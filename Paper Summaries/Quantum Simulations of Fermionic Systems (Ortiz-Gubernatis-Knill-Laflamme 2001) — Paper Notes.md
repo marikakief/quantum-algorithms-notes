@@ -45,7 +45,7 @@ The decomposition into Pauli terms is what makes both [[Gapped Phase Estimation|
 
 - Jordan & Wigner (1928) — original fermion-to-spin mapping
 - Lloyd (1996) — Hamiltonian simulation via [[Order-Condition Cancellation in Product Formulas|Trotter]]
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]] — eigenvalue algorithm that this paper provides the Hamiltonian encoding for
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]] — eigenvalue algorithm that this paper provides the Hamiltonian encoding for
 
 ---
 
@@ -54,7 +54,7 @@ The decomposition into Pauli terms is what makes both [[Gapped Phase Estimation|
 ### Paper notes
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — improves fermionic state preparation using [[Sorting Networks as Quantum Control-Flow Compilers|sorting networks]]
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — uses the Pauli decomposition from this paper
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the eigenvalue algorithm these Hamiltonians are fed into
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the eigenvalue algorithm these Hamiltonians are fed into
 
 ### Trick cards
 - [[Jordan-Wigner Transformation for Chemistry Hamiltonians]]

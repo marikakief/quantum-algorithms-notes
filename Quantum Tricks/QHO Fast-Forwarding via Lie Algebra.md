@@ -29,3 +29,7 @@ Only works when the Lie algebra is finite-dimensional. Anharmonic terms ($\hat{x
 
 ## Generalisation potential
 Any Hamiltonian with $\mathfrak{sl}(2)$, $\mathfrak{su}(2)$, or other low-dimensional Lie algebra structure could admit similar fast-forwarding. Look for: quadratic combinations of conjugate variables, or operators satisfying simple commutation relations.
+
+## Related notes
+- [[Lie-Algebraic Universality from Local Interactions]] — the complementary case: when the Lie algebra is the *full* $\mathfrak{su}(2^N)$, you get universality instead of fast-forwarding
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — introduces the Lie-algebraic framework for quantum simulation

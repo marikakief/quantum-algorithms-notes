@@ -22,7 +22,7 @@ For $n$ particles with pairwise interactions $V_{ij}$: do the QFT per-particle (
 
 ## When to reach for it
 
-- First-quantized quantum chemistry (the [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]] setting)
+- First-quantized quantum chemistry (the [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]] setting)
 - Any lattice simulation where kinetic and potential terms are diagonal in dual bases
 - PDE simulations with Laplacian + potential structure ([[Structured PDE Hamiltonian Simulation via QFT-QSFT-QCT (Quantum 2021-11-10-574) — Paper Notes|Childs-Liu]])
 
@@ -37,7 +37,7 @@ Only works when $T$ and $V$ are diagonal in dual (Fourier-related) bases. For no
 ## Related notes
 
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes]]
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]]
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]]
 - [[Structured PDE Hamiltonian Simulation via QFT-QSFT-QCT (Quantum 2021-11-10-574) — Paper Notes]]
 - [[QFT Diagonalization for Circulant Laplacians]]
 - [[Order-Condition Cancellation in Product Formulas]]

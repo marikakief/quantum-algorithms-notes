@@ -93,7 +93,7 @@ VQE's lasting contribution is probably sociological: it got experimentalists bui
 
 ## Comparison with phase estimation approaches
 
-| | VQE (this paper) | QPE ([[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes\|Abrams-Lloyd]]) | [[QSVT Meta-Template\|QSVT]] ground state prep |
+| | VQE (this paper) | QPE ([[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes\|Abrams-Lloyd]]) | [[QSVT Meta-Template\|QSVT]] ground state prep |
 |---|---|---|---|
 | Coherence time per shot | $O(1)$ (one ansatz circuit) | $O(\kappa/\epsilon)$ | $O(1/\Delta \cdot \log(1/\epsilon))$ |
 | Total measurements | $O(M/p^2)$ | $O(1/\|c_0\|^2)$ | $O(1/\gamma)$ |
@@ -115,7 +115,7 @@ Note: The Pauli decomposition for expectation estimation (Algorithm 1) is **not 
 ## References within this paper
 
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — [[Gapped Phase Estimation|phase estimation]]; VQE replaces the long coherent evolution of phase estimation with short measurements
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]] — phase estimation applied to Hamiltonian eigenvalues
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]] — phase estimation applied to Hamiltonian eigenvalues
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL algorithm (cited as related quantum linear algebra)
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2007)]] — sparse Hamiltonian decomposition used in Appendix for $k$-sparse case
 - Aspuru-Guzik, Dutoi, Love & Head-Gordon (2005, Science 309, 1704) — earlier QPE-based quantum chemistry proposal
@@ -132,7 +132,7 @@ Note: The Pauli decomposition for expectation estimation (Algorithm 1) is **not 
 ## Cross-links
 
 ### Paper notes
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the phase estimation approach VQE aims to replace
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the phase estimation approach VQE aims to replace
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — what fault-tolerant ground state prep looks like (via [[QSVT Meta-Template|QSVT]])
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — improved fault-tolerant eigenstate preparation
 

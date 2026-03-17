@@ -27,5 +27,6 @@ Requires sorted, repetition-free input for unitarity and correctness of antisymm
 
 ## Related Paper Notes
 
+- [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — original (buggy) antisymmetrization via heap sort
+- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — the fix using sorting networks
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
-- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]]

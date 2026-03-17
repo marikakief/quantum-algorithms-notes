@@ -24,7 +24,7 @@ A molecular Hamiltonian $H = \sum_{pq} h_{pq} \hat{a}_p^\dagger \hat{a}_q + \sum
 ## When to reach for it
 
 - Any quantum chemistry calculation: this is step 1 of mapping the problem to qubits
-- [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|VQE]], [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|QPE-based chemistry]], and fault-tolerant approaches all use this
+- [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|VQE]], [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|QPE-based chemistry]], and fault-tolerant approaches all use this
 - [[Term-by-Term Expectation Estimation|Expectation estimation]] of chemistry Hamiltonians
 
 ## Complexity

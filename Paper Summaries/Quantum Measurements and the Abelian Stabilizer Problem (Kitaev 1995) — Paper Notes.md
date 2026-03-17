@@ -13,7 +13,7 @@ The paper also introduces:
 - A general theory of reversible quantum computation (garbage-free)
 - A polynomial quantum Fourier transform for arbitrary finite Abelian groups
 
-This is one of the most important papers in quantum computing. The phase estimation procedure defined here became the backbone of quantum algorithms for eigenvalue problems, Hamiltonian simulation readout, and quantum chemistry — and it's the direct ancestor of the [[Gapped Phase Estimation|phase estimation]] used in [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]], [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]], and essentially every algorithm that needs to extract eigenvalue information from a unitary.
+This is one of the most important papers in quantum computing. The phase estimation procedure defined here became the backbone of quantum algorithms for eigenvalue problems, Hamiltonian simulation readout, and quantum chemistry — and it's the direct ancestor of the [[Gapped Phase Estimation|phase estimation]] used in [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]], [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]], and essentially every algorithm that needs to extract eigenvalue information from a unitary.
 
 ---
 
@@ -147,7 +147,7 @@ Previous polynomial QFT algorithms existed only for $q = 2^n$ (Coppersmith) or s
 ## Cross-links
 
 ### Paper notes
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — uses Kitaev's phase estimation for Hamiltonian eigenvalues
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — uses Kitaev's phase estimation for Hamiltonian eigenvalues
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — HHL uses phase estimation for matrix inversion
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — modern eigenvalue filtering via [[QSVT Meta-Template|QSVT]], building on concepts from this paper
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — uses phase estimation in the [[Hamiltonian-to-Projection via Phase Estimation|Hamiltonian-to-projection lemma]]

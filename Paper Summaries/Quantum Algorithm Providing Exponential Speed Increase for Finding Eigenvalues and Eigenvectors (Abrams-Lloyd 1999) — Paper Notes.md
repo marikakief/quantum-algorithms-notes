@@ -46,7 +46,7 @@ $$
 
 **Implementation:** Loop $i = 1$ to $M$: set a flag qubit if $i < j$, apply $U$ conditioned on the flag, uncompute the flag.
 
-⚠️ **Bug:** The paper's description of conditional application via a loop with a flag qubit and comparison $i < j$ requires sorting/comparison in superposition. The implementation as described doesn't correctly handle the coherent conditioning. This was fixed in [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Berry, Kieferová et al. (2018)]], which showed how to properly implement conditional operations using [[Sorting Networks as Quantum Control-Flow Compilers|sorting networks]] with fixed comparator schedules instead of data-dependent branching.
+**Note:** The paper's loop-based construction for conditional-$U^j$ is functional but unnecessarily complicated. The standard modern approach uses controlled-$U^{2^k}$ for each index qubit $k$ (the standard [[Gapped Phase Estimation|phase estimation]] circuit from Cleve, Ekert, Macchiavello & Mosca 1998), which avoids the loop entirely. The more serious sorting bug — using data-dependent heap sort for antisymmetrization of fermionic states — is in the companion paper [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]], not this one.
 
 ### Step 4: Decompose in eigenbasis
 
@@ -97,18 +97,6 @@ For a system of $n$ particles with Hamiltonian $H = \sum_i (T_i + V_i) + \sum_{i
 
 ---
 
-## The sorting bug
-
-The conditional time evolution (Step 3) requires applying $U^j$ — i.e., applying $U$ exactly $j$ times when the index register holds $|j\rangle$. The paper suggests implementing this via a loop with a comparison $i < j$ that sets a flag qubit.
-
-The problem: when $j$ is in superposition, the comparison $i < j$ requires a coherent comparator. The paper doesn't address how this comparator interacts with the quantum state. In particular, a naive implementation using data-dependent branching introduces entanglement with scratch registers that isn't properly cleaned up.
-
-**The fix** (from [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Berry, Kieferová et al. 2018]]): Use [[Sorting Networks as Quantum Control-Flow Compilers|sorting networks]] — fixed comparator schedules that don't depend on data values. This compiles the data-dependent control flow into a static quantum circuit. The [[Reversible Comparator with Swap Record|reversible comparator]] records whether a swap was performed, enabling later uncomputation.
-
-Alternatively, the standard modern approach is to use controlled-$U^{2^k}$ for each index qubit $k$ (the standard [[Gapped Phase Estimation|phase estimation]] circuit), which avoids the loop construction entirely. This was already known from Cleve, Ekert, Macchiavello & Mosca (1998) but not cited in this context by Abrams & Lloyd.
-
----
-
 ## Where this sits historically
 
 | Paper | What it adds |
@@ -137,14 +125,15 @@ Alternatively, the standard modern approach is to use controlled-$U^{2^k}$ for e
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — eigenvalue measurement procedure (phase estimation)
 - Cleve, Ekert, Macchiavello & Mosca (1998, quant-ph/9708016) — [[Gapped Phase Estimation|phase estimation]] for eigenvalues of unitaries (streamlined version of Kitaev's approach)
 - Feynman (1982) — quantum simulation proposal
-- Abrams & Lloyd (1997, PRL 79, 2586) — earlier work on quantum simulation and measurement
+- [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams & Lloyd (1997, PRL 79, 2586)]] — earlier work on fermionic simulation, antisymmetrization, and Hubbard model
 
 ---
 
 ## Cross-links
 
 ### Paper notes
-- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — fixes the sorting issue, improves antisymmetrization
+- [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — the companion paper on fermionic simulation (contains the heap sort bug)
+- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — fixes the sorting issue from the 1997 paper, improves antisymmetrization
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses phase estimation from this paper for matrix inversion
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — modern ground state prep via [[QSVT Meta-Template|QSVT]]
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — improved Hamiltonian simulation used in the $e^{-iHt}$ step
@@ -152,6 +141,5 @@ Alternatively, the standard modern approach is to use controlled-$U^{2^k}$ for e
 
 ### Trick cards
 - [[Gapped Phase Estimation]]
-- [[Sorting Networks as Quantum Control-Flow Compilers]]
-- [[Reversible Comparator with Swap Record]]
 - [[Order-Condition Cancellation in Product Formulas]]
+- [[Basis Switching via QFT for Kinetic-Potential Splitting]]

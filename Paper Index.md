@@ -6,6 +6,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ## Foundational / Historical
 
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — proves Feynman's conjecture: quantum computers efficiently simulate local quantum systems
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] — quantum computation model, Deutsch problem
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — exponential quantum speedup for Simon's problem
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — polynomial-time factoring and discrete log
@@ -17,6 +18,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ## Hamiltonian Simulation
 
 ### Product formulas (Trotter / Suzuki)
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — foundational product-formula simulation of local Hamiltonians; proves Feynman's conjecture
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — first efficient sparse Hamiltonian simulation
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — tight commutator-based Trotter error bounds
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomised multi-product formulas
@@ -48,8 +50,9 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes|Childs-Kothari-Somma (2010)]] — lower bounds for non-sparse simulation
 
 ### Fermionic systems
-- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Fermionic Eigenstate Prep (2018)]] — improved eigenstate preparation for fermionic systems
+- [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]] — first fermionic simulation algorithms; antisymmetrization, Hubbard model
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes|Ortiz-Gubernatis-Knill-Laflamme (2001)]] — early fermionic simulation framework
+- [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Fermionic Eigenstate Prep (2018)]] — improved eigenstate preparation for fermionic systems
 
 ---
 
@@ -93,7 +96,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ## Eigenvalue / Ground State Problems
 
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation
-- [[Quantum Algorithm for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd (1999)]] — quantum phase estimation for eigenvalues
+- [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd (1999)]] — quantum phase estimation for eigenvalues
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes|Lin-Tong (2020)]] — near-optimal ground state preparation via signal processing
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo-McClean et al. (2014)]] — VQE: variational quantum eigensolver
 

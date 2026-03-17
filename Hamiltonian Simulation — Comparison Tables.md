@@ -6,6 +6,7 @@
 
 | Paper | Core method | Precision dependence (headline) | Structural leverage | Main tradeoff |
 |---|---|---|---|---|
+| [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] | First-order product formula | $O(\ell m^2 t^2/\varepsilon)$ operations | Locality: each $H_i$ acts on $O(1)$-dim space | $O(t^2/\varepsilon)$ step scaling; first-order only |
 | [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] | Trotter + coloring decomposition | Poly in $t$; $\mathrm{poly}(n, t, 1/\epsilon)$ circuit size | Sparse entry-coloring into 2×2 blocks | $(D+1)^2 n^6$ term count; first sparse simulation |
 | [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] | Suzuki product formula + edge-coloring decomposition | $O(d^4 \tau^{1+1/2k} / \epsilon^{1/2k})$; near-linear via $k$-optimization | Local edge-coloring to 1-sparse pieces | $d^4$ sparsity cost; $5^{2k}$ constant blowup |
 | [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes]] | Oracle lower-bound / no-go analysis | Rules out generic $\mathrm{poly}(\|H\|t,\log N)$ in entry-oracle non-sparse setting | Norm-gap constructions + hardness embeddings | Model-specific (stronger oracles can bypass) |

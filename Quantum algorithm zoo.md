@@ -1,6 +1,6 @@
 sourced from [Quantum Zoo][https://quantumalgorithmzoo.org/] on March 17, 2025
 
-**1.** Daniel S. Abrams and Seth Lloyd
+**1. ✓** Daniel S. Abrams and Seth Lloyd
 Simulation of many-body Fermi systems on a universal quantum computer.
 _Physical Review Letters_, 79(13):2586-2589, 1997.
 [[arXiv:quant-ph/9703054](http://arxiv.org/abs/quant-ph/9703054)]
