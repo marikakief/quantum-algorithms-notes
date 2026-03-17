@@ -3,7 +3,6 @@
 > **Tags:** #hamiltonian-simulation #time-dependent #dyson #qdrift #LCU
 
 ---
-
 ## What the paper does
 
 Fixes a real inefficiency in time-dependent simulation complexity: prior bounds scaled with $t \cdot \max_\tau \|H(\tau)\|$, paying for the peak norm even when the Hamiltonian is large only briefly.

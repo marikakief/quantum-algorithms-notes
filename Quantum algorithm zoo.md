@@ -218,7 +218,7 @@ On the exact evaluation of certain instances of the Potts partition function by 
 _Comm. Math. Phys._ Vol. 279, pg. 735, 2008.
 [[arXiv:quant-ph/0703023](http://arxiv.org/abs/quant-ph/0703023)]
 
-**48.** Lov K. Grover
+**48. ✓** Lov K. Grover
 Quantum mechanics helps in searching for a needle in a haystack.
 _Physical Review Letters_, 79(2):325-328, 1997.
 [[arXiv:quant-ph/9605043](http://arxiv.org/abs/quant-ph/9605043)]
@@ -1112,7 +1112,7 @@ Quantum algorithm for finding constant-sized sub-hypergraphs over 3-uniform hype
 In _Proceedings of COCOON, 2014. pg. 429-440_
 [[arXiv:1310.4127](http://arxiv.org/abs/1310.4127)]
 
-**242.** Edward Farhi, Jeffrey Goldstone, and Sam Gutmann
+**242. ✓** Edward Farhi, Jeffrey Goldstone, and Sam Gutmann
 A quantum approximate optimization algorithm
 _[arXiv:1411.4028](http://arxiv.org/abs/1411.4028)_, 2014.
 

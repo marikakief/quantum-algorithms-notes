@@ -22,17 +22,22 @@ The collection skews toward quantum algorithms (Hamiltonian simulation, quantum 
 
 ```
 Quantum Foundations/
-├── Paper Summaries/                          — one note per paper
-├── Quantum Tricks/                           — atomic reusable technique cards
-└── Hamiltonian Simulation — Comparison Tables.md
+├── Paper Summaries/
+├── Quantum Tricks/
+├── Paper Index.md
+├── Hamiltonian Simulation — Comparison Tables.md
+├── Quantum algorithm zoo.md
+└── README.md
 ```
 
-**Paper Summaries** follow a consistent format: problem statement, main result, algorithm/construction, key theorems, comparison table with prior work, limitations, reusable ideas (linking to trick cards), and cross-references to related notes.
+**Paper Summaries** — one note per paper, covering: problem statement, main result, algorithm or construction in detail, key theorems with exact complexity bounds, comparison with prior work, limitations, reusable ideas (linking to trick cards), and cross-references to related notes.
 
-**Quantum Tricks** are self-contained technique cards. Each one explains a single reusable idea — what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
+**Quantum Tricks** — self-contained technique cards. Each one explains a single reusable idea: what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
+
+**Paper Index** — all paper notes organised by topic.
 
 ## AI disclosure
 
-Notes were written by Claude (AI), prompted and directed by me. I read the papers, specified what to include, and spot-checked the output — but I didn't write the prose. Errors are possible, particularly on complexity bounds and proof details. If you find one, open an issue.
+Notes were written by Claude (AI). I directed what to include and spot-checked the output, but I didn't write them. Errors are possible, particularly on complexity bounds and proof details. If you find one, open an issue.
 
 
