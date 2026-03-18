@@ -185,6 +185,9 @@ The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant ma
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — quantum walk simulation of sparse Hamiltonians
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|Markov chain ↔ Hamiltonian]] connection
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — [[QSVT Meta-Template|QSVT]] as the polynomial-transform generalization
+- [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — unifies this framework with Ambainis's; uses phase estimation on $W(P)$ for approximate reflection
+- [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — generalises the walk construction $G = UPU - P$ from discriminants to all frustration-free Hamiltonians
+- [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]] — uses Szegedy walks for quantum sampling in partition function estimation
 
 ### Trick cards
 - [[Quantized Bipartite Walk Construction]]

@@ -69,6 +69,7 @@ The unary clock is space-inefficient ($L$ qubits for $L$ time steps). Binary clo
 ## Related notes
 
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]]
+- [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — adapts the clock for ODE trajectories
 - [[Identity-Gate Padding for Output Amplification]]
 - [[History-State Padding for Final-Time Readout]]
 - [[Snake-Path 2D Embedding for Nearest-Neighbor Universality]]

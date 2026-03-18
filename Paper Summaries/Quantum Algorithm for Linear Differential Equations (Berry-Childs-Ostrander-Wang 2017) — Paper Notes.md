@@ -57,7 +57,7 @@ That paper showed how to turn Hamiltonian simulation into a linear system via Ta
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs, Kothari & Somma (2017)]] — quantum linear systems solver used as subroutine
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes|Aharonov et al. (2004)]] — [[History-State Encoding with Unary Clock|history-state construction]] that this paper adapts for ODE trajectories
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] for the Taylor-series encoding
-- Berry (2014, J. Phys. A 47, 105301) — earlier quantum ODE algorithm via product formulas
+- [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] — earlier quantum ODE algorithm; introduced the [[History-State Linear System Encoding for ODE Trajectories|history-state linear system encoding]]
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL algorithm for linear systems
 
 ---

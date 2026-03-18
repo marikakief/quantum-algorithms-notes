@@ -30,4 +30,5 @@ Each Taylor term $H^k = \sum_{\ell_1,\ldots,\ell_k} \alpha_{\ell_1}\cdots\alpha_
 
 ## Related Paper Notes
 
+- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes]] — the source paper
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]

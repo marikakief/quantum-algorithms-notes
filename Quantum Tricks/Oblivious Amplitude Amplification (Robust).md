@@ -62,6 +62,8 @@ For exact single-round amplification, need $\sin^2\theta = 1/4$ exactly. For gen
 
 ## Related Paper Notes
 
+- [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — where OAA was introduced (Lemma 3.6, 2D Subspace Lemma)
+- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes]] — cleanest proof of the robust version (Eq. 14)
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]

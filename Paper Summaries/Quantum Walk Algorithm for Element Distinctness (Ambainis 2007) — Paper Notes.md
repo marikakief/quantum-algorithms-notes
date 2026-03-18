@@ -175,6 +175,7 @@ This paper launched the **quantum walk search** paradigm:
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — abstracts the walk framework to arbitrary Markov chains
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes]] — continuous walk approach
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes]] — collision finding with structure
+- [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — generalises this approach to arbitrary ergodic chains; handles multiple solutions without reduction
 
 ### Trick cards
 - [[Walk on the Johnson Graph for Subset Search]]

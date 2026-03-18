@@ -104,5 +104,6 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 - [[Magnitude-Banded Hamiltonian Decomposition]]
 - [[Block-Hamiltonian Embedding for Unitary Synthesis]]
 - [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes]]
+- [[Hamiltonian Simulation with Nearly Optimal Dependence on All Parameters (Berry-Childs-Kothari 2015) — Paper Notes]] — combines this walk with Bessel-LCU for near-optimal simulation in all parameters
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]

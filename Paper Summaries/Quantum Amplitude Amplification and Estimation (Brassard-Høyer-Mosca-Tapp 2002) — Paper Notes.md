@@ -121,7 +121,7 @@ This is the generic "quadratic speedup for search" result. It's the reason ampli
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — [[Gapped Phase Estimation|phase estimation]] used for amplitude estimation
 - Brassard & Høyer (1997) — earlier version of amplitude amplification
 - Boyer, Brassard, Høyer & Tapp (1998) — tight bounds for search with unknown number of solutions
-- Bennett, Bernstein, Brassard & Vazirani (1997) — $\Omega(\sqrt{N})$ lower bound for search
+- [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — $\Omega(\sqrt{N})$ lower bound for search; Grover is optimal
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|Brassard, Høyer & Tapp (1997)]] — collision finding via [[Classical Preprocessing plus Grover Search|classical table + Grover]], a precursor application of amplitude amplification
 
 ---

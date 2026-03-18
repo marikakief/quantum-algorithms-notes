@@ -372,6 +372,7 @@ The paper introduces the [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|tech
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — uses [[History-State Encoding with Unary Clock|history-state construction]] descended from this paper
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern [[Order-Condition Cancellation in Product Formulas|product-formula analysis]]
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — optimal-scaling simulation via [[QSVT Meta-Template|QSVT]]
+- [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — quadratically amplifies the gap of the frustration-free clock Hamiltonians used here
 
 ### Trick cards
 - [[History-State Encoding with Unary Clock]]

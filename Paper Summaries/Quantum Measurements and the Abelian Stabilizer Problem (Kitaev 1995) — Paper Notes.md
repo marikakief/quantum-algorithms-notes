@@ -157,3 +157,6 @@ Previous polynomial QFT algorithms existed only for $q = 2^n$ (Coppersmith) or s
 - [[Gapped Phase Estimation]]
 - [[Hamiltonian-to-Projection via Phase Estimation]]
 - [[Reversible Computation via Compute-Copy-Uncompute]]
+
+### Subsequent work
+- [[Quantum Algorithms Revisited (Cleve-Ekert-Macchiavello-Mosca 1998) — Paper Notes]] — reformulated QPE as a single circuit (controlled-$U^{2^k}$ + inverse QFT); unified Deutsch-Jozsa, BV, Shor as phase estimation instances

@@ -147,7 +147,7 @@ The paper's real contribution is the *technique* — the two-reflection rotation
 - Yao (1993) — quantum circuit model
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — polynomial-time factoring, the result that made the field
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — exponential quantum speedup for Simon's problem, key influence
-- Bennett, Bernstein, Brassard & Vazirani (1996) — $\Omega(\sqrt{N})$ lower bound for quantum search
+- [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — $\Omega(\sqrt{N})$ lower bound for quantum search (Grover is optimal)
 - Boyer, Brassard, Høyer & Tapp (1996) — tight bounds on iterations, multiple solutions
 
 ---

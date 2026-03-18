@@ -32,5 +32,6 @@ Success probability $1/s^2$ can be small. Use [[Oblivious Amplitude Amplificatio
 ## Related Paper Notes
 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes]] — clean PREPARE/SELECT formulation; the standard reference
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]

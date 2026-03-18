@@ -39,4 +39,6 @@ Per-call: $O(m_b) = O(\log(L/\varepsilon))$ T gates for the comparator, plus the
 
 ## Related Paper Notes
 - [[Sublinear-T Block-Encodings for Second-Quantized Hamiltonians (arXiv 2510.08644) — Paper Notes]]
+- [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes]] — the foundational paper introducing inequality-test amplitude transduction
+- [[Inequality-Test Amplitude Transduction]] — the original trick this generalises
 - [[SELECT-SWAP Grouped Data Lookup for Block-Encoding]]

@@ -33,7 +33,7 @@ Quantum walk algorithm for element distinctness.
 _SIAM Journal on Computing_, 37:210-239, 2007.
 [[arXiv:quant-ph/0311001](http://arxiv.org/abs/quant-ph/0311001)]
 
-**8.** Andris Ambainis, Andrew M. Childs, Ben W.Reichardt, Robert Špalek, and Shengyu Zheng
+**8. ✓** Andris Ambainis, Andrew M. Childs, Ben W.Reichardt, Robert Špalek, and Shengyu Zheng
 Every AND-OR formula of size N can be evaluated in time  on a quantum computer.
 In _Proceedings of the 48th IEEE Symposium on the Foundations of Computer Science_, pages 363-372, 2007.
 [ [arXiv:quant-ph/0703015](http://arxiv.org/abs/quant-ph/0703015) and [arXiv:0704.3628](http://arxiv.org/abs/0704.3628)]
@@ -47,7 +47,7 @@ In _Proceedings of the 46th IEEE Symposium on Foundations of Computer Science_,
 Quantum search in an ordered list via adaptive learning.
 _[arXiv:quant-ph/0703231](http://arxiv.org/abs/quant-ph/0703231)_, 2007.
 
-**11.** Ethan Bernstein and Umesh Vazirani
+**11. ✓** Ethan Bernstein and Umesh Vazirani
 Quantum complexity theory.
 In _Proceedings of the 25th ACM Symposium on the Theory of Computing_, pages 11-20, 1993.
 
@@ -115,7 +115,7 @@ _Proceedings of ICALP 2008_
 _[Quantum information processing in continuous time](http://www.math.uwaterloo.ca/~amchilds/papers/thesis.pdf)_.
 PhD thesis, MIT, 2004.
 
-**26.** Andrew M. Childs, Richard Cleve, Enrico Deotto, Edward Farhi, Sam Gutmann, and Daniel A. Spielman
+**26. ✓** Andrew M. Childs, Richard Cleve, Enrico Deotto, Edward Farhi, Sam Gutmann, and Daniel A. Spielman
 Exponential algorithmic speedup by quantum walk.
 In _Proceedings of the 35th ACM Symposium on Theory of Computing_, pages 59-68, 2003.
 [[arXiv:quant-ph/0209131](http://arxiv.org/abs/quant-ph/0209131)]
@@ -150,7 +150,7 @@ _Quantum Information and Computation_, 9(3):215-230, 2009.
 Quantum theory, the Church-Turing principle, and the universal quantum computer.
 _Proceedings of the Royal Society of London Series A_, 400:97-117, 1985.
 
-**33.** David Deutsch and Richard Jozsa
+**33. ✓** David Deutsch and Richard Jozsa
 Rapid solution of problems by quantum computation.
 _Proceedings of the Royal Society of London Series A_, 493:553-558, 1992.
 
@@ -159,7 +159,7 @@ Quantum query complexity of some graph problems.
 _SIAM Journal on Computing_, 35(6):1310-1328, 2006.
 [[arXiv:quant-ph/0401091](http://arxiv.org/abs/quant-ph/0401091)]
 
-**35.** Christoph Dürr and Peter Høyer
+**35. ✓** Christoph Dürr and Peter Høyer
 A quantum algorithm for finding the minimum.
 _[arXiv:quant-ph/9607014](http://arxiv.org/abs/quant-ph/9607014)_, 1996.
 
@@ -278,7 +278,7 @@ A simple promiseBQP-complete matrix problem.
 _Theory of Computing_, 3:61-79, 2007.
 [[arXiv:quant-ph/0606229](http://arxiv.org/abs/quant-ph/0606229)]
 
-**61.** Stephen P. Jordan
+**61. ✓** Stephen P. Jordan
 Fast quantum algorithm for numerical gradient estimation.
 _Physical Review Letters_, 95:050501, 2005.
 [[arXiv:quant-ph/0405146](http://arxiv.org/abs/quant-ph/0405146)]
@@ -288,7 +288,7 @@ _Quantum Computation Beyond the Circuit Model_.
 PhD thesis, Massachusetts Institute of Technology, 2008.
 [[arXiv:0809.2307](http://arxiv.org/abs/0809.2307)]
 
-**63.** Ivan Kassal, Stephen P. Jordan, Peter J. Love, Masoud Mohseni, and Alán Aspuru-Guzik
+**63. ✓** Ivan Kassal, Stephen P. Jordan, Peter J. Love, Masoud Mohseni, and Alán Aspuru-Guzik
 Quantum algorithms for the simulation of chemical dynamics.
 _Proc. Natl. Acad. Sci._ Vol. 105, pg. 18681, 2008.
 [[arXiv:0801.2986](http://arxiv.org/abs/0801.2986)]
@@ -448,7 +448,7 @@ Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation.
 _SIAM Journal on Computing_, 37(1):166-194, 2007.
 [[arXiv:quant-ph/0405098](http://arxiv.org/abs/quant-ph/0405098)]
 
-**98.** Jérémie Roland and Nicolas J. Cerf
+**98. ✓** Jérémie Roland and Nicolas J. Cerf
 Quantum search by local adiabatic evolution.
 _Physical Review A_, 65(4):042308, 2002.
 [[arXiv:quant-ph/0107015](http://arxiv.org/abs/quant-ph/0107015)]
@@ -468,7 +468,7 @@ The quantum query complexity of read-many formulas
 In _Proceedings of ESA 2012_, pg. 337-348, Springer. (LNCS 7501)
 [[arXiv:1112.0548](http://arxiv.org/abs/1112.0548)]
 
-**102.** Alán Aspuru-Guzik, Anthony D. Dutoi, Peter J. Love, and Martin Head-Gordon
+**102. ✓** Alán Aspuru-Guzik, Anthony D. Dutoi, Peter J. Love, and Martin Head-Gordon
 Simulated quantum computation of molecular energies.
 _Science_, 309(5741):1704-1707, 2005.
 [[arXiv:quant-ph/0604193](http://arxiv.org/abs/quant-ph/0604193)]
@@ -609,7 +609,7 @@ In _Proceedings of MFCS 2009_, pg 663-674.
 Quantum Algorithms for many-to-one Functions to Solve the Regulator and the Principal Ideal Problem.
 _[arXiv:0912.4807](http://arxiv.org/abs/0912.4807)_, 2009.
 
-**132.** K. Temme, T.J. Osborne, K.G. Vollbrecht, D. Poulin, and F. Verstraete
+**132. ✓** K. Temme, T.J. Osborne, K.G. Vollbrecht, D. Poulin, and F. Verstraete
 Quantum Metropolis Sampling.
 _Nature_, Vol. 471, pg. 87-90, 2011.
 [[arXiv:0911.3635](http://arxiv.org/abs/0911.3635)]
@@ -651,7 +651,7 @@ Quantum query complexity of minor-closed graph properties.
 In _Proceedings of the 28th Symposium on Theoretical Aspects of Computer Science (STACS 2011)_, pg. 661-672
 [[arXiv:1011.1443](http://arxiv.org/abs/1011.1443)]
 
-**141.** Frédéric Magniez, Ashwin Nayak, Jérémie Roland, and Miklos Santha
+**141. ✓** Frédéric Magniez, Ashwin Nayak, Jérémie Roland, and Miklos Santha
 Search via quantum walk.
 In _Proceedings STOC 2007_, pg. 575-584.
 [[arXiv:quant-ph/0608026](http://arxiv.org/abs/quant-ph/0608026)]
@@ -720,7 +720,7 @@ _[arXiv:1108.3022](http://arxiv.org/abs/1108.3022)_, 2011.
 Improved output-sensitive quantum algorithms for Boolean matrix multiplication.
 In _Proceedings of the 23rd Annual ACM-SIAM Symposium on Discrete Algorithms (SODA '12)_, 2012.
 
-**156.** Dominic Berry
+**156. ✓** Dominic Berry
 Quantum algorithms for solving linear differential equations.
 _J. Phys. A: Math. Theor._47, 105301, 2014.
 [[arXiv:1010.2745](http://arxiv.org/abs/1010.2745)].
@@ -768,7 +768,7 @@ Quantum adversary (upper) bound.
 _39th International Colloquium on Automata, Languages and Programming - ICALP 2012_ Volume 7391, p. 557-568.
 [[arXiv:1101.0797](http://arxiv.org/abs/1101.0797)]
 
-**166.** Stephen Jordan, Keith Lee, and John Preskill
+**166. ✓** Stephen Jordan, Keith Lee, and John Preskill
 Quantum algorithms for quantum field theories.
 _Science_, Vol. 336, pg. 1130-1133, 2012.
 [[arXiv:1111.3633](http://arxiv.org/abs/1111.3633)]
@@ -851,7 +851,7 @@ The Complexity of Stoquastic Local Hamiltonian Problems.
 _Quantum Information and Computation_, 8(5):361-385, 2008.
 [[arXiv:quant-ph/0606140](http://arxiv.org/abs/quant-ph/0606140)]
 
-**184.** Rolando D. Somma and Sergio Boixo
+**184. ✓** Rolando D. Somma and Sergio Boixo
 Spectral gap amplification.
 _SIAM Journal on Computing_, 42:593-610, 2013.
 [[arXiv:1110.2494](http://arxiv.org/abs/1110.2494)]
@@ -946,7 +946,7 @@ _[arXiv:1310.6238](http://arxiv.org/abs/1310.6238)_, 2013.
 A reduction of semigroup DLP to classic DLP.
 _[arXiv:1310.7903](http://arxiv.org/abs/1310.7903)_, 2013.
 
-**205.** D. W. Berry, R. Cleve, and R. D. Somma
+**205. ✓** D. W. Berry, R. Cleve, and R. D. Somma
 Exponential improvement in precision for Hamiltonian-evolution simulation.
 _[arXiv:1308.5424](http://arxiv.org/abs/1308.5424)_, 2013.
 
@@ -972,7 +972,7 @@ _Quantum Information and Computation 6(6):483-494, 2005._
 Quantum algorithms for approximating the effective resistances of electrical networks.
 _[arXiv:1311.1851](http://arxiv.org/abs/1311.1851)_
 
-**211.** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma
+**211. ✓** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma
 Exponential improvement in precision for simulating sparse Hamiltonians
 _[arXiv:1312.1414](http://arxiv.org/abs/1312.1414)_
 
@@ -992,7 +992,7 @@ _[arXiv:1307.0411](http://arxiv.org/abs/1307.0411)_
 Quantum pattern matching fast on average
 _[arXiv:1408.1816](http://arxiv.org/abs/1408.1816)_
 
-**216.** Charles H. Bennett, Ethan Bernstein, Gilles Brassard, and Umesh Vazirani
+**216. ✓** Charles H. Bennett, Ethan Bernstein, Gilles Brassard, and Umesh Vazirani
 Strengths and weaknesses of quantum computing
 _SIAM J. Comput. 26(5):1524-1540, 1997_
 [[arXiv:quant-ph/9701001](http://arxiv.org/abs/quant-ph/9701001)]
@@ -1120,11 +1120,11 @@ _[arXiv:1411.4028](http://arxiv.org/abs/1411.4028)_, 2014.
 A quantum approximate optimization algorithm applied to a bounded occurrence constraint problem
 _[arXiv:1412.6062](http://arxiv.org/abs/1412.6062)_, 2014.
 
-**244.** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma
+**244. ✓** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma
 Simulating Hamiltonian dynamics with a truncated Taylor series
 _[arXiv:1412.4687](http://arxiv.org/abs/1412.4687)_, 2014.
 
-**245.** Dominic W. Berry, Andrew M. Childs, and Robin Kothari
+**245. ✓** Dominic W. Berry, Andrew M. Childs, and Robin Kothari
 Hamiltonian simulation with nearly optimal dependence on all parameters
 _[arXiv:1501.01715](http://arxiv.org/abs/1501.01715)_, 2015.
 
@@ -1212,7 +1212,7 @@ _[arXiv:1511.02306](http://arxiv.org/abs/1511.02306)_, 2015.
 Quantum walk speedup of backtracking algorithms
 _[arXiv:1509.02374](http://arxiv.org/abs/1509.02374)_, 2015.
 
-**265.** Ashley Montanaro
+**265. ✓** Ashley Montanaro
 Quantum speedup of Monte Carlo methods
 _[arXiv:1504.06987](http://arxiv.org/abs/1504.06987)_, 2015.
 
@@ -1948,7 +1948,7 @@ _[arXiv:2205.01141](https://arxiv.org/abs/2205.01141)_, 2022.
 A quantum algorithm for string matching
 _NPJ Quantum Information_, 7:37, 2021.
 
-**436.** András Gilyén, Srininvasan Arunachalam, and Nathan Wiebe
+**436. ✓** András Gilyén, Srininvasan Arunachalam, and Nathan Wiebe
 Optimizing quantum optimization algorithms via faster quantum gradient computation
 _Proceedings SODA 2019_, pp. 1425-1444
 [[arXiv:1711.00465](https://arxiv.org/abs/1711.00465)]
@@ -2004,7 +2004,7 @@ Quantum speedup of Monte Carlo integration in the directino of dimension and its
 _Quantum Information Processing_ 20:185, 2021.
 [[arXiv:2011.02165](https://arxiv.org/abs/2011.02165)]
 
-**448.** P. Rebentrost, B. Gupt, and T. R. Bromley
+**448. ✓** P. Rebentrost, B. Gupt, and T. R. Bromley
 Quantum computational finance: Monte Carlo pricing of financial derivatives
 _Physical Review A_ 98(2):022321, 2018.
 [[arXiv:1805.00109](https://arxiv.org/abs/1805.00109)]
@@ -2126,7 +2126,7 @@ The computational complexity of linear optics
 _Proceedings of STOC11_, 333-342, 2011.
 [[arXiv:1011.3245](https://arxiv.org/abs/1011.3245)]
 
-**474.** Dan Shepherd and Michael J. Bremner
+**474. ✓** Dan Shepherd and Michael J. Bremner
 Temporally unstructured quantum computation
 _Proceedings of the Royal Society A_, 465(2105):1413-1439, 2009.
 [[arXiv:0809.0847](https://arxiv.org/abs/0809.0847)]

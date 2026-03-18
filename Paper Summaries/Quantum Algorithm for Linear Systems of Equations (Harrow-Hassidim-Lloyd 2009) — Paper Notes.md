@@ -158,6 +158,24 @@ The user can choose to work only with the well-conditioned part, or estimate the
 
 ---
 
+## Fine print (Aaronson's caveats)
+
+Scott Aaronson's essay [*Quantum Machine Learning Algorithms: Read the Fine Print*](https://www.scottaaronson.com/papers/qml.pdf) (Nature Physics **11**, 291, 2015) lays out the four ways the "exponential speedup" can silently vanish:
+
+1. **State preparation.** Loading $|b\rangle$ from classical data requires either a QRAM or a structured formula for the amplitudes. If preparing $|b\rangle$ takes $n^c$ time, the exponential advantage is gone at step one.
+
+2. **Hamiltonian simulation access.** Applying $e^{iAt}$ requires $A$ to be sparse (or have other special structure) with efficiently-queryable entries. For dense or unstructured $A$, this step alone kills the speedup.
+
+3. **Condition number.** HHL's runtime grows linearly in $\kappa$. If $\kappa = n^c$, the advantage disappears. The BQP-completeness result (Theorem 4 above) shows that improving $\kappa$-dependence below linear would have complexity-theoretic consequences.
+
+4. **Readout.** The output is a quantum state $|x\rangle$, not the vector $x$. You can extract limited statistical information (inner products, locations of large entries) but reading any specific $x_i$ requires $\sim n$ repetitions — exponential overhead that negates the exponential speedup.
+
+Aaronson's broader point: every QML algorithm built on HHL inherits these caveats. The "task" that HHL solves efficiently is not "solve $Ax = b$" but rather "estimate certain observables of $A^{-1}|b\rangle$ for structured $A$ and efficiently-preparable $|b\rangle$." Whether classical algorithms can match that narrower task remains open for most applications. The one provable separation comes from HHL's BQP-completeness: encoding Shor's algorithm into a linear system gives a case where classical solvers provably can't compete (assuming factoring is hard classically), but those instances are artificial.
+
+The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner separation: comparing a vector against the Fourier transform of another vector gives provable exponential quantum speedup, but only when both vectors are sufficiently uniform and the relationship involves a global transform that foils classical sampling.
+
+---
+
 ## Reusable ideas
 
 1. **Phase-estimation-based eigenvalue extraction:** Decompose $|b\rangle$ in the eigenbasis of $A$ and write eigenvalues into a register. Then apply any function $f(\lambda)$ conditioned on the eigenvalue register. This is the template for all phase-estimation-based quantum linear algebra — later superseded by [[QSVT Meta-Template|QSVT]] but still the clearest conceptual framework.
@@ -182,6 +200,8 @@ The user can choose to work only with the well-conditioned part, or estimate the
 - Shewchuk (1994) — conjugate gradient method (classical comparison)
 - Simon (1997) — Simon's problem (used in oracle lower bounds)
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — first exponential quantum speedup; established the Fourier-sampling paradigm
+- Aaronson, [*Quantum Machine Learning Algorithms: Read the Fine Print*](https://www.scottaaronson.com/papers/qml.pdf), Nature Physics **11**, 291 (2015) — the definitive caveat-emptor on HHL-based QML claims
+- Clader, Jacobs & Sprouse, [*Preconditioned quantum linear system algorithm*](https://arxiv.org/abs/1301.2340), PRL **110**, 250504 (2013) — addresses state preparation (oracle-controlled rotation), readout (ancilla measurement for observables), and condition number (SPAI preconditioner); EM scattering cross-section as application
 
 ---
 
@@ -192,6 +212,7 @@ The user can choose to work only with the well-conditioned part, or estimate the
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — [[QSVT Meta-Template|QSVT]] subsumes the HHL approach
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — uses QLSA as subroutine for ODEs
 - [[Quantum Linear Matrix Equations — Paper Notes]] — matrix equation generalization
+- Clader-Jacobs-Sprouse (2013), arXiv:1301.2340 — preconditioned QLSA; oracle-based state prep, SPAI preconditioning, EM scattering application
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — Hamiltonian simulation backbone
 - [[Quantum Principal Component Analysis (Lloyd-Mohseni-Rebentrost 2014) — Paper Notes|Lloyd, Mohseni & Rebentrost (2014)]] — extends HHL ideas; [[Density Matrix Exponentiation via Partial Swap|density matrix exponentiation]] for non-sparse matrices
 

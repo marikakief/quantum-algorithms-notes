@@ -72,5 +72,5 @@ The central idea is recognizable, though. If you want to understand where the LC
 
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — product-formula simulation that LCU aims to improve upon
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]] — quantum-walk simulation (concurrent/related approach)
-- Berry, Childs, Cleve, Kothari & Somma (2014, arXiv:1412.4687) — refined PREPARE/SELECT formulation of LCU
+- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry, Childs, Cleve, Kothari & Somma (2015)]] — refined PREPARE/SELECT formulation of LCU; near-optimal simulation via truncated Taylor series
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL algorithm for linear systems (early application of LCU-like ideas)

@@ -22,6 +22,8 @@ The reduction carries $O(1)$ constant overhead, which is fine for asymptotic arg
 
 ## Related notes
 
+- [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — the source paper (STOC 2014)
+- [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — initial announcement
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
