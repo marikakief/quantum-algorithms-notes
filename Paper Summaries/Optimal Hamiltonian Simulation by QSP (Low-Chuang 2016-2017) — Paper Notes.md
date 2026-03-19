@@ -74,3 +74,5 @@ The companion paper (arXiv:1610.06546) gives the full qubitization treatment wit
 - [[Qubitization Iterate]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — uses this paper's QSP framework as its foundation; pedagogically reconstructs the QSP→QSVT chain
+- [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — extends QSP-based simulation to the fully-coherent setting; the one-shot construction resolves the parity obstruction that prevents direct QSP approximation of $e^{-ix\tau}$ on $[-1,1]$

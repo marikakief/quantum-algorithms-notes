@@ -67,3 +67,5 @@ For exact single-round amplification, need $\sin^2\theta = 1/4$ exactly. For gen
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
+- [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — uses ROAA (Theorem 3) as one route to fully-coherent simulation; also introduces a one-shot approach that avoids AA entirely
+- [[Postselection Removal via Approximate Success-Amplitude Amplification]] — direct comparison of conventional AA, ROAA, and one-shot in this context

@@ -82,3 +82,4 @@ Qubitization is the middle layer where the geometry becomes explicit. The paper 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) - Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) - Paper Notes]]
 - [[Hamiltonian Simulation - Comparison Tables]]
+- [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — pedagogical reconstruction of qubitization within the QSVT framework; treats Ham sim as QSVT with polynomial P ≈ e^{-iλt}

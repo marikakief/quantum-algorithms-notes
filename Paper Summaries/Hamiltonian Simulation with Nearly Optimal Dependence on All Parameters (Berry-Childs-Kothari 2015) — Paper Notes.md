@@ -8,11 +8,11 @@
 
 Combines the quantum walk approach (optimal in sparsity $d$, poor in precision $\varepsilon$) with the fractional-query/LCU approach (optimal in $\varepsilon$, poor in $d$) to get both:
 
-$$O\!\left(\tau \cdot \frac{\log(\tau/\varepsilon)}{\log\log(\tau/\varepsilon)}\right) \text{ queries}, \qquad \tau = d\|H\|_{\max}t$$
+$$O\!\left(\tau \cdot \frac{\log(\tau/\varepsilon)}{\log\log(\tau/\varepsilon)}\right) \text{ queries}, \qquad \tau = d|H|_{\max}t$$
 
-Note: $\tau = d\|H\|_{\max}t$, not $d^2\|H\|_{\max}t$ as in the earlier BCCKS papers. The extra factor of $d$ is removed by using the Szegedy walk (which costs $O(1)$ queries per step rather than $O(d)$ from the self-inverse decomposition).
+Note: $\tau = d|H|_{\max}t$, not $d^2|H|_{\max}t$ as in the earlier BCCKS papers. The extra factor of $d$ is removed by using the Szegedy walk (which costs $O(1)$ queries per step rather than $O(d)$ from the self-inverse decomposition).
 
-The paper also proves a new $\Omega(\tau)$ lower bound, showing the linear dependence on $d\|H\|_{\max}t$ is necessary.
+The paper also proves a new $\Omega(\tau)$ lower bound, showing the linear dependence on $d|H|_{\max}t$ is necessary.
 
 ---
 
@@ -59,7 +59,7 @@ Take $z = -1/2$ (constant), so each segment simulates time $1/(2Xd)$. The number
 
 | Parameter | Scaling |
 |---|---|
-| **Queries** | $O\!\left(\tau\,\frac{\log(\tau/\varepsilon)}{\log\log(\tau/\varepsilon)}\right)$, $\tau = d\|H\|_{\max}t$ |
+| **Queries** | $O\!\left(\tau\,\frac{\log(\tau/\varepsilon)}{\log\log(\tau/\varepsilon)}\right)$, $\tau = d|H|_{\max}t$ |
 | **Gates** | $O\!\left(\tau[n + \log^{5/2}(\tau/\varepsilon)]\,\frac{\log(\tau/\varepsilon)}{\log\log(\tau/\varepsilon)}\right)$ |
 | **Lower bound** (Theorem 2) | $\Omega\!\left(\tau + \frac{\log(1/\varepsilon)}{\log\log(1/\varepsilon)}\right)$ |
 | **Tradeoff** (Theorem 3) | $O(\tau^{1+\alpha/2} + \tau^{1-\alpha/2}\log(1/\varepsilon))$ for $\alpha \in (0,1]$ |
@@ -68,9 +68,9 @@ Take $z = -1/2$ (constant), so each segment simulates time $1/(2Xd)$. The number
 
 | Method | $\tau$ parameter | Precision |
 |---|---|---|
-| Walk (Berry-Childs 2012) | $d\|H\|_{\max}t$ (linear in $d$) | $O(1/\sqrt{\varepsilon})$ |
-| BCCKS 2014/2015 (fractional/Taylor) | $d^2\|H\|_{\max}t$ (quadratic in $d$) | $\widetilde{O}(\log(1/\varepsilon))$ |
-| **This paper** | $d\|H\|_{\max}t$ (linear in $d$) | $\widetilde{O}(\log(1/\varepsilon))$ |
+| Walk (Berry-Childs 2012) | $d|H|_{\max}t$ (linear in $d$) | $O(1/\sqrt{\varepsilon})$ |
+| BCCKS 2014/2015 (fractional/Taylor) | $d^2|H|_{\max}t$ (quadratic in $d$) | $\widetilde{O}(\log(1/\varepsilon))$ |
+| **This paper** | $d|H|_{\max}t$ (linear in $d$) | $\widetilde{O}(\log(1/\varepsilon))$ |
 
 ---
 
@@ -99,9 +99,9 @@ For $\alpha = 1$: single segment, $O(\tau^{3/2} + \log(1/\varepsilon)\sqrt{\tau}
 
 ---
 
-## Multi-step robust OAA (Lemma 6)
+## Multi-step error-tolerant OAA (Lemma 6)
 
-This paper provides the full multi-step version of robust OAA, generalising the single-step result from the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The proof uses Chebyshev polynomials to show that after $\ell$ rounds:
+This paper provides the full multi-step version of error-tolerant OAA, generalising the single-step result from the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The proof uses Chebyshev polynomials to show that after $\ell$ rounds:
 
 $$PR^\ell WP = Z \frac{(-1)^\ell T_{2\ell+1}(\sqrt{Z^\dagger Z})}{\sqrt{Z^\dagger Z}}$$
 
@@ -111,13 +111,11 @@ where $Z = PWP = \frac{1}{s}(|\varsigma\rangle\langle\varsigma| \otimes \tilde{V
 
 ## Reusable ideas
 
-1. **Bessel function linearisation of quantum walks** — using the Bessel generating function to convert $e^{\pm i\arcsin(\nu)}$ walk phases into the desired $e^{i\nu z}$ Hamiltonian phases. This avoids both phase estimation and self-inverse decomposition. A genuinely new technique.
+1. **[[Bessel Linearisation of Quantum Walk Phases]]** — uses the Bessel generating function to convert $e^{\pm i\arcsin(\nu)}$ walk phases into the desired $e^{i\nu z}$ Hamiltonian phases. This avoids both phase estimation and self-inverse decomposition.
 
-2. **Multi-step robust OAA** — generalisation of single-step OAA with explicit Chebyshev structure. Already captured in [[Oblivious Amplitude Amplification (Robust)]].
+2. **Multi-step error-tolerant OAA** — generalisation of single-step OAA with explicit Chebyshev structure. Already captured in [[Oblivious Amplitude Amplification (Robust)]].
 
 3. **$K_{d,d}$ graph blowup for lower bounds** — replace each edge with a complete bipartite graph to boost the Hamiltonian strength by $d$ at the cost of $d$-fold increase in sparsity. Clean technique for proving $\Omega(d)$ lower bounds.
-
-I'll create a trick card for the Bessel linearisation since it's a genuinely new reusable idea.
 
 ---
 

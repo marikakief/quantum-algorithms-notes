@@ -8,13 +8,13 @@
 
 **Hamiltonian simulation.** Given a Hamiltonian $H = \sum_{\ell=1}^L \alpha_\ell H_\ell$ (each $H_\ell$ unitary, $\alpha_\ell > 0$), simulate the time evolution $U = e^{-iHt}$ to precision $\varepsilon$.
 
-The cost should scale with $T := \|\boldsymbol{\alpha}\|_1 t = (\sum_\ell \alpha_\ell) t$ — the $\ell_1$-norm of coefficients times evolution time. This is the right complexity parameter for [[Linear Combination of Unitaries (LCU)|LCU]]-based methods.
+The cost should scale with $T := |\boldsymbol{\alpha}|_1 t = (\sum_\ell \alpha_\ell) t$ — the $\ell_1$-norm of coefficients times evolution time. This is the right complexity parameter for [[Linear Combination of Unitaries (LCU)|LCU]]-based methods.
 
 ---
 
 ## What the paper does
 
-Presents the simplest known algorithm achieving **near-optimal** Hamiltonian simulation: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
+Presents the simplest known algorithm achieving **near-optimal** Hamiltonian simulation: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|error-tolerant oblivious amplitude amplification]].
 
 This paper is the clean, self-contained version of the same authors' earlier STOC 2014 result (arXiv:1312.1414), which achieved the same complexity but used a more indirect approach through fractional queries. Here the algorithm fits in four pages and the reason for logarithmic $\varepsilon$-dependence is immediate: it comes from the super-exponential decay of the Taylor series tail ($(\ln 2)^K / K!$).
 
@@ -62,11 +62,11 @@ Since $s \approx 2$, a single round of [[Oblivious Amplitude Amplification (Robu
 
 $$A = -W R W^\dagger R W, \qquad R = \mathbb{1} - 2|0\rangle\langle 0| \otimes \mathbb{1}$$
 
-**The robust version** (this paper's key technical contribution): even though $\tilde{U}$ is not exactly unitary (it's a truncated series), the amplification still works with error linear in the truncation error. Specifically, from Eq. (14):
+**The error-tolerant version** (this paper's key technical contribution): even though $\tilde{U}$ is not exactly unitary (it's a truncated series), the amplification still works with error linear in the truncation error. Specifically, from Eq. (14):
 
 $$PA|0\rangle|\psi\rangle = |0\rangle\left(\frac{3}{s}\tilde{U} - \frac{4}{s^3}\tilde{U}\tilde{U}^\dagger\tilde{U}\right)|\psi\rangle$$
 
-If $|s - 2| = O(\delta)$ and $\|\tilde{U} - U_r\| = O(\delta)$, then $\|PA|0\rangle|\psi\rangle - |0\rangle U_r|\psi\rangle\| = O(\delta)$.
+If $|s - 2| = O(\delta)$ and $|\tilde{U} - U_r| = O(\delta)$, then $|PA|0\rangle|\psi\rangle - |0\rangle U_r|\psi\rangle| = O(\delta)$.
 
 ### Step 5: Compose segments
 
@@ -84,7 +84,7 @@ Repeat for all $r$ segments. Each segment introduces $O(\varepsilon/r)$ error; t
 | **Truncation order** $K$ | $O\!\left(\frac{\log(T/\varepsilon)}{\log\log(T/\varepsilon)}\right)$ |
 | **Number of segments** $r$ | $\lceil T / \ln 2 \rceil$ |
 
-Where $T = \|\boldsymbol{\alpha}\|_1 t$, $L$ = number of terms, $n$ = number of qubits.
+Where $T = |\boldsymbol{\alpha}|_1 t$, $L$ = number of terms, $n$ = number of qubits.
 
 **Precision dependence is exponentially better than all product-formula methods.** Trotter-Suzuki scales as $\text{poly}(1/\varepsilon)$; this scales as $\log(1/\varepsilon)$. Doubling the digits of accuracy only doubles the cost.
 
@@ -94,12 +94,12 @@ Where $T = \|\boldsymbol{\alpha}\|_1 t$, $L$ = number of terms, $n$ = number of 
 
 | Method | Precision dependence | Approach |
 |---|---|---|
-| [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes\|Lloyd (1996)]] | $O(1/\varepsilon)$ | First-order Trotter |
-| [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes\|BACS (2007)]] | $O(1/\varepsilon^{1/2k})$ | Higher-order Suzuki |
-| [[LCU Origins (Childs-Wiebe 2012) — Paper Notes\|Childs-Wiebe (2012)]] | Polynomial | LCU, no OAA |
+| [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] | $O(1/\varepsilon)$ | First-order Trotter |
+| [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|BACS (2007)]] | $O(1/\varepsilon^{1/2k})$ | Higher-order Suzuki |
+| [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs-Wiebe (2012)]] | Polynomial | LCU, no OAA |
 | BCCKS (2014, STOC) [1312.1414] | $\widetilde{O}(\log(1/\varepsilon))$ | Fractional queries |
-| **This paper** | $\widetilde{O}(\log(1/\varepsilon))$ | **Direct Taylor + robust OAA** |
-| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|Low-Chuang (2017)]] | $O(\log(1/\varepsilon))$ | QSP (optimal) |
+| **This paper** | $\widetilde{O}(\log(1/\varepsilon))$ | **Direct Taylor + error-tolerant OAA** |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] | $O(\log(1/\varepsilon))$ | QSP (optimal) |
 
 This paper matched the STOC 2014 result with a much simpler algorithm. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] later achieved strictly optimal query complexity by removing the $\log\log$ factor via [[QSVT Meta-Template|QSP/QSVT]], but the Taylor series approach remains the more accessible and practical method.
 
@@ -116,7 +116,7 @@ This paper matched the STOC 2014 result with a much simpler algorithm. [[Optimal
 
 Tensor product of:
 1. Single rotation chain on the unary register: $|0^K\rangle \to \sum_k \sqrt{(\tau)^k/k!}\;|1^k 0^{K-k}\rangle$. Cost: $O(K)$ gates (conditional rotations).
-2. On each term register: $|0\rangle \to \sum_\ell \sqrt{\alpha_\ell / \|\boldsymbol{\alpha}\|_1}\;|\ell\rangle$. Cost: $O(L)$ per register.
+2. On each term register: $|0\rangle \to \sum_\ell \sqrt{\alpha_\ell / |\boldsymbol{\alpha}|_1}\;|\ell\rangle$. Cost: $O(L)$ per register.
 
 Total PREPARE cost: $O(LK)$.
 
@@ -148,7 +148,7 @@ The paper outlines an extension to time-dependent $H(t)$ via discretised time-or
 
 $$\tilde{U} = \sum_{k=0}^{K} \frac{(-it/r)^k}{M^k k!} \sum_{j_1,\ldots,j_k} \mathcal{T}\;H(t_{j_k}) \cdots H(t_{j_1})$$
 
-Additional ancillas encode discrete time points $|t_{j_1}\rangle \cdots |t_{j_k}\rangle$. The resulting algorithm matches the time-independent cost up to $\log(M)$ factors, where $M$ is polynomial in $1/\varepsilon$ and $\max_t \|dH/dt\|$.
+Additional ancillas encode discrete time points $|t_{j_1}\rangle \cdots |t_{j_k}\rangle$. The resulting algorithm matches the time-independent cost up to $\log(M)$ factors, where $M$ is polynomial in $1/\varepsilon$ and $\max_t |dH/dt|$.
 
 This was later developed into full-fledged algorithms by [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] and [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes|Berry-Childs-Su-Wang-Wiebe (2020)]].
 
@@ -159,7 +159,7 @@ This was later developed into full-fledged algorithms by [[Time-Dependent Hamilt
 All the reusable techniques from this paper already have trick cards in the vault:
 
 1. **[[Taylor Series Truncation with ln2 Segmentation]]** — the $\ln 2$ segment length choice and truncation order analysis
-2. **[[Oblivious Amplitude Amplification (Robust)]]** — the robust version that handles non-unitary $\tilde{U}$; this paper's Eq. (14) is the cleanest proof
+2. **[[Oblivious Amplitude Amplification (Robust)]]** — the error-tolerant version that handles non-unitary $\tilde{U}$; this paper's Eq. (14) is the cleanest proof
 3. **[[Linear Combination of Unitaries (LCU)]]** — the PREPARE/SELECT framework as used here; this paper gave the clean formulation that became standard
 4. **[[Unary Encoding for Sequential Controlled Operations]]** — the unary $|k\rangle$ register trick for sequential application of $H_{\ell_1} \cdots H_{\ell_k}$
 
@@ -170,7 +170,7 @@ All the reusable techniques from this paper already have trick cards in the vaul
 - **Not quite optimal.** The $\log\log(T/\varepsilon)$ denominator means this is near-optimal but not tight. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] removed this factor via QSP.
 - **Ancilla overhead.** $O(K \log L)$ ancillas — modest, but grows with both precision and number of terms.
 - **PREPARE cost scales with $L$.** For Hamiltonians with many terms (e.g., molecular Hamiltonians after Jordan-Wigner), the cost of preparing the coefficient state dominates. Later work on [[Standard-Form Encoding (Prepare + Signal Oracle)|double factorization and tensor hypercontraction]] reduces this.
-- **No commutator structure.** Unlike Trotter methods, this approach treats all terms symmetrically. It doesn't benefit from near-commutativity of $H_\ell$'s — the cost is always $\|\boldsymbol{\alpha}\|_1 t$, even when the Hamiltonian is nearly diagonal.
+- **No commutator structure.** Unlike Trotter methods, this approach treats all terms symmetrically. It doesn't benefit from near-commutativity of $H_\ell$'s — the cost is always $|\boldsymbol{\alpha}|_1 t$, even when the Hamiltonian is nearly diagonal.
 - **Single-round OAA needs $s = 2$.** If the coefficient sum drifts from 2 (e.g., the last segment), an extra ancilla qubit is needed for [[Amplitude Dilution for Exact OAA|amplitude dilution]].
 
 ---
@@ -217,7 +217,7 @@ The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially be
 
 ### Trick cards
 - [[Taylor Series Truncation with ln2 Segmentation]] — the segment length choice
-- [[Oblivious Amplitude Amplification (Robust)]] — robust OAA for non-unitary targets
+- [[Oblivious Amplitude Amplification (Robust)]] — error-tolerant OAA for non-unitary targets
 - [[Linear Combination of Unitaries (LCU)]] — the PREPARE/SELECT framework
 - [[Unary Encoding for Sequential Controlled Operations]] — unary $|k\rangle$ encoding for term indexing
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]] — the oracle abstraction

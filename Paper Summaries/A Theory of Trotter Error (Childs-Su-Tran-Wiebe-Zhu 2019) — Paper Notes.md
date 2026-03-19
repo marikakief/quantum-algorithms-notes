@@ -86,4 +86,5 @@ Prior to this paper, commutator-based Trotter bounds existed (e.g., Descombes–
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
+- [[Time-Dependent Unbounded Hamiltonian Simulation with Vector Norm Scaling (An-Fang-Liu 2021) — Paper Notes]] — extends commutator-scaling analysis to time-dependent setting + adds vector-norm bounds
 - [[Hamiltonian Simulation — Comparison Tables]]

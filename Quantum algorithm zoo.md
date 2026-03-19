@@ -1142,7 +1142,7 @@ _Journal of Mathematical Physics_ 53(10):102202, 2012.
 Post-Quantum Cryptography
 _[Springer](http://www.springer.com/mathematics/numbers/book/978-3-540-88701-0)_, 2009.
 
-**249.** B. D. Clader, B. C. Jacobs, and C. R. Sprouse
+**249. ✓** B. D. Clader, B. C. Jacobs, and C. R. Sprouse
 Preconditioned quantum linear system algorithm
 _Phys. Rev. Lett._ 110:250504, 2013.
 [[arXiv:1301.2340](http://arxiv.org/abs/1301.2340)]
@@ -2097,7 +2097,7 @@ Time-dependent Hamiltonian simulation with L1-norm scaling
 _Quantum_, 4:254, 2020.
 [[arXiv:1906.07115](https://arxiv.org/abs/1906.07115)]
 
-**468.** David Poulin, Angie Qarry, Rolando Somma, and Frank Verstraete
+**468. ✓** David Poulin, Angie Qarry, Rolando Somma, and Frank Verstraete
 Quantum simulation of time-dependent Hamiltonians and the convenient illusion of Hilbert space
 _Physical Review Letters_, 106(17):170501, 2011.
 [[arXiv:1102.1360](https://arxiv.org/abs/1102.1360)]
@@ -2320,7 +2320,7 @@ _[arXiv:2502.20253](https://arxiv.org/abs/2502.20253)_, 2025.
 Quantum Algorithms for Representation-Theoretic Multiplicities
 _[arXiv:2407.17649](https://arxiv.org/abs/2407.17649)_, 2024.
 
-**517.** Dong An and Lin Lin
+**517. ✓** Dong An and Lin Lin
 Quantum Linear System Solver Based on Time-optimal Adiabatic Quantum Computing and Quantum Approximate Optimization Algorithm
 _ACM Transactions on Quantum Computing_, 3(2):1–28, 2022.
 [[arXiv:1909.05500](https://arxiv.org/abs/1909.05500)]

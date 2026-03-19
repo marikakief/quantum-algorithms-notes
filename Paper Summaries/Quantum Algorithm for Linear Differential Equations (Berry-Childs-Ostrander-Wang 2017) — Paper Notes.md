@@ -70,3 +70,4 @@ That paper showed how to turn Hamiltonian simulation into a linear system via Ta
 - [[Postselection-Cost Parameterization via g-Factor]]
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes]]
 - [[Quantum Linear Matrix Equations — Paper Notes]]
+- [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes]] — alternative to QLSA-based approach; trades $O(T)$ for $O(T^2)$ matrix queries but handles non-diagonalisable $A(t)$, non-smooth coefficients, and uses fewer initial-state queries

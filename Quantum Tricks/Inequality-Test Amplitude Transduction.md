@@ -30,7 +30,7 @@ $$\frac{\alpha_\ell^{(n)}}{\sqrt{2^n}} \approx \sqrt{2^n}\, \alpha_\ell$$
 - Any setting where you'd otherwise use Grover's arcsine-based rotation
 
 ## Complexity
-$n$ Toffoli gates per round of [[Standard Amplitude Amplification|amplitude amplification]]. Total state preparation cost: $O(n/\delta)$ Toffolis where $\delta = \|\vec{\alpha}\|_2 / \sqrt{d}$ is the overlap with the uniform state.
+$n$ Toffoli gates per round of [[Standard Amplitude Amplification|amplitude amplification]]. Total state preparation cost: $O(n/\delta)$ Toffolis where $\delta = |\vec{\alpha}|_2 / \sqrt{d}$ is the overlap with the uniform state.
 
 ## Caveat
 - Introduces $n$ ancilla qubits for the `ref` register (reusable after un-preparation)

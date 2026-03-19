@@ -43,7 +43,7 @@ This is the quantum analogue of a Mach-Zehnder interferometer, where $\phi$ is t
 | Deutsch (1985) | $U_f: |y\rangle \to |y \oplus f(x)\rangle$ | $\pi f(x)$ |
 | Deutsch-Jozsa (1992) | Same, $n$-bit version | $\pi f(x)$ for each $x$ |
 | Bernstein-Vazirani (1993) | $f(x) = s \cdot x$ | $\pi(s \cdot x)$ |
-| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor (1994)]] | $U: |x\rangle \to |ax \bmod N\rangle$ | $2\pi k/r$ (order $r$) |
+| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] | $U: |x\rangle \to |ax \bmod N\rangle$ | $2\pi k/r$ (order $r$) |
 
 ---
 

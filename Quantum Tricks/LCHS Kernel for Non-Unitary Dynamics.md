@@ -26,6 +26,12 @@ Useful only when the resulting unitary family is implementable efficiently and t
 
 ## Related notes
 
+- [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes]] — generalises to tuneable kernels with near-optimal precision scaling
+- [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes]] — extends LCHS to general eigenvalue transforms via Laplace representation
+- [[Generalised LCHS Identity]] — the generalised version of this identity with freely choosable kernel
+- [[Laplace-Transform LCU Lifting for Eigenvalue Transforms]]
+- [[Near-Optimal Hardy-Space Kernel for LCHS]]
+- [[Phragmén–Lindelöf Decay Barrier for Analytic Kernels]]
 - [[Quantum Linear Matrix Equations — Paper Notes]]
 - [[Hubbard-Stratonovich Decoupling]]
 - [[Linear Combination of Unitaries (LCU)]]

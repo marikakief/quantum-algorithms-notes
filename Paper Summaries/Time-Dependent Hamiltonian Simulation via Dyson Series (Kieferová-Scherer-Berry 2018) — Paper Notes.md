@@ -89,6 +89,7 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 
 ## Cross-links
 
+- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — earlier polynomial-size simulation of arbitrary time-dependent Hamiltonians via generalised Trotter; this Dyson paper supersedes its efficiency
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]]
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]]
 - [[Linear Combination of Unitaries (LCU)]]
@@ -96,3 +97,5 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 - [[Coherent Time-Ordering via Ancilla Clocks]]
 - [[Sorting-Based Time-Ordering for Dyson LCU]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]] — alternative approach avoiding time-ordering; matches first-order Dyson in worst case, beats it for commutator-structured problems
+- [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes]] — reuses the truncated Dyson series machinery for general (non-Hamiltonian) linear ODEs; adds USVA + compression gadget to fix the success-probability decay problem

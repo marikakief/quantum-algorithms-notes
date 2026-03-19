@@ -23,6 +23,20 @@ Any randomized simulation or compilation protocol needing a strong worst-case gu
 
 The bound can be conservative: the actual random circuit error may concentrate well below the diamond-norm bound, especially when individual sample errors partially cancel. Empirical error is often significantly better than the proven bound.
 
+## Stronger version: quadratic error suppression
+
+The argument above gives a *linear* relationship between average-channel error and diamond-norm bound. There is a strictly stronger version — the Hastings-Campbell mixing lemma — that gives *quadratic* suppression:
+
+If individual circuits satisfy $\|U_j - V\| \le a$ and the weighted average satisfies $\|\sum_j p_j U_j - V\| \le b$, then:
+$$\|\Lambda - \mathcal{V}\|_\diamond \le a^2 + 2b$$
+
+This means individual circuits only need error $O(\sqrt{\epsilon})$ to achieve channel error $O(\epsilon)$ — a quadratic improvement. This stronger form is what enables [[Stochastic QSP via Chebyshev Tail Truncation|Stochastic QSP]] to halve query complexity: the ensemble polynomials have pointwise error $O(\sqrt{\epsilon})$, but the channel error is $O(\epsilon)$.
+
+See [[Mixing Lemma for Block-Encodings]] for the extension to block-encoded operators (needed for QSP/QSVT).
+
 ## Related Paper Notes
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm]]
+- [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]]
+- [[Mixing Lemma for Block-Encodings]]
+- [[Stochastic QSP via Chebyshev Tail Truncation]]

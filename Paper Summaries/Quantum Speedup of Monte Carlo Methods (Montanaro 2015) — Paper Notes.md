@@ -46,7 +46,7 @@ For general $A$ with $\text{Var}(v(A)) \leq \sigma^2$:
 4. **Estimate each part.** Apply Algorithm 2 (the bounded-$\ell_2$-norm estimator, which uses Algorithm 1 as subroutine) to $B_{\geq 0}/4$ and $-B_{<0}/4$.
 5. **Recombine.** $\tilde{\mu} = \sigma(\tilde{m} - 4\tilde{\mu}_- + 4\tilde{\mu}_+)$.
 
-**Key intermediate step (Algorithm 2):** For non-negative outputs with bounded $\|v(A)\|_2$, split the output range into dyadic intervals $[2^{\ell-1}, 2^\ell)$, estimate each interval's contribution separately via Algorithm 1, and recombine. This is Heinrich's idea generalised from uniform distributions to arbitrary algorithms. Uses $\tilde{O}(1/\epsilon)$ calls.
+**Key intermediate step (Algorithm 2):** For non-negative outputs with bounded $|v(A)|_2$, split the output range into dyadic intervals $[2^{\ell-1}, 2^\ell)$, estimate each interval's contribution separately via Algorithm 1, and recombine. This is Heinrich's idea generalised from uniform distributions to arbitrary algorithms. Uses $\tilde{O}(1/\epsilon)$ calls.
 
 **Total cost of Algorithm 3:** $\tilde{O}(\sigma/\epsilon)$ uses of $A$ and $A^{-1}$.
 

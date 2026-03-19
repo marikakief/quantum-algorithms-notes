@@ -57,7 +57,7 @@ The abstraction worth keeping: when a Hamiltonian is a weighted sum of many easy
 
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — deterministic [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki product formulas]] that qDRIFT offers an alternative to
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]] — qubitization/QSP as the asymptotic competitor
-- Poulin, Qarry, Somma & Verstraete (2011) — related random-walk approach to Hamiltonian simulation
+- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin, Qarry, Somma & Verstraete (2011)]] — [[Monte Carlo Average-Hamiltonian Product Formula|randomised product formula]] for arbitrary time-dependent Hamiltonians; precursor to qDRIFT's randomisation philosophy
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — Trotter error theory (comparison point)
 
 ---
@@ -73,3 +73,5 @@ The abstraction worth keeping: when a Hamiltonian is a weighted sum of many easy
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — qFLO: applies Richardson extrapolation on top of qDRIFT to get depth $O((\lambda T)^2 \log(1/\varepsilon))$
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — higher-order randomized simulation via multi-product formula importance sampling; direct generalization of qDRIFT's randomization idea

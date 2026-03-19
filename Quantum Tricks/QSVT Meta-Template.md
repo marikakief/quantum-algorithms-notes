@@ -23,8 +23,14 @@ The complexity driver is usually just:
 
 That is the main simplification [[QSVT Meta-Template|QSVT]] brings.
 
+## Variant: stochastic QSP
+
+The template above produces a single coherent unitary. If you can tolerate a quantum channel instead (e.g., for observable estimation), [[Stochastic QSP via Chebyshev Tail Truncation]] randomizes over a family of lower-degree polynomials and cuts the average degree — and thus query complexity — roughly in half. See [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]].
+
 ## Related notes
 
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Parity-Aware Polynomial Design]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
+- [[Stochastic QSP via Chebyshev Tail Truncation]]
+- [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]]

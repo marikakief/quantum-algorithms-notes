@@ -213,6 +213,7 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — uses QLSA as subroutine for ODEs
 - [[Quantum Linear Matrix Equations — Paper Notes]] — matrix equation generalization
 - Clader-Jacobs-Sprouse (2013), arXiv:1301.2340 — preconditioned QLSA; oracle-based state prep, SPAI preconditioning, EM scattering application
+- [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — preconditioned QLSP via block-encoding + QSVT; supersedes Clader et al.
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — Hamiltonian simulation backbone
 - [[Quantum Principal Component Analysis (Lloyd-Mohseni-Rebentrost 2014) — Paper Notes|Lloyd, Mohseni & Rebentrost (2014)]] — extends HHL ideas; [[Density Matrix Exponentiation via Partial Swap|density matrix exponentiation]] for non-sparse matrices
 

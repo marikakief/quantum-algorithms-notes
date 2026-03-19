@@ -56,7 +56,7 @@ If you modify the oracle's answers on a set $F$ of time-string pairs with total 
 
 For any oracle $A$ and any modification $A^y$ (changing $A$ at a single point $y$), there's a set $S$ of at most $2T^2/\epsilon^2$ "heavily queried" strings such that for all $y \notin S$:
 
-$$\big\||\phi_T\rangle - |\phi_T\rangle^{(y)}\big\| \leq \epsilon$$
+$$\big||\phi_T\rangle - |\phi_T\rangle^{(y)}\big| \leq \epsilon$$
 
 Since $|S| \leq 2T^2/\epsilon^2$ and there are $2^n$ possible marked items, if $T = o(\sqrt{2^n})$ then most marked items are indistinguishable from the empty oracle. The algorithm can't reliably tell whether $y$ is marked.
 
@@ -103,7 +103,7 @@ Since the answer is correct in at least $(1-\epsilon)$ fraction of the superposi
 
 | Result | Statement |
 |---|---|
-| **Search lower bound** | Any quantum algorithm needs $\Omega(\sqrt{N})$ queries for unstructured search. Tight with [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes\|Grover]]. |
+| **Search lower bound** | Any quantum algorithm needs $\Omega(\sqrt{N})$ queries for unstructured search. Tight with [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover]]. |
 | **NP $\not\subset$ BQTime$(o(2^{n/2}))$** | Relative to a random oracle, w.p. 1. |
 | **NP $\cap$ co-NP $\not\subset$ BQTime$(o(2^{n/3}))$** | Relative to a random permutation oracle, w.p. 1. |
 | **Random permutation one-wayness** | Relative to a random permutation oracle, w.p. 1, there exists a quantum one-way permutation. |

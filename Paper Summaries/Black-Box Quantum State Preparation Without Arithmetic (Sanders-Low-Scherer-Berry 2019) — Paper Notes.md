@@ -8,7 +8,7 @@
 
 **Input:** An oracle `amp` returning $n$-bit approximations $\alpha_\ell^{(n)} = \lfloor 2^n \alpha_\ell \rfloor$ of target coefficients $\alpha_0, \ldots, \alpha_{d-1} \in [0,1)$.
 
-**Output:** A quantum state approximating $|\text{target}\rangle = \frac{1}{\|\vec{\alpha}\|_2} \sum_\ell \alpha_\ell |\ell\rangle$ (linear coefficients) or $\frac{1}{\|\sqrt{\vec{\alpha}}\|_2} \sum_\ell \sqrt{\alpha_\ell} |\ell\rangle$ (root coefficients).
+**Output:** A quantum state approximating $|\text{target}\rangle = \frac{1}{|\vec{\alpha}|_2} \sum_\ell \alpha_\ell |\ell\rangle$ (linear coefficients) or $\frac{1}{|\sqrt{\vec{\alpha}}|_2} \sum_\ell \sqrt{\alpha_\ell} |\ell\rangle$ (root coefficients).
 
 **Prior cost (Grover):** $n$ Toffoli gates per oracle call + cost of computing $\arcsin(\alpha_\ell^{(n)}/2^n)$ on a quantum computer, which is $O(n^2)$ Toffolis (or worse) per round of amplitude amplification.
 

@@ -137,4 +137,5 @@ The two coincide for Hermitian $A$ (where $A = A^\dagger$ and singular values $=
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes]]
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]]
+- [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes]] — same authors (An, Childs, Lin); alternative approach to non-normal eigenvalue transforms via Laplace/LCHS rather than history states
 - [[Hamiltonian Simulation — Comparison Tables]]

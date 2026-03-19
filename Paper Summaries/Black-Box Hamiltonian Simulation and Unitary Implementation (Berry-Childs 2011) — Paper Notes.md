@@ -1,4 +1,3 @@
-
 > **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box Hamiltonian simulation and unitary implementation*, arXiv:0910.4157, Quantum Information and Computation **12**, 29–62 (2012)  
 > **Links:** [arXiv](https://arxiv.org/abs/0910.4157) · [QIC](https://doi.org/10.26421/QIC12.1-2)  
 > **Tags:** #hamiltonian-simulation #quantum-walk #black-box #historical
@@ -16,18 +15,18 @@ The prior state of the art (Berry–Ahokas–Cleve–Sanders 2006) had $D^4$ dep
 Given black-box access $O_H$ to matrix elements $H_{jk}$, construct an isometry $T: |j\rangle \mapsto |\eta_j\rangle$ where
 
 $$
-|\eta_j\rangle = |j\rangle\left(\sqrt{\frac{\varepsilon}{\|H\|_1}}\sum_k \sqrt{H^*_{jk}}|k\rangle + \sqrt{1 - \frac{\varepsilon\sigma_j}{\|H\|_1}}|M+1\rangle\right),
+|\eta_j\rangle = |j\rangle\left(\sqrt{\frac{\varepsilon}{|H|_1}}\sum_k \sqrt{H^*_{jk}}|k\rangle + \sqrt{1 - \frac{\varepsilon\sigma_j}{|H|_1}}|M+1\rangle\right),
 $$
 
-with $\sigma_j = \sum_k |H_{jk}|$ and $\|H\|_1 = \max_j \sigma_j$ (the max column-sum norm). The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
+with $\sigma_j = \sum_k |H_{jk}|$ and $|H|_1 = \max_j \sigma_j$ (the max column-sum norm). The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
 
-The key relation is $\langle\eta_j|S|\eta_k\rangle = \varepsilon H_{jk}/\|H\|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/\|H\|_1$ scaled by $\varepsilon$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
+The key relation is $\langle\eta_j|S|\eta_k\rangle = \varepsilon H_{jk}/|H|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/|H|_1$ scaled by $\varepsilon$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
 
 The parameter $\varepsilon \in (0,1]$ controls **laziness**: small $\varepsilon$ makes the walk slow, which reduces the arcsin nonlinearity error in the phase-eigenvalue relation. The paper uses phase estimation to correct residual errors from this nonlinearity.
 
 ## Main complexity results
 
-**Theorem 1 (sparse simulation):** With upper bounds $\Lambda \ge \|H\|$ and $\Lambda_{\max} \ge \|H\|_{\max}$, simulate evolution for time $t$ with error $\delta$ using
+**Theorem 1 (sparse simulation):** With upper bounds $\Lambda \ge |H|$ and $\Lambda_{\max} \ge |H|_{\max}$, simulate evolution for time $t$ with error $\delta$ using
 
 $$
 O\!\left(\frac{\Lambda t}{\sqrt{\delta}} + D\Lambda_{\max} t + 1\right) \text{ queries to } O_H,\, O_F.
@@ -79,7 +78,7 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 
 ## Limits
 
-- Uses the max column-sum norm $\|H\|_1$, not the spectral norm $\|H\|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
+- Uses the max column-sum norm $|H|_1$, not the spectral norm $|H|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
 - Not optimal: later qubitization/QSP/QSVT frameworks achieve better parameters and cleaner structure for oracles that provide block-encodings.
 - Worst-case constant prefactors are not particularly tight.
 

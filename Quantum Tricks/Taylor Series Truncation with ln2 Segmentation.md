@@ -1,12 +1,13 @@
+# Taylor Series Truncation with ln2 Segmentation
 
+> **Source:** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma, arXiv:1412.4687
 > **Tags:** #trick #hamiltonian-simulation #taylor-series #segmentation
-> **Source:** Berry, Childs, Cleve, Kothari, Somma. arXiv:1412.4687
 
 ## What it does
 Simulates $e^{-iHt}$ by truncating the Taylor series at order $K$ and choosing segment length so that the coefficient sum is exactly 2 (enabling [[Oblivious Amplitude Amplification (Robust)|oblivious amplitude amplification]]).
 
 ## The trick
-1. Divide time $t$ into $r = \lceil T / \ln 2 \rceil$ segments, where $T = \|\alpha\|_1 t$ ($\alpha$ = coefficients in $H = \sum \alpha_\ell H_\ell$)
+1. Divide time $t$ into $r = \lceil T / \ln 2 \rceil$ segments, where $T = |\alpha|_1 t$ ($\alpha$ = coefficients in $H = \sum \alpha_\ell H_\ell$)
 2. Each segment has normalised time $\tau = \ln 2$
 3. Truncate: $\tilde{U} = \sum_{k=0}^K \frac{(-i\tau)^k}{k!} H^k$
 4. The coefficient sum $s = \sum_{k=0}^K \frac{(\ln 2)^k}{k!} \approx e^{\ln 2} = 2$ ✓

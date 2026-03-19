@@ -1,7 +1,7 @@
 # Linear Combination of Unitaries (LCU)
 
+> **Source:** Andrew M. Childs and Nathan Wiebe, arXiv:1202.5822 (first coherent LCU construction for Hamiltonian simulation); Berry, Childs, Cleve, Kothari, and Somma, arXiv:1412.4687 for the clean PREPARE/SELECT formulation
 > **Tags:** #trick #LCU #block-encoding #fundamental
-> **Source:** Berry, Childs, Cleve, Kothari, Somma. arXiv:1412.4687 (clean PREPARE/SELECT formulation); LCU primitive idea originates in Childs–Wiebe arXiv:1202.5822
 
 ## What it does
 Implements a non-unitary operator $\tilde{U} = \sum_j \beta_j V_j$ ([[Linear Combination of Unitaries (LCU)|linear combination of unitaries]]) as a probabilistic quantum operation, with success heralded by ancilla measurement.

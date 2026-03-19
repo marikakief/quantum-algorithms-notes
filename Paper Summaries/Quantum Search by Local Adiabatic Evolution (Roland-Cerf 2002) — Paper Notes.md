@@ -109,7 +109,9 @@ The local adiabatic idea — slow down where the gap is small — is the templat
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — the gate-model version of the same problem
 - [[A Quantum Algorithm for Finding the Minimum (Dürr-Høyer 1996) — Paper Notes]] — another application of Grover search
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes]] — the constant-rate predecessor; this paper fixes it
+- [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — generalises the local adiabatic idea to QLSP with power-law and smooth schedules
 
 ### Trick cards
 - [[Local Adiabatic Schedule via Gap-Dependent Evolution Rate]]
+- [[Gap-Adapted Adiabatic Scheduling]] — generalised version of the local adiabatic idea with tunable exponent $p$
 - [[Phase Kickback from Oracle Queries]] — the oracle mechanism underlying both adiabatic and gate-model search

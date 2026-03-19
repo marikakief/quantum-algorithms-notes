@@ -69,3 +69,4 @@ The hard part of a QSVT paper is usually not the circuit construction — it's t
 - [[Qubitization Iterate]]
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Hamiltonian Simulation - Comparison Tables]]
+- [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — pedagogical tutorial built on this framework; good entry point for understanding the QSP→QET→QSVT chain

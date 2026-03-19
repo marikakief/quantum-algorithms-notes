@@ -9,7 +9,7 @@
 The full, expanded version of the polylog-precision Hamiltonian simulation result. This is the paper where **oblivious amplitude amplification** was introduced, where the **lower bound** proving optimality of the $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ scaling was established, and where the entire framework was cleaned up relative to the initial [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] announcement.
 
 **Main results:**
-1. $d$-sparse Hamiltonian simulation in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2\|H\|_{\max}t$
+1. $d$-sparse Hamiltonian simulation in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2|H|_{\max}t$
 2. Simulation of continuous/fractional-query models with same scaling
 3. Matching lower bound: $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries are necessary
 4. Introduction of **oblivious amplitude amplification**
@@ -64,7 +64,7 @@ where $S = -URU^\dagger R$, $R = 2\Pi - \mathbb{1}$, $\Pi = |0^\mu\rangle\langle
 
 **Why "oblivious":** The reflection $R$ is about the ancilla being $|0^\mu\rangle$, not about the full input state $|0^\mu\rangle|\psi\rangle$. Standard amplitude amplification requires reflecting about the input state (which you don't know). OAA avoids this.
 
-**The 2D Subspace Lemma (Lemma 3.7):** The crucial insight is that for any $|\psi\rangle$, the operator $Q = (\langle 0^\mu| \otimes \mathbb{1})U^\dagger \Pi U(|0^\mu\rangle \otimes \mathbb{1})$ satisfies $\langle\psi|Q|\psi\rangle = p$ for all $|\psi\rangle$, which forces $Q = p\mathbb{1}$. This constrains the orthogonal partner $|\Psi^\perp\rangle$ to satisfy $\Pi|\Psi^\perp\rangle = 0$, ensuring the evolution stays in a 2D subspace where standard Grover-type rotation applies.
+**The 2D Subspace Lemma (Lemma 3.7):** The key insight is that for any $|\psi\rangle$, the operator $Q = (\langle 0^\mu| \otimes \mathbb{1})U^\dagger \Pi U(|0^\mu\rangle \otimes \mathbb{1})$ satisfies $\langle\psi|Q|\psi\rangle = p$ for all $|\psi\rangle$, which forces $Q = p\mathbb{1}$. This constrains the orthogonal partner $|\Psi^\perp\rangle$ to satisfy $\Pi|\Psi^\perp\rangle = 0$, ensuring the evolution stays in a 2D subspace where standard Grover-type rotation applies.
 
 With $\sin^2\theta = 1/4$ ($\theta = \pi/6$), one round ($\ell = 1$) gives $\sin(3\theta) = \sin(\pi/2) = 1$ — exact amplification in 3 applications of $U$.
 
@@ -75,7 +75,7 @@ With $\sin^2\theta = 1/4$ ($\theta = \pi/6$), one round ($\ell = 1$) gives $\sin
 Reduce sparse Hamiltonian simulation to the fractional-query model:
 
 1. Decompose $H$ into $d^2$ 1-sparse Hamiltonians (Lemma 4.4, with a bipartite trick that removes the $\log^* n$ factor)
-2. Decompose each 1-sparse Hamiltonian into $O(\|G\|_{\max}/\gamma)$ self-inverse unitaries with eigenvalues $\pm 1$ (Lemma 4.3)
+2. Decompose each 1-sparse Hamiltonian into $O(|G|_{\max}/\gamma)$ self-inverse unitaries with eigenvalues $\pm 1$ (Lemma 4.3)
 3. First-order Trotter to get a fractional-query algorithm
 4. Apply Steps 1–4 to simulate with discrete queries
 
@@ -87,7 +87,7 @@ Reduce sparse Hamiltonian simulation to the fractional-query model:
 |---|---|
 | **Simulation (Theorem 1.1)** | $O(\tau\log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $O(\tau n\log^2(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ gates |
 | **Continuous-query simulation (Theorem 1.3)** | Same query scaling for any continuous-query algorithm |
-| **Lower bound (Theorem 1.2)** | $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries needed for a 2-sparse $H$ with $\|H\|_{\max} < 1$ |
+| **Lower bound (Theorem 1.2)** | $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries needed for a 2-sparse $H$ with $|H|_{\max} < 1$ |
 | **OAA (Lemma 3.6)** | Deterministic amplitude amplification without reflection about input state |
 
 ---
@@ -122,7 +122,7 @@ Since computing parity of $N$ bits requires $\Omega(N)$ queries (even with unbou
 
 ## Reusable ideas
 
-1. **[[Oblivious Amplitude Amplification (Robust)]]** — introduced here; later made robust for non-unitary targets in the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The existing trick card already credits this paper.
+1. **[[Oblivious Amplitude Amplification (Robust)]]** — introduced here; later made error-tolerant for non-unitary targets in the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The existing trick card already credits this paper.
 
 2. **[[Fractional-Query to Discrete-Query Reduction]]** — the Hamming weight truncation technique. Trick card exists, attributed to this paper.
 
@@ -178,5 +178,5 @@ Three contributions of lasting value:
 - [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes]] — related lower bounds
 
 ### Trick cards
-- [[Oblivious Amplitude Amplification (Robust)]] — introduced here; made robust in 1412.4687
+- [[Oblivious Amplitude Amplification (Robust)]] — introduced here; made error-tolerant in 1412.4687
 - [[Fractional-Query to Discrete-Query Reduction]] — the Hamming weight truncation framework

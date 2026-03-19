@@ -74,7 +74,7 @@ If the classical integration uses randomness (e.g., Monte Carlo), replace the ra
 |---|---|---|---|
 | **Grover-Rudolph (this paper)** | Efficient classical CDF | $O(n)$ rotations + integration cost | Structured distributions only |
 | **Grover black-box (1997)** | Oracle access to coefficients | $O(\sqrt{N} \cdot \text{arcsine cost})$ | General but expensive |
-| [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes\|Sanders-Low-Scherer-Berry (2019)]] | Oracle access to coefficients | $O(\sqrt{N} \cdot n)$ Toffolis | Arithmetic-free version of Grover |
+| [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] | Oracle access to coefficients | $O(\sqrt{N} \cdot n)$ Toffolis | Arithmetic-free version of Grover |
 | QROM lookup | Explicit coefficient table | $O(N)$ T gates | No structure needed, but linear in $N$ |
 
 The key distinction: Grover-Rudolph exploits *structure* in the distribution (efficient integrability) to get $O(n) = O(\log N)$ depth. Black-box methods treat coefficients as opaque and pay $O(\sqrt{N})$.

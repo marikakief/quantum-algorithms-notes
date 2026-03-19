@@ -29,3 +29,4 @@ Any time the target operator is assembled from simpler pieces: chemistry Hamilto
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Sandwich LCU for Matrix Equations]]
+- [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — uses composition algebra to build preconditioned operator $I + A^{-1}B$

@@ -77,3 +77,4 @@ Sparsity-dependence and condition-number dependence remain similar to HHL in bas
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Quantum Linear Matrix Equations — Paper Notes]]
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — achieves matching polylog precision via adiabatic scheduling (completely different route)

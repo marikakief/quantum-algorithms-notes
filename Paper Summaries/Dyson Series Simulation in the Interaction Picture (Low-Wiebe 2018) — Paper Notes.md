@@ -82,3 +82,4 @@ There is a separate result on **sparse time-dependent Hamiltonians**: the paper 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Oblivious Amplitude Amplification (Robust)]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — applies similar $H = A + B$ splitting philosophy to linear systems and matrix functions rather than simulation

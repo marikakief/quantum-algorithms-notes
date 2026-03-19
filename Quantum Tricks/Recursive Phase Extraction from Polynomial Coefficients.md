@@ -26,3 +26,5 @@ Stable numerics require careful coefficient conditioning for high L.
 ## Related Paper Notes
 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
+- [[Efficient Phase-Factor Evaluation in QSP (Dong-Meng-Whaley-Lin 2021) — Paper Notes]] — the optimisation-based replacement when this method breaks at high degree
+- [[Energy Landscape of Symmetric QSP (Wang-Dong-Lin 2022) — Paper Notes]]

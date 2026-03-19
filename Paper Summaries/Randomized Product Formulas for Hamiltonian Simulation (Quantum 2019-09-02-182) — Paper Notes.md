@@ -61,6 +61,7 @@ Random-order heuristics for product formulas appeared earlier in numerical ODE l
 
 ## Cross-links
 
+- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — earlier randomised product formula for time-dependent Hamiltonians via Monte Carlo time-sampling
 - [[Permutation Averaging for Product-Formula Error Cancellation]]
 - [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm]]
 - [[Nondegenerate-vs-Degenerate Taylor-Term Bookkeeping]]
@@ -69,3 +70,5 @@ Random-order heuristics for product formulas appeared earlier in numerical ODE l
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — uses Richardson extrapolation (incoherent multiproduct) over qDRIFT step sizes; closely related to the coherent multiproduct approach here
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — combines multi-product formulas with randomized sampling; complementary approach to the permutation-averaging technique here

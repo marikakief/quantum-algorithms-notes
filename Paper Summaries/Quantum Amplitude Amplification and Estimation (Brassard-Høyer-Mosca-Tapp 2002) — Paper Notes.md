@@ -98,10 +98,10 @@ This is the generic "quadratic speedup for search" result. It's the reason ampli
 
 | This paper (2002) | Later development |
 |---|---|
-| Standard amplitude amplification (reflects about $A\|0\rangle$) | [[Oblivious Amplitude Amplification (Robust)\|Oblivious AA]] (Berry et al. 2014): reflects about ancilla $\|0^\mu\rangle$ only, works for any input |
-| Amplitude estimation via phase estimation on $Q$ | [[Kaiser-Window Amplitude Estimation\|Kaiser-window AE]]: better spectral leakage control |
-| Quadratic speedup for search | [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes\|Szegedy (2004)]]: $\sqrt{\delta\epsilon}$ rule for walk-based search |
-| $Q = -AS_0 A^{-1} S_\chi$ | [[QSVT Meta-Template\|QSVT]]: general polynomial of singular values, amplitude amplification as special case |
+| Standard amplitude amplification (reflects about $A|0\rangle$) | [[Oblivious Amplitude Amplification (Robust)|Oblivious AA]] (Berry et al. 2014): reflects about ancilla $|0^\mu\rangle$ only, works for any input |
+| Amplitude estimation via phase estimation on $Q$ | [[Kaiser-Window Amplitude Estimation|Kaiser-window AE]]: better spectral leakage control |
+| Quadratic speedup for search | [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]]: $\sqrt{\delta\epsilon}$ rule for walk-based search |
+| $Q = -AS_0 A^{-1} S_\chi$ | [[QSVT Meta-Template|QSVT]]: general polynomial of singular values, amplitude amplification as special case |
 
 ---
 
