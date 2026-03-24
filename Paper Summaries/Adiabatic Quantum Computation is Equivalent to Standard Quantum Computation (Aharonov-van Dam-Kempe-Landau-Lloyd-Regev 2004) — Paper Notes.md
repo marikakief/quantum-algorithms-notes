@@ -368,6 +368,7 @@ The paper introduces the [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|tech
 ## Cross-links
 
 ### Paper notes
+- [[Improved Error Bounds for the Adiabatic Approximation (Cheung-Høyer-Wiebe 2011) — Paper Notes]] — sharper adiabatic theorem (tighter and asymptotically tight) than the one used in Theorem 2.1 here
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — product-formula sparse simulation, builds on the BQP equivalence established here
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — uses [[History-State Encoding with Unary Clock|history-state construction]] descended from this paper
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern [[Order-Condition Cancellation in Product Formulas|product-formula analysis]]

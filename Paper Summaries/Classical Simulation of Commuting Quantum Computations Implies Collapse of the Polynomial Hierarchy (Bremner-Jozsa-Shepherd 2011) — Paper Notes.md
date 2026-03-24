@@ -132,6 +132,8 @@ This paper, together with Aaronson-Arkhipov's BosonSampling, launched the quantu
 ### Paper notes
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes]] — IQP circuits generalise the Deutsch-Jozsa structure ($H$-diagonal-$H$)
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes]] — foundational computation model
+- [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes]] — concurrent; BosonSampling uses the same PH-collapse template; connects to permanent \#P-hardness
+- [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes]] — contrast: Clifford/stabilizer circuits are in ⊕L ⊆ P (classically easy); IQP adds diagonal phase gates, pushing hardness to the PH
 
 ### Trick cards
 - [[Hadamard Gadget for IQP Reduction]]

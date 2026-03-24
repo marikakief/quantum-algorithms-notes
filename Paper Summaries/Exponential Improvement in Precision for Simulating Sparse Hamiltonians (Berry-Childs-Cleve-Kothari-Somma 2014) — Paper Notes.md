@@ -9,7 +9,7 @@
 The full, expanded version of the polylog-precision Hamiltonian simulation result. This is the paper where **oblivious amplitude amplification** was introduced, where the **lower bound** proving optimality of the $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ scaling was established, and where the entire framework was cleaned up relative to the initial [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] announcement.
 
 **Main results:**
-1. $d$-sparse Hamiltonian simulation in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2|H|_{\max}t$
+1. $d$-sparse Hamiltonian simulation in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2\|H\|_{\max}t$
 2. Simulation of continuous/fractional-query models with same scaling
 3. Matching lower bound: $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries are necessary
 4. Introduction of **oblivious amplitude amplification**
@@ -122,7 +122,7 @@ Since computing parity of $N$ bits requires $\Omega(N)$ queries (even with unbou
 
 ## Reusable ideas
 
-1. **[[Oblivious Amplitude Amplification (Robust)]]** — introduced here; later made error-tolerant for non-unitary targets in the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The existing trick card already credits this paper.
+1. **[[Oblivious Amplitude Amplification (Robust)]]** — introduced here; later made robust for non-unitary targets in the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]]. The existing trick card already credits this paper.
 
 2. **[[Fractional-Query to Discrete-Query Reduction]]** — the Hamming weight truncation technique. Trick card exists, attributed to this paper.
 
@@ -178,5 +178,5 @@ Three contributions of lasting value:
 - [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes]] — related lower bounds
 
 ### Trick cards
-- [[Oblivious Amplitude Amplification (Robust)]] — introduced here; made error-tolerant in 1412.4687
+- [[Oblivious Amplitude Amplification (Robust)]] — introduced here; made robust in 1412.4687
 - [[Fractional-Query to Discrete-Query Reduction]] — the Hamming weight truncation framework

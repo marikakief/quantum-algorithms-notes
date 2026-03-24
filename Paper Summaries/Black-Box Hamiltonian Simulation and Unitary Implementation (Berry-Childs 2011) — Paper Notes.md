@@ -18,15 +18,15 @@ $$
 |\eta_j\rangle = |j\rangle\left(\sqrt{\frac{\varepsilon}{|H|_1}}\sum_k \sqrt{H^*_{jk}}|k\rangle + \sqrt{1 - \frac{\varepsilon\sigma_j}{|H|_1}}|M+1\rangle\right),
 $$
 
-with $\sigma_j = \sum_k |H_{jk}|$ and $|H|_1 = \max_j \sigma_j$ (the max column-sum norm). The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
+with $\sigma_j = \sum_k |H_{jk}|$ and $\|H\|_1 = \max_j \sigma_j$ (the max column-sum norm). The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
 
-The key relation is $\langle\eta_j|S|\eta_k\rangle = \varepsilon H_{jk}/|H|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/|H|_1$ scaled by $\varepsilon$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
+The key relation is $\langle\eta_j|S|\eta_k\rangle = \varepsilon H_{jk}/|H|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/\|H\|_1$ scaled by $\varepsilon$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
 
 The parameter $\varepsilon \in (0,1]$ controls **laziness**: small $\varepsilon$ makes the walk slow, which reduces the arcsin nonlinearity error in the phase-eigenvalue relation. The paper uses phase estimation to correct residual errors from this nonlinearity.
 
 ## Main complexity results
 
-**Theorem 1 (sparse simulation):** With upper bounds $\Lambda \ge |H|$ and $\Lambda_{\max} \ge |H|_{\max}$, simulate evolution for time $t$ with error $\delta$ using
+**Theorem 1 (sparse simulation):** With upper bounds $\Lambda \ge \|H\|$ and $\Lambda_{\max} \ge \|H\|_{\max}$, simulate evolution for time $t$ with error $\delta$ using
 
 $$
 O\!\left(\frac{\Lambda t}{\sqrt{\delta}} + D\Lambda_{\max} t + 1\right) \text{ queries to } O_H,\, O_F.
@@ -78,9 +78,21 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 
 ## Limits
 
-- Uses the max column-sum norm $|H|_1$, not the spectral norm $|H|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
+- Uses the max column-sum norm $\|H\|_1$, not the spectral norm $\|H\|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
 - Not optimal: later qubitization/QSP/QSVT frameworks achieve better parameters and cleaner structure for oracles that provide block-encodings.
 - Worst-case constant prefactors are not particularly tight.
+
+## Reusable ideas
+
+1. **[[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians]]** — encode Hamiltonian matrix elements into walk eigenphases via the $T: |j\rangle \mapsto |\eta_j\rangle$ isometry construction. Applies whenever you have query access to matrix elements and want a walk operator whose spectrum encodes the Hamiltonian.
+
+2. **[[Lazy-Walk Phase-Correction for Simulation Accuracy]]** — use the laziness parameter $\varepsilon$ to suppress the arcsin nonlinearity in the walk eigenphases, trading walk speed for simulation accuracy. A precursor to the Bessel linearisation of BCK 2015.
+
+3. **[[Magnitude-Banded Hamiltonian Decomposition]]** — decompose a non-sparse Hamiltonian into magnitude bands to control the column-sum norm. Used here for the non-sparse simulation result.
+
+4. **[[Block-Hamiltonian Embedding for Unitary Synthesis]]** — embed a target unitary into a Hamiltonian via $H_U = \begin{pmatrix} 0 & U \\ U^\dagger & 0 \end{pmatrix}$ and simulate to implement $U$. Achieves $\tilde{O}(N^{2/3})$ query complexity for $N \times N$ unitaries.
+
+---
 
 ## References within this paper
 

@@ -141,6 +141,21 @@ Using $n = 10$ qubits per degree of freedom (grid of $2^{30}$ points) and $m = 1
 
 ---
 
+## References within this paper
+
+- Zalka (1998) and Wiesner (1996) — the original real-space quantum simulation algorithm that this paper improves (halving gate count by avoiding uncomputation via Fourier-eigenstate kickback)
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — foundational result that quantum computers can simulate local Hamiltonians in polynomial time
+- [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams & Lloyd (1997)]] — antisymmetrisation method for preparing multi-electron wavefunctions, used directly in the state-preparation section
+- [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes|Aspuru-Guzik et al. (2005)]] — predecessor from the same group; quantum algorithm for static electronic structure (FCI eigenvalues), referenced for orbital occupation numbers and on-the-fly BO surface computation
+- [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover & Rudolph (2002)]] — efficient preparation of quantum states from integrable distributions; used for Gaussian wavepacket and harmonic oscillator state prep
+- Lidar & Wang (2005) — earlier application of Zalka-Wiesner to thermal rate constants via flux-flux correlation functions
+- Steane (2007) — design for a 300-qubit error-corrected trapped-ion computer; the resource estimates in Figs. 2–3 are benchmarked against this proposal
+- Brassard, Høyer, Mosca, Tapp (2002) — amplitude estimation, used to improve measurement precision from $1/\sqrt{M}$ to $1/M$
+- Suzuki (1990) — higher-order Trotter decompositions referenced for improving the first-order split-operator error
+- BKMP2 surface for H₃ (Boothroyd et al. 1996) — the benchmark PES used to estimate that $K \geq 15$ is needed for 0.1% accuracy in the BO crossover argument
+
+---
+
 ## Cross-links
 
 ### Paper notes

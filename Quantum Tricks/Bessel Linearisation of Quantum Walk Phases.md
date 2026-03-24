@@ -15,7 +15,7 @@ The Bessel generating function identity:
 
 $$\sum_{m=-\infty}^{\infty} J_m(z)\,\mu_\pm^m = \exp\!\left[\frac{z}{2}\left(\mu_\pm - \frac{1}{\mu_\pm}\right)\right] = e^{i\nu z}$$
 
-gives exactly the desired Hamiltonian evolution phase, and crucially is the **same** for both $\mu_+$ and $\mu_-$ — no need to distinguish eigenspaces.
+gives exactly the desired Hamiltonian evolution phase, and — this is the key point — is the **same** for both $\mu_+$ and $\mu_-$. No need to distinguish eigenspaces.
 
 Apply:
 

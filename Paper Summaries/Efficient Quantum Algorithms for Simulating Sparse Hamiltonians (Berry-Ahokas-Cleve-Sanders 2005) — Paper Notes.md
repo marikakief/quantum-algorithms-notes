@@ -29,7 +29,7 @@ $$
 
 By choosing $k$ appropriately, this becomes nearly linear in $t$ (up to subexponential corrections in $\log(d^2 \|H\| t / \epsilon)$).
 
-This was the first result to break away from the polynomial-in-$t$ scaling of [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes|Aharonov and Ta-Shma's]] earlier lattice-based approach and achieve near-optimal time dependence for sparse Hamiltonians.
+This was the first result to break away from the polynomial-in-$t$ scaling of [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov and Ta-Shma's]] earlier approach and achieve near-optimal time dependence for sparse Hamiltonians.
 
 ---
 
@@ -162,6 +162,7 @@ The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponentia
 ## Cross-links
 
 ### Paper notes
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — extends the [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki order optimization]] from this paper to time-dependent Hamiltonians, with rigorous non-analytic bounds
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — improved the sparsity dependence to linear in $d$
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern analysis of the [[Order-Condition Cancellation in Product Formulas|product-formula error]] used here
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves the truly optimal scaling this paper approaches

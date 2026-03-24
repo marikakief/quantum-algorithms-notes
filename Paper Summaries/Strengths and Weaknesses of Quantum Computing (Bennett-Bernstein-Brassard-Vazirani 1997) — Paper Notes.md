@@ -174,6 +174,7 @@ This is one of the most-cited papers in quantum complexity for good reason:
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — generalises Grover; inherits the $\Omega(\sqrt{N})$ lower bound
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — exploits structure to beat the $\sqrt{N}$ barrier
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — walk-based search framework, also $O(\sqrt{N})$
+- [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes]] — uses BBBV as baseline; proves Forrelation gives optimal 1-vs-$\tilde{\Omega}(\sqrt{N})$ quantum-classical query separation and shows the simulation theorem that closes the Buhrman et al. open question
 
 ### Trick cards
 - [[Query Magnitude Hybrid Argument for Oracle Lower Bounds]] — the lower bound technique

@@ -14,7 +14,7 @@ The cost should scale with $T := |\boldsymbol{\alpha}|_1 t = (\sum_\ell \alpha_\
 
 ## What the paper does
 
-Presents the simplest known algorithm achieving **near-optimal** Hamiltonian simulation: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|error-tolerant oblivious amplitude amplification]].
+Presents the simplest known algorithm achieving **near-optimal** Hamiltonian simulation: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
 
 This paper is the clean, self-contained version of the same authors' earlier STOC 2014 result (arXiv:1312.1414), which achieved the same complexity but used a more indirect approach through fractional queries. Here the algorithm fits in four pages and the reason for logarithmic $\varepsilon$-dependence is immediate: it comes from the super-exponential decay of the Taylor series tail ($(\ln 2)^K / K!$).
 
@@ -62,7 +62,7 @@ Since $s \approx 2$, a single round of [[Oblivious Amplitude Amplification (Robu
 
 $$A = -W R W^\dagger R W, \qquad R = \mathbb{1} - 2|0\rangle\langle 0| \otimes \mathbb{1}$$
 
-**The error-tolerant version** (this paper's key technical contribution): even though $\tilde{U}$ is not exactly unitary (it's a truncated series), the amplification still works with error linear in the truncation error. Specifically, from Eq. (14):
+**The robust version** (this paper's key technical contribution): even though $\tilde{U}$ is not exactly unitary (it's a truncated series), the amplification still works with error linear in the truncation error. Specifically, from Eq. (14):
 
 $$PA|0\rangle|\psi\rangle = |0\rangle\left(\frac{3}{s}\tilde{U} - \frac{4}{s^3}\tilde{U}\tilde{U}^\dagger\tilde{U}\right)|\psi\rangle$$
 
@@ -98,7 +98,7 @@ Where $T = |\boldsymbol{\alpha}|_1 t$, $L$ = number of terms, $n$ = number of qu
 | [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|BACS (2007)]] | $O(1/\varepsilon^{1/2k})$ | Higher-order Suzuki |
 | [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs-Wiebe (2012)]] | Polynomial | LCU, no OAA |
 | BCCKS (2014, STOC) [1312.1414] | $\widetilde{O}(\log(1/\varepsilon))$ | Fractional queries |
-| **This paper** | $\widetilde{O}(\log(1/\varepsilon))$ | **Direct Taylor + error-tolerant OAA** |
+| **This paper** | $\widetilde{O}(\log(1/\varepsilon))$ | **Direct Taylor + robust OAA** |
 | [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] | $O(\log(1/\varepsilon))$ | QSP (optimal) |
 
 This paper matched the STOC 2014 result with a much simpler algorithm. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] later achieved strictly optimal query complexity by removing the $\log\log$ factor via [[QSVT Meta-Template|QSP/QSVT]], but the Taylor series approach remains the more accessible and practical method.
@@ -213,11 +213,12 @@ The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially be
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses Hamiltonian simulation as a subroutine
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — applies LCU methods to ODEs
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]] — quantum chemistry application that benefits from improved simulation
+- [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes]] — first application of this paper's technique to chemistry; on-the-fly integral computation
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — tight Trotter bounds; complementary approach
 
 ### Trick cards
 - [[Taylor Series Truncation with ln2 Segmentation]] — the segment length choice
-- [[Oblivious Amplitude Amplification (Robust)]] — error-tolerant OAA for non-unitary targets
+- [[Oblivious Amplitude Amplification (Robust)]] — robust OAA for non-unitary targets
 - [[Linear Combination of Unitaries (LCU)]] — the PREPARE/SELECT framework
 - [[Unary Encoding for Sequential Controlled Operations]] — unary $|k\rangle$ encoding for term indexing
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]] — the oracle abstraction

@@ -24,8 +24,13 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ### Product formulas (Trotter / Suzuki)
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — foundational product-formula simulation of local Hamiltonians; proves Feynman's conjecture
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2010)]] — higher-order Suzuki product formulas for time-dependent Hamiltonians; explicit bounds without analyticity; smoothness-order saturation
+- [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2011)]] — end-to-end quantum algorithm for time-dependent sparse simulation; constant- and adaptive-step variants; explicit oracle precision requirements; discontinuity handling
+- [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes|Raeisi-Wiebe-Sanders (2012)]] — autonomous gate-level circuit synthesis for $k$-local Hamiltonians; Pauli-string primitives via parity-CNOT ladder; commuting-group parallelisation; $O(n^{2+o(1)})$ gates for physically local models
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin-Qarry-Somma-Verstraete (2011)]] — derivative-free Trotter for arbitrary time-dependent Hamiltonians; quantum Shannon counting argument; randomised product formula
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — first efficient sparse Hamiltonian simulation
+- [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs-Wiebe (2013)]] — recursive product formulas for commutator exponentials; nearly-optimal via quantum search lower bound
+- [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe (2015)]] — Trotter error scales with $Z_{\max}^6$ not $N$; norm bounds loose by 10¹⁶; classical error subtraction
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — tight commutator-based Trotter error bounds
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized product-formula ordering; permutation averaging improves error bounds
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized sampling of multi-product formulas; trades circuit depth for shots
@@ -40,6 +45,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] — first polylog$(1/\varepsilon)$ simulation via compressed fractional-query Trotter; broke the precision barrier
 - [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2014)]] — full STOC version; introduces OAA, proves optimal $\varepsilon$-lower bound
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2015)]] — truncated Taylor series + LCU + robust OAA; near-optimal $\log(1/\varepsilon)$ precision scaling
+- [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes|Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik (2015)]] — first application of truncated Taylor series to chemistry; on-the-fly integral computation reduces cost to $\widetilde{O}(N^5 t)$
 - [[Hamiltonian Simulation with Nearly Optimal Dependence on All Parameters (Berry-Childs-Kothari 2015) — Paper Notes|Berry-Childs-Kothari (2015)]] — Bessel-LCU of walk steps; optimal in both sparsity and precision
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry-Childs (2011)]] — black-box simulation via sparse oracles
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs-Kothari-Somma (2015)]] — Fourier and Chebyshev LCU for matrix inversion
@@ -78,7 +84,9 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ### Fermionic systems
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]] — first fermionic simulation algorithms; antisymmetrization, Hubbard model
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes|Ortiz-Gubernatis-Knill-Laflamme (2001)]] — early fermionic simulation framework
+- [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes|Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik (2015)]] — first truncated Taylor series for chemistry; database $\widetilde{O}(N^8 t)$ and on-the-fly $\widetilde{O}(N^5 t)$ algorithms with $\log(1/\varepsilon)$ precision
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Fermionic Eigenstate Prep (2018)]] — improved eigenstate preparation for fermionic systems
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley, Babbush et al. (2016)]] — first scalable hardware quantum chemistry; VQE + Bravyi-Kitaev on 2-qubit H₂; chemical accuracy achieved; PEA comparison
 
 ---
 
@@ -120,6 +128,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ## Linear Systems and Differential Equations
 
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — HHL: exponential speedup for linear systems
+- [[Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes|Wiebe-Braun-Lloyd (2012)]] — extends HHL to least-squares fitting via isometry embedding; fit-quality estimation via swap test; sparse classical readout via quantum-aided compressed sensing
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes|Tong-An-Wiebe-Lin (2021)]] — preconditioned QLSP via fast inversion; Green's function computation; Gibbs state preparation via contour integral and inverse-transform approaches
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] — first quantum algorithm for general linear ODEs; history-state encoding + HHL, $\tilde{O}(\Delta t^2)$ scaling
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] — linear ODEs via quantum simulation
@@ -138,6 +147,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd (1999)]] — quantum phase estimation for eigenvalues
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes|Aspuru-Guzik et al. (2005)]] — first quantum chemistry calculations (H₂O, LiH); recursive PEA, adiabatic state prep
+- [[Towards Quantum Chemistry on a Quantum Computer (Lanyon-Whitfield-Aspuru-Guzik-White 2010) — Paper Notes|Lanyon et al. (2010)]] — first experimental quantum chemistry calculation; photonic IPEA on H$_2$ to 20-bit precision
 - [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes|Kassal et al. (2008)]] — full chemical dynamics beyond Born-Oppenheimer; split-operator real-space simulation in $O(B^2 m^2)$
 - [[Quantum Metropolis Sampling (Temme-Osborne-Vollbrecht-Poulin-Verstraete 2011) — Paper Notes|Temme et al. (2011)]] — quantum Metropolis for Gibbs state preparation; sign-problem-free sampling from eigenbasis
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes|Tong-An-Wiebe-Lin (2021)]] — Gibbs state preparation via preconditioned contour integral and inverse-transform approaches
@@ -156,12 +166,25 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 - [[Quantum Principal Component Analysis (Lloyd-Mohseni-Rebentrost 2014) — Paper Notes|Lloyd-Mohseni-Rebentrost (2014)]] — quantum PCA
 
+## Quantum Learning / Tomography
+
+- [[Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes|Wiebe-Braun-Lloyd (2012)]] — quantum least-squares fitting; foundational quantum ML paper; exponential speedup in $N$ under strict conditions (sparse $F$, efficient state prep, sparse solution)
+- [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes|Aaronson (2006)]] — PAC learning quantum states
+
+## Hamiltonian Learning and Certification
+
+- [[Hamiltonian Learning and Certification Using Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2014, PRL)]] — Bayesian Hamiltonian learning via IQLE + PGH + SMC; $O(d \log 1/\delta)$ experiments; certifies unknown quantum simulators; noiseless analysis
+- [[Quantum Hamiltonian Learning Using Imperfect Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2014, PRA)]] — sequel: robustness of QHL to depolarizing noise (rate degrades by $(1-\mathcal{N})$, not catastrophically); noisy swap gates via superoperator modeling; model mismatch saturates at residual scale; free Bayesian model selection via SMC marginal likelihoods
+- [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]] — shadow tomography: $\tilde{O}(\log^4 M \cdot \log D / \varepsilon^4)$ copies to estimate $M$ observables on an unknown $D$-dimensional state; polylog in both $M$ and $D$
+
 ---
 
 ## Variational and Near-Term Algorithms
 
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes|Farhi-Goldstone-Gutmann (2014)]] — QAOA for combinatorial optimisation
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo-McClean et al. (2014)]] — VQE
+- [[The Theory of Variational Hybrid Quantum-Classical Algorithms (McClean-Romero-Babbush-Aspuru-Guzik 2015) — Paper Notes|McClean-Romero-Babbush-Aspuru-Guzik (2015)]] — VQE theory: variational adiabatic paths, generalized UCC, variational error suppression, measurement cost reduction, derivative-free optimization
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley, Babbush et al. (2016)]] — first scalable hardware VQE experiment; Bravyi-Kitaev encoding; chemical accuracy on H₂; experimental confirmation of variational error suppression
 
 ---
 
@@ -173,6 +196,8 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov-Ta-Shma (2003)]] — adiabatic state generation and SZK
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|Somma-Boixo (2013)]] — quadratic gap amplification for frustration-free Hamiltonians; optimal; impossible for general $H$
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes|An-Lin (2019)]] — time-optimal adiabatic schedules for QLSP; generalises Roland-Cerf local adiabatic method
+- [[Improved Error Bounds for the Adiabatic Approximation (Cheung-Høyer-Wiebe 2011) — Paper Notes|Cheung-Høyer-Wiebe (2011)]] — rigorous upper/lower bounds on adiabatic error; asymptotically tight; resolves Marzlin–Sanders counterexample
+- [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes|Kieferová-Wiebe (2014)]] — coherent averaging of two adiabatic paths via LCU gadget; cancels $O(1/T)$ diabatic error leaving $O(1/T^2)$; symmetric-spectrum case cancels all transitions simultaneously; polynomial equivalence to circuit model
 
 ---
 
@@ -185,11 +210,14 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — quantum algorithms for group-theoretic problems
 - [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes|Buhrman-Cleve-Watrous-de Wolf (2001)]] — exponential quantum communication advantage
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|BBBV (1997)]] — $\Omega(\sqrt{N})$ search lower bound (Grover is optimal); BQP$^{\text{BQP}}$ = BQP via tidy subroutines
+- [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes|Aaronson-Ambainis (2015)]] — optimal 1-vs-$\tilde{\Omega}(\sqrt{N})$ quantum-classical query separation; simulation theorem ($t$ quantum queries → $O(N^{1-1/(2t)})$ classical); $k$-fold Forrelation is BQP-complete
 
 
 ## Quantum Supremacy / Hardness of Sampling
 
+- [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — stabilizer circuits are *easy* (⊕L-complete, in P); contrast with the results below
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes|Bremner-Jozsa-Shepherd (2011)]] — IQP sampling hardness; post-IQP = PP; Hadamard gadget
+- [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes|Aaronson-Arkhipov (2011)]] — BosonSampling; exact hardness via permanent #P-hardness; approximate hardness via PGC + PACC; Gaussian permanent hiding
 
 ---
 
@@ -200,7 +228,16 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ---
 
+## Classical Simulation of Quantum Circuits
+
+- [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — CHP algorithm; destabilizer tableau; $O(n^2)$ simulation; stabilizer circuits are ⊕L-complete; canonical form $O(n^2/\log n)$ gates
+- [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes|Bremner-Jozsa-Shepherd (2011)]] — IQP circuits are classically hard to sample (also in Quantum Supremacy section)
+
+---
+
 ## Gate Synthesis and Compilation
 
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes|Dawson-Nielsen (2005)]] — Solovay-Kitaev theorem and efficient gate compilation
+- [[Floating Point Representations in Quantum Circuit Synthesis (Wiebe-Kliuchnikov 2013) — Paper Notes|Wiebe-Kliuchnikov (2013)]] — gearbox circuit for angle squaring; floating-point small-rotation synthesis; beats ancilla-free T-count lower bound
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low-Yoder-Chuang (2016)]] — composite pulse sequences for robust gate synthesis
+- [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — Clifford canonical form: any Clifford unitary has an $O(n^2/\log n)$-gate 11-round circuit

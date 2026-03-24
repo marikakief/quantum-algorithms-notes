@@ -80,6 +80,7 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] framework for implementing the truncated Dyson series
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — product-formula approach that this paper offers an alternative to
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders (2010)]] — higher-order Suzuki product formulas for time-dependent simulation; earlier foundational work establishing rigorous bounds for the product-formula alternative this paper supersedes
 - Berry, Childs, Cleve, Kothari & Somma (2015) — Taylor-series LCU for time-independent simulation
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2019)]] — extends this work to the interaction picture
 - [[Oblivious Amplitude Amplification (Robust)]] — used to boost LCU success probability
@@ -89,6 +90,8 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 
 ## Cross-links
 
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — product-formula precursor; near-linear scaling for smooth $H(t)$ via optimized Suzuki order; direct predecessor in the time-dependent simulation lineage
+- [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes]] — companion algorithmic paper to the 2010 theory paper; full end-to-end product-formula simulation of time-dependent sparse Hamiltonians with oracle precision accounted for; this Dyson paper supersedes it in precision scaling
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — earlier polynomial-size simulation of arbitrary time-dependent Hamiltonians via generalised Trotter; this Dyson paper supersedes its efficiency
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]]
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]]

@@ -782,7 +782,7 @@ Quantum algorithms for matching and network flows.
 _Proceedings of STACS 2007_, pg. 172-183.
 [[arXiv:quant-ph/0508205](http://arxiv.org/abs/quant-ph/0508205)]
 
-**169.** Nathan Wiebe, Daniel Braun, and Seth Lloyd
+**169. ✓** Nathan Wiebe, Daniel Braun, and Seth Lloyd
 Quantum data-fitting.
 _Physical Review Letters_ 109, 050505, 2012.
 [[arXiv:1204.5242](http://arxiv.org/abs/1204.5242)]
@@ -1183,7 +1183,7 @@ Exponential quantum speed-ups are generic
 _Quantum Information and Computation_, Vol. 13, Pg. 0901, 2013
 [[arXiv:1010.3654](http://arxiv.org/abs/1010.3654)]
 
-**258.** Scott Aaronson and Andris Ambainis
+**258. ✓** Scott Aaronson and Andris Ambainis
 Forrelation: A problem that optimally separates quantum from classical computing.
 _[arXiv:1411.5729](http://arxiv.org/abs/1411.5729)_, 2014.
 
@@ -2121,7 +2121,7 @@ Near-optimal quantum algorithms for multivariate mean estimation
 _Proceedings of STOC22_, 33-43, 2022.
 [[arXiv:2111.09787](https://arxiv.org/abs/2111.09787)]
 
-**473.** Scott Aaronson and Alex Arkhipov
+**473. ✓** Scott Aaronson and Alex Arkhipov
 The computational complexity of linear optics
 _Proceedings of STOC11_, 333-342, 2011.
 [[arXiv:1011.3245](https://arxiv.org/abs/1011.3245)]

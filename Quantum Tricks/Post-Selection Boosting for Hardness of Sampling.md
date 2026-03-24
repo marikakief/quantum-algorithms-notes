@@ -33,4 +33,5 @@ The argument is non-constructive — it doesn't tell you *which* instances are h
 
 ## Related notes
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes]] — first use for IQP
+- [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes]] — BosonSampling; uses this template with PostBQP = PP via KLM
 - [[Hadamard Gadget for IQP Reduction]] — the tool for Step 1 in the IQP case

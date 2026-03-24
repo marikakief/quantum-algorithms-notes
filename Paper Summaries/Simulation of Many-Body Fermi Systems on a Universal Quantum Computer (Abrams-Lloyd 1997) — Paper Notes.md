@@ -153,6 +153,7 @@ Physical quantities extractable from the simulation:
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — fixes the heap sort bug with sorting networks, improves the full pipeline
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes]] — alternative fermionic simulation framework
 - [[Sublinear-T Block-Encodings for Second-Quantized Hamiltonians (arXiv 2510.08644) — Paper Notes]] — modern first-quantized techniques
+- [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — uses the Abrams-Lloyd antisymmetrisation method for preparing multi-electron wavefunctions in chemical dynamics simulation
 
 ### Trick cards
 - [[Block-Diagonal Decomposition for Parallel Hamiltonian Simulation]]

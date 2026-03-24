@@ -133,6 +133,8 @@ Note: The Pauli decomposition for expectation estimation (Algorithm 1) is **not 
 
 ### Paper notes
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the phase estimation approach VQE aims to replace
+- [[The Theory of Variational Hybrid Quantum-Classical Algorithms (McClean-Romero-Babbush-Aspuru-Guzik 2015) — Paper Notes]] — theoretical companion paper: variational adiabatic paths, generalized UCC, error suppression, measurement cost reduction
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first hardware implementation of scalable VQE using Bravyi-Kitaev encoding; superconducting qubits; achieves chemical accuracy on H₂
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — what fault-tolerant ground state prep looks like (via [[QSVT Meta-Template|QSVT]])
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — improved fault-tolerant eigenstate preparation
 

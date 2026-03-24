@@ -113,7 +113,10 @@ Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discr
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — the phase estimation algorithm applied here
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — the Trotter simulation framework
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — later improvements to the full pipeline (sorting networks, qubitisation)
+- [[Towards Quantum Chemistry on a Quantum Computer (Lanyon-Whitfield-Aspuru-Guzik-White 2010) — Paper Notes]] — first experimental implementation of the quantum chemistry pipeline from this paper (photonic, H$_2$)
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — VQE as a near-term alternative to full PEA
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first scalable hardware experiment for this paper's algorithm; uses Bravyi-Kitaev (not Jordan-Wigner) and demonstrates both VQE and Trotterized PEA
+- [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — extends from static electronic structure to full chemical dynamics; uses orbital occupations from this paper for state preparation
 
 ### Trick cards
 - [[Recursive Phase Estimation for Qubit-Efficient Readout]]

@@ -34,6 +34,7 @@ The bound gives $\Omega(\sqrt{N})$ for search over $N$ items. The technique exte
 ## Related notes
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes]]
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]]
+- [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes]] — Forrelation achieves the optimal 1-vs-$\tilde{\Omega}(\sqrt{N})$ separation; the BBBV search bound is one baseline it references
 - [[Standard Amplitude Amplification]]
 - [[Superposition Query for Global Properties]]
 - [[Inversion About the Mean]]

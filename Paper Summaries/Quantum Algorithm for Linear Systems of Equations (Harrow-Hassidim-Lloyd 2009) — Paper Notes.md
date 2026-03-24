@@ -208,6 +208,7 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 ## Cross-links
 
 ### Paper notes
+- [[Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes]] — extends HHL to rectangular (non-square) least-squares via isometry embedding; three algorithms for parameter state prep, fit quality estimation, and sparse classical readout
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes]] — improves $\kappa^2 \to \kappa$ and $1/\epsilon \to \mathrm{poly}\log(1/\epsilon)$
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — [[QSVT Meta-Template|QSVT]] subsumes the HHL approach
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — uses QLSA as subroutine for ODEs

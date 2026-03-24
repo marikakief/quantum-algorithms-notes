@@ -48,7 +48,7 @@ Integrating:
 
 $$t(s) = \frac{1}{2\varepsilon}\frac{N}{\sqrt{N-1}}\left[\arctan\left(\sqrt{N-1}(2s-1)\right) + \arctan\sqrt{N-1}\right]$$
 
-Setting $s = 1$: $T = \frac{\pi}{2\varepsilon}\sqrt{N}$.
+Setting $s = 1$ and taking $N \gg 1$: $T = \frac{\pi}{2\varepsilon}\sqrt{N}$. (The exact finite-$N$ expression is $T = \frac{1}{\varepsilon}\frac{N}{\sqrt{N-1}}\arctan\sqrt{N-1}$, which converges to the $\pi/2$ form as $N \to \infty$.)
 
 The schedule $s(t)$ is an S-curve: fast at the endpoints, slow through the bottleneck at $s = 1/2$ where the gap closes. The slowdown is exactly calibrated so the integrated evolution time is $O(\sqrt{N})$.
 
@@ -56,11 +56,11 @@ The schedule $s(t)$ is an S-curve: fast at the endpoints, slow through the bottl
 
 ## Optimality proof
 
-Uses the same framework as the Farhi-Gutmann proof for the analog analogue. For any evolution schedule $s(t)$:
+Uses the same framework as the Farhi-Gutmann continuous-time search lower bound. For any evolution schedule $s(t)$:
 
-1. States $|\psi_m, T\rangle$ for different marked items $m$ must be distinguishable after time $T$
-2. The rate of distinguishability is bounded by the Hamiltonian's norm restricted to the marked subspace: $\|H_{2m}|\psi\rangle\|^2 = s^2$
-3. Summing over all $m, m'$ and integrating: $T \geq \frac{\varepsilon}{4}\sqrt{N}$
+1. Final states $|\psi_m, T\rangle$ for different marked items $m$ must become distinguishable (nearly orthogonal) after time $T$
+2. The rate at which $\langle\psi_m|\psi_{m'}\rangle$ can decrease is bounded by the $m$-dependent part of the Hamiltonian: $\|H_m|\psi\rangle\| \leq s(t)$
+3. Integrating this bound over the evolution and summing over pairs gives $T = \Omega(\sqrt{N})$
 
 So $O(\sqrt{N})$ is tight. No schedule does better.
 
@@ -110,6 +110,7 @@ The local adiabatic idea — slow down where the gap is small — is the templat
 - [[A Quantum Algorithm for Finding the Minimum (Dürr-Høyer 1996) — Paper Notes]] — another application of Grover search
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes]] — the constant-rate predecessor; this paper fixes it
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — generalises the local adiabatic idea to QLSP with power-law and smooth schedules
+- [[Improved Error Bounds for the Adiabatic Approximation (Cheung-Høyer-Wiebe 2011) — Paper Notes]] — uses the search Hamiltonian as a test case; shows the $O(1/T)$ boundary term vanishes at specific $T$ values (Eq. 71)
 
 ### Trick cards
 - [[Local Adiabatic Schedule via Gap-Dependent Evolution Rate]]

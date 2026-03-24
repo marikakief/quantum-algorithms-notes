@@ -19,7 +19,7 @@ The approach is indirect and somewhat baroque: decompose the Hamiltonian into se
 **Result (Theorem 1):**
 $$O\!\left([d^2\tau + \log(1/\varepsilon)] \cdot \log^3[d(\tau + \tau')/\varepsilon] \cdot n^c\right)$$
 
-oracle calls and additional gates, where $\tau = |H|t$, $\tau' = |H'|t$ (for time-dependent $H$), and $c$ is a constant.
+oracle calls and additional gates, where $\tau = \|H\|t$, $\tau' = \|H'\|t$ (for time-dependent $H$), and $c$ is a constant.
 
 ---
 
@@ -35,7 +35,7 @@ Approximate the time-ordered exponential via first-order Trotter:
 
 $$\mathcal{T}\exp\!\left[-i\int_0^t H(t')\,dt'\right] \approx \prod_j \exp[-iH_j(t_0)\,\delta t]$$
 
-The error is $O(M^2 \delta t^2 (|H|^2 + |H'|))$, requiring $r = O(M^2t^2(|H|^2 + |H'|)/\varepsilon)$ time steps.
+The error is $O(M^2 \delta t^2 (|H|^2 + |H'|))$, requiring $r = O(M^2t^2(\|H\|^2 + \|H'\|)/\varepsilon)$ time steps.
 
 *Note: this Trotter step introduces polynomial $1/\varepsilon$ dependence. The exponential improvement comes from the compression in Steps 4–5, not from avoiding Trotter.*
 
@@ -63,7 +63,7 @@ If the measurement gives $b = 0$: success. If $b = 1$: a "fault" occurred. The s
 
 Here's where the $\log(1/\varepsilon)$ scaling emerges. The $m$ ancilla qubits in a segment are in a superposition dominated by low Hamming weight (few 1's). Instead of $m$ controlled-$U_l$ operations (one per ancilla), truncate at Hamming weight $k_1$:
 
-$$k_1 = O\!\left(\frac{\log(td|H|_{\max}/\varepsilon)}{\log\log(td|H|_{\max}/\varepsilon)}\right)$$
+$$k_1 = O\!\left(\frac{\log(td\|H\|_{\max}/\varepsilon)}{\log\log(td\|H\|_{\max}/\varepsilon)}\right)$$
 
 The error from truncation is exponentially small because the binomial distribution concentrates. This is the core insight from the [[Fractional-Query to Discrete-Query Reduction|fractional-query framework]]: the number of "actual" queries per segment is $k_1$, not $m$.
 
@@ -83,7 +83,7 @@ When faults occur, undo the failed segment attempt and retry. This is a biased r
 | Additional gates | $O\!\left([d^2\tau + \log(1/\varepsilon)] \cdot \log^3[d(\tau + \tau')/\varepsilon] \cdot n^c\right)$ |
 | Time-derivative dependence | $\log(|H'|t)$ — exponentially better than prior methods |
 
-Where $\tau = |H|t$, $\tau' = |H'|t$.
+Where $\tau = \|H\|t$, $\tau' = \|H'\|t$.
 
 ---
 
@@ -109,7 +109,7 @@ This paper builds directly on two precursors:
 This paper (BCS 2013) takes those ideas and applies them to Hamiltonian simulation proper, adding the self-inverse decomposition (Lemma 1) and the Chernoff-based fault correction. The result is the first polylog-precision simulation, but the algorithm is complex — six steps, recursive fault correction, and the self-inverse constraint.
 
 The subsequent papers simplified dramatically:
-- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|BCCKS (2015, PRL)]] replaced the entire pipeline with LCU + truncated Taylor series + error-tolerant OAA
+- [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|BCCKS (2015, PRL)]] replaced the entire pipeline with LCU + truncated Taylor series + robust OAA
 - The STOC 2014 version (1312.1414) was an intermediate step introducing OAA
 
 ---

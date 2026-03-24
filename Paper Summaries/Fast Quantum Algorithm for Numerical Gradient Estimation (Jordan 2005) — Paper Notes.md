@@ -115,6 +115,9 @@ The product-state structure after kickback — each dimension decouples — is a
 - [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — the discrete algorithm this generalises (hidden inner product → gradient)
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — related oracle algorithm lineage
 
+### Paper notes (continued)
+- [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — co-author Jordan; applies the same Fourier-eigenstate kickback to evaluate Coulomb potentials in chemical dynamics
+
 ### Trick cards
 - [[Fourier-Eigenstate Kickback for Arithmetic Oracles]]
 - [[Phase Kickback from Oracle Queries]] — the Boolean special case

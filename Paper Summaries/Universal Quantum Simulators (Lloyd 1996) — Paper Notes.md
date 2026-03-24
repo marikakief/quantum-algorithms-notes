@@ -128,6 +128,7 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes]] — develops the fermionic simulation that Lloyd discusses informally
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — Lloyd co-authored; uses simulation ideas in the adiabatic setting
 - [[Quantum Algorithms for Quantum Field Theories (Jordan-Lee-Preskill 2012) — Paper Notes]] — extends simulation to interacting QFTs; completes Feynman's programme for $\phi^4$ scattering
+- [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — applies split-operator simulation to full chemical dynamics; shows diabatic treatment beats Born-Oppenheimer on a quantum computer
 
 ### Trick cards
 - [[Product-Formula Time-Slicing for Local Hamiltonians]]

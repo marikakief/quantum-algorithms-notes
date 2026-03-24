@@ -95,7 +95,7 @@ Note: the Invariance Property is the key condition — it is satisfied for free 
 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP used to simulate the shadow Hamiltonian $H_S$
 - Babbush et al. (2023, arXiv:2303.13012) — exponential speedup for coupled oscillators; recovered as special case
-- Aaronson (2018) — shadow tomography (different "shadow" framework)
+- [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]] — shadow tomography (different "shadow" framework; see that note for the comparison)
 - Huang, Kueng & Preskill (2020) — classical shadows (another "shadow" framework)
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Berry et al. (2018)]] — fermionic techniques relevant to free-fermion shadow states
 
@@ -110,3 +110,4 @@ Note: the Invariance Property is the key condition — it is satisfied for free 
 - [[Operator-to-State Mapping for Heisenberg Evolution]]
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]]
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes]]

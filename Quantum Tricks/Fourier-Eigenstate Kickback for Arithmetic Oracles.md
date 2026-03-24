@@ -40,3 +40,4 @@ The phase is $2\pi f(x)/N_o$ — the function value must fit in $N_o$ levels of 
 - [[Phase Kickback from Oracle Queries]] — the Boolean special case
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — modular exponentiation kickback
 - [[Gapped Phase Estimation]] — kickback from controlled-$U$ is the same mechanism
+- [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — major application: Coulomb potential evaluation via this trick, halving Zalka-Wiesner gate count

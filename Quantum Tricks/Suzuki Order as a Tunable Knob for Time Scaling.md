@@ -1,3 +1,4 @@
+# Suzuki Order as a Tunable Knob for Time Scaling
 
 > **Source:** Berry, Ahokas, Cleve, Sanders, arXiv:quant-ph/0508139 (2005)
 > **Tags:** #trick #product-formulas #suzuki #optimization
@@ -41,6 +42,7 @@ The $5^{2k}$ blowup comes from the Suzuki recursion structure (each level multip
 ## Related notes
 
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]]
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — extends this trick to time-dependent Hamiltonians; same order optimization, but order is now capped by $H(t)$'s smoothness
 - [[Order-Condition Cancellation in Product Formulas]]
 - [[Trotter Commutator-Scaling Bound]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
