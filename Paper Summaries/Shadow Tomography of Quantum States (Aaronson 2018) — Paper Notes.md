@@ -145,6 +145,8 @@ The shadow Hamiltonian simulation paper explicitly cites this work (in its relat
 ### Paper notes
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes]] — the offline precursor: same goal, $O(n)$ sample complexity, no gentleness requirement
 - [[Shadow Hamiltonian Simulation — Paper Notes]]
+- [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]] — achieves triply efficient (sample + computation + few-copy) shadow tomography using two-copy measurements; closes the gap between sample-efficient and computationally efficient protocols left open here
+- [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes]] — uses the classical shadow formalism for projected quantum kernels; an application of shadow-type ideas to QML advantage
 
 ### Trick cards
 - [[Gentle Search via Quantum OR]]

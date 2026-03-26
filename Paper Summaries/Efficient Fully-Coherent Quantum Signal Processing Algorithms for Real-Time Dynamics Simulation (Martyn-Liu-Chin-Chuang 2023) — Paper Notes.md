@@ -186,3 +186,4 @@ Existing trick cards directly used or illustrated:
 - [[QSVT Meta-Template]]
 - [[Phased Qubitization Sequence]]
 - [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]] — same first author; takes the complementary approach: sacrifices coherence (outputs a channel) to halve query complexity. Direct contrast: that paper optimizes for query count, this paper optimizes for coherent output.
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — alternative approach to the same parity obstruction: uses [[Parity Shifting via Spectral Multiplication in GQSP|spectral multiplication]] + [[Generalized Quantum Signal Processing (GQSP)|GQSP]] rather than [[Affine Spectrum Compression for QSP Parity Bypass|affine compression]]; achieves $2\times$ query reduction

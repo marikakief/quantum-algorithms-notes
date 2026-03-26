@@ -25,3 +25,4 @@ which matches lower bounds in all parameters. Here $\tau = td\|H\|_{\max}$ is th
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
 - [[Phased Qubitization Sequence]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — uses the same Jacobi–Anger truncation but with [[Directional Walk Control for Phase Doubling|directional control]] to halve the query count

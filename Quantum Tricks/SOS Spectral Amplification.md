@@ -28,3 +28,7 @@ Higher-degree SOS tightens $\Delta$ but grows $\lambda$ (more terms in the SOS d
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[SOSSA — Sum-of-Squares Spectral Amplification]]
+- [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — chemistry-specific implementation with DFTHC
+- [[Rectangular Block-Encoding for Spectrum Amplification]]
+- [[SOS Decomposition via Semidefinite Programming for Chemistry]]
+- [[DFTHC Factorization]]

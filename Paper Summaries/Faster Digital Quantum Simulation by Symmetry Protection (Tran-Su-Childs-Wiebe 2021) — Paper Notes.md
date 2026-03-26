@@ -63,7 +63,7 @@ The same underlying principle — use a known symmetry/group structure to averag
 
 ## References within this paper
 
-- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — [[Trotter Commutator-Scaling Bound|commutator-scaling bounds]] that this paper leverages
+- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — [[Trotter Commutator-Scaling Bound|commutator-scaling bounds]] that this paper uses
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander & Su (2019)]] — randomized formulas (complementary approach)
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT (alternative randomization)
 - Facchi & Pascazio (2002) — quantum Zeno effect; symmetry protection uses related ideas
@@ -77,3 +77,12 @@ The same underlying principle — use a known symmetry/group structure to averag
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — resource estimates for Hubbard and jellium using second-order Trotter; the translation symmetry of both target Hamiltonians makes them prime candidates for the symmetry-protection kicks developed here
+- [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — fermionic swap network gives a Trotter step for the Hubbard model in $O(\sqrt{N})$ depth on a linear chain; inserting symmetry kicks between swap-network layers is a natural extension
+- [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — FFFT-based split-operator step targets translationally invariant periodic Hamiltonians (jellium, Hubbard) where the lattice translation symmetry exploited here is directly available
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — the high-order Suzuki framework this paper's error analysis extends with symmetry kicks
+- [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — demonstrated that norm bounds overestimate Trotter error empirically; symmetry protection provides a complementary mechanism to achieve the same practical improvement analytically
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — multi-product formulas as a different route to reducing Trotter error; both papers use averaging ideas but in different ways
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected product formulas; another approach to reducing leading Trotter error, complementary to symmetry protection
+- [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — yet another randomized strategy to boost effective product-formula order; similar goal to the randomized variant of this paper
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimized constant factors in product formulas; the large practical gains there and the gains from symmetry protection both address the gap between analytical and observed Trotter costs

@@ -139,7 +139,14 @@ This idea spawned an entire subfield. Follow-ups:
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — the history state construction Berry adapts
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes]] — Kitaev's clock, the original source
 
+- [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]] — extends the history-state + Taylor-series approach to *nonlinear* ODEs via Carleman linearisation with rescaling
+
 ### Trick cards
 - [[History-State Linear System Encoding for ODE Trajectories]]
 - [[History-State Encoding with Unary Clock]] — the underlying Kitaev clock construction
 - [[History-State Padding for Final-Time Readout]] — the padding trick to boost success probability
+- [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — extends the history-state approach to time-dependent coefficients via Dyson block-encoding; eliminates the $\Delta t^2$ scaling and diagonalisability requirement
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — achieves optimal $O(\kappa\log(1/\varepsilon))$ QLSP complexity; the optimal QLSP subroutine that supersedes the HHL used here
+- [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — validates the practical constant-factor efficiency of the discrete adiabatic QLSP that follows in this lineage
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — extends the adiabatic discretisation approach to $\varepsilon$-independent time steps; further advances the simulation lineage this paper started
+- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — applies Dyson-series LCU to time-dependent Hamiltonians; closely related machinery to the Taylor-series approach used here

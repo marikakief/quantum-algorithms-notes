@@ -117,6 +117,13 @@ Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discr
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — VQE as a near-term alternative to full PEA
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first scalable hardware experiment for this paper's algorithm; uses Bravyi-Kitaev (not Jordan-Wigner) and demonstrates both VQE and Trotterized PEA
 - [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — extends from static electronic structure to full chemical dynamics; uses orbital occupations from this paper for state preparation
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — applies UCC+VQE (the near-term alternative to this paper's PEA approach) with practical strategies for multi-parameter systems
+- [[Increasing the Representation Accuracy of Quantum Simulations of Chemistry without Extra Quantum Resources (Takeshita, Rubin, Babbush, McClean 2019) — Paper Notes]] — VQSE extends the active-space approach (central to this paper's resource analysis) to recover basis-set accuracy without extra qubits
+- [[Application of Fermionic Marginal Constraints to Hybrid Quantum Algorithms (Rubin, Babbush, McClean 2018) — Paper Notes]] — addresses the measurement overhead that this paper's algorithm incurs; $n$-representability constraints reduce shot count >10×
+- [[Decoding Quantum Errors with Subspace Expansions (McClean, Jiang, Rubin, Babbush, Neven 2019) — Paper Notes]] — error mitigation for the near-term VQE approach that this paper contrasts with QPE
+- [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes]] — drastically reduces the Pauli measurement overhead that is the main cost in this paper's QPE pipeline
+- [[Simulating Challenging Correlated Molecules and Materials on the Sycamore Processor (Tazhigulov, Sun, Babbush, Chan et al 2022) — Paper Notes]] — 2022 hardware realization on Sycamore of quantum simulation for real correlated materials; benchmark for how far the field has come since this proposal
+- [[Reliably Assessing the Electronic Structure of Cytochrome P450 (Goings, Babbush, Rubin et al 2022) — Paper Notes]] — concrete quantum resource estimates for a pharmaceutically relevant molecule; quantifies the qubit and gate counts this paper's QPE approach requires for practical problems
 
 ### Trick cards
 - [[Recursive Phase Estimation for Qubit-Efficient Readout]]

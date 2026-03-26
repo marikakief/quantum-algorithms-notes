@@ -25,6 +25,8 @@ Enables the FMM paper's main result: gate complexity $t(\eta^{4/3}N^{1/3} + \eta
 ## Caveat
 The analysis applies to first-quantized real-space representations; the norm bounds are not straightforwardly transferred to second-quantized or plane-wave basis representations. The subpolynomial factor $(\eta N t/\varepsilon)^{o(1)}$ hides significant logarithmic terms — the crossover with other methods (e.g., [[Interaction-Picture Norm Reduction|interaction picture]] simulation) depends on concrete constants.
 
-## Related Paper Notes
+## Related notes
 
+- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]]
+- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes]]
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]]

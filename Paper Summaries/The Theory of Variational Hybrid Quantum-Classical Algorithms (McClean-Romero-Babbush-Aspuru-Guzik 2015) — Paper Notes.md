@@ -177,6 +177,10 @@ The caveat: this is a 2-parameter toy problem. The advantage of COBYLA/Powell ov
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]]
 - [[QET-U — Ground-State Preparation and Energy Estimation on Early Fault-Tolerant QC (Dong-Lin-Tong 2022) — Paper Notes]]
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — experimental validation of VQE theory on superconducting hardware; confirms variational error suppression in practice
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — direct follow-up by the same group; implements the analytical gradient and COBYLA optimizer strategies proposed here on larger systems
+- [[Application of Fermionic Marginal Constraints to Hybrid Quantum Algorithms (Rubin, Babbush, McClean 2018) — Paper Notes]] — proves optimality of the $M_\ell \propto |w_\ell|$ measurement allocation suggested in this paper's correlated sampling section
+- [[Decoding Quantum Errors with Subspace Expansions (McClean, Jiang, Rubin, Babbush, Neven 2019) — Paper Notes]] — applies the variational framework and QSE to error mitigation; a direct descendant of the error-suppression ideas here
+- [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes]] — reduces measurement overhead far beyond the grouping strategies sketched here via basis rotation and double factorization
 
 ### Trick cards
 - [[Term-by-Term Expectation Estimation]]

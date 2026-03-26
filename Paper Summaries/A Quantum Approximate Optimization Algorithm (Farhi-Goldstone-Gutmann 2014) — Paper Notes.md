@@ -173,7 +173,7 @@ Harrigan et al. (Nature Physics 2021, Google) implemented QAOA on a superconduct
 
 The question of whether QAOA offers practical quantum advantage for combinatorial optimisation is genuinely open. It hasn't been ruled out, but it hasn't been demonstrated either.
 
-> **📋 TODO:** The subsequent developments section above is a sketch, not comprehensive coverage. QAOA has generated a large body of work that deserves fuller treatment, including:
+> **📋 TODO:** The subsequent developments section above is a sketch, not thorough coverage. QAOA has generated a large body of work that deserves fuller treatment, including:
 > - Detailed comparison of QAOA performance on specific problem families (MaxCut variants, LABS, SK model, Max-$k$-XOR) with best known classical results
 > - Warm-starting and recursive QAOA variants
 > - Constrained optimisation with $XY$-mixers and other structured mixers (Hadfield et al.)
@@ -238,6 +238,8 @@ The question of whether QAOA offers practical quantum advantage for combinatoria
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — VQE, the parallel variational approach for eigenvalue problems
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — Grover search as a special case of the alternating operator structure
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — adiabatic ↔ circuit equivalence, relevant to QAOA convergence
+- [[Optimization by Decoded Quantum Interferometry (Jordan, Shutty, Wootters, Babbush et al 2024) — Paper Notes]] — DQI is a complementary optimization approach that exploits Fourier sparsity rather than landscape structure; beats QAOA's information-theoretic ceiling for large-$k$ constraint satisfaction
+- [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — quartic speedup for planted $k$XOR via Kikuchi-guided Hamiltonians; different problem class and mechanism than QAOA but overlapping target domain
 
 ### Trick cards
 - [[Alternating Operator Ansatz]] — the circuit structure generalised

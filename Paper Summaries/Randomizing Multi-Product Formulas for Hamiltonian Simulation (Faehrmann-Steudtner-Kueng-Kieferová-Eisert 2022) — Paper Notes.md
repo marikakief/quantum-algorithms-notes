@@ -187,3 +187,13 @@ Key references:
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Richardson Extrapolation over Randomized Step Sizes]]
 - [[Channel Series Expansion via Variation-of-Parameters]]
+
+**Related (alternative approaches to improving product formulas):**
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic correctors rather than randomised sampling; achieves factor-$\alpha$ error improvement for perturbed systems while staying fully ancilla-free
+- [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — concurrent work (2022); uses randomized corrections within a single product formula to double error order; shares the mixing-lemma analysis framework
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds high-order product formulas that drastically reduce constant-factor error; complementary to the randomised sampling approach here
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — foundational Suzuki product-formula theory that underpins the MPF error analysis used here
+- [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — alternative strategy for reducing Trotter error via symmetry kicks; complementary to the multi-product approach here
+- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — Marika's earlier paper; pursues Dyson-LCU as an alternative to the product-formula paradigm this paper improves
+- [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes]] — Marika's earlier paper; uses LCU-based combination of unitaries, the same structural idea underlying the MPF approach
+- [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — practical Trotter resource estimation for condensed-phase systems; a target application where MPF cost reductions from this paper would apply

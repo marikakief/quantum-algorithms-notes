@@ -109,6 +109,9 @@ The key limitation compared to later work: eigenstates are prepared classically 
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — analyses the Trotter errors relevant to the scalable version of this approach
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — source of the phase estimation algorithm used here
 - [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]] — related Aspuru-Guzik group work on chemical dynamics
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — the scalable superconducting successor; uses Bravyi-Kitaev instead of the configuration basis used here, making the precompilation polynomial-cost
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — practical strategies for VQE+UCC, the near-term alternative to this paper's PEA approach for molecular energies
+- [[Increasing the Representation Accuracy of Quantum Simulations of Chemistry without Extra Quantum Resources (Takeshita, Rubin, Babbush, McClean 2019) — Paper Notes]] — extends the active-space idea inherent in this paper's minimal-basis approach to recover full-basis accuracy via classical postprocessing
 
 ### Trick cards
 - [[Recursive Phase Estimation for Qubit-Efficient Readout]] — related qubit-efficient PEA variant from Aspuru-Guzik et al. (2005)

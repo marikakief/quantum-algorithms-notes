@@ -2,6 +2,8 @@
 
 A personal Obsidian knowledge base for quantum algorithms, complexity, and related theory. Started in early 2026 as a way to get back into the literature after a research hiatus.
 
+> **Best experience: open this vault in [Obsidian](https://obsidian.md).** The notes are heavily cross-linked with `[[wikilinks]]` — reading them as plain markdown files works, but you lose the graph view, backlinks panel, and hover previews that make the connections between papers visible. See [Recommended Obsidian Setup](#recommended-obsidian-setup) below.
+
 ## What this is
 
 Structured notes on quantum algorithms papers, built around a network of paper summaries and reusable "trick cards" — atomic technique notes that can be linked across papers. The goal is a graph of connected ideas rather than a flat list of summaries.
@@ -22,10 +24,11 @@ The collection skews toward quantum algorithms (Hamiltonian simulation, quantum 
 
 ```
 Quantum Foundations/
-├── Paper Summaries/
-├── Quantum Tricks/
-├── Paper Index.md
+├── Paper Summaries/       (~185 paper notes)
+├── Quantum Tricks/        (~500 technique cards)
+├── Paper Index.md         (topical index)
 ├── Hamiltonian Simulation — Comparison Tables.md
+├── FeMoCo Resource Estimation Timeline.md
 ├── Quantum algorithm zoo.md
 └── README.md
 ```
@@ -35,6 +38,44 @@ Quantum Foundations/
 **Quantum Tricks** — self-contained technique cards. Each one explains a single reusable idea: what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
 
 **Paper Index** — all paper notes organised by topic.
+
+**FeMoCo Resource Estimation Timeline** — standalone synthesis note tracking how FeMoCo quantum resource estimates dropped from ~10¹⁴ to ~10⁹ Toffolis across 8 years of algorithmic improvements.
+
+## Recommended Obsidian Setup
+
+### Core plugins (built-in, just enable them)
+
+- **Backlinks** — shows which notes link to the current note. Essential for trick cards (you can see every paper that uses a technique). Enable "Backlinks in document" to see them inline.
+- **Graph view** — visualise the link structure. Try filtering to just `path:Paper Summaries` or `path:Quantum Tricks` to see clusters. The Hamiltonian simulation cluster is particularly dense.
+- **Page preview** — hover over a `[[wikilink]]` to see the target note without leaving the current one. Very useful for quickly checking a trick card while reading a paper note.
+- **Outline** — table of contents for long paper notes.
+- **Search** — Obsidian's search handles `[[wikilinks]]` natively and can filter by path, tag, etc.
+- **Tags** — paper notes use tags like `#hamiltonian-simulation`, `#quantum-chemistry`, `#product-formulas`. Enable the tag pane to browse by topic.
+
+### Community plugins (recommended)
+
+- **Dataview** — query your vault like a database. Useful for things like "list all papers by Berry sorted by year" or "show all trick cards tagged #block-encoding". Install from Community Plugins → Browse.
+- **Latex Suite** — if you want to edit the maths. The notes use `$...$` and `$$...$$` extensively. This plugin gives you snippets and auto-completion for LaTeX.
+- **Admonition / Callouts** — some notes use `> [!note]` and `> [!warning]` callout blocks. Obsidian renders these natively since v0.14, but a callout plugin can add more types.
+- **Graph Analysis** — goes beyond the built-in graph view. Can find clusters, shortest paths between papers, and identify hub notes. Good for seeing which trick cards are most connected.
+- **Local Graph** — shows the immediate neighbourhood of the current note. Faster than the full graph for seeing what's connected to what you're reading.
+
+### Settings worth changing
+
+- **Files & Links → Default location for new notes** → set to vault root (so new notes don't end up in a random subfolder)
+- **Files & Links → Use [[Wikilinks]]** → make sure this is ON (it should be by default)
+- **Editor → Readable line length** → ON (the paper notes can get wide)
+- **Editor → Show frontmatter** → OFF (cleaner reading experience; the metadata is there if you need it)
+
+### Graph view tips
+
+The vault has 680+ notes, so the full graph is dense. Try these filters:
+- `path:Paper Summaries` — just the paper network
+- `path:Quantum Tricks` — just the technique network
+- `tag:#hamiltonian-simulation` — one topic cluster
+- Depth slider → 1 or 2 for local exploration
+
+Colour groups by folder (`Paper Summaries` vs `Quantum Tricks`) to see the bipartite structure: papers on one side, tricks on the other, with links crossing between them.
 
 ## AI disclosure
 

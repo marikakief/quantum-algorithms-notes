@@ -1404,7 +1404,7 @@ Quantum recommendation systems
 _Innovations in Theoretical Computer Science (ITCS 2017)_, LIPIcs, vol. [67](http://drops.dagstuhl.de/opus/portals/lipics/index.php?semnr=16054), pg. [1868-8969](http://drops.dagstuhl.de/opus/volltexte/2017/8154/pdf/LIPIcs-ITCS-2017-49.pdf).
 [[arXiv:1603.08675](http://arxiv.org/abs/1603.08675)]
 
-**310.** Markus Reiher, Nathan Wiebe, Krysta M. Svore, Dave Wecker, and Matthias Troyer
+**310. ✓** Markus Reiher, Nathan Wiebe, Krysta M. Svore, Dave Wecker, and Matthias Troyer
 Elucidating reaction mechanisms on quantum computers
 _[arXiv:1605.03590](http://arxiv.org/abs/1605.03590)_, 2016.
 

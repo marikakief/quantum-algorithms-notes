@@ -173,3 +173,4 @@ where $\alpha_{\text{comm}} = \frac{1}{T}\sum_l \frac{1}{2}\int_{t_{l-1}}^{t_l}\
 - [[Oblivious Amplitude Amplification (Robust)]] — related amplification technique
 - [[Variable-Time Amplification for Condition-Number Reduction]] — related QLSA technique
 - [[Standard Amplitude Amplification]] — used for the final success-probability boost
+- [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — QLSA-based alternative achieving $O(T)$ oracle scaling for time-dependent inhomogeneous ODEs; uses same Dyson machinery but different overall architecture

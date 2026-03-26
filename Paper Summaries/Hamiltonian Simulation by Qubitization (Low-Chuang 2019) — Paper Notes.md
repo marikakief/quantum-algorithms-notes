@@ -78,8 +78,14 @@ Qubitization is the middle layer where the geometry becomes explicit. The paper 
 - [[Phased Qubitization Sequence]]
 - [[Signal Transduction via Controlled-W]]
 - [[Jacobi-Anger Truncation for QSP Simulation]]
-- [[LCU Origins (Childs-Wiebe 2012) - Paper Notes]]
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) - Paper Notes]]
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) - Paper Notes]]
-- [[Hamiltonian Simulation - Comparison Tables]]
+- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
+- [[Hamiltonian Simulation — Comparison Tables]]
+- [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — first full fault-tolerant chemistry instantiation of the qubitization interface, with explicit PREPARE/SELECT constructions ([[Unary Iteration]], [[QROM (Quantum Read-Only Memory)|QROM]], [[Coherent Alias Sampling for PREPARE]]) and surface-code T counts
+- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — extends this framework to arbitrary molecular orbital bases using single factorization and QROAM; applies the standard-form encoding abstraction to dense $O(N^4)$ Hamiltonians
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — further develops the qubitized chemistry walk using THC factorization; achieves $\widetilde{O}(N)$ Toffolis per walk step in arbitrary basis, matching the standard-form encoding cost floor
+- [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — generalizes the symmetric qubitization walk to asymmetric PREPARE oracles ($A \neq B$); applies to Gaussian-coupled Hamiltonians (SYK) where random circuits replace coherent alias sampling
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — pedagogical reconstruction of qubitization within the QSVT framework; treats Ham sim as QSVT with polynomial P ≈ e^{-iλt}
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — halves the query count of qubitization-based simulation using directional walk control and GQSP; direct improvement on the algorithm introduced here
+- [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — alternative resolution of the QSP parity obstruction for $e^{-ixt}$ via affine spectrum compression; uses the walk operator from this paper

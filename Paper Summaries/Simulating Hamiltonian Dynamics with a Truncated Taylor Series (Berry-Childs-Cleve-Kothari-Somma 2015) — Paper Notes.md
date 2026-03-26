@@ -207,6 +207,7 @@ The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially be
 - [[Hamiltonian Simulation with Nearly Optimal Dependence on All Parameters (Berry-Childs-Kothari 2015) — Paper Notes]] — combines walk + LCU for optimal sparsity scaling
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieved strictly optimal scaling, removing the $\log\log$ factor
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — reformulated via block-encoding + QSP
+- [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — chemistry case where Taylor-series simulation is replaced by direct qubitized phase estimation; useful contrast because both use LCU-style PREPARE/SELECT but optimize different end goals
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — generalised the polynomial framework
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — extended the Taylor/LCU approach to time-dependent $H(t)$
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]] — further refinement of time-dependent simulation

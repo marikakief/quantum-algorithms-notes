@@ -22,4 +22,10 @@ Trade-off: $O(\eta \cdot L)$ registers instead of $O(n_b \cdot L)$, but eliminat
 Extra register cost: $O(\eta L)$ value registers where $L$ = tree depth, hence $O(\eta \log N)$ qubits up to the precision of each stored charge/multipole word. Eliminates the implicit $O(\eta)$ overhead from QRAM-style state-dependent addressing at each access.
 
 ## Caveat
-Information replication means updates must propagate to all copies — the forward-backward sweep handles this, but adds $O(\eta)$ work per level.
+Information replication means updates must propagate to all copies — the [[Forward-Backward Sweep for Hierarchical Aggregation|forward-backward sweep]] handles this, but adds $O(\eta)$ work per level.
+
+## Related notes
+- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]]
+- [[Quantum Sorting for Fixed-Location Data Access]]
+- [[Forward-Backward Sweep for Hierarchical Aggregation]]
+- [[Shifted Morton Orderings for Interaction List Access]]

@@ -148,9 +148,16 @@ This paper was one of the first to seriously question whether worst-case Trotter
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]]
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]]
 - [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes]]
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]]
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — randomized multi-product formulas as a follow-on strategy to close the gap between norm bounds and actual Trotter cost that this paper identified
+- [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry kicks as another route to achieve the practical Trotter error reduction this paper documented empirically
+- [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — randomized corrections that double effective product-formula order; addresses the overestimation problem this paper raised
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected product formulas; achieves provable factor-$\alpha$ improvement for perturbed systems, vindicating the practical-error framing of this paper
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds 8th-order product formulas ~100× more accurate; directly addresses the norm-bound looseness this paper identified
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
+- [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — extends the error-tightening program to condensed-phase Hamiltonians (Hubbard, jellium) and derives explicit $W$ norms; the extensive-vs-intensive error framing there is the condensed-matter analogue of the basis/state-dependence insight here
+- [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — the split-operator Trotter step for plane-wave Hamiltonians, introduced by several of the same authors; the translation-invariant structure of the potential energy coefficients produces the same kind of systematic cancellation in the Trotter error that this paper identifies for molecular systems
+- [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — fermionic swap network Trotter step; the ordering-dependent Trotter error (left unanalysed in that paper) is exactly the kind of problem this paper's techniques address
 
 ### Trick cards
 - [[Nuclear Charge Scaling of Trotter Error]]

@@ -56,7 +56,14 @@ Circuit: 11 single-qubit gates + 2 CZ$_\pi$ gates.
 - **Not a speedup over classical for small systems:** For H₂, exact diagonalization is trivial classically. VQE is only interesting when the molecule is large enough that the Hilbert space is classically intractable.
 
 ## Related notes
-- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first scalable hardware demo; VQE achieves chemical accuracy on H₂
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — practical strategies for scaling VQE+UCC: MP2 prescreening, CAS restriction, analytical gradients
+- [[Increasing the Representation Accuracy of Quantum Simulations of Chemistry without Extra Quantum Resources (Takeshita, Rubin, Babbush, McClean 2019) — Paper Notes]] — extends VQE accuracy beyond the active space via VQSE and orbital relaxation, no extra qubits
+- [[Application of Fermionic Marginal Constraints to Hybrid Quantum Algorithms (Rubin, Babbush, McClean 2018) — Paper Notes]] — proves optimal shot allocation for VQE; reduces measurement cost >10× via $n$-representability constraints
+- [[Decoding Quantum Errors with Subspace Expansions (McClean, Jiang, Rubin, Babbush, Neven 2019) — Paper Notes]] — error mitigation for VQE via symmetry-based subspace projection; no ancilla needed
+- [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes]] — reduces VQE measurement circuits from $O(N^4)$ to $O(N)$ via basis rotation grouping
+- [[Simulating Challenging Correlated Molecules and Materials on the Sycamore Processor (Tazhigulov, Sun, Babbush, Chan et al 2022) — Paper Notes]] — Sycamore NISQ experiment for spin models; QITE variant of the variational approach with extensive error mitigation
+- [[Reliably Assessing the Electronic Structure of Cytochrome P450 (Goings, Babbush, Rubin et al 2022) — Paper Notes]] — fault-tolerant QPE resource estimates for CYP; the long-term alternative to VQE for this class of problems
 - [[Unitary Coupled Cluster (UCC) Ansatz]]
 - [[Pauli Expectation Value Estimation]]
 - [[Bravyi-Kitaev Transformation]]

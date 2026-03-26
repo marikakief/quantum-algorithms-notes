@@ -22,3 +22,4 @@ Any time you derive polynomial approximants analytically and need guaranteed imp
 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
 - [[SOSSA — Sum-of-Squares Spectral Amplification]]
+- [[Rudin Sum-of-Squares Completion with Parity Control]] — parity-aware extension using Rudin's decomposition, from [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes|Berry et al. (2024)]]

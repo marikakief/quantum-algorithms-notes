@@ -186,6 +186,8 @@ The simulation works via **block-multilinear polynomial approximation**:
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — query complexity separations via walk methods
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes]] — related quantum-classical separation story via sampling
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes]] — earlier Aaronson paper; block-multilinear polynomial idea recurs there
+- [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — BQP-completeness result for coupled oscillator simulation; the glued-trees oracle separation underlying that result is in the same spirit as Forrelation's optimal query separation
+- [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — quartic query separation for planted $k$XOR; different oracle model but same project of finding natural problems with provable quantum-classical gaps
 
 ### Trick cards
 - [[Gaussian Lifting for Query Lower Bounds]]

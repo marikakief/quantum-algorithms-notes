@@ -170,7 +170,7 @@ Decides whether an eigenphase lies in one of two intervals separated by a gap $\
 
 ## Notes and context
 
-SOSSA was simultaneously applied to real-world quantum chemistry in a companion paper by Low et al. (arXiv:2502.15882, 2025), where it achieved state-of-the-art gate counts for molecular phase estimation. The present paper provides the general theory and the SYK demonstration.
+SOSSA was simultaneously applied to real-world quantum chemistry in a companion paper: [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low, King, Berry et al. (2025)]], where it achieved state-of-the-art gate counts for molecular phase estimation (FeMoCo-76: $9.99 \times 10^8$ Toffolis). That paper introduces the [[DFTHC Factorization]] and [[Rectangular Block-Encoding for Spectrum Amplification|rectangular block-encoding]] technique. The present paper provides the general theory and the SYK demonstration.
 
 The SYK speedup (degree-2 Majorana) is a random-instance / high-probability statement. The gate costs per block-encoding query are not dramatically different from LCU, so the query-model improvement carries through to end-to-end gate counts in this case — but this should be checked per system.
 
@@ -198,3 +198,7 @@ The SYK speedup (degree-2 Majorana) is a random-instance / high-probability stat
 - [[SOS Spectral Amplification]]
 - [[Double Factorisation for Block-Encoding]]
 - [[Gapped Phase Estimation]]
+- [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — chemistry companion paper
+- [[DFTHC Factorization]]
+- [[Rectangular Block-Encoding for Spectrum Amplification]]
+- [[SOS Decomposition via Semidefinite Programming for Chemistry]]

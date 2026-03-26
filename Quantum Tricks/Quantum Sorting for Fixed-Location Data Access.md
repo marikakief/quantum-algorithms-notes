@@ -27,7 +27,10 @@ Sorting network over $\eta$ registers of $O(\log N)$ bits: standard AKS/odd-even
 ## Caveat
 Sorting is a coherent quantum operation — the sorted order is entangled with the particle state. Uncomputation after the FMM step requires running the sorting network in reverse (same cost). The multiple-Morton-ordering strategy requires $O(\log\eta)$ separate sorted orderings (one per tree level), each needing its own sort/unsort pass. Constant-factor overhead is therefore non-trivial.
 
-## Related Paper Notes
+## Related notes
 
+- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]]
 - [[Per-Particle Box Registers (Avoiding Quantum Addressing)]]
 - [[Forward-Backward Sweep for Hierarchical Aggregation]]
+- [[Shifted Morton Orderings for Interaction List Access]]
+- [[Sorting Networks as Quantum Control-Flow Compilers]]

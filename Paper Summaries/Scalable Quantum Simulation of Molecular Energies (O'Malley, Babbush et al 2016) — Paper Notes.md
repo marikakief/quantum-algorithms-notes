@@ -20,7 +20,7 @@ where the coefficients $\{g_\gamma\}$ are efficiently computable functions of bo
 
 ## What the paper does
 
-First experimental demonstration of a scalable quantum chemistry algorithm — one that does not require exponentially costly precompilation. Using two superconducting Xmon qubits (for VQE) and three qubits (for PEA), the paper runs both the [[Variational Quantum Eigensolver (VQE)]] and the canonical [[Trotterized Phase Estimation]] algorithm on the $\text{H}_2$ dissociation curve. The VQE run achieves chemical accuracy (dissociation energy error $(8 \pm 5) \times 10^{-4}$ Hartree); the PEA run does not ($( 1 \pm 1) \times 10^{-2}$ Hartree) because only a single Trotter step is feasible. The key comparison demonstrates that variational algorithms are more error-tolerant than fixed-circuit algorithms on pre-fault-tolerant hardware.
+First experimental demonstration of a scalable quantum chemistry algorithm — one that does not require exponentially costly precompilation. Using two superconducting Xmon qubits (for VQE) and three qubits (for PEA), the paper runs both the [[Variational Quantum Eigensolver (VQE)]] and the canonical [[Trotterized Time Evolution for Chemistry|Trotterized]] [[Iterative Phase Estimation (Kitaev)|phase estimation]] algorithm on the $\text{H}_2$ dissociation curve. The VQE run achieves chemical accuracy (dissociation energy error $(8 \pm 5) \times 10^{-4}$ Hartree); the PEA run does not ($( 1 \pm 1) \times 10^{-2}$ Hartree) because only a single Trotter step is feasible. The key comparison demonstrates that variational algorithms are more error-tolerant than fixed-circuit algorithms on pre-fault-tolerant hardware.
 
 ## The algorithm / construction
 
@@ -33,7 +33,7 @@ First experimental demonstration of a scalable quantum chemistry algorithm — o
 
 ### Variational Quantum Eigensolver (VQE)
 
-The ansatz uses the [[Unitary Coupled Cluster (UCC)]] parameterization. For H₂ in this basis, UCCSD reduces to a single parameter:
+The ansatz uses the [[Unitary Coupled Cluster (UCC) Ansatz|UCC]] parameterization. For H₂ in this basis, UCCSD reduces to a single parameter:
 
 $$|\phi(\theta)\rangle = e^{-i\theta X_0 Y_1} |01\rangle$$
 
@@ -153,12 +153,31 @@ The distinguishing contribution is not the accuracy per se (prior experiments we
 | Barends et al. (2016), Nature 534, 222 | Digitized adiabatic quantum computing on same device | No |
 | Kelly et al. (2015), Nature 519, 66 | State preservation by repetitive error detection (device paper) | No |
 | Shen et al. (2015) | VQE + UCC in ion trap | No |
-| Babbush et al. (2016), NJP 18, 033032 | Exponentially more precise fermion simulation | No |
+| Babbush et al. (2016/2018), NJP 18, 033032 / QST 3, 015006 | Exponentially more precise fermion simulation via CI matrix + Taylor series | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] |
 
 ## Cross-links
 
 ### Paper notes
-*(None yet in vault — this is the first paper)*
+- [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — Original VQE proposal demonstrated on HeH⁺; this paper is the first scalable hardware implementation using a polynomial-cost fermion-to-qubit mapping (BK vs configuration basis)
+- [[The Theory of Variational Hybrid Quantum-Classical Algorithms (McClean-Romero-Babbush-Aspuru-Guzik 2015) — Paper Notes]] — Theory paper by the same group; proves variational error suppression and develops the analytical gradient framework used here
+- [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]] — Original quantum chemistry QPE proposal; this paper is the first hardware implementation that uses a scalable (BK) fermion mapping instead of the exponentially costly configuration basis used there
+- [[Towards Quantum Chemistry on a Quantum Computer (Lanyon-Whitfield-Aspuru-Guzik-White 2010) — Paper Notes]] — First experimental PEA chemistry demo (photonic, H₂); this paper's comparison table (Table I) explicitly benchmarks against Lanyon et al., distinguishing scalable (BK) from non-scalable (configuration basis) representations
+- [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] — Theoretical algorithm paper cited by this work (as NJP 2016 precursor); provides the formal complexity result and full proof that the Taylor series approach achieves $\tilde{O}(\eta^2 N^3 t)$ gate complexity in the first-quantized CI picture
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — Builds directly on this paper's VQE + UCC approach; introduces practical strategies to scale beyond the single-parameter H₂ demo: MP2 prescreening, active-space restriction, and analytical gradients
+- [[Application of Fermionic Marginal Constraints to Hybrid Quantum Algorithms (Rubin, Babbush, McClean 2018) — Paper Notes]] — Proves that the $M_\ell \propto |w_\ell|$ shot allocation used here is optimal, and shows $> 10\times$ reduction in measurement cost via fermionic $n$-representability constraints
+- [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] — Applies the same Taylor series LCU framework to first-quantized real-space simulation; analyses discretization costs that this paper's Trotter approach sidesteps
+- [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — Provides the efficient Trotter step (depth $N$, linear connectivity) and Slater determinant preparation that would scale the PEA approach demonstrated here
+- [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — Fault-tolerant successor: qubitization with compiled T-gate counts shows what's needed to scale beyond this proof-of-concept to classically intractable molecules
+- [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — Extends to periodic systems via plane-wave dual basis; proposes jellium as a near-term target building on the VQE approach demonstrated here
+- [[Compressing Many-Body Fermion Operators under Unitary Constraints (Rubin, Lee, Babbush 2021) — Paper Notes|Rubin, Lee, Babbush 2021]]
+- [[Decoding Quantum Errors with Subspace Expansions (McClean, Jiang, Rubin, Babbush, Neven 2019) — Paper Notes|McClean, Jiang, Rubin, Babbush, Neven 2019]]
+- [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes|Huggins, McClean, Rubin, Babbush et al 2021]]
+- [[Increasing the Representation Accuracy of Quantum Simulations of Chemistry without Extra Quantum Resources (Takeshita, Rubin, Babbush, McClean 2019) — Paper Notes|Takeshita, Rubin, Babbush, McClean 2019]]
+- [[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes|Motta, Babbush, Chan et al 2018]]
+- [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes|Huang, Babbush, McClean et al 2021]]
+- [[Unbiasing Fermionic Quantum Monte Carlo with a Quantum Computer (Huggins, Babbush et al 2021) — Paper Notes|Huggins, Babbush et al 2021]]
+- [[Simulating Challenging Correlated Molecules and Materials on the Sycamore Processor (Tazhigulov, Sun, Babbush, Chan et al 2022) — Paper Notes]] — The 2022 successor to this paper's "what can superconducting hardware actually do for chemistry?" question; scales from 2 qubits to 11, from H₂ to Fe-S clusters and α-RuCl₃, with a far more sophisticated error mitigation stack
+- [[Is There Evidence for Exponential Quantum Advantage in Quantum Chemistry (Lee, Babbush, Chan et al 2022) — Paper Notes|Lee, Babbush, Chan et al 2022]]
 
 ### Trick cards
 - [[Bravyi-Kitaev Transformation]]

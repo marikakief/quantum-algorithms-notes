@@ -78,7 +78,7 @@ The quantum algorithm uses $O(n)$ queries → **exponential separation**.
 
 ### The road to Shor
 
-Simon's algorithm is the direct conceptual predecessor to [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev's phase estimation]] and [[Shor's Factoring Algorithm (Shor 1994) — Paper Notes|Shor's factoring algorithm]]:
+Simon's algorithm is the direct conceptual predecessor to [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev's phase estimation]] and [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's factoring algorithm]]:
 
 | Simon (1994) | Shor (1994) |
 |---|---|

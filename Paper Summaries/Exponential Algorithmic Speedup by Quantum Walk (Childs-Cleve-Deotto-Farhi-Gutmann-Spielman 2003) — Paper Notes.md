@@ -153,6 +153,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — algorithmic application of discrete quantum walks
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — black-box Hamiltonian simulation extending the oracle-to-Hamiltonian ideas here
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — product-formula simulation tools used in the implementation
+- [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — the classical lower bound in that paper directly inherits the exponential separation from this glued-trees result; the oscillator problem is BQP-complete via a reduction through this paper
 
 ### Trick cards
 - [[Column-Subspace Reduction for Symmetric Graphs]]

@@ -23,7 +23,7 @@ $$
 s_p = \frac{1}{4 - 4^{1/(2p+1)}}.
 $$
 
-The crucial point: the subintervals are chosen to preserve the ordering structure of $U(\lambda,\mu)$. Each $U_p$ application covers a contiguous ordered interval; their composition correctly chains together the time-ordered segments. This is what makes the recursion valid for ordered exponentials, not just for $e^{tH}$.
+The key point: the subintervals are chosen to preserve the ordering structure of $U(\lambda,\mu)$. Each $U_p$ application covers a contiguous ordered interval; their composition correctly chains together the time-ordered segments. This is what makes the recursion valid for ordered exponentials, not just for $e^{tH}$.
 
 **Step 3 — Error cancellation.** The specific choice of $s_p$ cancels the leading-order error term in $U_p$ in a symmetric way, making $U_{p+1}$ accurate to $O(\Delta\lambda^{2p+3})$. The proof uses Taylor expansion of the ordered exponential via the recursive derivatives $\partial_\lambda^p U = T_p(\lambda)U(\lambda,\mu)$ (where $T_{p+1}(\lambda) = T_p(\lambda)H(\lambda) + \partial_\lambda T_p(\lambda)$, $T_0 = I$) plus symmetry arguments.
 

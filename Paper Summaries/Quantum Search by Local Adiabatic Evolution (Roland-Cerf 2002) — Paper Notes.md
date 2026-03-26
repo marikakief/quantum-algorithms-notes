@@ -116,3 +116,6 @@ The local adiabatic idea — slow down where the gap is small — is the templat
 - [[Local Adiabatic Schedule via Gap-Dependent Evolution Rate]]
 - [[Gap-Adapted Adiabatic Scheduling]] — generalised version of the local adiabatic idea with tunable exponent $p$
 - [[Phase Kickback from Oracle Queries]] — the oracle mechanism underlying both adiabatic and gate-model search
+
+### Follow-up
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Discretises the local adiabatic schedule with Trotter step size 1; generalises to $1 \leq p < 2$; adds boundary-cancellation variant achieving super-polynomial precision

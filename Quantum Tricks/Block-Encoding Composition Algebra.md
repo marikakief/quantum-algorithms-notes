@@ -30,3 +30,4 @@ Any time the target operator is assembled from simpler pieces: chemistry Hamilto
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Sandwich LCU for Matrix Equations]]
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — uses composition algebra to build preconditioned operator $I + A^{-1}B$
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — composition of Givens rotation block-encodings with diagonal SELECT is the main structural element; the block-encoding of the full walk step follows from composition rules applied to per-term THC oracles

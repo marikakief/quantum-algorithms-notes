@@ -161,7 +161,7 @@ Three contributions of lasting value:
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL (2009)]] [Ref 22]
 - [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] — initial announcement
 - Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (2009) [Ref 17] — fractional-query framework
-- Berry-Cleve-Gharibian (2013) [Ref 7] — time-efficient implementation
+- [[Gate-Efficient Discrete Simulations of Continuous-Time Quantum Query Algorithms (Berry-Cleve-Gharibian 2012) — Paper Notes|Berry-Cleve-Gharibian (2012)]] [Ref 7] — gate-efficient compression of CGMSY construction
 - Marriott-Watrous (2005) [Ref 27] — QMA in-place amplification (OAA inspiration)
 
 ---

@@ -25,3 +25,5 @@ The classical phase-synthesis step can be numerically delicate at high degree, s
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
+- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — applies this sequence for phase estimation on an arbitrary-basis chemistry Hamiltonian; the phase estimation step uses the Jacobi-Anger truncation of the phased iterate
+- [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — applies the phased sequence via QSP to the asymmetric qubitization walk; derives sharp truncation order using Airy-function asymptotics of Bessel functions

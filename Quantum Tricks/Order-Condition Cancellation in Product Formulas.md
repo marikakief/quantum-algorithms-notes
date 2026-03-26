@@ -30,3 +30,5 @@ Order conditions are algebraic identities that hold for a specific formula const
 - [[Trotter Commutator-Scaling Bound]]
 - [[Finite Nested-Commutator Expansion]]
 - [[Permutation Averaging for Product-Formula Error Cancellation]]
+- [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — derives a concrete second-order Trotter error bound ($W t^3$ form) for condensed-phase systems; the $1/12$ prefactor comes precisely from the second-order order conditions cancelling all first-order error terms
+- [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — shows that ground-state Trotter error is far below the operator-norm bound; the same order-condition cancellation structure explains why states with small overlap with high-error eigenstates see negligible cost

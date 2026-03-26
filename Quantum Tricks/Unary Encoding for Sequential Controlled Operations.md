@@ -32,3 +32,4 @@ Ancilla cost is $O(K \log L)$ qubits — one $\log L$-qubit register per Taylor 
 ## Related Paper Notes
 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Unary Iteration]] — closely related later primitive from [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. 2018]]. This card is earlier and specific to unary-encoding the Taylor truncation order; [[Unary Iteration]] generalizes the "sweep a unary control" idea to binary-indexed table lookup and SELECT gadgets.

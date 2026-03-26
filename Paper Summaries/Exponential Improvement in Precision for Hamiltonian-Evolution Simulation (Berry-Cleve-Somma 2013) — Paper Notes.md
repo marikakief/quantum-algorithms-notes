@@ -168,3 +168,8 @@ The core insight — that ancilla states in a Trotter-like decomposition concent
 
 ### Trick cards
 - [[Fractional-Query to Discrete-Query Reduction]] — the compression idea that makes polylog precision possible
+- [[Succinct Encoding of Low-Hamming-Weight Superpositions]] — the compressed control qubit encoding from Berry-Cleve-Gharibian
+- [[Recursive Bisection Measurement]] — compressed measurement protocol
+
+### Source papers for the compression
+- [[Gate-Efficient Discrete Simulations of Continuous-Time Quantum Query Algorithms (Berry-Cleve-Gharibian 2012) — Paper Notes]] — introduced the gate-efficient compression of CGMSY; this paper extends those techniques to Hamiltonian simulation

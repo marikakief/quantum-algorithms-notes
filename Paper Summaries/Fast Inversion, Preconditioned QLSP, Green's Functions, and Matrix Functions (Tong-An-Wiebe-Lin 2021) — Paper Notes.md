@@ -156,6 +156,8 @@ The advantage is structural: when $H = T + V$ with $T$ large but fast-invertible
 - [[Quantum Metropolis Sampling (Temme-Osborne-Vollbrecht-Poulin-Verstraete 2011) — Paper Notes]]
 - [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes]]
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]]
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — concurrent QLSP work achieving optimal $O(\kappa\log(1/\varepsilon))$ via discrete adiabatic theorem; complementary approach to the preconditioning strategy here
+- [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — argues that QLSP-based ODE approaches (including preconditioned variants) introduce condition-number overhead that prevents exponential speedup for oscillator dynamics
 
 ### Trick cards
 - [[Fast Inversion for Classically-Diagonalizable Matrices]]

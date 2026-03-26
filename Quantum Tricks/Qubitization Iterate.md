@@ -25,3 +25,6 @@ The iterate reduces a hard many-qubit spectral transformation to programmable SU
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
+- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — concrete instantiation of the iterate for arbitrary molecular orbital bases using single factorization and QROAM-based PREPARE
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC-based instantiation achieving $\widetilde{O}(N)$ Toffoli cost per iterate step in arbitrary basis
+- [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — asymmetric generalization where the iterate uses two different PREPARE oracles for bra and ket sides

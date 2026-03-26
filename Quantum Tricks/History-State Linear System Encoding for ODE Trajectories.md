@@ -34,7 +34,7 @@ The condition number of $\mathcal{A}$ is $\kappa = O(N_t \kappa_V)$ where $\kapp
 
 ## Caveat
 
-The quadratic penalty in $\Delta t$ (relative to the $\Omega(\Delta t)$ lower bound) comes from HHL's $\kappa^2$ scaling. [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] fixed the precision dependence (poly → polylog in $1/\varepsilon$) but kept the $\Delta t^2$. Optimal $\Delta t$ scaling requires moving beyond HHL to direct Hamiltonian simulation encodings (Costa et al. 2022).
+The quadratic penalty in $\Delta t$ (relative to the $\Omega(\Delta t)$ lower bound) comes from HHL's $\kappa^2$ scaling. [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] fixed the precision dependence (poly → polylog in $1/\varepsilon$) but kept the $\Delta t^2$. [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes|Berry-Costa (2022)]] achieves optimal $\Delta t$ scaling by switching to Dyson series block-encodings within the same history-state framework, using the [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|optimal QLSA]].
 
 Also: $A$ must satisfy a stability condition (eigenvalues in a left-half-plane wedge) for the multistep method to be $A(\alpha)$-stable.
 

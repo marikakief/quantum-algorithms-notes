@@ -140,3 +140,5 @@ For [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computatio
 - [[Search Lower Bound for Spectral Gap Impossibility]]
 - [[Quantized Bipartite Walk Construction]] — the Szegedy walk that this generalises
 - [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping]] — related gap analysis technique
+- [[Rectangular Block-Encoding for Spectrum Amplification]] — more efficient rectangular block-encoding approach (Low et al. 2025)
+- [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — applies spectrum amplification to chemistry with SOS decomposition and DFTHC

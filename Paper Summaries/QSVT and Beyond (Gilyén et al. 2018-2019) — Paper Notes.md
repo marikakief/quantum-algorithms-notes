@@ -64,9 +64,14 @@ The hard part of a QSVT paper is usually not the circuit construction — it's t
 
 - [[QSVT Meta-Template]]
 - [[Parity-Aware Polynomial Design]]
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) - Paper Notes]]
-- [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) - Paper Notes]]
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
+- [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Qubitization Iterate]]
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Hamiltonian Simulation - Comparison Tables]]
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — pedagogical tutorial built on this framework; good entry point for understanding the QSP→QET→QSVT chain
+- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — fault-tolerant chemistry application of the block-encoding abstraction to arbitrary molecular orbital bases; QROAM-based PREPARE instantiates the standard-form encoding for $O(N^4)$-term Hamiltonians
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC-based qubitized chemistry; the [[Block-Encoding Composition Algebra]] rules govern composition of Givens rotation circuits with diagonal SELECT, and the overall algorithm is an optimal QSVT Hamiltonian simulation
+- [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — asymmetric block-encoding variant (two different PREPARE oracles) for Gaussian-coupled Hamiltonians; fits the generalized standard-form encoding picture
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — extends QSP Hamiltonian simulation to GQSP, halving the query count; built on the block-encoding framework introduced here
+- [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — one-shot coherent simulation via affine spectrum compression; resolves the parity obstruction that exists within the standard QSVT framework defined here

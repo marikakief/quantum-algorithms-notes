@@ -71,3 +71,7 @@ Note the caveats: this is an oracle separation, contingent on efficient state pr
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+
+---
+
+> **⚠️ Duplicate note:** This is a shorter summary of arXiv:2303.13012. A more detailed treatment lives at [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]], which includes the full algorithm, BQP-completeness proof, comparison with QLSP approaches, and trick cards. Refer there for cross-links to related work.

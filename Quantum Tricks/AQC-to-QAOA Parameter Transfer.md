@@ -36,3 +36,5 @@ Same asymptotic gate complexity as the underlying AQC: the discretisation adds T
 - [[Gap-Adapted Adiabatic Scheduling]]
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes]]
 - [[Superadiabatic Smooth Scheduling for Exponential Precision]]
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Shows discrete AQC with step size 1 produces QAOA angles matching optimal $O(\sqrt{N})$ for Grover search
+- [[Boundary-Cancellation Schedule for Adiabatic Grover Search]]

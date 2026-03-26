@@ -26,3 +26,9 @@ $O(\eta)$ work per tree level, hence $O(\eta L)$ overall where $L$ = tree depth.
 
 ## Caveat
 Requires data in sorted order first. Information is replicated per-particle (each particle stores its box's aggregate), so register cost is $O(\eta \cdot L)$ where $L$ = tree depth.
+
+## Related notes
+- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]]
+- [[Quantum Sorting for Fixed-Location Data Access]]
+- [[Per-Particle Box Registers (Avoiding Quantum Addressing)]]
+- [[Shifted Morton Orderings for Interaction List Access]]

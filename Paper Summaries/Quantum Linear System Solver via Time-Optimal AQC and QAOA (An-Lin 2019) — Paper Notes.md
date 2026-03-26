@@ -162,8 +162,9 @@ The time-dependent Hamiltonian $H(f(s))$ is simulated using the [[Time-Dependent
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]]
-
 - [[Optimal Polynomial Based Quantum Eigenstate Filtering (Dong-An-Lin 2020) — Paper Notes]] — follow-up adding eigenstate filtering to make the AQC approach rigorous; also introduces Zeno alternative
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — direct follow-on; achieves optimal $O(\kappa\log(1/\varepsilon))$ by replacing continuous adiabatic simulation with discrete qubitized walk, removing the $\log\kappa$ overhead left here
+- [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — numerically validates that the discrete approach is ~20× cheaper in practice than the randomized adiabatic method
 
 ### Trick cards
 - [[Gap-Adapted Adiabatic Scheduling]]

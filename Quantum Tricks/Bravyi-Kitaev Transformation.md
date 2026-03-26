@@ -50,7 +50,8 @@ $$H = f_0 \mathbf{1} + f_1 Z_0 + f_2 Z_1 + f_3 Z_2 + f_1 Z_0 Z_1 + f_4 Z_0 Z_2 +
 The BK mapping is conceptually more complex than JW and the circuit for a given Hamiltonian term is harder to write by hand. For small systems (2–4 qubits) the advantage over JW is marginal. The savings only become significant at larger $N$. Also, the BK encoding breaks particle-number conservation symmetry more than JW does, complicating state preparation if you want to start from a particle-number eigenstate.
 
 ## Related notes
-- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first hardware use of BK mapping for VQE; reduces 4-qubit operator to 2-qubit via BK + symmetry
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — shows BK reduces UCC gate cost per parameter from $O(N)$ to $O(\log N)$ vs Jordan-Wigner
 - [[Symmetry Reduction in Qubit Hamiltonians]]
 - [[Variational Quantum Eigensolver (VQE)]]
 - [[Trotterized Time Evolution for Chemistry]]

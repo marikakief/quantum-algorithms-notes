@@ -34,6 +34,7 @@ qmd query "low-energy phase estimation trick sqrt Delta lambda"
 - [[Quantum Sorting for Fixed-Location Data Access]]
 - [[Forward-Backward Sweep for Hierarchical Aggregation]]
 - [[Per-Particle Box Registers (Avoiding Quantum Addressing)]]
+- [[Shifted Morton Orderings for Interaction List Access]]
 - [[QROM + Newton Iteration for Function Evaluation]]
 - [[Restricted Interaction Norms for Product Formulas]]
 

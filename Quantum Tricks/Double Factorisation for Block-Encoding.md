@@ -28,3 +28,5 @@ Only helps for quadratic (degree-2) operators. Higher-degree $B_j$ need differen
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[SOSSA — Sum-of-Squares Spectral Amplification]]
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]]
+- [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — DFTHC generalizes DF via $(R, B, C)$ parameterization
+- [[DFTHC Factorization]] — the generalization

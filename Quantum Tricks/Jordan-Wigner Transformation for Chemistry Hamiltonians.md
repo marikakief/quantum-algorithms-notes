@@ -43,3 +43,5 @@ The $\sigma_z$ strings make the Pauli terms nonlocal even for spatially local in
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]]
 - [[Fermionic-to-Qubit Mapping for Simplicial Dirac Operators]]
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]]
+- [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — compares JW vs BK gate cost for UCC; JW gives $O(N)$ gates/parameter vs $O(\log N)$ for BK
+- [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — uses BK (not JW) for H₂ simulation; demonstrates why the JW $O(N)$ string length motivates alternative mappings

@@ -43,3 +43,5 @@ The $1/\varepsilon$ dependence is still polynomial. For polylogarithmic precisio
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]]
 - [[Superadiabatic Smooth Scheduling for Exponential Precision]]
 - [[AQC-to-QAOA Parameter Transfer]]
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Extends gap-adapted scheduling to the discretised setting with $h = 1$; adds boundary cancellation variant
+- [[Boundary-Cancellation Schedule for Adiabatic Grover Search]]

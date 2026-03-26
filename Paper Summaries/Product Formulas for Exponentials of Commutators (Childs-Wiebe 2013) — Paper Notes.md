@@ -152,3 +152,7 @@ This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-
 - [[Group Commutator Error Cancellation]]
 - [[Finite Nested-Commutator Expansion]]
 - [[Order-Condition Cancellation in Product Formulas]]
+- [[Vandermonde Compilation of Nested Commutator Exponentials]]
+
+### Subsequent work
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — extends the commutator product-formula compilation to systematically build correctors for Suzuki/Yoshida product formulas; uses Vandermonde systems to determine compilation coefficients

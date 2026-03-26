@@ -72,3 +72,4 @@ Random-order heuristics for product formulas appeared earlier in numerical ODE l
 - [[Hamiltonian Simulation — Comparison Tables]]
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — uses Richardson extrapolation (incoherent multiproduct) over qDRIFT step sizes; closely related to the coherent multiproduct approach here
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — combines multi-product formulas with randomized sampling; complementary approach to the permutation-averaging technique here
+- [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — builds directly on this work; inserts randomized correction unitaries between half-steps to double the error order from $2k+1$ to $4k+2$

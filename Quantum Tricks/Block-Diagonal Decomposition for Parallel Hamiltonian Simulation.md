@@ -32,3 +32,5 @@ Works cleanly for translationally invariant Hamiltonians where all blocks are id
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]]
 - [[Product-Formula Time-Slicing for Local Hamiltonians]]
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]]
+- [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — the split-operator Trotter step uses the same block-diagonal principle at scale: potential-energy terms are diagonal in the dual basis (all commute, apply in parallel), kinetic terms are diagonal in the plane-wave basis; the FFFT alternates between the two diagonal representations
+- [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — fermionic swap network schedules the Hubbard model Trotter step in $O(\sqrt{N})$ depth by exploiting block-diagonal structure of the 2D lattice Hamiltonian (interleaved spin-up/spin-down JW ordering produces near-block-diagonal layers)

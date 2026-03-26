@@ -142,6 +142,7 @@ The main improvement over prior product-formula work is rigour: the proof goes t
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]]
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
+- [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — uses the Suzuki recursion and Yoshida time-reversibility from this paper as the structural foundation for randomized order-doubling
 - [[Time-Dependent Unbounded Hamiltonian Simulation with Vector Norm Scaling (An-Fang-Liu 2021) — Paper Notes]]
 - [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]]
 
@@ -152,3 +153,9 @@ The main improvement over prior product-formula work is rigour: the proof goes t
 - [[Suzuki Order as a Tunable Knob for Time Scaling]]
 - [[Order-Condition Cancellation in Product Formulas]]
 - [[Generalised Trotter for Time-Dependent Hamiltonians]]
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — uses the same Yoshida construction to find dramatically improved 8th-order product formulas via numerical optimization with over-parameterized ansätze
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — multi-product formula randomization; the MPF error analysis directly uses the Suzuki product-formula bounds established here
+- [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry-protected simulation; applies the product-formula framework developed here with symmetry kicks inserted between steps
+- [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — empirical study showing the practical Trotter error for chemistry is far below the norm bounds; directly motivated by the bounds established in this paper
+- [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — fault-tolerant Trotter simulation; uses high-order product formulas from this lineage for condensed-phase Hamiltonians
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — injected BCH correctors that improve effective order; builds directly on the error expansion framework for product formulas developed here

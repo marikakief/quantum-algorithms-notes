@@ -374,6 +374,8 @@ The paper introduces the [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|tech
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern [[Order-Condition Cancellation in Product Formulas|product-formula analysis]]
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — optimal-scaling simulation via [[QSVT Meta-Template|QSVT]]
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — quadratically amplifies the gap of the frustration-free clock Hamiltonians used here
+- [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — applies adiabatic techniques specifically to QLSP; gap-adapted scheduling builds directly on the adiabatic framework established here
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — achieves optimal QLSP scaling by discretizing the adiabatic evolution via qubitization; the discrete adiabatic theorem is a rigorous analogue of the continuous theorem used here
 
 ### Trick cards
 - [[History-State Encoding with Unary Clock]]

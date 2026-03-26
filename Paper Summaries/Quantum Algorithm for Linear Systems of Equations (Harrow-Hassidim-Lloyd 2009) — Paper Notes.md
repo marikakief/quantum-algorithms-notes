@@ -217,6 +217,13 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — preconditioned QLSP via block-encoding + QSVT; supersedes Clader et al.
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — Hamiltonian simulation backbone
 - [[Quantum Principal Component Analysis (Lloyd-Mohseni-Rebentrost 2014) — Paper Notes|Lloyd, Mohseni & Rebentrost (2014)]] — extends HHL ideas; [[Density Matrix Exponentiation via Partial Swap|density matrix exponentiation]] for non-sparse matrices
+- [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — improves to near-optimal $O(\kappa\,\mathrm{polylog}(\kappa/\varepsilon))$ via adiabatic scheduling; direct successor to HHL
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — achieves the optimal $O(\kappa\log(1/\varepsilon))$ lower bound via discrete adiabatic theorem; the definitive successor to HHL
+- [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — numerical validation showing the optimal QLSP solver's practical constant is ~1,500× smaller than the analytical bound
+- [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — argues QLSP-based ODE simulation is suboptimal for oscillator dynamics; exponential speedup requires bypassing HHL-style linear system formulations
+- [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — early ODE solver that directly uses HHL as its linear-system subroutine
+- [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — later ODE solver built on the same HHL/QLSP pipeline, extended to time-dependent coefficients via Dyson series
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — downstream adiabatic-simulation result in the same Costa-An-Berry lineage that grew out of improving HHL-style QLSP dependence
 
 ### Trick cards
 - [[Gapped Phase Estimation]]
@@ -225,3 +232,4 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 - [[Fourier Integral LCU for Matrix Inversion]]
 - [[QSVT Meta-Template]]
 - [[Linear Combination of Unitaries (LCU)]]
+- [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]] — nonlinear ODEs via Carleman linearisation + QLSP; demonstrates the QLSP-based pipeline for a qualitatively different (nonlinear) problem class

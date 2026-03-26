@@ -177,3 +177,4 @@ The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponentia
 - [[Suzuki Order as a Tunable Knob for Time Scaling]]
 - [[Order-Condition Cancellation in Product Formulas]]
 - [[Trotter Commutator-Scaling Bound]]
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimizes the constant factors in high-order product formulas that this paper first applied to quantum simulation
