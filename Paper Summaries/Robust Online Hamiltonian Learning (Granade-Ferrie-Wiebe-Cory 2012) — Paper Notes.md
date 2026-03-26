@@ -33,6 +33,7 @@ Precursor to the full QHL framework of Wiebe-Granade-Ferrie-Cory 2014, which add
 
 - Direct precursor to [[Hamiltonian Learning and Certification Using Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes|Wiebe-Granade-Ferrie-Cory 2014 (QHL)]]
 - The SMC + Bayesian update framework is inherited by [[Quantum Bootstrapping via Compressed Quantum Hamiltonian Learning (Wiebe-Granade-Ferrie-Cory 2015) — Paper Notes|bootstrapping paper]]
+- The framework is distilled to single-parameter phase estimation in [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes|Wiebe-Granade 2016 (RFPE)]], replacing full SMC with Gaussian + rejection sampling
 
 ---
 

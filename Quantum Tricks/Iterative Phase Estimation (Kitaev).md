@@ -53,6 +53,7 @@ In O'Malley et al.: 3 qubits total (1 ancilla + 2 register), circuit for control
 
 ## Related notes
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
+- [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes]] — adaptive Bayesian approach that outperforms Kitaev by $\sim 10^7\times$ in median error after 150 experiments; replaces the bit-by-bit strategy with Gaussian inference + PGH
 - [[Trotterized Time Evolution for Chemistry]]
 - [[Variational Quantum Eigensolver (VQE)]]
 - [[Bravyi-Kitaev Transformation]]

@@ -176,3 +176,8 @@ with $\gamma \sim O(1/d)$, implying $N_{\mathrm{steps}}(\delta) = O(d \log(1/\de
 - [[Noise-Robust Bayesian Hamiltonian Learning]] — from sequel paper on noisy resources
 - [[Superoperator Noise Incorporation for Robust QHL]] — from sequel paper on noisy resources
 - [[Bayesian Model Selection via SMC Marginal Likelihoods]] — from sequel paper on noisy resources
+- [[Rejection Filtering for Lightweight Bayesian Updates]] — RFPE distills this paper's Bayesian/PGH framework to single-parameter PE with a Gaussian posterior
+- [[PGH Adaptation for Single-Parameter Phase Estimation]] — closed-form PGH for phase estimation, derived from the multi-parameter PGH introduced here
+
+### Subsequent work
+- [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes]] — applies the QHL Bayesian/PGH framework to single-parameter phase estimation; replaces full SMC with Gaussian + rejection sampling (RFPE)

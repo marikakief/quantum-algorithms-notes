@@ -87,6 +87,7 @@ These match (up to log factors) the achieved scalings.
 - [[Chebyshev Polynomial Spectral Projector]] — related filtering technique
 - [[Gapped Phase Estimation]] — alternative gap estimation
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard, Høyer, Mosca & Tapp (2002)]] — [[Standard Amplitude Amplification|amplitude amplification]] and [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]]
+- [[An Alternating-Minimization Method for Preparing Low-Energy States (Anshu 2026) — Paper Notes]] — heuristic alternative for the case where initial overlap and gap are not known; sacrifices guarantees for a wider operating range
 
 ## References within this paper
 

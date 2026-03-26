@@ -41,6 +41,8 @@ The optimal $t$ for minimising expected posterior variance is $t \approx 1/(2\si
 ## Related notes
 - [[Hamiltonian Learning and Certification Using Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes]]
 - [[Quantum Hamiltonian Learning Using Imperfect Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes]] — robustness of PGH to noise; validated on superconducting and quantum-dot hardware
+- [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes]] — simplifies PGH to $M = \lceil 1.25/\sigma \rceil$ for single-parameter Gaussian posteriors; see also [[PGH Adaptation for Single-Parameter Phase Estimation]]
+- [[PGH Adaptation for Single-Parameter Phase Estimation]] — the closed-form single-parameter variant of this trick
 - [[IQLE Loschmidt-Echo for Quantum Likelihood Evaluation]]
 - [[Sequential Monte Carlo for Quantum Parameter Estimation]]
 - [[Noise-Robust Bayesian Hamiltonian Learning]]

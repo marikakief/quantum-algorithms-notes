@@ -24,8 +24,9 @@ The collection skews toward quantum algorithms (Hamiltonian simulation, quantum 
 
 ```
 Quantum Foundations/
-├── Paper Summaries/       (~185 paper notes)
-├── Quantum Tricks/        (~500 technique cards)
+├── Paper Summaries/       (~187 paper notes)
+├── Quantum Tricks/        (~513 technique cards)
+├── Concept Hubs/          (topic overview pages)
 ├── Paper Index.md         (topical index)
 ├── Hamiltonian Simulation — Comparison Tables.md
 ├── FeMoCo Resource Estimation Timeline.md
@@ -36,6 +37,8 @@ Quantum Foundations/
 **Paper Summaries** — one note per paper, covering: problem statement, main result, algorithm or construction in detail, key theorems with exact complexity bounds, comparison with prior work, limitations, reusable ideas (linking to trick cards), and cross-references to related notes.
 
 **Quantum Tricks** — self-contained technique cards. Each one explains a single reusable idea: what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
+
+**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., Hamiltonian simulation, product formulas, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
 
 **Paper Index** — all paper notes organised by topic.
 

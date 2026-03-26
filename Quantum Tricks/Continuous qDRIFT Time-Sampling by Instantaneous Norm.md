@@ -1,4 +1,6 @@
 
+# Continuous qDRIFT Time-Sampling by Instantaneous Norm
+
 > **Tags:** #trick #qdrift #time-dependent #randomization
 > **Source:** arXiv:1906.07115, Section 3
 

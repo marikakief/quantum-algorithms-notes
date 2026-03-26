@@ -84,3 +84,4 @@ There is a separate result on **sparse time-dependent Hamiltonians**: the paper 
 - [[Hamiltonian Simulation — Comparison Tables]]
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — applies similar $H = A + B$ splitting philosophy to linear systems and matrix functions rather than simulation
 - [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — uses this paper's Dyson block-encoding for time-dependent ODEs; combines with history-state linear system encoding + optimal QLSA
+- [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]] — applies time reparameterization to convert $L^\infty$ scaling of this paper's Dyson algorithm to $L^1$ (integrated norm); the rescaled-Dyson approach directly builds on the KSB/Low-Wiebe Dyson framework

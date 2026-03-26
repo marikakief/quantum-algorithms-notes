@@ -240,6 +240,7 @@ The question of whether QAOA offers practical quantum advantage for combinatoria
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — adiabatic ↔ circuit equivalence, relevant to QAOA convergence
 - [[Optimization by Decoded Quantum Interferometry (Jordan, Shutty, Wootters, Babbush et al 2024) — Paper Notes]] — DQI is a complementary optimization approach that exploits Fourier sparsity rather than landscape structure; beats QAOA's information-theoretic ceiling for large-$k$ constraint satisfaction
 - [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — quartic speedup for planted $k$XOR via Kikuchi-guided Hamiltonians; different problem class and mechanism than QAOA but overlapping target domain
+- [[An Alternating-Minimization Method for Preparing Low-Energy States (Anshu 2026) — Paper Notes]] — related alternating structure; Anshu alternates Hamiltonians where QAOA alternates operators; targets ground state preparation rather than combinatorial optimisation
 
 ### Trick cards
 - [[Alternating Operator Ansatz]] — the circuit structure generalised
