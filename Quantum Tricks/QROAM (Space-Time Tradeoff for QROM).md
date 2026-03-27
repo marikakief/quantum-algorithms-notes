@@ -1,4 +1,4 @@
-> **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134; building on Low, Kliuchnikov, Schaeffer, arXiv:1812.00954
+> **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134; building on [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low, Kliuchnikov, Schaeffer (arXiv:1812.00954)]]
 > **Tags:** #trick #circuit-primitive #T-complexity #QROM #QROAM #data-loading #oracle #space-time-tradeoff
 
 ## What it does
@@ -19,7 +19,7 @@ The system register and other unused qubits serve as "dirty" ancillae (not initi
 
 Cost: $2\lceil d/k \rceil + 4M(k-1)$, using $(k-1)M$ dirty ancillae.
 
-This is improved over Low, Kliuchnikov, Schaeffer (arXiv:1812.00954) by:
+This is improved over [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low, Kliuchnikov, Schaeffer (2024)]] by:
 - Using a linear-depth swapping network instead of log-depth (saves factor of 2 in $Mk$ term, since dirty CSWAP must be toggled twice in the log-depth version)
 - Using $|+\rangle$ states instead of spare registers (saves from $Mk$ to $M(k-1)$ ancillae)
 
@@ -40,7 +40,7 @@ This is improved over Low, Kliuchnikov, Schaeffer (arXiv:1812.00954) by:
 ## Caveat
 The space cost can be significant: optimal $k$ with clean ancillae requires $O(\sqrt{dM})$ extra qubits. For very large tables (e.g., $d = 10^6$), this can exceed the system register size. The dirty-ancilla variant is less costly in space but $\sim 4\times$ more expensive in Toffolis.
 
-A lower bound proven in Low, Kliuchnikov, Schaeffer (arXiv:1812.00954) shows that no further space-time tradeoffs can asymptotically beat the $\sqrt{dM}$ scaling for general QROM.
+A lower bound proven in [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low, Kliuchnikov, Schaeffer (2024)]] shows that no further space-time tradeoffs can asymptotically beat the $\sqrt{dM}$ scaling for general QROM.
 
 ## Related notes
 - [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]]
@@ -50,3 +50,6 @@ A lower bound proven in Low, Kliuchnikov, Schaeffer (arXiv:1812.00954) shows tha
 - [[Measurement-Based QROM Uncomputation]]
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]]
 - [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]]
+- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes]] — introduces the [[SelectSwap Network for Data Lookup|SelectSwap]] architecture that QROAM builds on
+- [[SelectSwap Network for Data Lookup]] — the underlying construction
+- [[Dirty Qubit Recycling for T-Gate Reduction]]

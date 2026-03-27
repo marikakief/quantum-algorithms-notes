@@ -2144,7 +2144,7 @@ _[arXiv:2208.06909](https://arxiv.org/abs/2208.06909)_, 2022.
 No quantum speedup over gradient descent for non-smooth convex optimization
 _[arXiv:2010.01801](https://arxiv.org/abs/2010.01801)_, 2020.
 
-**478.** Jeongwan Haah, Matthew B. Hastings, Robin Kothari, and Guang Hao Low
+**478. ✓** Jeongwan Haah, Matthew B. Hastings, Robin Kothari, and Guang Hao Low
 Quantum algorithm for simulating real time evolution of lattice Hamiltonians
 _SIAM Journal on Computing_, 52(6):10.1137, 2018.
 [[arXiv:1801.03922](https://arxiv.org/abs/1801.03922)]

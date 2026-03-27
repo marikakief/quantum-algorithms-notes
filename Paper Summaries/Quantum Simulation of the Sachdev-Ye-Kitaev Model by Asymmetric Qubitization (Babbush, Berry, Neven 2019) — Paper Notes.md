@@ -209,3 +209,6 @@ The prior approach was impractical for anything beyond toy sizes. This paper mak
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — the symmetric version that this paper generalizes
 - [[Truncated Taylor Series Simulation]] — the LCU framework underlying the signal-processing approach
 - [[Unary Iteration]] — used inside the controlled Majorana circuit from ref [21]
+
+### Later work
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — improves SYK simulation query complexity by $\sqrt{N}$ via SOSSA (degree-2 Majorana SOS + spectral amplification)

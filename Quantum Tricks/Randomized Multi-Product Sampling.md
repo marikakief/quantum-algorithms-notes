@@ -61,3 +61,5 @@ Cost is $O(\Xi^4/\varepsilon^2)$ shots. The linear combination of unitaries is e
 - [[Richardson Extrapolation over Randomized Step Sizes]] — Watson's incoherent analogue (no Hadamard test)
 - [[Linear Combination of Unitaries (LCU)]] — the coherent version that this replaces
 - [[Oblivious Amplitude Amplification (Robust)]] — needed for coherent LCU; avoided here
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes]] — the conditioning result ($\|\vec{a}\|_1 \in O(\log m)$) that makes randomised MPFs practical
+- [[Chebyshev-Node Conditioning for Multiproduct Formulas]] — how to keep $\Xi$ logarithmic via Chebyshev nodes

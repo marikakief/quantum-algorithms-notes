@@ -62,3 +62,5 @@ $$V_{\mathrm{cf}} = \sum_{q=1}^K w_q \, S_{2\chi}\!\left(\frac{T}{x_q}\right)^{x
 - [[Term-Weighted Random Hamiltonian Sampling (qDRIFT)]] — single-term version (no linear combination)
 - [[Importance Sampling over Hamiltonian Terms]] — broader importance-sampling context
 - [[Linear Combination of Unitaries (LCU)]] — coherent version; $\Xi$ appears as LCU normalization
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes]] — the foundational conditioning result; Chebyshev nodes give $\|\vec{a}\|_1 \in O(\log m)$
+- [[Chebyshev-Node Conditioning for Multiproduct Formulas]] — the specific Chebyshev trick

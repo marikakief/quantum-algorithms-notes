@@ -210,7 +210,7 @@ The $4\times$ improvement on FeMoCo-76 is impressive but understates the method'
 
 What I find most interesting is how this connects to the broader story of SOS hierarchies in quantum information. The SOS relaxation for computing $E_{\text{SOS}}$ is exactly the dual of the 2-RDM variational method from quantum chemistry. The quality of the quantum speedup depends on how well classical methods can bound the ground-state energy from below. There's a pleasing irony: the better your classical lower bounds, the bigger your quantum speedup. This creates a productive interplay between classical and quantum methods rather than a competition.
 
-The paper's connection to [[SOSSA — Sum-of-Squares Spectral Amplification|SOSSA (2505.01528)]] is direct — that follow-up paper generalizes the SOS+SA framework beyond electronic structure to lattice models and SYK. This paper is the chemistry-specific version with all the engineering details worked out.
+The paper's connection to [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes|SOSSA (2505.01528)]] is direct — that companion paper generalizes the SOS+SA framework beyond electronic structure to arbitrary Hamiltonians and demonstrates it on SYK. This paper is the chemistry-specific version with all the engineering details worked out.
 
 State preparation being comparable in cost to phase estimation is a significant milestone. It means the next frontier is jointly optimizing both components, which [[Rapid Initial State Preparation for the Quantum Simulation of Strongly Correlated Molecules (Berry, Tong, Babbush, Rubin et al 2024) — Paper Notes|Berry, Tong et al. (2024)]] already started doing from the state-prep side.
 
@@ -220,7 +220,8 @@ State preparation being comparable in cost to phase estimation is a significant 
 
 ### Paper notes
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — foundational spectrum amplification; this paper applies it to chemistry
-- [[SOSSA — Sum-of-Squares Spectral Amplification]] — generalization to lattice models and SYK; follow-up by the same group
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — general SOSSA theory paper: self-contained framework, adaptive algorithms, SYK demonstration, query-optimal lower bounds
+- [[SOSSA — Sum-of-Squares Spectral Amplification]] — informal note on the same general theory paper
 - [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — prior best resource estimates; THC factorization that DFTHC generalizes
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — established the qubitization + QROM + alias sampling framework used here
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — qubitization / quantum walk
@@ -244,5 +245,7 @@ State preparation being comparable in cost to phase estimation is a significant 
 - [[Frustration-Free Gap Amplification via Walk Operator]] — related concept from Somma-Boixo
 - [[Linear Combination of Unitaries (LCU)]] — underlying framework
 - [[Oblivious Amplitude Amplification (Robust)]] — used in the T₂ block-encoding construction
+
+- [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes]] — foundational paper introducing uniform spectral amplification and low-energy subspace amplification; this paper applies the idea to chemistry with SOS decompositions
 
 See [[FeMoCo Resource Estimation Timeline]] for how this estimate fits in the broader progression.

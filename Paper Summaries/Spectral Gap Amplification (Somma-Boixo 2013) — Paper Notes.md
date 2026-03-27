@@ -142,3 +142,6 @@ For [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computatio
 - [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping]] — related gap analysis technique
 - [[Rectangular Block-Encoding for Spectrum Amplification]] — more efficient rectangular block-encoding approach (Low et al. 2025)
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — applies spectrum amplification to chemistry with SOS decomposition and DFTHC
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — SOSSA: combines SOS decomposition with spectral amplification; generalises the frustration-free gap amplification to arbitrary Hamiltonians via SDP-optimised SOS; $\sqrt{N}$ SYK speedup
+- [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes]] — distortion-free generalization of spectral gap amplification via QSP; preserves relative energy spacings
+- [[Uniform Spectral Amplification of Low-Energy Subspaces]] — trick card for the uniform version

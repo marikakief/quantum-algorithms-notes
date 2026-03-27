@@ -84,3 +84,4 @@ So sequence design is polynomial-time classical preprocessing, not exponential p
 - [[SOSSA — Sum-of-Squares Spectral Amplification]]
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
+- [[Robust Calibration of a Universal Single-Qubit Gate Set via Robust Phase Estimation (Kimmel-Low-Yoder 2015) — Paper Notes]] — precursor by the same group; uses composite gate sequences for gate calibration; the $\theta$-estimation composite is an early instance of the polynomial-response philosophy developed here

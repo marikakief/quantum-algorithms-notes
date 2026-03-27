@@ -25,10 +25,14 @@ Higher-degree SOS tightens $\Delta$ but grows $\lambda$ (more terms in the SOS d
 
 ## Related Paper Notes
 
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — the full SOSSA theory paper: self-contained proofs, adaptive algorithms, SYK demonstration, query-optimal lower bounds
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
-- [[SOSSA — Sum-of-Squares Spectral Amplification]]
+- [[SOSSA — Sum-of-Squares Spectral Amplification]] — informal paper note on the same paper
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — chemistry-specific implementation with DFTHC
 - [[Rectangular Block-Encoding for Spectrum Amplification]]
 - [[SOS Decomposition via Semidefinite Programming for Chemistry]]
 - [[DFTHC Factorization]]
+- [[Adaptive Spectral-Amplified Energy Estimation]] — the adaptive binary search algorithm from the SOSSA paper
+- [[SOS Lower Bound via Gram Matrix SDP]] — the classical SDP preprocessing step
+- [[Majorana SOS with Double Factorization]] — block-encoding compilation for fermionic SOS generators

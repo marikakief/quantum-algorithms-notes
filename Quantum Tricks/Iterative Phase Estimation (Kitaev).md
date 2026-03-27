@@ -55,3 +55,4 @@ In O'Malley et al.: 3 qubits total (1 ancilla + 2 register), circuit for control
 - [[Trotterized Time Evolution for Chemistry]]
 - [[Variational Quantum Eigensolver (VQE)]]
 - [[Bravyi-Kitaev Transformation]]
+- [[Robust Calibration of a Universal Single-Qubit Gate Set via Robust Phase Estimation (Kimmel-Low-Yoder 2015) — Paper Notes]] — extends this framework to tolerate SPAM errors via additive error bounds

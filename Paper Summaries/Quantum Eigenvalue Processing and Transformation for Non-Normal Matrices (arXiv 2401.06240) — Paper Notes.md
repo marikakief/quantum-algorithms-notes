@@ -1,6 +1,6 @@
 > **Paper:** Quantum eigenvalue processing
 > **arXiv:** [2401.06240](https://arxiv.org/abs/2401.06240)
-> **Published:** FOCS 2024 (pp. 1051–1062)
+> **Published:** FOCS 2024 (pp. 1051–1062); SIAM Journal on Computing **55**(1), 135–215 (2026)
 > **Date read:** 2026-03-13
 > **Tags:** #qevt #qeve #non-normal #block-encoding #qlsa #qsvt-adjacent
 

@@ -51,3 +51,5 @@ Since the data encoding is via CNOTs (Clifford gates), the *only* T-gate cost is
 - [[Unary Iteration]] — QROM is built on top of unary iteration
 - [[Coherent Alias Sampling for PREPARE]] — uses QROM to load alias tables
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — QROM is used inside the PREPARE oracle for qubitization
+- [[SelectSwap Network for Data Lookup]] — generalises QROM to use dirty qubits, reducing T-count from $O(N)$ to $O(\sqrt{N})$; QROM is the $\lambda=1$ special case
+- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes]] — introduces SelectSwap

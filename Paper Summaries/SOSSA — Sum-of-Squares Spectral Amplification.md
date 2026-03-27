@@ -4,6 +4,8 @@
 > **Authors:** Robbie King, Guang Hao Low, Ryan Babbush, Rolando D. Somma, Nicholas C. Rubin (Google Quantum AI / Caltech)
 > **Date read:** 2026-03-12
 > **Tags:** #hamiltonian-simulation #quantum-algorithms #SOS #spectral-amplification
+> 
+> **See also:** [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — full structured paper note following the vault format
 
 ---
 
@@ -202,3 +204,5 @@ The SYK speedup (degree-2 Majorana) is a random-instance / high-probability stat
 - [[DFTHC Factorization]]
 - [[Rectangular Block-Encoding for Spectrum Amplification]]
 - [[SOS Decomposition via Semidefinite Programming for Chemistry]]
+- [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes]] — original uniform spectral amplification paper; introduces the low-energy subspace amplification that SOSSA builds on
+- [[Uniform Spectral Amplification of Low-Energy Subspaces]] — the trick card for the precursor technique

@@ -33,6 +33,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher, Wiebe, Svore, Wecker, Troyer (2017)]] — The FeMoCo benchmark paper: first complete fault-tolerant resource estimate for a scientifically important molecule (nitrogenase FeMoCo, 108–114 spin-orbitals); 2nd-order Trotter + QPE + surface code compilation; ~$10^{14}$ T gates, 111 logical qubits; subsequently improved by ~$300{,}000\times$ via qubitization and tensor factorization
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — tight commutator-based Trotter error bounds
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized product-formula ordering; permutation averaging improves error bounds
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low-Kliuchnikov-Wiebe (2019)]] — well-conditioned multiproduct formulas via Chebyshev nodes; $O(t\lambda\log^2(t\lambda/\epsilon))$ simulation combining commutativity exploitation with near-optimal time/error scaling
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized sampling of multi-product formulas; trades circuit depth for shots
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes|Cho-Berry-Hsieh (2022)]] — randomized corrections double the error order of symmetric product formulas from $2k+1$ to $4k+2$; requires Pauli-string structure
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes|Tran-Su-Childs-Wiebe (2021)]] — symmetry-protected Trotter error cancellation
@@ -43,6 +44,9 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes|Watson (2025)]] — qFLO: Richardson extrapolation over qDRIFT step sizes; exponential depth improvement for observable estimation
 - [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes|Martyn-Rall (2025)]] — Stochastic QSP: randomizes at the polynomial/QSP level rather than Hamiltonian term level; halves $\log(1/\epsilon)$ query cost across all QSP-family algorithms
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes|An-Costa-Berry (2025)]] — for near-adiabatic dynamics, product formulas can use $\varepsilon$-independent step sizes; discrete adiabatic theorem as analysis tool; first-order Trotter + boundary cancellation → super-polynomial convergence
+
+### Lattice / geometrically local simulation
+- [[Quantum Algorithm for Simulating Real Time Evolution of Lattice Hamiltonians (Haah-Hastings-Kothari-Low 2021) — Paper Notes|Haah-Hastings-Kothari-Low (2021)]] — optimal $O(nT\operatorname{polylog}(nT/\epsilon))$ gate count for geometrically local lattice Hamiltonians via Lieb-Robinson decomposition; matching $\tilde{\Omega}(nT)$ gate lower bound; commutator-sensitive Lieb-Robinson velocity
 
 ### Taylor series / LCU methods
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs-Wiebe (2012)]] — linear combination of unitaries, the foundational technique
@@ -69,6 +73,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ### Qubitization / QSP / QSVT
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2016–2017)]] — optimal simulation via quantum signal processing
+- [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes|Low-Chuang (2017)]] — uniform spectral amplification; flexible QSP and amplitude multiplication; $O(t\sqrt{d\|H\|_{\max}\|H\|_1})$ sparse simulation
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low-Chuang (2019)]] — qubitization iterate and block-encoding framework
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — quantum singular value transformation, unifying framework
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low-Yoder-Chuang (2016)]] — composite pulse sequences and QSP precursors
@@ -104,6 +109,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|Martyn-Rossi-Tan-Chuang (2021)]] — pedagogical tutorial: QSP → QET → QSVT unification; constructs search, QPE, simulation, matrix inversion as QSVT instances
 - [[Quantum Eigenvalue Processing and Transformation for Non-Normal Matrices (arXiv 2401.06240) — Paper Notes|Quantum Eigenvalue Processing for Non-Normal Matrices (2024)]] — QSVT extension to non-normal matrices
 - [[SOSSA — Sum-of-Squares Spectral Amplification.md|SOSSA — Sum-of-Squares Spectral Amplification]] — SOS-based spectral amplification
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes|King, Low, Babbush, Somma, Rubin (2025)]] — SOSSA framework: SOS decomposition + spectral amplification for low-energy simulation; query complexity $O(\sqrt{\Delta\lambda}/\varepsilon)$; adaptive algorithms with no prior on $\Delta$; $\sqrt{N}$ speedup for SYK; query-optimal lower bounds
 - [[Quantum Hermite Transform — Paper Notes|Quantum Hermite Transform]] — Hermite polynomial quantum transform
 
 ---
@@ -113,6 +119,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — original $O(\sqrt{N})$ search
 - [[A Quantum Algorithm for Finding the Minimum (Dürr-Høyer 1996) — Paper Notes|Dürr-Høyer (1996)]] — minimum finding in $O(\sqrt{N})$ via Grover with evolving threshold
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard-Høyer-Mosca-Tapp (2002)]] — amplitude amplification and estimation, general framework
+- [[Fixed-Point Quantum Search with an Optimal Number of Queries (Yoder-Low-Chuang 2014) — Paper Notes|Yoder-Low-Chuang (2014)]] — first fixed-point amplitude amplification with optimal $O(1/\sqrt{\lambda})$ queries; Chebyshev polynomial design seeded the entire QSP programme
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|Brassard-Høyer-Tapp (1997)]] — collision finding via Grover
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes|Montanaro (2015)]] — near-quadratic speedup for Monte Carlo mean estimation; partition function applications via quantum walks
 - [[Quantum Computational Finance — Monte Carlo Pricing of Financial Derivatives (Rebentrost-Gupt-Bromley 2018) — Paper Notes|Rebentrost-Gupt-Bromley (2018)]] — quantum amplitude estimation applied to European and Asian option pricing; quadratic speedup over classical MC
@@ -239,6 +246,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] — recursive bisection state preparation for log-concave distributions; $O(\log N)$ rotations
 - [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] — arithmetic-free state preparation via inequality test; 286–375× Toffoli reduction over Grover's arcsine approach
+- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low-Kliuchnikov-Schaeffer (2024)]] — SelectSwap network trades dirty qubits for T gates; achieves $\widetilde{O}(\sqrt{N})$ T-count for $N$-dimensional state preparation — quadratic improvement; optimal up to log factors; underlies QROAM
 
 ---
 
@@ -255,6 +263,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Floating Point Representations in Quantum Circuit Synthesis (Wiebe-Kliuchnikov 2013) — Paper Notes|Wiebe-Kliuchnikov (2013)]] — gearbox circuit for angle squaring; floating-point small-rotation synthesis; beats ancilla-free T-count lower bound
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low-Yoder-Chuang (2016)]] — composite pulse sequences for robust gate synthesis
 - [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — Clifford canonical form: any Clifford unitary has an $O(n^2/\log n)$-gate 11-round circuit
+- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low-Kliuchnikov-Schaeffer (2024)]] — SelectSwap data-lookup oracle; optimal T-count/dirty-qubit tradeoff for unitary synthesis; $\widetilde{O}(\sqrt{N})$ T-count via $O(\sqrt{N})$ dirty qubits
 
 ---
 
@@ -360,6 +369,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 
 ## Phase Estimation
 
+- [[Robust Calibration of a Universal Single-Qubit Gate Set via Robust Phase Estimation (Kimmel-Low-Yoder 2015) — Paper Notes|Kimmel-Low-Yoder (2015)]] — SPAM-tolerant non-adaptive phase estimation with Heisenberg scaling; estimates systematic gate errors ($\alpha$, $\epsilon$, $\theta$) in a universal single-qubit gate set; additive error threshold $1/\sqrt{8}$; composite sequence for off-resonance error amplification; improved Higgins scaling constant from $54\pi$ to $10.7\pi$
 - [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes|Wiebe-Granade (2016)]] — RFPE: Gaussian + rejection-sampling approximation to Bayesian posterior; PGH experiment design; $O(\log(1/\varepsilon))$ experiments; Heisenberg-limited; noise-tolerant; restart protocol for tail failure recovery.
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley, Babbush et al. (2016)]] — First complete end-to-end execution of Trotterized PEA for quantum chemistry on hardware (3 qubits, 1 Trotter step).
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. (2018)]] — Phase estimation on the qubitized walk operator; Heisenberg-limited $O(\lambda/\varepsilon)$ query complexity; uses optimized entanglement-based PEA resource state $\chi_m$.
@@ -397,10 +407,12 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes|Babbush, Berry, Neven (2019)]] — Introduces asymmetric qubitization (two different PREPARE oracles); applies to SYK model with gate complexity $O(N^{7/2}t + N^{5/2}t\,\mathrm{polylog}(N/\varepsilon))$; exponential improvement in $1/\varepsilon$ and polynomial improvement in $N$ over prior Trotter approach; T-count $< 10^7 Jt$ at $N=100$.
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes|Sanders, Berry, Babbush et al. (2020)]] — Qubitized walks for optimization cost functions: SK walk at $6N + O(\log^2 N)$ Toffolis, LABS walk at $4N + O(\log N)$ Toffolis; stroboscopic adiabatic walk via inflated-$\lambda$ qubitization.
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low, King, Berry et al. (2025)]] — Spectrum amplification via rectangular block-encoding of SOS Hamiltonian square root; DFTHC factorization interpolating DF/THC; effective LCU norm $\sqrt{2\Lambda E_{\text{gap}}}$; current best FeMoCo resource estimates ($9.99 \times 10^8$ Toffolis).
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes|King, Low, Babbush, Somma, Rubin (2025)]] — General SOSSA theory: SOS decomposition via SDP + spectral amplification for arbitrary Hamiltonians; adaptive energy/phase estimation without prior on $\Delta$; query-optimal lower bounds via PARITY$\circ$OR; SYK degree-2 Majorana SOS demonstration.
 
 ## Quantum Simulation of Holographic / Strongly Correlated Models
 
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes|Babbush, Berry, Neven (2019)]] — SYK model simulation via asymmetric qubitization; $O(N^{7/2}t)$ gate complexity; motivated by AdS/CFT and holographic duality; T-count makes SYK among the most viable early surface-code applications.
+- [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes|King, Low, Babbush, Somma, Rubin (2025)]] — SOSSA applied to SYK: degree-2 Majorana SOS + double factorization achieves $\sqrt{\Delta_{\text{SOS}}\lambda_{\text{SOS}}} \sim N^{3/2}$ vs $\lambda_{\text{LCU}} \sim N^2$ — a $\sqrt{N}$ asymptotic speedup.
 
 ## Quantum Dynamics / Stopping Power / Warm Dense Matter
 

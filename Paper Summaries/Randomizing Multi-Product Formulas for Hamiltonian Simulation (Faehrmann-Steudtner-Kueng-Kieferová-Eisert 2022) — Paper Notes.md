@@ -155,13 +155,14 @@ Key references:
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry et al. (2015)]] — Taylor series + LCU, the standard LCU-based simulation method this paper offers an alternative to
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2016–2017)]] — QSP: the asymptotic standard; comparison upper bound
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT: broader framework context
-- Low, Wiebe & Kimmel (earlier multiproduct work) — deterministic MPF with OAA; what this paper replaces
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low, Kliuchnikov & Wiebe (2019)]] — well-conditioned multiproduct formulas; solves the conditioning problem ($\|\vec{a}\|_1$ from $e^{\Omega(m)}$ to $O(\log m)$) that makes deterministic and randomised MPFs practical; the direct precursor to this paper
 
 ---
 
 ## Cross-links
 
 **Paper notes:**
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes]] — the conditioning result that makes MPFs practical
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]]
@@ -187,6 +188,8 @@ Key references:
 - [[Standard-Form Encoding (Prepare + Signal Oracle)]]
 - [[Richardson Extrapolation over Randomized Step Sizes]]
 - [[Channel Series Expansion via Variation-of-Parameters]]
+- [[Chebyshev-Node Conditioning for Multiproduct Formulas]] — the core conditioning trick from LKW19
+- [[Order-Optimized Multiproduct Simulation]] — order selection strategy from LKW19
 
 **Related (alternative approaches to improving [[product formula]]s):**
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic correctors rather than randomised sampling; achieves factor-$\alpha$ error improvement for perturbed systems while staying fully ancilla-free

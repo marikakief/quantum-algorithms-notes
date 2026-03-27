@@ -57,3 +57,4 @@ For the prior-correct hypothesis, $P(E = 1) \approx \tau^2/2$ (small). For the p
 - [[Noise-Robust Bayesian Hamiltonian Learning]] — analogous graceful-degradation strategy for QHL
 - [[Iterative Phase Estimation (Kitaev)]] — deterministic alternative with no failure mode of this type
 - [[Sequential Monte Carlo for Quantum Parameter Estimation]] — heavier alternative with better tail behaviour (no Gaussian approximation)
+- [[Robust Calibration of a Universal Single-Qubit Gate Set via Robust Phase Estimation (Kimmel-Low-Yoder 2015) — Paper Notes]] — non-adaptive alternative that handles SPAM errors via additive error bounds rather than Bayesian inference

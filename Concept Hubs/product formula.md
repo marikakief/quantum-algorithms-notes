@@ -1,3 +1,9 @@
+---
+aliases:
+  - Product Formula (Trotter-Suzuki)
+  - Trotter-Suzuki
+---
+
 # Product Formula
 
 **Concept hub** — 86 wikilink refs across the vault.
