@@ -18,11 +18,11 @@ The bottleneck: computing $V$ requires summing over all $\binom{\eta}{2}$ pairs,
 
 ## What the paper does
 
-Yes, it can. The paper constructs a quantum version of the fast multipole method (FMM) that computes the Coulomb potential in $\widetilde{O}(\eta)$ operations per Trotter step, then combines this with high-order product formulas and the [[Restricted Interaction Norms for Product Formulas|Low et al. Trotter bounds]] to achieve overall gate complexity
+Yes, it can. The paper constructs a quantum version of the fast multipole method (FMM) that computes the Coulomb potential in $\widetilde{O}(\eta)$ operations per Trotter step, then combines this with high-order [[product formula]]s and the [[Restricted Interaction Norms for Product Formulas|Low et al. Trotter bounds]] to achieve overall gate complexity
 
 $$t\left(\eta^{4/3} N^{1/3} + \eta^{1/3} N^{2/3}\right) \left(\frac{\eta N t}{\epsilon}\right)^{o(1)}$$
 
-in the thermodynamic limit $\Omega \propto \eta$. This is roughly an $O(\eta)$ speedup over all prior first-quantized product formula approaches (which pay $O(\eta^2)$ for the Coulomb sum), and gives the **lowest known complexity for any approach** when $N < \eta^6$ — the regime that covers essentially all practical molecular and materials simulations.
+in the thermodynamic limit $\Omega \propto \eta$. This is roughly an $O(\eta)$ speedup over all prior first-quantized [[product formula]] approaches (which pay $O(\eta^2)$ for the Coulomb sum), and gives the **lowest known complexity for any approach** when $N < \eta^6$ — the regime that covers essentially all practical molecular and materials simulations.
 
 The space complexity is $O(\eta \log N \cdot \text{polylog}(1/\epsilon))$.
 
@@ -34,7 +34,7 @@ My assessment: this resolves a long-standing open problem in quantum simulation 
 
 ### Setup: real-space first-quantized encoding
 
-The $\eta$-electron state lives on a grid $G = [-(N^{1/3}-1)/2, (N^{1/3}-1)/2]^3$ with positions encoded as binary natural numbers $|x\rangle|y\rangle|z\rangle$ using $3\lceil\log N^{1/3}\rceil$ qubits per electron. This is the [[Real-Space Grid Encoding for Many-Body Simulation|real-space grid encoding]] from Kassal et al. (2008).
+The $\eta$-electron state lives on a grid $G = [-(N^{1/3}-1)/2, (N^{1/3}-1)/2]^3$ with positions encoded as binary natural numbers $|x\rangle|y\rangle|z\rangle$ using $3\lceil\log N^{1/3}\rceil$ qubits per electron. This is the [[Real-Space Grid Encoding for Many-Body Simulation|real-space grid encoding]] from [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes|Kassal et al. (2008)]].
 
 Time evolution uses a split-operator Trotter step: evolve under $T$ (via QFT → phase kickback → inverse QFT, cost $\widetilde{O}(\eta)$) then under $U + V$ (via computing the potential and applying [[Phase Kickback from Oracle Queries|phase kickback]]).
 
@@ -116,7 +116,7 @@ Qubit count: $O(\eta \log N \log^3(1/\epsilon))$ for the full multipole expansio
 
 $$t\left(\eta^{4/3} N^{1/3} + \eta^{1/3} N^{2/3}\right) \left(\frac{\eta N t}{\epsilon}\right)^{o(1)}$$
 
-where the $o(1)$ exponent can be made arbitrarily small by increasing the product formula order.
+where the $o(1)$ exponent can be made arbitrarily small by increasing the [[product formula]] order.
 
 **Lemma 1 (Shifted Morton orderings):** For any point $p$ in the grid and any $q$ in its interaction-list neighbourhood ($|\lfloor p_j/2 \rfloor - \lfloor q_j/2 \rfloor| \leq 1$ for all coordinates $j$), there exists a shift $z \in \{0, 2\}^d$ such that the shifted Morton indices satisfy $|M(p+z) - M(q+z)| \leq 4^d - 1$.
 
@@ -172,7 +172,7 @@ The improvement over Rubin et al. (2024) is roughly a factor of $\eta$. The inte
 Key cited papers with vault notes:
 - [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush, Berry, McClean, Neven (2019)]] — First-quantized interaction-picture simulation; best scaling for $N > \eta^6$
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry, Wiebe, Rubin, Babbush (2021)]] — First constant-factor first-quantized chemistry compilation
-- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2024)]] — First-quantized product formula for stopping power; direct predecessor
+- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2024)]] — First-quantized [[product formula]] for stopping power; direct predecessor
 - [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes|Babbush, Huggins, Berry et al. (2023)]] — First-quantized Trotter for dynamics; same framework without FMM
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2018)]] — Interaction-picture simulation; second-quantized predecessor
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP-based simulation
@@ -182,7 +182,7 @@ Key cited papers with vault notes:
 Papers not yet in the vault:
 - Kassal, Jordan, Love, Mohseni, Aspuru-Guzik (2008) — Original first-quantized real-space chemistry simulation; this paper's direct ancestor
 - Childs, Leng, Li, Liu, Zhang (2022) — "Quantum simulation of real-space dynamics"; discusses QRAM-based FMM (with the $O(\eta)$ overhead this paper avoids)
-- Low, Su, Tong, Tran (2023) — "Complexity of implementing Trotter steps"; product formula error bounds used here
+- Low, Su, Tong, Tran (2023) — "Complexity of implementing Trotter steps"; [[product formula]] error bounds used here
 - Stetina & Wiebe (2025) — First-quantized non-relativistic QED with Gauss's law constraint; concurrent work avoiding $O(\eta^2)$ Coulomb overhead via a different mechanism
 - Greengard & Rokhlin (1985–1988) — Original classical fast multipole method
 

@@ -1,4 +1,3 @@
-# Λ-Smoothness Parametrization
 
 > **Source:** Wiebe, Berry, Høyer, Sanders, arXiv:0812.0562 (J. Phys. A 2010)
 > **Tags:** #trick #product-formulas #suzuki #time-dependent #error-analysis

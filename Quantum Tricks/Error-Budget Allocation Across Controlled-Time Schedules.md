@@ -9,7 +9,7 @@ Allocates simulation error non-uniformly across controlled-time calls (e.g., PE 
 Give larger allowed error to short-time evolutions and tighter error to long-time evolutions according to schedule weighting.
 
 ## When to reach for it
-- Hamiltonian simulation inside [[Gapped Phase Estimation|phase estimation]] / iterative estimation pipelines
+- [[Hamiltonian simulation]] inside [[Gapped Phase Estimation|phase estimation]] / iterative estimation pipelines
 
 ## Complexity
 Can reduce total gate budget significantly versus uniform error assignment.

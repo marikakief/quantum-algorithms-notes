@@ -100,7 +100,7 @@ For VQE with $d$ parameters: classical gradient estimation needs $O(d/\varepsilo
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo-McClean et al. (2014)]] — VQE, main application
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes|Farhi-Goldstone-Gutmann (2014)]] — QAOA, another application
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL (2009)]] — referenced for linear systems context
-- Bernstein & Vazirani (1993) — the original discrete algorithm that Jordan generalised
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — the original discrete algorithm that Jordan generalised
 
 ---
 

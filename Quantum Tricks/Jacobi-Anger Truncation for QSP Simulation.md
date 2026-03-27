@@ -1,4 +1,3 @@
-# Jacobi-Anger Truncation for QSP Simulation
 
 > **Source:** Guang Hao Low and Isaac L. Chuang, *Optimal Hamiltonian Simulation by Quantum Signal Processing*, arXiv:1606.02685, Phys. Rev. Lett. **118**, 010501 (2017)  
 > **Links:** [arXiv](https://arxiv.org/abs/1606.02685) · [PRL](https://doi.org/10.1103/PhysRevLett.118.010501)  

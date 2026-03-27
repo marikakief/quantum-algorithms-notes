@@ -1,4 +1,3 @@
-# QCT Implementation via QFT Decomposition
 
 > **Tags:** #trick #qct #qft #spectral-methods
 > **Source:** Andrew M. Childs, Jin-Peng Liu, and Aaron Ostrander, *High-precision quantum algorithms for partial differential equations*, arXiv:2002.07868, Quantum **5**, 574 (2021)

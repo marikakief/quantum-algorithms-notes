@@ -1,4 +1,3 @@
-# Magnus-LCU for Time-Averaged Hamiltonian Block-Encoding
 
 > **Source:** Dong An, Di Fang, and Lin Lin, arXiv:2111.03103 (Quantum 2022)
 > **Tags:** #trick #LCU #block-encoding #Magnus-expansion #time-dependent
@@ -21,7 +20,7 @@ The entire first-order Magnus approximation — compute the time average, then e
 
 ## When to reach for it
 
-- Time-dependent Hamiltonian simulation where you want to avoid time-ordering circuits.
+- Time-dependent [[Hamiltonian simulation]] where you want to avoid time-ordering circuits.
 - Interaction picture simulation where the fast-forwardable part can be absorbed into the oracle.
 - Any setting where the quadrature error needs to be suppressed well below the Magnus truncation error — you can increase $M$ at logarithmic cost.
 

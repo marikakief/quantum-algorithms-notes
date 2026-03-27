@@ -1,4 +1,3 @@
-# Stabilizer Canonical Form via Gate Type Sorting
 
 > **Source:** Aaronson & Gottesman, arXiv:quant-ph/0406196 (2004)
 > **Tags:** #trick #clifford #canonical-form #circuit-compilation #gate-synthesis

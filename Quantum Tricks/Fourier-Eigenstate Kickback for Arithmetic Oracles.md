@@ -1,6 +1,5 @@
-# Fourier-Eigenstate Kickback for Arithmetic Oracles
 
-> **Source:** Jordan, PRL 95, 050501 (2005); same mechanism in Shor (1994), Kitaev (1995)
+> **Source:** Jordan, PRL 95, 050501 (2005); same mechanism in [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]], [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]]
 > **Tags:** #trick #phase-kickback #oracle #arithmetic #QFT
 
 ## What it does

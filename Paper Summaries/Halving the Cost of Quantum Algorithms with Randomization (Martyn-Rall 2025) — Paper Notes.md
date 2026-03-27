@@ -16,7 +16,7 @@ In the deterministic [[QSVT Meta-Template|QSP/QSVT]] setting, the cost is $d$ qu
 
 Yes — by roughly a factor of 2, asymptotically. The paper introduces **Stochastic QSP**: instead of one deterministic QSP circuit of degree $d$, sample a random circuit from a strategically constructed ensemble of lower-degree polynomials. The [[Mixing Lemma for Block-Encodings|Hastings-Campbell mixing lemma]], extended to block-encodings, guarantees that the resulting channel has diamond-norm error $O(\epsilon)$ even though each individual circuit only achieves error $O(\sqrt{\epsilon})$. This quadratic error suppression means the ensemble needs average degree only $d/2 + O(1)$.
 
-Because the standard cost driver across the [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|QSP/QSVT family]] is the polynomial degree (which enters as $\log(1/\epsilon)$ for precision-limited algorithms), this is a genuine factor-of-2 improvement in the precision-dependent part of query complexity across a wide range of algorithms: Hamiltonian simulation, imaginary time evolution, phase estimation, ground state preparation, matrix inversion.
+Because the standard cost driver across the [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|QSP/QSVT family]] is the polynomial degree (which enters as $\log(1/\epsilon)$ for precision-limited algorithms), this is a genuine factor-of-2 improvement in the precision-dependent part of query complexity across a wide range of algorithms: [[Hamiltonian simulation]], imaginary time evolution, phase estimation, ground state preparation, matrix inversion.
 
 **Assessment:** This is a clean, general-purpose improvement — not a one-problem trick. The construction is elegant, the proof is short, and the improvement applies broadly. The main limitation is that you get a quantum channel (probabilistic mixture of unitaries) rather than a single coherent unitary, which precludes use as a coherent subroutine inside amplitude amplification. But in most practical measurement scenarios, a channel is exactly what you want.
 
@@ -123,8 +123,8 @@ The two Martyn lines are **complementary**: Martyn 2023 optimizes for coherence 
 | Method | Paper | Randomization level | Output | Precision scaling |
 |---|---|---|---|---|
 | qDRIFT | [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell 2018]] | Hamiltonian term selection | Channel | $O((\lambda t)^2/\epsilon)$ — no log! |
-| Randomized product formulas | [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu 2019]] | Trotter ordering | Channel | Improved Trotter error constants |
-| Randomized MPF | [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann et al. 2022]] | Multi-product formula sampling | Observable estimation | Exponential depth reduction, $O(\Xi^4/\epsilon^2)$ shots |
+| Randomized [[product formula]]s | [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu 2019]] | Trotter ordering | Channel | Improved Trotter error constants |
+| Randomized MPF | [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann et al. 2022]] | Multi-[[product formula]] sampling | Observable estimation | Exponential depth reduction, $O(\Xi^4/\epsilon^2)$ shots |
 | qFLO | [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes|Watson 2025]] | Richardson extrapolation of qDRIFT | Observable estimation | $O((\lambda T)^2 \log(1/\epsilon))$ depth |
 | **Stochastic QSP** | **This paper** | **QSP polynomial ensemble** | **Channel** | $O(\tfrac{1}{2}\log(1/\epsilon))$ |
 
@@ -163,13 +163,13 @@ The two Martyn lines are **complementary**: Martyn 2023 optimizes for coherence 
 Key citations the paper builds on:
 
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|Martyn-Rossi-Tan-Chuang (2021)]] — QSP/QSVT framework; this paper is a direct efficiency improvement on that family.
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2016–2017)]] — original optimal QSP Hamiltonian simulation, the baseline being improved.
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2016–2017)]] — original optimal QSP [[Hamiltonian simulation]], the baseline being improved.
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low-Chuang (2019)]] — qubitization and block-encoding framework.
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — QSVT meta-framework; the broader context.
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes|Martyn-Liu-Chin-Chuang (2023)]] — the complementary fully-coherent approach by the same first author.
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2018)]] — qDRIFT; the Hastings-Campbell mixing lemma originates here.
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized product formulas; related randomization philosophy.
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized MPF; same mixing lemma, applied to multi-product formulas.
+- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized [[product formula]]s; related randomization philosophy.
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized MPF; same mixing lemma, applied to multi-[[product formula]]s.
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes|Watson (2025)]] — qFLO; another randomized approach in the same spirit.
 - Hastings and Campbell (2019) — original Hastings-Campbell mixing lemma for unitaries. No vault note yet.
 

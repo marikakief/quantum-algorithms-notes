@@ -1,4 +1,3 @@
-# Asymmetric Block Encoding via Hadamard Pairing
 
 > **Source:** Costa, An, Sanders, Su, Babbush, Berry, arXiv:2111.08152
 > **Tags:** #trick #block-encoding #qubitization #adiabatic #circuit-simplification

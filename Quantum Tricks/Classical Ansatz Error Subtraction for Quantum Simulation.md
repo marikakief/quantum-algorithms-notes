@@ -1,4 +1,3 @@
-# Classical Ansatz Error Subtraction for Quantum Simulation
 
 > **Source:** Babbush, McClean, Wecker, Aspuru-Guzik, Wiebe, arXiv:1410.8159 (PRA 2015)
 > **Tags:** #trick #trotter-error #quantum-chemistry #error-mitigation #classical-processing

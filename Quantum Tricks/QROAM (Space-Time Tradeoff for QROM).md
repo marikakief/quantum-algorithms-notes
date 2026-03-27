@@ -1,5 +1,3 @@
-# QROAM (Space-Time Tradeoff for QROM)
-
 > **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134; building on Low, Kliuchnikov, Schaeffer, arXiv:1812.00954
 > **Tags:** #trick #circuit-primitive #T-complexity #QROM #QROAM #data-loading #oracle #space-time-tradeoff
 

@@ -1,4 +1,3 @@
-# Mimicking State via Matrix Multiplicative Weights
 
 > **Source:** King, Gosset, Kothari, Babbush, arXiv:2404.19211
 > **Tags:** #trick #shadow-tomography #multiplicative-weights #sign-recovery #Pauli-learning #two-copy

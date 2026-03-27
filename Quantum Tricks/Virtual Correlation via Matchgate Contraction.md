@@ -1,4 +1,3 @@
-# Virtual Correlation via Matchgate Contraction
 
 > **Source:** Huggins, O'Gorman, Rubin, Reichman, Babbush, Lee, arXiv:2106.16235
 > **Tags:** #trick #matchgate #active-space #virtual-correlation #QMC #AFQMC

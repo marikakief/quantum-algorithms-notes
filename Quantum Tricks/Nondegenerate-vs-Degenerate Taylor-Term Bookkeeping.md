@@ -1,4 +1,3 @@
-# Nondegenerate-vs-Degenerate Taylor-Term Bookkeeping
 
 > **Tags:** #trick #taylor-expansion #combinatorics #simulation-analysis
 > **Source:** Quantum 2019-09-02-182

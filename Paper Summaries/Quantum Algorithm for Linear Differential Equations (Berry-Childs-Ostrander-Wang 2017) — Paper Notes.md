@@ -47,10 +47,10 @@ So the strength of the paper is not breadth; it is a clever reduction with good 
 
 ## Predecessors worth knowing
 
-The reduction strategy here builds directly on the Taylor-series Hamiltonian simulation work:
+The reduction strategy here builds directly on the Taylor-series [[Hamiltonian simulation]] work:
 - Berry, Childs, Cleve, Kothari, Somma, "Simulating Hamiltonian dynamics with a truncated Taylor series," PRL 114, 090502 (2015), arXiv:1412.4687.
 
-That paper showed how to turn Hamiltonian simulation into a linear system via Taylor-series recurrence. The present paper applies the same encoding idea to ODEs.
+That paper showed how to turn [[Hamiltonian simulation]] into a linear system via Taylor-series recurrence. The present paper applies the same encoding idea to ODEs.
 
 ## References within this paper
 

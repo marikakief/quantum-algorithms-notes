@@ -1,6 +1,4 @@
-# Linear Combination of Unitaries (LCU)
-
-> **Source:** Andrew M. Childs and Nathan Wiebe, arXiv:1202.5822 (first coherent LCU construction for Hamiltonian simulation); Berry, Childs, Cleve, Kothari, and Somma, arXiv:1412.4687 for the clean PREPARE/SELECT formulation
+> **Source:** Andrew M. Childs and Nathan Wiebe, arXiv:1202.5822 (first coherent LCU construction for [[Hamiltonian simulation]]); Berry, Childs, Cleve, Kothari, and Somma, arXiv:1412.4687 for the clean PREPARE/SELECT formulation
 > **Tags:** #trick #LCU #block-encoding #fundamental
 
 ## What it does
@@ -19,7 +17,7 @@ Projecting ancilla onto $|0\rangle$ yields $\tilde{U}|\psi\rangle / s$. Success 
 
 ## When to reach for it
 - **The** fundamental primitive for [[Block-Encoding Composition Algebra|block-encoding construction]]
-- Hamiltonian simulation via Taylor series
+- [[Hamiltonian simulation]] via Taylor series
 - Any non-unitary operator expressible as weighted sum of unitaries
 - Building block for [[QSVT Meta-Template|QSVT]], [[Qubitization Iterate|qubitisation]], and essentially all modern quantum algorithms
 

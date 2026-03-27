@@ -1,4 +1,3 @@
-# Occupation-Detection Assisted Subspace Block-Encoding
 
 > **Tags:** #trick #occupation-oracles #subspace #qsvt
 > **Source:** arXiv:2510.08644

@@ -13,7 +13,7 @@
 | Algorithm | Queries | Notes |
 |---|---|---|
 | Classical (sorting) | $\Theta(N)$ | Optimal classically |
-| Buhrman et al. (2001) | $O(N^{3/4})$ | First quantum improvement |
+| [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes|Buhrman et al. (2001)]] | $O(N^{3/4})$ | First quantum improvement |
 | [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes\|BHT]] (collision, $r$-to-1) | $O(N^{1/3})$ | Requires $r$-to-1 promise |
 | Aaronson-Shi lower bound | $\Omega(N^{2/3})$ | Polynomial method |
 | **This paper** | $O(N^{2/3})$ | **Tight** |

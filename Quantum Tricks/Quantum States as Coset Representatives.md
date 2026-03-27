@@ -1,4 +1,3 @@
-# Quantum States as Coset Representatives
 
 > **Source:** Watrous, arXiv:quant-ph/0011023 (2001), §4.2
 > **Tags:** #trick #group-theory #factor-groups #state-representation #non-abelian

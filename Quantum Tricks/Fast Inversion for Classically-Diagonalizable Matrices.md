@@ -1,4 +1,3 @@
-# Fast Inversion for Classically-Diagonalizable Matrices
 
 > **Source:** Tong, An, Wiebe & Lin, arXiv:2008.13295, Phys. Rev. A **104**, 032422 (2021)
 > **Tags:** #trick #block-encoding #matrix-inversion #QLSA #preconditioning

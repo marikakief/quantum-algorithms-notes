@@ -94,7 +94,7 @@ The polynomial hierarchy collapses.
 | Aaronson (2005) | post-BQP = PP |
 | Terhal & DiVincenzo (2004) | Depth-4 circuits hardness via gate teleportation |
 | **This paper (2011)** | **post-IQP = PP; Hadamard gadget; IQP hardness of sampling** |
-| Aaronson & Arkhipov (2011) | BosonSampling — similar PH-collapse argument for linear optics |
+| [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes|Aaronson & Arkhipov (2011)]] | BosonSampling — similar PH-collapse argument for linear optics |
 | Bremner, Montanaro, Shepherd (2016) | Average-case hardness and noise tolerance for IQP |
 
 This paper, together with Aaronson-Arkhipov's BosonSampling, launched the quantum supremacy programme — the idea that near-term quantum devices, even without full error correction, could demonstrate computational advantages via sampling problems.

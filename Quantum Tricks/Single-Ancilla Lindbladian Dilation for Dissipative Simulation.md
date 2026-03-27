@@ -1,4 +1,3 @@
-# Single-Ancilla Lindbladian Dilation for Dissipative Simulation
 
 > **Source:** Ding, Chen & Lin, arXiv:2308.15676
 > **Tags:** #trick #Lindbladian #open-systems #single-ancilla #dilation

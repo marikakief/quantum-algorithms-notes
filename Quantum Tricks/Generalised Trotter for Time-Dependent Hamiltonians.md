@@ -1,4 +1,3 @@
-# Generalised Trotter for Time-Dependent Hamiltonians
 
 > **Source:** Huyghebaert and De Raedt, J. Phys. A 23 (1990); rigorously analysed by Dong An, Di Fang, and Jin-Peng Liu, arXiv:2012.13105 (Quantum 2021)
 > **Tags:** #trick #trotter #time-dependent #commutator-scaling #hamiltonian-simulation
@@ -30,7 +29,7 @@ The generalised version has pure [[Trotter Commutator-Scaling Bound|commutator s
 
 ## When to reach for it
 
-- Time-dependent Hamiltonian simulation with rapidly varying coefficients (large $f'$).
+- Time-dependent [[Hamiltonian simulation]] with rapidly varying coefficients (large $f'$).
 - Situations where $[H_1, H_2]$ is small but $\|H_1\|$ and $f_1'$ are large — the standard Trotter overpays while the generalised version doesn't see the derivatives.
 - Quantum control problems where $f_j(t)$ are control pulses with fast modulation.
 - As a drop-in replacement for standard Trotter in PDE simulations.

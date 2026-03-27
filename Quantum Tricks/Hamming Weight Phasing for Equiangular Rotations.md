@@ -1,4 +1,3 @@
-# Hamming Weight Phasing for Equiangular Rotations
 
 > **Source:** Gidney, Quantum **2**, 74 (2018); extended by Kivlichan, Gidney, Babbush et al., arXiv:1902.10673 (2020)
 > **Tags:** #trick #fault-tolerant #T-gate-reduction #rotation-synthesis #Trotter #circuit-optimization

@@ -1,4 +1,3 @@
-# Block-Multilinear Polynomial Simulation of Quantum Queries
 
 > **Source:** Aaronson & Ambainis, arXiv:1411.5729 (2015)
 > **Tags:** #trick #simulation #query-complexity #polynomial-method #classical-simulation

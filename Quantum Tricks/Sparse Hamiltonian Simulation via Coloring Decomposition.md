@@ -26,7 +26,7 @@ $$
 
 ## When to reach for it
 
-Historically important — this is the original sparse simulation construction. In practice, use the tighter [[Edge-Coloring Decomposition for Sparse Hamiltonians|edge-coloring decomposition]] from Berry et al. (2005), which achieves $6d^2$ terms with $O(\log^* n)$ oracle queries each, or [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians|quantum walk]] methods for linear-in-$d$ scaling.
+Historically important — this is the original sparse simulation construction. In practice, use the tighter [[Edge-Coloring Decomposition for Sparse Hamiltonians|edge-coloring decomposition]] from [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry et al. (2005)]], which achieves $6d^2$ terms with $O(\log^* n)$ oracle queries each, or [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians|quantum walk]] methods for linear-in-$d$ scaling.
 
 ## Complexity
 

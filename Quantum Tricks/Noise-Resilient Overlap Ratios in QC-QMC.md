@@ -1,4 +1,3 @@
-# Noise-Resilient Overlap Ratios in QC-QMC
 
 > **Source:** Huggins, O'Gorman, Rubin, Reichman, Babbush, Lee, arXiv:2106.16235
 > **Tags:** #trick #noise-resilience #QMC #AFQMC #NISQ #error-mitigation

@@ -12,7 +12,7 @@ The physical setup: $\eta$ electrons and one quantum projectile nucleus (mass $M
 
 $$H = H_0 - \frac{\nabla^2_{\text{proj}}}{2M_{\text{proj}}} - \sum_{i=1}^{\eta} \frac{\zeta_{\text{proj}}}{\|r_i - R_{\text{proj}}\|} + \sum_{\ell=1}^{L} \frac{\zeta_{\text{proj}}\zeta_\ell}{\|R_\ell - R_{\text{proj}}\|}$$
 
-where $H_0$ is the standard [[First-Quantized Plane-Wave Chemistry Encoding|first-quantized Born-Oppenheimer Hamiltonian]] for $\eta$ electrons and $L$ classical nuclei. The target nuclei remain classical; the projectile is promoted to a quantum degree of freedom. This avoids time-dependent Hamiltonian simulation entirely — the resulting $H$ is time-independent.
+where $H_0$ is the standard [[First-Quantized Plane-Wave Chemistry Encoding|first-quantized Born-Oppenheimer Hamiltonian]] for $\eta$ electrons and $L$ classical nuclei. The target nuclei remain classical; the projectile is promoted to a quantum degree of freedom. This avoids time-dependent [[Hamiltonian simulation]] entirely — the resulting $H$ is time-independent.
 
 The observable of interest: the projectile's kinetic energy as a function of time. The stopping power is extracted from the slope of kinetic energy loss vs. displacement.
 
@@ -28,7 +28,7 @@ This is the first constant-factor resource estimate for a practically relevant *
 
 The headline numbers for the fully converged alpha-in-hydrogen system (218 electrons): $\sim 10^{15}$ Toffoli gates with 8th-order Trotter, $\sim 2 \times 10^{17}$ with QSP, and $\sim 10^3$ logical qubits. That's roughly 100× more Toffolis than FeMoCo-scale ground-state problems, but the same order of logical qubits. A benchmark-scale version (28 electrons) drops to $\sim 10^{13}$ Toffolis.
 
-My assessment: this paper establishes that quantum dynamics simulations of WDM are within reach of the same hardware generation that could tackle molecular ground states — the qubit overhead is modest, and the Toffoli overhead (while large) is polynomial. The product formula approach wins over QSP by two orders of magnitude here, largely because the numerically optimized 8th-order formula has a tiny prefactor ($\xi = 3.4 \times 10^{-8}$). The paper also contributes a genuinely useful hybrid QROM+Newton-Raphson approach for computing inverse square roots in Trotter steps.
+My assessment: this paper establishes that quantum dynamics simulations of WDM are within reach of the same hardware generation that could tackle molecular ground states — the qubit overhead is modest, and the Toffoli overhead (while large) is polynomial. The [[product formula]] approach wins over QSP by two orders of magnitude here, largely because the numerically optimized 8th-order formula has a tiny prefactor ($\xi = 3.4 \times 10^{-8}$). The paper also contributes a genuinely useful hybrid QROM+Newton-Raphson approach for computing inverse square roots in Trotter steps.
 
 ---
 
@@ -40,7 +40,7 @@ Four steps:
 
 1. **Initial state preparation:** Electronic subsystem drawn from a thermal (Mermin Kohn-Sham) Slater determinant via [[Givens Rotation Slater Determinant Preparation|Givens rotation protocol]]; projectile initialized as a Gaussian wave packet in momentum space centered at $k_{\text{proj}}$ with variance $\sigma_k$.
 
-2. **Time evolution:** Under the time-independent non-BO Hamiltonian $H$, using either QSP ([[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]) or high-order product formulas.
+2. **Time evolution:** Under the time-independent non-BO Hamiltonian $H$, using either QSP ([[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]) or high-order [[product formula]]s.
 
 3. **Measurement:** Estimate the projectile kinetic energy $\langle T_{\text{proj}} \rangle$ at $\sim 10$ time points.
 
@@ -73,7 +73,7 @@ QSP synthesizes $e^{-iHt}$ with cost $O(\lambda t + \log(1/\varepsilon)/\log\log
 
 ### Product formula approach (8th-order Trotter)
 
-For the product formula, the paper works with a **real-space grid Hamiltonian** (dual to the plane-wave representation) and considers only electronic degrees of freedom (projectile costs are subdominant).
+For the [[product formula]], the paper works with a **real-space grid Hamiltonian** (dual to the plane-wave representation) and considers only electronic degrees of freedom (projectile costs are subdominant).
 
 Each Trotter step involves:
 1. Computing potential energy in position basis and phasing
@@ -86,7 +86,7 @@ The bottleneck is step 1: computing $\eta(\eta-1)/2$ pairwise Coulomb potentials
 
 1. Variable-spacing [[QROM (Quantum Read-Only Memory)|QROM]] to load cubic polynomial interpolation coefficients (15 bits precision). Cost: $4n + 2$ Toffolis where $n$ is the bit size per spatial direction.
 2. Evaluate the cubic polynomial via Horner's rule (3 multiplications at $\sim 15^2$ Toffolis each).
-3. One step of generalized Newton-Raphson: $y \mapsto \frac{1}{2}y(2 + b^2 - y^2x)$ to compute $b/\sqrt{x}$ directly (absorbing the product formula coefficient $b$ into the iteration). This avoids a separate multiplication by the Trotter coefficient.
+3. One step of generalized Newton-Raphson: $y \mapsto \frac{1}{2}y(2 + b^2 - y^2x)$ to compute $b/\sqrt{x}$ directly (absorbing the [[product formula]] coefficient $b$ into the iteration). This avoids a separate multiplication by the Trotter coefficient.
 
 Total per-pair cost: $\sim 2395$ Toffolis (for $n = 6$), given by:
 
@@ -179,7 +179,7 @@ The $\sim 100\times$ Toffoli increase over FeMoCo-scale QPE comes from: (a) time
 
 2. **Thermal state preparation isn't costed.** The protocol assumes a Mermin Kohn-Sham Slater determinant from a classical DFT calculation. Preparing a more accurate thermal state would add cost.
 
-3. **Projectile remains essentially classical.** The Gaussian wave packet is designed to approximate a point charge throughout the dynamics. The non-BO treatment is a computational convenience (avoiding time-dependent Hamiltonian simulation), not a physically motivated choice.
+3. **Projectile remains essentially classical.** The Gaussian wave packet is designed to approximate a point charge throughout the dynamics. The non-BO treatment is a computational convenience (avoiding time-dependent [[Hamiltonian simulation]]), not a physically motivated choice.
 
 4. **No error budget for discretization.** The plane-wave cutoff and $\sigma_k$ choices are calibrated against TDDFT convergence, not against exact benchmarks.
 
@@ -193,7 +193,7 @@ The $\sim 100\times$ Toffoli increase over FeMoCo-scale QPE comes from: (a) time
 
 1. [[Non-BO Projectile Block Encoding Extension]] — Extending first-quantized plane-wave block encodings to handle a quantum projectile with a different (larger) momentum grid than the electrons. The controlled preparation trick for the $\nu$ superposition costs only $n_n - n_p$ extra Toffolis.
 
-2. [[QROM Interpolation plus Newton-Raphson for Inverse Square Root]] — Hybrid function evaluation: QROM loads a cubic polynomial interpolant at 15-bit precision, then one Newton-Raphson step boosts to $\sim 10^{-9}$ relative error. Generalizing to $b/\sqrt{x}$ folds the product formula coefficient into the iteration for free.
+2. [[QROM Interpolation plus Newton-Raphson for Inverse Square Root]] — Hybrid function evaluation: QROM loads a cubic polynomial interpolant at 15-bit precision, then one Newton-Raphson step boosts to $\sim 10^{-9}$ relative error. Generalizing to $b/\sqrt{x}$ folds the [[product formula]] coefficient into the iteration for free.
 
 3. [[Gaussian Wave Packet Variance Tuning for Observable Estimation]] — Designing the projectile wave packet width $\sigma_k$ to balance physical accuracy (point-charge approximation) against sampling efficiency. Calibrated via classical TDDFT convergence tests.
 
@@ -211,7 +211,7 @@ The $\sim 100\times$ Toffoli increase over FeMoCo-scale QPE comes from: (a) time
 - [[Fault-Tolerant Quantum Simulation of Materials Using Bloch Orbitals (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — Second-quantized materials simulation comparison point.
 - Kothari and O'Donnell (2023) — Mean estimation with Heisenberg scaling; paper provides first constant-factor analysis of this algorithm's cost for a concrete problem.
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan, Gidney, Babbush et al. (2020)]] — Trotter simulation of condensed-phase systems; norm scaling analysis.
-- Morales, Costa, Burgarth, Sanders, Berry (2022) — Numerically optimized higher-order product formulas; the bespoke 8th-order formula used here builds on this approach.
+- Morales, Costa, Burgarth, Sanders, Berry (2022) — Numerically optimized higher-order [[product formula]]s; the bespoke 8th-order formula used here builds on this approach.
 - Jones et al. (2012) — Original Newton-Raphson approach for computing inverse square root on quantum computers; this paper improves on it with the QROM hybrid.
 
 ---
@@ -242,5 +242,5 @@ The $\sim 100\times$ Toffoli increase over FeMoCo-scale QPE comes from: (a) time
 - [[QROM Interpolation plus Newton-Raphson for Inverse Square Root]] — New trick card from this paper
 - [[Gaussian Wave Packet Variance Tuning for Observable Estimation]] — New trick card from this paper
 - [[Shot-Noise vs Heisenberg-Scaling Observable Estimation Crossover]] — New trick card from this paper
-- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]] — Follow-up that resolves the $O(\eta^2)$ Coulomb bottleneck in this paper's product formula approach via quantum FMM
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — systematic search and comparison of high-order product formulas; the bespoke 8th-order formula used in this paper is from the same research programme
+- [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes]] — Follow-up that resolves the $O(\eta^2)$ Coulomb bottleneck in this paper's [[product formula]] approach via quantum FMM
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — systematic search and comparison of high-order [[product formula]]s; the bespoke 8th-order formula used in this paper is from the same research programme

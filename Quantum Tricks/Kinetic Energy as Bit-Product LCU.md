@@ -1,4 +1,3 @@
-# Kinetic Energy as Bit-Product LCU
 
 > **Source:** Su, Berry, Wiebe, Rubin, Babbush, arXiv:2105.12767 (2021)
 > **Tags:** #trick #LCU #kinetic-energy #arithmetic-free #first-quantized #qubitization

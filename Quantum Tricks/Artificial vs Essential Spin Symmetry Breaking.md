@@ -1,4 +1,3 @@
-# Artificial vs Essential Spin Symmetry Breaking
 
 > **Source:** Goings, White, Lee, Tautermann, Degroote, Gidney, Shiozaki, Babbush, Rubin, arXiv:2202.01244; see also Lee and Head-Gordon (2019)
 > **Tags:** #trick #quantum-chemistry #multireference #diagnostics #spin-contamination #coupled-cluster

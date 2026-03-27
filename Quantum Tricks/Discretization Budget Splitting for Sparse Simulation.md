@@ -1,4 +1,3 @@
-# Discretization Budget Splitting for Sparse Simulation
 
 > **Source:** Wiebe, Berry, Høyer & Sanders, arXiv:1011.3489 (2011)
 > **Tags:** #trick #oracle-model #precision #sparse #hamiltonian-simulation

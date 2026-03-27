@@ -1,4 +1,3 @@
-# Inequality-Test Amplitude Transduction
 
 > **Source:** Sanders, Low, Scherer, Berry, arXiv:1807.03206, PRL 122, 020502 (2019)
 > **Tags:** #trick #state-preparation #comparator #amplitude-loading #Toffoli-count

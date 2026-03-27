@@ -1,4 +1,3 @@
-# Exponential Superposition State Preparation
 
 > **Source:** Berry, Cleve, Gharibian, arXiv:1211.4637
 > **Tags:** #trick #state-preparation #amplitude-encoding

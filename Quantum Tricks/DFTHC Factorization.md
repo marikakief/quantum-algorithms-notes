@@ -1,4 +1,3 @@
-# DFTHC Factorization
 
 > **Source:** Low, King, Berry et al., arXiv:2502.15882
 > **Tags:** #trick #tensor-factorization #quantum-chemistry #block-encoding #SOS

@@ -1,4 +1,3 @@
-# SOS Decomposition via Semidefinite Programming for Chemistry
 
 > **Source:** Low, King, Berry et al., arXiv:2502.15882
 > **Tags:** #trick #sum-of-squares #SDP #quantum-chemistry #classical-preprocessing

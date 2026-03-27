@@ -119,7 +119,7 @@ The full-rank $J$ matrices are the main advantage over analytical decompositions
 ## Limits / caveats
 
 - **Convergence slowdown:** The residual rank saturates at maximum, slowing convergence for high-accuracy targets. Not a problem for practical circuits (sub-milliHartree is usually sufficient), but the decomposition is not monotonically efficient.
-- **Trotter error not addressed:** The paper decomposes the *generator* but doesn't bound the Trotter error from the product formula approximation $e^G \approx \prod e^{Z_l^2}$. For near-term applications this is fine (variational parameters absorb it), but for fault-tolerant time evolution you'd need additional analysis.
+- **Trotter error not addressed:** The paper decomposes the *generator* but doesn't bound the Trotter error from the [[product formula]] approximation $e^G \approx \prod e^{Z_l^2}$. For near-term applications this is fine (variational parameters absorb it), but for fault-tolerant time evolution you'd need additional analysis.
 - **Hamiltonian compression doesn't work well:** As shown in Appendix B, the greedy objective doesn't preserve spectral properties of the Hamiltonian. Don't use this for compressing $H$ directly — use it for compressing $e^{T-T^\dagger}$ generators.
 - **$O(n^5)$ per iteration** is cheap but not free. For large basis sets with many iterations, the total classical preprocessing cost could be non-trivial.
 - **Greedy only — no global optimality guarantee.** The compression ratio depends on the greedy path. Random vs. Takagi-seeded initialization gives similar results empirically, but there's no proof of optimality.
@@ -136,7 +136,7 @@ The full-rank $J$ matrices are the main advantage over analytical decompositions
 
 Key papers cited:
 
-- **Motta et al. (2018)**, arXiv:1808.02625 — Introduced double factorization / low-rank representations for quantum simulation. The SVD baseline decomposition comes from here.
+- **[[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes|Motta et al. (2018)]]**, arXiv:1808.02625 — Introduced double factorization / low-rank representations for quantum simulation. The SVD baseline decomposition comes from here.
 - **Matsuzawa & Kurashige (2020)**, J. Chem. Theory Comput. 16, 944 — Introduced the Takagi-based decomposition and $k$-uCJ ansatz. Pointed out the rank-1 deficiency problem.
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes|Kivlichan, McClean et al. (2018)]] — The [[Fermionic Swap Network]] and [[Givens Rotation Slater Determinant Preparation|Givens rotation circuits]] that form the physical circuit primitives.
 - [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes|Romero, Babbush et al. (2018)]] — The Trotterized [[Unitary Coupled Cluster (UCC) Ansatz|UCC]] circuit strategy that this paper improves upon.
@@ -170,7 +170,7 @@ Key papers cited:
 - [[Givens Rotation Slater Determinant Preparation]] — Circuit primitive for implementing basis rotations $U_l$
 - [[Fermionic Swap Network]] — Circuit primitive for implementing Ising interaction layers
 - [[Unitary Coupled Cluster (UCC) Ansatz]] — The operator being compressed
-- [[Trotterized Time Evolution for Chemistry]] — The product formula approximation used
+- [[Trotterized Time Evolution for Chemistry]] — The [[product formula]] approximation used
 - [[Greedy Sum-of-Squares Operator Decomposition]] — New trick card: the core algorithm
 - [[Full-Rank Ising Coupling via Numerical Basis Optimization]] — New trick card: the key improvement over analytical methods
 - [[Compressed UCC as ADAPT-VQE Initial State]] — New trick card: the application to warm-starting iterative methods

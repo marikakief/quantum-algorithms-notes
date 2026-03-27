@@ -1,4 +1,3 @@
-# Phase Estimation as Eigenvalue Filter for Walk-Based Search
 
 > **Source:** Magniez, Nayak, Roland, Santha, SIAM J. Comput. 40(1), 2011; arXiv:quant-ph/0608026
 > **Tags:** #trick #quantum-walk #phase-estimation #reflection #search

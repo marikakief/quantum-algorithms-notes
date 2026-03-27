@@ -108,7 +108,7 @@ There are three distinct things called "shadow" in quantum computing:
 | [[Classical shadows (Huang-Kueng-Preskill 2020)]] | Same, for local observables | No (randomised single-copy) |
 | [[Shadow Hamiltonian Simulation — Paper Notes\|Shadow Hamiltonian simulation]] | Dimension of the simulated state | Yes (full quantum computation) |
 
-The shadow Hamiltonian simulation paper explicitly cites this work (in its related-work table) as occupying a different niche — it compresses the dynamics, not the tomographic sample complexity.
+The shadow [[Hamiltonian simulation]] paper explicitly cites this work (in its related-work table) as occupying a different niche — it compresses the dynamics, not the tomographic sample complexity.
 
 ---
 

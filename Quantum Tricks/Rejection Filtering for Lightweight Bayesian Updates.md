@@ -1,4 +1,3 @@
-# Rejection Filtering for Lightweight Bayesian Updates
 
 > **Source:** Wiebe and Granade, *Efficient Bayesian Phase Estimation*, arXiv:1508.00869 (2016)
 > **Tags:** #trick #Bayesian-inference #rejection-sampling #phase-estimation #particle-filter #RFPE

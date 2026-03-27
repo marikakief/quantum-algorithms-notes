@@ -1,4 +1,3 @@
-# Product-Formula Error Representation Switching
 
 > **Tags:** #trick #trotter #analysis
 > **Source:** Childs, Su, Tran, Wiebe, Zhu, arXiv:1912.08854

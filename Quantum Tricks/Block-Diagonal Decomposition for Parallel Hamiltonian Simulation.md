@@ -1,4 +1,3 @@
-# Block-Diagonal Decomposition for Parallel Hamiltonian Simulation
 
 > **Source:** Abrams & Lloyd, arXiv:quant-ph/9703054 (1997)
 > **Tags:** #trick #hamiltonian-simulation #fermions #hubbard-model

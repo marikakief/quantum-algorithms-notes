@@ -1,4 +1,3 @@
-# Incremental Kinetic Energy Register
 
 > **Source:** Su, Berry, Wiebe, Rubin, Babbush, arXiv:2105.12767 (2021)
 > **Tags:** #trick #kinetic-energy #interaction-picture #incremental-update #arithmetic

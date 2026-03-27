@@ -1,4 +1,3 @@
-# Generating-Function Pfaffian Trick for Gaussian Overlaps
 
 > **Source:** Wan, Huggins, Lee, Babbush, arXiv:2207.13723
 > **Tags:** #trick #Pfaffian #generating-function #Gaussian-state #classical-shadows #matchgate #Clifford-algebra

@@ -1,4 +1,3 @@
-# Gaussian Lifting for Query Lower Bounds
 
 > **Source:** Aaronson & Ambainis, arXiv:1411.5729 (2015)
 > **Tags:** #trick #lower-bound #query-complexity #Fourier-analysis #boolean-functions

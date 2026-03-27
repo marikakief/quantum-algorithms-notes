@@ -1,4 +1,3 @@
-# Gradient Encoding for Multi-Observable Estimation
 
 > **Source:** Huggins, Wan, McClean, O'Brien, Wiebe, Babbush, arXiv:2111.09283
 > **Tags:** #trick #measurement #expectation-value #gradient-estimation #fault-tolerant

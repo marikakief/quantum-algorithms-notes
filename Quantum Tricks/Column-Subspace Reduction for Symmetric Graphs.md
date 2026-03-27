@@ -1,4 +1,3 @@
-# Column-Subspace Reduction for Symmetric Graphs
 
 > **Source:** Childs, Cleve, Deotto, Farhi, Gutmann, Spielman, arXiv:quant-ph/0209131 (2003)
 > **Tags:** #trick #quantum-walk #symmetry #graph-traversal

@@ -1,4 +1,3 @@
-# Dolph-Chebyshev Eigenstate Filtering
 
 > **Source:** Costa, An, Sanders, Su, Babbush, Berry, arXiv:2111.08152
 > **Tags:** #trick #eigenstate-filtering #LCU #Chebyshev #linear-systems #qubitization

@@ -1,4 +1,3 @@
-# Hierarchical Low-Rank Hamiltonian Decomposition
 
 > **Tags:** #trick #low-rank #hamiltonian-simulation #block-encoding
 > **Source:** Low, Su, Tong, Tran, *On the complexity of implementing Trotter steps*, arXiv:2211.09133, PRX Quantum 4, 020323 (2023)

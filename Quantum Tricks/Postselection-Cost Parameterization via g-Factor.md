@@ -1,4 +1,3 @@
-# Postselection-Cost Parameterization via g-Factor
 
 > **Tags:** #trick #postselection #complexity #linear-odes
 > **Source:** arXiv:1701.03684

@@ -1,4 +1,3 @@
-# Incidence-Matrix Encoding of Coupled-Oscillator Forces
 
 > **Tags:** #trick #graph-encoding #oscillators #hamiltonian-simulation
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, *Exponential quantum speedup in simulating coupled classical oscillators*, arXiv:2303.13012, PRX **13**, 041041 (2023)

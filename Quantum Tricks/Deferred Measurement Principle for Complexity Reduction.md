@@ -1,4 +1,3 @@
-# Deferred Measurement Principle for Complexity Reduction
 
 > **Source:** Aaronson & Gottesman, arXiv:quant-ph/0406196 (2004); also a standard quantum circuit identity
 > **Tags:** #trick #complexity #measurement #circuit-identities #parityl

@@ -1,4 +1,3 @@
-# Inversion About the Mean
 
 > **Source:** Grover, arXiv:quant-ph/9605043 (1996)
 > **Tags:** #trick #grover #reflection #amplitude-amplification #fundamental

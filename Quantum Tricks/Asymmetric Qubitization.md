@@ -1,4 +1,3 @@
-# Asymmetric Qubitization
 
 > **Source:** Babbush, Berry, Neven, arXiv:1806.02793, Phys. Rev. A **99**, 040301(R) (2019)
 > **Tags:** #trick #qubitization #LCU #block-encoding #quantum-signal-processing #asymmetric

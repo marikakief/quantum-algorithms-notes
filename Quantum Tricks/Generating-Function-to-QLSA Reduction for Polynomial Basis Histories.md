@@ -1,4 +1,3 @@
-# Generating-Function-to-QLSA Reduction for Polynomial Basis Histories
 
 > **Tags:** #trick #qlsa #polynomial-transforms #non-normal
 > **Source:** arXiv:2401.06240 (Quantum eigenvalue processing, FOCS 2024)

@@ -1,4 +1,3 @@
-# Symmetry-Adapted Block Encoding via QROAM Data Reduction
 
 > **Source:** Rubin, Berry, Malone, White, Khattar, DePrince, Sicolo, Kühn, Kaicher, Lee, Babbush, arXiv:2302.05531
 > **Tags:** #trick #block-encoding #qubitization #QROAM #symmetry #periodic-systems #translational-symmetry

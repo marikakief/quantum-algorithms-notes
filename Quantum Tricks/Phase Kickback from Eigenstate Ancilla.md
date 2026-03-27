@@ -1,4 +1,3 @@
-# Phase Kickback from Eigenstate Ancilla
 
 > **Source:** Deutsch, Proc. R. Soc. Lond. A **400**, 97–117 (1985); made explicit in Cleve, Ekert, Macchiavello & Mosca (1998)
 > **Tags:** #trick #phase-kickback #oracle #fundamental

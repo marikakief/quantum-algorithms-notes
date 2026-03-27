@@ -162,7 +162,7 @@ The caveat: this is a 2-parameter toy problem. The advantage of COBYLA/Powell ov
 - [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes|Babbush et al. (2015)]] — Taylor series simulation for chemistry
 - Taube and Bartlett (2006) — classical UCC theory (no vault note)
 - Yung et al. (2014) — VQE theory extension and ion trap implementation (no vault note)
-- Roland and Cerf (2002) — local adiabatic evolution; see [[Gap-Adapted Adiabatic Scheduling]]
+- [[Quantum Search by Local Adiabatic Evolution (Roland-Cerf 2002) — Paper Notes|Roland and Cerf (2002)]] — local adiabatic evolution; see [[Gap-Adapted Adiabatic Scheduling]]
 - Bellman et al. (1965) — Pontryagin's minimum principle, basis for the bang-bang observation
 
 ---

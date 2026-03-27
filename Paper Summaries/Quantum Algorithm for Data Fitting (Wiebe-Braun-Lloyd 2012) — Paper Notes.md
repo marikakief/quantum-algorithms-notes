@@ -51,7 +51,7 @@ Note $I(F)^2 = A := \mathrm{diag}(F^\dagger F,\; F F^\dagger)$, so $A^{-1}$ is b
 
    $$|\Psi_0\rangle = \sqrt{\frac{2}{T}}\sum_{\tau=0}^{T-1} \sin\!\left(\frac{\pi(\tau+\tfrac12)}{T}\right) |\tau\rangle \otimes |\mathbf{y}\rangle,$$
    
-   apply controlled evolutions $e^{-iI(F^\dagger)\tau t_0/T}$ via sparse Hamiltonian simulation, then QFT and an ancilla-controlled eigenvalue rotation. Postselect on $|1\rangle$; success probability $O(1/\kappa^2)$, boost with $O(\kappa)$ amplitude amplification.
+   apply controlled evolutions $e^{-iI(F^\dagger)\tau t_0/T}$ via sparse [[Hamiltonian simulation]], then QFT and an ancilla-controlled eigenvalue rotation. Postselect on $|1\rangle$; success probability $O(1/\kappa^2)$, boost with $O(\kappa)$ amplitude amplification.
 
 2. **Invert via HHL:** Apply $A^{-1} = I(F)^{-2}$ to the result using HHL on the Hermitian operator $A$. Another round of phase estimation + eigenvalue inversion.
 

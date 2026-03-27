@@ -1,4 +1,3 @@
-# Fat-Shattering Dimension of Quantum States via Random Access Codes
 
 > **Source:** Aaronson, arXiv:quant-ph/0608142 (2006)
 > **Tags:** #trick #quantum-learning #PAC-learning #fat-shattering #random-access-codes #sample-complexity

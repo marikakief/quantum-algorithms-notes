@@ -1,4 +1,3 @@
-# Superadiabatic Smooth Scheduling for Exponential Precision
 
 > **Source:** Dong An and Lin Lin, arXiv:1909.05500; uses Nenciu (1993) superadiabatic theory
 > **Tags:** #trick #adiabatic #superadiabatic #precision #scheduling

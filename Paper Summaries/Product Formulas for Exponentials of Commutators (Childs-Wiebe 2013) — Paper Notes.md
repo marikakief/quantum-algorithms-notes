@@ -12,7 +12,7 @@ The problem generalizes to: given a sequence $A_0, \ldots, A_k$, implement $e^{Z
 
 ## What the paper does
 
-Provides a recursive construction — the first systematic one — for building product formula approximations to exponentials of commutators (and nested commutators) to arbitrary order. The cost scales as $(\Lambda T)^{k+1+o(1)}$ in total evolution time, where $\Lambda \geq 2\max_j \|A_j\|$ and $k$ is the nesting depth of the commutator. A quantum search reduction shows this is nearly optimal: any such product formula requires $\Omega(T)$ exponentials.
+Provides a recursive construction — the first systematic one — for building [[product formula]] approximations to exponentials of commutators (and nested commutators) to arbitrary order. The cost scales as $(\Lambda T)^{k+1+o(1)}$ in total evolution time, where $\Lambda \geq 2\max_j \|A_j\|$ and $k$ is the nesting depth of the commutator. A quantum search reduction shows this is nearly optimal: any such [[product formula]] requires $\Omega(T)$ exponentials.
 
 Applications include quantum control (arbitrary unitary through commutator evolution) and simulating many-body Hamiltonians with higher-order coupling terms (products of commuting operators).
 
@@ -60,7 +60,7 @@ where $\mu_p, \nu_p$ cancel the leading error (explicit values in Eq. (24) of th
 
 ### Nested commutators (Lemma 6)
 
-To implement $e^{Z_k T^{k+1}}$ for $Z_k = [A_k, [A_{k-1}, \cdots [A_1, A_0]\cdots]]$, recursively replace each inner commutator exponential in the outer formula with the appropriate product formula approximation of the inner commutator. This yields $U_p(A_k t, \ldots, A_0 t)$ satisfying
+To implement $e^{Z_k T^{k+1}}$ for $Z_k = [A_k, [A_{k-1}, \cdots [A_1, A_0]\cdots]]$, recursively replace each inner commutator exponential in the outer formula with the appropriate [[product formula]] approximation of the inner commutator. This yields $U_p(A_k t, \ldots, A_0 t)$ satisfying
 $$
 U_p(A_k t, \ldots, A_0 t) = e^{Z_k t^{k+1}} + O(t^{2p+k+1}).
 $$
@@ -89,7 +89,7 @@ $$
 N_{\rm exp} = (\Lambda T)^{k+1} \cdot (\Lambda T / \varepsilon)^{O(1/p)} \xrightarrow{p\to\infty} (\Lambda T)^{k+1+o(1)}.
 $$
 
-**Theorem 12 (lower bound — near-optimality):** Any product formula approximation to $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The lower bound is established via reduction to the $\Omega(\sqrt{n})$ quantum search lower bound.
+**Theorem 12 (lower bound — near-optimality):** Any [[product formula]] approximation to $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The lower bound is established via reduction to the $\Omega(\sqrt{n})$ quantum search lower bound.
 
 **Theorem 13 (many-body couplings):** For commuting Hermitian operators $\{A_\ell\}$ with multiplicities $\alpha_\ell$, the operator $\exp(-i \, 2^{-k} A_1^{\alpha_1} \cdots A_m^{\alpha_m} t^{k+1})$ (where $k = \sum_\ell \alpha_\ell - 1$) can be simulated using $O(6^{pk} (6^{pk} \Lambda t)^{k+1+(k+1)^2/(2p)} \varepsilon^{-(k+1)/(2p)})$ exponentials.
 
@@ -102,7 +102,7 @@ $$
 | Complexity scaling | Unknown (first systematic treatment) | $(\Lambda T)^{k+1+o(1)}$ |
 | Optimality | No lower bound | $\Omega(T)$ lower bound; near-optimal |
 | Many-body $k$-body terms | Not addressed | Handled via qubit dilation trick |
-| Quantum control | No product formula approach | New family of evolutions for control |
+| Quantum control | No [[product formula]] approach | New family of evolutions for control |
 
 The [[Balanced Group Commutator Decomposition]] trick from Solovay–Kitaev uses group commutators for gate synthesis, but only one level deep. This paper's recursion goes to arbitrary order.
 
@@ -110,7 +110,7 @@ The [[Balanced Group Commutator Decomposition]] trick from Solovay–Kitaev uses
 
 The complexity $O(6^{pk})$ grows exponentially in both the recursion depth $p$ and the nesting depth $k$. For $k \geq 2$ the practical constant factors are large. The near-linearity in $T^{k+1}$ only emerges after optimizing $p$ in the large-$T$ regime.
 
-The lower bound (Theorem 12) shows the $(\Lambda T)^{k+1}$ factor is genuine. The $o(1)$ precision exponent is nearly but not fully optimal — there is a polylog$(1/\varepsilon)$ gap versus the $O(1)$ precision dependence achieved by LCU/[[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] methods for direct Hamiltonian simulation.
+The lower bound (Theorem 12) shows the $(\Lambda T)^{k+1}$ factor is genuine. The $o(1)$ precision exponent is nearly but not fully optimal — there is a polylog$(1/\varepsilon)$ gap versus the $O(1)$ precision dependence achieved by LCU/[[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] methods for direct [[Hamiltonian simulation]].
 
 This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP/qubitization]] era; the methods here are product-formula-only. For simulating $e^{HT}$ directly, [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Taylor series / LCU]] achieves polylog$(1/\varepsilon)$. The commutator-simulation setting is distinct: when you only have access to $e^{At}$ and $e^{Bt}$ but want $e^{[A,B]T}$, this paper gives the right tool.
 
@@ -122,23 +122,23 @@ This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-
 
 3. **[[Anticommutator Simulation via Qubit Dilation]]** — embed commuting operators $A_\ell$ in a larger Hilbert space ($H \otimes \mathbb{C}^2$) so that the commutator of the embedded operators reproduces the product $A_1^{\alpha_1} \cdots A_m^{\alpha_m}$; this converts many-body interaction simulation into nested commutator simulation.
 
-4. **[[Quantum Search Lower Bound for Commutator Simulation]]** — prove near-optimality of commutator simulation by reducing to quantum search: evolving under $[|w\rangle\langle w|, |+\rangle\langle +|]$ for time $T = O(\sqrt{n})$ solves the $n$-item search problem, so any product formula using $o(T)$ exponentials gives fewer than $\Omega(\sqrt{n})$ oracle queries — a contradiction.
+4. **[[Quantum Search Lower Bound for Commutator Simulation]]** — prove near-optimality of commutator simulation by reducing to quantum search: evolving under $[|w\rangle\langle w|, |+\rangle\langle +|]$ for time $T = O(\sqrt{n})$ solves the $n$-item search problem, so any [[product formula]] using $o(T)$ exponentials gives fewer than $\Omega(\sqrt{n})$ oracle queries — a contradiction.
 
 ## References within this paper
 
-- **Suzuki (1990, 1991)** — higher-order Trotter–Suzuki product formulas; basis of the even-$k$ recursion in this paper. Vault note: [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] has context.
+- **Suzuki (1990, 1991)** — higher-order Trotter–Suzuki [[product formula]]s; basis of the even-$k$ recursion in this paper. Vault note: [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] has context.
 - **Solovay–Kitaev** — uses one level of group commutator for gate approximation. Vault: [[Balanced Group Commutator Decomposition]], [[Group Commutator Error Cancellation]].
 - **Grover / quantum search lower bound** — the $\Omega(\sqrt{n})$ query lower bound (Bennett et al.) is the basis for Theorem 12.
-- **Jean and Koseleff (2003)** — alternative product formula recursion that raises order by $1/2$ per step, which inspires the $G_p / F_p$ family in Section III B.
-- **Berry–Ahokas–Cleve–Sanders (2005)** — Suzuki product formulas for sparse Hamiltonian simulation; [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] is the evolution.
+- **Jean and Koseleff (2003)** — alternative [[product formula]] recursion that raises order by $1/2$ per step, which inspires the $G_p / F_p$ family in Section III B.
+- **Berry–Ahokas–Cleve–Sanders (2005)** — Suzuki product formulas for sparse [[Hamiltonian simulation]]; [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] is the evolution.
 - **Childs–Wiebe (2012)** — precursor paper on LCU; vault: [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]].
 
 ## Cross-links
 
 ### Paper notes
-- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]] — same authors, contemporary work; the LCU paper goes in a different direction (coherent sums), while this paper stays with product formulas
+- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]] — same authors, contemporary work; the LCU paper goes in a different direction (coherent sums), while this paper stays with [[product formula]]s
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — later work making Trotter error bounds tight via nested commutator structure; the [[Finite Nested-Commutator Expansion]] trick is conceptually related
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — uses product formula ideas including multi-product formulas; Marika is a co-author
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — uses [[product formula]] ideas including multi-product formulas; Marika is a co-author
 - [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — product formula era successor that eventually got superseded by Taylor/QSP
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — the method that eventually beats product formula precision scaling
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — higher-order Suzuki for time-dependent Hamiltonians; methodologically adjacent
@@ -155,4 +155,4 @@ This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-
 - [[Vandermonde Compilation of Nested Commutator Exponentials]]
 
 ### Subsequent work
-- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — extends the commutator product-formula compilation to systematically build correctors for Suzuki/Yoshida product formulas; uses Vandermonde systems to determine compilation coefficients
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — extends the commutator product-formula compilation to systematically build correctors for Suzuki/Yoshida [[product formula]]s; uses Vandermonde systems to determine compilation coefficients

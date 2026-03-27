@@ -1,4 +1,3 @@
-# Szegedy Walk for Formula Evaluation
 
 > **Source:** Ambainis, Childs, Reichardt, Špalek, Zhang, FOCS 2007; arXiv:quant-ph/0703015 & arXiv:0704.3628
 > **Tags:** #trick #quantum-walk #formula-evaluation #szegedy #phase-estimation

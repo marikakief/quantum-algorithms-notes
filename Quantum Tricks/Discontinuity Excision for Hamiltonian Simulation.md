@@ -1,4 +1,3 @@
-# Discontinuity Excision for Hamiltonian Simulation
 
 > **Source:** Wiebe, Berry, Høyer & Sanders, arXiv:1011.3489 (2011)
 > **Tags:** #trick #hamiltonian-simulation #time-dependent #discontinuities

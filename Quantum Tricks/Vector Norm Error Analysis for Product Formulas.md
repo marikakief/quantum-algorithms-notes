@@ -1,4 +1,3 @@
-# Vector Norm Error Analysis for Product Formulas
 
 > **Source:** Dong An, Di Fang, and Jin-Peng Liu, arXiv:2012.13105 (Quantum 2021); extends Jahnke-Lubich (BIT 2000)
 > **Tags:** #trick #trotter #product-formulas #vector-norm #unbounded-operators #PDE
@@ -28,7 +27,7 @@ holds trivially by spectral theory (since $A$ commutes with $e^{-isA}$, giving $
 ## When to reach for it
 
 - Simulating PDEs on fine grids where the Hamiltonian norm grows with grid size but the solution stays smooth.
-- Any Hamiltonian simulation where the initial state sits in a low-energy subspace relative to the dominant term.
+- Any [[Hamiltonian simulation]] where the initial state sits in a low-energy subspace relative to the dominant term.
 - Comparing Trotter methods fairly against post-Trotter methods: the operator-norm comparison may overstate Trotter's cost for physical initial states.
 
 ## Complexity

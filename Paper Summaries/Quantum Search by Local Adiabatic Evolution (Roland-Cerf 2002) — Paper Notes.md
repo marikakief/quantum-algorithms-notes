@@ -6,7 +6,7 @@
 
 ## The problem
 
-Farhi et al. (2000) proposed adiabatic quantum computation: interpolate $H(t) = (1-s)H_0 + s H_m$ from an easy initial Hamiltonian to one whose ground state encodes the solution. Applied to unstructured search, their constant-rate interpolation requires time $T = O(N)$ — no speedup over classical.
+[[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes|Farhi et al. (2000)]] proposed adiabatic quantum computation: interpolate $H(t) = (1-s)H_0 + s H_m$ from an easy initial Hamiltonian to one whose ground state encodes the solution. Applied to unstructured search, their constant-rate interpolation requires time $T = O(N)$ — no speedup over classical.
 
 Can you do better by varying the interpolation rate?
 

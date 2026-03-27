@@ -1,4 +1,3 @@
-# Monotonicity Bootstrap for Conductance Bounds
 
 > **Source:** Aharonov, van Dam, Kempe, Landau, Lloyd, Regev, arXiv:quant-ph/0405098, Claim 3.7
 > **Tags:** #trick #spectral-gap #markov-chains #monotonicity

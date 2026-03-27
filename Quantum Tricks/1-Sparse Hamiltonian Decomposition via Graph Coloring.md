@@ -1,4 +1,3 @@
-# 1-Sparse Hamiltonian Decomposition via Graph Coloring
 
 > **Source:** Babbush, Berry, Sanders, Kivlichan, Scherer, Wei, Love, Aspuru-Guzik, arXiv:1506.01029 (2018); earlier: Toloui & Love (2013)
 > **Tags:** #trick #sparse-simulation #graph-coloring #1-sparse #LCU #hamiltonian-decomposition

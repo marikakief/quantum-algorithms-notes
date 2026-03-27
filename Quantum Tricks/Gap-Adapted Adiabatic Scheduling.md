@@ -1,4 +1,3 @@
-# Gap-Adapted Adiabatic Scheduling
 
 > **Source:** Dong An and Lin Lin, arXiv:1909.05500; builds on Roland and Cerf, arXiv:quant-ph/0107015
 > **Tags:** #trick #adiabatic #scheduling #spectral-gap #eigenpath-tracking

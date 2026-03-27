@@ -1,4 +1,3 @@
-# Gramian-Based Momentum Norm for Non-Cubic Cells
 
 > **Source:** Berry, Rubin, Babbush et al., arXiv:2312.07654
 > **Tags:** #trick #plane-wave #non-cubic #arithmetic #block-encoding #first-quantized

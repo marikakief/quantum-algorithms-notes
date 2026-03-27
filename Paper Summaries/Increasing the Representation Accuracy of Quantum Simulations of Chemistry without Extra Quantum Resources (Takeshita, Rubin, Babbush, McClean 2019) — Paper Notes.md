@@ -18,7 +18,7 @@ The standard fix — enlarging the active space — costs more qubits and deeper
 
 Introduces two methods that improve on the active-space approximation without additional qubits or circuit depth:
 
-1. **Virtual Quantum Subspace Expansion (VQSE):** Extends the Quantum Subspace Expansion (QSE) framework by including excitations into virtual orbitals as expansion operators. The matrix elements involving virtual indices are contracted classically using Wick's theorem (the reference state has zero virtual occupancy), so only active-space RDMs need to be measured on the quantum device.
+1. **[[Virtual Quantum Subspace Expansion (VQSE)]]:** Extends the Quantum Subspace Expansion (QSE) framework by including excitations into virtual orbitals as expansion operators. The matrix elements involving virtual indices are contracted classically using Wick's theorem (the reference state has zero virtual occupancy), so only active-space RDMs need to be measured on the quantum device.
 
 2. **Full-space orbital relaxation:** Classical MCSCF-style optimization of one-body orbital rotations over the full orbital space (active + virtual + core), using only the measured 1- and 2-RDMs from the active-space calculation.
 
@@ -36,7 +36,7 @@ Solve the generalized eigenvalue problem $HC = SCE$ to obtain improved energies 
 
 Standard QSE for chemistry uses active-space excitation operators ($a_p^\dagger a_q$ and $a_p^\dagger a_q^\dagger a_r a_s$ with all indices in $A$). This requires measuring the active-space 4-RDM. It can refine the active-space answer but can't go beyond the active-space basis.
 
-### Virtual Quantum Subspace Expansion (VQSE)
+### [[Virtual Quantum Subspace Expansion (VQSE)]]
 
 The key insight: expansion operators can include excitations from active to virtual orbitals — operators like $a_i^\dagger a_p$ (with $i \in A \cup V$, $p \in A$) and $a_\mu^\dagger a_q\, a_\nu^\dagger a_r$ (with $\mu, \nu \in V$; $q, r \in A$). These create excited configurations in the virtual space, expanding the effective basis beyond the active space.
 
@@ -141,7 +141,7 @@ The paper does not provide general asymptotic complexity bounds beyond the measu
 - Roos, Taylor, Siegbahn (1980); Werner, Knowles (1985) — Classical CASSCF and MRCI methods. VQSE is the quantum analogue of internally contracted MRCI.
 - Kutzelnigg, Mukherjee (1997) — Cumulant decomposition of RDMs. Used here for measurement reduction.
 - McClean, Kimchi-Schwartz et al. (2017) — Earlier QSE work for error mitigation. VQSE repurposes the QSE framework for basis extension rather than error correction.
-- Peruzzo et al. (2014) — Original [[Variational Quantum Eigensolver (VQE)|VQE]] proposal.
+- [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]] — Original [[Variational Quantum Eigensolver (VQE)|VQE]] proposal.
 
 ## Cross-links
 

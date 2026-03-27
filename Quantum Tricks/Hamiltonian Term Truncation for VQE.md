@@ -1,4 +1,3 @@
-# Hamiltonian Term Truncation for VQE
 
 > **Source:** McClean, Romero, Babbush & Aspuru-Guzik, arXiv:1509.04279
 > **Tags:** #trick #VQE #measurement #variance-reduction #quantum-chemistry

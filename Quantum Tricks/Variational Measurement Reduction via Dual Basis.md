@@ -1,4 +1,3 @@
-# Variational Measurement Reduction via Dual Basis
 
 > **Source:** Babbush, Wiebe, McClean, McClain, Neven, Chan, arXiv:1706.00023 (2018)
 > **Tags:** #trick #variational #measurement #VQE #shot-reduction #dual-basis #plane-wave #commuting-terms

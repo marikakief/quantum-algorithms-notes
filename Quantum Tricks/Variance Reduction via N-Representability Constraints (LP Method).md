@@ -1,5 +1,3 @@
-# Variance Reduction via N-Representability Constraints (LP Method)
-
 > **Source:** Rubin, Babbush, McClean, arXiv:1801.03524, New J. Phys. 20, 053020 (2018)
 > **Tags:** #trick #measurement #VQE #n-representability #variance-reduction #LP #quantum-chemistry
 

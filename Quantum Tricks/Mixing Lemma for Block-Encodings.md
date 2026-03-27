@@ -1,4 +1,3 @@
-# Mixing Lemma for Block-Encodings
 
 > **Source:** John M. Martyn, Patrick Rall, *Halving the Cost of Quantum Algorithms with Randomization*, arXiv:2409.03744, npj Quantum Information **11**, 51 (2025), Lemma 2
 > **Tags:** #trick #block-encoding #channel-approximation #mixing-lemma #QSP #QSVT

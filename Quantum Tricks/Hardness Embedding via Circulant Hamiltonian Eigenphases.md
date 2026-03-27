@@ -1,4 +1,3 @@
-# Hardness Embedding via Circulant Hamiltonian Eigenphases
 
 > **Tags:** #trick #lower-bounds #circulant #oracle-model
 > **Source:** arXiv:0908.4398, Sections 3–4

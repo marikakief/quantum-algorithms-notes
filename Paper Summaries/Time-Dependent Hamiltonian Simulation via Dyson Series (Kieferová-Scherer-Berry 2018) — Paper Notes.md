@@ -7,7 +7,7 @@
 
 ## What the paper does
 
-Extends truncated-Taylor / LCU Hamiltonian simulation to the time-dependent setting by replacing the Taylor series with a truncated Dyson series. The underlying LCU structure is the same; the new work is the machinery for handling time-ordered integrals coherently.
+Extends truncated-Taylor / LCU [[Hamiltonian simulation]] to the time-dependent setting by replacing the Taylor series with a truncated Dyson series. The underlying LCU structure is the same; the new work is the machinery for handling time-ordered integrals coherently.
 
 The propagator is
 $$
@@ -80,7 +80,7 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] framework for implementing the truncated Dyson series
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — product-formula approach that this paper offers an alternative to
-- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders (2010)]] — higher-order Suzuki product formulas for time-dependent simulation; earlier foundational work establishing rigorous bounds for the product-formula alternative this paper supersedes
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders (2010)]] — higher-order Suzuki [[product formula]]s for time-dependent simulation; earlier foundational work establishing rigorous bounds for the product-formula alternative this paper supersedes
 - Berry, Childs, Cleve, Kothari & Somma (2015) — Taylor-series LCU for time-independent simulation
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2019)]] — extends this work to the interaction picture
 - [[Oblivious Amplitude Amplification (Robust)]] — used to boost LCU success probability
@@ -103,7 +103,7 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 - [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]] — alternative approach avoiding time-ordering; matches first-order Dyson in worst case, beats it for commutator-structured problems
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes]] — reuses the truncated Dyson series machinery for general (non-Hamiltonian) linear ODEs; adds USVA + compression gadget to fix the success-probability decay problem
 - [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — applies this paper's Dyson block-encoding machinery to time-dependent ODEs (not just Hamiltonians); encodes propagators inside a history-state linear system
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — Marika's later Hamiltonian simulation paper; pursues randomized multi-product formulas as an alternative to the Dyson-LCU approach developed here
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — Marika's later [[Hamiltonian simulation]] paper; pursues randomized multi-[[product formula]]s as an alternative to the Dyson-LCU approach developed here
 - [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes]] — Marika's earlier paper; shares coherent-control + LCU philosophy, applied to adiabatic state preparation instead of real-time simulation
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — uses truncated Taylor series + history state for linear ODEs; this paper extends the approach to time-dependent Hamiltonians via Dyson series
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — improves Berry 2014 to exponential precision; shares the ODE-to-linear-system encoding that Berry-Costa 2022 then extends via this paper's Dyson machinery

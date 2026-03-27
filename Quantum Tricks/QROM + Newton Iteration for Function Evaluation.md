@@ -1,5 +1,3 @@
-# QROM + Newton Iteration for Function Evaluation
-
 > **Tags:** #trick #arithmetic #function-evaluation #QROM
 > **Source:** arXiv:2510.07380 (Quantum FMM, Berry et al.); technique developed in Babbush et al. (plasma simulation papers) and used here for the Coulomb $1/r$ evaluation
 

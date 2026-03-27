@@ -1,4 +1,3 @@
-# Formula Rebalancing for Quantum Evaluation
 
 > **Source:** Bshouty, Cleve, Eberly (1991); Bonet & Buss (1994); applied in Ambainis, Childs, Reichardt, Špalek, Zhang (FOCS 2007)
 > **Tags:** #trick #formula-evaluation #preprocessing #classical

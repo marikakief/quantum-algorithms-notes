@@ -1,4 +1,3 @@
-# Frequency-Domain Filter for Energy-Monotone Quantum Jumps
 
 > **Source:** Ding, Chen & Lin, arXiv:2308.15676
 > **Tags:** #trick #Lindbladian #filter-function #ground-state-preparation #Gevrey
@@ -31,7 +30,7 @@ A concrete choice that works numerically: $\hat{f}(\omega) = \frac{1}{2}[\text{e
 ## Complexity
 - **Quadrature points:** $M_s = S_s/\tau_s$ where $S_s = \Theta(\Delta^{-1} \text{polylog})$ and $\tau_s = \Theta(1/\max\{\|H\|, S_\omega\})$
 - **Per-quadrature-point cost:** one Hamiltonian evolution of duration $\tau_s$ plus one application of $A$
-- **Total Hamiltonian simulation per step:** $O(S_s) = O(\Delta^{-1} \text{polylog})$
+- **Total [[Hamiltonian simulation]] per step:** $O(S_s) = O(\Delta^{-1} \text{polylog})$
 
 ## Caveat
 The filter function assumes knowledge of (or a lower bound on) the spectral gap $\Delta$ and the spectral bandwidth $S_\omega$. The filter's quality degrades as $\Delta \to 0$: $S_s$ diverges, making each step more expensive. Also, the construction guarantees the ground state is *a* fixed point, but not that it's the *unique* fixed point — ergodicity requires additional conditions on $A$ (see Theorem 7 in the source paper).

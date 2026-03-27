@@ -1,4 +1,3 @@
-# Qubitization of Block-Encoded Dirac Operators
 
 > **Tags:** #trick #qubitization #block-encoding #tda
 > **Source:** Babbush et al. arXiv:2209.13581, "Analyzing Prospects for Quantum Advantage in Topological Data Analysis" (PRX Quantum 2024)
@@ -23,7 +22,7 @@ In TDA, this supports kernel detection (Betti numbers) via phase-space filtering
 Query complexity scales with [[Standard-Form Encoding (Prepare + Signal Oracle)|block-encoding]] normalisation and target precision/gap; often better constants than product-formula simulation for spectral tasks.
 
 ## Caveat
-Great for spectral extraction; not always best for plain fixed-time evolution when Hamiltonian simulation primitives are already cheap.
+Great for spectral extraction; not always best for plain fixed-time evolution when [[Hamiltonian simulation]] primitives are already cheap.
 
 ## Related Paper Notes
 

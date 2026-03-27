@@ -1,4 +1,3 @@
-# Rudin Sum-of-Squares Completion with Parity Control
 
 > **Source:** Berry, Motlagh, Pantaleoni, Wiebe, arXiv:2401.10321; underlying technique from Rudin, *Amer. Math. Monthly* **107**, 813 (2000)
 > **Tags:** #trick #QSP #GQSP #polynomials #completion #sum-of-squares

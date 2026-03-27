@@ -76,7 +76,7 @@ Measuring the index register collapses the system register into the correspondin
 
 ## Complexity
 
-- Hamiltonian simulation: $O(t^2/\epsilon)$ gates via [[Order-Condition Cancellation in Product Formulas|Trotter]] (using Lloyd's method)
+- [[Hamiltonian simulation]]: $O(t^2/\epsilon)$ gates via [[Order-Condition Cancellation in Product Formulas|Trotter]] (using Lloyd's method)
 - Phase estimation: $M = 2^m$ controlled applications of $U$
 - Total: $O(M \cdot t^2/\epsilon)$ for eigenvalue precision $\sim 1/M$
 - Eigenvector found with probability $|c_k|^2$ per trial → $O(1/|c_k|^2)$ repetitions
@@ -121,7 +121,7 @@ For a system of $n$ particles with Hamiltonian $H = \sum_i (T_i + V_i) + \sum_{i
 
 ## References within this paper
 
-- Lloyd (1996, Science 273, 1073) — [[Order-Condition Cancellation in Product Formulas|Trotter-based]] Hamiltonian simulation
+- Lloyd (1996, Science 273, 1073) — [[Order-Condition Cancellation in Product Formulas|Trotter-based]] [[Hamiltonian simulation]]
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — eigenvalue measurement procedure (phase estimation)
 - Cleve, Ekert, Macchiavello & Mosca (1998, quant-ph/9708016) — [[Gapped Phase Estimation|phase estimation]] for eigenvalues of unitaries (streamlined version of Kitaev's approach)
 - Feynman (1982) — quantum simulation proposal
@@ -136,7 +136,7 @@ For a system of $n$ particles with Hamiltonian $H = \sum_i (T_i + V_i) + \sum_{i
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — fixes the sorting issue from the 1997 paper, improves antisymmetrization
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses phase estimation from this paper for matrix inversion
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — modern ground state prep via [[QSVT Meta-Template|QSVT]]
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — improved Hamiltonian simulation used in the $e^{-iHt}$ step
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — improved [[Hamiltonian simulation]] used in the $e^{-iHt}$ step
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes]] — alternative ground-state-finding approach
 
 ### Trick cards

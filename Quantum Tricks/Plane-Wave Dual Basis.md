@@ -1,4 +1,3 @@
-# Plane-Wave Dual Basis
 
 > **Source:** Babbush, Wiebe, McClean, McClain, Neven, Chan, arXiv:1706.00023 (2018)
 > **Tags:** #trick #plane-wave #dual-basis #periodic-systems #second-quantized #Hamiltonian-reduction #DVR

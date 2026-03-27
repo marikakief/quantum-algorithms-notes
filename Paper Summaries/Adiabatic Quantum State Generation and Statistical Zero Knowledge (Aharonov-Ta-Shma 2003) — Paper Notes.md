@@ -87,7 +87,7 @@ with $\|U_\delta^{t/2\delta} - e^{-iHt}\| \leq O(M\Lambda \delta + M\Lambda^3 t 
 |---|---|---|---|
 | **This paper** | Coloring by $(k, i\bmod k, j\bmod k, \mathrm{rindex}, \mathrm{cindex})$ | $(D+1)^2 n^6$ | Classical computation |
 | [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes\|Berry et al. (2005)]] | [[Edge-Coloring Decomposition for Sparse Hamiltonians\|Edge coloring]] | $6d^2$ | $O(\log^* n)$ oracle queries |
-| Childs (2010) | [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians\|Quantum walk]] | No decomposition needed | $O(d)$ per walk step |
+| [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] | [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians\|Quantum walk]] | No decomposition needed | $O(d)$ per walk step |
 
 Aharonov-Ta-Shma's decomposition is the earliest and least efficient, but it established the key idea: sparse → sum of trivially simulable blocks → [[Order-Condition Cancellation in Product Formulas|product formula]].
 

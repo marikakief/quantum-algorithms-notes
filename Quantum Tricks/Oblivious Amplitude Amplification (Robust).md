@@ -49,7 +49,7 @@ If the natural success probability $p > 1/4$, introduce an extra ancilla qubit a
 
 ## When to reach for it
 - After any [[Linear Combination of Unitaries (LCU)|LCU]] where $s \approx 2$ (choose segment length to ensure this)
-- Hamiltonian simulation via truncated Taylor series
+- [[Hamiltonian simulation]] via truncated Taylor series
 - Any [[Block-Encoding Composition Algebra|block-encoding]] construction that needs deterministic success
 - When the target operation is only approximately unitary (truncation, discretisation)
 - As a conceptual stepping stone to [[QSVT Meta-Template|QSVT]]

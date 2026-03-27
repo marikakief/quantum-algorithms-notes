@@ -7,7 +7,7 @@
 
 ## What the paper does
 
-This is the paper where Hamiltonian simulation stops looking like a clever pile of LCU gadgets and starts looking geometrically inevitable.
+This is the paper where [[Hamiltonian simulation]] stops looking like a clever pile of LCU gadgets and starts looking geometrically inevitable.
 
 The main idea is to take a block-encoded Hamiltonian and embed each eigenvalue into a two-dimensional invariant subspace where the simulation problem becomes an \(SU(2)\) rotation problem. Once you see that, optimal simulation by phased sequences becomes almost unavoidable.
 
@@ -37,7 +37,7 @@ The spectral transform problem reduces to programmable single-qubit geometry ins
 
 ## Why QSP plugs in
 
-Once each eigenvalue has become a rotation angle, phase-modulated sequences of the iterate implement polynomial transformations of the spectrum. Hamiltonian simulation becomes "choose the right polynomial approximation to \(e^{-i\lambda t}\)" rather than "invent a fresh simulation circuit."
+Once each eigenvalue has become a rotation angle, phase-modulated sequences of the iterate implement polynomial transformations of the spectrum. [[Hamiltonian simulation]] becomes "choose the right polynomial approximation to \(e^{-i\lambda t}\)" rather than "invent a fresh simulation circuit."
 
 ## Main result
 

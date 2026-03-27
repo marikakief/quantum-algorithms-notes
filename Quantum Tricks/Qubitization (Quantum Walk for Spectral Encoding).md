@@ -1,5 +1,3 @@
-# Qubitization (Quantum Walk for Spectral Encoding)
-
 > **Source:** Low & Chuang, arXiv:1610.06546 (2017); applied to quantum chemistry in Babbush, Gidney et al., arXiv:1805.03662, Phys. Rev. X **8**, 041015 (2018)
 > **Tags:** #trick #qubitization #phase-estimation #LCU #walk-operator #spectroscopy #quantum-walk
 

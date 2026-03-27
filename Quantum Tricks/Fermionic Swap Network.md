@@ -1,4 +1,3 @@
-# Fermionic Swap Network
 
 > **Source:** Kivlichan, McClean, Wiebe, Gidney, Aspuru-Guzik, Chan, Babbush, arXiv:1711.04789 (2018)
 > **Tags:** #trick #Trotter #fermionic-swap #Jordan-Wigner #linear-connectivity #circuit-compilation #quantum-chemistry
@@ -39,7 +38,7 @@ Each $F_t$ compiles to at most 3 entangling gates (CNOT/CZ) plus single-qubit ro
 
 - Compiling Trotterized time evolution for electronic structure on any linearly-connected quantum hardware (superconducting qubits, trapped ions in a chain).
 - As the state-evolution subroutine in [[Iterative Phase Estimation (Kitaev)]] for quantum chemistry.
-- As the Hamiltonian simulation layer in VQE circuits when the ansatz includes Trotterized evolution.
+- As the [[Hamiltonian simulation]] layer in VQE circuits when the ansatz includes Trotterized evolution.
 - Whenever you want to minimise two-qubit gate count for a Trotter step of a dense (all-to-all) quadratic+quartic fermionic Hamiltonian.
 - The Hubbard model variant gives $O(\sqrt{N})$ depth on a linear chain — use it for 2D lattice simulation.
 

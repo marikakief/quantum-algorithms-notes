@@ -1,4 +1,3 @@
-# Gapped Phase Estimation
 
 > **Tags:** #trick #phase-estimation #ancilla-free
 > **Source:** arXiv:2505.01528 (SOSSA), Lemma 6

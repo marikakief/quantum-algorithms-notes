@@ -130,7 +130,7 @@ See [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes]].
 |---|---|---|---|
 | Standard tomography | Reconstruct $\rho$ | $\Theta(4^n/\varepsilon^2)$ | Yes (in principle) |
 | **This paper (2006)** | Predict $\text{Tr}(E\rho)$ for $E \sim D$ | PV: $\tilde{O}(n/(\varepsilon\gamma^2))$ via the improved theorem; SB: weaker one-shot bounds, roughly $\tilde{O}(n/(\gamma^8\varepsilon^4))$ from the stated theorem | No (SDP exponential) |
-| Aaronson (2018) | Predict online, gently | $\tilde{O}(\varepsilon^{-4}\log^4 M \log D)$ | No (in general) |
+| [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]] | Predict online, gently | $\tilde{O}(\varepsilon^{-4}\log^4 M \log D)$ | No (in general) |
 | Huang-Kueng-Preskill (2020) | Classical shadows, fixed obs. | $O(\log M / \varepsilon^2)$ for fixed observables under the classical-shadows setting | Yes (measurement + classical post-processing are efficient) |
 
 ---

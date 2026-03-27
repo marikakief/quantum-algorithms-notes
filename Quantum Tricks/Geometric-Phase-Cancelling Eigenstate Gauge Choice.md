@@ -1,4 +1,3 @@
-# Geometric-Phase-Cancelling Eigenstate Gauge Choice
 
 > **Source:** Cheung, Høyer, Wiebe, arXiv:1103.4174; standard technique — see also Berry (1984), Wilczek-Zee (1984)
 > **Tags:** #trick #adiabatic #geometric-phase #gauge-choice #eigenstate-basis

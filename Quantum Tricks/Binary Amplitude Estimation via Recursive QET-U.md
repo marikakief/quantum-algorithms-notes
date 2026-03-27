@@ -1,4 +1,3 @@
-# Binary Amplitude Estimation via Recursive QET-U
 
 > **Source:** Yulong Dong, Lin Lin, and Yu Tong, arXiv:2204.05955 (PRX Quantum 2022), Lemma 12 & Appendix D
 > **Tags:** #trick #amplitude-estimation #QET-U #ancilla-efficient

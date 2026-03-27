@@ -1,4 +1,3 @@
-# Basis Rotation Grouping for VQE Measurement
 
 > **Source:** Huggins, McClean, Rubin, Jiang, Wiebe, Whaley, Babbush, arXiv:1907.13117
 > **Tags:** #trick #measurement #VQE #NISQ #quantum-chemistry #low-rank #diagonal-measurement

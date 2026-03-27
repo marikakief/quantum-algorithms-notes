@@ -1,4 +1,3 @@
-# Fully-Coherent One-Shot Hamiltonian Simulation
 
 > **Tags:** #trick #hamiltonian-simulation #QSP #QET #fully-coherent #one-shot #block-encoding
 > **Source:** Martyn, Liu, Chin, Chuang (2023), Sec. III, Theorem 5
@@ -14,7 +13,7 @@ Failure probability $\delta$ is controlled additively and independently of $\eps
 
 ## When to use this
 
-- Hamiltonian simulation appears as a subroutine inside a larger coherent algorithm (e.g., you're building a larger block-encoding or an LCU decomposition of a time-dependent Hamiltonian).
+- [[Hamiltonian simulation]] appears as a subroutine inside a larger coherent algorithm (e.g., you're building a larger block-encoding or an LCU decomposition of a time-dependent Hamiltonian).
 - You're implementing time-dependent simulation via Dyson-series or interaction-picture methods and need to concatenate many simulation steps without postselection costs compounding.
 - You want clean $\ln(1/\epsilon)$ precision scaling and independent control of failure probability.
 

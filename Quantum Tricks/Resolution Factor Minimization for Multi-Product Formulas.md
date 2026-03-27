@@ -1,4 +1,3 @@
-# Resolution Factor Minimization for Multi-Product Formulas
 
 **Source:** [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]]  
 **Tags:** #trick #hamiltonian-simulation #multi-product #randomization #optimization
@@ -9,7 +8,7 @@
 
 When you randomize a linear combination of unitaries $\sum_q C_q V_q$, the shot count scales as $\Xi^4/\varepsilon^2$ where:
 $$\Xi = \sum_q |C_q|$$
-This is the $\ell_1$ norm of the coefficient vector. Large $\Xi$ kills the efficiency of the randomized approach. Standard Vandermonde-based multi-product formulas (Childs-Wiebe) can have $\Xi \gg 1$ because the Vandermonde coefficients can be large in magnitude with alternating signs.
+This is the $\ell_1$ norm of the coefficient vector. Large $\Xi$ kills the efficiency of the randomized approach. Standard Vandermonde-based multi-[[product formula]]s (Childs-Wiebe) can have $\Xi \gg 1$ because the Vandermonde coefficients can be large in magnitude with alternating signs.
 
 **Goal:** Design MPF coefficient sets that keep $\Xi$ close to 1.
 

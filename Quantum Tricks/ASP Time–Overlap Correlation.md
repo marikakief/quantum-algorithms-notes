@@ -1,4 +1,3 @@
-# ASP Time–Overlap Correlation
 
 > **Source:** Lee, Babbush, Chan et al., arXiv:2208.02199 (2022)
 > **Tags:** #trick #state-preparation #adiabatic #phase-estimation #quantum-chemistry #orthogonality-catastrophe

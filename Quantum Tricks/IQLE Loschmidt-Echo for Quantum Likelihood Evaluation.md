@@ -1,4 +1,3 @@
-# IQLE Loschmidt-Echo for Quantum Likelihood Evaluation
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1309.0876 (2014)
 > **Tags:** #trick #hamiltonian-learning #IQLE #Loschmidt-echo #quantum-simulation #certification #likelihood

@@ -166,7 +166,7 @@ The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant ma
 ## References within this paper
 
 - Ambainis (2003, quant-ph/0311001) — element distinctness quantum walk; this paper generalizes its framework
-- Grover (1996) — database search; special case of the $\sqrt{\delta\epsilon}$ rule with $\delta = 1$
+- [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — database search; special case of the $\sqrt{\delta\epsilon}$ rule with $\delta = 1$
 - Magniez, Santha & Szegedy (2003, quant-ph/0310134) — triangle finding using quantized walks
 - Childs & Eisenberg (2003, quant-ph/0311038) — streamlined analysis of Ambainis's walk
 - Childs, Cleve, Deotto, Farhi, Gutmann & Spielman (2003, quant-ph/0209131) — exponential speedup via continuous quantum walk

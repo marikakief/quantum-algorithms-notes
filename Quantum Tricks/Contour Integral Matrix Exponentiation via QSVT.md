@@ -1,4 +1,3 @@
-# Contour Integral Matrix Exponentiation via QSVT
 
 > **Source:** Fang, Lin & Tong, arXiv:2208.06941, Quantum **7**, 955 (2023), Appendix G. Builds on Tong, An, Wiebe & Lin, Phys. Rev. A **104**, 032422 (2021).
 > **Tags:** #trick #QSVT #matrix-function #contour-integral #non-normal #block-encoding

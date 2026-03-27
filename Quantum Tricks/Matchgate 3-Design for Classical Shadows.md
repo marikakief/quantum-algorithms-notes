@@ -1,4 +1,3 @@
-# Matchgate 3-Design for Classical Shadows
 
 > **Source:** Wan, Huggins, Lee, Babbush, arXiv:2207.13723
 > **Tags:** #trick #matchgate #t-design #classical-shadows #fermionic-Gaussian #representation-theory

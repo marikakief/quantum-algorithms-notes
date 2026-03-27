@@ -85,7 +85,7 @@ $$
 
 The function value $f(x)$ gets kicked into the **phase** of the first register (the "phase kickback" trick). The second register is unchanged. Then Hadamard + measurement on the first register distinguishes the two cases.
 
-**Note:** Deutsch's original 1985 version is slightly different and succeeds with probability 1/2 (requiring repetition). The clean deterministic version above (with the $|1\rangle$ ancilla trick) is from Deutsch and Jozsa (1992) and independently Cleve, Ekert, Macchiavello, and Mosca (1998). But the core idea — superposition query + phase extraction — is already in the 1985 paper.
+**Note:** Deutsch's original 1985 version is slightly different and succeeds with probability 1/2 (requiring repetition). The clean deterministic version above (with the $|1\rangle$ ancilla trick) is from [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes|Deutsch and Jozsa (1992)]] and independently Cleve, Ekert, Macchiavello, and Mosca (1998). But the core idea — superposition query + phase extraction — is already in the 1985 paper.
 
 ---
 

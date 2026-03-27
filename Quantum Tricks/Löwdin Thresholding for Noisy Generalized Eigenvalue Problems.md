@@ -1,4 +1,3 @@
-# Löwdin Thresholding for Noisy Generalized Eigenvalue Problems
 
 > **Source:** Epperly, Lin, and Nakatsukasa, arXiv:2110.07492 (SIAM J. Matrix Anal. Appl. 43(3), 2022)
 > **Tags:** #trick #generalized-eigenvalue #thresholding #noise #perturbation-theory

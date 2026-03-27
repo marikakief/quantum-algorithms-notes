@@ -1,4 +1,3 @@
-# Perturbation Gadgets for Locality Reduction
 
 > **Source:** Kempe, Kitaev & Regev, arXiv:quant-ph/0406180, SICOMP 35(5), 2006
 > **Tags:** #trick #perturbation #locality #QMA #2-local

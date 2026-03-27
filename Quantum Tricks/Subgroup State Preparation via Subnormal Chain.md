@@ -1,4 +1,3 @@
-# Subgroup State Preparation via Subnormal Chain
 
 > **Source:** Watrous, arXiv:quant-ph/0011023 (2001), §3.2
 > **Tags:** #trick #group-theory #solvable-groups #state-preparation #non-abelian

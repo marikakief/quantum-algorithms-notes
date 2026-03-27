@@ -114,7 +114,7 @@ The follow-up by Dong, Lin, Ni, and Wang (2022) makes this connection explicit a
 - **Overlap requirement:** You must know a lower bound $\eta$ on $p_0 = \langle\psi_0|\rho|\psi_0\rangle$. If $\eta$ is exponentially small, the $\eta^{-2}$ in the total evolution time kills you. This is the same wall every QPE-based method hits — there's no getting around it without better state preparation.
 - **Total evolution time still $\eta^{-2}$:** The Heisenberg limit is in $\varepsilon$, not in $\eta$. The $\eta^{-2}$ factor matches QPE but doesn't beat it. Amplitude amplification in the block-encoding model (Lin-Tong 2020) reduces this to $\eta^{-1}$ but needs more qubits.
 - **Classical post-processing:** The binary search + majority voting has $\tilde{O}(\eta^{-2}\text{polylog})$ classical cost, which is modest.
-- **Hamiltonian simulation overhead:** The circuit requires controlled $e^{-ij\tau H}$, which itself needs a Hamiltonian simulation subroutine. The paper analyses Trotter-based implementation (Appendix D), adding polynomial overhead in system size and sparsity. More advanced simulation methods (Taylor series, QSP) can reduce this.
+- **[[Hamiltonian simulation]] overhead:** The circuit requires controlled $e^{-ij\tau H}$, which itself needs a [[Hamiltonian simulation]] subroutine. The paper analyses Trotter-based implementation (Appendix D), adding polynomial overhead in system size and sparsity. More advanced simulation methods (Taylor series, QSP) can reduce this.
 - **Not a state preparation algorithm:** Unlike Lin-Tong (2020), this only estimates the energy — it doesn't produce the ground state. If you need the state, you need a different approach.
 
 ## Reusable ideas

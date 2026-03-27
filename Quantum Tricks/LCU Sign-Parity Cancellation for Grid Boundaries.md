@@ -1,4 +1,3 @@
-# LCU Sign-Parity Cancellation for Grid Boundaries
 
 > **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019)
 > **Tags:** #trick #LCU #grid #boundary-conditions #unitary #momentum-space #first-quantized

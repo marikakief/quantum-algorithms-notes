@@ -1,4 +1,3 @@
-# Sequential Monte Carlo for Quantum Parameter Estimation
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1309.0876 (2014); see also Granade, Ferrie, Wiebe, Cory, arXiv:1207.1655 (2012)
 > **Tags:** #trick #bayesian-inference #SMC #hamiltonian-learning #posterior #parameter-estimation

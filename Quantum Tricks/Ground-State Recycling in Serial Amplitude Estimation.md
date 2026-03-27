@@ -1,4 +1,3 @@
-# Ground-State Recycling in Serial Amplitude Estimation
 
 > **Source:** O'Brien, Streif, Rubin, Santagati, Su, Huggins et al., arXiv:2111.12437
 > **Tags:** #trick #amplitude-estimation #state-preparation #fault-tolerant #overlap-estimation

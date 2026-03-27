@@ -123,7 +123,7 @@ This is worse than $\tilde{O}(\eta^5)$ from the CI approach. But the error metri
 
 | Paper | Year | Approach | Representation | Scaling (fixed h or orbitals ∝ η) | Discretization addressed? |
 |---|---|---|---|---|---|
-| Kassal et al. (2008) | 2008 | Real-space Trotter | First-quantized, grid | $\tilde{O}(\eta^5)$ | Partially |
+| [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes|Kassal et al. (2008)]] | 2008 | Real-space Trotter | First-quantized, grid | $\tilde{O}(\eta^5)$ | Partially |
 | Babbush et al. 2016 (NJP) | 2016 | Taylor series, second-quant, on-the-fly | Second-quantized | $\tilde{O}(\eta^5 t)$ | No |
 | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes\|Babbush et al. 2018]] | 2018 | Taylor series, CI matrix | First-quantized, orbital basis | $\tilde{O}(\eta^5 t)$ (η orbitals ∝ η) | No |
 | **This work (fixed h)** | **2017** | **Taylor series, real space** | **First-quantized, position grid** | **$\tilde{O}(\eta^2)$** | **Theorem 3 only** |
@@ -162,7 +162,7 @@ The $\tilde{O}(\eta^2)$ claim is real but conditional on a fixed grid spacing. O
 | Ref | What it is | Vault note? |
 |---|---|---|
 | Berry, Childs, Cleve, Kothari, Somma (2015), FOCS | Truncated Taylor series simulation — the core LCU method applied here | No (described in [[Truncated Taylor Series Simulation]]) |
-| Babbush et al. (2018), arXiv:1506.01029 | CI-representation Taylor series simulation (first-quantized orbital basis) — companion paper using same LCU technique | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] |
+| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush et al. (2018)]], arXiv:1506.01029 | CI-representation Taylor series simulation (first-quantized orbital basis) — companion paper using same LCU technique | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] |
 | Kassal, Whitfield, et al. (2008) | Earlier real-space simulation via quantum Fourier transform and Jordan's algorithm; $\tilde{O}(\eta^5)$ | No |
 | Wiesner (1996), Zalka (1998) | Original grid-based real-space encoding; the encoding this paper uses | No |
 | Lidar & Wang (1999) | Position-space simulation of the Hubbard model using Wiesner encoding | No |

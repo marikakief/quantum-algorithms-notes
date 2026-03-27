@@ -1,5 +1,3 @@
-# Per-Particle Box Registers (Avoiding Quantum Addressing)
-
 > **Tags:** #trick #data-structure #QRAM-avoidance #FMM
 > **Source:** arXiv:2510.07380 (Quantum FMM, Berry, Wan, Baczewski, Tikku, Babbush), Section IV.1
 

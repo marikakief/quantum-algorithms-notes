@@ -1,5 +1,3 @@
-# Random Circuit State Preparation (Gaussian Amplitudes)
-
 > **Source:** Babbush, Berry, Neven, arXiv:1806.02793, Phys. Rev. A **99**, 040301(R) (2019)
 > **Tags:** #trick #state-preparation #random-circuits #Gaussian-distribution #SYK-model
 

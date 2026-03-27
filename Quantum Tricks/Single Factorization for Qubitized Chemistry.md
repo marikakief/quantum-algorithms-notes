@@ -1,4 +1,3 @@
-# Single Factorization for Qubitized Chemistry
 
 > **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134
 > **Tags:** #trick #quantum-chemistry #Hamiltonian-decomposition #low-rank #qubitization #LCU #Cholesky-decomposition

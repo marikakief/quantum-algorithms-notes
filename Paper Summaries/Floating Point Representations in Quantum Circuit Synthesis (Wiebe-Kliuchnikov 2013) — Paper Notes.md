@@ -139,7 +139,7 @@ For the example $e^{-i\pi Z / 2^{16}}$ to $10^{-5}$ precision: the floating-poin
 ### Paper notes
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes]] — the gate compilation method they supersede for small-angle synthesis
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes]] — composite gate sequences; related non-deterministic / iterative gate synthesis ideas
-- [[Raeisi-Wiebe-Sanders 2012]] — gate-level Hamiltonian simulation circuit construction, context for where small rotations arise
+- [[Raeisi-Wiebe-Sanders 2012]] — gate-level [[Hamiltonian simulation]] circuit construction, context for where small rotations arise
 
 ### Trick cards
 - [[Gearbox Circuit for Angle Squaring]]

@@ -1,4 +1,3 @@
-# Walk on the Johnson Graph for Subset Search
 
 > **Source:** Ambainis, arXiv:quant-ph/0311001 (2003); SIAM J. Comput. 37(1), 210–239 (2007)
 > **Tags:** #trick #quantum-walk #element-distinctness #Johnson-graph #subset-search

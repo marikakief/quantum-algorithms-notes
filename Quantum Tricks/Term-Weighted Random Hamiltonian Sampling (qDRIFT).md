@@ -1,5 +1,5 @@
 
-> **Source:** Earl T. Campbell, *A random compiler for fast Hamiltonian simulation*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)  
+> **Source:** Earl T. Campbell, *A random compiler for fast [[Hamiltonian simulation]]*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)  
 > **Links:** [arXiv](https://arxiv.org/abs/1811.08017) · [PRL](https://doi.org/10.1103/PhysRevLett.123.070503)  
 > **Tags:** #trick #qdrift #randomization #hamiltonian-simulation
 

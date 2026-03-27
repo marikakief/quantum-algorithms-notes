@@ -1,4 +1,4 @@
-> **Source:** Dong An, Di Fang, and Jin-Peng Liu, *Time-dependent unbounded Hamiltonian simulation with vector norm scaling*, arXiv:2012.13105, Quantum **5**, 459 (2021)
+> **Source:** Dong An, Di Fang, and Jin-Peng Liu, *Time-dependent unbounded [[Hamiltonian simulation]] with vector norm scaling*, arXiv:2012.13105, Quantum **5**, 459 (2021)
 > **Links:** [arXiv](https://arxiv.org/abs/2012.13105) · [Quantum](https://quantum-journal.org/papers/q-2021-05-26-459/)
 > **Tags:** #hamiltonian-simulation #trotter #product-formulas #time-dependent #unbounded-operators #vector-norm #commutator-scaling #Schrödinger #PDE
 
@@ -142,7 +142,7 @@ The relationship with qHOP (the same group's later paper) is worth noting: qHOP 
 - Jahnke and Lubich (2000) — the time-independent vector-norm error analysis that this paper generalises. *BIT Numer. Math.* 40(4), 735–744.
 - Huyghebaert and De Raedt (1990) — introduced generalised Trotter for time-dependent systems. *J. Phys. A* 23(24), 5777–5793.
 - Descombes and Thalhammer (2010) — prior time-dependent Trotter error bounds in the semiclassical regime
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] — sparse Hamiltonian simulation foundations
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] — sparse [[Hamiltonian simulation]] foundations
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — QSVT framework
 - Şahinoğlu and Somma (2020) — related low-energy subspace simulation, arXiv:2006.02660
 

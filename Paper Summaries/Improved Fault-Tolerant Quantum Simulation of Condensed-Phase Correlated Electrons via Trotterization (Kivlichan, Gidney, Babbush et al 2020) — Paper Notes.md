@@ -6,7 +6,7 @@
 
 ## The computational problem
 
-Estimate ground state energies of condensed-phase correlated electron systems — the Hubbard model and the plane-wave electronic structure Hamiltonian (including jellium and periodic materials like lithium, diamond, silicon, graphite) — on a fault-tolerant quantum computer, using second-order Trotter-Suzuki product formulas combined with phase estimation.
+Estimate ground state energies of condensed-phase correlated electron systems — the Hubbard model and the plane-wave electronic structure Hamiltonian (including jellium and periodic materials like lithium, diamond, silicon, graphite) — on a fault-tolerant quantum computer, using second-order Trotter-Suzuki [[product formula]]s combined with phase estimation.
 
 The specific question: can optimized low-order Trotter methods compete with the [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]-based approach of [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. (2018)]] when targeting condensed-phase systems where *relative* (extensive) precision is physically meaningful?
 
@@ -172,8 +172,8 @@ For the Hubbard model with extensive error: qubitization $O(N)$, this paper $O(1
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — the high-order product-formula framework underlying the Trotter steps analysed here
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — multi-product randomized sampling; an alternative technique to reduce effective Trotter cost for the kind of chemistry Hamiltonians studied here
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — randomized order-doubling; could further reduce the Trotter step count for the Hubbard/jellium Hamiltonians analysed here
-- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected product formulas; extends the error-tightening direction of this paper with systematic corrector terms
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimized high-order product formulas; the resource counts derived here would benefit directly from the improved constant factors found there
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected [[product formula]]s; extends the error-tightening direction of this paper with systematic corrector terms
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimized high-order [[product formula]]s; the resource counts derived here would benefit directly from the improved constant factors found there
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — introduces the split-operator algorithm and plane-wave dual basis that this paper optimizes
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — introduces the fermionic swap network Trotter step used here
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — qubitization approach; the main comparison point

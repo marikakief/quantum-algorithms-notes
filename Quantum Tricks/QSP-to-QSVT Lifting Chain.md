@@ -1,4 +1,3 @@
-# QSP-to-QSVT Lifting Chain
 
 > **Source:** Martyn, Rossi, Tan & Chuang, *Grand Unification of Quantum Algorithms*, PRX Quantum **2**, 040203 (2021) — Sections II–IV.
 > **Tags:** #trick #QSP #QET #QSVT #conceptual-chain #block-encoding

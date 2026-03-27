@@ -1,4 +1,4 @@
-> **Source:** Mauro E. S. Morales, Pedro C. S. Costa, Giacomo Pantaleoni, Daniel K. Burgarth, Yuval R. Sanders, Dominic W. Berry, *Selection and improvement of product formulae for best performance of quantum simulation*, arXiv:2210.15817, Quantum Information & Computation **25**(1), 1 (2025)
+> **Source:** Mauro E. S. Morales, Pedro C. S. Costa, Giacomo Pantaleoni, Daniel K. Burgarth, Yuval R. Sanders, Dominic W. Berry, *Selection and improvement of [[product formula]]e for best performance of quantum simulation*, arXiv:2210.15817, Quantum Information & Computation **25**(1), 1 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2210.15817) · [QIC](https://doi.org/10.26421/QIC25.1-2-1)
 > **Tags:** #hamiltonian-simulation #product-formulas #trotter #suzuki #symplectic-integrators #numerical-optimization #quantum-chemistry
 
@@ -6,25 +6,25 @@
 
 ## The computational problem
 
-Given a Hamiltonian $H = \sum_{j=1}^J H_j$, simulate $e^{-iHt}$ to error $\varepsilon$ using [[Order-Condition Cancellation in Product Formulas|product formulas]] — sequences of exponentials $\prod e^{c_j H_{\sigma(j)} t}$. The cost metric is the total number of exponentials in the product. Higher-order product formulas reduce the number of time steps needed, but the coefficients and structure of the formula determine the constant factor in the error, which can vary by orders of magnitude between formulas of the same order.
+Given a Hamiltonian $H = \sum_{j=1}^J H_j$, simulate $e^{-iHt}$ to error $\varepsilon$ using [[Order-Condition Cancellation in Product Formulas|product formulas]] — sequences of exponentials $\prod e^{c_j H_{\sigma(j)} t}$. The cost metric is the total number of exponentials in the product. Higher-order [[product formula]]s reduce the number of time steps needed, but the coefficients and structure of the formula determine the constant factor in the error, which can vary by orders of magnitude between formulas of the same order.
 
-The paper asks: among all product formulas of a given order and length, which ones actually perform best for quantum simulation?
+The paper asks: among all [[product formula]]s of a given order and length, which ones actually perform best for quantum simulation?
 
 ---
 
 ## What the paper does
 
-Finds new 8th-order product formulas that are ~100× more accurate than any previously known (without processing) and ~300× more accurate (with [[Processed Product Formula Kernel-Processor Decomposition|processing]]). Establishes that 8th order is optimal over the parameter range $T/\varepsilon \sim 10^7$ to $10^{16}$ relevant to quantum chemistry, making 10th order unnecessary for any realistic quantum simulation. Also introduces a principled framework for comparing product formulas of different orders and lengths using eigenvalue error rather than spectral-norm error.
+Finds new 8th-order [[product formula]]s that are ~100× more accurate than any previously known (without processing) and ~300× more accurate (with [[Processed Product Formula Kernel-Processor Decomposition|processing]]). Establishes that 8th order is optimal over the parameter range $T/\varepsilon \sim 10^7$ to $10^{16}$ relevant to quantum chemistry, making 10th order unnecessary for any realistic quantum simulation. Also introduces a principled framework for comparing [[product formula]]s of different orders and lengths using eigenvalue error rather than spectral-norm error.
 
-This is a paper that changes the practical landscape of Hamiltonian simulation via product formulas. The improvement factors are large enough to matter for real resource estimates. Yuval and Dominic are coauthors — directly relevant to Marika's environment.
+This is a paper that changes the practical landscape of [[Hamiltonian simulation]] via product formulas. The improvement factors are large enough to matter for real resource estimates. Yuval and Dominic are coauthors — directly relevant to Marika's environment.
 
 ---
 
 ## The algorithm / construction
 
-### Background: product formula structure
+### Background: [[product formula]] structure
 
-A $k$-th order product formula satisfies $S_k(t) = e^{-iHt} + O(t^{k+1})$. The standard construction uses [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki's fractal recursion]]: $S_{2\kappa}(t) = S_{2\kappa-2}(s_\kappa t)^2 \cdot S_{2\kappa-2}((1-4s_\kappa)t) \cdot S_{2\kappa-2}(s_\kappa t)^2$ with $s_\kappa = 1/(4-4^{1/(2\kappa-1)})$. This yields exponential blowup in the number of terms: $2(J-1)5^{\kappa-1}+1$ for the five-fold recursion.
+A $k$-th order [[product formula]] satisfies $S_k(t) = e^{-iHt} + O(t^{k+1})$. The standard construction uses [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki's fractal recursion]]: $S_{2\kappa}(t) = S_{2\kappa-2}(s_\kappa t)^2 \cdot S_{2\kappa-2}((1-4s_\kappa)t) \cdot S_{2\kappa-2}(s_\kappa t)^2$ with $s_\kappa = 1/(4-4^{1/(2\kappa-1)})$. This yields exponential blowup in the number of terms: $2(J-1)5^{\kappa-1}+1$ for the five-fold recursion.
 
 ### Yoshida's non-fractal method
 
@@ -52,7 +52,7 @@ The paper finds an 8th-order kernel with $m=8$ (17 stages) whose eigenvalue erro
 
 ## Key results
 
-### New 8th-order product formulas
+### New 8th-order [[product formula]]s
 
 | Formula | Stages ($M$) | Processing | Eigenvalue error $\zeta$ | Performance $M\zeta^{1/k}$ |
 |---|---|---|---|---|
@@ -74,7 +74,7 @@ So the figure of merit for comparing same-order formulas is $M\zeta^{1/k}$ — n
 
 ### Order thresholds
 
-For product formulas of orders $k_1 < k_2$, the ratio $T/\varepsilon$ beyond which order $k_2$ becomes preferable is:
+For [[product formula]]s of orders $k_1 < k_2$, the ratio $T/\varepsilon$ beyond which order $k_2$ becomes preferable is:
 $$
 \frac{T}{\varepsilon} = \left(\frac{M_2 \zeta_2^{1/k_2}}{M_1 \zeta_1^{1/k_1}}\right)^{\frac{1}{1/k_1 - 1/k_2}}
 $$
@@ -84,7 +84,7 @@ $$
 | 6th → 8th order | ~68,000 | ~$3.2 \times 10^7$ |
 | 8th → 10th order | ~$9.3 \times 10^{15}$ | Similar |
 
-The 8th→10th threshold is absurdly large: at $10^4$ Toffolis per exponential, a simulation needing 10th order would take millions of years. So **10th order product formulas are irrelevant for quantum computing**, despite the exceptional 10th-order solution SS10s35 from Sofroniou-Spaletta.
+The 8th→10th threshold is absurdly large: at $10^4$ Toffolis per exponential, a simulation needing 10th order would take millions of years. So **10th order [[product formula]]s are irrelevant for quantum computing**, despite the exceptional 10th-order solution SS10s35 from Sofroniou-Spaletta.
 
 ### Eigenvalue error vs. spectral-norm error
 
@@ -140,7 +140,7 @@ The paper also tests the recently proposed formulas of [[Randomized Product Form
 
 ## Reusable ideas
 
-1. [[Processed Product Formula Kernel-Processor Decomposition]] — Decompose a product formula as $P\Sigma P^{-1}$ to reduce the effective per-step cost by solving fewer order conditions for the kernel.
+1. [[Processed Product Formula Kernel-Processor Decomposition]] — Decompose a [[product formula]] as $P\Sigma P^{-1}$ to reduce the effective per-step cost by solving fewer order conditions for the kernel.
 
 2. [[Eigenvalue Error as the Correct Product Formula Metric]] — For long-time simulation, eigenvalue error in a single step dominates the total spectral-norm error; basis error cancels across steps.
 
@@ -154,8 +154,8 @@ The paper also tests the recently proposed formulas of [[Randomized Product Form
 
 Key citations and their roles:
 
-- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer, Sanders (2010)]] — Extended Suzuki product formulas to ordered exponentials; this paper builds on the same Yoshida construction
-- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]] — Showed practical product formula error is governed by commutators, motivating the search for better constant factors
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer, Sanders (2010)]] — Extended Suzuki [[product formula]]s to ordered exponentials; this paper builds on the same Yoshida construction
+- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]] — Showed practical [[product formula]] error is governed by commutators, motivating the search for better constant factors
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve, Sanders (2007)]] — First use of high-order Suzuki formulas for quantum simulation
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush, McClean, Wecker, Aspuru-Guzik, Wiebe (2015)]] — Showed norm-based Trotter bounds are loose by $10^{16}$ for chemistry
 - Yoshida (1990) — Original non-fractal method for deriving product formulas via BCH expansion
@@ -177,9 +177,9 @@ Key citations and their roles:
 ### Paper notes
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — tight error analysis that this paper's formulas benefit from
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — Yoshida/Suzuki framework extended to time-dependent case; same construction used here
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — first systematic use of high-order product formulas in quantum simulation
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — first systematic use of high-order [[product formula]]s in quantum simulation
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — showed norm bounds dramatically overestimate Trotter error
-- [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes]] — related product formula constructions
+- [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes]] — related [[product formula]] constructions
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — randomisation may be less helpful than expected given eigenvalue error analysis
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — multi-product approaches; different error trade-offs
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — randomised approach whose improvement may be limited by basis error issues

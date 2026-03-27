@@ -98,7 +98,7 @@ The key limitation compared to later work: eigenstates are prepared classically 
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation algorithm
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes|Farhi et al. (2000)]] — adiabatic quantum computation
 - Dobšíček, Johansson, Shumeiko, Wendin, PRA 76, 030306(R) (2007) — IPEA algorithm details
-- Brown, Clark, Chuang, PRL 97, 050504 (2006) — NMR pairing Hamiltonian simulation
+- Brown, Clark, Chuang, PRL 97, 050504 (2006) — NMR pairing [[Hamiltonian simulation]]
 - Knill, Laflamme, Milburn, Nature 409, 46 (2001) — linear optical quantum computing (KLM) scheme
 
 ## Cross-links

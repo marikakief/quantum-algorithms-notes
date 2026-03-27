@@ -1,4 +1,3 @@
-# Guided Sparse Hamiltonian Framework
 
 > **Source:** Schmidhuber, O'Donnell, Kothari, Babbush, arXiv:2406.19378; Gharibian & Le Gall, STOC 2022
 > **Tags:** #trick #guided-Hamiltonian #sparse-Hamiltonian #phase-estimation #amplitude-amplification #BQP-complete
@@ -11,7 +10,7 @@ Solves the decision version of the sparse Hamiltonian problem — does $\|H\| \g
 
 Three standard subroutines composed in a specific way:
 
-1. **Sparse Hamiltonian simulation.** Given an $s$-sparse Hamiltonian $H$ on $N$ qubits with $\|H\|_{\max} \leq 1$, implement $e^{-iHt}$ to error $\epsilon$ using $O(st + \log(1/\epsilon))$ queries to the adjacency matrix and adjacency list oracles (Berry, Childs, Kothari 2015; [[Qubitization (Quantum Walk for Spectral Encoding)|Gilyén et al. 2019]]).
+1. **Sparse [[Hamiltonian simulation]].** Given an $s$-sparse Hamiltonian $H$ on $N$ qubits with $\|H\|_{\max} \leq 1$, implement $e^{-iHt}$ to error $\epsilon$ using $O(st + \log(1/\epsilon))$ queries to the adjacency matrix and adjacency list oracles (Berry, Childs, Kothari 2015; [[Qubitization (Quantum Walk for Spectral Encoding)|Gilyén et al. 2019]]).
 
 2. **Phase estimation.** Apply QPE to the simulated unitary $U = e^{iH\pi/(2s)}$ with the guiding state $|\Psi\rangle$ as input. The eigenphases of $U$ are in 1-1 correspondence with eigenvalues of $H$ (since $\|H\| \leq s$). Distinguish eigenphases corresponding to $h \geq \lambda$ from $h \leq (1-\alpha)\lambda$ with precision $\epsilon_{\text{PE}} = \alpha\lambda\pi/(2s)$, using $O((1/\epsilon_{\text{PE}}) \log(1/\delta_{\text{PE}}))$ applications of $U$.
 

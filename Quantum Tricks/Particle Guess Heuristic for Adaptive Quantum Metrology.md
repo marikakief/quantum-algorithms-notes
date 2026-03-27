@@ -1,4 +1,3 @@
-# Particle Guess Heuristic for Adaptive Quantum Metrology
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1309.0876 (2014)
 > **Tags:** #trick #hamiltonian-learning #adaptive-experiments #experiment-design #metrology #SMC

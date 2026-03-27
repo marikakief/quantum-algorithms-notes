@@ -1,5 +1,3 @@
-# Fermionic Fast Fourier Transform (FFFT)
-
 > **Source:** Babbush, Wiebe, McClean, McClain, Neven, Chan, arXiv:1706.00023 (2018)
 > **Tags:** #trick #FFFT #Fourier-transform #fermionic #circuit-compilation #planar-lattice #low-depth #second-quantized
 

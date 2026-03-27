@@ -1,5 +1,3 @@
-# Unitary Coupled Cluster (UCC) Ansatz
-
 > **Source:** Hoffmann & Simons, JCP 88, 993 (1988) [original UCC]; Bartlett, Kucharski & Noga, CPL 155, 133 (1989); Taube & Bartlett, IJQC 106, 3393 (2006); O'Malley, Babbush et al., arXiv:1512.06860 (2016) [hardware demo]
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
 > **Tags:** #trick #ansatz #quantum-chemistry #VQE #coupled-cluster

@@ -1,4 +1,3 @@
-# Error Budget Optimization for Fault-Tolerant Algorithms
 
 > **Source:** Reiher, Wiebe, Svore, Wecker, Troyer, arXiv:1605.03590 (Appendix E); now standard in fault-tolerant resource estimation
 > **Tags:** #trick #error-analysis #resource-estimation #fault-tolerant #optimization

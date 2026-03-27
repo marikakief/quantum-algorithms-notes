@@ -1,4 +1,3 @@
-# Importance Sampling for Fourier CDF Estimation
 
 > **Source:** Lin Lin and Yu Tong, arXiv:2102.11340 (PRX Quantum 3, 010318, 2022)
 > **Tags:** #trick #importance-sampling #Fourier #spectral-measure #variance-reduction

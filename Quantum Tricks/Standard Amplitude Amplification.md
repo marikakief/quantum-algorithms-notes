@@ -1,6 +1,5 @@
-# Standard Amplitude Amplification
 
-> **Source:** Brassard, Høyer, Mosca & Tapp, arXiv:quant-ph/0005055 (2002); generalizing Grover (1996)
+> **Source:** Brassard, Høyer, Mosca & Tapp, arXiv:quant-ph/0005055 (2002); generalizing [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]]
 > **Tags:** #trick #amplitude-amplification #search #fundamental
 
 ## What it does

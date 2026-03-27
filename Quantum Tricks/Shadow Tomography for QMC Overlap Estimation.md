@@ -1,4 +1,3 @@
-# Shadow Tomography for QMC Overlap Estimation
 
 > **Source:** Huggins, O'Gorman, Rubin, Reichman, Babbush, Lee, arXiv:2106.16235
 > **Tags:** #trick #shadow-tomography #QMC #AFQMC #measurement #NISQ

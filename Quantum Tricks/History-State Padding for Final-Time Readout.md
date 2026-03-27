@@ -1,4 +1,3 @@
-# History-State Padding for Final-Time Readout
 
 > **Tags:** #trick #state-prep #linear-odes #history-state
 > **Source:** Aharonov et al. arXiv:quant-ph/0405098 (Lemma 3.10); also arXiv:1701.03684

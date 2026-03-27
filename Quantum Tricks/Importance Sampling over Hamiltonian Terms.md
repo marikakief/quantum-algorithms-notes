@@ -1,4 +1,3 @@
-# Importance Sampling over Hamiltonian Terms
 
 > **Source:** Knill, Ortiz & Somma, PRA 75, 012328 (2007); also implicit in Campbell (2019) qDRIFT
 > **Tags:** #trick #measurement #sampling #variance-reduction

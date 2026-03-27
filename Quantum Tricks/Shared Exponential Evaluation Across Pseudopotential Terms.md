@@ -1,4 +1,3 @@
-# Shared Exponential Evaluation Across Pseudopotential Terms
 
 > **Source:** Berry, Rubin, Babbush et al., arXiv:2312.07654
 > **Tags:** #trick #block-encoding #pseudopotential #resource-reduction #first-quantized

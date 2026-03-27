@@ -1,5 +1,3 @@
-# Variational Quantum Eigensolver (VQE)
-
 > **Source:** Peruzzo et al., Nat. Commun. 5 (2014) [original proposal]; O'Malley, Babbush et al., arXiv:1512.06860 (2016) [first scalable hardware demo]
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
 > **Tags:** #trick #VQE #variational #hybrid-classical-quantum #NISQ #quantum-chemistry

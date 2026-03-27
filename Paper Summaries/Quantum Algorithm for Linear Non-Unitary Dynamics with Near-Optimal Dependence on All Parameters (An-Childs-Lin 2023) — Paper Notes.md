@@ -12,13 +12,13 @@ $$\frac{\mathrm{d}}{\mathrm{d}t} u(t) = -A(t)\, u(t) + b(t), \quad u(0) = u_0, \
 
 where $A(t) \in \mathbb{C}^{N \times N}$ has positive Hermitian part $L(t) = (A(t) + A(t)^\dagger)/2 \succeq 0$. The goal is to prepare a quantum state $\varepsilon$-close to the normalised solution $u(T)/\|u(T)\|$, given oracle access to $A(t)$ (via block-encoding or HAM-T oracle) and state-preparation oracles for $u_0$ and $b(t)$.
 
-The two key cost measures are: (1) **matrix queries** — calls to the block-encoding or Hamiltonian simulation oracle for $A(t)$; (2) **state-preparation queries** — calls to the oracles preparing $|u_0\rangle$ and $|b(t)\rangle$.
+The two key cost measures are: (1) **matrix queries** — calls to the block-encoding or [[Hamiltonian simulation]] oracle for $A(t)$; (2) **state-preparation queries** — calls to the oracles preparing $|u_0\rangle$ and $|b(t)\rangle$.
 
 ---
 
 ## What the paper does
 
-Introduces a generalised family of [[LCHS Kernel for Non-Unitary Dynamics|LCHS identities]] that express a non-unitary propagator $\mathcal{T} e^{-\int_0^T A(s)\, ds}$ as a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of Hamiltonian simulation unitaries, with a tuneable kernel $f(k)$ replacing the original Cauchy kernel. By choosing a [[Near-Optimal Hardy-Space Kernel for LCHS|near-optimal kernel]] from a Hardy-space family, the precision dependence of the matrix-query cost drops from $O(1/\varepsilon)$ (original LCHS) to polylogarithmic in $1/\varepsilon$ — an exponential improvement.
+Introduces a generalised family of [[LCHS Kernel for Non-Unitary Dynamics|LCHS identities]] that express a non-unitary propagator $\mathcal{T} e^{-\int_0^T A(s)\, ds}$ as a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of [[Hamiltonian simulation]] unitaries, with a tuneable kernel $f(k)$ replacing the original Cauchy kernel. By choosing a [[Near-Optimal Hardy-Space Kernel for LCHS|near-optimal kernel]] from a Hardy-space family, the precision dependence of the matrix-query cost drops from $O(1/\varepsilon)$ (original LCHS) to polylogarithmic in $1/\varepsilon$ — an exponential improvement.
 
 This is the first quantum algorithm for linear ODEs achieving **both** optimal state-preparation cost $O((\|u_0\| + \|b\|_{L^1})/\|u(T)\|)$ **and** near-optimal matrix-query scaling on all parameters simultaneously.
 
@@ -65,14 +65,14 @@ Truncate the $k$-integral to $[-K, K]$ with $K = O((\log 1/\varepsilon)^{1/\beta
 
 $$\mathcal{T} e^{-\int A} \approx \sum_{j=0}^{M-1} c_j\, U(T, k_j), \quad M = O\!\left(T \max_t \|L(t)\| \cdot (\log 1/\varepsilon)^{1+1/\beta}\right),$$
 
-where $U(T, k) = \mathcal{T} e^{-i\int_0^T [kL(s) + H(s)]\, ds}$ is a unitary Hamiltonian simulation.
+where $U(T, k) = \mathcal{T} e^{-i\int_0^T [kL(s) + H(s)]\, ds}$ is a unitary [[Hamiltonian simulation]].
 
 The coefficients satisfy $\sum_j |c_j| = O(1)$ (Lemma 14), so the [[Linear Combination of Unitaries (LCU)|LCU]] normalisation stays bounded.
 
 ### Step 6: Quantum implementation
 
 1. **PREPARE:** Encode the quadrature weights $\{c_j\}$ into an ancilla state.
-2. **SELECT:** For each $j$, implement $U(T, k_j)$ — Hamiltonian simulation of $k_j L(s) + H(s)$ for time $T$. Use [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]-based simulation for time-independent $A$, or [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|truncated Dyson series]] for time-dependent $A$.
+2. **SELECT:** For each $j$, implement $U(T, k_j)$ — [[Hamiltonian simulation]] of $k_j L(s) + H(s)$ for time $T$. Use [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]-based simulation for time-independent $A$, or [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|truncated Dyson series]] for time-dependent $A$.
 3. **LCU + amplitude amplification:** Standard [[Linear Combination of Unitaries (LCU)|LCU]] protocol gives the result with success probability $\Omega(\|u(T)\|^2 / (\|u_0\| + \|b\|_{L^1})^2)$; [[Standard Amplitude Amplification|amplitude amplification]] boosts this.
 
 For the inhomogeneous term $\int_0^T \mathcal{T} e^{-\int_s^T A} \cdot b(s)\, ds$, discretise both the $k$-integral and the $s$-integral by composite Gaussian quadrature, yielding a [[Double-Integral Quadrature for Operator LCU|double-integral quadrature]].
@@ -95,7 +95,7 @@ where $\alpha_A \geq \max_t \|A(t)\|$ and $\beta \in (0,1)$ is the kernel parame
 
 ### Corollary 17 (time-independent, homogeneous)
 
-When $A$ is time-independent and $b = 0$, using [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] for Hamiltonian simulation removes one $\log$ factor:
+When $A$ is time-independent and $b = 0$, using [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] for [[Hamiltonian simulation]] removes one $\log$ factor:
 
 $$\tilde{O}\!\left(\frac{\|u_0\|}{\|u(T)\|} \cdot \alpha_A T \cdot (\log 1/\varepsilon)^{1/\beta}\right) \text{ matrix queries}.$$
 
@@ -140,7 +140,7 @@ The truncated Dyson method achieves $(\log 1/\varepsilon)^2$ matrix-query scalin
 
 4. **Composite Gaussian quadrature constants:** While asymptotically near-optimal, the constants in the quadrature error bounds involve terms like $T \max_t \|L(t)\|$, which matter in practice.
 
-5. **Section 4.4.4 (newly added):** Discusses open questions around whether the $(\log 1/\varepsilon)^{1+1/\beta}$ factor for time-dependent problems can be tightened to $(\log 1/\varepsilon)^{1/\beta}$ matching the time-independent case. The extra $\log$ comes from having to use time-dependent Hamiltonian simulation (truncated Dyson series) rather than QSP.
+5. **Section 4.4.4 (newly added):** Discusses open questions around whether the $(\log 1/\varepsilon)^{1+1/\beta}$ factor for time-dependent problems can be tightened to $(\log 1/\varepsilon)^{1/\beta}$ matching the time-independent case. The extra $\log$ comes from having to use time-dependent [[Hamiltonian simulation]] (truncated Dyson series) rather than QSP.
 
 ---
 
@@ -160,10 +160,10 @@ The truncated Dyson method achieves $(\log 1/\varepsilon)^2$ matrix-query scalin
 
 - [[LCHS Kernel for Non-Unitary Dynamics|An-Liu-Lin (PRL 2023)]] — the original LCHS method this paper improves. arXiv:2303.01029.
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching approach. The main competitor for quantum ODE solving.
-- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] — truncated Dyson series, used as the Hamiltonian simulation subroutine for the time-dependent case.
+- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] — truncated Dyson series, used as the [[Hamiltonian simulation]] subroutine for the time-dependent case.
 - Berry, Childs, Ostrander, and Wang (2017) — QLSA-based ODE solver. arXiv:1701.05552. Not in vault.
 - Childs, Kothari, and Somma (2017) — quantum spectral method. Not in vault.
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT, used for time-independent Hamiltonian simulation subroutine.
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT, used for time-independent [[Hamiltonian simulation]] subroutine.
 - [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes|An-Childs-Lin (2024)]] — Lap-LCHS, the follow-up that extends this paper's kernel to general eigenvalue transforms.
 
 ---

@@ -1,4 +1,3 @@
-# Lazy-Walk Phase-Correction for Simulation Accuracy
 
 > **Tags:** #trick #quantum-walk #phase-estimation #hamiltonian-simulation
 > **Source:** arXiv:0910.4157, Sections III–IV

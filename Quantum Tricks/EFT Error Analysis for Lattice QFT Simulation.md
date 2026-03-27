@@ -1,4 +1,3 @@
-# EFT Error Analysis for Lattice QFT Simulation
 
 > **Source:** Jordan, Lee, Preskill, Science 336, 1130 (2012); arXiv:1111.3633
 > **Tags:** #trick #effective-field-theory #lattice #error-analysis #renormalization

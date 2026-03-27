@@ -1,4 +1,3 @@
-# Hamiltonian-to-Markov-Chain Spectral Gap Mapping
 
 > **Source:** Aharonov, van Dam, Kempe, Landau, Lloyd, Regev, arXiv:quant-ph/0405098, Section 2.3
 > **Tags:** #trick #spectral-gap #markov-chains #conductance

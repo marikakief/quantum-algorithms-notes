@@ -1,4 +1,3 @@
-# Locality-Based Classical Preprocessing for Variational Circuits
 
 > **Source:** Farhi, Goldstone & Gutmann, arXiv:1411.4028 (2014)
 > **Tags:** #trick #QAOA #classical-simulation #locality #variational

@@ -1,4 +1,3 @@
-# Symbolic Cost Propagation Through Call Graphs
 
 > **Source:** Harrigan, Khattar, Yuan et al., arXiv:2409.04643
 > **Tags:** #trick #resource-estimation #symbolic #optimization #software-pattern

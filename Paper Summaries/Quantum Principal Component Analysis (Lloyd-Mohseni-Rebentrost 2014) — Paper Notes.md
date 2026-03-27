@@ -40,7 +40,7 @@ The swap operator $S$ is sparse (it's a permutation), so $e^{-iS\Delta t}$ can b
 
 **Any density matrix is a Hamiltonian.** Given copies of an unknown state, you can use it to drive unitary evolution on other states — without ever learning what $\rho$ is. The state "plays an active role in its own analysis."
 
-This works for **non-sparse** matrices, unlike standard Hamiltonian simulation which requires sparsity or special structure. The only requirement is that you have multiple copies of the state.
+This works for **non-sparse** matrices, unlike standard [[Hamiltonian simulation]] which requires sparsity or special structure. The only requirement is that you have multiple copies of the state.
 
 ---
 
@@ -116,7 +116,7 @@ This was one of the most important results in quantum algorithms: it clarified t
 
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — quantum matrix inversion (HHL); qPCA extends the $e^{-i\rho t}$ component
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — [[Gapped Phase Estimation|phase estimation]] used to extract eigenvalues from $e^{-i\rho t}$
-- Berry, Ahokas, Cleve & Sanders (2007) — higher-order Suzuki-Trotter for sparse Hamiltonian simulation
+- Berry, Ahokas, Cleve & Sanders (2007) — higher-order Suzuki-Trotter for sparse [[Hamiltonian simulation]]
 - Gross, Liu, Flammia, Becker & Eisert (2010) — quantum compressive sensing ($O(Rd\log d)$ tomography)
 
 ---

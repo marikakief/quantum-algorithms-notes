@@ -138,10 +138,10 @@ The paper also shows sensitivity to the choice of $H_B$: using $H_B' = \sum_i H_
 ## References within this paper
 
 - Messiah (1958) — adiabatic theorem reference
-- Grover (1996) — unstructured search; the paper analyzes adiabatic Grover as a special case
+- [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — unstructured search; the paper analyzes adiabatic Grover as a special case
 - Farhi & Gutmann (1998) — continuous-time Hamiltonian version of Grover; $\Omega(\sqrt{N})$ lower bound
 - Bennett, Bernstein, Brassard & Vazirani (1997) — query complexity lower bounds
-- Lloyd (1996) — Trotter-based simulation used in Section 5 to show circuit equivalence
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — Trotter-based simulation used in Section 5 to show circuit equivalence
 
 ---
 

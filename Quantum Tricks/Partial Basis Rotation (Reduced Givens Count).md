@@ -1,5 +1,3 @@
-# Partial Basis Rotation (Reduced Givens Count)
-
 > **Source:** Motta, Ye, McClean, Li, Minnich, Babbush, Chan, arXiv:1808.02625
 > **Tags:** #trick #circuit-compilation #Givens-rotation #low-rank #basis-rotation #linear-connectivity
 

@@ -1,4 +1,3 @@
-# Trigonometric Minimax Polynomial for Krylov Concentration
 
 > **Source:** Epperly, Lin, and Nakatsukasa, arXiv:2110.07492 (SIAM J. Matrix Anal. Appl. 43(3), 2022), Lemma 3.3
 > **Tags:** #trick #Krylov #Chebyshev #minimax #spectral-concentration

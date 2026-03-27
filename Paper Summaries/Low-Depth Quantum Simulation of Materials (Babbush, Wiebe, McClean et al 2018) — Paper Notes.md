@@ -34,7 +34,7 @@ where $T$ contains $N$ diagonal kinetic terms, $U$ contains $N$ diagonal on-site
 
 See [[Plane-Wave Dual Basis]].
 
-### The Fermionic Fast Fourier Transform (FFFT)
+### The [[Fermionic Fast Fourier Transform (FFFT)]]
 
 To alternate between simulating $T$ (easy in the plane-wave basis) and $U + V$ (easy in the dual basis), one needs an efficient circuit that maps between the two. The FFFT is the fermionic analogue of the quantum Fourier transform, acting on the second-quantized mode creation operators as:
 

@@ -1,4 +1,3 @@
-# Avoided Crossing at Critical Hopping Rate
 
 > **Source:** Childs & Goldstone, arXiv:quant-ph/0306054 (2004), §IV.B–D
 > **Tags:** #trick #spectral #quantum-walk #phase-transition #search

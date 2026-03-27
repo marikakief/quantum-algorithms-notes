@@ -1,4 +1,3 @@
-# Bell Difference Sampling for Magnitude Estimation
 
 > **Source:** King, Gosset, Kothari, Babbush, arXiv:2404.19211; also Huang, Kueng, Preskill (2021)
 > **Tags:** #trick #Bell-sampling #shadow-tomography #magnitude-estimation #two-copy #Pauli-learning

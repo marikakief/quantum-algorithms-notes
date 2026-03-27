@@ -1,4 +1,3 @@
-# Force Operator Block Encoding via Hamiltonian Differentiation
 
 > **Source:** O'Brien, Streif, Rubin, Santagati, Su, Huggins et al., arXiv:2111.12437
 > **Tags:** #trick #block-encoding #quantum-chemistry #force-estimation #fault-tolerant

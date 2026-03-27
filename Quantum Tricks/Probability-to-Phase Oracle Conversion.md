@@ -1,4 +1,3 @@
-# Probability-to-Phase Oracle Conversion
 
 > **Source:** Gilyén, Arunachalam, Wiebe, arXiv:1711.00465 (2019)
 > **Tags:** #trick #oracle #amplitude-estimation #VQE #QAOA

@@ -1,4 +1,3 @@
-# Recursive Phase Estimation for Qubit-Efficient Readout
 
 > **Source:** Aspuru-Guzik, Dutoi, Love, Head-Gordon, Science 309 (2005)
 > **Tags:** #trick #phase-estimation #quantum-chemistry #qubit-efficiency

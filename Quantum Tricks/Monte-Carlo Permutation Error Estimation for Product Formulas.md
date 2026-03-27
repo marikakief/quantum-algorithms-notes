@@ -1,4 +1,3 @@
-# Monte-Carlo Permutation Error Estimation for Product Formulas
 
 > **Tags:** #trick #monte-carlo #randomization #trotter
 > **Source:** Quantum 2019-09-02-182

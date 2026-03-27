@@ -1,4 +1,3 @@
-# Solovay-Kitaev Recursive Gate Compilation
 
 > **Source:** Solovay (1995), Kitaev (1997); pedagogical presentation in Dawson & Nielsen, arXiv:quant-ph/0505030
 > **Tags:** #trick #gate-compilation #universality #fault-tolerance #fundamental

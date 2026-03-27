@@ -1,4 +1,3 @@
-# Randomized Error Budget for Phase Estimation
 
 > **Source:** Low, King, Berry et al., arXiv:2502.15882
 > **Tags:** #trick #error-analysis #phase-estimation #quantum-chemistry

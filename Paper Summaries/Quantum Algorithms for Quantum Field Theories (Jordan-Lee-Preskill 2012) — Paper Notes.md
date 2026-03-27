@@ -121,7 +121,7 @@ The effective field theory approach to discretisation is transferable: any quant
 - Feynman (1982) — posed the question of quantum simulation of QFTs
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — first quantum simulation algorithm
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]] — fermionic systems
-- Berry-Ahokas-Cleve-Sanders (2007) — efficient sparse Hamiltonian simulation, Trotter bounds
+- Berry-Ahokas-Cleve-Sanders (2007) — efficient sparse [[Hamiltonian simulation]], Trotter bounds
 - Kitaev-Webb (2008) — Gaussian state preparation
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation for measurement step
 - Suzuki (1990) — higher-order Trotter formulae

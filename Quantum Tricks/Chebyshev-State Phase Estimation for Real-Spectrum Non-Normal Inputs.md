@@ -4,7 +4,7 @@
 
 ## What it does
 
-Estimates eigenvalues of diagonalizable matrices with real spectra in $[-1,1]$ with Heisenberg-limited $O(1/\varepsilon)$ scaling in precision, using a Chebyshev history state rather than Hamiltonian simulation. Works for non-normal matrices where QPE on $e^{-iAt}$ would be complicated or meaningless (since $A$ might not be unitary or even normal).
+Estimates eigenvalues of diagonalizable matrices with real spectra in $[-1,1]$ with Heisenberg-limited $O(1/\varepsilon)$ scaling in precision, using a Chebyshev history state rather than [[Hamiltonian simulation]]. Works for non-normal matrices where QPE on $e^{-iAt}$ would be complicated or meaningless (since $A$ might not be unitary or even normal).
 
 ## The trick
 

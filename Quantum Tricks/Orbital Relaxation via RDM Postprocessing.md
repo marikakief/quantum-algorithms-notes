@@ -1,4 +1,3 @@
-# Orbital Relaxation via RDM Postprocessing
 
 > **Source:** Takeshita, Rubin, Jiang, Lee, Babbush, McClean, arXiv:1902.10679
 > **Tags:** #trick #orbital-optimization #MCSCF #active-space #NISQ #quantum-chemistry #RDM #postprocessing

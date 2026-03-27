@@ -1,4 +1,3 @@
-# Superposition Query for Global Properties
 
 > **Source:** Deutsch, Proc. R. Soc. Lond. A **400**, 97–117 (1985)
 > **Tags:** #trick #query-complexity #superposition #fundamental

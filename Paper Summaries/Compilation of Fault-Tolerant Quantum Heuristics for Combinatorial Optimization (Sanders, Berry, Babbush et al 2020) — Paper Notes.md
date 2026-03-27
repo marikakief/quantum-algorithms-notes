@@ -120,7 +120,7 @@ For heuristic QAOA (pre-optimized parameters, no outer loop), the cost per step 
 
 Three variants:
 
-**Trotter-based**: Standard product formula discretization. Cost $\sim M \cdot C_{\text{phase}}$ for $M$ steps. Higher-order Suzuki formulas cost $2 \times 5^{\rho/2 - 1} \cdot M \cdot C_{\text{phase}}$ for order-$\rho$.
+**Trotter-based**: Standard [[product formula]] discretization. Cost $\sim M \cdot C_{\text{phase}}$ for $M$ steps. Higher-order Suzuki formulas cost $2 \times 5^{\rho/2 - 1} \cdot M \cdot C_{\text{phase}}$ for order-$\rho$.
 
 **Qubitized walk-based (new)**: Stroboscopically simulate the adiabatic path using qubitized walk steps. The walk at time $s$ encodes $\arccos(H(s)/\lambda)$; inflating $\lambda \to r\lambda$ shrinks each step to duration $\sim 1/r$, enabling refinement. The effective Hamiltonian generated is $r \arcsin(E_k/(r\lambda))$ per eigenvalue, which approaches $E_k/\lambda$ as $r \to \infty$. The convergence bound (Appendix B):
 
@@ -210,7 +210,7 @@ This paper is the definitive "reality check" for fault-tolerant quantum optimiza
 
 The technical contributions are genuinely useful beyond the pessimistic conclusion. The [[Adaptive QROM for Function Evaluation|QROM interpolation method]] for cheap function evaluation, the improved LHPST rotation for dense Hamiltonians, and the explicit spectral gap amplification oracle are all reusable building blocks. The observation that most optimization algorithms share the same oracle bottlenecks is a helpful organizing principle.
 
-For Marika: Yuval is first author on this, and your boundary cancellation work shows up in the adiabatic analysis (Section III.C). The paper also cites Berry, Kieferová et al. (2018) for qubitization conventions. If you're ever asked "why not just run QAOA on a fault-tolerant machine?", this paper is the quantitative answer.
+For Marika: Yuval is first author on this, and your boundary cancellation work shows up in the adiabatic analysis (Section III.C). The paper also cites Berry, [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová et al. (2018)]] for qubitization conventions. If you're ever asked "why not just run QAOA on a fault-tolerant machine?", this paper is the quantitative answer.
 
 The open question it leaves: is there a quantum optimization heuristic with *better than quadratic* speedup on any structured ensemble? The paper strongly motivates that search.
 
@@ -235,9 +235,9 @@ Key papers cited (with vault links where available):
 - Farhi, Goldstone, Gutmann (2014) — QAOA
 - Gidney (2018) — Addition circuits, phase gradient trick
 - Gidney & Fowler (2019) — Surface code compilation and Toffoli state distillation costs
-- Kieferová & Wiebe (2014) — Boundary cancellation methods for improved adiabatic scaling
+- [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes|Kieferová & Wiebe (2014)]] — Boundary cancellation methods for improved adiabatic scaling
 - Berry, Kieferová, Scherer, Sanders, Low, Wiebe, Gidney, Babbush (2018) — Qubitization conventions; Sanders is also a co-author there
-- Szegedy (2004) — Szegedy quantum walk framework
+- [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — Szegedy quantum walk framework
 - Boixo, Knill, Somma (2009) — Zeno phase randomization approach
 - Isakov, Zintchenko, Rønnow, Troyer (2015) — The classical SA code used for comparison
 
@@ -251,7 +251,7 @@ Key papers cited (with vault links where available):
 - [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]] — Also compiles interaction-picture approaches with detailed resource estimates
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — Same author group makes the [[Stroboscopic Adiabatic Walk]] rigorous and optimal for the QLSP via the [[Discrete Adiabatic Theorem for Quantum Walks]]
 - [[Analyzing Prospects for Quantum Advantage in Topological Data Analysis (Berry, Su, Babbush et al 2024) — Paper Notes]] — Uses the [[Sum of Tree Sums for Bit Counting|bit-summing]] technique from this paper for [[Clique Checking via Edge Counting|clique checking]] in the TDA algorithm; also uses the equal-superposition preparation method
-- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes]] — Uses the QROM function interpolation technique from this paper as the first stage of a hybrid QROM+Newton-Raphson inverse square root computation for product formula simulation
+- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes]] — Uses the QROM function interpolation technique from this paper as the first stage of a hybrid QROM+Newton-Raphson inverse square root computation for [[product formula]] simulation
 - [[Optimization by Decoded Quantum Interferometry (Jordan, Shutty, Wootters, Babbush et al 2024) — Paper Notes]] — A fundamentally different approach to quantum optimization: reduces to syndrome decoding rather than Hamiltonian-based methods; achieves superpolynomial speedup for OPI where this paper's compiled heuristics offer at best quadratic advantages
 - [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — contrasts with this paper's pessimism: for coupled oscillators a genuine exponential speedup exists, unlike the at-most-quadratic advantage found here for combinatorial optimization heuristics
 - [[Is There Evidence for Exponential Quantum Advantage in Quantum Chemistry (Lee, Babbush, Chan et al 2022) — Paper Notes]] — a similar "reality check" paper for quantum chemistry advantage; both papers temper optimism by carefully accounting for constant factors and classical comparison points

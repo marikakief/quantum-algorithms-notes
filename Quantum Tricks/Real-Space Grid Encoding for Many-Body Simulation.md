@@ -1,6 +1,5 @@
-# Real-Space Grid Encoding for Many-Body Simulation
 
-> **Source:** Kivlichan, Wiebe, Babbush, Aspuru-Guzik, arXiv:1608.05696 (2017); building on Wiesner (1996), Zalka (1998), Kassal et al. (2008)
+> **Source:** Kivlichan, Wiebe, Babbush, Aspuru-Guzik, arXiv:1608.05696 (2017); building on Wiesner (1996), Zalka (1998), [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes|Kassal et al. (2008)]]
 > **Tags:** #trick #first-quantized #real-space #grid-encoding #position-basis #many-body
 
 ## What it does

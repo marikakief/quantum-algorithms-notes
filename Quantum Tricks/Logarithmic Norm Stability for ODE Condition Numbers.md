@@ -1,4 +1,3 @@
-# Logarithmic Norm Stability for ODE Condition Numbers
 
 > **Source:** Berry and Costa, arXiv:2212.03544; see also Krovi, arXiv:2202.01054
 > **Tags:** #trick #stability #condition-number #ODE #linear-systems

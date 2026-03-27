@@ -1,4 +1,3 @@
-# Symmetry Reduction for Phase Factor Uniqueness
 
 > **Source:** Wang, Dong & Lin, arXiv:2110.04993, Quantum **6**, 850 (2022)
 > **Tags:** #trick #QSP #phase-factors #symmetry #optimisation #Hessian

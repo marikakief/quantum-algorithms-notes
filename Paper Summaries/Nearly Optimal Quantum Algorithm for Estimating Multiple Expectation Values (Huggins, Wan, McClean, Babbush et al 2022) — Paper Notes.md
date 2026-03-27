@@ -132,7 +132,7 @@ The advantage in total time evolution depends on the time-point distribution. Fo
 
 Key papers cited:
 - Gilyen, Arunachalam, Wiebe (2019) — Quantum gradient estimation algorithm. The primary tool; this paper's main contribution is finding the right function to feed it. No vault note.
-- Jordan (2005) — Original quantum speedup for gradient estimation via binary oracle. Gilyen et al. improved it to handle probability oracles. No vault note.
+- [[Fast Quantum Algorithm for Numerical Gradient Estimation (Jordan 2005) — Paper Notes|Jordan (2005)]] — Original quantum speedup for gradient estimation via binary oracle. Gilyen et al. improved it to handle probability oracles. No vault note.
 - Van Apeldoorn (2021) — Lower bound for quantum probability oracles and multidimensional amplitude estimation. Provides the $\Omega(\sqrt{M}/\varepsilon)$ lower bound that Corollary 3 derives from. No vault note.
 - Knill, Ortiz, Somma (2007) — Optimal single-observable estimation via amplitude estimation. The baseline $\tilde{O}(M/\varepsilon)$ when applied to each observable separately. No vault note.
 - [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes|Huggins et al. (2021)]] — [[Basis Rotation Grouping for VQE Measurement|Basis rotation grouping]] for efficient VQE measurement. This paper cites it as a practical grouping strategy for the sampling-based regime.

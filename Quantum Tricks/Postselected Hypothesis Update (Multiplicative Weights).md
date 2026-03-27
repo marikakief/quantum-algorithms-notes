@@ -1,5 +1,3 @@
-# Postselected Hypothesis Update (Multiplicative Weights)
-
 > **Source:** Aaronson (2004, postselected learning); made constructive in arXiv:1711.01053 (Aaronson, Shadow Tomography, STOC 2018)
 > **Tags:** #trick #shadow-tomography #multiplicative-weights #online-learning #quantum-learning
 

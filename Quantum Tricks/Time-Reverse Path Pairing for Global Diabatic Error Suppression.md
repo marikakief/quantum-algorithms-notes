@@ -1,4 +1,3 @@
-# Time-Reverse Path Pairing for Global Diabatic Error Suppression
 
 > **Source:** Kieferová, Wiebe, *On The Power Of Coherently Controlled Quantum Adiabatic Evolutions*, NJP 16, 123034 (2014); arXiv:1403.6545
 > **Tags:** #trick #adiabatic #symmetry #diabatic-error #state-preparation #coherent-control

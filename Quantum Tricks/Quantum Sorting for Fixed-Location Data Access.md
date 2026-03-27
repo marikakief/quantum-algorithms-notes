@@ -1,4 +1,3 @@
-# Quantum Sorting for Fixed-Location Data Access
 
 > **Tags:** #trick #data-access #sorting #QRAM-avoidance
 > **Source:** arXiv:2510.07380 (Quantum FMM, Berry, Wan, Baczewski, Tikku, Babbush), Section IV

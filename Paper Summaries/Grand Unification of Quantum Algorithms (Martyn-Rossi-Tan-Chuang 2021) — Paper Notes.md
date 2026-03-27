@@ -8,7 +8,7 @@
 
 This is a **pedagogical tutorial**, not a paper with new results. If you're looking for the original QSVT theorem, that's [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén, Su, Low & Wiebe (2019)]]. What Martyn et al. do is take the framework and actually explain it — carefully, with worked examples, with circuits drawn out.
 
-The value is entirely educational. They introduce an intermediate object — the **Quantum Eigenvalue Transform (QET)** — that sits between QSP and QSVT and makes the generalization feel natural rather than sudden. They then construct search, phase estimation, Hamiltonian simulation, and matrix inversion from scratch as QSVT instances, showing that these weren't just "also implementable via QSVT" but are in a precise sense the same underlying structure.
+The value is entirely educational. They introduce an intermediate object — the **Quantum Eigenvalue Transform (QET)** — that sits between QSP and QSVT and makes the generalization feel natural rather than sudden. They then construct search, phase estimation, [[Hamiltonian simulation]], and matrix inversion from scratch as QSVT instances, showing that these weren't just "also implementable via QSVT" but are in a precise sense the same underlying structure.
 
 If you want to understand *why* QSVT is a unification and not just a restatement, this paper is where to start.
 
@@ -94,7 +94,7 @@ $$U_{\text{QET}}(\vec\phi) = e^{i\phi_0 \Pi} \prod_{j=1}^{d} \bigl[U_H \, e^{i\p
 
 In the invariant 2D subspace spanned by $\{|\tilde{0}\rangle|\psi_k\rangle, |\tilde{0}^\perp\rangle|\psi_k\rangle\}$ for each eigenstate $|\psi_k\rangle$, this acts exactly like the QSP sequence $U_{\text{QSP}}(\lambda_k/\alpha; \vec\phi)$. So the top-left block of $U_{\text{QET}}$ applies $P(\lambda_k/\alpha)$ to each eigenvalue — this is the eigenvalue transform.
 
-This relies on the [[Invariant SU(2) Subspace Embedding]] structure, which is the same machinery as qubitization. The connection to [[Qubitization Iterate]] is direct: qubitization is the special case where the polynomial is chosen to be $e^{-i\lambda t}$ for Hamiltonian simulation.
+This relies on the [[Invariant SU(2) Subspace Embedding]] structure, which is the same machinery as qubitization. The connection to [[Qubitization Iterate]] is direct: qubitization is the special case where the polynomial is chosen to be $e^{-i\lambda t}$ for [[Hamiltonian simulation]].
 
 ---
 
@@ -180,7 +180,7 @@ Apply the sign-function QSVT to discriminate positive vs. negative — that give
 
 No QFT. No quantum control register. The algorithm is iterative and adaptive, similar to [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev's]] phase estimation but derived entirely within the QSVT framework.
 
-### Hamiltonian simulation
+### [[Hamiltonian simulation]]
 
 Given $H$ with $\|H\| \leq 1$, approximate $e^{-iHt}$.
 
@@ -202,14 +202,14 @@ The QSVT circuit applies this to the singular values of $A$, effectively impleme
 
 ## The unification argument
 
-The paper's title claim is: search, phase estimation, Hamiltonian simulation, and matrix inversion are all instances of QSVT with different polynomial choices.
+The paper's title claim is: search, phase estimation, [[Hamiltonian simulation]], and matrix inversion are all instances of QSVT with different polynomial choices.
 
 | Algorithm | Target function | Polynomial degree | Access oracle |
 |---|---|---|---|
 | Search (FP-AA) | $\text{sign}(a)$ at $\kappa = 1/\sqrt{N}$ | $O(\kappa^{-1})$ | Grover diffusion oracle |
 | Eigenvalue threshold | $\text{sign}((\lambda - \lambda^*)/\alpha)$ | $O(\delta^{-1} \log(1/\epsilon))$ | Block-encoding of $H$ |
 | Phase estimation (1 bit) | $\text{sign}(\cos(\pi \cdot))$ | $O(\epsilon^{-1})$ | Controlled-$U^{2^j}$ |
-| Hamiltonian simulation | $e^{-i\lambda t}$ | $O(t + \log(1/\epsilon))$ | Block-encoding of $H$ |
+| [[Hamiltonian simulation]] | $e^{-i\lambda t}$ | $O(t + \log(1/\epsilon))$ | Block-encoding of $H$ |
 | Matrix inversion | $1/\sigma$ on $[1/\kappa, 1]$ | $O(\kappa \log(1/\epsilon))$ | Block-encoding of $A$ |
 
 The unification is not just taxonomic — it means that algorithmic improvements to the polynomial approximation machinery (better degree bounds, better compilation of phase angles) propagate automatically to all of these algorithms simultaneously.
@@ -282,7 +282,7 @@ Existing trick cards also used:
 - [[Parity-Aware Polynomial Design]] — constraints on realizable polynomials
 - [[One-Ancilla Alternating Phase Sequence]] — the alternating phase/block sequence
 - [[Invariant SU(2) Subspace Embedding]] — why QET works on each eigenspace
-- [[Jacobi-Anger Truncation for QSP Simulation]] — polynomial degree for Hamiltonian simulation
+- [[Jacobi-Anger Truncation for QSP Simulation]] — polynomial degree for [[Hamiltonian simulation]]
 - [[Standard Amplitude Amplification]] — subsumed as QSVT instance
 - [[Oblivious Amplitude Amplification (Robust)]] — postselection recovery
 - [[Fixed-Point Amplitude Amplification with Eigenstate Filtering]] — fixed-point search
@@ -301,7 +301,7 @@ Existing trick cards also used:
 ## References within this paper
 
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén, Su, Low & Wiebe (2019)]] — the foundational QSVT paper; all theorems here are from that work
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — original QSP for Hamiltonian simulation
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — original QSP for [[Hamiltonian simulation]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]] — qubitization framework; QSVT generalizes this
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low, Yoder & Chuang (2016)]] — composite pulse sequences, QSP precursors
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — search algorithm, shown as QSVT instance

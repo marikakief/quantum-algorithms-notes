@@ -1,4 +1,3 @@
-# Bayesian Restart Protocol for Phase Estimation
 
 > **Source:** Wiebe and Granade, *Efficient Bayesian Phase Estimation*, arXiv:1508.00869 (2016)
 > **Tags:** #trick #phase-estimation #Bayesian-inference #fault-tolerance #restart #RFPE #error-recovery

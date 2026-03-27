@@ -1,4 +1,3 @@
-# Interaction-Picture Split for Product Formulas
 
 > **Tags:** #trick #interaction-picture #trotter
 > **Source:** arXiv:1912.08854; related to Low–Wiebe (arXiv:1805.00675) and prior interaction-picture simulation work
@@ -11,7 +10,7 @@ Formally: instead of simulating $e^{-i(A+B)t}$ directly, use
 $$
 e^{-i(A+B)t} = e^{-iAt} \cdot \mathcal{T}\exp\!\left(-i\int_0^t e^{iAs}B\,e^{-iAs}\,ds\right),
 $$
-and simulate the second factor. For product formulas, this means applying frame rotations $e^{-iA\cdot}$ between simulation steps of $B$ in the rotating frame.
+and simulate the second factor. For [[product formula]]s, this means applying frame rotations $e^{-iA\cdot}$ between simulation steps of $B$ in the rotating frame.
 
 ## When to reach for it
 
@@ -28,7 +27,7 @@ Can reduce prefactors substantially when $\|B\| \ll \|A\|$. In chemistry context
 
 ## Caveat
 
-Requires efficient controlled frame evolutions (i.e., $e^{-iAt}$ applied coherently with time parameter controlled). For product formulas specifically, this means the frame rotation overhead must be cheap.
+Requires efficient controlled frame evolutions (i.e., $e^{-iAt}$ applied coherently with time parameter controlled). For [[product formula]]s specifically, this means the frame rotation overhead must be cheap.
 
 ## Related Paper Notes
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]

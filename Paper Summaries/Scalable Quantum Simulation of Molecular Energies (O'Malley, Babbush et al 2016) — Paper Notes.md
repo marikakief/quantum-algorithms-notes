@@ -31,7 +31,7 @@ First experimental demonstration of a scalable quantum chemistry algorithm — o
 3. **[[Bravyi-Kitaev Transformation]]:** map the second-quantized Hamiltonian to a qubit Hamiltonian. For H₂, the result acts non-trivially on only 2 qubits after exploiting that qubits 1 and 3 are stabilized by the Hartree-Fock initial state.
 4. Reduced Hamiltonian is Eq. (1) above, with $g_\gamma(R)$ tabulated for each bond length.
 
-### Variational Quantum Eigensolver (VQE)
+### [[Variational Quantum Eigensolver (VQE)]]
 
 The ansatz uses the [[Unitary Coupled Cluster (UCC) Ansatz|UCC]] parameterization. For H₂ in this basis, UCCSD reduces to a single parameter:
 
@@ -101,12 +101,12 @@ Fails chemical accuracy because a single Trotter step is insufficient; more step
 
 | Experiment | System | Algorithm | Scalable representation? | Chemical accuracy? |
 |---|---|---|---|---|
-| Lanyon et al. (2010) | Photonic | PEA | No (configuration basis) | Yes (H₂, with preprocessing) |
+| [[Towards Quantum Chemistry on a Quantum Computer (Lanyon-Whitfield-Aspuru-Guzik-White 2010) — Paper Notes|Lanyon et al. (2010)]] | Photonic | PEA | No (configuration basis) | Yes (H₂, with preprocessing) |
 | Du et al. (2010) | NMR | PEA + adiabatic | No (configuration basis) | Yes (H₂) |
 | Wang et al. (2015) | NV center | PEA | No (configuration basis) | Yes (HeH⁺) |
-| Peruzzo et al. (2014) | Photonic | VQE | No (configuration basis) | Yes (HeH⁺) |
+| [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]] | Photonic | VQE | No (configuration basis) | Yes (HeH⁺) |
 | Shen et al. (2015) | Ion trap | VQE+UCC | No (configuration basis) | Yes (H₂) |
-| **O'Malley et al. (2016)** | **Superconducting** | **VQE + PEA** | **Yes (Bravyi-Kitaev)** | **Yes (VQE only)** |
+| **[[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley et al. (2016)]]** | **Superconducting** | **VQE + PEA** | **Yes (Bravyi-Kitaev)** | **Yes (VQE only)** |
 
 The distinguishing contribution is not the accuracy per se (prior experiments were accurate too) but the scalability: all prior experiments used the configuration basis, which requires exponentially costly classical preprocessing to exponentiate the full Hamiltonian matrix. This paper is the first to use a scalable fermion-to-qubit mapping (Bravyi-Kitaev) on hardware, making the compilation cost polynomial in system size.
 
@@ -141,14 +141,14 @@ The distinguishing contribution is not the accuracy per se (prior experiments we
 | Ref | What it is | Vault note? |
 |---|---|---|
 | Aspuru-Guzik et al. (2005), Science 309, 1704 | Original proposal for quantum simulation of chemistry using QPE | No |
-| Peruzzo et al. (2014), Nat. Commun. 5 | First VQE experiment (photonic, HeH⁺) | No |
+| [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]], Nat. Commun. 5 | First VQE experiment (photonic, HeH⁺) | No |
 | McClean et al. (2016), NJP 18, 23023 | Theory of variational hybrid quantum-classical algorithms | No |
 | Wecker, Hastings, Troyer (2015), PRA 92, 042303 | Progress towards practical VQE | No |
 | Tranter et al. (2015), Int. J. Quant. Chem. 115, 1431 | Analysis of Bravyi-Kitaev transformation properties | No |
 | Seeley, Richard, Love (2012), JCP 137, 224109 | Bravyi-Kitaev transformation for electronic structure | No |
 | Bravyi & Kitaev (2002), Ann. Phys. 298, 210 | Original Bravyi-Kitaev fermion mapping | No |
 | Somma et al. (2002), PRA 65 | Jordan-Wigner transformation for simulation | No |
-| Kitaev (1995), arXiv:9511026 | Iterative phase estimation algorithm | No |
+| [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]], arXiv:9511026 | Iterative phase estimation algorithm | No |
 | Trotter (1959) | Product formula for operator semi-groups | No |
 | Barends et al. (2016), Nature 534, 222 | Digitized adiabatic quantum computing on same device | No |
 | Kelly et al. (2015), Nature 519, 66 | State preservation by repetitive error detection (device paper) | No |

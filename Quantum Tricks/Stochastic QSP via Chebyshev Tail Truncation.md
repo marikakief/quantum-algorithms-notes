@@ -1,4 +1,3 @@
-# Stochastic QSP via Chebyshev Tail Truncation
 
 > **Source:** John M. Martyn, Patrick Rall, *Halving the Cost of Quantum Algorithms with Randomization*, arXiv:2409.03744, npj Quantum Information **11**, 51 (2025)
 > **Tags:** #trick #QSP #QSVT #randomization #channel-approximation #Chebyshev
@@ -37,7 +36,7 @@ The channel achieves the same diamond-norm error as the deterministic degree-$d$
 - You're in a precision-dominated regime where $\log(1/\epsilon)$ is the cost bottleneck.
 - You can tolerate classical pre-computation (sampling the ensemble, synthesizing QSP phases for the chosen polynomial).
 
-Specific algorithms that benefit: Hamiltonian simulation $e^{-iHt}$, imaginary time evolution, phase estimation, ground state preparation, matrix inversion — anywhere [[QSVT Meta-Template|QSP/QSVT]] is used with a smooth approximation target.
+Specific algorithms that benefit: [[Hamiltonian simulation]] $e^{-iHt}$, imaginary time evolution, phase estimation, ground state preparation, matrix inversion — anywhere [[QSVT Meta-Template|QSP/QSVT]] is used with a smooth approximation target.
 
 ## Complexity
 
@@ -59,5 +58,5 @@ For real-time simulation: reduces from $O(\alpha t + \log(1/\epsilon)/\log\log(1
 - [[Diamond-Norm Channel Averaging for Random Compilers]]
 - [[QSVT Meta-Template]]
 - [[Term-Weighted Random Hamiltonian Sampling (qDRIFT)]] — same randomization philosophy at the Hamiltonian term level
-- [[Randomized Multi-Product Sampling]] — same philosophy at the multi-product formula level
+- [[Randomized Multi-Product Sampling]] — same philosophy at the multi-[[product formula]] level
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — the coherent alternative

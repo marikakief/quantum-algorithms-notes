@@ -99,7 +99,7 @@ The product-state structure after kickback — each dimension decouples — is a
 
 ## References within this paper
 
-- Bernstein & Vazirani (1993) — the discrete version of the same algorithm (inner product mod 2 → gradient)
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — the discrete version of the same algorithm (inner product mod 2 → gradient)
 - Mosca (1999, PhD thesis) — context for the Bernstein-Vazirani generalisation
 - Cleve, Ekert, Macchiavello, Mosca (1998) — [[Gapped Phase Estimation|phase estimation]]
 - Nielsen & Chuang (2000) — QFT properties used in the precision analysis

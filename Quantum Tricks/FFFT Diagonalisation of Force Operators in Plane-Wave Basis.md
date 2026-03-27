@@ -1,4 +1,3 @@
-# FFFT Diagonalisation of Force Operators in Plane-Wave Basis
 
 > **Source:** O'Brien, Streif, Rubin, Santagati, Su, Huggins et al., arXiv:2111.12437
 > **Tags:** #trick #plane-wave #FFFT #force-estimation #block-encoding #first-quantized

@@ -1,4 +1,3 @@
-# Alternating Operator Ansatz
 
 > **Source:** Farhi, Goldstone & Gutmann, arXiv:1411.4028 (2014); generalised by Hadfield et al. (2019)
 > **Tags:** #trick #QAOA #variational #ansatz #combinatorial-optimization

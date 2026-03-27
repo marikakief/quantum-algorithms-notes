@@ -1,4 +1,3 @@
-# Order-Finding via QFT and Continued Fractions
 
 > **Source:** Shor, arXiv:quant-ph/9508027 (1994), §5
 > **Tags:** #trick #period-finding #number-theory #continued-fractions

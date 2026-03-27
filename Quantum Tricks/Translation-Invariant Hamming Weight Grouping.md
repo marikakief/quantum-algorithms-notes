@@ -1,4 +1,3 @@
-# Translation-Invariant Hamming Weight Grouping
 
 > **Source:** Kivlichan, Gidney, Babbush et al., arXiv:1902.10673, Quantum **4**, 296 (2020)
 > **Tags:** #trick #Trotter #fault-tolerant #translation-invariance #T-gate-reduction #circuit-optimization

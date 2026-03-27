@@ -1,4 +1,3 @@
-# Rectangular Matrix Pseudoinverse via Hermitian Isometry Embedding
 
 > **Source:** Wiebe, Braun, Lloyd, arXiv:1204.5242 (2012)
 > **Tags:** #trick #linear-algebra #HHL #least-squares #pseudoinverse #isometry

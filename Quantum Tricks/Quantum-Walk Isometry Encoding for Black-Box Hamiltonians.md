@@ -1,6 +1,5 @@
-# Quantum-Walk Isometry Encoding for Black-Box Hamiltonians
 
-> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box Hamiltonian simulation and unitary implementation*, arXiv:0910.4157  
+> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box [[Hamiltonian simulation]] and unitary implementation*, arXiv:0910.4157  
 > **Tags:** #trick #quantum-walk #black-box #hamiltonian-simulation
 
 ## Idea

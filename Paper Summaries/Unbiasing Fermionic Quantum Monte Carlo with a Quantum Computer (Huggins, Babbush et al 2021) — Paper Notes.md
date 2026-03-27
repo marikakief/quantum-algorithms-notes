@@ -161,9 +161,9 @@ Shadow tomography with $N$-qubit Cliffords: $R = O(\log M / \varepsilon^2)$ meas
 Key citations and their role:
 
 - **Zhang & Krakauer (2003)** — Introduces the phaseless approximation for AFQMC. The constraint mechanism that QC-QMC aims to improve.
-- **Peruzzo et al. (2014)** — Original [[Variational Quantum Eigensolver (VQE)|VQE]] proposal. QC-QMC is positioned as a fundamentally different hybrid paradigm.
+- **[[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]]** — Original [[Variational Quantum Eigensolver (VQE)|VQE]] proposal. QC-QMC is positioned as a fundamentally different hybrid paradigm.
 - **Huang, Kueng, Preskill (2020)** — Classical shadow tomography framework. The measurement protocol underlying the experiments.
-- **Aaronson (2018)** — Original shadow tomography concept (different protocol).
+- **[[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]]** — Original shadow tomography concept (different protocol).
 - **Troyer & Wiese (2005)** — QMA-completeness of the sign problem. Establishes the fundamental hardness.
 - **Goddard et al. (1973); Cullen (1996)** — Perfect pairing (PP) wavefunction theory. The trial ansatz used in all experiments.
 - [[Increasing the Representation Accuracy of Quantum Simulations of Chemistry without Extra Quantum Resources (Takeshita, Rubin, Babbush, McClean 2019) — Paper Notes|Takeshita, Rubin, Babbush, McClean (2020)]] — Prior virtual correlation strategy within VQE (VQSE). QC-AFQMC's virtual correlation is more efficient (no RDM overhead).

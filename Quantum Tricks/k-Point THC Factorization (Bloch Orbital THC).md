@@ -1,5 +1,3 @@
-# k-Point THC Factorization (Bloch Orbital THC)
-
 > **Source:** Rubin, Berry, Malone, White, Khattar, DePrince, Sicolo, Kühn, Kaicher, Lee, Babbush, arXiv:2302.05531
 > **Tags:** #trick #tensor-hypercontraction #periodic-systems #Bloch-orbitals #Coulomb-operator #density-fitting
 

@@ -1,4 +1,3 @@
-# Swap Test for State Comparison
 
 > **Source:** Buhrman, Cleve, Watrous & de Wolf, arXiv:quant-ph/0102001 (2001), Figure 1
 > **Tags:** #trick #state-comparison #swap-test #inner-product #fundamental

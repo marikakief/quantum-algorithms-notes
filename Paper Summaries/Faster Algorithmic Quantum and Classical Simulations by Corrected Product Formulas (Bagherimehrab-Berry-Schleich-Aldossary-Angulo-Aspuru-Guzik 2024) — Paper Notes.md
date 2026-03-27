@@ -12,7 +12,7 @@ The question: can we beat standard [[Order-Condition Cancellation in Product For
 
 ## What the paper does
 
-Introduces **corrected product formulas (CPFs)** — standard product formulas with auxiliary "corrector" terms $e^{\pm C}$ injected at the boundaries. The correctors are exponentials of nested commutators $\mathrm{ad}_A^j(B)$ that systematically cancel leading error terms in the [[Finite Nested-Commutator Expansion|BCH kernel]] of the product formula.
+Introduces **corrected [[product formula]]s (CPFs)** — standard [[product formula]]s with auxiliary "corrector" terms $e^{\pm C}$ injected at the boundaries. The correctors are exponentials of nested commutators $\mathrm{ad}_A^j(B)$ that systematically cancel leading error terms in the [[Finite Nested-Commutator Expansion|BCH kernel]] of the product formula.
 
 The headline results:
 
@@ -25,7 +25,7 @@ This matters practically: CPF error bounds match or beat the *empirical* (not ju
 
 ### Three types of correctors
 
-All correctors modify the kernel $K$ of a standard product formula $S(λ) = e^K$ to a better kernel $K'$ closer to the exact kernel $λH$.
+All correctors modify the kernel $K$ of a standard [[product formula]] $S(λ) = e^K$ to a better kernel $K'$ closer to the exact kernel $λH$.
 
 **1. Symplectic corrector.** Conjugation: $e^C S(\lambda) e^{-C} = e^{K'}$ with $K' = e^{\mathrm{ad}_C} K$. The key property: for $r$ Trotter steps,
 
@@ -122,7 +122,7 @@ The CPF approach occupies a sweet spot: same $\alpha^2$ scaling as THRIFT but us
 
 5. **Hardware validation is limited.** The IBM experiments use only 2–4 qubit Ising models with $r = 10$ steps. At this scale the corrector circuit depth dominates. The paper acknowledges the overhead becomes negligible only at larger $r$.
 
-6. **Concurrent work.** THRIFT (Bosse et al., arXiv:2403.08729) achieves the same $O(\alpha^2 t^{2k+1})$ bound via interaction-frame product formulas. The $\alpha^2$ scaling is provably optimal for product-formula-type approaches (shown by Bosse et al.).
+6. **Concurrent work.** THRIFT (Bosse et al., arXiv:2403.08729) achieves the same $O(\alpha^2 t^{2k+1})$ bound via interaction-frame [[product formula]]s. The $\alpha^2$ scaling is provably optimal for product-formula-type approaches (shown by Bosse et al.).
 
 ## My assessment
 
@@ -134,15 +134,15 @@ The limitation is that this stays firmly within the product-formula paradigm. If
 
 ## Reusable ideas
 
-1. [[Symplectic Corrector Injection for Product Formulas]] — the core technique: conjugate a product formula by $e^{\pm C}$ where $C$ is a linear combination of nested commutators, to cancel leading BCH error terms at negligible additive cost
+1. [[Symplectic Corrector Injection for Product Formulas]] — the core technique: conjugate a [[product formula]] by $e^{\pm C}$ where $C$ is a linear combination of nested commutators, to cancel leading BCH error terms at negligible additive cost
 2. [[Bernoulli Polynomial Kernel Expansion for Product Formulas]] — the exact expansion of PF2 kernel modulo second-order-in-$B$ terms, using Bernoulli polynomials to identify which commutator terms to cancel
 3. [[Vandermonde Compilation of Nested Commutator Exponentials]] — the explicit procedure for decomposing $e^{c \lambda^{2m} \mathrm{ad}_A^{2m-1}(B)}$ into products of $e^{a\lambda A}$ and $e^{b\lambda B}$ via a Vandermonde linear system with rational solutions
 
 ## References within this paper
 
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]] — the [[Trotter Commutator-Scaling Bound|commutator-scaling framework]] that CPFs improve upon
-- [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe (2013)]] — recursive commutator product formulas; CPF compilations extend this work
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomised product formulas; alternative error-reduction strategy
+- [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe (2013)]] — recursive commutator [[product formula]]s; CPF compilations extend this work
+- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomised [[product formula]]s; alternative error-reduction strategy
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2019)]] — interaction-picture simulation; CPFs avoid its ancilla/controlled-evolution requirements
 - Suzuki (1990, 1995) — the standard recursive product formulas and an early "hybrid" fourth-order formula that foreshadows correctors
 - Yoshida (1990) — alternative higher-order product formulas with fewer exponentials
@@ -151,7 +151,7 @@ The limitation is that this stays firmly within the product-formula paradigm. If
 - Bosse, Childs, Derby, Gambetta, Montanaro, Santos (2024) — THRIFT algorithm; same $\alpha^2$ error scaling via interaction-frame product formulas; proved $\alpha^2$ is optimal
 - Morales, Costa, Pantaleoni, Burgarth, Sanders, Berry (2024) — selection and improvement of product formulae; eigenvalue error analysis
 - Chen, Childs, Hafezi, Jiang, Kim, Xu (2022) — efficient commutator product formulas; compilation primitive $W(a)$ used here
-- Nakaji, Bagherimehrab, Aspuru-Guzik (2024) — high-order randomised compiler for Hamiltonian simulation
+- Nakaji, Bagherimehrab, Aspuru-Guzik (2024) — high-order randomised compiler for [[Hamiltonian simulation]]
 
 ## Cross-links
 
@@ -166,7 +166,7 @@ The limitation is that this stays firmly within the product-formula paradigm. If
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]]
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds over-parameterized 8th-order product formulas ~100× more accurate; the corrector approach here and the coefficient-optimization approach there are complementary strategies for reducing product-formula error constants
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds over-parameterized 8th-order [[product formula]]s ~100× more accurate; the corrector approach here and the coefficient-optimization approach there are complementary strategies for reducing product-formula error constants
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry kicks as a different mechanism for practical Trotter error reduction; orthogonal to the deterministic corrector approach here
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — concrete resource estimates for condensed-phase Hamiltonians; the CPF error improvements here directly reduce the Trotter step counts reported there
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — foundational product-formula theory; the BCH error structure analysed there is what the correctors here cancel

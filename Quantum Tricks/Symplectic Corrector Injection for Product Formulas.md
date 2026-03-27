@@ -1,15 +1,14 @@
-# Symplectic Corrector Injection for Product Formulas
 
 > **Source:** Bagherimehrab, Berry, Schleich, Aldossary, Angulo, Aspuru-Guzik, arXiv:2409.08265  
 > **Tags:** #trick #product-formulas #hamiltonian-simulation #commutators #perturbation
 
 ## What it does
 
-Improves a product formula's error by one or more orders of magnitude by conjugating it with a single corrector unitary $e^{\pm C}$, where $C$ is a linear combination of nested commutators of the Hamiltonian partitions.
+Improves a [[product formula]]'s error by one or more orders of magnitude by conjugating it with a single corrector unitary $e^{\pm C}$, where $C$ is a linear combination of nested commutators of the Hamiltonian partitions.
 
 ## The trick
 
-Given a product formula $S(\lambda) = e^K$ approximating $e^{\lambda H}$ for $H = A + \alpha B$, define the symplectic corrector $C$ and form:
+Given a [[product formula]] $S(\lambda) = e^K$ approximating $e^{\lambda H}$ for $H = A + \alpha B$, define the symplectic corrector $C$ and form:
 
 $$S^c(\lambda) = e^C S(\lambda) e^{-C} = e^{K'}, \quad K' = K + [C, K] + \tfrac{1}{2}[C, [C, K]] + \cdots$$
 

@@ -224,12 +224,12 @@ Prior papers on quantum chemistry simulation — Aspuru-Guzik et al. (2005), [[A
 
 ### Papers with vault notes
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush, McClean, Wecker, Aspuru-Guzik, Wiebe (2015)]] — Trotter error analysis for quantum chemistry
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve, Sanders (2007)]] — sparse Hamiltonian simulation
-- [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes|Berry, Childs, Cleve, Kothari, Somma (2015)]] — truncated Taylor series for Hamiltonian simulation
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve, Sanders (2007)]] — sparse [[Hamiltonian simulation]]
+- [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes|Berry, Childs, Cleve, Kothari, Somma (2015)]] — truncated Taylor series for [[Hamiltonian simulation]]
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo, McClean et al. (2014)]] — VQE (an alternative approach)
 
 ### Key uncited but contextually important
-- Lloyd (1996) — universal quantum simulators, Ref. [5]
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — universal quantum simulators, Ref. [5]
 - Zalka (1998) — quantum simulation of quantum systems, Ref. [6]
 - Aspuru-Guzik et al. (2005) — first quantum chemistry algorithm proposal, Ref. [9] (this paper appears in the vault under a different title)
 - Fowler et al. (2012) — surface code resource estimates, Ref. [48]
@@ -241,6 +241,9 @@ Prior papers on quantum chemistry simulation — Aspuru-Guzik et al. (2005), [[A
 ---
 
 ## Cross-links
+
+### Synthesis notes
+- [[FeMoCo Resource Estimation Timeline]] — tracks the evolution of FeMoCo resource estimates from this paper through 2025; this paper is the baseline
 
 ### Paper notes
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — introduced qubitization for chemistry; first major algorithmic improvement over Trotter for FeMoCo-scale problems

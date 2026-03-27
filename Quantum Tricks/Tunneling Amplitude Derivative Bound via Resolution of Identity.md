@@ -1,4 +1,3 @@
-# Tunneling Amplitude Derivative Bound via Resolution of Identity
 
 > **Source:** Cheung, Høyer, Wiebe, arXiv:1103.4174 (Lemma 3 and Appendix A)
 > **Tags:** #trick #adiabatic #operator-bounds #resolution-of-identity #eigenstate-derivatives

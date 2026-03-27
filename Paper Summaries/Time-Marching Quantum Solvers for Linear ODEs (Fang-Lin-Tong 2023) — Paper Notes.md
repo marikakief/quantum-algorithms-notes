@@ -146,7 +146,7 @@ where $\alpha_{\text{comm}} = \frac{1}{T}\sum_l \frac{1}{2}\int_{t_{l-1}}^{t_l}\
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén, Su, Low & Wiebe (2019)]] — QSVT, the core tool for USVA and matrix inversion ([37, 38])
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2018)]] — interaction-picture simulation; source of the compression gadget ([57])
 - [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes|An, Fang & Lin (2022)]] — qHOP, commutator-scaled Magnus simulation; this paper's first-order Magnus integrator generalises qHOP to non-Hamiltonian case ([4])
-- [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes|Berry, Childs, Su, Wang & Wiebe (2020)]] — L1-norm Hamiltonian simulation ([7])
+- [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes|Berry, Childs, Su, Wang & Wiebe (2020)]] — L1-norm [[Hamiltonian simulation]] ([7])
 - Krovi (2022), *Improved quantum algorithms for linear and nonlinear differential equations*, Quantum **7**, 913 — improved QLSA-based solver with better condition-number scaling ([48])
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL, the original QLSA ([44])
 - Tong, An, Wiebe & Lin (2021), *Fast inversion, preconditioned QLSS, fast Green's-function computation, and fast evaluation of matrix functions*, Phys. Rev. A **104**, 032422 — contour integral method for matrix functions ([61])
@@ -162,7 +162,7 @@ where $\alpha_{\text{comm}} = \frac{1}{T}\sum_l \frac{1}{2}\int_{t_{l-1}}^{t_l}\
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — earlier QLSA approach
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — QSVT as the core subroutine
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]] — source of the compression gadget
-- [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]] — Magnus-based Hamiltonian simulation generalised here
+- [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]] — Magnus-based [[Hamiltonian simulation]] generalised here
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — HHL, foundational QLSA
 - [[Energy Landscape of Symmetric QSP (Wang-Dong-Lin 2022) — Paper Notes]] — phase-factor computation for QSVT
 

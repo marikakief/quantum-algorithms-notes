@@ -1,4 +1,3 @@
-# Independent Batch Splitting for Hamiltonian-Guiding State Decoupling
 
 > **Source:** Schmidhuber, O'Donnell, Kothari, Babbush, arXiv:2406.19378
 > **Tags:** #trick #decoupling #second-moment-method #independence #planted-inference

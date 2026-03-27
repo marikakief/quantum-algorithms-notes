@@ -1,5 +1,3 @@
-# Iterative Phase Estimation (Kitaev)
-
 > **Source:** Kitaev, arXiv:quant-ph/9511026 (1995); O'Malley, Babbush et al., arXiv:1512.06860 (2016) [hardware demo]
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]
 > **Tags:** #trick #phase-estimation #QPE #Kitaev #energy-estimation

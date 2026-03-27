@@ -80,7 +80,7 @@ The quantum algorithm uses $O(n)$ queries → **exponential separation**.
 
 Simon's algorithm is the direct conceptual predecessor to [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev's phase estimation]] and [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's factoring algorithm]]:
 
-| Simon (1994) | Shor (1994) |
+| [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] | [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] |
 |---|---|
 | Hidden subgroup of $\mathbb{Z}_2^n$ | Hidden subgroup of $\mathbb{Z}_N$ |
 | Hadamard transform = Fourier over $\mathbb{Z}_2^n$ | QFT over $\mathbb{Z}_N$ |
@@ -96,8 +96,8 @@ Shor has acknowledged that Simon's result was a direct inspiration. The structur
 |---|---|---|
 | $\mathsf{EQP} \neq \mathsf{P}$ relative to oracle | Deutsch-Jozsa (1992) | Total function, but $\mathsf{EQP}$ (exact) vs $\mathsf{P}$ |
 | $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | Bernstein-Vazirani (1993) | Polynomial separation |
-| $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | **Simon (1994)** | **Exponential separation** |
-| Concrete factoring speedup | Shor (1994) | Under hardness assumptions, not oracle |
+| $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | **[[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]]** | **Exponential separation** |
+| Concrete factoring speedup | [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] | Under hardness assumptions, not oracle |
 
 Simon's is the first **exponential** oracle separation between bounded-error quantum and classical.
 
@@ -113,8 +113,8 @@ Simon's is the first **exponential** oracle separation between bounded-error qua
 
 ## References within this paper
 
-- Deutsch & Jozsa (1992) — first quantum oracle speedup (promised constant vs balanced)
-- Bernstein & Vazirani (1993) — polynomial quantum oracle separation (BPP vs BQP)
+- [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes|Deutsch & Jozsa (1992)]] — first quantum oracle speedup (promised constant vs balanced)
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — polynomial quantum oracle separation (BPP vs BQP)
 - Berthiaume & Brassard (1992) — oracle separations for quantum complexity classes
 - Yao (1993) — quantum circuit model
 - Bennett, Bernstein, Brassard & Vazirani (1997) — $\Omega(\sqrt{N})$ lower bound for search, placing limits on quantum speedups

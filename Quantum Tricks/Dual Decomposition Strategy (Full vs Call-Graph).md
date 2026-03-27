@@ -1,5 +1,3 @@
-# Dual Decomposition Strategy (Full vs Call-Graph)
-
 > **Source:** Harrigan, Khattar, Yuan et al., arXiv:2409.04643
 > **Tags:** #trick #software-pattern #resource-estimation #testing #compilation
 

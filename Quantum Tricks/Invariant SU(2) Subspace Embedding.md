@@ -1,5 +1,3 @@
-# Invariant SU(2) Subspace Embedding
-
 > **Tags:** #trick #spectral-method #geometry #qubitization
 > **Source:** Low–Chuang 2019
 

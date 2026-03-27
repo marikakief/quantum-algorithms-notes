@@ -1,5 +1,3 @@
-# EQA Assessment Framework (State Preparation vs Classical Heuristic)
-
 > **Source:** Lee, Babbush, Chan et al., arXiv:2208.02199 (2022)
 > **Tags:** #trick #quantum-advantage #complexity #state-preparation #classical-heuristics #quantum-chemistry
 

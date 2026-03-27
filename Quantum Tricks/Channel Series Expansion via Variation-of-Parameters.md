@@ -1,4 +1,3 @@
-# Channel Series Expansion via Variation-of-Parameters
 
 **Source:** Watson, arXiv:2411.04240 (2025), Lemma 3. Builds on AAT24 and earlier Dyson-series techniques.
 
@@ -64,4 +63,4 @@ The mathematical machinery is similar (both use Dyson-series-style arguments), b
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — source paper (Lemma 3)
 - [[Term-Weighted Random Hamiltonian Sampling (qDRIFT)]] — the channel being expanded
 - [[Diamond-Norm Channel Averaging for Random Compilers]] — related averaging argument
-- [[Trotter Commutator-Scaling Bound]] — analogous expansion for deterministic product formulas
+- [[Trotter Commutator-Scaling Bound]] — analogous expansion for deterministic [[product formula]]s

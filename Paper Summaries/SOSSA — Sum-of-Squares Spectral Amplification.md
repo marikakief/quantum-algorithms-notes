@@ -145,7 +145,7 @@ The energy estimation algorithm doesn't require knowing $\Delta$ in advance. Two
 
 Final cost: $\Theta(\sqrt{\max\{\varepsilon, \Delta_{\text{SOS}}\} \cdot \lambda}/\varepsilon)$ — interpolates smoothly between $\Theta(\lambda/\varepsilon)$ (worst case, $\Delta \sim \lambda$) and $\Theta(\sqrt{\lambda/\varepsilon})$ (near the spectral boundary, $\Delta \sim \varepsilon$).
 
-### Gapped Phase Estimation
+### [[Gapped Phase Estimation]]
 
 Decides whether an eigenphase lies in one of two intervals separated by a gap $\delta$. Uses $O((1/\delta)\log(1/q))$ queries with **no ancillary qubits** beyond those needed for the walk operator — implemented via a Chebyshev polynomial approximation to a step function applied through controlled $U$/$U^\dagger$ calls. Clean subroutine used as the inner binary-search step in the adaptive energy estimation algorithm.
 

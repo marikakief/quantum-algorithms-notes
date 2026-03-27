@@ -1,4 +1,3 @@
-# Grassmann Integral Framework for Free-Fermion Traces
 
 > **Source:** Wan, Huggins, Lee, Babbush, arXiv:2207.13723
 > **Tags:** #trick #Grassmann-integral #free-fermion #Pfaffian #classical-simulation #matchgate #Clifford-algebra

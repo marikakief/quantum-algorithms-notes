@@ -1,4 +1,3 @@
-# Inequality-Testing State Preparation for Sparse Weighted Graphs
 
 > **Tags:** #trick #state-preparation #sparse-graphs #block-encoding
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, *Exponential quantum speedup in simulating coupled classical oscillators*, arXiv:2303.13012, PRX **13**, 041041 (2023)

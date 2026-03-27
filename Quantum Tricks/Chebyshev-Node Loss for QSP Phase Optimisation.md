@@ -1,4 +1,3 @@
-# Chebyshev-Node Loss for QSP Phase Optimisation
 
 > **Source:** Dong, Meng, Whaley & Lin, arXiv:2002.11649, Phys. Rev. A **103**, 042419 (2021)
 > **Tags:** #trick #QSP #phase-factors #optimisation #Chebyshev #sampling

@@ -1,4 +1,3 @@
-# Unary Iteration
 
 > **Source:** Babbush, Gidney, Berry, Wiebe et al., arXiv:1805.03662, Phys. Rev. X **8**, 041015 (2018)
 > **Tags:** #trick #circuit-primitive #T-complexity #SELECT #indexed-operations #unary

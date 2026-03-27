@@ -1,4 +1,3 @@
-# Phase Gradient State for Controlled Rotations
 
 > **Source:** Gidney (2018), Kitaev, Shen & Vyalyi (2002); compiled in Sanders, Berry et al., arXiv:2007.07391
 > **Tags:** #trick #phase-gradient #rotation #fault-tolerant #arithmetic

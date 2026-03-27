@@ -1,4 +1,3 @@
-# Permanent Formula for Bosonic Amplitudes
 
 > **Source:** Aaronson & Arkhipov, arXiv:1011.3245; classical result in quantum optics
 > **Tags:** #trick #linear-optics #BosonSampling #permanent #bosons #second-quantization

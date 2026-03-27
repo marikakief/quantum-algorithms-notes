@@ -74,12 +74,12 @@ This is more restricted than the general Stinespring approach (you need matching
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | Feynman (1982)                                                                                                                                             | Conjecture: quantum computers can simulate local quantum systems                                 |
 | Benioff (1980)                                                                                                                                             | First quantum computer model                                                                     |
-| Deutsch (1985)                                                                                                                                             | Universal quantum computer formalism                                                             |
+| [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]]                                                                                                                                             | Universal quantum computer formalism                                                             |
 | Lloyd (1993, 1995) [13, 20]                                                                                                                                | Quantum cellular automata; Lie-algebraic universality of two-qubit gates                         |
 | Deutsch-Barenco-Ekert (1995) [21]                                                                                                                          | Independent proof of gate universality                                                           |
 | **This paper (1996)**                                                                                                                                      | **Proves Feynman's conjecture with explicit product-formula construction and complexity bounds** |
 | [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes\|Abrams-Lloyd (1999)]] | QPE for eigenvalue extraction from simulated systems                                             |
-| [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes\|Aharonov-Ta-Shma (2003)]]                       | First sparse Hamiltonian simulation with explicit gate counts                                    |
+| [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes\|Aharonov-Ta-Shma (2003)]]                       | First sparse [[Hamiltonian simulation]] with explicit gate counts                                    |
 | [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes\|Berry et al. (2005)]]                   | Higher-order Suzuki formulas, improved $\varepsilon$-dependence                                  |
 | [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes\|Childs et al. (2019)]]                                                          | Tight Trotter error bounds via nested commutators                                                |
 
@@ -104,14 +104,14 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 
 - **Feynman (1982)** — the original conjecture that quantum computers could simulate quantum systems. Int. J. Theor. Phys. 21, 467.
 - **Benioff (1980)** — first quantum computer model. J. Stat. Phys. 22, 563.
-- **Deutsch (1985)** — universal quantum computer. Proc. R. Soc. London A 400, 97.
-- **Shor (1994)** — factoring algorithm. Motivates the discussion of simulation being a *different* application of quantum computers, one that's easier to implement.
+- **[[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]]** — universal quantum computer. Proc. R. Soc. London A 400, 97.
+- **[[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]]** — factoring algorithm. Motivates the discussion of simulation being a *different* application of quantum computers, one that's easier to implement.
 - **Lloyd (1993, 1995)** — quantum cellular automata [13] and Lie-algebraic universality of gates [20]. Direct precursors.
 - **Deutsch-Barenco-Ekert (1995)** — independent universality proof [21].
 - **Cirac-Zoller (1995)** — ion-trap quantum computer proposal [22]. Lloyd specifically suggests this as a near-term platform for quantum simulation.
 - **Monroe et al. (1995)** — first experimental two-qubit gate (ion trap) [24].
 - **Kraus (1983)** — the Kraus representation theorem used for open-system simulation [39].
-- **Suzuki** — not explicitly cited, but higher-order product formulas are discussed. Later work by [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry et al. (2005)]] develops this.
+- **Suzuki** — not explicitly cited, but higher-order [[product formula]]s are discussed. Later work by [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry et al. (2005)]] develops this.
 
 ## Cross-links
 
@@ -119,8 +119,8 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — direct follow-up: handles fermionic statistics, antisymmetrization, Hubbard model
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — extends product-formula simulation to sparse Hamiltonians with higher-order Suzuki formulas
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — provides the tight error analysis that Lloyd's first-order bounds were missing
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves optimal precision scaling, far beyond product formulas
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — unifying framework that subsumes product formulas
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves optimal precision scaling, far beyond [[product formula]]s
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — unifying framework that subsumes [[product formula]]s
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — builds on simulation to extract eigenvalues via QPE
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — first explicit sparse simulation construction
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — randomised approach to the same product-formula framework

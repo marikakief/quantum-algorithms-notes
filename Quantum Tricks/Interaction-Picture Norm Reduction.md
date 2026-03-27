@@ -1,4 +1,3 @@
-# Interaction-Picture Norm Reduction
 
 > **Source:** Guang Hao Low and Nathan Wiebe, *Hamiltonian Simulation in the Interaction Picture*, arXiv:1805.00675  
 > **Tags:** #trick #interaction-picture #hamiltonian-simulation

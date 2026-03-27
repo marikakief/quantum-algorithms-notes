@@ -1,4 +1,3 @@
-# Energy-Balanced Encoding for Classical-to-Quantum Reduction
 
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, arXiv:2303.13012
 > **Tags:** #trick #encoding #classical-to-quantum #Hamiltonian-simulation #coupled-oscillators #energy-conservation

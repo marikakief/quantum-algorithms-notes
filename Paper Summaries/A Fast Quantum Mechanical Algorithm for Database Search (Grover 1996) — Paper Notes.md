@@ -143,7 +143,7 @@ The paper's real contribution is the *technique* — the two-reflection rotation
 
 - Benioff (1980) — early proposal for quantum computation
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] — formalization of quantum computation, the Deutsch problem
-- Bernstein & Vazirani (1993) — quantum complexity classes, BQP
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — quantum complexity classes, BQP
 - Yao (1993) — quantum circuit model
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — polynomial-time factoring, the result that made the field
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — exponential quantum speedup for Simon's problem, key influence

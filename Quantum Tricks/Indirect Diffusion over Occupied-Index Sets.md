@@ -1,4 +1,3 @@
-# Indirect Diffusion over Occupied-Index Sets
 
 > **Tags:** #trick #subspace-methods #fermions #block-encoding
 > **Source:** arXiv:2510.08644

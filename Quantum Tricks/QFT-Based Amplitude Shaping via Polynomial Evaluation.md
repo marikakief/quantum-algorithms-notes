@@ -1,4 +1,3 @@
-# QFT-Based Amplitude Shaping via Polynomial Evaluation
 
 > **Source:** Jordan, Shutty, Wootters, Zalcman, Schmidhuber, King, Isakov, Khattar, Babbush, arXiv:2408.08292
 > **Tags:** #trick #quantum-optimization #QFT #amplitude-shaping #state-preparation #DQI

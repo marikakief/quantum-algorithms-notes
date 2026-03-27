@@ -1,4 +1,3 @@
-# Lie-Algebraic Universality from Local Interactions
 
 > **Source:** Lloyd, Science 273(5278), 1073–1078 (1996); Lloyd, PRL 75, 346 (1995); Deutsch-Barenco-Ekert, Proc. R. Soc. A 449, 669 (1995)
 > **Tags:** #trick #universality #lie-algebra #quantum-control

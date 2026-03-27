@@ -1,4 +1,3 @@
-# 2-RDM Physicality Restoration by PSD Projection
 
 > **Source:** Rubin, Babbush, McClean, arXiv:1801.03524, New J. Phys. 20, 053020 (2018)
 > **Tags:** #trick #error-mitigation #RDM #n-representability #noise #quantum-chemistry #PSD-projection

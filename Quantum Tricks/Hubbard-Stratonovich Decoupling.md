@@ -1,4 +1,3 @@
-# Hubbard-Stratonovich Decoupling
 
 > **Source:** Used in Rolando D. Somma, Guang Hao Low, Dominic W. Berry, and Ryan Babbush, *Quantum algorithm for linear matrix equations*, arXiv:2508.02822  
 > **Links:** [arXiv](https://arxiv.org/abs/2508.02822)  

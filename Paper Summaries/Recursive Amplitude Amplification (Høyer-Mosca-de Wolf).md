@@ -1,5 +1,3 @@
-# Recursive Amplitude Amplification (Høyer-Mosca-de Wolf)
-
 > **🚧 STUB** — referenced in Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) notes.
 
 ---

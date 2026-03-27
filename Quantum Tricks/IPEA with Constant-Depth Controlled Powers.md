@@ -1,4 +1,3 @@
-# IPEA with Constant-Depth Controlled Powers
 
 > **Source:** Lanyon, Whitfield, Aspuru-Guzik, White et al., Nature Chemistry 2, 106 (2010); arXiv:0905.0887
 > **Tags:** #trick #phase-estimation #quantum-chemistry #circuit-depth

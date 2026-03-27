@@ -1,4 +1,3 @@
-# Variational Error Suppression
 
 > **Source:** McClean, Romero, Babbush & Aspuru-Guzik, arXiv:1509.04279
 > **Tags:** #trick #VQE #error-mitigation #NISQ #variational

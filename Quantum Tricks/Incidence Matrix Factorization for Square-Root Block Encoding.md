@@ -1,4 +1,3 @@
-# Incidence Matrix Factorization for Square-Root Block Encoding
 
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, arXiv:2303.13012
 > **Tags:** #trick #block-encoding #graph-Laplacian #incidence-matrix #Hamiltonian-simulation #square-root

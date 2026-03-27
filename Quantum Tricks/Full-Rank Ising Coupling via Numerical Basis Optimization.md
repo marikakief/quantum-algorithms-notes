@@ -1,4 +1,3 @@
-# Full-Rank Ising Coupling via Numerical Basis Optimization
 
 > **Source:** Rubin, Lee, Babbush, arXiv:2109.05010 (2021)
 > **Tags:** #trick #operator-decomposition #circuit-compilation #information-density

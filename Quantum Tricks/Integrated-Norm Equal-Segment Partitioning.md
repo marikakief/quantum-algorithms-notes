@@ -1,4 +1,3 @@
-# Integrated-Norm Equal-Segment Partitioning
 
 > **Tags:** #trick #time-dependent #segmentation #error-budget
 > **Source:** arXiv:1906.07115, Theorem 7'

@@ -1,4 +1,3 @@
-# AQC-to-QAOA Parameter Transfer
 
 > **Source:** Dong An and Lin Lin, arXiv:1909.05500
 > **Tags:** #trick #QAOA #adiabatic #variational #warm-start

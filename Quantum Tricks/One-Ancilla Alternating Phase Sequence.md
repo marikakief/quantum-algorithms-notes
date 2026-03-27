@@ -1,4 +1,3 @@
-# One-Ancilla Alternating Phase Sequence
 
 > **Tags:** #trick #QSP #implementation #low-ancilla
 > **Source:** Gilyén et al. arXiv:1806.01838

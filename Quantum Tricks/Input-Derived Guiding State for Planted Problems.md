@@ -1,4 +1,3 @@
-# Input-Derived Guiding State for Planted Problems
 
 > **Source:** Schmidhuber, O'Donnell, Kothari, Babbush, arXiv:2406.19378
 > **Tags:** #trick #guiding-state #planted-inference #amplitude-amplification #overlap #state-preparation

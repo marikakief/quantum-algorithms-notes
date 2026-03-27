@@ -1,4 +1,3 @@
-# Gearbox Circuit for Angle Squaring
 
 > **Source:** Wiebe, Kliuchnikov, arXiv:1305.5528
 > **Tags:** #trick #gate-synthesis #repeat-until-success #T-count #Clifford-T

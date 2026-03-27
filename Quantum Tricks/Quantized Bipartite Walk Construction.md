@@ -1,4 +1,3 @@
-# Quantized Bipartite Walk Construction
 
 > **Source:** Szegedy, FOCS 2004
 > **Tags:** #trick #quantum-walk #markov-chain #fundamental

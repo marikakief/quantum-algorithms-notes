@@ -1,4 +1,3 @@
-# Fractional Coloring of Commutation Graphs
 
 > **Source:** King, Gosset, Kothari, Babbush, arXiv:2404.19211
 > **Tags:** #trick #graph-coloring #shadow-tomography #measurement-grouping #Pauli-learning #commutation-graph

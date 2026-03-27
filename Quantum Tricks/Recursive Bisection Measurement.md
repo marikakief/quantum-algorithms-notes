@@ -1,4 +1,3 @@
-# Recursive Bisection Measurement
 
 > **Source:** Berry, Cleve, Gharibian, arXiv:1211.4637
 > **Tags:** #trick #measurement #compression #query-complexity

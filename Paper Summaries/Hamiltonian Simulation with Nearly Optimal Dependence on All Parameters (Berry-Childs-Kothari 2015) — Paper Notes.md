@@ -1,4 +1,4 @@
-> **Source:** Dominic W. Berry, Andrew M. Childs, Robin Kothari, *Hamiltonian simulation with nearly optimal dependence on all parameters*, Proc. 56th IEEE FOCS, pp. 792–809 (2015). arXiv:1501.01715
+> **Source:** Dominic W. Berry, Andrew M. Childs, Robin Kothari, *[[Hamiltonian simulation]] with nearly optimal dependence on all parameters*, Proc. 56th IEEE FOCS, pp. 792–809 (2015). arXiv:1501.01715
 > **Links:** [arXiv](https://arxiv.org/abs/1501.01715) · [FOCS](https://doi.org/10.1109/FOCS.2015.54)
 > **Tags:** #hamiltonian-simulation #quantum-walk #bessel-functions #LCU #lower-bounds
 
@@ -20,7 +20,7 @@ The paper also proves a new $\Omega(\tau)$ lower bound, showing the linear depen
 
 ### The problem
 
-The Szegedy quantum walk operator $U$ for a $d$-sparse Hamiltonian $H$ has eigenvalues $\mu_\pm = \pm e^{\pm i \arcsin(\lambda/Xd)}$ corresponding to eigenvalue $\lambda$ of $H$. For Hamiltonian simulation, you want the phase $e^{-i\lambda t}$, but you get $e^{\pm i\arcsin(\lambda/Xd)}$ — a nonlinear function.
+The Szegedy quantum walk operator $U$ for a $d$-sparse Hamiltonian $H$ has eigenvalues $\mu_\pm = \pm e^{\pm i \arcsin(\lambda/Xd)}$ corresponding to eigenvalue $\lambda$ of $H$. For [[Hamiltonian simulation]], you want the phase $e^{-i\lambda t}$, but you get $e^{\pm i\arcsin(\lambda/Xd)}$ — a nonlinear function.
 
 Previous approaches [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|(Berry-Childs 2012)]] used phase estimation to correct this, giving $O(1/\sqrt{\varepsilon})$ precision dependence. The [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes|BCCKS STOC 2014]] approach decomposed $H$ into self-inverse terms (costing an extra factor of $d$) to avoid the walk entirely.
 
@@ -130,7 +130,7 @@ where $Z = PWP = \frac{1}{s}(|\varsigma\rangle\langle\varsigma| \otimes \tilde{V
 
 ## Why this matters
 
-This paper completed the quest for near-optimal Hamiltonian simulation in all parameters simultaneously. The BCS 2013 / BCCKS 2014 line had optimal $\varepsilon$-dependence but quadratic $d$-dependence. The walk approach had linear $d$ but poor $\varepsilon$. This paper married the two via a beautiful application of Bessel functions.
+This paper completed the quest for near-optimal [[Hamiltonian simulation]] in all parameters simultaneously. The BCS 2013 / BCCKS 2014 line had optimal $\varepsilon$-dependence but quadratic $d$-dependence. The walk approach had linear $d$ but poor $\varepsilon$. This paper married the two via a beautiful application of Bessel functions.
 
 The Bessel-LCU approach also connects to the broader principle that LCU can implement *any* desired function of a walk operator's eigenvalues — the generating function just provides the right coefficients. [[QSVT Meta-Template|QSVT]] later formalised this principle completely, but the Bessel construction here was an early and striking example.
 

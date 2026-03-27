@@ -1,4 +1,3 @@
-# Quantum-Walk Realization of Chebyshev Matrix Polynomials
 
 > **Source:** arXiv:1511.02306 (Childs, Kothari, Somma)  
 > **Tags:** #trick #quantum-walk #chebyshev #block-encoding
@@ -13,7 +12,7 @@ For a sparse Hermitian matrix $A$ with spectral norm bounded by 1, there is a st
 
 The key fact: if you can apply $W$ and its inverse, then applying $W^n$ on the relevant subspace implements an action related to $T_n(A)$, where $T_n$ is the Chebyshev polynomial of degree $n$. Specifically, $W^n$ acts on the walk space in a way that projects down to $T_n(A/\|A\|)$ on the original register.
 
-This means: you can implement any polynomial of $A$ with degree $n$ by making $O(n)$ queries to the walk oracle, rather than $O(n)$ applications of $e^{iAt}$ (which would require Hamiltonian simulation). In the sparse-access model, the walk oracle is essentially as cheap as two oracle queries to $A$.
+This means: you can implement any polynomial of $A$ with degree $n$ by making $O(n)$ queries to the walk oracle, rather than $O(n)$ applications of $e^{iAt}$ (which would require [[Hamiltonian simulation]]). In the sparse-access model, the walk oracle is essentially as cheap as two oracle queries to $A$.
 
 ## Why Chebyshev and not just Taylor?
 

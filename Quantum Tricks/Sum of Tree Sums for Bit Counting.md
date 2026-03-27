@@ -1,4 +1,3 @@
-# Sum of Tree Sums for Bit Counting
 
 > **Source:** Technique from Kivlichan, Gidney, Berry et al. (2020); compiled with improvements in Sanders, Berry et al., arXiv:2007.07391
 > **Tags:** #trick #arithmetic #reversible-computation #ancilla-reduction

@@ -1,4 +1,3 @@
-# QSVT Sign-Function Discriminator
 
 > **Source:** Martyn, Rossi, Tan & Chuang, *Grand Unification of Quantum Algorithms*, PRX Quantum **2**, 040203 (2021) — Sections V.A, V.B, V.C. Also [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. 2019]].
 > **Tags:** #trick #QSVT #sign-function #amplitude-amplification #phase-estimation #search

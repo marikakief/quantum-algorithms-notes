@@ -1,4 +1,3 @@
-# Phragmén–Lindelöf Decay Barrier for Analytic Kernels
 
 > **Source:** An, Childs, Lin, arXiv:2312.03916 (Proposition 8)
 > **Tags:** #trick #impossibility #Hardy-space #LCHS #complex-analysis

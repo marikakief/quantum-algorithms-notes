@@ -1,4 +1,3 @@
-# Payoff Encoding via Ancilla Rotation
 
 > **Source:** Rebentrost-Gupt-Bromley, arXiv:1805.00109; technique appears broadly in quantum Monte Carlo literature (Brassard-Høyer-Mosca-Tapp 2002, Montanaro 2015)
 > **Tags:** #trick #amplitude-estimation #monte-carlo #function-encoding

@@ -1,4 +1,3 @@
-# Extensive vs Intensive Error Targeting
 
 > **Source:** Kivlichan, Gidney, Babbush et al., arXiv:1902.10673, Quantum **4**, 296 (2020)
 > **Tags:** #trick #error-analysis #resource-estimation #Trotter #qubitization #condensed-phase #fault-tolerant

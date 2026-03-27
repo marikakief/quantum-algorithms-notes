@@ -1,4 +1,3 @@
-# Carleman Vector Rescaling for Measurement Probability Boost
 
 > **Source:** Costa, Schleich, Morales, Berry, arXiv:2312.09518 (Definition 1, Lemma 2)
 > **Tags:** #trick #Carleman-linearisation #rescaling #amplitude-amplification #measurement-probability

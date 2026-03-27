@@ -1,4 +1,3 @@
-# High-Order Finite Difference Kinetic Energy
 
 > **Source:** Kivlichan, Wiebe, Babbush, Aspuru-Guzik, arXiv:1608.05696 (2017)
 > **Tags:** #trick #finite-difference #kinetic-energy #LCU #real-space #bounded-LCU-norm

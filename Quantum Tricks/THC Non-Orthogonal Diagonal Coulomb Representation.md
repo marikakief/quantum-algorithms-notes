@@ -1,4 +1,3 @@
-# THC Non-Orthogonal Diagonal Coulomb Representation
 
 > **Source:** Lee, Berry, Gidney, Huggins, McClean, Wiebe, Babbush, arXiv:2011.03494
 > **Tags:** #trick #tensor-hypercontraction #block-encoding #quantum-chemistry #Coulomb-operator #non-orthogonal-basis

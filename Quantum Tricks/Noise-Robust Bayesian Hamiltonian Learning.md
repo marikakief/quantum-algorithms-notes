@@ -1,4 +1,3 @@
-# Noise-Robust Bayesian Hamiltonian Learning
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1311.5269 (PRA 89, 042314, 2014)
 > **Tags:** #trick #hamiltonian-learning #noise-robustness #depolarizing #Bayesian-inference #IQLE

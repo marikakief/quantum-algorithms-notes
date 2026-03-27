@@ -1,4 +1,3 @@
-# Dyson Block-Encoding for Time-Dependent Linear Systems
 
 > **Source:** Berry and Costa, arXiv:2212.03544
 > **Tags:** #trick #dyson-series #block-encoding #ODE #linear-systems

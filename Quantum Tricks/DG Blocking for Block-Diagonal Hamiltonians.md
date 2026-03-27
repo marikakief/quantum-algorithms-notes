@@ -1,4 +1,3 @@
-# DG Blocking for Block-Diagonal Hamiltonians
 
 > **Source:** McClean, Faulstich, Zhu, O'Gorman, Qiu, White, Babbush, Lin, arXiv:1909.00028
 > **Tags:** #trick #basis-set #block-diagonal #SVD #Hamiltonian-reduction #quantum-chemistry

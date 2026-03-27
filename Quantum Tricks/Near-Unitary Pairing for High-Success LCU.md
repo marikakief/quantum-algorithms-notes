@@ -1,4 +1,3 @@
-# Near-Unitary Pairing for High-Success LCU
 
 > **Tags:** #trick #LCU #success-probability #design-pattern
 > **Source:** Childs–Wiebe arXiv:1202.5822

@@ -1,4 +1,3 @@
-# Term-by-Term Expectation Estimation
 
 > **Source:** Knill, Ortiz & Somma, PRA 75, 012328 (2007)
 > **Tags:** #trick #measurement #expectation-value #NISQ

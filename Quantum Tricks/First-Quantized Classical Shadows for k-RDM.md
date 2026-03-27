@@ -1,4 +1,3 @@
-# First-Quantized Classical Shadows for k-RDM
 
 > **Source:** Babbush, Huggins, Berry et al., arXiv:2301.01203 (2023)
 > **Tags:** #trick #classical-shadows #first-quantized #RDM #measurement #quantum-chemistry

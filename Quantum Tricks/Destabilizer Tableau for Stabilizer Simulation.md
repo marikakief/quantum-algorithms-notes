@@ -1,4 +1,3 @@
-# Destabilizer Tableau for Stabilizer Simulation
 
 > **Source:** Aaronson & Gottesman, arXiv:quant-ph/0406196 (2004)
 > **Tags:** #trick #stabilizer #tableau #classical-simulation #clifford

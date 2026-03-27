@@ -1,6 +1,4 @@
-# Interaction Picture Simulation (Kinetic Frame)
-
-> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe, Quantum (2019), arXiv:1805.00675
+> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe, [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Quantum (2019)]], arXiv:1805.00675
 > **Tags:** #trick #interaction-picture #LCU #Hamiltonian-simulation #first-quantized #sublinear #Dyson-series
 
 ## What it does
@@ -42,7 +40,7 @@ So $\|T\|/\lambda_{U+V} = O(N^{1/3}/\eta^2)$ — kinetic energy dominates by a p
 - Total gate cost: $\widetilde{O}(\lambda_B t \cdot (\eta \log^2 N)) = \widetilde{O}(\eta^{8/3} N^{1/3} t)$
 - The $\|T\|$ contribution appears only as a $\log$ factor
 
-**Contrast with Low & Wiebe (2018):** That paper applied the interaction picture to *second-quantized* plane-wave chemistry, choosing $A = U+V$ (potential, large in second quantization) and $B = T$ (kinetic, small relative to potential in second quantization). The physics is reversed in first quantization, which is why this paper gets a better scaling.
+**Contrast with [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2018)]]:** That paper applied the interaction picture to *second-quantized* plane-wave chemistry, choosing $A = U+V$ (potential, large in second quantization) and $B = T$ (kinetic, small relative to potential in second quantization). The physics is reversed in first quantization, which is why this paper gets a better scaling.
 
 **Implementation of $e^{-iA\tau} = e^{-iT\tau}$:**
 

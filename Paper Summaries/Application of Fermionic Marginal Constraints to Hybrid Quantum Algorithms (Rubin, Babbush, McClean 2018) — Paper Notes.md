@@ -186,7 +186,7 @@ Prior work on hybrid algorithms (McClean et al. 2016, O'Malley et al. 2016) used
 
 Key citations:
 
-- **Peruzzo et al. (2014)** — original VQE proposal; referenced as motivation. No vault note yet.
+- **[[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]]** — original VQE proposal; referenced as motivation. No vault note yet.
 - **McClean, Romero, Babbush, Aspuru-Guzik (2016)** — derives the VQE framework including Pauli decomposition and suggests $M_\ell \propto |w_\ell|$ allocation without proving optimality. No vault note yet.
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — first hardware VQE demonstration; uses the $M_\ell \propto |w_\ell|$ heuristic; this paper proves it optimal.
 - [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — concurrent work from largely the same group; focuses on ansatz design rather than measurement.

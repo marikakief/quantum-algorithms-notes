@@ -1,4 +1,3 @@
-# Quantum-Aided Compressed Sensing for Sparse State Readout
 
 > **Source:** Wiebe, Braun, Lloyd, arXiv:1204.5242 (2012)
 > **Tags:** #trick #tomography #compressed-sensing #quantum-ML #sparse #readout

@@ -1,4 +1,3 @@
-# Gaussian Wave Packet Variance Tuning for Observable Estimation
 
 > **Source:** Rubin, Berry, Kononov, Malone, Khattar, White, Lee, Neven, Babbush, Baczewski, arXiv:2308.12352
 > **Tags:** #trick #state-preparation #observable-estimation #dynamics #non-Born-Oppenheimer #sampling
@@ -9,7 +8,7 @@ Controls the tradeoff between physical accuracy and measurement efficiency when 
 
 ## The trick
 
-When promoting a classical nucleus to a quantum degree of freedom (e.g., to avoid time-dependent Hamiltonian simulation), initialize it as a Gaussian wave packet in momentum space:
+When promoting a classical nucleus to a quantum degree of freedom (e.g., to avoid time-dependent [[Hamiltonian simulation]]), initialize it as a Gaussian wave packet in momentum space:
 
 $$\psi_{\text{proj}}(k, t=0) \propto e^{ik \cdot R_{\text{proj}}} e^{-\|k - k_{\text{proj}}\|^2 / 4\sigma_k^2}$$
 

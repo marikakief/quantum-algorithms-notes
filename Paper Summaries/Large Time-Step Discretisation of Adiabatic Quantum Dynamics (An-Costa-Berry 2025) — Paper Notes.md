@@ -8,7 +8,7 @@
 
 **Eigenstate preparation via digital adiabatic quantum computing.** Given Hamiltonians $H_0$ (easy) and $H_1$ (target), with $H(s) = (1-f(s))H_0 + f(s)H_1$, prepare the eigenstate of $H_1$ connected to a known eigenstate of $H_0$ by adiabatic evolution along the eigenpath of $H(s)$.
 
-The question: how large can the time step $h$ be when simulating the adiabatic dynamics digitally via product formulas or exponential integrators, and what is the overall query complexity?
+The question: how large can the time step $h$ be when simulating the adiabatic dynamics digitally via [[product formula]]s or exponential integrators, and what is the overall query complexity?
 
 ---
 
@@ -41,16 +41,16 @@ The second observation: the Hamiltonian $H(t/T)$ already varies on the slow time
 **First-order exponential integrator:**
 $$U_{\exp}(t+h, t) = e^{-ihH(t/T)}$$
 
-**Simplified $p$-th order product formula:**
+**Simplified $p$-th order [[product formula]]:**
 $$U_{\text{spf},p}(t+h, t) = \prod_{k=0}^{K_p} e^{-i\beta_{p,k} h f(t/T) H_1} \, e^{-i\alpha_{p,k} h (1-f(t/T)) H_0}$$
 
 The "simplified" version evaluates all scheduling functions at the same time $t/T$ rather than at staggered points within the step. This matters because it makes the walk operator a function of a single parameter $s = t/T$, fitting cleanly into the [[Discrete Adiabatic Theorem for Quantum Walks|discrete adiabatic theorem]] framework.
 
-### Gap matching for product formulas
+### Gap matching for [[product formula]]s
 
 For the exponential integrator with $h \leq 1/\alpha$ (where $\alpha = \|H_0\| + \|H_1\|$), the gap of $e^{-ihH(s)}$ equals the gap of $hH(s)$ — inherited directly from the Hamiltonian.
 
-For product formulas, it's harder. The eigenvalues of $e^{-ihf(s)H_1}e^{-ih(1-f(s))H_0}$ are not trivially related to those of $H(s)$ at large $h$. The paper's strategy: reduce $h$ until the [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter error bound]] guarantees the product walk operator is close enough to $e^{-ihH(s)}$ to inherit its gap. The step size needed is:
+For [[product formula]]s, it's harder. The eigenvalues of $e^{-ihf(s)H_1}e^{-ih(1-f(s))H_0}$ are not trivially related to those of $H(s)$ at large $h$. The paper's strategy: reduce $h$ until the [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter error bound]] guarantees the product walk operator is close enough to $e^{-ihH(s)}$ to inherit its gap. The step size needed is:
 
 $$h = O\!\left(\min\!\left\{\frac{1}{\alpha}, \frac{\Delta_*^{1/p}}{\tilde{\alpha}_p^{1/p}}\right\}\right)$$
 
@@ -92,7 +92,7 @@ $$T_d = O\!\left(\frac{\alpha^3}{\Delta_*^3 \varepsilon}\right)$$
 
 Compare standard analysis: $T_d = O(\alpha^3 \Delta_*^{-3} \varepsilon^{-2})$. The improvement is a full factor of $1/\varepsilon$.
 
-**Theorem (Corollary 8 — first/second-order product formula):** Same $T$, with step size:
+**Theorem (Corollary 8 — first/second-order [[product formula]]):** Same $T$, with step size:
 
 $$h = \min\!\left\{\frac{1}{\alpha},\; \sqrt{\frac{95}{2}} \sqrt{\frac{\Delta_*}{2\|[H_1,[H_1,H_0]]\| + \|[H_0,[H_0,H_1]]\|}}\right\}$$
 
@@ -100,7 +100,7 @@ Total steps:
 
 $$T_d = O\!\left(\frac{\alpha^3}{\Delta_*^3 \varepsilon} \max\!\left\{1, \sqrt{\frac{2\|[H_1,[H_1,H_0]]\| + \|[H_0,[H_0,H_1]]\|}{\Delta_* \alpha^2}}\right\}\right)$$
 
-**Theorem (Corollary 9 — $p$-th order simplified product formula):** For any $p \geq 1$:
+**Theorem (Corollary 9 — $p$-th order simplified [[product formula]]):** For any $p \geq 1$:
 
 $$T_d = O\!\left(\frac{\alpha^3}{\Delta_*^3 \varepsilon} \max\!\left\{1, \frac{\tilde{\alpha}_p^{1/p}}{\Delta_*^{1/p} \alpha}\right\}\right)$$
 
@@ -132,7 +132,7 @@ $$T_d = O(1/\varepsilon^{1/k}) \quad \text{for any } k \geq 1$$
 | **This paper** + BCC | $O(1)$ | $O(1/\varepsilon^{o(1)})$ (conditional) | Theorems 11, 12 |
 
 Key improvements over Yi (2021) and Kovalsky et al. (2023):
-1. Works for any-order product formulas, not just first-order Trotter
+1. Works for any-order [[product formula]]s, not just first-order Trotter
 2. Under boundary cancellation, achieves exponential convergence (they only show linear)
 3. Reveals the discrete adiabatic perspective — Trotter can succeed for gapless $H(s)$
 
@@ -144,11 +144,11 @@ Key improvements over Yi (2021) and Kovalsky et al. (2023):
 
 - **The gap of product walk operators is not well-understood at large $h$.** For the exponential integrator, the gap relation is clean ($h \leq 1/\alpha$ guarantees it). For Trotter at large step sizes, the walk operator gap can differ wildly from the Hamiltonian gap — the paper shows examples in both directions. The "Trotter opens gaps" phenomenon is demonstrated on a 4D toy model only; no natural applications are known yet.
 
-- **Simplified product formulas only.** The higher-order results (Corollary 9) use simplified formulas where all scheduling evaluations share the same time point. The full higher-order Trotter-Suzuki formula with staggered evaluations isn't directly covered — that would require a discrete adiabatic theorem for non-autonomous sequences, which doesn't exist.
+- **Simplified [[product formula]]s only.** The higher-order results (Corollary 9) use simplified formulas where all scheduling evaluations share the same time point. The full higher-order Trotter-Suzuki formula with staggered evaluations isn't directly covered — that would require a discrete adiabatic theorem for non-autonomous sequences, which doesn't exist.
 
 - **The $\Delta_*^{-3}$ gap dependence.** All results (without gap-adapted scheduling) have cubic gap dependence, inherited from the [[Discrete Adiabatic Theorem for Quantum Walks|discrete adiabatic theorem]]. This is improvable to linear for specific problems using [[Gap-Adapted Adiabatic Scheduling|gap-adapted schedules]] (Section VI demonstrates this for Grover), but the general framework doesn't achieve it.
 
-- **Implementation overhead.** The exponential integrator requires a block encoding of $H(s)$ and QSVT to implement $e^{-ihH(s)}$, adding $O(\log(1/\varepsilon'))$ overhead per step. The product formula approach doesn't need this — just exponentials of $H_0$ and $H_1$ separately — which is one of its practical advantages.
+- **Implementation overhead.** The exponential integrator requires a block encoding of $H(s)$ and QSVT to implement $e^{-ihH(s)}$, adding $O(\log(1/\varepsilon'))$ overhead per step. The [[product formula]] approach doesn't need this — just exponentials of $H_0$ and $H_1$ separately — which is one of its practical advantages.
 
 ---
 
@@ -167,7 +167,7 @@ Key improvements over Yi (2021) and Kovalsky et al. (2023):
 ## References within this paper
 
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa, An, Sanders, Su, Babbush, Berry (2022)]]: Source of the [[Discrete Adiabatic Theorem for Quantum Walks|discrete adiabatic theorem]] with explicit gap dependence — the main technical tool of this paper.
-- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]]: Nested commutator Trotter error bounds — used for gap matching in higher-order product formulas.
+- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]]: Nested commutator Trotter error bounds — used for gap matching in higher-order [[product formula]]s.
 - [[Quantum Search by Local Adiabatic Evolution (Roland-Cerf 2002) — Paper Notes|Roland and Cerf (2002)]]: Local adiabatic scheduling for Grover search ($p = 2$). This paper generalises to $1 \leq p < 2$.
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes|An and Lin (2019)]]: Scheduling function for QLSP via AQC; the "glue function" scheduling (Eq. 82) originates here.
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes|Farhi, Goldstone, Gutmann (2014)]]: QAOA formulation. This paper shows discrete AQC produces QAOA angles matching optimal query complexity for Grover search.
@@ -175,7 +175,7 @@ Key improvements over Yi (2021) and Kovalsky et al. (2023):
 - Yi (2021), Phys. Rev. A 104, 052603: Showed robustness of Trotterised AQC via effective Hamiltonian approach. This paper extends to all orders and boundary cancellation.
 - Kovalsky et al. (2023), PRL 131, 060602: Related first-order-Trotter-specific result. This paper is strictly more general.
 - Jansen, Ruskai, Seiler (2007): Continuous adiabatic theorem with explicit gap dependence.
-- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer, Sanders (2010)]]: Higher-order product formulas for time-dependent Hamiltonians — the standard analysis this paper improves upon.
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer, Sanders (2010)]]: Higher-order [[product formula]]s for time-dependent Hamiltonians — the standard analysis this paper improves upon.
 - [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes|Morales, Costa, Pantaleoni, Burgarth, Sanders, Berry (2025)]]: Improved product formulas — the simplified versions used here.
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová, Scherer, Berry (2019)]]: Dyson series for time-dependent simulation — an alternative approach this paper implicitly competes with.
 - Dalzell, Yoder, Chuang (2017): Fixed-point adiabatic search with boundary cancellation — the paper builds on and improves their Grover search results.
@@ -192,8 +192,8 @@ Key improvements over Yi (2021) and Kovalsky et al. (2023):
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — gap-adapted scheduling and AQC-QAOA connection; "glue function" scheduling used here
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes]] — QAOA formulation; shown to be asymptotically matched by discrete AQC for Grover
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — the search lower bound this paper matches
-- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — standard higher-order product formula analysis that is improved here
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — the simplified product formulas used in this analysis
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — standard higher-order [[product formula]] analysis that is improved here
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — the simplified [[product formula]]s used in this analysis
 - [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes]] — coherent adiabatic error cancellation; different approach to the boundary-term problem this paper addresses via boundary cancellation
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — AQC-circuit equivalence
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — the HHL starting point for the broader QLSP lineage that this Costa-An-Berry thread ultimately improves

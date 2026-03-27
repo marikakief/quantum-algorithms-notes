@@ -1,4 +1,3 @@
-# Bravyi-Kitaev Transformation
 
 > **Source:** Bravyi & Kitaev, Ann. Phys. 298, 210 (2002); Seeley, Richard & Love, JCP 137, 224109 (2012); Tranter et al., Int. J. Quant. Chem. 115, 1431 (2015)
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]

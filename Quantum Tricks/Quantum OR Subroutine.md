@@ -1,6 +1,5 @@
-# Quantum OR Subroutine
 
-> **Source:** Harrow, Lin & Montanaro (2017), fixing Aaronson (2006); used centrally in arXiv:1711.01053 (Aaronson, Shadow Tomography)
+> **Source:** Harrow, Lin & Montanaro (2017), fixing [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes|Aaronson (2006)]]; used centrally in arXiv:1711.01053 (Aaronson, Shadow Tomography)
 > **Tags:** #trick #shadow-tomography #quantum-or #hypothesis-testing #sample-complexity
 
 ## What it does

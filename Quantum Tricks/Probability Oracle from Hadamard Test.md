@@ -1,6 +1,5 @@
-# Probability Oracle from Hadamard Test
 
-> **Source:** Huggins, Wan, McClean, O'Brien, Wiebe, Babbush, arXiv:2111.09283 (construction); Kitaev (1995), Aharonov, Jones, Landau (2009) (Hadamard test)
+> **Source:** Huggins, Wan, McClean, O'Brien, Wiebe, Babbush, arXiv:2111.09283 (construction); [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]], Aharonov, Jones, Landau (2009) (Hadamard test)
 > **Tags:** #trick #Hadamard-test #oracle-construction #measurement #amplitude-encoding
 
 ## What it does

@@ -1,4 +1,3 @@
-# History-State Encoding with Unary Clock
 
 > **Source:** Kitaev (2002), adapted by Aharonov, van Dam, Kempe, Landau, Lloyd, Regev, arXiv:quant-ph/0405098
 > **Tags:** #trick #history-state #clock #encoding #fundamental

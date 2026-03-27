@@ -1,4 +1,3 @@
-# Qubitized Dyson Series for Phase Estimation
 
 > **Source:** Su, Berry, Wiebe, Rubin, Babbush, arXiv:2105.12767 (2021)
 > **Tags:** #trick #qubitization #Dyson-series #interaction-picture #phase-estimation #amplitude-amplification

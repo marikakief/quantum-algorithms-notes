@@ -6,10 +6,10 @@
 
 ## What the paper does
 
-The full, expanded version of the polylog-precision Hamiltonian simulation result. This is the paper where **oblivious amplitude amplification** was introduced, where the **lower bound** proving optimality of the $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ scaling was established, and where the entire framework was cleaned up relative to the initial [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] announcement.
+The full, expanded version of the polylog-precision [[Hamiltonian simulation]] result. This is the paper where **oblivious amplitude amplification** was introduced, where the **lower bound** proving optimality of the $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ scaling was established, and where the entire framework was cleaned up relative to the initial [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] announcement.
 
 **Main results:**
-1. $d$-sparse Hamiltonian simulation in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2\|H\|_{\max}t$
+1. $d$-sparse [[Hamiltonian simulation]] in $O(\tau \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon))$ queries, $\tau = d^2\|H\|_{\max}t$
 2. Simulation of continuous/fractional-query models with same scaling
 3. Matching lower bound: $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries are necessary
 4. Introduction of **oblivious amplitude amplification**
@@ -20,7 +20,7 @@ The algorithm still goes through the fractional-query model (unlike the later [[
 
 ## The computational problem
 
-**Sparse Hamiltonian simulation.** Same as BCS 2013, but now also covers:
+**Sparse [[Hamiltonian simulation]].** Same as BCS 2013, but now also covers:
 - **Continuous-query simulation (Theorem 1.3):** Simulate a $T$-query continuous-query algorithm using $O(T\log(T/\varepsilon)/\log\log(T/\varepsilon))$ discrete queries
 - **Lower bound (Theorem 1.2):** For any $\varepsilon > 0$, there exists a 2-sparse Hamiltonian requiring $\Omega(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ queries
 
@@ -70,9 +70,9 @@ With $\sin^2\theta = 1/4$ ($\theta = \pi/6$), one round ($\ell = 1$) gives $\sin
 
 **This eliminates the recursive fault correction** of BCS 2013. Instead of measuring, failing, and recursively recovering, OAA deterministically boosts the amplitude. The entire fault-correction apparatus disappears.
 
-### Step 5: Hamiltonian simulation reduction (Section 4)
+### Step 5: [[Hamiltonian simulation]] reduction (Section 4)
 
-Reduce sparse Hamiltonian simulation to the fractional-query model:
+Reduce sparse [[Hamiltonian simulation]] to the fractional-query model:
 
 1. Decompose $H$ into $d^2$ 1-sparse Hamiltonians (Lemma 4.4, with a bipartite trick that removes the $\log^* n$ factor)
 2. Decompose each 1-sparse Hamiltonian into $O(|G|_{\max}/\gamma)$ self-inverse unitaries with eigenvalues $\pm 1$ (Lemma 4.3)
@@ -136,7 +136,7 @@ Since computing parity of $N$ bits requires $\Omega(N)$ queries (even with unbou
 
 - **Still goes through fractional queries.** The algorithm structure is: Trotter → self-inverse decomposition → fractional-query gadgets → Hamming weight truncation → OAA. The [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]] showed all this machinery is unnecessary — just implement the Taylor series as an LCU.
 - **Self-inverse constraint persists.** The decomposition into eigenvalue-$\pm 1$ unitaries is unnatural and adds overhead.
-- **First-order Trotter.** The Lie product formula introduces polynomial overhead in the number of segments; only the compression makes the $\varepsilon$-dependence polylogarithmic.
+- **First-order Trotter.** The Lie [[product formula]] introduces polynomial overhead in the number of segments; only the compression makes the $\varepsilon$-dependence polylogarithmic.
 - **Not what you'd implement.** Historically important, but the Taylor series version (1412.4687) is strictly simpler with the same asymptotics.
 
 ---
@@ -147,7 +147,7 @@ Three contributions of lasting value:
 
 1. **OAA.** This single idea — amplitude amplification without knowing the input state — has become one of the most-used tools in quantum algorithms. It's the backbone of LCU-based simulation, block-encoding constructions, and (with the QSVT lens) essentially all modern quantum algorithms.
 
-2. **The lower bound.** Proving that $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ is tight settled the precision complexity of Hamiltonian simulation. The parity embedding technique is elegant and has been adapted for other lower bounds.
+2. **The lower bound.** Proving that $\log(1/\varepsilon)/\log\log(1/\varepsilon)$ is tight settled the precision complexity of [[Hamiltonian simulation]]. The parity embedding technique is elegant and has been adapted for other lower bounds.
 
 3. **The complete framework.** BCS 2013 sketched the result; this paper provided the full, rigorous, self-contained treatment that the community could build on.
 

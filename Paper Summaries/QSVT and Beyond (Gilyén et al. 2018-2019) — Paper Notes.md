@@ -9,7 +9,7 @@
 
 The core result: given a block-encoding of $A/\alpha$, choose a scalar function $f$ on the relevant singular-value interval, approximate it by a bounded polynomial $P$ with the right parity, then apply $P$ to the singular values of $A/\alpha$ via a QSP-style phase sequence. Algorithm design reduces to approximation theory plus encoding design.
 
-Before this, the toolkit felt fragmented — LCU for one thing, qubitization for another, amplitude amplification somewhere else, matrix inversion treated as a separate trick. QSVT subsumes all of these as polynomial-transform special cases. The paper explicitly shows this for optimal Hamiltonian simulation, Moore–Penrose pseudoinverse, fixed-point amplitude amplification, robust OAA, quantum walk results, and several quantum machine learning algorithms.
+Before this, the toolkit felt fragmented — LCU for one thing, qubitization for another, amplitude amplification somewhere else, matrix inversion treated as a separate trick. QSVT subsumes all of these as polynomial-transform special cases. The paper explicitly shows this for optimal [[Hamiltonian simulation]], Moore–Penrose pseudoinverse, fixed-point amplitude amplification, robust OAA, quantum walk results, and several quantum machine learning algorithms.
 
 It also proves a lower bound on the efficiency of singular value transformation, so the framework is tight in the relevant parameters.
 
@@ -50,7 +50,7 @@ The hard part of a QSVT paper is usually not the circuit construction — it's t
 
 ## References within this paper
 
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP for Hamiltonian simulation; QSVT generalizes this
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP for [[Hamiltonian simulation]]; QSVT generalizes this
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]] — qubitization framework that QSVT subsumes
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] as a special case of block-encoding
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL algorithm, shown to be a QSVT instance
@@ -71,7 +71,7 @@ The hard part of a QSVT paper is usually not the circuit construction — it's t
 - [[Hamiltonian Simulation - Comparison Tables]]
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]] — pedagogical tutorial built on this framework; good entry point for understanding the QSP→QET→QSVT chain
 - [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — fault-tolerant chemistry application of the block-encoding abstraction to arbitrary molecular orbital bases; QROAM-based PREPARE instantiates the standard-form encoding for $O(N^4)$-term Hamiltonians
-- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC-based qubitized chemistry; the [[Block-Encoding Composition Algebra]] rules govern composition of Givens rotation circuits with diagonal SELECT, and the overall algorithm is an optimal QSVT Hamiltonian simulation
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC-based qubitized chemistry; the [[Block-Encoding Composition Algebra]] rules govern composition of Givens rotation circuits with diagonal SELECT, and the overall algorithm is an optimal QSVT [[Hamiltonian simulation]]
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — asymmetric block-encoding variant (two different PREPARE oracles) for Gaussian-coupled Hamiltonians; fits the generalized standard-form encoding picture
-- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — extends QSP Hamiltonian simulation to GQSP, halving the query count; built on the block-encoding framework introduced here
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — extends QSP [[Hamiltonian simulation]] to GQSP, halving the query count; built on the block-encoding framework introduced here
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — one-shot coherent simulation via affine spectrum compression; resolves the parity obstruction that exists within the standard QSVT framework defined here

@@ -1,4 +1,3 @@
-# Coherent Metropolis Accept-Reject via Phase Estimation
 
 > **Source:** Temme, Osborne, Vollbrecht, Poulin, Verstraete, Nature 471, 87 (2011)
 > **Tags:** #trick #Metropolis #phase-estimation #Gibbs-state #thermal-state
@@ -34,7 +33,7 @@ The key insight: by revealing only one bit (accept/reject) rather than the full 
 One phase estimation circuit + one controlled rotation + one single-qubit measurement per step. Phase estimation dominates: $O(\text{poly}(n))$ for $n$-qubit system.
 
 ## Caveat
-Requires the ability to perform coherent phase estimation (i.e., Hamiltonian simulation for various times). Phase estimation errors propagate to the acceptance probabilities — finite precision $r$ introduces $O(\beta \cdot 2^{-r})$ error in the fixed point. The symmetry condition $d\mu(C) = d\mu(C^\dagger)$ on the proposal distribution is needed for detailed balance.
+Requires the ability to perform coherent phase estimation (i.e., [[Hamiltonian simulation]] for various times). Phase estimation errors propagate to the acceptance probabilities — finite precision $r$ introduces $O(\beta \cdot 2^{-r})$ error in the fixed point. The symmetry condition $d\mu(C) = d\mu(C^\dagger)$ on the proposal distribution is needed for detailed balance.
 
 ## Related notes
 - [[Quantum Metropolis Sampling (Temme-Osborne-Vollbrecht-Poulin-Verstraete 2011) — Paper Notes]]

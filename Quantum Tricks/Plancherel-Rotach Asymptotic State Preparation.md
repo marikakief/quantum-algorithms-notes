@@ -1,4 +1,3 @@
-# Plancherel-Rotach Asymptotic State Preparation
 
 > **Tags:** #trick #state-preparation #asymptotics #hermite
 > **Source:** arXiv:2510.04929 (Quantum Hermite Transform)

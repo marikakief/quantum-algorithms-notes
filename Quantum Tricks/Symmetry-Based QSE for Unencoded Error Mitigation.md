@@ -1,4 +1,3 @@
-# Symmetry-Based QSE for Unencoded Error Mitigation
 
 > **Source:** McClean, Jiang, Rubin, Babbush, Neven, arXiv:1903.05786
 > **Tags:** #trick #error-mitigation #subspace-expansion #symmetry-verification #NISQ #quantum-chemistry

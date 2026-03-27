@@ -1,4 +1,3 @@
-# Randomized Multi-Product Sampling
 
 **Source:** [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]]  
 **Tags:** #trick #hamiltonian-simulation #randomization #multi-product #importance-sampling
@@ -7,7 +6,7 @@
 
 ## The trick
 
-A multi-product formula (MPF) approximates $U(T)$ as a linear combination of product-formula unitaries:
+A multi-[[product formula]] (MPF) approximates $U(T)$ as a linear combination of product-formula unitaries:
 $$U(T) \approx \frac{1}{\Xi} \sum_q C_q V_q$$
 where $\Xi = \sum_q |C_q|$ and each $V_q = S_{2\chi}(T/\ell_q)^{\ell_q}$ is a standard Suzuki product formula at step count $\ell_q$.
 
@@ -45,7 +44,7 @@ The single ancilla qubit is used for the Hadamard test (controlled-$V_q$), not f
 
 ## Generality
 
-The trick extends beyond Hamiltonian simulation. For any task where you need $\mathrm{tr}(O \sum_q C_q U_q \rho U_q^\dagger)$ and each $U_q$ is easy to implement:
+The trick extends beyond [[Hamiltonian simulation]]. For any task where you need $\mathrm{tr}(O \sum_q C_q U_q \rho U_q^\dagger)$ and each $U_q$ is easy to implement:
 - form probabilities $p_q = |C_q|/\Xi$,
 - sample and rescale,
 - average.

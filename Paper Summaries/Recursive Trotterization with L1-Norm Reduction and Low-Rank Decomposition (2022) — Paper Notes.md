@@ -7,7 +7,7 @@
 
 ## What the paper does
 
-Addresses a bottleneck that the Trotter error literature mostly ignores: even when you know a product formula will work (e.g., using the commutator bounds from 1912.08854), implementing each Trotter step naively costs $O(L)$ gates for an $L$-term Hamiltonian. For structured Hamiltonians, this can be reduced to sublinear-in-$L$.
+Addresses a bottleneck that the Trotter error literature mostly ignores: even when you know a [[product formula]] will work (e.g., using the commutator bounds from 1912.08854), implementing each Trotter step naively costs $O(L)$ gates for an $L$-term Hamiltonian. For structured Hamiltonians, this can be reduced to sublinear-in-$L$.
 
 Two main tools:
 1. **Recursive block encoding**: for power-law decaying interactions, recursively group terms across distance scales to exploit the hierarchy.

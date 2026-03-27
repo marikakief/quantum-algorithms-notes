@@ -1,4 +1,3 @@
-# Generalized Unitary Coupled Cluster for Qubits
 
 > **Source:** McClean, Romero, Babbush & Aspuru-Guzik, arXiv:1509.04279
 > **Tags:** #trick #VQE #ansatz #unitary-coupled-cluster #quantum-chemistry #universality

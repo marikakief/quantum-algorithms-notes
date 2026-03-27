@@ -140,7 +140,7 @@ Physical quantities extractable from the simulation:
 
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — the simulation framework this builds on (ref [18])
 - Feynman (1982) — original simulation conjecture, including the worry about fermions (ref [19])
-- Shor (1994) — factoring algorithm, contrasted with simulation as a quantum computing application (ref [1])
+- [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — factoring algorithm, contrasted with simulation as a quantum computing application (ref [1])
 - Barenco et al. (1995) — universal gate decompositions, used for compiling local unitaries (ref [33])
 
 ---

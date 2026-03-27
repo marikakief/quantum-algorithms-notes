@@ -1,4 +1,3 @@
-# Coherent Averaging of Adiabatic Paths for Diabatic Error Cancellation
 
 > **Source:** Kieferová, Wiebe, *On The Power Of Coherently Controlled Quantum Adiabatic Evolutions*, NJP 16, 123034 (2014); arXiv:1403.6545
 > **Tags:** #trick #adiabatic #coherent-control #LCU #diabatic-error #state-preparation

@@ -1,4 +1,3 @@
-# Hybrid Active Space Construction
 
 > **Source:** McClean, Faulstich, Zhu, O'Gorman, Qiu, White, Babbush, Lin, arXiv:1909.00028
 > **Tags:** #trick #basis-set #active-space #static-correlation #dynamic-correlation #DMRG #natural-orbitals

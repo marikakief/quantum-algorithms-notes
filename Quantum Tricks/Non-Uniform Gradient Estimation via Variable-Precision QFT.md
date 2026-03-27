@@ -1,4 +1,3 @@
-# Non-Uniform Gradient Estimation via Variable-Precision QFT
 
 > **Source:** Huggins, Wan, McClean, O'Brien, Wiebe, Babbush, arXiv:2111.09283 (Appendix H); extends Gilyen, Arunachalam, Wiebe (2019)
 > **Tags:** #trick #gradient-estimation #quantum-algorithms #measurement #QFT

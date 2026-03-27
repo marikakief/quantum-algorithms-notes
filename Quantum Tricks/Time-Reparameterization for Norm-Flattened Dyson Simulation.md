@@ -1,6 +1,5 @@
 
 
-# Time-Reparameterization for Norm-Flattened Dyson Simulation
 
 > **Tags:** #trick #dyson #time-dependent #lcu
 > **Source:** arXiv:1906.07115, Section 4 (Theorems 10–11)

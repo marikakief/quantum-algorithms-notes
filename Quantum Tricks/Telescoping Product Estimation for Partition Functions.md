@@ -1,4 +1,3 @@
-# Telescoping Product Estimation for Partition Functions
 
 > **Source:** Montanaro, arXiv:1504.06987; classical technique from Štefankovič-Vempala-Vigoda (2009)
 > **Tags:** #trick #partition-function #monte-carlo #cooling-schedule #statistical-physics

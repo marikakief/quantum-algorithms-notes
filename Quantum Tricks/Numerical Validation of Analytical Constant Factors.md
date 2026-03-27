@@ -1,4 +1,3 @@
-# Numerical Validation of Analytical Constant Factors
 
 > **Source:** Costa, An, Babbush, Berry, arXiv:2312.07690
 > **Tags:** #trick #resource-estimation #constant-factors #numerical-benchmarks #QLSP

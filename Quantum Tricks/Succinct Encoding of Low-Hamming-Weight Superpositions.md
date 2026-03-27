@@ -1,4 +1,3 @@
-# Succinct Encoding of Low-Hamming-Weight Superpositions
 
 > **Source:** Berry, Cleve, Gharibian, arXiv:1211.4637
 > **Tags:** #trick #compression #encoding #query-complexity
@@ -46,5 +45,5 @@ Also, the measurement step requires a non-trivial [[Recursive Bisection Measurem
 - [[Exponential Superposition State Preparation]] — used to prepare the compressed state
 - [[Recursive Bisection Measurement]] — used to measure in the compressed basis
 - [[Fractional-Query to Discrete-Query Reduction]] — the broader framework
-- [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — extends this compression to Hamiltonian simulation
+- [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — extends this compression to [[Hamiltonian simulation]]
 - [[Compressed Gap Encoding for Ordered Tuples]] — related compression technique

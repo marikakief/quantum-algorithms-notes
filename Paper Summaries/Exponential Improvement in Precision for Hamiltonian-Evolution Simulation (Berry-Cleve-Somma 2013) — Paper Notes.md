@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-First algorithm achieving **polylogarithmic dependence on inverse precision** ($\log(1/\varepsilon)$) for Hamiltonian simulation. This is an exponential improvement over all prior methods, which scaled as $\text{poly}(1/\varepsilon)$.
+First algorithm achieving **polylogarithmic dependence on inverse precision** ($\log(1/\varepsilon)$) for [[Hamiltonian simulation]]. This is an exponential improvement over all prior methods, which scaled as $\text{poly}(1/\varepsilon)$.
 
 The approach is indirect and somewhat baroque: decompose the Hamiltonian into self-inverse terms, simulate each via ancilla-controlled unitaries, then use compression and concentration bounds from the fractional-query framework of Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (2009) and Berry-Cleve-Gharibian (2013) to reduce the query count. The result is technically impressive but hard to parse, which is exactly why the later simplifications (BCCKS STOC 2014, then the truncated Taylor paper) were needed.
 
@@ -14,7 +14,7 @@ The approach is indirect and somewhat baroque: decompose the Hamiltonian into se
 
 ## The computational problem
 
-**Sparse Hamiltonian simulation.** Given a $d$-sparse Hamiltonian $H$ on $n$ qubits via an oracle for its nonzero entries, simulate $e^{-iHt}$ to precision $\varepsilon$.
+**Sparse [[Hamiltonian simulation]].** Given a $d$-sparse Hamiltonian $H$ on $n$ qubits via an oracle for its nonzero entries, simulate $e^{-iHt}$ to precision $\varepsilon$.
 
 **Result (Theorem 1):**
 $$O\!\left([d^2\tau + \log(1/\varepsilon)] \cdot \log^3[d(\tau + \tau')/\varepsilon] \cdot n^c\right)$$
@@ -29,7 +29,7 @@ oracle calls and additional gates, where $\tau = \|H\|t$, $\tau' = \|H'\|t$ (for
 
 Using the edge-coloring technique of [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]], decompose $H$ into $O(d^2)$ real/imaginary 1-sparse Hamiltonians $H_j$.
 
-### Step 2: Lie-Trotter product formula
+### Step 2: Lie-Trotter [[product formula]]
 
 Approximate the time-ordered exponential via first-order Trotter:
 
@@ -102,11 +102,11 @@ Where $\tau = \|H\|t$, $\tau' = \|H'\|t$.
 
 This paper builds directly on two precursors:
 
-1. **Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (2009)** — Introduced the fractional-query framework: simulate continuous-time quantum walk algorithms using discrete queries, with compression via Hamming weight truncation. The key idea that ancilla states concentrate on low Hamming weight was born here, but applied to query complexity rather than Hamiltonian simulation.
+1. **Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (2009)** — Introduced the fractional-query framework: simulate continuous-time quantum walk algorithms using discrete queries, with compression via Hamming weight truncation. The key idea that ancilla states concentrate on low Hamming weight was born here, but applied to query complexity rather than [[Hamiltonian simulation]].
 
 2. **Berry-Cleve-Gharibian (2013, arXiv:1211.4637)** — Extended the compression technique, improved the analysis. Still in the query-complexity context.
 
-This paper (BCS 2013) takes those ideas and applies them to Hamiltonian simulation proper, adding the self-inverse decomposition (Lemma 1) and the Chernoff-based fault correction. The result is the first polylog-precision simulation, but the algorithm is complex — six steps, recursive fault correction, and the self-inverse constraint.
+This paper (BCS 2013) takes those ideas and applies them to [[Hamiltonian simulation]] proper, adding the self-inverse decomposition (Lemma 1) and the Chernoff-based fault correction. The result is the first polylog-precision simulation, but the algorithm is complex — six steps, recursive fault correction, and the self-inverse constraint.
 
 The subsequent papers simplified dramatically:
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|BCCKS (2015, PRL)]] replaced the entire pipeline with LCU + truncated Taylor series + robust OAA
@@ -136,9 +136,9 @@ The subsequent papers simplified dramatically:
 
 ## Why this matters
 
-This is the paper that broke the $\text{poly}(1/\varepsilon)$ barrier for Hamiltonian simulation. Before it, every simulation algorithm — product formulas, quantum walks, LCU — scaled polynomially in $1/\varepsilon$. After it, the question became how to simplify the approach, not whether polylog precision was achievable.
+This is the paper that broke the $\text{poly}(1/\varepsilon)$ barrier for [[Hamiltonian simulation]]. Before it, every simulation algorithm — [[product formula]]s, quantum walks, LCU — scaled polynomially in $1/\varepsilon$. After it, the question became how to simplify the approach, not whether polylog precision was achievable.
 
-The core insight — that ancilla states in a Trotter-like decomposition concentrate on low Hamming weight, so you only need $O(\log(1/\varepsilon))$ queries per segment — came from the fractional-query literature. Transplanting it to Hamiltonian simulation was the breakthrough, even though the resulting algorithm was unwieldy.
+The core insight — that ancilla states in a Trotter-like decomposition concentrate on low Hamming weight, so you only need $O(\log(1/\varepsilon))$ queries per segment — came from the fractional-query literature. Transplanting it to [[Hamiltonian simulation]] was the breakthrough, even though the resulting algorithm was unwieldy.
 
 ---
 
@@ -172,4 +172,4 @@ The core insight — that ancilla states in a Trotter-like decomposition concent
 - [[Recursive Bisection Measurement]] — compressed measurement protocol
 
 ### Source papers for the compression
-- [[Gate-Efficient Discrete Simulations of Continuous-Time Quantum Query Algorithms (Berry-Cleve-Gharibian 2012) — Paper Notes]] — introduced the gate-efficient compression of CGMSY; this paper extends those techniques to Hamiltonian simulation
+- [[Gate-Efficient Discrete Simulations of Continuous-Time Quantum Query Algorithms (Berry-Cleve-Gharibian 2012) — Paper Notes]] — introduced the gate-efficient compression of CGMSY; this paper extends those techniques to [[Hamiltonian simulation]]

@@ -5,7 +5,7 @@ tags: [excalidraw]
 # Excalidraw Data
 
 ## Text Elements
-Projector-Controlled Phase Gate  e^{iφΠ} ^title
+[[Projector-Controlled Phase Gate]]  e^{iφΠ} ^title
 
 |ã⟩ ^lbl-anc
 

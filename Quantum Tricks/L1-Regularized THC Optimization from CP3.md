@@ -1,4 +1,3 @@
-# L1-Regularized THC Optimization from CP3
 
 > **Source:** Goings, White, Lee, Tautermann, Degroote, Gidney, Shiozaki, Babbush, Rubin, arXiv:2202.01244
 > **Tags:** #trick #quantum-chemistry #tensor-hypercontraction #LCU #qubitization #optimization

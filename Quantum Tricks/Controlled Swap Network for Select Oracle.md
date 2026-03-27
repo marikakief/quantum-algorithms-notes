@@ -1,4 +1,3 @@
-# Controlled Swap Network for Select Oracle
 
 > **Source:** Kivlichan, Wiebe, Babbush, Aspuru-Guzik, arXiv:1608.05696 (2017)
 > **Tags:** #trick #swap-network #select-oracle #LCU #circuit-depth #adder #quantum-simulation

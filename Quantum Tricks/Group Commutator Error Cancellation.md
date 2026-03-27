@@ -1,4 +1,3 @@
-# Group Commutator Error Cancellation
 
 > **Source:** Dawson & Nielsen, arXiv:quant-ph/0505030, Lemma 1
 > **Tags:** #trick #error-cancellation #commutator #gate-compilation

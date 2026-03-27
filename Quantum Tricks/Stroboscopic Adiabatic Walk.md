@@ -1,10 +1,9 @@
-# Stroboscopic Adiabatic Walk
 
 > **Source:** Sanders, Berry, Costa, Tessler, Wiebe, Gidney, Neven, Babbush, arXiv:2007.07391
 > **Tags:** #trick #qubitization #adiabatic #quantum-walk #heuristic
 
 ## What it does
-Simulates an adiabatic path using a sequence of [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] walk steps, where each step advances by a small "time" $\sim 1/r$ without requiring explicit Hamiltonian simulation circuits. The per-step cost depends on the LCU query complexity, not the number of Hamiltonian terms.
+Simulates an adiabatic path using a sequence of [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] walk steps, where each step advances by a small "time" $\sim 1/r$ without requiring explicit [[Hamiltonian simulation]] circuits. The per-step cost depends on the LCU query complexity, not the number of Hamiltonian terms.
 
 ## The trick
 A qubitized walk $W(s)$ for Hamiltonian $H(s)$ at adiabatic parameter $s$ encodes eigenvalues as $e^{\pm i \arccos(E_k / \lambda)}$. This corresponds to unit-time evolution under $\arccos(H/\lambda)$ — too large a step for adiabatic refinement.
@@ -15,7 +14,7 @@ $$H = \sum_k \lambda_k U_k \;\;\longrightarrow\;\; \sum_k \lambda_k U_k + \frac{
 
 This changes the PREPARE state to include the extra identity terms, and the SELECT oracle gains one additional control qubit. The resulting walk $W_r(s)$ has eigenvalues encoding $r \arcsin(E_k / (r\lambda))$, which for large $r$ approximates $E_k / \lambda$. Each application advances by time $\sim 1/r$.
 
-A product formula over adiabatic parameter values $s_1, s_2, \ldots$ gives:
+A [[product formula]] over adiabatic parameter values $s_1, s_2, \ldots$ gives:
 
 $$\prod_m W_r(s_m) \approx \text{adiabatic evolution along } \{s_m\}$$
 

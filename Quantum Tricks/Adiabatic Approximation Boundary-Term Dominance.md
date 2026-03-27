@@ -1,4 +1,3 @@
-# Adiabatic Approximation Boundary-Term Dominance
 
 > **Source:** Cheung, Høyer, Wiebe, arXiv:1103.4174; also noted in Jansen-Ruskai-Seiler 2007, MMP 2006, Sun 1988
 > **Tags:** #trick #adiabatic #integration-by-parts #asymptotic-expansion #boundary-terms

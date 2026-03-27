@@ -1,4 +1,3 @@
-# Phase Kickback from Oracle Queries
 
 > **Source:** Deutsch & Jozsa, Proc. R. Soc. Lond. A 439 (1992); modern form from Cleve, Ekert, Macchiavello & Mosca (1998)
 > **Tags:** #trick #oracle #phase-kickback #foundational

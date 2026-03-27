@@ -1,4 +1,3 @@
-# Qubit vs Fermionic Variance Bounds
 
 > **Source:** Huggins, McClean, Rubin, Jiang, Wiebe, Whaley, Babbush, arXiv:1907.13117
 > **Tags:** #trick #measurement #bounds #Jordan-Wigner #quantum-chemistry #cost-estimation

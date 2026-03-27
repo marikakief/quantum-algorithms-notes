@@ -1,4 +1,3 @@
-# QROM-Loaded Givens Rotation Networks
 
 > **Source:** Lee, Berry, Gidney, Huggins, McClean, Wiebe, Babbush, arXiv:2011.03494; builds on Kivlichan et al. arXiv:1711.04789 and von Burg et al. arXiv:2007.14460
 > **Tags:** #trick #QROM #Givens-rotation #basis-rotation #qubitization #circuit-primitive

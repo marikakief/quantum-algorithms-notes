@@ -1,4 +1,3 @@
-# Hadamard Sandwich for Global Function Properties
 
 > **Source:** Deutsch & Jozsa, Proc. R. Soc. Lond. A 439 (1992)
 > **Tags:** #trick #oracle #interference #foundational

@@ -1,4 +1,3 @@
-# Parity Shifting via Spectral Multiplication in GQSP
 
 > **Source:** Berry, Motlagh, Pantaleoni, Wiebe, arXiv:2401.10321
 > **Tags:** #trick #QSP #GQSP #parity #polynomials

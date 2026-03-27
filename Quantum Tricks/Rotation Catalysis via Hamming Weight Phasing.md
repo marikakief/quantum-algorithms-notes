@@ -1,4 +1,3 @@
-# Rotation Catalysis via Hamming Weight Phasing
 
 > **Source:** Kivlichan, Gidney, Babbush et al., arXiv:1902.10673, Quantum **4**, 296 (2020); building on Gidney, Quantum **2**, 74 (2018)
 > **Tags:** #trick #fault-tolerant #T-gate-reduction #rotation-catalysis #FFFT #circuit-optimization

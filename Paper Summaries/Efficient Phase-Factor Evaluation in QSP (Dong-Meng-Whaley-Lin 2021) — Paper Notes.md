@@ -76,7 +76,7 @@ A useful identity: shifting all phases by $\pi/4$ in $\sigma_z$ swaps $\operator
 
 | Application | Degree $d$ | Target error | Achieved $L(\Phi)$ | Wall time |
 |---|---|---|---|---|
-| Hamiltonian simulation ($e^{-iHt}$, Jacobi-Anger) | 10,000 | $10^{-12}$ | $< 10^{-25}$ | ~minutes |
+| [[Hamiltonian simulation]] ($e^{-iHt}$, Jacobi-Anger) | 10,000 | $10^{-12}$ | $< 10^{-25}$ | ~minutes |
 | Eigenvalue filtering (rectangular window) | 4,000 | $10^{-12}$ | $< 10^{-25}$ | ~minutes |
 | Matrix inversion ($1/x$ via QLSP) | 10,000 | $10^{-12}$ | $< 10^{-25}$ | ~minutes |
 
@@ -104,7 +104,7 @@ The paper doesn't prove convergence guarantees (that comes later in [[Energy Lan
 
 ## Applications demonstrated
 
-### 1. Hamiltonian simulation
+### 1. [[Hamiltonian simulation]]
 
 Target: $f(x) = \operatorname{Re}[e^{-itx}]$ or $\operatorname{Im}[e^{-itx}]$ (Jacobi-Anger expansion in Chebyshev polynomials). Degree $d = O(t + \log(1/\varepsilon))$.
 
@@ -138,7 +138,7 @@ Target: $f(x) = 1/(\kappa x)$ on $[-1, -1/\kappa] \cup [1/\kappa, 1]$ (odd funct
 
 ## References within this paper
 
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — introduced QSP for Hamiltonian simulation; this paper makes it compilable
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — introduced QSP for [[Hamiltonian simulation]]; this paper makes it compilable
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén, Su, Low & Wiebe (2019)]] — QSVT framework; the [[Recursive Phase Extraction from Polynomial Coefficients|recursive extraction]] algorithm that this paper replaces
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|Martyn et al. (2021)]] — pedagogical review of QSP/QSVT that uses QSPPACK for all its examples
 - [[Optimal Polynomial Based Quantum Eigenstate Filtering (Dong-An-Lin 2020) — Paper Notes|Dong, An & Lin (2020)]] — eigenstate filtering application; same group, concurrent work

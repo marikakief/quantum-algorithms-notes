@@ -1,4 +1,3 @@
-# Hamiltonian-to-Projection via Phase Estimation
 
 > **Source:** Aharonov & Ta-Shma, arXiv:quant-ph/0301023 (2003), Claim 6
 > **Tags:** #trick #phase-estimation #projection #adiabatic

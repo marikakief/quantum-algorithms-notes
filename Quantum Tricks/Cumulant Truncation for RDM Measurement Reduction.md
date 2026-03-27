@@ -1,4 +1,3 @@
-# Cumulant Truncation for RDM Measurement Reduction
 
 > **Source:** Takeshita, Rubin, Jiang, Lee, Babbush, McClean, arXiv:1902.10679; classical origins in Kutzelnigg & Mukherjee (1997)
 > **Tags:** #trick #RDM #measurement #cumulant #approximation #quantum-chemistry

@@ -1,4 +1,3 @@
-# Commuting Hamiltonian Rescaling for Error Mitigation
 
 > **Source:** Tazhigulov, Sun, Haghshenas, Zhai, Tan, Rubin, Babbush, Minnich, Chan, arXiv:2203.15291
 > **Tags:** #trick #error-mitigation #postprocessing #NISQ #rescaling #noise-model
@@ -11,7 +10,7 @@ Corrects amplitude degradation in noisy quantum simulations by deriving time-dep
 
 Construct a commuting sub-Hamiltonian $\hat{H}'$ from $\hat{H}$ by retaining only mutually commuting terms (e.g., for a hexagonal spin model, keep only terms on non-overlapping pairs like (1-2), (3-4), (5-6)). Because $\hat{H}'$ has only commuting terms, its dynamics are classically simulable exactly.
 
-Run the same circuit recompilation ansatz for $\hat{H}'$ on the quantum device — the brickwork circuit still couples all qubits, so the noise profile closely matches the full-Hamiltonian simulation. For each time point $t$, compute:
+Run the same circuit recompilation ansatz for $\hat{H}'$ on the quantum device — the brickwork circuit still couples all qubits, so the noise profile closely matches the full-[[Hamiltonian simulation]]. For each time point $t$, compute:
 
 $$f(t) = \frac{\langle A \rangle_t^{\mathrm{ideal}}(\hat{H}')}{\langle A \rangle_t^{\mathrm{hw}}(\hat{H}')}$$
 

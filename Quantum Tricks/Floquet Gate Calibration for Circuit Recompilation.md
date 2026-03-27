@@ -1,4 +1,3 @@
-# Floquet Gate Calibration for Circuit Recompilation
 
 > **Source:** Tazhigulov, Sun, Haghshenas, Zhai, Tan, Rubin, Babbush, Minnich, Chan, arXiv:2203.15291; Neill et al., Nature 594, 508 (2021)
 > **Tags:** #trick #gate-calibration #NISQ #superconducting #circuit-optimization #Sycamore

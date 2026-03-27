@@ -1,4 +1,3 @@
-# MP2-Based Amplitude Prescreening for UCC
 
 > **Source:** Romero, Babbush, McClean, Hempel, Love, Aspuru-Guzik, arXiv:1701.02691 (2018)
 > **Tags:** #trick #VQE #UCC #quantum-chemistry #parameter-reduction #MP2

@@ -1,4 +1,3 @@
-# Subdivision Gadget for k-to-2-Local Reduction
 
 > **Source:** Kempe, Kitaev & Regev, arXiv:quant-ph/0406180, SICOMP 35(5) (2006)
 > **Tags:** #trick #perturbation #2-local #QMA #gadget

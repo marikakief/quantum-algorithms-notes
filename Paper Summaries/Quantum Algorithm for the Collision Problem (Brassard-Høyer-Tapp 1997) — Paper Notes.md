@@ -124,7 +124,7 @@ This directly impacts:
 
 ## References within this paper
 
-- Grover (1996) — quantum search algorithm used as subroutine
+- [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — quantum search algorithm used as subroutine
 - Boyer, Brassard, Høyer & Tapp (1996) — tight bounds on quantum searching; generalisation to unknown $t$
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — solves the structured collision problem ($f(x) = f(x \oplus s)$) in $O(n)$ queries
 - Brassard & Høyer (1997) — exact quantum polynomial-time algorithm for Simon's problem

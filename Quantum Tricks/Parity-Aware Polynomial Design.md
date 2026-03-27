@@ -1,4 +1,3 @@
-# Parity-Aware Polynomial Design
 
 > **Source:** András Gilyén, Yuan Su, Guang Hao Low, and Nathan Wiebe, *Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics*, arXiv:1806.01838, STOC 2019  
 > **Links:** [arXiv](https://arxiv.org/abs/1806.01838) · [STOC](https://doi.org/10.1145/3313276.3316366)  

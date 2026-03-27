@@ -184,7 +184,7 @@ After Shor: billions of dollars in quantum computing investment, post-quantum cr
 - Coppersmith (1994) — approximate QFT dropping small phases; reduces gate count to $O(n \log n)$
 - Boneh & Lipton (1995) — generalised discrete log to non-cyclic abelian groups
 - Deutsch (1985, 1989) — quantum Turing machines and circuits
-- Bernstein & Vazirani (1993) — polynomial quantum-classical separation
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — polynomial quantum-classical separation
 - Feynman (1982) — first suggestion that quantum mechanics might confer computational advantage
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985, 1989)]] — defined quantum Turing machines and quantum circuits; first quantum algorithm
 

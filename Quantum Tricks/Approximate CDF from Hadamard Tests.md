@@ -1,4 +1,3 @@
-# Approximate CDF from Hadamard Tests
 
 > **Source:** Lin Lin and Yu Tong, arXiv:2102.11340 (PRX Quantum 3, 010318, 2022)
 > **Tags:** #trick #spectral-measure #CDF #binary-search #Hadamard-test
@@ -39,7 +38,7 @@ For ground-state energy to precision $\varepsilon$ with overlap $\eta$:
 
 - The ACDF is "blurred" by the transition width $\delta$: eigenvalues closer than $\delta$ are not resolved. Setting $\delta = \varepsilon\tau$ ensures the energy estimate is accurate to $\varepsilon$ but means you can't resolve spectral features finer than that.
 - Requires a lower bound $\eta$ on the ground-state overlap. If unknown, you need a preliminary estimation step.
-- The Hadamard test requires controlled $e^{-ij\tau H}$, which adds Hamiltonian simulation overhead.
+- The Hadamard test requires controlled $e^{-ij\tau H}$, which adds [[Hamiltonian simulation]] overhead.
 
 ## Related notes
 - [[Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant QC (Lin-Tong 2022) — Paper Notes]]

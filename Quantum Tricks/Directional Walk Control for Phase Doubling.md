@@ -1,4 +1,3 @@
-# Directional Walk Control for Phase Doubling
 
 > **Source:** Berry, Motlagh, Pantaleoni, Wiebe, arXiv:2401.10321; also Babbush, Gidney, Berry, Wiebe et al., arXiv:1805.03662
 > **Tags:** #trick #QSP #GQSP #qubitization #block-encoding #hamiltonian-simulation #phase-doubling
@@ -20,7 +19,7 @@ For [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|q
 ## When to reach for it
 
 - Any [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]]/[[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]-based algorithm where the block-encoding allows cheap inversion of the walk step.
-- Hamiltonian simulation where $\lambda t$ dominates the query cost and a constant-factor improvement matters (e.g., fault-tolerant chemistry resource estimates).
+- [[Hamiltonian simulation]] where $\lambda t$ dominates the query cost and a constant-factor improvement matters (e.g., fault-tolerant chemistry resource estimates).
 - Eigenvalue estimation, where [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush et al. (2018)]] already demonstrated the $2\times$ improvement.
 
 ## Complexity
@@ -29,7 +28,7 @@ Halves the query count from $K+1$ to approximately $K/2 + 2$ controlled operatio
 
 ## Caveat
 
-Requires [[Generalized Quantum Signal Processing (GQSP)|GQSP]] (complex polynomial pairs) rather than standard QSP (real polynomials) when applied to Hamiltonian simulation. The directional control changes the Fourier parity of the accessible polynomials, requiring [[Parity Shifting via Spectral Multiplication in GQSP|parity shifting]] to match the Jacobi–Anger expansion.
+Requires [[Generalized Quantum Signal Processing (GQSP)|GQSP]] (complex polynomial pairs) rather than standard QSP (real polynomials) when applied to [[Hamiltonian simulation]]. The directional control changes the Fourier parity of the accessible polynomials, requiring [[Parity Shifting via Spectral Multiplication in GQSP|parity shifting]] to match the Jacobi–Anger expansion.
 
 Also requires that inverting $U$ is cheap. For qubitization from [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low–Chuang]], this is nearly free. For other block-encoding constructions, the cost may not be negligible.
 

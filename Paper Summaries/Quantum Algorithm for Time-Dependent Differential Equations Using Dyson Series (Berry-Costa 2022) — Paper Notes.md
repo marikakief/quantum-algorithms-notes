@@ -127,7 +127,7 @@ The improvement over Fang-Lin-Tong is the $T$ scaling: $O(T)$ vs. $O(T^2)$, thou
 
 ## My assessment
 
-This is a clean, well-executed paper that fills an obvious gap. The prior work on time-dependent ODEs (Childs-Liu spectral method) had unnecessarily large log factors and needed smoothness assumptions. This paper removes both issues by switching from spectral methods to Dyson series, which is a natural choice given that the Dyson machinery was already available from the Hamiltonian simulation papers.
+This is a clean, well-executed paper that fills an obvious gap. The prior work on time-dependent ODEs (Childs-Liu spectral method) had unnecessarily large log factors and needed smoothness assumptions. This paper removes both issues by switching from spectral methods to Dyson series, which is a natural choice given that the Dyson machinery was already available from the [[Hamiltonian simulation]] papers.
 
 The time-independent result (Theorem 4.2) is almost a corollary, but it's worth having separately — it's simpler than the encoding in [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] and gives a cleaner complexity expression.
 

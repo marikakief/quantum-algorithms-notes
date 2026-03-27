@@ -1,4 +1,3 @@
-# Optimization-to-Decoding Reduction via Code Duality
 
 > **Source:** Jordan, Shutty, Wootters, Zalcman, Schmidhuber, King, Isakov, Khattar, Babbush, arXiv:2408.08292
 > **Tags:** #trick #quantum-optimization #coding-theory #reduction #code-duality #DQI

@@ -1,4 +1,3 @@
-# Phased Qubitization Sequence
 
 > **Source:** Guang Hao Low and Isaac L. Chuang, *Optimal Hamiltonian Simulation by Quantum Signal Processing*, arXiv:1606.02685, Phys. Rev. Lett. **118**, 010501 (2017); and *Hamiltonian Simulation by Qubitization*, arXiv:1610.06546, Quantum **3**, 163 (2019)  
 > **Links:** [QSP arXiv](https://arxiv.org/abs/1606.02685) · [Qubitization arXiv](https://arxiv.org/abs/1610.06546)  

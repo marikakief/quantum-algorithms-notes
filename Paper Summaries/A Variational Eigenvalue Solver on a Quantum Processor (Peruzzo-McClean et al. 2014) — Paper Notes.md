@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Introduces the **Variational Quantum Eigensolver (VQE)** — a hybrid quantum-classical algorithm for finding ground state energies that replaces the long coherent evolution of [[Gapped Phase Estimation|phase estimation]] with many short measurements and classical optimization. Demonstrated experimentally on He-H$^+$ using a photonic chip.
+Introduces the **[[Variational Quantum Eigensolver (VQE)]]** — a hybrid quantum-classical algorithm for finding ground state energies that replaces the long coherent evolution of [[Gapped Phase Estimation|phase estimation]] with many short measurements and classical optimization. Demonstrated experimentally on He-H$^+$ using a photonic chip.
 
 This paper launched the NISQ (noisy intermediate-scale quantum) era of quantum algorithms. It is arguably the most influential paper in near-term quantum computing — and also the source of significant overhype about what near-term devices can actually do.
 

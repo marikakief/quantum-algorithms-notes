@@ -1,4 +1,4 @@
-> **Source:** Dominic W. Berry, Andrew M. Childs, Yuan Su, Xin Wang, and Nathan Wiebe, *Time-dependent Hamiltonian simulation with $L^1$-norm scaling*, arXiv:1906.07115, Quantum **4**, 254 (2020)
+> **Source:** Dominic W. Berry, Andrew M. Childs, Yuan Su, Xin Wang, and Nathan Wiebe, *Time-dependent [[Hamiltonian simulation]] with $L^1$-norm scaling*, arXiv:1906.07115, Quantum **4**, 254 (2020)
 > **Links:** [arXiv](https://arxiv.org/abs/1906.07115) · [Quantum](https://doi.org/10.22331/q-2020-04-20-254)
 > **Tags:** #hamiltonian-simulation #time-dependent #dyson #qdrift #LCU #L1-norm
 
@@ -155,8 +155,8 @@ The paper gives a schematic example of $H_2 + H$ scattering, where the Coulomb i
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin, Qarry, Somma & Verstraete (2011)]] — Hamiltonian averaging / Monte Carlo; continuous qDRIFT is compared to this approach in Appendix A
 - Berry, Childs, Cleve, Kothari & Somma (2015) — fractional-query simulation; Theorem 4 shows its query complexity already has $L^1$ scaling
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP optimal scaling (comparison point)
-- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — commutator-based [[Product Formula Error Bounds|Trotter error theory]]; related analysis techniques for product formulas
-- Wiebe, Berry, Høyer & Sanders (2010) — higher-order product formulas for time-dependent simulation; requires smoothness
+- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — commutator-based [[Product Formula Error Bounds|Trotter error theory]]; related analysis techniques for [[product formula]]s
+- Wiebe, Berry, Høyer & Sanders (2010) — higher-order [[product formula]]s for time-dependent simulation; requires smoothness
 
 ---
 

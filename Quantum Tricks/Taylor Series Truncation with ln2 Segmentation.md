@@ -1,4 +1,3 @@
-# Taylor Series Truncation with ln2 Segmentation
 
 > **Source:** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma, arXiv:1412.4687
 > **Tags:** #trick #hamiltonian-simulation #taylor-series #segmentation
@@ -19,7 +18,7 @@ $$K = O\!\left(\frac{\log(T/\varepsilon)}{\log\log(T/\varepsilon)}\right)$$
 This doubly-logarithmic scaling in $1/\varepsilon$ comes from Stirling: $(\ln 2)^k / k! \approx (e \ln 2 / k)^k$, super-exponentially small for $k \gg 1$.
 
 ## When to reach for it
-- Hamiltonian simulation when you want near-optimal $\log(1/\varepsilon)$ precision dependence
+- [[Hamiltonian simulation]] when you want near-optimal $\log(1/\varepsilon)$ precision dependence
 - Any [[Linear Combination of Unitaries (LCU)|LCU]]-based simulation where you need the coefficient sum to be a specific constant
 - As a cleaner alternative to Trotter-Suzuki for high-precision simulation
 

@@ -1,4 +1,3 @@
-# Trotter Gap Independence from Hamiltonian Gap
 
 > **Source:** An, Costa, Berry, arXiv:2509.00171
 > **Tags:** #trick #product-formulas #spectral-gap #adiabatic #discrete-adiabatic

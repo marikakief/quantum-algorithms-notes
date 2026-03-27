@@ -121,7 +121,7 @@ The [[Kaiser Window Amplitude Estimation|Kaiser window]] achieves the informatio
 
 ## Case studies
 
-### Case study 1: Hamiltonian simulation (§IV)
+### Case study 1: [[Hamiltonian simulation]] (§IV)
 
 Two methods implemented via the block encoding + [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] infrastructure:
 
@@ -204,7 +204,7 @@ Key citations that connect to the vault:
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry, Wiebe, Rubin, Babbush (2021)]] — first-quantized block encodings
 - [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — non-BO dynamics block encoding
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan, Gidney, Babbush et al. (2020)]] — Trotterized Hubbard model
-- Low & Chuang (2019) — [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] and Hamiltonian simulation by QSP
+- [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]] — [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] and [[Hamiltonian simulation]] by QSP
 - Gilyén, Su, Low, Wiebe (2019) — [[Qubitization (Quantum Walk for Spectral Encoding)|QSVT]] framework, block encoding formalism
 - Motlagh & Wiebe (2024) — Generalized QSP
 - Jones, Whitfield et al. (2012) — programmable ancilla rotations

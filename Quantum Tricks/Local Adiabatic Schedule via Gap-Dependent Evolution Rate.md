@@ -1,4 +1,3 @@
-# Local Adiabatic Schedule via Gap-Dependent Evolution Rate
 
 > **Source:** Roland & Cerf, Phys. Rev. A 65, 042308 (2002); arXiv:quant-ph/0107015
 > **Tags:** #trick #adiabatic #search #schedule-optimization

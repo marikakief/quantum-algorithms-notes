@@ -1,4 +1,3 @@
-# Geometric Difference Test for Quantum ML Advantage
 
 > **Source:** Huang, Broughton, Mohseni, Babbush, Boixo, Neven, McClean, arXiv:2011.01938
 > **Tags:** #trick #quantum-ml #kernel-methods #quantum-advantage #learning-theory

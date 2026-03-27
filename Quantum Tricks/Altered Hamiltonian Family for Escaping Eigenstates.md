@@ -1,4 +1,3 @@
-# Altered Hamiltonian Family for Escaping Eigenstates
 
 > **Source:** Anurag Anshu, arXiv:2603.15495
 > **Tags:** #trick #ground-state-preparation #local-Hamiltonian #frustration-free #heuristic #energy-lowering

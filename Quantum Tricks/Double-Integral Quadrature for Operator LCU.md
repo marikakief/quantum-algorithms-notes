@@ -1,4 +1,3 @@
-# Double-Integral Quadrature for Operator LCU
 
 > **Source:** An, Childs, Lin, arXiv:2411.04010
 > **Tags:** #trick #quadrature #LCU #discretisation
@@ -17,7 +16,7 @@ Given $h(A) = \int_0^\infty \int_\mathbb{R} w(k,t)\, e^{-it(kL+H)}\, dk\, dt$:
 
 3. **Encode weights:** Prepare a quantum state $\sum_{j,l} \sqrt{|w_{j,l}|}\, |j,l\rangle$ encoding the quadrature weights, with phase information handled by controlled rotations. This is the PREPARE oracle for the LCU.
 
-4. **SELECT:** Conditionally apply $e^{-it_l(k_j L + H)}$ (Hamiltonian simulation) controlled on $|j,l\rangle$.
+4. **SELECT:** Conditionally apply $e^{-it_l(k_j L + H)}$ ([[Hamiltonian simulation]]) controlled on $|j,l\rangle$.
 
 The total number of unitaries in the sum is $M_k \times M_t$, but each is just a Hamiltonian simulation call. The PREPARE oracle costs $O(\text{polylog}(M_k M_t))$ assuming efficient state preparation.
 
@@ -27,7 +26,7 @@ Any time you have a continuous operator integral that decomposes into a 2D famil
 
 ## Complexity
 
-Grid size: $M_k = O(K/h_k)$, $M_t = O(T/h_t)$. For first-order quadrature, $h_k, h_t = O(\varepsilon)$, giving $M_k M_t = O(KT/\varepsilon^2)$ points. Higher-order quadrature reduces this. Each grid point costs one Hamiltonian simulation of time $\leq KT$.
+Grid size: $M_k = O(K/h_k)$, $M_t = O(T/h_t)$. For first-order quadrature, $h_k, h_t = O(\varepsilon)$, giving $M_k M_t = O(KT/\varepsilon^2)$ points. Higher-order quadrature reduces this. Each grid point costs one [[Hamiltonian simulation]] of time $\leq KT$.
 
 ## Caveat
 

@@ -1,4 +1,3 @@
-# Gaussian Time-Sampling Filter for Spectral Estimation
 
 > **Source:** Ding, Li, Lin, Ni, Ying, Zhang, arXiv:2402.01013
 > **Tags:** #trick #spectral-estimation #Gaussian-filter #Hadamard-test #phase-estimation

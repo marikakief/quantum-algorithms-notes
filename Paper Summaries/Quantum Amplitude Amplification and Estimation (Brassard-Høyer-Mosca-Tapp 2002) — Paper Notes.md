@@ -1,4 +1,4 @@
-> **Source:** Gilles Brassard, Peter Høyer, Michele Mosca, and Alain Tapp, *Quantum Amplitude Amplification and Estimation*, Contemporary Mathematics **305**, AMS (2002); arXiv:quant-ph/0005055
+> **Source:** Gilles Brassard, Peter Høyer, Michele Mosca, and Alain Tapp, *Quantum [[Amplitude Amplification and Estimation]]*, Contemporary Mathematics **305**, AMS (2002); arXiv:quant-ph/0005055
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0005055)
 > **Tags:** #amplitude-amplification #amplitude-estimation #grover #counting #foundational
 

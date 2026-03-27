@@ -137,7 +137,7 @@ The symmetry verification work (Bonet-Monroig et al.) is a special case of this 
 - Gottesman (1997) — Stabilizer formalism. The theoretical backbone of the code-based constructions.
 - Bravyi, Gambetta, Mezzacapo, Temme (2017) — Tapering off qubits: identifies $Z_2$ symmetries for qubit reduction. The same symmetries are reused here as projectors instead.
 - Preskill (2018) — NISQ era framing.
-- Motta, Ye, McClean et al. (2019) — Quantum imaginary time evolution and quantum Lanczos; cited as a QSE variation.
+- Motta, Ye, [[Decoding Quantum Errors with Subspace Expansions (McClean, Jiang, Rubin, Babbush, Neven 2019) — Paper Notes|McClean et al. (2019)]] — Quantum imaginary time evolution and quantum Lanczos; cited as a QSE variation.
 
 ## Cross-links
 

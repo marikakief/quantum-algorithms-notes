@@ -1,4 +1,3 @@
-# Classical Circuit Recompilation for Depth Reduction
 
 > **Source:** Tazhigulov, Sun, Haghshenas, Zhai, Tan, Rubin, Babbush, Minnich, Chan, arXiv:2203.15291; Sun et al., PRX Quantum 2, 010317 (2021)
 > **Tags:** #trick #circuit-compilation #NISQ #variational #depth-reduction #recompilation

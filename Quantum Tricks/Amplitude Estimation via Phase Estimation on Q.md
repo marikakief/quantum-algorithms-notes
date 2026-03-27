@@ -1,4 +1,3 @@
-# Amplitude Estimation via Phase Estimation on Q
 
 > **Source:** Brassard, Høyer, Mosca & Tapp, arXiv:quant-ph/0005055 (2002), Section 4
 > **Tags:** #trick #amplitude-estimation #phase-estimation #counting

@@ -1,4 +1,3 @@
-# Oracle-to-Hamiltonian Simulation via Swap Conjugation
 
 > **Source:** Childs, Cleve, Deotto, Farhi, Gutmann, Spielman, arXiv:quant-ph/0209131 (2003)
 > **Tags:** #trick #quantum-walk #hamiltonian-simulation #oracle
@@ -24,7 +23,7 @@ Simulate $e^{-iHt}$ via [[Product-Formula Time-Slicing for Local Hamiltonians|Li
 
 ## When to reach for it
 - Any oracle problem where you need to simulate a quantum walk on a graph given by a black box
-- Converting graph oracle access into Hamiltonian simulation
+- Converting graph oracle access into [[Hamiltonian simulation]]
 - When the "natural" Hamiltonian is nonlocal but structured as an adjacency matrix
 
 ## Complexity

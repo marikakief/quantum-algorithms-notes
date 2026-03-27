@@ -1,4 +1,3 @@
-# Clique Bound from Uncertainty Principle
 
 > **Source:** King, Gosset, Kothari, Babbush, arXiv:2404.19211
 > **Tags:** #trick #uncertainty-principle #anticommutativity #commutation-graph #shadow-tomography #structural-bound

@@ -1,4 +1,3 @@
-# Second-to-First Quantization State Conversion
 
 > **Source:** Babbush, Huggins, Berry et al., arXiv:2301.01203 (2023)
 > **Tags:** #trick #first-quantized #state-preparation #Slater-determinant #Givens-rotations

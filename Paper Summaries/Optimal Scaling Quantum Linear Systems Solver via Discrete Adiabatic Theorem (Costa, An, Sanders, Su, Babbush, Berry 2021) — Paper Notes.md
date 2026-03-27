@@ -124,7 +124,7 @@ My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The
 
 3. **Assumes a good block encoding.** The result counts queries to a block encoding oracle. The cost of constructing that block encoding from more fundamental access models (sparse matrix oracles, etc.) is separate and problem-dependent.
 
-4. **The $\kappa \log(1/\varepsilon)$ complexity is multiplicative, not additive.** Unlike Hamiltonian simulation (where $t$ and $\log(1/\varepsilon)$ enter additively), here $\kappa$ and $\log(1/\varepsilon)$ must multiply. This is a fundamental feature of the problem, not a limitation of the algorithm.
+4. **The $\kappa \log(1/\varepsilon)$ complexity is multiplicative, not additive.** Unlike [[Hamiltonian simulation]] (where $t$ and $\log(1/\varepsilon)$ enter additively), here $\kappa$ and $\log(1/\varepsilon)$ must multiply. This is a fundamental feature of the problem, not a limitation of the algorithm.
 
 5. **The scheduling parameter $p$ affects constants significantly.** Numerically, $p \approx 1.3$ minimizes the error bound (not the analytically convenient $p = 3/2$). The optimal $p$ may depend on $\kappa$.
 
@@ -151,7 +151,7 @@ My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The
 - **Harrow, Kothari [17]** — The $\Omega(\kappa \log(1/\varepsilon))$ lower bound (in preparation at time of writing).
 - **Dranov, Kellendonk, Seiler (DKS) [18]** — Original discrete adiabatic theorem (1998); proved $O(1/T)$ error but without gap dependence.
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes|Sanders, Berry, Costa et al. [24]]] — [[Stroboscopic Adiabatic Walk]] for optimization; earlier (less rigorous) use of discrete qubitized walks for adiabatic evolution.
-- Berry, Kieferová, Scherer, Sanders, Low, Wiebe, Gidney, Babbush [25] — npj QI 2018; techniques for Hamiltonian simulation that fed into the block encoding approach used here.
+- Berry, Kieferová, Scherer, Sanders, Low, Wiebe, Gidney, Babbush [25] — npj QI 2018; techniques for [[Hamiltonian simulation]] that fed into the block encoding approach used here.
 
 ---
 
@@ -170,7 +170,7 @@ My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — older HHL-based ODE solver; this paper provides the optimal QLSP primitive that later ODE algorithms can plug in instead
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — improved linear ODE solver whose QLSA subroutine is superseded by the optimal discrete-adiabatic QLSP here
 - [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — time-dependent ODE solver from overlapping authors; uses the improved QLSP lineage together with Dyson-series machinery
-- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — Dyson-series Hamiltonian simulation from the same broader Berry/Kieferová line; related block-encoding machinery feeds into later ODE solvers
+- [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — Dyson-series [[Hamiltonian simulation]] from the same broader Berry/Kieferová line; related block-encoding machinery feeds into later ODE solvers
 
 ### Trick cards
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — The walk operator used here
@@ -182,5 +182,5 @@ My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The
 
 ### Follow-up
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — Numerical validation showing the actual constant factor is ~1,500× smaller than the analytical bound.
-- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Extends the discrete adiabatic framework to show time step sizes can be $\varepsilon$-independent for any-order product formulas; boundary cancellation gives super-polynomial convergence.
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Extends the discrete adiabatic framework to show time step sizes can be $\varepsilon$-independent for any-order [[product formula]]s; boundary cancellation gives super-polynomial convergence.
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]] — uses the optimal QLSP solver as subroutine for nonlinear ODEs after Carleman linearisation

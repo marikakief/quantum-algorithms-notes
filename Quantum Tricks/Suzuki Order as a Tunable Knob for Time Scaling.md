@@ -1,4 +1,3 @@
-# Suzuki Order as a Tunable Knob for Time Scaling
 
 > **Source:** Berry, Ahokas, Cleve, Sanders, arXiv:quant-ph/0508139 (2005)
 > **Tags:** #trick #product-formulas #suzuki #optimization
@@ -32,7 +31,7 @@ The time dependence is essentially linear with a subexponential correction — m
 ## When to use this reasoning
 
 - Analyzing [[Order-Condition Cancellation in Product Formulas|product-formula]] costs: don't commit to a fixed Suzuki order. Treat $k$ as a variable.
-- Comparing product-formula approaches against [[Linear Combination of Unitaries (LCU)|LCU]]/[[QSVT Meta-Template|QSP]]: this gives the best product formulas can do asymptotically.
+- Comparing product-formula approaches against [[Linear Combination of Unitaries (LCU)|LCU]]/[[QSVT Meta-Template|QSP]]: this gives the best [[product formula]]s can do asymptotically.
 - The same "order as knob" idea appears whenever a family of approximants is parameterized by degree/order (Taylor series truncation, polynomial approximation degree in [[QSVT Meta-Template|QSP]], etc.).
 
 ## Caveat

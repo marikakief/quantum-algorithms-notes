@@ -115,7 +115,7 @@ For $\delta = 0.05$: ratio $\approx 100$, i.e., analytical gradient needs $\sim 
 
 | Paper | Contribution | Relation to this work |
 |---|---|---|
-| Peruzzo et al. (2014) | First VQE experiment (photonic, HeH⁺) | Proposed the VQE framework used here |
+| [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]] | First VQE experiment (photonic, HeH⁺) | Proposed the VQE framework used here |
 | O'Malley/Babbush et al. (2016) | First scalable VQE hardware demo | Uses UCC ansatz on hardware; this paper refines the classical strategies |
 | Wecker, Hastings, Troyer (2015) | VQE resource estimates, Trotter for chemistry | Established circuit depth concerns motivating this work |
 | Whitfield, Biamonte, Aspuru-Guzik (2011) | UCC circuit construction via JW | Baseline circuit cost this paper improves on |
@@ -150,7 +150,7 @@ The earlier O'Malley et al. paper demonstrated VQE on hardware but used a single
 
 | Ref | What it is | Vault note? |
 |---|---|---|
-| Peruzzo et al. (2014), Nat. Commun. 5, 4213 | Original VQE experiment | No |
+| [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes|Peruzzo et al. (2014)]], Nat. Commun. 5, 4213 | Original VQE experiment | No |
 | O'Malley, Babbush et al. (2016), PRX 6, 031007 | First scalable hardware VQE; UCCSD on 2 qubits | [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] |
 | McClean, Romero, Babbush, Aspuru-Guzik (2016), NJP 18, 023023 | Framework for variational hybrid algorithms | No |
 | Wecker, Hastings, Troyer (2015), PRA 92, 042303 | Resource estimates for VQE; Trotter analysis | No |

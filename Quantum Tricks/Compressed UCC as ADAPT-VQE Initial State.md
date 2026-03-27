@@ -1,4 +1,3 @@
-# Compressed UCC as ADAPT-VQE Initial State
 
 > **Source:** Rubin, Lee, Babbush, arXiv:2109.05010 (2021)
 > **Tags:** #trick #state-preparation #ADAPT-VQE #UCC #initial-state #overlap

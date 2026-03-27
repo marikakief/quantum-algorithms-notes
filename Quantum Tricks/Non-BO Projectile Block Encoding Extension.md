@@ -1,4 +1,3 @@
-# Non-BO Projectile Block Encoding Extension
 
 > **Source:** Rubin, Berry, Kononov, Malone, Khattar, White, Lee, Neven, Babbush, Baczewski, arXiv:2308.12352
 > **Tags:** #trick #block-encoding #first-quantized #non-Born-Oppenheimer #qubitization #plane-wave

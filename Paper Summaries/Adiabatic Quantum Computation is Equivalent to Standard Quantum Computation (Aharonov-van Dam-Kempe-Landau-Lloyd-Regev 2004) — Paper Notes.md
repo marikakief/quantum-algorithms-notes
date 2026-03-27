@@ -322,7 +322,7 @@ The restricted Hamiltonians $H''_{S,\ell}$ match the 3-local versions when proje
 ## Connections to later work
 
 ### [[Hamiltonian simulation]]
-Corollary 1.2 says adiabatic computation with explicit sparse Hamiltonians is equivalent to circuit-model QC. This places sparse Hamiltonian simulation squarely in BQP. The [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders]] paper builds directly on this, providing explicit product-formula algorithms for the simulation task.
+Corollary 1.2 says adiabatic computation with explicit sparse Hamiltonians is equivalent to circuit-model QC. This places sparse [[Hamiltonian simulation]] squarely in BQP. The [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders]] paper builds directly on this, providing explicit product-formula algorithms for the simulation task.
 
 ### Quantum algorithms for differential equations
 The [[History-State Encoding with Unary Clock|history-state construction]] is the direct ancestor of the history-state encodings used in [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|quantum ODE/PDE algorithms]]. The [[Identity-Gate Padding for Output Amplification|identity-gate padding trick]] reappears as [[History-State Padding for Final-Time Readout|history-state padding for final-time readout]].
@@ -357,9 +357,9 @@ The paper introduces the [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|tech
 
 - Kitaev, Shen & Vyalyi (2002) — *Classical and Quantum Computation* (AMS). Source of the [[History-State Encoding with Unary Clock|history-state construction]] and the geometric lemma (Lemma 14.4)
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes|Farhi, Goldstone, Gutmann & Sipser (2000)]] — initiated adiabatic QC
-- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — adiabatic state generation, first sparse Hamiltonian simulation, showed adiabatic computation with sparse Hamiltonians can be simulated by circuits
+- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — adiabatic state generation, first sparse [[Hamiltonian simulation]], showed adiabatic computation with sparse Hamiltonians can be simulated by circuits
 - Reichardt (2004) — version of the adiabatic theorem used (Theorem 2.1); based on Avron & Elgart (1999)
-- Kempe & Regev (2003) — 3-local Hamiltonian is QMA-complete; source of the [[Perturbation Lemma for Locality Reduction|perturbation technique]] for locality reduction
+- [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes|Kempe & Regev (2003)]] — 3-local Hamiltonian is QMA-complete; source of the [[Perturbation Lemma for Locality Reduction|perturbation technique]] for locality reduction
 - van Dam, Mosca & Vazirani (2001) — showed adiabatic QC can be simulated by standard QC (the easy direction)
 - Sinclair & Jerrum (1988) — conductance bound (Theorem 2.5) used for [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|spectral gap analysis]]
 

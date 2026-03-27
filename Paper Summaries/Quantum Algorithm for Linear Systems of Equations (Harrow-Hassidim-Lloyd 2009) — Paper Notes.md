@@ -28,7 +28,7 @@ The paper emphasizes that $|x\rangle$ is useful not for reading out all of $\vec
 
 ## The algorithm
 
-### Step 1: Hamiltonian simulation
+### Step 1: [[Hamiltonian simulation]]
 
 Use $A$ as a Hamiltonian and simulate $e^{iAt}$ via [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|sparse Hamiltonian simulation]]. If $A$ is $s$-sparse, this costs $\tilde{O}(\log(N) s^2 t)$ per application.
 
@@ -101,7 +101,7 @@ $$
 $$
 
 Breaking this down:
-- $\log(N)$: from Hamiltonian simulation (exponential speedup over classical $O(N)$)
+- $\log(N)$: from [[Hamiltonian simulation]] (exponential speedup over classical $O(N)$)
 - $s^2$: from [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|sparse simulation]] sparsity dependence
 - $\kappa^2$: $\kappa$ from amplitude amplification, another $\kappa$ from $t_0 = O(\kappa/\epsilon)$
 - $1/\epsilon$: from phase estimation precision needed for eigenvalue inversion
@@ -164,7 +164,7 @@ Scott Aaronson's essay [*Quantum Machine Learning Algorithms: Read the Fine Prin
 
 1. **State preparation.** Loading $|b\rangle$ from classical data requires either a QRAM or a structured formula for the amplitudes. If preparing $|b\rangle$ takes $n^c$ time, the exponential advantage is gone at step one.
 
-2. **Hamiltonian simulation access.** Applying $e^{iAt}$ requires $A$ to be sparse (or have other special structure) with efficiently-queryable entries. For dense or unstructured $A$, this step alone kills the speedup.
+2. **[[Hamiltonian simulation]] access.** Applying $e^{iAt}$ requires $A$ to be sparse (or have other special structure) with efficiently-queryable entries. For dense or unstructured $A$, this step alone kills the speedup.
 
 3. **Condition number.** HHL's runtime grows linearly in $\kappa$. If $\kappa = n^c$, the advantage disappears. The BQP-completeness result (Theorem 4 above) shows that improving $\kappa$-dependence below linear would have complexity-theoretic consequences.
 
@@ -190,13 +190,13 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 
 ## References within this paper
 
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2007)]] — sparse Hamiltonian simulation used for $e^{iAt}$
-- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — additional Hamiltonian simulation techniques
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2007)]] — sparse [[Hamiltonian simulation]] used for $e^{iAt}$
+- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — additional [[Hamiltonian simulation]] techniques
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — eigenvalue measurement (phase estimation foundation)
 - Luis & Peřina (1996), Buzek, Derka & Massar (1999) — optimized phase estimation with sinusoidal weights
 - Cleve, Ekert, Macchiavello & Mosca (1998) — quantum phase estimation
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard, Høyer, Mosca & Tapp (2002)]] — [[Standard Amplitude Amplification|amplitude amplification]] and [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]]
-- Grover & Rudolph (2002) — efficient state preparation for integrable distributions
+- [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover & Rudolph (2002)]] — efficient state preparation for integrable distributions
 - Shewchuk (1994) — conjugate gradient method (classical comparison)
 - Simon (1997) — Simon's problem (used in oracle lower bounds)
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — first exponential quantum speedup; established the Fourier-sampling paradigm
@@ -215,7 +215,7 @@ The essay also highlights forrelation (Aaronson-Ambainis 2014) as a cleaner sepa
 - [[Quantum Linear Matrix Equations — Paper Notes]] — matrix equation generalization
 - Clader-Jacobs-Sprouse (2013), arXiv:1301.2340 — preconditioned QLSA; oracle-based state prep, SPAI preconditioning, EM scattering application
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes]] — preconditioned QLSP via block-encoding + QSVT; supersedes Clader et al.
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — Hamiltonian simulation backbone
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[Hamiltonian simulation]] backbone
 - [[Quantum Principal Component Analysis (Lloyd-Mohseni-Rebentrost 2014) — Paper Notes|Lloyd, Mohseni & Rebentrost (2014)]] — extends HHL ideas; [[Density Matrix Exponentiation via Partial Swap|density matrix exponentiation]] for non-sparse matrices
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — improves to near-optimal $O(\kappa\,\mathrm{polylog}(\kappa/\varepsilon))$ via adiabatic scheduling; direct successor to HHL
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — achieves the optimal $O(\kappa\log(1/\varepsilon))$ lower bound via discrete adiabatic theorem; the definitive successor to HHL

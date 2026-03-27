@@ -1,4 +1,3 @@
-# Number-Basis Postselection for Error Mitigation
 
 > **Source:** Huggins, McClean, Rubin, Jiang, Wiebe, Whaley, Babbush, arXiv:1907.13117
 > **Tags:** #trick #error-mitigation #postselection #measurement #NISQ #quantum-chemistry #symmetry-verification

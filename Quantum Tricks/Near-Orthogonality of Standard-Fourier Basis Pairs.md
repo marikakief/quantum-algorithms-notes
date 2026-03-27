@@ -1,4 +1,3 @@
-# Near-Orthogonality of Standard-Fourier Basis Pairs
 
 > **Source:** Aaronson & Ambainis, arXiv:1411.5729 (2015)
 > **Tags:** #trick #lower-bound #query-complexity #Fourier-analysis #information-theory

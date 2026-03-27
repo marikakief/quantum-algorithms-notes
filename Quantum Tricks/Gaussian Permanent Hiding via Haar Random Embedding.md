@@ -1,4 +1,3 @@
-# Gaussian Permanent Hiding via Haar Random Embedding
 
 > **Source:** Aaronson & Arkhipov, arXiv:1011.3245
 > **Tags:** #trick #complexity-theory #BosonSampling #permanent #average-case #quantum-supremacy

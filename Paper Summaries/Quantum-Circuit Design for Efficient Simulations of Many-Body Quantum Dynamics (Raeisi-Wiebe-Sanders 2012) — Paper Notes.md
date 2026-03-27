@@ -129,7 +129,7 @@ The $n^2$ (vs $n^3$ in some earlier work) improvement for physically local Hamil
 
 ## Limits / caveats
 
-- Not optimal in precision scaling: $\varepsilon^{o(1)}$ vs the $\log(1/\varepsilon)$ now achievable via [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]. For precision-sensitive applications, product formulas are outdated.
+- Not optimal in precision scaling: $\varepsilon^{o(1)}$ vs the $\log(1/\varepsilon)$ now achievable via [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]. For precision-sensitive applications, [[product formula]]s are outdated.
 - Rigorous Trotter-error bounds are extremely loose. The paper's own numerics show they overestimate by ~$10^6$ for random Hamiltonians. The commutator-aware bounds of [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs et al. (2019)]] improve this significantly.
 - The $5^{\chi-1}$ factor in gate counts grows rapidly with Suzuki order $\chi$. High-order formulas have large constants.
 - Assumes $k$-local structure is explicitly given. Not applicable to black-box sparse Hamiltonians.
@@ -152,7 +152,7 @@ See also (existing trick cards): [[Suzuki Recursion for Ordered Exponentials]], 
 |---|---|
 | [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes\|Wiebe-Berry-Høyer-Sanders (2010)]] | Core integrator bounds (Suzuki recursion, order-$\chi$ error) |
 | [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes\|Wiebe-Berry-Høyer-Sanders (2011)]] | End-to-end sparse simulation predecessor |
-| [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes\|Berry et al. (2005)]] | Sparse Hamiltonian simulation baseline |
+| [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes\|Berry et al. (2005)]] | Sparse [[Hamiltonian simulation]] baseline |
 | [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes\|Dawson & Nielsen (2005)]] | Cited for efficient rotation synthesis in discrete gate set |
 | Kitaev (2003), Ann. Phys. | Original honeycomb model definition |
 | Bardeen, Cooper & Schrieffer (1957), Phys. Rev. | Original BCS superconductivity model |

@@ -1,4 +1,3 @@
-# Quantum Tricks — Index
 
 > **Purpose:** Second-brain library of advanced, reusable quantum algorithmic primitives (beyond standard QFT/Grover).
 > **Search:** via qmd (collection: `obsidian`) and Obsidian search.
@@ -148,7 +147,7 @@ qmd query "low-energy phase estimation trick sqrt Delta lambda"
 - [[Magnitude-Banded Hamiltonian Decomposition]]
 - [[Block-Hamiltonian Embedding for Unitary Synthesis]]
 
-### From randomized product formulas (Quantum q-2019-09-02-182)
+### From randomized [[product formula]]s (Quantum q-2019-09-02-182)
 - [[Permutation Averaging for Product-Formula Error Cancellation]]
 - [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm]]
 - [[Nondegenerate-vs-Degenerate Taylor-Term Bookkeeping]]

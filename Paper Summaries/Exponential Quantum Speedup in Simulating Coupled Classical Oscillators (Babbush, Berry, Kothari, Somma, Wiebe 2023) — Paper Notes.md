@@ -71,9 +71,9 @@ The sparse oracle $S$ provides the positions and values of nonzero entries in $K
 
 The block encoding satisfies $\langle 0| U_B |0\rangle \approx B/\sqrt{2\aleph d}$, where $\aleph = \kappa_{\max}/m_{\min}$. The normalization $\Lambda = \sqrt{2\aleph d}$ is the block encoding factor.
 
-The $\sqrt{d}$ factor (not the usual $d$) in $\Lambda$ comes from a single sparse-state preparation — standard Hamiltonian simulation uses matched preparation/inverse-preparation (each contributing $\sqrt{d}$) for an overall $d$ factor. Here only one preparation is needed because $B$ is already the "half" of $A$.
+The $\sqrt{d}$ factor (not the usual $d$) in $\Lambda$ comes from a single sparse-state preparation — standard [[Hamiltonian simulation]] uses matched preparation/inverse-preparation (each contributing $\sqrt{d}$) for an overall $d$ factor. Here only one preparation is needed because $B$ is already the "half" of $A$.
 
-### Step 3: Hamiltonian simulation
+### Step 3: [[Hamiltonian simulation]]
 
 Simulate $e^{-itH}$ using [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]/QSP (Low & Chuang) or the [[Truncated Taylor Series Simulation|truncated Taylor series]] approach. Query complexity:
 
@@ -160,8 +160,8 @@ The energy-balanced encoding is the critical innovation. The Costa et al. wave e
 ### Papers without vault notes
 
 - Childs, Cleve, Deotto, Farhi, Gutmann, Spielman (2003) — Glued trees problem: exponential quantum walk speedup. The classical lower bound in Theorem 2 is inherited from this result.
-- Costa, Jordan, Ostrander (2019) — Quantum algorithm for the wave equation via Hamiltonian simulation. A special case of the coupled oscillators problem (uniform masses, local couplings, position-based encoding). Only polynomial speedup.
-- Low & Chuang (2017, 2019) — QSP and [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]. The paper uses these for optimal Hamiltonian simulation of $H$.
+- Costa, Jordan, Ostrander (2019) — Quantum algorithm for the wave equation via [[Hamiltonian simulation]]. A special case of the coupled oscillators problem (uniform masses, local couplings, position-based encoding). Only polynomial speedup.
+- Low & Chuang (2017, 2019) — QSP and [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]. The paper uses these for optimal [[Hamiltonian simulation]] of $H$.
 - Berry, Childs, Cleve, Kothari, Somma (2015) — [[Truncated Taylor Series Simulation]]. Alternative simulation method applicable here.
 - Berry, Childs, Kothari (2015) — Nearly optimal Hamiltonian simulation. Another usable simulation backend.
 - Grover & Sengupta (2002) — Classical analog of Grover search via coupled pendulums. Presaged the classical-quantum oscillator connection.
@@ -180,8 +180,8 @@ The energy-balanced encoding is the critical innovation. The Costa et al. wave e
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — QLSP comparison; this paper argues QLSP-based ODE approaches are suboptimal for oscillator dynamics due to condition-number overhead
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — follow-on to the optimal QLSP solver; constant-factor results affect practical cost of QLSP-based ODE approaches compared here
 - [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes]] — Same author group, same year; that paper addresses quantum chemistry dynamics, this one addresses classical dynamics
-- [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] — Real-space Hamiltonian simulation with sparse oracles
-- [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — Same authors (Kothari, Babbush); quartic (not exponential) speedup via sparse Hamiltonian simulation of the Kikuchi matrix for planted inference problems
+- [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] — Real-space [[Hamiltonian simulation]] with sparse oracles
+- [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — Same authors (Kothari, Babbush); quartic (not exponential) speedup via sparse [[Hamiltonian simulation]] of the Kikuchi matrix for planted inference problems
 - [[Analyzing Prospects for Quantum Advantage in Topological Data Analysis (Berry, Su, Babbush et al 2024) — Paper Notes]] — parallel quantum advantage analysis from the same group; honest speedup regime assessment
 - [[Is There Evidence for Exponential Quantum Advantage in Quantum Chemistry (Lee, Babbush, Chan et al 2022) — Paper Notes]] — companion paper asking the same question for quantum chemistry; both papers use an "honest speedup assessment" framework
 

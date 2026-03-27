@@ -1,4 +1,3 @@
-# Split-Operator Real-Space Simulation on a Quantum Computer
 
 > **Source:** Kassal, Jordan, Love, Mohseni, Aspuru-Guzik, PNAS 105, 18681 (2008); based on Zalka (1998) and Wiesner (1996)
 > **Tags:** #trick #quantum-simulation #real-space #QFT #split-operator

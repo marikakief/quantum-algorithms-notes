@@ -15,7 +15,7 @@ Maps exponentially many coupled classical oscillators to sparse block-Hamiltonia
 1. Rewrite Newton's equations $\ddot{y} = -Ay$ for $2^n$ oscillators as first-order dynamics, factoring $A = BB^\dagger$.
 2. Simulate the block Hamiltonian $H = \begin{pmatrix}0&B\\B^\dagger&0\end{pmatrix}$: amplitudes of the evolved quantum state encode the momenta and displacements of the classical oscillators.
 3. Build $B$ using an incidence-matrix structure for sparse coupling networks (graph of springs/masses).
-4. Use block-encoding + near-optimal sparse Hamiltonian simulation to get complexity polynomial in $n$, almost linear in evolution time, and sublinear in sparsity.
+4. Use block-encoding + near-optimal sparse [[Hamiltonian simulation]] to get complexity polynomial in $n$, almost linear in evolution time, and sublinear in sparsity.
 5. Extract kinetic/potential energy ratios via projector/amplitude estimation on the encoded state.
 
 ---

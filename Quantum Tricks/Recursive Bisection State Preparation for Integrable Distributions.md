@@ -1,4 +1,3 @@
-# Recursive Bisection State Preparation for Integrable Distributions
 
 > **Source:** Grover & Rudolph, arXiv:quant-ph/0208112 (2002)
 > **Tags:** #trick #state-preparation #amplitude-loading #log-concave #sampling

@@ -1,4 +1,3 @@
-# Pauli-String Exponential via Parity-CNOT Ladder
 
 > **Source:** Raeisi, Wiebe & Sanders, arXiv:1108.4318 (2012)
 > **Tags:** #trick #circuit-synthesis #hamiltonian-simulation #Pauli-string #product-formula

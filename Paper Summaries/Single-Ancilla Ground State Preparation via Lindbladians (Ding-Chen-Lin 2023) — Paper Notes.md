@@ -6,12 +6,12 @@
 
 ## The problem
 
-Prepare the ground state $|\psi_0\rangle$ of a Hamiltonian $H$ with spectral gap $\Delta = \lambda_1 - \lambda_0 > 0$, on an early fault-tolerant quantum computer. Specifically: given access to Hamiltonian simulation $e^{\pm i H t}$ and a simple coupling operator $A$, prepare a state $\rho_{\text{out}}$ with $\|\rho_{\text{out}} - |\psi_0\rangle\langle\psi_0|\|_1 \leq \epsilon$.
+Prepare the ground state $|\psi_0\rangle$ of a Hamiltonian $H$ with spectral gap $\Delta = \lambda_1 - \lambda_0 > 0$, on an early fault-tolerant quantum computer. Specifically: given access to [[Hamiltonian simulation]] $e^{\pm i H t}$ and a simple coupling operator $A$, prepare a state $\rho_{\text{out}}$ with $\|\rho_{\text{out}} - |\psi_0\rangle\langle\psi_0|\|_1 \leq \epsilon$.
 
 Unlike [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes|QPE/QSVT-based methods]], this algorithm:
 - Uses only **one ancilla qubit** (plus system qubits)
 - Requires no initial-state overlap $\gamma = \langle\psi_0|\phi_0\rangle$ — it can work from **zero overlap**
-- Needs only mid-circuit measurement/reset of the single ancilla and Hamiltonian simulation
+- Needs only mid-circuit measurement/reset of the single ancilla and [[Hamiltonian simulation]]
 - Is a quantum analogue of classical Markov chain Monte Carlo
 
 The cost is measured primarily by $T_{H,\text{total}}$, the total Hamiltonian simulation time (sum of all evolution times across all circuit executions).
@@ -28,7 +28,7 @@ The key technical contributions:
 2. **Efficient circuit** (Proposition 5): telescoping cancellation of back-and-forth Hamiltonian evolution reduces the total simulation time per step to $O(S_s)$ where $S_s = \Theta(\Delta^{-1} \cdot \text{polylog})$.
 3. **Convergence analysis** under ETH-type assumptions (Theorem 7, Theorem 26): the Lindbladian has a unique fixed point and polynomial mixing time.
 
-**My assessment:** This is a genuinely different approach to ground-state preparation — not a refinement of QPE or variational methods, but a quantum MCMC strategy. The single-ancilla requirement is attractive for early fault-tolerant hardware. The main limitation is the cost: the total Hamiltonian simulation time scales as $\tilde{O}(e^{\Theta(T^2/\epsilon)})$ for the continuous-time version or $\tilde{O}(e^{\Theta(T^{1+1/p}/\epsilon^{1/p})})$ for the $p$-th order discrete version. This is much worse than [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes|Lin-Tong (2020)]] or [[QET-U — Ground-State Preparation and Energy Estimation on Early Fault-Tolerant QC (Dong-Lin-Tong 2022) — Paper Notes|QET-U]] in asymptotic terms, but the hardware requirements are radically simpler. The mixing time — which determines $T$ — remains the big unknown and is likely system-dependent, analogous to classical MCMC.
+**My assessment:** This is a genuinely different approach to ground-state preparation — not a refinement of QPE or variational methods, but a quantum MCMC strategy. The single-ancilla requirement is attractive for early fault-tolerant hardware. The main limitation is the cost: the total [[Hamiltonian simulation]] time scales as $\tilde{O}(e^{\Theta(T^2/\epsilon)})$ for the continuous-time version or $\tilde{O}(e^{\Theta(T^{1+1/p}/\epsilon^{1/p})})$ for the $p$-th order discrete version. This is much worse than [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes|Lin-Tong (2020)]] or [[QET-U — Ground-State Preparation and Energy Estimation on Early Fault-Tolerant QC (Dong-Lin-Tong 2022) — Paper Notes|QET-U]] in asymptotic terms, but the hardware requirements are radically simpler. The mixing time — which determines $T$ — remains the big unknown and is likely system-dependent, analogous to classical MCMC.
 
 ---
 
@@ -84,7 +84,7 @@ $$\overrightarrow{\prod_l} e^{-i\frac{\sqrt{\tau}}{2}\tilde{H}_l} \cdot \overlef
 
 Each factor $e^{-i\frac{\sqrt{\tau}}{2}\sigma_l \otimes A(s_l)}$ decomposes as $(I \otimes e^{iHs_l}) \cdot \tilde{A}_l(\sqrt{\tau}) \cdot (I \otimes e^{-iHs_l})$ where $\tilde{A}_l$ involves only the simple operator $A$ and the ancilla.
 
-**Proposition 5 (Cancellation):** Consecutive Hamiltonian evolutions telescope: $e^{-iHs_l} \cdot e^{iHs_{l+1}} = e^{iH\tau_s}$, reducing the per-step Hamiltonian simulation cost from $O(M_s \cdot S_s)$ to $O(S_s)$.
+**Proposition 5 (Cancellation):** Consecutive Hamiltonian evolutions telescope: $e^{-iHs_l} \cdot e^{iHs_{l+1}} = e^{iH\tau_s}$, reducing the per-step [[Hamiltonian simulation]] cost from $O(M_s \cdot S_s)$ to $O(S_s)$.
 
 The resulting quantum channel $W(\tau)$ (Eq. 16) implements one step of the dissipative evolution. The full iteration is:
 

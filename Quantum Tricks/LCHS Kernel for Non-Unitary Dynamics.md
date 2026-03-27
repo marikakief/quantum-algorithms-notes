@@ -1,6 +1,5 @@
-# LCHS Kernel for Non-Unitary Dynamics
 
-> **Source:** Dong An, Jin-Peng Liu, and Lin Lin, *Linear combination of Hamiltonian simulation for nonunitary dynamics with optimal state preparation cost*, arXiv:2303.01029, Phys. Rev. Lett. **131**, 150603 (2023); used in *Quantum algorithm for linear matrix equations*, arXiv:2508.02822  
+> **Source:** Dong An, Jin-Peng Liu, and Lin Lin, *Linear combination of [[Hamiltonian simulation]] for nonunitary dynamics with optimal state preparation cost*, arXiv:2303.01029, Phys. Rev. Lett. **131**, 150603 (2023); used in *Quantum algorithm for linear matrix equations*, arXiv:2508.02822  
 > **Links:** [LCHS arXiv](https://arxiv.org/abs/2303.01029) · [matrix equations arXiv](https://arxiv.org/abs/2508.02822)  
 > **Tags:** #trick #non-unitary #dissipative #hamiltonian-simulation
 
@@ -8,7 +7,7 @@
 
 Represent a decaying non-unitary evolution such as \(e^{-tQ}\), when the Hermitian part of \(Q\) is positive, as a linear combination / integral over unitary evolutions of related Hermitian generators.
 
-Concretely: the LCHS identity writes the non-unitary propagator as a weighted integral (or sum) of unitary Hamiltonian simulation operators. This is fundamentally different from dilation-based approaches (which embed into a larger Hilbert space and then postselect) or from [[QSVT Meta-Template|QSVT]] (which uses the spectral mapping theorem). LCHS does not require either; it achieves optimal state preparation cost directly.
+Concretely: the LCHS identity writes the non-unitary propagator as a weighted integral (or sum) of unitary [[Hamiltonian simulation]] operators. This is fundamentally different from dilation-based approaches (which embed into a larger Hilbert space and then postselect) or from [[QSVT Meta-Template|QSVT]] (which uses the spectral mapping theorem). LCHS does not require either; it achieves optimal state preparation cost directly.
 
 ## Why it matters
 

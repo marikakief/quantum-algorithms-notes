@@ -1,4 +1,3 @@
-# Operator-to-State Mapping for Heisenberg Evolution
 
 > **Tags:** #trick #heisenberg-picture #operator-growth #scrambling
 > **Source:** Shadow Hamiltonian Simulation, Nature Comms 16, 3486 (2025)

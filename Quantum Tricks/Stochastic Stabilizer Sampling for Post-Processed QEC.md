@@ -1,4 +1,3 @@
-# Stochastic Stabilizer Sampling for Post-Processed QEC
 
 > **Source:** McClean, Jiang, Rubin, Babbush, Neven, arXiv:1903.05786
 > **Tags:** #trick #sampling #error-mitigation #stabilizer-codes #NISQ #measurement

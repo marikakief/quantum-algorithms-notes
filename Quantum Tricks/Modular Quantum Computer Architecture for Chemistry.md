@@ -1,4 +1,3 @@
-# Modular Quantum Computer Architecture for Chemistry
 
 > **Source:** Reiher, Wiebe, Svore, Wecker, Troyer, arXiv:1605.03590 (Section III, Table II)
 > **Tags:** #trick #architecture #fault-tolerant #surface-code #T-factory #resource-estimation

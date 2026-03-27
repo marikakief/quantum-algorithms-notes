@@ -83,7 +83,7 @@ The comparator costs exactly $n$ Toffoli gates. The arcsine costs $\Omega(n^2)$ 
 
 ---
 
-## Why this matters for Hamiltonian simulation
+## Why this matters for [[Hamiltonian simulation]]
 
 Black-box state preparation is the PREPARE oracle in:
 - **[[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Qubitization]]** — preparing $\sum_\ell \sqrt{|\alpha_\ell|/\lambda} |\ell\rangle$ for LCU coefficients

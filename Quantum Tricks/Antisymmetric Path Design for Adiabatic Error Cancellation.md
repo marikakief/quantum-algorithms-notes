@@ -1,4 +1,3 @@
-# Antisymmetric Path Design for Adiabatic Error Cancellation
 
 > **Source:** Kieferová, Wiebe, *On The Power Of Coherently Controlled Quantum Adiabatic Evolutions*, NJP 16, 123034 (2014); arXiv:1403.6545
 > **Tags:** #trick #adiabatic #path-design #diabatic-error #polynomial-interpolation #state-preparation

@@ -10,7 +10,7 @@ Structured notes on quantum algorithms papers, built around a network of paper s
 
 Paper notes cover the problem being solved, the main result, the algorithm or construction in detail, key theorems with exact complexity bounds, comparison with prior work, limitations, and reusable techniques. Trick cards are standalone explanations of a single idea — a technique, construction, or proof method that can be applied in different contexts. Everything is cross-linked.
 
-The collection skews toward quantum algorithms (Hamiltonian simulation, quantum walk, linear systems, ground state preparation), complexity (QMA, BQP), and quantum machine learning. Coverage is uneven and reflects what I was thinking about at the time, not a systematic survey of the field.
+The collection skews toward quantum algorithms ([[Hamiltonian simulation]], quantum walk, linear systems, ground state preparation), complexity (QMA, BQP), and quantum machine learning. Coverage is uneven and reflects what I was thinking about at the time, not a systematic survey of the field.
 
 ## What this isn't
 
@@ -26,9 +26,15 @@ The collection skews toward quantum algorithms (Hamiltonian simulation, quantum 
 Quantum Foundations/
 ├── Paper Summaries/       (~187 paper notes)
 ├── Quantum Tricks/        (~513 technique cards)
+├── Comparison Tables/     (resource estimate & method comparison tables)
+│   ├── Quantum Chemistry — NISQ Experiments & VQE.md
+│   ├── Quantum Chemistry — Fault-Tolerant Resource Estimates.md
+│   ├── Quantum Chemistry — Circuit Primitives.md
+│   ├── Quantum Chemistry — Technique Crosswalk.md
+│   └── Hamiltonian Simulation — Time-Dependent Methods.md
 ├── Concept Hubs/          (topic overview pages)
 ├── Paper Index.md         (topical index)
-├── Hamiltonian Simulation — Comparison Tables.md
+├── Hamiltonian Simulation — Comparison Tables.md  (hub → links to Comparison Tables/)
 ├── FeMoCo Resource Estimation Timeline.md
 ├── Quantum algorithm zoo.md
 └── README.md
@@ -38,18 +44,20 @@ Quantum Foundations/
 
 **Quantum Tricks** — self-contained technique cards. Each one explains a single reusable idea: what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
 
-**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., Hamiltonian simulation, product formulas, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
+**Comparison Tables** — resource estimate and method comparison tables, split by topic. The hub note [[Hamiltonian Simulation — Comparison Tables]] links to all five sub-notes. Includes NISQ experiments, fault-tolerant resource estimates (FeMoCo, CYP P450, Diamond, LNO, stopping power), circuit primitives (product formulas, Trotter depth, state preparation), a technique crosswalk mapping tricks to papers, and time-dependent simulation methods.
 
-**Paper Index** — all paper notes organised by topic.
+**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., [[Hamiltonian simulation]], [[product formula]]s, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
 
-**FeMoCo Resource Estimation Timeline** — standalone synthesis note tracking how FeMoCo quantum resource estimates dropped from ~10¹⁴ to ~10⁹ Toffolis across 8 years of algorithmic improvements.
+**[[Paper Index]]** — all paper notes organised by topic.
+
+**[[FeMoCo Resource Estimation Timeline]]** — standalone synthesis note tracking how FeMoCo quantum resource estimates dropped from ~10¹⁴ to ~10⁹ Toffolis across 8 years of algorithmic improvements.
 
 ## Recommended Obsidian Setup
 
 ### Core plugins (built-in, just enable them)
 
 - **Backlinks** — shows which notes link to the current note. Essential for trick cards (you can see every paper that uses a technique). Enable "Backlinks in document" to see them inline.
-- **Graph view** — visualise the link structure. Try filtering to just `path:Paper Summaries` or `path:Quantum Tricks` to see clusters. The Hamiltonian simulation cluster is particularly dense.
+- **Graph view** — visualise the link structure. Try filtering to just `path:Paper Summaries` or `path:Quantum Tricks` to see clusters. The [[Hamiltonian simulation]] cluster is particularly dense.
 - **Page preview** — hover over a `[[wikilink]]` to see the target note without leaving the current one. Very useful for quickly checking a trick card while reading a paper note.
 - **Outline** — table of contents for long paper notes.
 - **Search** — Obsidian's search handles `[[wikilinks]]` natively and can filter by path, tag, etc.

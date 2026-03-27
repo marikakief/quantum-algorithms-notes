@@ -1,4 +1,3 @@
-# Fractional-Query to Discrete-Query Reduction
 
 > **Source:** Dominic W. Berry, Andrew M. Childs, Richard Cleve, Robin Kothari, and Rolando D. Somma, *Exponential improvement in precision for simulating sparse Hamiltonians*, arXiv:1312.1414 (STOC 2014)  
 > **Links:** [arXiv](https://arxiv.org/abs/1312.1414)  

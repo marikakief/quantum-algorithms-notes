@@ -1,4 +1,3 @@
-# Hybrid Classical-Quantum Chemistry Workflow
 
 > **Source:** Reiher, Wiebe, Svore, Wecker, Troyer, arXiv:1605.03590
 > **Tags:** #trick #quantum-chemistry #resource-estimation #workflow #fault-tolerant

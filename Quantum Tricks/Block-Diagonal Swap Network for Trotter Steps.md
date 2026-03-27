@@ -1,4 +1,3 @@
-# Block-Diagonal Swap Network for Trotter Steps
 
 > **Source:** McClean, Faulstich, Zhu, O'Gorman, Qiu, White, Babbush, Lin, arXiv:1909.00028
 > **Tags:** #trick #Trotter #fermionic-swap #block-diagonal #circuit-compilation #linear-connectivity

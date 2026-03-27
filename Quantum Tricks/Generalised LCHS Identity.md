@@ -1,11 +1,10 @@
-# Generalised LCHS Identity
 
 > **Source:** An, Childs, Lin, arXiv:2312.03916 (Theorem 6)
 > **Tags:** #trick #LCHS #non-unitary #hamiltonian-simulation #identity
 
 ## What it does
 
-Expresses a general non-unitary propagator $\mathcal{T} e^{-\int_0^t A(s)\, ds}$ (with dissipative $A$) as a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of unitary Hamiltonian simulation operators, with a **freely choosable** kernel function rather than the fixed Cauchy kernel of the original [[LCHS Kernel for Non-Unitary Dynamics|LCHS]].
+Expresses a general non-unitary propagator $\mathcal{T} e^{-\int_0^t A(s)\, ds}$ (with dissipative $A$) as a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of unitary [[Hamiltonian simulation]] operators, with a **freely choosable** kernel function rather than the fixed Cauchy kernel of the original [[LCHS Kernel for Non-Unitary Dynamics|LCHS]].
 
 ## The trick
 
@@ -19,7 +18,7 @@ The freedom to choose $f$ is what makes the improved LCHS possible. The only con
 
 ## When to reach for it
 
-Whenever you need to implement a non-unitary operator $e^{-tA}$ with $A$ dissipative (positive Hermitian part) and you have access to Hamiltonian simulation of $kL + H$. This is the foundation for:
+Whenever you need to implement a non-unitary operator $e^{-tA}$ with $A$ dissipative (positive Hermitian part) and you have access to [[Hamiltonian simulation]] of $kL + H$. This is the foundation for:
 - Quantum ODE solvers (this paper)
 - [[Laplace-Transform LCU Lifting for Eigenvalue Transforms|Lap-LCHS]] for general eigenvalue transforms
 - Gibbs state preparation

@@ -1,4 +1,3 @@
-# Adaptive QROM for Function Evaluation
 
 > **Source:** Sanders, Berry, Costa, Tessler, Wiebe, Gidney, Neven, Babbush, arXiv:2007.07391
 > **Tags:** #trick #QROM #function-evaluation #arithmetic #heuristic

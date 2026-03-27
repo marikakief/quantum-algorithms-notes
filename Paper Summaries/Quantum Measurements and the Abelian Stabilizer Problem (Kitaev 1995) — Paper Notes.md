@@ -13,7 +13,7 @@ The paper also introduces:
 - A general theory of reversible quantum computation (garbage-free)
 - A polynomial quantum Fourier transform for arbitrary finite Abelian groups
 
-This is one of the most important papers in quantum computing. The phase estimation procedure defined here became the backbone of quantum algorithms for eigenvalue problems, Hamiltonian simulation readout, and quantum chemistry — and it's the direct ancestor of the [[Gapped Phase Estimation|phase estimation]] used in [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]], [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]], and essentially every algorithm that needs to extract eigenvalue information from a unitary.
+This is one of the most important papers in quantum computing. The phase estimation procedure defined here became the backbone of quantum algorithms for eigenvalue problems, [[Hamiltonian simulation]] readout, and quantum chemistry — and it's the direct ancestor of the [[Gapped Phase Estimation|phase estimation]] used in [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd]], [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]], and essentially every algorithm that needs to extract eigenvalue information from a unitary.
 
 ---
 
@@ -129,8 +129,8 @@ Previous polynomial QFT algorithms existed only for $q = 2^n$ (Coppersmith) or s
 
 ## References within this paper
 
-- Shor (1994) — factoring and discrete log via period-finding; this paper gives an alternative route via eigenvalue measurement
-- Simon (1994) — finding hidden subgroups; Kitaev generalizes Simon's procedure
+- [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — factoring and discrete log via period-finding; this paper gives an alternative route via eigenvalue measurement
+- [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — finding hidden subgroups; Kitaev generalizes Simon's procedure
 - Deutsch (1985, 1989) — quantum Turing machines and circuits
 - Yao (1993) — equivalence of quantum TMs and circuits
 - Bennett (1973) — reversible computation (classical)

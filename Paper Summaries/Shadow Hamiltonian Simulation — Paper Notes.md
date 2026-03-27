@@ -30,7 +30,7 @@ i.e., commutators of $H$ with operators in $S$ close within $S$. This holds auto
 $$
 \frac{d}{dt} |\rho(t); S\rangle = -iH_S |\rho(t); S\rangle.
 $$
-Shadow Hamiltonian simulation then reduces to standard Hamiltonian simulation of $H_S$.
+Shadow [[Hamiltonian simulation]] then reduces to standard [[Hamiltonian simulation]] of $H_S$.
 
 ## When $H_S$ is Hermitian
 
@@ -86,7 +86,7 @@ Under these conditions: block-encode $H_S / (d\|H_S\|_{\max})$ and simulate via 
 | Framework | What it compresses | When efficient |
 |---|---|---|
 | Shadow tomography (Aaronson 2018) | Measurement samples | Few observables, many copies |
-| Shadow Hamiltonian simulation (this paper) | Time evolution | IP satisfied, $H_S$ sparse |
+| Shadow [[Hamiltonian simulation]] (this paper) | Time evolution | IP satisfied, $H_S$ sparse |
 | Classical shadows (Huang et al. 2020) | State representation | Local observables |
 
 Note: the Invariance Property is the key condition — it is satisfied for free theories but breaks as soon as interactions generate operators outside $S$.

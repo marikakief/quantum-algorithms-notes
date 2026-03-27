@@ -56,7 +56,7 @@ All inequalities in the chain $\|H\|_{\max} \le \text{mcn}(H) \le \|H\| \le \|\t
 
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — sparse simulation; this paper asks what happens without sparsity
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]] — quantum walk simulation (sparse case)
-- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse Hamiltonian simulation
+- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse [[Hamiltonian simulation]]
 - Childs (2010, Commun. Math. Phys. 294) — quantum walk approach achieving linear-in-$d$ scaling
 
 ---

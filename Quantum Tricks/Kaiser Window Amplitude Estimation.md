@@ -1,4 +1,3 @@
-# Kaiser Window Amplitude Estimation
 
 > **Source:** Berry, Su, Gyurik, King, Basso, Del Toro Barba, Rajput, Wiebe, Dunjko, Babbush, arXiv:2209.13581, PRX Quantum **5**, 010319 (2024)
 > **Tags:** #trick #amplitude-estimation #Kaiser-window #fault-tolerant #signal-processing

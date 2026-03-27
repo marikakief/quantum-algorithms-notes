@@ -1,4 +1,3 @@
-# Birthday-Grover Space-Time Tradeoff
 
 > **Source:** Brassard, Høyer & Tapp, arXiv:quant-ph/9705002 (1997), Corollary 3
 > **Tags:** #trick #collision #tradeoff #query-complexity #cryptography

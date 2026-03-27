@@ -1,4 +1,3 @@
-# Pauli Expectation Value Estimation
 
 > **Source:** McClean et al., NJP 18, 23023 (2016); O'Malley, Babbush et al., arXiv:1512.06860 (2016)
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]

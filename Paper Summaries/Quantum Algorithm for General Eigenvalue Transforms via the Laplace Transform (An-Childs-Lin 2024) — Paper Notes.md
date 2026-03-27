@@ -14,13 +14,13 @@ Equivalently: prepare the state $h(A)|\psi\rangle / \|h(A)|\psi\rangle\|$ for a 
 
 ## What the paper does
 
-Generalises [[LCHS Kernel for Non-Unitary Dynamics|LCHS]] from implementing a single matrix exponential $e^{-tA}$ to implementing arbitrary eigenvalue transforms $h(A)$ that have well-behaved inverse Laplace transforms. The construction — called **Lap-LCHS** — writes $h(A)$ as a double integral over Hamiltonian simulation unitaries, then discretises and implements via [[Linear Combination of Unitaries (LCU)|LCU]] with [[Standard Amplitude Amplification|amplitude amplification]].
+Generalises [[LCHS Kernel for Non-Unitary Dynamics|LCHS]] from implementing a single matrix exponential $e^{-tA}$ to implementing arbitrary eigenvalue transforms $h(A)$ that have well-behaved inverse Laplace transforms. The construction — called **Lap-LCHS** — writes $h(A)$ as a double integral over [[Hamiltonian simulation]] unitaries, then discretises and implements via [[Linear Combination of Unitaries (LCU)|LCU]] with [[Standard Amplitude Amplification|amplitude amplification]].
 
 The key identity: if $h(z) = \int_0^\infty g(t)\, e^{-zt}\, dt$ and $e^{-tA}$ has the LCHS representation $e^{-tA} = \int_\mathbb{R} f(k)\,(1-ik)^{-1}\, e^{-it(kL+H)}\, dk$ (where $A = L + iH$), then:
 
 $$h(A) = \int_0^\infty \int_\mathbb{R} \frac{f(k)\, g(t)}{1-ik}\, e^{-it(kL+H)}\, dk\, dt.$$
 
-This double integral is a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of Hamiltonian simulation unitaries. Discretise both integrals, implement each $e^{-it(kL+H)}$ via [[QSVT Meta-Template|QSVT]]-based Hamiltonian simulation, and combine via LCU.
+This double integral is a continuous [[Linear Combination of Unitaries (LCU)|LCU]] of [[Hamiltonian simulation]] unitaries. Discretise both integrals, implement each $e^{-it(kL+H)}$ via [[QSVT Meta-Template|QSVT]]-based Hamiltonian simulation, and combine via LCU.
 
 This is a genuinely different approach from [[Quantum Eigenvalue Processing and Transformation for Non-Normal Matrices (arXiv 2401.06240) — Paper Notes|QEVT]] (which uses history-state polynomial bases and QLSA) and from direct [[QSVT Meta-Template|QSVT]] (which processes singular values, not eigenvalues). Lap-LCHS works through the Laplace transform representation, which is natural for operator functions arising from dissipative dynamics and ODEs.
 
@@ -53,7 +53,7 @@ Truncate: $k \in [-K, K]$, $t \in [0, T]$. Apply Riemann sums (or higher-order q
 ### Step 4: Quantum implementation
 
 1. Prepare a two-register state encoding the quadrature weights $w(k_j, t_l)$ (state-preparation oracle).
-2. Conditionally apply $e^{-it_l(k_j L + H)}$ via [[QSVT Meta-Template|QSVT]]-based Hamiltonian simulation. The Hamiltonian $k_j L + H$ is formed from the block-encoding of $A$ via [[Linear Combination of Unitaries (LCU)|LCU]].
+2. Conditionally apply $e^{-it_l(k_j L + H)}$ via [[QSVT Meta-Template|QSVT]]-based [[Hamiltonian simulation]]. The Hamiltonian $k_j L + H$ is formed from the block-encoding of $A$ via [[Linear Combination of Unitaries (LCU)|LCU]].
 3. Un-compute the weight register (LCU protocol).
 4. Apply [[Standard Amplitude Amplification|amplitude amplification]] to boost success probability.
 
@@ -143,7 +143,7 @@ The technique is most compelling for problems where (a) the matrix is naturally 
 
 For non-normal matrices without the dissipativity constraint, [[Quantum Eigenvalue Processing and Transformation for Non-Normal Matrices (arXiv 2401.06240) — Paper Notes|QEVT]] remains the more general (if more complex) tool. And for Hermitian/normal matrices, [[QSVT Meta-Template|QSVT]] is still optimal. Lap-LCHS carves out a middle ground: dissipative non-normal matrices with Laplace-friendly target functions.
 
-The connection to Marika's work is through the Hamiltonian simulation underpinning — each term in the LCU is a standard Hamiltonian simulation problem, so improvements to simulation (whether via [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|randomised multi-product formulas]], [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|truncated Dyson series]], or stochastic QSP) directly improve Lap-LCHS.
+The connection to Marika's work is through the [[Hamiltonian simulation]] underpinning — each term in the LCU is a standard [[Hamiltonian simulation]] problem, so improvements to simulation (whether via [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|randomised multi-product formulas]], [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|truncated Dyson series]], or stochastic QSP) directly improve Lap-LCHS.
 
 ---
 
@@ -159,7 +159,7 @@ The connection to Marika's work is through the Hamiltonian simulation underpinni
 
 - [[LCHS Kernel for Non-Unitary Dynamics|An-Liu-Lin (2023)]] — the original LCHS paper (Phys. Rev. Lett. 131, 150603). This paper directly extends it.
 - [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes|An-Childs-Lin (arXiv:2312.03916)]] — introduces the generalised kernel family and near-optimal precision scaling that Lap-LCHS builds on.
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — [[QSVT Meta-Template|QSVT]]-based Hamiltonian simulation used as the inner subroutine
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — [[QSVT Meta-Template|QSVT]]-based [[Hamiltonian simulation]] used as the inner subroutine
 - [[Quantum Eigenvalue Processing and Transformation for Non-Normal Matrices (arXiv 2401.06240) — Paper Notes|An-Childs-Lin (2024)]] — QEVT, the alternative (history-state-based) approach to non-normal eigenvalue transforms by the same authors
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry et al. (2015)]] — truncated Taylor series + [[Linear Combination of Unitaries (LCU)|LCU]] method
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching ODE solver, comparison point for the inhomogeneous ODE application

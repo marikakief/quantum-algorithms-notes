@@ -1,4 +1,3 @@
-# Continuous-Time Quantum Walk Search
 
 > **Source:** Childs & Goldstone, arXiv:quant-ph/0306054 (2004); Farhi & Gutmann (1998) for complete graph case
 > **Tags:** #trick #quantum-walk #search #spatial-search #Hamiltonian

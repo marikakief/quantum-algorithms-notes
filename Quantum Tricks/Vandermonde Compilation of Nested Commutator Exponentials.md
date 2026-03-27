@@ -1,6 +1,5 @@
-# Vandermonde Compilation of Nested Commutator Exponentials
 
-> **Source:** Bagherimehrab, Berry et al., arXiv:2409.08265; building on Childs & Wiebe (2013) and Chen, Childs et al. (2022)  
+> **Source:** Bagherimehrab, Berry et al., arXiv:2409.08265; building on [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe (2013)]] and Chen, Childs et al. (2022)  
 > **Tags:** #trick #product-formulas #commutators #compilation #quantum-control
 
 ## What it does
@@ -25,7 +24,7 @@ Set $a_\ell = \ell + 1$ (arbitrary distinct nonzero values). The coefficient mat
 
 ## When to reach for it
 
-- Compiling the [[Symplectic Corrector Injection for Product Formulas|symplectic correctors]] for corrected product formulas
+- Compiling the [[Symplectic Corrector Injection for Product Formulas|symplectic correctors]] for corrected [[product formula]]s
 - Implementing $e^{c\lambda^{2m} \mathrm{ad}_A^{2m-1}(B)}$ for single-commutator correctors (Yoshida CPFs)
 - Synthesising unitaries from nested commutator generators on a quantum simulator with limited native gates
 - Any setting where you need a product-formula implementation of a commutator exponential and [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs-Wiebe recursion]] is too expensive

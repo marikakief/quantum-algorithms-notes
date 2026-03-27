@@ -1,4 +1,3 @@
-# DQI Semicircle Law for Optimization-Decoding Duality
 
 > **Source:** Jordan, Shutty, Wootters, Zalcman, Schmidhuber, King, Isakov, Khattar, Babbush, arXiv:2408.08292
 > **Tags:** #trick #quantum-optimization #coding-theory #decoding #semicircle-law #DQI

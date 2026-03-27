@@ -1,4 +1,3 @@
-# Column Synthesis via SVD-QR Decomposition
 
 > **Source:** Berry, Tong, Khattar, White, Kim, Boixo, Lin, Lee, Chan, Babbush, Rubin, arXiv:2409.11748 (2024)
 > **Tags:** #trick #unitary-synthesis #MPS #state-preparation #circuit-compilation #fault-tolerant

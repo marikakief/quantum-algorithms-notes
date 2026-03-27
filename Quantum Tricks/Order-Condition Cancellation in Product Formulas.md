@@ -1,4 +1,3 @@
-# Order-Condition Cancellation in Product Formulas
 
 > **Source:** Andrew M. Childs, Yuan Su, Minh C. Tran, Nathan Wiebe, and Shuchen Zhu, *A Theory of Trotter Error*, arXiv:1912.08854, Phys. Rev. X **11**, 011020 (2021)  
 > **Links:** [arXiv](https://arxiv.org/abs/1912.08854) · [PRX](https://doi.org/10.1103/PhysRevX.11.011020)  
@@ -6,7 +5,7 @@
 
 ## Idea
 
-A $p$-th order product formula is constructed so that all Taylor/commutator terms up to order $p$ match the true evolution exactly. These terms are not just small — they are zero by construction (the order conditions). Only $(p+1)$-fold and higher nested commutators survive.
+A $p$-th order [[product formula]] is constructed so that all Taylor/commutator terms up to order $p$ match the true evolution exactly. These terms are not just small — they are zero by construction (the order conditions). Only $(p+1)$-fold and higher nested commutators survive.
 
 ## Why it matters
 
@@ -16,7 +15,7 @@ This is also why the [[Trotter Commutator-Scaling Bound|commutator-scaling bound
 
 ## When to use it
 
-- Analyzing higher-order product formulas ([[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki $p=4,6,\ldots$]]).
+- Analyzing higher-order [[product formula]]s ([[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki $p=4,6,\ldots$]]).
 - Checking which Taylor / commutator terms actually survive in the error expansion.
 - Comparing deterministic and randomized product-formula analyses (randomization can provide additional cancellation beyond the order conditions).
 

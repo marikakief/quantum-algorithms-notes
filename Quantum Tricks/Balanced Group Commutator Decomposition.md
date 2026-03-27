@@ -1,4 +1,3 @@
-# Balanced Group Commutator Decomposition
 
 > **Source:** Solovay (1995), Kitaev (1997); Dawson & Nielsen, arXiv:quant-ph/0505030, Section 4.1 (SU(2)), Section 5.2 (SU(d))
 > **Tags:** #trick #commutator #lie-algebra #gate-compilation

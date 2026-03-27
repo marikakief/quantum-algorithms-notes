@@ -1,6 +1,5 @@
-# Basis Switching via QFT for Kinetic-Potential Splitting
 
-> **Source:** Ortiz, Gubernatis, Knill & Laflamme, PRA 64, 022319 (2001); also Abrams & Lloyd (1999); Zalka (1998)
+> **Source:** Ortiz, Gubernatis, Knill & Laflamme, PRA 64, 022319 (2001); also [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]]; Zalka (1998)
 > **Tags:** #trick #quantum-chemistry #simulation #QFT #basis-switching
 
 ## What it does

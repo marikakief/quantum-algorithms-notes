@@ -1,4 +1,3 @@
-# Commuting-Group Parallelisation via Graph Colouring
 
 > **Source:** Raeisi, Wiebe & Sanders, arXiv:1108.4318 (2012)
 > **Tags:** #trick #hamiltonian-simulation #parallelization #product-formula #circuit-depth

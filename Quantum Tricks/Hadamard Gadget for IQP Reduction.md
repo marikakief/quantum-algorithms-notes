@@ -1,4 +1,3 @@
-# Hadamard Gadget for IQP Reduction
 
 > **Source:** Bremner, Jozsa, Shepherd, Proc. R. Soc. A 467 (2011); arXiv:1005.1407
 > **Tags:** #trick #IQP #post-selection #circuit-compilation

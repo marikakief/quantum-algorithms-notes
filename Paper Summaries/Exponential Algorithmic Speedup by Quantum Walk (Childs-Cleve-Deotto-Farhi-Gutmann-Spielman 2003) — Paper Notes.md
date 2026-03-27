@@ -70,7 +70,7 @@ Repeat $O(n)$ times → high probability of success. Total: $\mathrm{poly}(n)$ o
 
 ## Implementing the quantum walk on a quantum computer
 
-This is the technically interesting part — the quantum walk Hamiltonian $H$ is defined by the graph, which is given as an oracle, so $H$ isn't obviously local. The implementation uses five Hamiltonian simulation tools:
+This is the technically interesting part — the quantum walk Hamiltonian $H$ is defined by the graph, which is given as an oracle, so $H$ isn't obviously local. The implementation uses five [[Hamiltonian simulation]] tools:
 
 1. **Local terms** — simulate any $O(1)$-qubit Hamiltonian directly
 2. **[[Product-Formula Time-Slicing for Local Hamiltonians|Lie product formula]]** — simulate $H_1 + \cdots + H_k$ from simulations of each $H_i$
@@ -127,7 +127,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 ## Reusable ideas
 
 1. [[Column-Subspace Reduction for Symmetric Graphs]] — when a graph has a symmetry that makes each "column" of vertices equivalent, the quantum walk reduces to a walk on a much smaller line. The random structure doesn't break this symmetry as long as it's "balanced" within columns.
-2. [[Oracle-to-Hamiltonian Simulation via Swap Conjugation]] — simulate a graph-adjacency Hamiltonian from an oracle by conjugating a swap operator with oracle queries: $H = \sum_c V_c^\dagger T V_c$. Turns an oracle problem into Hamiltonian simulation.
+2. [[Oracle-to-Hamiltonian Simulation via Swap Conjugation]] — simulate a graph-adjacency Hamiltonian from an oracle by conjugating a swap operator with oracle queries: $H = \sum_c V_c^\dagger T V_c$. Turns an oracle problem into [[Hamiltonian simulation]].
 
 ---
 
@@ -138,7 +138,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — factoring; all prior exponential speedups used QFT
 - Farhi & Gutmann (1998, PRA 58, 915) — introduced continuous-time quantum walks
 - Childs, Farhi & Gutmann (2002) — exponentially faster hitting time for quantum vs classical walk on $G_n$ (but not an algorithmic separation)
-- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — Hamiltonian simulation tools used in the implementation (ref [26])
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — [[Hamiltonian simulation]] tools used in the implementation (ref [26])
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — discrete-time walk framework (appeared shortly after)
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — later unified continuous and discrete walks
 
@@ -151,7 +151,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes]] — continuous-time walk for spatial search (same technique, different problem)
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — discrete-time walk framework with quadratic speedup
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — algorithmic application of discrete quantum walks
-- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — black-box Hamiltonian simulation extending the oracle-to-Hamiltonian ideas here
+- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — black-box [[Hamiltonian simulation]] extending the oracle-to-Hamiltonian ideas here
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — product-formula simulation tools used in the implementation
 - [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — the classical lower bound in that paper directly inherits the exponential separation from this glued-trees result; the oscillator problem is BQP-complete via a reduction through this paper
 
@@ -160,4 +160,4 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[Oracle-to-Hamiltonian Simulation via Swap Conjugation]]
 - [[Continuous-Time Quantum Walk Search]] — related continuous-time walk technique
 - [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians]] — later development of the oracle-to-walk idea
-- [[Product-Formula Time-Slicing for Local Hamiltonians]] — used in the Lie product formula step
+- [[Product-Formula Time-Slicing for Local Hamiltonians]] — used in the Lie [[product formula]] step

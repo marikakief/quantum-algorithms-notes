@@ -1,4 +1,3 @@
-# Givens Rotation Slater Determinant Preparation
 
 > **Source:** Kivlichan, McClean, Wiebe, Gidney, Aspuru-Guzik, Chan, Babbush, arXiv:1711.04789 (2018)
 > **Tags:** #trick #state-preparation #Slater-determinant #Givens-rotation #linear-connectivity #initial-state #VQE

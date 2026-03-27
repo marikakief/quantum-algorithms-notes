@@ -1,4 +1,3 @@
-# History-State Linear System Encoding for ODE Trajectories
 
 > **Source:** D. W. Berry, J. Phys. A 47, 105301 (2014); arXiv:1010.2745
 > **Tags:** #trick #history-state #ODE #linear-systems #HHL

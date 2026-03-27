@@ -1,4 +1,3 @@
-# Stabilizer Subspace Projection for Error Mitigation
 
 > **Source:** McClean, Jiang, Rubin, Babbush, Neven, arXiv:1903.05786
 > **Tags:** #trick #error-mitigation #stabilizer-codes #post-processing #NISQ #quantum-error-correction

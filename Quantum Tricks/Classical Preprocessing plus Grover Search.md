@@ -1,4 +1,3 @@
-# Classical Preprocessing plus Grover Search
 
 > **Source:** Brassard, Høyer & Tapp, arXiv:quant-ph/9705002 (1997)
 > **Tags:** #trick #collision #Grover #hybrid #query-complexity

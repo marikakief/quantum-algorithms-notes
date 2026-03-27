@@ -1,4 +1,3 @@
-# Variational Adiabatic Path Optimization
 
 > **Source:** McClean, Romero, Babbush & Aspuru-Guzik, arXiv:1509.04279
 > **Tags:** #trick #adiabatic #variational #VQE #scheduling

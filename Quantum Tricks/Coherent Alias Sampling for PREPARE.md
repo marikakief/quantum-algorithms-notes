@@ -1,4 +1,3 @@
-# Coherent Alias Sampling for PREPARE
 
 > **Source:** Babbush, Gidney, Berry, Wiebe et al., arXiv:1805.03662, Phys. Rev. X **8**, 041015 (2018)
 > **Tags:** #trick #state-preparation #LCU #PREPARE #alias-sampling #T-complexity #oracle

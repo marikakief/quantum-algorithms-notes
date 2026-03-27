@@ -1,4 +1,3 @@
-# Control-Free QET-U via Anti-Commuting Pauli Strings
 
 > **Source:** Yulong Dong, Lin Lin, and Yu Tong, arXiv:2204.05955 (PRX Quantum 2022), Section VI
 > **Tags:** #trick #control-free #QET-U #spin-models #Trotter

@@ -101,7 +101,7 @@ Higher-order spatial discretisation helps by reducing the number of grid points 
 
 ## Comparison with prior work
 
-| | Liu-Kolden-Krovi et al. (2021) | Liu-An-Fang et al. (2023) | Krovi (2023) | **This paper** |
+| | Liu-Kolden-Krovi et al. (2021) | Liu-An-[[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang et al. (2023)]] | Krovi (2023) | **This paper** |
 |---|---|---|---|---|
 | Time dependence | $T^2$ | $T^2$ | $T \cdot \text{poly}(\log)$ | $T \cdot \text{poly}(\log)$ |
 | Error dependence | $\sim 1/\varepsilon$ | $\sim 1/\varepsilon$ | $\text{polylog}(1/\varepsilon)$ | $\log(1/\varepsilon)$ |

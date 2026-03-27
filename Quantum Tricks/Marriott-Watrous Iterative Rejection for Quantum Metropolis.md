@@ -1,4 +1,3 @@
-# Marriott-Watrous Iterative Rejection for Quantum Metropolis
 
 > **Source:** Temme, Osborne, Vollbrecht, Poulin, Verstraete, Nature 471, 87 (2011); technique from Marriott & Watrous, Computational Complexity 14, 122 (2005)
 > **Tags:** #trick #Metropolis #rejection #binary-measurement #QMA

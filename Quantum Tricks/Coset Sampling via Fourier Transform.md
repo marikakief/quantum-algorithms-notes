@@ -1,6 +1,5 @@
-# Coset Sampling via Fourier Transform
 
-> **Source:** Simon, FOCS 1994 / SIAM J. Comput. 1997; generalized in Kitaev (1995), Shor (1994)
+> **Source:** Simon, FOCS 1994 / SIAM J. Comput. 1997; generalized in [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]], [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]]
 > **Tags:** #trick #hidden-subgroup #fourier #period-finding #fundamental
 
 ## What it does

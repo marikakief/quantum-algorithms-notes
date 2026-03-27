@@ -1,4 +1,3 @@
-# Quantum Mean Estimation via Amplitude Estimation
 
 > **Source:** Montanaro, arXiv:1504.06987; builds on Heinrich (2002), Brassard-Høyer-Mosca-Tapp (2002)
 > **Tags:** #trick #amplitude-estimation #monte-carlo #mean-estimation

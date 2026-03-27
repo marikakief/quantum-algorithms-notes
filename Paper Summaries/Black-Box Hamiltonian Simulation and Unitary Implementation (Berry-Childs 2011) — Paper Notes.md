@@ -1,4 +1,4 @@
-> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box Hamiltonian simulation and unitary implementation*, arXiv:0910.4157, Quantum Information and Computation **12**, 29–62 (2012)  
+> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box [[Hamiltonian simulation]] and unitary implementation*, arXiv:0910.4157, Quantum Information and Computation **12**, 29–62 (2012)  
 > **Links:** [arXiv](https://arxiv.org/abs/0910.4157) · [QIC](https://doi.org/10.26421/QIC12.1-2)  
 > **Tags:** #hamiltonian-simulation #quantum-walk #black-box #historical
 
@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Two main results: (1) improved black-box sparse Hamiltonian simulation using quantum walks, achieving linear scaling in both sparsity $D$ and simulation time $t$; (2) black-box unitary implementation via Hamiltonian simulation, achieving $\tilde O(N^{2/3})$ query complexity.
+Two main results: (1) improved black-box sparse [[Hamiltonian simulation]] using quantum walks, achieving linear scaling in both sparsity $D$ and simulation time $t$; (2) black-box unitary implementation via [[Hamiltonian simulation]], achieving $\tilde O(N^{2/3})$ query complexity.
 
 The prior state of the art (Berry–Ahokas–Cleve–Sanders 2006) had $D^4$ dependence on sparsity. This paper reduces that to linear in $D$ for the sparse case. That is the headline result.
 
@@ -62,13 +62,13 @@ $$
 H = \begin{pmatrix} 0 & U \\ U^\dagger & 0 \end{pmatrix}.
 $$
 
-Evolving under $H$ for time $t = \pi/2$ maps between the two sectors and applies $U$ (up to a global phase). This reduces unitary implementation to Hamiltonian simulation, transferring the walk-based simulation complexity directly.
+Evolving under $H$ for time $t = \pi/2$ maps between the two sectors and applies $U$ (up to a global phase). This reduces unitary implementation to [[Hamiltonian simulation]], transferring the walk-based simulation complexity directly.
 
 ## Historical context
 
 | Approach | Sparsity scaling | Time scaling |
 |---|---|---|
-| Lloyd (1996) | — (local Hamiltonians only) | polynomial |
+| [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] | — (local Hamiltonians only) | polynomial |
 | Aharonov–Ta-Shma (2003) | $D^6$ | $\tilde O(t)$ |
 | Berry–Ahokas–Cleve–Sanders (2006) | $D^4$ | near-linear in $t$ |
 | **This paper, sparse (Thm 1)** | **$D$** | **linear in $t$** |
@@ -101,7 +101,7 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 - Childs (2010, Commun. Math. Phys. 294) — quantum walk approach to sparse simulation (linear in $D$ via different walk construction)
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — [[Quantized Bipartite Walk Construction|quantization of Markov chains]], foundation for quantum walk methods
 - Grover (2000) — [[Standard Amplitude Amplification|amplitude amplification]] used for state preparation in the walk step
-- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse Hamiltonian simulation, $D^6$ scaling
+- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse [[Hamiltonian simulation]], $D^6$ scaling
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard, Høyer, Mosca & Tapp (2002)]] — [[Standard Amplitude Amplification|amplitude amplification]] and [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]]
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — walk-based linear-time simulation for non-sparse Hamiltonians
 

@@ -1,4 +1,3 @@
-# Postselection Removal via Approximate Success-Amplitude Amplification
 
 > **Tags:** #trick #amplitude-amplification #postselection #OAA #fully-coherent #QSP
 > **Source:** Martyn, Liu, Chin, Chuang (2023), Sec. II.D–E, Theorems 2–3

@@ -146,7 +146,7 @@ The paper is a significant step toward algorithms for classically intractable mo
 | Bravyi & Kitaev (2002) | Original BK fermion-to-qubit mapping | No |
 | Seeley, Richard, Love (2012) | Analysis of Bravyi-Kitaev transformation | No |
 | O'Malley, Babbush et al. (2016) | Hardware experiment; cites early version of this work | [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] |
-| Childs (2010) | Sparse Hamiltonian simulation via quantum walk | No |
+| [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] | Sparse [[Hamiltonian simulation]] via quantum walk | No |
 
 ## Cross-links
 

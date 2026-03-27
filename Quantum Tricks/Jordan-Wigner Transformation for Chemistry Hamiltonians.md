@@ -1,4 +1,3 @@
-# Jordan-Wigner Transformation for Chemistry Hamiltonians
 
 > **Source:** Jordan & Wigner (1928); made explicit for quantum computing by Ortiz, Gubernatis, Knill & Laflamme, PRA 64, 022319 (2001)
 > **Tags:** #trick #fermionic #jordan-wigner #quantum-chemistry

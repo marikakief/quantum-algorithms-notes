@@ -1,4 +1,3 @@
-# Number Operator Symmetry Shifting for LCU 1-Norm Reduction
 
 > **Source:** Berry, Tong, Khattar, White, Kim, Boixo, Lin, Lee, Chan, Babbush, Rubin, arXiv:2409.11748 (2024); Loaiza, Khah, Wiebe, Izmaylov, QST 8, 035019 (2023)
 > **Tags:** #trick #block-encoding #LCU #1-norm #symmetry #quantum-chemistry #fault-tolerant

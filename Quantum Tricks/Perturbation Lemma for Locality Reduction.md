@@ -1,4 +1,3 @@
-# Perturbation Lemma for Locality Reduction
 
 > **Source:** Aharonov et al., arXiv:quant-ph/0405098, Lemma 3.17; also used in Kempe-Regev (2003)
 > **Tags:** #trick #perturbation #locality #spectral-gap

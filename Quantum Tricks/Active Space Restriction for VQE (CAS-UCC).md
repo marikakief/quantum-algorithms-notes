@@ -1,5 +1,3 @@
-# Active Space Restriction for VQE (CAS-UCC)
-
 > **Source:** Romero, Babbush, McClean, Hempel, Love, Aspuru-Guzik, arXiv:1701.02691 (2018)
 > **Tags:** #trick #VQE #UCC #quantum-chemistry #active-space #qubit-reduction
 

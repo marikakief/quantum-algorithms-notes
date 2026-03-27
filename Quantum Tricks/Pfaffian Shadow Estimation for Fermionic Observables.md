@@ -1,4 +1,3 @@
-# Pfaffian Shadow Estimation for Fermionic Observables
 
 > **Source:** Wan, Huggins, Lee, Babbush, arXiv:2207.13723
 > **Tags:** #trick #classical-shadows #Pfaffian #fermionic #measurement #matchgate #covariance-matrix

@@ -1,4 +1,4 @@
-> **Source:** Paul K. Faehrmann, Mark Steudtner, Richard Kueng, Mária Kieferová, Jens Eisert, *Randomizing multi-product formulas for Hamiltonian simulation*, Quantum **6**, 806 (2022)  
+> **Source:** Paul K. Faehrmann, Mark Steudtner, Richard Kueng, Mária Kieferová, Jens Eisert, *Randomizing multi-[[product formula]]s for [[Hamiltonian simulation]]*, Quantum **6**, 806 (2022)  
 > **Links:** [arXiv:2101.07808](https://arxiv.org/abs/2101.07808) · [Quantum journal](https://doi.org/10.22331/q-2022-09-19-806)  
 > **Tags:** #hamiltonian-simulation #multi-product #randomization #product-formulas
 
@@ -6,15 +6,15 @@
 
 ## What the paper does
 
-Multi-product formulas (MPFs) combine product-formula circuits at different step counts to cancel higher-order Trotter errors. The problem: doing this coherently requires implementing a linear combination of unitaries — ancilla registers, oblivious amplitude amplification, significant overhead. This paper cuts that overhead by replacing coherent LCU with randomized sampling. Instead of building the coherent superposition $\sum_q C_q V_q$, you sample term $q$ with probability proportional to $|C_q|$, run the corresponding product-formula circuit, and estimate observables classically. The cost is $O(\Xi^4/\varepsilon^2)$ shots, where $\Xi = \sum_q |C_q|$ is the resolution factor.
+Multi-[[product formula]]s (MPFs) combine product-formula circuits at different step counts to cancel higher-order Trotter errors. The problem: doing this coherently requires implementing a linear combination of unitaries — ancilla registers, oblivious amplitude amplification, significant overhead. This paper cuts that overhead by replacing coherent LCU with randomized sampling. Instead of building the coherent superposition $\sum_q C_q V_q$, you sample term $q$ with probability proportional to $|C_q|$, run the corresponding product-formula circuit, and estimate observables classically. The cost is $O(\Xi^4/\varepsilon^2)$ shots, where $\Xi = \sum_q |C_q|$ is the resolution factor.
 
 Two new MPF families are introduced — "matching" and "closed-form" — specifically designed to keep $\Xi$ small, which is the key to making the shot overhead tolerable.
 
 ---
 
-## Background: multi-product formulas
+## Background: multi-[[product formula]]s
 
-For $H = \sum_{j=1}^L H_j$, a $2\chi$-th order Suzuki formula $S_{2\chi}(t)^r$ has error that scales as $t^{2\chi+1}$ in the time step. A multi-product formula takes a linear combination:
+For $H = \sum_{j=1}^L H_j$, a $2\chi$-th order Suzuki formula $S_{2\chi}(t)^r$ has error that scales as $t^{2\chi+1}$ in the time step. A multi-[[product formula]] takes a linear combination:
 $$V_{\mathrm{MPF}} = \sum_{q=1}^K C_q \, S_{2\chi}\!\left(\frac{t}{\ell_q}\right)^{\!\ell_q}$$
 choosing coefficients $C_q$ and step counts $\ell_q$ so that error terms cancel up to much higher order. The Childs-Wiebe approach picks coefficients via a Vandermonde system — the $C_q$ are solutions to a linear system that enforces cancellation up to order $2\chi K$.
 
@@ -29,7 +29,7 @@ choosing coefficients $C_q$ and step counts $\ell_q$ so that error terms cancel 
 1. Compute $\Xi = \sum_q |C_q|$ and probabilities $p_q = |C_q|/\Xi$.
 2. For each of $N$ repetitions:
    a. Sample index $q$ with probability $p_q$.
-   b. Run circuit $V_q = S_{2\chi}(t/\ell_q)^{\ell_q}$ (a standard product formula — no ancillas needed).
+   b. Run circuit $V_q = S_{2\chi}(t/\ell_q)^{\ell_q}$ (a standard [[product formula]] — no ancillas needed).
    c. Measure observable $O$ using the **Hadamard test**: a single ancilla qubit, a controlled-$V_q$ gate, and a measurement. This gives an unbiased estimator of $\mathrm{Re}\langle \psi | V_q^\dagger O V_q | \psi \rangle$.
 3. Classical post-processing: multiply each sample by $\mathrm{sgn}(C_q) \cdot \Xi^2$ and average.
 
@@ -140,7 +140,7 @@ Caveat: numerics are on small systems. How the comparison holds up at scale is l
 
 - [[Randomized Multi-Product Sampling]] — the core trick: replace coherent LCU with importance sampling over signed linear combinations of product-formula circuits.
 - [[Resolution Factor Minimization for Multi-Product Formulas]] — designing MPFs to minimize $\Xi = \sum|C_q|$; multiplicative layering (matching MPF) and Gauss-Legendre quadrature (closed-form MPF) as two concrete approaches.
-- [[Importance Sampling over Hamiltonian Terms]] — broader context for importance-sampled Hamiltonian simulation.
+- [[Importance Sampling over Hamiltonian Terms]] — broader context for importance-sampled [[Hamiltonian simulation]].
 
 ---
 
@@ -148,8 +148,8 @@ Caveat: numerics are on small systems. How the comparison holds up at scale is l
 
 Key references:
 
-- [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT: the direct precursor in randomized Hamiltonian simulation; this paper can be seen as a higher-order generalization
-- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — LCU origins; the multi-product formula construction (Vandermonde MPF) is from here; also where $\Xi$ appears as the LCU normalization constant
+- [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT: the direct precursor in randomized [[Hamiltonian simulation]]; this paper can be seen as a higher-order generalization
+- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — LCU origins; the multi-[[product formula]] construction (Vandermonde MPF) is from here; also where $\Xi$ appears as the LCU normalization constant
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2019)]] — randomized product-formula ordering; the other major randomized simulation result; a complementary approach (randomize *ordering*, not *which term in a linear combination*)
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — Trotter error theory providing the foundation for MPF error analysis
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry et al. (2015)]] — Taylor series + LCU, the standard LCU-based simulation method this paper offers an alternative to
@@ -166,7 +166,7 @@ Key references:
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
-- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — early randomised product formula approach (Monte Carlo time-sampling); different randomisation strategy from the MPF importance sampling here
+- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — early randomised [[product formula]] approach (Monte Carlo time-sampling); different randomisation strategy from the MPF importance sampling here
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes]]
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
@@ -188,7 +188,7 @@ Key references:
 - [[Richardson Extrapolation over Randomized Step Sizes]]
 - [[Channel Series Expansion via Variation-of-Parameters]]
 
-**Related (alternative approaches to improving product formulas):**
+**Related (alternative approaches to improving [[product formula]]s):**
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic correctors rather than randomised sampling; achieves factor-$\alpha$ error improvement for perturbed systems while staying fully ancilla-free
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — concurrent work (2022); uses randomized corrections within a single product formula to double error order; shares the mixing-lemma analysis framework
 - [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds high-order product formulas that drastically reduce constant-factor error; complementary to the randomised sampling approach here

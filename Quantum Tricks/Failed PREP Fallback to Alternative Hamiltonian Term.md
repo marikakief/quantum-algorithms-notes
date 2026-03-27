@@ -1,4 +1,3 @@
-# Failed PREP Fallback to Alternative Hamiltonian Term
 
 > **Source:** Su, Berry, Wiebe, Rubin, Babbush, arXiv:2105.12767 (2021)
 > **Tags:** #trick #state-preparation #amplitude-amplification #LCU #qubitization #block-encoding

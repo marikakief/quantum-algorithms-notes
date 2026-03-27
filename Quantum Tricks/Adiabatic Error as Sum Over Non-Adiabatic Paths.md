@@ -1,4 +1,3 @@
-# Adiabatic Error as Sum Over Non-Adiabatic Paths
 
 > **Source:** Cheung, Høyer, Wiebe, arXiv:1103.4174 (builds on Ambainis-Regev arXiv:quant-ph/0411152 and Mackenzie-Marcotte-Paquette PRA 73:042104)
 > **Tags:** #trick #adiabatic #path-integrals #error-analysis

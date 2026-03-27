@@ -1,5 +1,3 @@
-# Virtual Quantum Subspace Expansion (VQSE)
-
 > **Source:** Takeshita, Rubin, Jiang, Lee, Babbush, McClean, arXiv:1902.10679
 > **Tags:** #trick #subspace-expansion #active-space #NISQ #quantum-chemistry #RDM #dynamic-correlation
 

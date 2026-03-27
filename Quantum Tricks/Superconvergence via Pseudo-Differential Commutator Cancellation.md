@@ -1,4 +1,3 @@
-# Superconvergence via Pseudo-Differential Commutator Cancellation
 
 > **Source:** Dong An, Di Fang, and Lin Lin, arXiv:2111.03103 (Quantum 2022), Lemma 10
 > **Tags:** #trick #superconvergence #pseudo-differential #Schrödinger #commutator

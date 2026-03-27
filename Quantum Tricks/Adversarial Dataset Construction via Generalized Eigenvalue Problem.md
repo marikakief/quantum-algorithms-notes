@@ -1,4 +1,3 @@
-# Adversarial Dataset Construction via Generalized Eigenvalue Problem
 
 > **Source:** Huang, Broughton, Mohseni, Babbush, Boixo, Neven, McClean, arXiv:2011.01938
 > **Tags:** #trick #quantum-ml #kernel-methods #benchmarking #learning-theory

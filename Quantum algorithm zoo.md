@@ -788,7 +788,7 @@ _Physical Review Letters_ 109, 050505, 2012.
 [[arXiv:1204.5242](http://arxiv.org/abs/1204.5242)]
 
 **170.** Andrew Childs and Nathan Wiebe
-Hamiltonian simulation using linear combinations of unitary operations.
+[[Hamiltonian simulation]] using linear combinations of unitary operations.
 _Quantum Information and Computation_ 12, 901-924, 2012.
 [[arXiv:1202.5822](http://arxiv.org/abs/1202.5822)]
 
@@ -2150,7 +2150,7 @@ _SIAM Journal on Computing_, 52(6):10.1137, 2018.
 [[arXiv:1801.03922](https://arxiv.org/abs/1801.03922)]
 
 **479.** Andrew M. Childs and Yuan Su
-Nearly optimal lattice simulation by product formulas
+Nearly optimal lattice simulation by [[product formula]]s
 _Physical Review Letters_, 123(5):050503, 2019.
 [[arXiv:1901.00564](https://arxiv.org/abs/1901.00564)]
 
@@ -2160,7 +2160,7 @@ _Nature Communications_, 15:2520, 2024.
 [[arXiv:2206.14736](https://arxiv.org/abs/2206.14736)]
 
 **481.** Burak Şahinoğlu and Rolando D. Somma
-Hamiltonian simulation in the low-energy subspace
+[[Hamiltonian simulation]] in the low-energy subspace
 _npj Quantum Information_, 7:119, 2021.
 [[arXiv:2006.02660](https://arxiv.org/abs/2006.02660)]
 
@@ -2170,7 +2170,7 @@ _Quantum_, 8:1409, 2024.
 [[arXiv:2312.08867](https://arxiv.org/abs/2312.08867)]
 
 **483.** Kasra Hejazi, Modjtaba Shokrian Zini, and Juan Miguel Arrazola
-Better bounds for low-energy product formulas
+Better bounds for low-energy [[product formula]]s
 _[arXiv:2402.10362](https://arxiv.org/abs/2402.10362)_, 2024.
 
 **484.** Yu Tong, Victor V. Albert, Jarrod R. McClean, John Preskill, and Yuan Su

@@ -1,4 +1,3 @@
-# Suzuki-Like Recursion for Even-k Commutator Exponentials
 
 > **Source:** Childs & Wiebe, arXiv:1211.4945, J. Math. Phys. 54, 062202 (2013)
 > **Tags:** #trick #product-formula #commutator #suzuki #recursion

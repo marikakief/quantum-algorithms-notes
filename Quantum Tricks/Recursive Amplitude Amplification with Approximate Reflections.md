@@ -1,4 +1,3 @@
-# Recursive Amplitude Amplification with Approximate Reflections
 
 > **Source:** Magniez, Nayak, Roland, Santha, SIAM J. Comput. 40(1), 2011; building on Høyer, Mosca, de Wolf (2003)
 > **Tags:** #trick #amplitude-amplification #recursion #error-reduction #search

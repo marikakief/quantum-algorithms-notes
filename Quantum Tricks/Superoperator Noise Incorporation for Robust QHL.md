@@ -1,4 +1,3 @@
-# Superoperator Noise Incorporation for Robust QHL
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1311.5269 (PRA 89, 042314, 2014)
 > **Tags:** #trick #hamiltonian-learning #noise-robustness #superoperator #process-tomography #IQLE

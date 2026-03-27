@@ -6,7 +6,7 @@
 
 ## The computational problem
 
-**Hamiltonian simulation.** Given a Hamiltonian $H = \sum_{\ell=1}^L \alpha_\ell H_\ell$ (each $H_\ell$ unitary, $\alpha_\ell > 0$), simulate the time evolution $U = e^{-iHt}$ to precision $\varepsilon$.
+**[[Hamiltonian simulation]].** Given a Hamiltonian $H = \sum_{\ell=1}^L \alpha_\ell H_\ell$ (each $H_\ell$ unitary, $\alpha_\ell > 0$), simulate the time evolution $U = e^{-iHt}$ to precision $\varepsilon$.
 
 The cost should scale with $T := |\boldsymbol{\alpha}|_1 t = (\sum_\ell \alpha_\ell) t$ — the $\ell_1$-norm of coefficients times evolution time. This is the right complexity parameter for [[Linear Combination of Unitaries (LCU)|LCU]]-based methods.
 
@@ -14,7 +14,7 @@ The cost should scale with $T := |\boldsymbol{\alpha}|_1 t = (\sum_\ell \alpha_\
 
 ## What the paper does
 
-Presents the simplest known algorithm achieving **near-optimal** Hamiltonian simulation: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
+Presents the simplest known algorithm achieving **near-optimal** [[Hamiltonian simulation]]: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
 
 This paper is the clean, self-contained version of the same authors' earlier STOC 2014 result (arXiv:1312.1414), which achieved the same complexity but used a more indirect approach through fractional queries. Here the algorithm fits in four pages and the reason for logarithmic $\varepsilon$-dependence is immediate: it comes from the super-exponential decay of the Taylor series tail ($(\ln 2)^K / K!$).
 
@@ -177,9 +177,9 @@ All the reusable techniques from this paper already have trick cards in the vaul
 
 ## Why this matters
 
-This is the paper that made [[Linear Combination of Unitaries (LCU)|LCU]]-based Hamiltonian simulation practical and comprehensible. The STOC 2014 predecessor achieved the same asymptotics but via a complicated fractional-query reduction. Here the algorithm is direct: write down the Taylor series, implement it as an LCU, amplify with OAA. The entire paper is four pages.
+This is the paper that made [[Linear Combination of Unitaries (LCU)|LCU]]-based [[Hamiltonian simulation]] practical and comprehensible. The STOC 2014 predecessor achieved the same asymptotics but via a complicated fractional-query reduction. Here the algorithm is direct: write down the Taylor series, implement it as an LCU, amplify with OAA. The entire paper is four pages.
 
-The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially better than any product formula — established LCU as the dominant paradigm for high-precision quantum simulation, later refined by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] but never conceptually replaced. If you want to understand why modern quantum algorithms use block-encoding instead of Trotter, start here.
+The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially better than any [[product formula]] — established LCU as the dominant paradigm for high-precision quantum simulation, later refined by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] but never conceptually replaced. If you want to understand why modern quantum algorithms use block-encoding instead of Trotter, start here.
 
 ---
 
@@ -211,7 +211,7 @@ The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially be
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — generalised the polynomial framework
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — extended the Taylor/LCU approach to time-dependent $H(t)$
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]] — further refinement of time-dependent simulation
-- [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses Hamiltonian simulation as a subroutine
+- [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses [[Hamiltonian simulation]] as a subroutine
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — applies LCU methods to ODEs
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]] — quantum chemistry application that benefits from improved simulation
 - [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes]] — first application of this paper's technique to chemistry; on-the-fly integral computation

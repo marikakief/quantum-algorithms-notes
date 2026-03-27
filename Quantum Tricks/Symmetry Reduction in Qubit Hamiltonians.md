@@ -1,4 +1,3 @@
-# Symmetry Reduction in Qubit Hamiltonians
 
 > **Source:** O'Malley, Babbush et al., arXiv:1512.06860 (2016)
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]

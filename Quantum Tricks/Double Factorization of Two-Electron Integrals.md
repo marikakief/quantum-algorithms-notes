@@ -1,4 +1,3 @@
-# Double Factorization of Two-Electron Integrals
 
 > **Source:** Motta, Ye, McClean, Li, Minnich, Babbush, Chan, arXiv:1808.02625
 > **Tags:** #trick #quantum-chemistry #Hamiltonian-decomposition #Cholesky-decomposition #low-rank #Trotter #circuit-compilation

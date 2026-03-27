@@ -1,4 +1,3 @@
-# Finite Difference Order Optimisation for Quantum Gradient Estimation
 
 > **Source:** O'Brien, Streif, Rubin, Santagati, Su, Huggins et al., arXiv:2111.12437
 > **Tags:** #trick #gradient-estimation #finite-difference #phase-estimation #fault-tolerant

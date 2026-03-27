@@ -1,4 +1,3 @@
-# Rowsum Phase-Tracking in Pauli Group Arithmetic
 
 > **Source:** Aaronson & Gottesman, arXiv:quant-ph/0406196 (2004)
 > **Tags:** #trick #stabilizer #clifford #pauli-group #phase-tracking

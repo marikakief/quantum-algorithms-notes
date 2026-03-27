@@ -1,4 +1,3 @@
-# Grover Search with Evolving Threshold for Minimum Finding
 
 > **Source:** Dürr & Høyer, arXiv:quant-ph/9607014 (1996)
 > **Tags:** #trick #search #Grover #optimization #minimum-finding

@@ -1,4 +1,3 @@
-# Adiabatic State Preparation for Chemistry
 
 > **Source:** Aspuru-Guzik et al., Science 309 (2005); idea from Farhi, Goldstone, Gutmann, Sipser (2000)
 > **Tags:** #trick #state-preparation #quantum-chemistry #adiabatic
@@ -26,7 +25,7 @@ The adiabatic theorem guarantees the system stays in the ground state if $\Delta
 - When you have a good classical estimate of the gap along the interpolation path
 
 ## Complexity
-- $T$ Trotter steps, each requiring one Hamiltonian simulation step
+- $T$ Trotter steps, each requiring one [[Hamiltonian simulation]] step
 - $T$ must be large enough that $1/T \ll (\min_s \Delta E(s))^2$
 - For well-behaved gaps: $T = O(\mathrm{poly}(1/\Delta E_{\min}))$
 

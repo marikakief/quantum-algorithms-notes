@@ -1,4 +1,3 @@
-# Reversible Computation via Compute-Copy-Uncompute
 
 > **Source:** Bennett (1973); formalized for quantum use in Kitaev, arXiv:quant-ph/9511026 (1995), Lemmas 1–2
 > **Tags:** #trick #reversible #garbage #fundamental

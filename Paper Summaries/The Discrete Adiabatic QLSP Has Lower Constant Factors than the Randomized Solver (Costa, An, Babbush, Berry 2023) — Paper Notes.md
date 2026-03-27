@@ -42,7 +42,7 @@ At $\kappa = 50$: $\alpha = T\Delta/\kappa = 392 \times 0.2 / 50 \approx 1.57$. 
 
 ### Randomized method
 
-They also test the randomized adiabatic method (Subaşı et al. 2019, with optimal probability distributions from Sanders et al. 2020), measuring total evolution time $\sum_j |t_j|$. Same matrix instances, same $\kappa$ values. For the randomized method, the complexity is in terms of evolution time, not walk steps — a distinction the paper emphasizes because converting evolution time to actual gate count adds further overhead (the randomized method requires continuous Hamiltonian simulation).
+They also test the randomized adiabatic method (Subaşı et al. 2019, with optimal probability distributions from Sanders et al. 2020), measuring total evolution time $\sum_j |t_j|$. Same matrix instances, same $\kappa$ values. For the randomized method, the complexity is in terms of evolution time, not walk steps — a distinction the paper emphasizes because converting evolution time to actual gate count adds further overhead (the randomized method requires continuous [[Hamiltonian simulation]]).
 
 At $\kappa = 50$, non-Hermitian: the randomized method needs total time $\sim 7717$, compared to $\sim 392$ walk steps for the discrete method. That's a factor of ~20.
 
@@ -66,7 +66,7 @@ which gives a tighter relation between $\varepsilon_f$ and the final error $\var
 
 **Practical constant factor (main finding):** $\alpha \approx 1.56$ for non-Hermitian $8\times 8$ matrices at $\kappa = 50$. For PD Hermitian matrices, $\alpha$ is even smaller (~0.2 for $4\times4$ PD at $\kappa = 50$). Both are about three orders of magnitude below the analytical bounds.
 
-**Discrete vs. randomized (head-to-head):** The discrete adiabatic walk is ~20× cheaper than the randomized method in walk steps vs. evolution time. The actual advantage is larger because the randomized method's evolution time must still be converted to quantum circuit operations via Hamiltonian simulation.
+**Discrete vs. randomized (head-to-head):** The discrete adiabatic walk is ~20× cheaper than the randomized method in walk steps vs. evolution time. The actual advantage is larger because the randomized method's evolution time must still be converted to quantum circuit operations via [[Hamiltonian simulation]].
 
 **Cost partition:** For $\alpha \approx 1$, the adiabatic step accounts for the majority of the total cost across all practically relevant $\varepsilon$ values. The filtering step dominates only at astronomically small $\varepsilon$ (consistent with the analysis in the original paper, which identified $\varepsilon \lesssim 10^{-180}$ as the crossover point).
 
@@ -92,7 +92,7 @@ The conclusion is clean: the discrete method wins on both asymptotic scaling and
 
 3. **$p = 1.4$ is not analytically justified.** The schedule parameter $p = 1.4$ is chosen empirically. The original paper analyzed $p = 3/2$ because it yields cleaner expressions. The optimal $p$ likely depends on $\kappa$ and the specific matrix.
 
-4. **The comparison with the randomized method is somewhat unfair in its favour.** The randomized method's complexity is given as total evolution time, not circuit depth. Converting to actual gates via Hamiltonian simulation (e.g., product formulas or LCU) would add at least a constant multiplicative factor, widening the gap.
+4. **The comparison with the randomized method is somewhat unfair in its favour.** The randomized method's complexity is given as total evolution time, not circuit depth. Converting to actual gates via [[Hamiltonian simulation]] (e.g., [[product formula]]s or LCU) would add at least a constant multiplicative factor, widening the gap.
 
 5. **No T-count or surface code compilation.** This is a complexity comparison at the query level, not a full resource estimate. Translating to T-gates and physical qubits (as done for chemistry problems in other Babbush group papers) would be needed for practical assessment.
 

@@ -1,4 +1,3 @@
-# Shifted Morton Orderings for Interaction List Access
 
 > **Source:** Berry, Wan, Baczewski, Eklund, Tikku, Babbush, arXiv:2510.07380
 > **Tags:** #trick #space-filling-curve #FMM #data-access #sorting

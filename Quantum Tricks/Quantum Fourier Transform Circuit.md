@@ -1,4 +1,3 @@
-# Quantum Fourier Transform Circuit
 
 > **Source:** Shor, arXiv:quant-ph/9508027 (1994), §4; Coppersmith (1994) for the approximate version
 > **Tags:** #trick #QFT #circuit #fundamental

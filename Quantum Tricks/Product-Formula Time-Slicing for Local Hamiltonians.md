@@ -1,4 +1,3 @@
-# Product-Formula Time-Slicing for Local Hamiltonians
 
 > **Source:** Lloyd, Science 273(5278), 1073–1078 (1996)
 > **Tags:** #trick #hamiltonian-simulation #product-formula #trotter
@@ -33,7 +32,7 @@ The key insight: even though $e^{iHt}$ acts on an exponentially large Hilbert sp
 Higher-order Suzuki formulas improve the $\varepsilon$-dependence to $O(t^{1+1/2k}/\varepsilon^{1/2k})$ for order $2k$. See [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs et al. (2019)]] for tight bounds using nested commutators.
 
 ## Caveat
-First-order Trotter scaling is $O(t^2/\varepsilon)$ in the step count — far from the optimal $O(t + \log(1/\varepsilon))$ achieved by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]]. For high-precision applications, product formulas are outclassed asymptotically. But for moderate precision and structured Hamiltonians, the constants can be very favorable (the commutator structure often helps enormously).
+First-order Trotter scaling is $O(t^2/\varepsilon)$ in the step count — far from the optimal $O(t + \log(1/\varepsilon))$ achieved by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]]. For high-precision applications, [[product formula]]s are outclassed asymptotically. But for moderate precision and structured Hamiltonians, the constants can be very favorable (the commutator structure often helps enormously).
 
 ## Related notes
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]]

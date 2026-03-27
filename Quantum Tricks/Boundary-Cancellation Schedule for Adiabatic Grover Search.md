@@ -1,4 +1,3 @@
-# Boundary-Cancellation Schedule for Adiabatic Grover Search
 
 > **Source:** An, Costa, Berry, arXiv:2509.00171
 > **Tags:** #trick #adiabatic #grover #search #boundary-cancellation #QAOA #scheduling

@@ -1,4 +1,3 @@
-# Measurement-Based QROM Uncomputation
 
 > **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134 (Appendix C)
 > **Tags:** #trick #circuit-primitive #T-complexity #QROM #uncomputation #measurement #phase-fixup

@@ -1,11 +1,10 @@
-# Suzuki Recursion for Ordered Exponentials
 
 > **Source:** Wiebe, Berry, Høyer, Sanders, arXiv:0812.0562 (J. Phys. A 2010)
 > **Tags:** #trick #product-formulas #suzuki #time-dependent #ordered-exponential
 
 ## What it does
 
-Extends the Suzuki recursive product formula from the time-independent case to ordered operator exponentials $\mathcal{T}\exp\!\int_\mu^\lambda H(u)\,du$, achieving error $O(\Delta\lambda^{2k+1})$ at order $k$ — the same scaling as time-independent Suzuki — provided $H(u)$ has $2k$ bounded derivatives.
+Extends the Suzuki recursive [[product formula]] from the time-independent case to ordered operator exponentials $\mathcal{T}\exp\!\int_\mu^\lambda H(u)\,du$, achieving error $O(\Delta\lambda^{2k+1})$ at order $k$ — the same scaling as time-independent Suzuki — provided $H(u)$ has $2k$ bounded derivatives.
 
 ## The trick
 
@@ -29,7 +28,7 @@ The key point: the subintervals are chosen to preserve the ordering structure of
 
 ## When to reach for it
 
-- Time-dependent Hamiltonian simulation with smooth $H(t)$.
+- Time-dependent [[Hamiltonian simulation]] with smooth $H(t)$.
 - Any ordered-operator problem where you need explicit error bounds and $H$ is not analytic (Dyson-series methods need stronger assumptions on convergence; this works with finite smoothness).
 - When you want to optimize Suzuki order $k$ to get near-linear scaling in evolution time — the [[Suzuki Order as a Tunable Knob for Time Scaling|order-as-knob]] strategy carries over unchanged from the time-independent case.
 

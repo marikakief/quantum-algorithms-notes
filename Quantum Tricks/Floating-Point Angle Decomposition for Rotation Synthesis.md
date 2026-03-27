@@ -1,4 +1,3 @@
-# Floating-Point Angle Decomposition for Rotation Synthesis
 
 > **Source:** Wiebe, Kliuchnikov, arXiv:1305.5528
 > **Tags:** #trick #gate-synthesis #T-count #rotation-synthesis #Clifford-T

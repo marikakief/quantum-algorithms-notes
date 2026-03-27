@@ -1,4 +1,3 @@
-# Kikuchi Method for Degree Reduction
 
 > **Source:** Wein, Alaoui, Moore, FOCS 2019; Hastings, Quantum 4, 237 (2020); Schmidhuber, O'Donnell, Kothari, Babbush, arXiv:2406.19378
 > **Tags:** #trick #Kikuchi-method #degree-reduction #spectral-method #planted-inference #constraint-satisfaction

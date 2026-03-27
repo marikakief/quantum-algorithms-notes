@@ -1,6 +1,5 @@
-# Interference-Based Period Finding
 
-> **Source:** Simon, FOCS 1994; Shor, FOCS 1994; generalized in Kitaev (1995)
+> **Source:** Simon, FOCS 1994; Shor, FOCS 1994; generalized in [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]]
 > **Tags:** #trick #interference #period-finding #query-complexity
 
 ## What it does

@@ -1,4 +1,3 @@
-# Normal Matrix Fourier Decomposition via Root-of-Unity Unitary
 
 > **Source:** Motlagh and Wiebe, arXiv:2308.01501 (2023)
 > **Tags:** #trick #GQSP #normal-matrices #convolution #QFT #block-encoding

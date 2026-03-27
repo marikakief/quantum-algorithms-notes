@@ -1,5 +1,3 @@
-# Programmable Ancilla Rotations (PAR) for T-Depth Reduction
-
 > **Source:** Jones et al., New J. Phys. **14**, 115023 (2012); resource analysis in Reiher, Wiebe, Svore, Wecker, Troyer, arXiv:1605.03590
 > **Tags:** #trick #T-depth #rotation-synthesis #fault-tolerant #magic-state-distillation #parallelism
 

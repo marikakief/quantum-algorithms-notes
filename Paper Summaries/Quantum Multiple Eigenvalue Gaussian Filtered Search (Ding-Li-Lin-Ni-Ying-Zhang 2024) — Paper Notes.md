@@ -6,7 +6,7 @@
 
 ## The computational problem
 
-**Multiple Eigenvalue Estimation (MEE):** Given a Hamiltonian $H \in \mathbb{C}^{M \times M}$ with $\|H\| \leq \pi$, oracle access to Hamiltonian simulation $e^{-iHt}$, and an initial state $|\psi\rangle$ with overlaps $p_m = |\langle \psi_m | \psi \rangle|^2$ on eigenstates, estimate all *dominant* eigenvalues $\{\lambda_m\}_{m \in D}$ to precision $\epsilon$.
+**Multiple Eigenvalue Estimation (MEE):** Given a Hamiltonian $H \in \mathbb{C}^{M \times M}$ with $\|H\| \leq \pi$, oracle access to [[Hamiltonian simulation]] $e^{-iHt}$, and an initial state $|\psi\rangle$ with overlaps $p_m = |\langle \psi_m | \psi \rangle|^2$ on eigenstates, estimate all *dominant* eigenvalues $\{\lambda_m\}_{m \in D}$ to precision $\epsilon$.
 
 Key parameters: maximal circuit depth $T_{\max}$ (longest single evolution time) and total evolution time $T_{\text{tot}} = \sum_n |t_n|$.
 

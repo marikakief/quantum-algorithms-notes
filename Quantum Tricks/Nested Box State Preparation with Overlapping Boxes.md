@@ -1,4 +1,3 @@
-# Nested Box State Preparation with Overlapping Boxes
 
 > **Source:** Berry, Rubin, Babbush et al., arXiv:2312.07654; extends Su, Berry et al., arXiv:2105.12767
 > **Tags:** #trick #state-preparation #block-encoding #LCU #amplitude-amplification #first-quantized

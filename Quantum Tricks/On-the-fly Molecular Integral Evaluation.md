@@ -1,4 +1,3 @@
-# On-the-fly Molecular Integral Evaluation
 
 > **Source:** Babbush, Berry, Sanders, Kivlichan, Scherer, Wei, Love, Aspuru-Guzik, arXiv:1506.01029 (2018)
 > **Tags:** #trick #quantum-chemistry #oracle #integrals #on-the-fly #sparse-oracle

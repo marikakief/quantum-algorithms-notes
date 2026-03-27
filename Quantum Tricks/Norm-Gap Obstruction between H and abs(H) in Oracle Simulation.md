@@ -1,11 +1,9 @@
-# Norm-Gap Obstruction between H and abs(H) in Oracle Simulation
-
 > **Source:** Andrew M. Childs and Robin Kothari, *Limitations on the simulation of non-sparse Hamiltonians*, arXiv:0908.4398  
 > **Tags:** #trick #norms #lower-bounds #hamiltonian-simulation
 
 ## The obstruction
 
-In entry-oracle Hamiltonian simulation, the quantum-walk approach (Berry–Childs 2011, and earlier) scales with $\|\text{abs}(H)\|$ (spectral norm of the entrywise-absolute-value matrix), not $\|H\|$ itself. These satisfy:
+In entry-oracle [[Hamiltonian simulation]], the quantum-walk approach (Berry–Childs 2011, and earlier) scales with $\|\text{abs}(H)\|$ (spectral norm of the entrywise-absolute-value matrix), not $\|H\|$ itself. These satisfy:
 
 $$
 \|H\| \le \|\text{abs}(H)\| \le \|H\|_1,

@@ -1,4 +1,3 @@
-# Query Magnitude Hybrid Argument for Oracle Lower Bounds
 
 > **Source:** Bennett, Bernstein, Brassard & Vazirani, arXiv:quant-ph/9701001 (1997)
 > **Tags:** #trick #lower-bound #query-complexity #oracle

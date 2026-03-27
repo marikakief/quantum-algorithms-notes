@@ -1,4 +1,4 @@
-> **Source:** Ryan Babbush, Dominic W. Berry, Hartmut Neven, *Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization*, arXiv:1806.02793, Phys. Rev. A **99**, 040301(R) (2019)
+> **Source:** Ryan Babbush, Dominic W. Berry, Hartmut Neven, *Quantum Simulation of the Sachdev-Ye-Kitaev Model by [[Asymmetric Qubitization]]*, arXiv:1806.02793, Phys. Rev. A **99**, 040301(R) (2019)
 > **Links:** [arXiv](https://arxiv.org/abs/1806.02793) · [Journal](https://doi.org/10.1103/PhysRevA.99.040301)
 > **Tags:** #quantum-simulation #SYK-model #qubitization #LCU #fault-tolerant #T-complexity #holography #Majorana-fermions #quantum-signal-processing
 
@@ -148,7 +148,7 @@ The prior approach was impractical for anything beyond toy sizes. This paper mak
 
 - **Coupling-dependent simulation time.** The T-count scales as $N^{7/2}Jt$, so the physical time $t$ that matters is $Jt$ (dimensionless). For the SYK model to exhibit its interesting holographic properties, $J$ must be large (strong coupling), which pushes up $\lambda t$. The paper doesn't estimate what values of $Jt$ are needed for physically interesting simulations.
 
-- **No initial state preparation.** The paper addresses Hamiltonian simulation only. To study the thermal state or compute out-of-time-order correlators, one also needs to prepare the initial state (e.g., a thermal/Gibbs state), which has its own complexity. This is a separate open problem.
+- **No initial state preparation.** The paper addresses [[Hamiltonian simulation]] only. To study the thermal state or compute out-of-time-order correlators, one also needs to prepare the initial state (e.g., a thermal/Gibbs state), which has its own complexity. This is a separate open problem.
 
 - **Asymmetry overhead is mild here but not always.** The $\sqrt{\pi/2}$ overhead from asymmetric qubitization is specific to Gaussian-distributed couplings. For other distributions, the ratio $\sqrt{\langle |w_\ell|^2\rangle}/\langle |w_\ell|\rangle$ could be much worse. The technique is most natural when there's a distribution-theoretic match between random circuit amplitudes and the Hamiltonian couplings.
 
@@ -172,17 +172,17 @@ The prior approach was impractical for anything beyond toy sizes. This paper mak
 | Kitaev (2015) | Original SYK model; maximal chaos result | No |
 | Sachdev & Ye (1993) | Original SY model that SYK generalizes | No |
 | García-Álvarez et al. (2017), PRL | Prior Trotter-based SYK simulation: $O(N^{10}t^2/\varepsilon)$ | No |
-| Low & Chuang (2016), arXiv:1610.06546 | [[Qubitization (Quantum Walk for Spectral Encoding)]] — the framework this paper extends | [[Qubitization (Quantum Walk for Spectral Encoding)]] |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2016)]], arXiv:1610.06546 | [[Qubitization (Quantum Walk for Spectral Encoding)]] — the framework this paper extends | [[Qubitization (Quantum Walk for Spectral Encoding)]] |
 | Low & Chuang (2017), PRL | Quantum signal processing — polynomial transformations of walk operators | No |
-| Childs & Wiebe (2012) | LCU query model for Hamiltonian simulation | No |
+| [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] | LCU query model for [[Hamiltonian simulation]] | No |
 | Babbush, Gidney et al. (2018), PRX [ref 21] | Controlled Majorana operator circuit (Section 3B); source of the SELECT implementation used here | [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] |
 | Gidney (2017), arXiv:1709.06648 | Tofolli gate compilation to Clifford+T | No |
-| Boixo, Babbush et al. (2018), Nature Physics | Random circuit sampling; Porter-Thomas convergence evidence | No |
-| Szegedy (2004), FOCS | Product of reflections → rotation (quantum walk theory) | No |
+| Boixo, [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush et al. (2018)]], Nature Physics | Random circuit sampling; Porter-Thomas convergence evidence | No |
+| [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]], FOCS | Product of reflections → rotation (quantum walk theory) | No |
 | Berry, Childs, Kothari (2015), FOCS | [[Truncated Taylor Series Simulation]] | [[Truncated Taylor Series Simulation]] |
 | Childs, Kothari, Somma (2017), SIAM | LCU simulation optimality | No |
 | Fowler et al. (2012), PRA | Surface code — motivates T-gate minimization | No |
-| Babbush et al. (2018), PRX, 1711.07629 [ref 30] | Low-depth materials simulation | [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] |
+| [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes|Babbush et al. (2018)]], PRX, 1711.07629 [ref 30] | Low-depth materials simulation | [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] |
 | Berry, Gidney, Motta, McClean, Babbush (2019) [ref 29] | Improved qubitization resource estimates | [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] |
 | Childs, Maslov et al. (2018), PNAS [ref 31] | Heisenberg model simulation | No |
 | Harrow & Low (2009); Harrow & Mehraban (2018) | Random circuit convergence to approximate designs | No |

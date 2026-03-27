@@ -1,4 +1,3 @@
-# Parity-Counted Fermionic Sign Tracking
 
 > **Source:** Abrams & Lloyd, arXiv:quant-ph/9703054 (1997)
 > **Tags:** #trick #fermions #second-quantization #jordan-wigner

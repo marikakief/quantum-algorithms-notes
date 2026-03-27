@@ -1,4 +1,3 @@
-# Frustration-Free Gap Amplification via Walk Operator
 
 > **Source:** Somma & Boixo, SIAM J. Comput. 42, 593 (2013); arXiv:1110.2494
 > **Tags:** #trick #spectral-gap #frustration-free #quantum-walk #adiabatic

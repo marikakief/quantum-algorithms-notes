@@ -1,11 +1,10 @@
-# Quantum Search Lower Bound for Commutator Simulation
 
 > **Source:** Childs & Wiebe, arXiv:1211.4945, J. Math. Phys. 54, 062202 (2013)
 > **Tags:** #trick #lower-bounds #commutator #quantum-search #optimality
 
 ## What it does
 
-Proves that any product-formula simulation of $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The argument works by embedding a quantum search problem into the commutator evolution, so a too-efficient product formula would contradict the $\Omega(\sqrt{n})$ search lower bound.
+Proves that any product-formula simulation of $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The argument works by embedding a quantum search problem into the commutator evolution, so a too-efficient [[product formula]] would contradict the $\Omega(\sqrt{n})$ search lower bound.
 
 ## The trick
 
@@ -19,7 +18,7 @@ $$
 $$
 acts as $-i$ times a rotation generator. Evolving for time $T = \Theta(\sqrt{n})$ under $[A,B]$ maps $|+\rangle \to |w\rangle$, solving the search problem.
 
-**Query reduction:** Each elementary exponential $e^{\pm A\tau}$ or $e^{\pm B\tau}$ requires at most 2 oracle queries to the search function (to implement the projectors coherently). So a product formula using $N_{\rm exp}$ exponentials gives a quantum search algorithm with $O(N_{\rm exp})$ oracle queries.
+**Query reduction:** Each elementary exponential $e^{\pm A\tau}$ or $e^{\pm B\tau}$ requires at most 2 oracle queries to the search function (to implement the projectors coherently). So a [[product formula]] using $N_{\rm exp}$ exponentials gives a quantum search algorithm with $O(N_{\rm exp})$ oracle queries.
 
 **Lower bound:** By the Bennett–Bernstein–Brassard–Vazirani $\Omega(\sqrt{n})$ search lower bound, any quantum algorithm solving $n$-item search uses $\Omega(\sqrt{n})$ queries. Therefore $N_{\rm exp} \geq \Omega(\sqrt{n}) = \Omega(T)$.
 
@@ -29,7 +28,7 @@ Since $T = \Theta(\sqrt{n})$, this gives $N_{\rm exp} = \Omega(T)$ — matching 
 
 - Proving optimality of commutator-simulation algorithms.
 - More broadly: showing that any product-formula approach to some evolution must use $\Omega(f(T))$ elementary exponentials, by finding a hard instance whose evolution solves a query problem with a known lower bound.
-- The pattern — encode a hard query problem into a Hamiltonian commutator, then use query complexity lower bounds — is a general technique for Hamiltonian simulation lower bounds.
+- The pattern — encode a hard query problem into a Hamiltonian commutator, then use query complexity lower bounds — is a general technique for [[Hamiltonian simulation]] lower bounds.
 
 ## Complexity
 

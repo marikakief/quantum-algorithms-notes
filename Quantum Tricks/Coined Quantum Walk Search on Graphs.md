@@ -1,6 +1,5 @@
-# Coined Quantum Walk Search on Graphs
 
-> **Source:** Shenvi, Kempe & Whaley (2003) for hypercube; Ambainis (2003) for element distinctness; Ambainis, Kempe & Rivosh (2004) for grids. Survey: Ambainis, arXiv:quant-ph/0403120
+> **Source:** Shenvi, Kempe & Whaley (2003) for hypercube; [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] for element distinctness; Ambainis, Kempe & Rivosh (2004) for grids. Survey: Ambainis, arXiv:quant-ph/0403120
 > **Tags:** #trick #quantum-walk #search #Grover #coin
 
 ## What it does

@@ -1,6 +1,5 @@
-# Szegedy Walk Quantization of Hamiltonians
 
-> **Source:** Childs, arXiv:0810.0312 (2010), §2; building on Szegedy (2004)
+> **Source:** Childs, arXiv:0810.0312 (2010), §2; building on [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]]
 > **Tags:** #trick #quantum-walk #qubitization-precursor #spectral #QSP-precursor #fundamental
 
 ## What it does
@@ -11,7 +10,7 @@ $$
 H|\lambda\rangle = \lambda\|{\mathrm{abs}(H)}\||\lambda\rangle \implies U|\mu_\pm\rangle = \pm e^{\pm i\arcsin\lambda}|\mu_\pm\rangle
 $$
 
-Hamiltonian eigenvalues map to walk eigenphases via $\arcsin$. This is the bridge between quantum walks, Hamiltonian simulation, and [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|quantum signal processing]].
+Hamiltonian eigenvalues map to walk eigenphases via $\arcsin$. This is the bridge between quantum walks, [[Hamiltonian simulation]], and [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|quantum signal processing]].
 
 ## The construction
 

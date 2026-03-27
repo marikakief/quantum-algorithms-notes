@@ -1,4 +1,3 @@
-# Amplitude Amplification and Estimation
 
 **Concept hub** — 42 wikilink refs across the vault.
 

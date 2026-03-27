@@ -1,4 +1,3 @@
-# Entropy Pumping for State Preparation
 
 > **Source:** Lloyd, Science 273(5278), 1073–1078 (1996)
 > **Tags:** #trick #state-preparation #cooling #entropy

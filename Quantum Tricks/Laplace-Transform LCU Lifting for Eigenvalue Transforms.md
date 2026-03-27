@@ -1,11 +1,10 @@
-# Laplace-Transform LCU Lifting for Eigenvalue Transforms
 
 > **Source:** An, Childs, Lin, arXiv:2411.04010
 > **Tags:** #trick #eigenvalue-transform #LCHS #LCU #Laplace
 
 ## What it does
 
-Converts any eigenvalue transformation $h(A)$ with a well-behaved inverse Laplace transform into a [[Linear Combination of Unitaries (LCU)|linear combination of unitaries]] — specifically, of Hamiltonian simulation operators.
+Converts any eigenvalue transformation $h(A)$ with a well-behaved inverse Laplace transform into a [[Linear Combination of Unitaries (LCU)|linear combination of unitaries]] — specifically, of [[Hamiltonian simulation]] operators.
 
 ## The trick
 
@@ -17,7 +16,7 @@ Substitute (2) into (1):
 
 $$h(A) = \int_0^\infty \int_\mathbb{R} \frac{f(k)\, g(t)}{1-ik}\, e^{-it(kL+H)}\, dk\, dt$$
 
-The integrand is a unitary ($e^{-it(kL+H)}$) weighted by a scalar kernel. Truncate and discretise both integrals → finite LCU of Hamiltonian simulation unitaries. Implement via standard [[Linear Combination of Unitaries (LCU)|LCU]] protocol + [[Standard Amplitude Amplification|amplitude amplification]].
+The integrand is a unitary ($e^{-it(kL+H)}$) weighted by a scalar kernel. Truncate and discretise both integrals → finite LCU of [[Hamiltonian simulation]] unitaries. Implement via standard [[Linear Combination of Unitaries (LCU)|LCU]] protocol + [[Standard Amplitude Amplification|amplitude amplification]].
 
 The block-encoding normalisation is $\|f\|_{L^1} \cdot \|g\|_{L^1}$.
 
@@ -26,7 +25,7 @@ The block-encoding normalisation is $\|f\|_{L^1} \cdot \|g\|_{L^1}$.
 - You need to apply a non-polynomial function of a non-normal matrix (e.g., fractional powers $(\eta I + A)^{-p}$, $e^{-TA^{-1}}$)
 - The matrix has the dissipativity property $L = (A + A^\dagger)/2 \succeq 0$
 - The function $h$ has a known Laplace/inverse-Laplace representation
-- You already have Hamiltonian simulation subroutines available (the inner loop is standard Ham-sim)
+- You already have [[Hamiltonian simulation]] subroutines available (the inner loop is standard Ham-sim)
 
 ## Complexity
 

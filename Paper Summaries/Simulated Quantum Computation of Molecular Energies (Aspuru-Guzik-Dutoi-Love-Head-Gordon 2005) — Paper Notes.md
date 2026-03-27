@@ -97,7 +97,7 @@ Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discr
 ## References within this paper
 
 - Feynman (1982) — quantum simulation conjecture
-- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — Hamiltonian simulation framework (ref [2])
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — [[Hamiltonian simulation]] framework (ref [2])
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]] — fermionic simulation (ref [3])
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams-Lloyd (1999)]] — phase estimation for eigenvalues (ref [4])
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation (ref [5])

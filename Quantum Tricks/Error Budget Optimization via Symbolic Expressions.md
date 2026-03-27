@@ -1,4 +1,3 @@
-# Error Budget Optimization via Symbolic Expressions
 
 > **Source:** Harrigan, Khattar, Yuan et al., arXiv:2409.04643; also used in Kivlichan, Gidney, Babbush et al. (2020) and Campbell (2021)
 > **Tags:** #trick #resource-estimation #optimization #error-budget #compilation

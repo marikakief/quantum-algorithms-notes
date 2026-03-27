@@ -1,4 +1,3 @@
-# Mixed-Unitary Channel Approximation for Time-Dependent Evolution
 
 > **Tags:** #trick #channel-simulation #diamond-norm #randomization
 > **Source:** arXiv:1906.07115, Sections 3 and A

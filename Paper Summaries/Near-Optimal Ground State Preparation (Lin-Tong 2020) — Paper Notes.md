@@ -82,7 +82,7 @@ These match (up to log factors) the achieved scalings.
 ## Related notes
 
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — QSP/QSVT framework
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — QSP for Hamiltonian simulation
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — QSP for [[Hamiltonian simulation]]
 - [[Linear Combination of Unitaries (LCU)]] — alternative approach
 - [[Chebyshev Polynomial Spectral Projector]] — related filtering technique
 - [[Gapped Phase Estimation]] — alternative gap estimation
@@ -92,7 +92,7 @@ These match (up to log factors) the achieved scalings.
 ## References within this paper
 
 - Ge et al. (2019) — prior work on ground state preparation (J. Math. Phys. 60, 022202)
-- Gilyén et al. (2019) — QSVT framework
-- Low & Chuang (2017) — optimal Hamiltonian simulation via QSP
+- [[Optimizing Quantum Optimization Algorithms via Faster Quantum Gradient Computation (Gilyén-Arunachalam-Wiebe 2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT framework
+- Low & Chuang (2017) — optimal [[Hamiltonian simulation]] via QSP
 - Poulin & Wocjan (2009) — earlier ground state preparation approach
 - [[Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant QC (Lin-Tong 2022) — Paper Notes|Lin and Tong (2022)]] — same authors' follow-up: Heisenberg-limited energy estimation with 1 ancilla, designed for early fault-tolerant hardware

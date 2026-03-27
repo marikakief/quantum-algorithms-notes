@@ -1,4 +1,3 @@
-# Kitaev Geometric Lemma for Ground Space Angles
 
 > **Source:** Kitaev, Shen & Vyalyi, *Classical and Quantum Computation* (2002), Lemma 14.4
 > **Tags:** #trick #spectral-gap #QMA #perturbation

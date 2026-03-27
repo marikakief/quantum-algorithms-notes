@@ -58,7 +58,7 @@ Block-encode $B_G/\lambda$ (with $\lambda \approx n$) by preparing an equal supe
 
 Cost per walk step: $6|E| + 5n + O(\log n)$ Toffolis (edge database) or $4|E^C| + 5n + O(\log n)$ (missing edges).
 
-This is a significant improvement over prior work that simulated $e^{iB_G t}$ via Hamiltonian simulation — [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] avoids the logarithmic overhead from short-time simulation needed to prevent eigenvalue wraparound.
+This is a significant improvement over prior work that simulated $e^{iB_G t}$ via [[Hamiltonian simulation]] — [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] avoids the logarithmic overhead from short-time simulation needed to prevent eigenvalue wraparound.
 
 ### Step 3: Project onto the zero eigenspace
 
@@ -104,7 +104,7 @@ For $K(16,16)$ (complete 16-partite graph, $n = 256$, $k = 16$): **~6.8 billion 
 |---|---|---|---|
 | Dicke state prep | Superposition over all $k$ | $\tilde{O}(k^2 n \log^2 n)$ Toffolis | $\tilde{O}(n)$ or $(k+2)n$ Toffolis |
 | Clique detection | $O(k^2)$ oracle calls | Same as Lloyd | $3\|E\| + O(\log k)$ or $2\|E^C\|$ Toffolis |
-| Dirac operator | Hamiltonian simulation | Hamiltonian simulation | [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]] (walk operator) |
+| Dirac operator | [[Hamiltonian simulation]] | [[Hamiltonian simulation]] | [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]] (walk operator) |
 | Kernel projection | Phase estimation | Phase estimation | [[Dolph-Chebyshev Eigenstate Filtering|Chebyshev filter]] |
 | Final estimation | Classical sampling | Amplitude estimation | [[Kaiser Window Amplitude Estimation|Kaiser-window amplitude estimation]] |
 | Constant factors | Not computed | Not computed | **Fully compiled** |
@@ -162,7 +162,7 @@ For data drawn from a probability measure on $\mathbb{R}^d$: Betti numbers grow 
 - **Ubaru et al. (2021)** — arXiv:2108.02811. QSVT-based kernel projector for TDA with linear depth.
 - **Hayakawa (2022)** — Quantum 6, 873. Quantum algorithm for persistent Betti numbers.
 - **Apers, Sen & Szabó (2022)** — arXiv:2211.09618. Classical PIMC algorithm for normalized Betti numbers; polynomial for constant gap and constant error.
-- **Low & Chuang (2019)** — [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]]. Quantum 3, 163. Walk operator construction used here.
+- **[[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]]** — [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]]. Quantum 3, 163. Walk operator construction used here.
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. (2018)]] — Controlled Pauli string technique (Figure 9) used for the Dirac operator implementation; also source of [[Unary Iteration|unary iteration]].
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes|Sanders et al. (2020)]] — Efficient bit-summing procedure used in clique checking; also source of [[QROM (Quantum Read-Only Memory)|QROM]] equal-superposition preparation.
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan, Gidney, Babbush et al. (2020)]] — Single-Toffoli-per-addition bit-summing method.

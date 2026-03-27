@@ -1,4 +1,3 @@
-# Hamming-Distance Ordering for Multi-Determinant Preparation
 
 > **Source:** Tubman, Mejuto-Zaera, Epstein, Hait, Levine, Huggins, Jiang, McClean, Babbush, Head-Gordon, Whaley, arXiv:1809.05523 (2018)
 > **Tags:** #trick #state-preparation #multi-determinant #circuit-optimisation #classical-preprocessing

@@ -1,4 +1,3 @@
-# First-Quantized Plane-Wave Chemistry Encoding
 
 > **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019)
 > **Tags:** #trick #first-quantized #plane-wave #qubit-encoding #antisymmetry #momentum-space

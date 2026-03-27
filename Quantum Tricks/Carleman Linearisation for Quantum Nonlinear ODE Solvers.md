@@ -1,4 +1,3 @@
-# Carleman Linearisation for Quantum Nonlinear ODE Solvers
 
 > **Source:** Carleman (1932); quantum application by Liu-Kolden-Krovi-Loureiro-Trivisa-Childs (2021); generalised to arbitrary $M$ in Costa-Schleich-Morales-Berry, arXiv:2312.09518
 > **Tags:** #trick #nonlinear-ODE #Carleman-linearisation #linearisation #Kronecker

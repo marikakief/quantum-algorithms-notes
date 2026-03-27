@@ -1,4 +1,3 @@
-# Comparator-Based Direct Amplitude Sampling from Fixed-Point Coefficients
 
 > **Source:** Yulong Liu, Zheru Zhu, Lin Lin, Guang Hao Low, and Jinglei Yang, arXiv:2510.08644, Section V.2
 > **Tags:** #trick #state-preparation #amplitude-loading #comparators

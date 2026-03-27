@@ -1,6 +1,5 @@
-# Post-Selection Boosting for Hardness of Sampling
 
-> **Source:** Bremner, Jozsa, Shepherd (2011); Aaronson & Arkhipov (2011); general technique
+> **Source:** Bremner, Jozsa, Shepherd (2011); [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes|Aaronson & Arkhipov (2011)]]; general technique
 > **Tags:** #trick #complexity-theory #quantum-supremacy #sampling #polynomial-hierarchy
 
 ## What it does

@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Introduces **qHOP** (quantum Highly Oscillatory Protocol), a simple algorithm for time-dependent Hamiltonian simulation that replaces time-ordered products with ordinary matrix exponentials of time-averaged Hamiltonians. The method is simultaneously:
+Introduces **qHOP** (quantum Highly Oscillatory Protocol), a simple algorithm for time-dependent [[Hamiltonian simulation]] that replaces time-ordered products with ordinary matrix exponentials of time-averaged Hamiltonians. The method is simultaneously:
 - **Insensitive to rapid time-variation** (unlike Trotter, whose cost depends on $\|H'(t)\|$)
 - **Commutator-scaled** (cost governed by $\|[H(s), H(t)]\|$ rather than $\|H\|^2$)
 - **L1-norm scaling capable** (like continuous qDRIFT but with better precision)
@@ -117,7 +117,7 @@ The [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Pa
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes|Berry, Childs, Su, Wang, Wiebe (2020)]] — continuous qDRIFT and L1-norm scaling
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2019)]] — commutator-based Trotter error theory
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT framework used for time-independent simulation step
-- An, Fang, Lin (2021) — time-dependent unbounded Hamiltonian simulation with vector norm scaling (precursor)
+- An, Fang, Lin (2021) — time-dependent unbounded [[Hamiltonian simulation]] with vector norm scaling (precursor)
 
 ## Cross-links
 

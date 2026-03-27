@@ -1,4 +1,3 @@
-# Sparse State Preparation for Qubitized Chemistry
 
 > **Source:** Berry, Gidney, Motta, McClean, Babbush, arXiv:1902.02134 (Section 5)
 > **Tags:** #trick #state-preparation #LCU #PREPARE #sparsity #qubitization #quantum-chemistry

@@ -1,4 +1,3 @@
-# QET-U — Eigenvalue Transformation via Hamiltonian Evolution
 
 > **Source:** Yulong Dong, Lin Lin, and Yu Tong, arXiv:2204.05955 (PRX Quantum 2022)
 > **Tags:** #trick #QSP #QET-U #eigenvalue-transformation #early-fault-tolerant

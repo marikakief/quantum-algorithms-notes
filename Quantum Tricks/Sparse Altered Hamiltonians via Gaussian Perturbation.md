@@ -1,4 +1,3 @@
-# Sparse Altered Hamiltonians via Gaussian Perturbation
 
 > **Source:** Anurag Anshu, arXiv:2603.15495
 > **Tags:** #trick #sparse-Hamiltonians #classical-optimization #uncertainty-principle #variance #energy-lowering
@@ -54,7 +53,7 @@ The numerics in [[An Alternating-Minimization Method for Preparing Low-Energy St
 
 Constructing $H_{T,f}$: $O(n \cdot t)$ Gaussian random variables for the banded construction, or $O(n)$ for the Hamming-1 construction (each qubit has $n$ single-flip neighbours). If algorithm makes $C$ calls: $C$-wise independence uses $\mathrm{poly}(C)$ space.
 
-Hamiltonian simulation of $H_{T,f}$: $H_{T,f}$ is sparse (sparsity $O(t)$ or $O(n)$), so standard sparse simulation applies.
+[[Hamiltonian simulation]] of $H_{T,f}$: $H_{T,f}$ is sparse (sparsity $O(t)$ or $O(n)$), so standard sparse simulation applies.
 
 ## Caveat
 

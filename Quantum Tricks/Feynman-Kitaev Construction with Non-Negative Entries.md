@@ -1,4 +1,3 @@
-# Feynman-Kitaev Construction with Non-Negative Entries
 
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, arXiv:2303.13012; builds on Jordan, Gosset, Love (2010) and Childs, Gosset, Webb (2015)
 > **Tags:** #trick #BQP-completeness #Feynman-Kitaev #circuit-to-Hamiltonian #non-negative-matrix #coupled-oscillators

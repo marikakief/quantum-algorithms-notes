@@ -83,7 +83,7 @@ The algorithm needs $S_{2,d}$ to be $O(1)$ for the gap analysis to give $\Theta(
 | Approach | Time | Notes |
 |---|---|---|
 | Grover (all-to-all) | $O(\sqrt{N})$ | Requires non-local oracle |
-| Aaronson-Ambainis (2003) | $O(\sqrt{N})$ for $d > 2$; $O(\sqrt{N}\,\text{polylog})$ for $d = 2$ | Divide and conquer |
+| Aaronson-[[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] | $O(\sqrt{N})$ for $d > 2$; $O(\sqrt{N}\,\text{polylog})$ for $d = 2$ | Divide and conquer |
 | **Childs-Goldstone (this paper)** | $O(\sqrt{N})$ for $d > 4$ | Continuous-time walk on lattice |
 | Ambainis-Kempe-Rivosh (2005) | $O(\sqrt{N\log N})$ for $d = 2$ | Coined discrete walk |
 
@@ -113,8 +113,8 @@ Dropping the scalar $\gamma N I$, this is the Farhi-Gutmann "analog analogue" of
 
 ## References within this paper
 
-- Grover (1996) — the all-to-all quantum search; this paper's complete graph case
-- Aaronson & Ambainis (2003) — spatial search via divide-and-conquer; achieves $\sqrt{N}$ for $d > 2$
+- [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the all-to-all quantum search; this paper's complete graph case
+- Aaronson & [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — spatial search via divide-and-conquer; achieves $\sqrt{N}$ for $d > 2$
 - Farhi & Gutmann (1998) — continuous-time quantum walk on the complete graph ("analog analogue of Grover")
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Boyer, Brassard, Høyer & Tapp (1998)]] — tight bounds on quantum search
 - Benioff (2002) — quantum robot model (spatial quantum computation)

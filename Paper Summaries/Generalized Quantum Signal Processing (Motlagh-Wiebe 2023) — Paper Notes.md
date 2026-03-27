@@ -21,9 +21,9 @@ Yes. GQSP replaces the single-axis rotations (X- or Z-rotations) used as signal 
 The paper also provides:
 1. A recursive algorithm for computing GQSP rotation angles when both $P$ and $Q$ are known — much simpler than existing QSP phase-finding
 2. An FFT-based optimisation algorithm for finding $Q$ given only $P$, scaling to degree $\sim 10^7$ polynomials in under a minute on GPU
-3. Applications to Hamiltonian simulation (simplified formulation), an optimal fractional query algorithm, bosonic operator implementation, and normal matrix synthesis (diagonal and circulant/convolution matrices)
+3. Applications to [[Hamiltonian simulation]] (simplified formulation), an optimal fractional query algorithm, bosonic operator implementation, and normal matrix synthesis (diagonal and circulant/convolution matrices)
 
-**My assessment:** This is a genuinely important extension of the QSP framework. The key insight — that SU(2) signal processing operators remove all practical polynomial restrictions — is clean and natural in retrospect, but nobody had done it properly before. The paper's impact is already visible: [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes|Berry-Motlagh-Pantaleoni-Wiebe (2024)]] used GQSP immediately to halve the query count for Hamiltonian simulation. The phase-finding simplification is a real pedagogical win too — standard QSP phase-finding is notoriously fiddly, and the GQSP recursive formula is straightforward.
+**My assessment:** This is a genuinely important extension of the QSP framework. The key insight — that SU(2) signal processing operators remove all practical polynomial restrictions — is clean and natural in retrospect, but nobody had done it properly before. The paper's impact is already visible: [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes|Berry-Motlagh-Pantaleoni-Wiebe (2024)]] used GQSP immediately to halve the query count for [[Hamiltonian simulation]]. The phase-finding simplification is a real pedagogical win too — standard QSP phase-finding is notoriously fiddly, and the GQSP recursive formula is straightforward.
 
 ---
 
@@ -90,7 +90,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 
 **Corollary 5.** Any $P \in \mathbb{C}[x]$ with $|P|^2 \leq 1$ on $\mathbb{T}$ can be implemented via GQSP.
 
-**Theorem 7 (Hamiltonian simulation).** Given $U = e^{iH}$, implement $e^{it\sin H}$ and $e^{it\cos H}$ to accuracy $\epsilon$ using $O(t + \log(1/\epsilon)/\log\log(1/\epsilon))$ controlled-$U$ operations and a single ancilla qubit.
+**Theorem 7 ([[Hamiltonian simulation]]).** Given $U = e^{iH}$, implement $e^{it\sin H}$ and $e^{it\cos H}$ to accuracy $\epsilon$ using $O(t + \log(1/\epsilon)/\log\log(1/\epsilon))$ controlled-$U$ operations and a single ancilla qubit.
 
 **Corollary 8 (Qubitization simulation).** Block-encode $e^{-iHt}$ using $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ applications of the walk operator $W$, where $\alpha$ is the [[Linear Combination of Unitaries (LCU)|LCU]] 1-norm.
 
@@ -119,7 +119,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 | Application | Previous best | GQSP result |
 |---|---|---|
 | Fractional query $U^t$ | $O((1/\delta)\log(1/\epsilon))$ — [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes\|Gilyén et al. 2019]] | $O(1/\delta + \log(1/\epsilon))$ — optimal |
-| Hamiltonian simulation | Same asymptotic, but needs LCU for mixed parity | Direct single-pass via [[Jacobi-Anger Truncation for QSP Simulation\|Jacobi-Anger expansion]] |
+| [[Hamiltonian simulation]] | Same asymptotic, but needs LCU for mixed parity | Direct single-pass via [[Jacobi-Anger Truncation for QSP Simulation\|Jacobi-Anger expansion]] |
 | Convolution ($d$-length filter, $N$-dimensional state) | $O(d\log N)$ via LCU of cyclic permutations | $O(d\log N + \log^2 N)$ via GQSP of QFT-diagonalised permutation |
 
 ---
@@ -134,7 +134,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 
 4. **Normal matrix factory applicability.** The diagonal/circulant synthesis results (Section VI) are clean but somewhat niche. The circulant result requires knowing the filter coefficients classically and having an efficient change-of-basis circuit (QFT for circulant, general $Q$ for other normal matrices). The practical impact is limited to cases where the matrix structure aligns with this framework.
 
-5. **Simulation complexity not improved asymptotically.** The Hamiltonian simulation application (Corollary 8) has the same $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ scaling as [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang 2017]]. The advantage is conceptual simplicity (no LCU needed for mixed parity) rather than query count. The actual $2\times$ query reduction came later in [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes|Berry et al. 2024]], which combined GQSP with [[Directional Walk Control for Phase Doubling|directional walk control]].
+5. **Simulation complexity not improved asymptotically.** The [[Hamiltonian simulation]] application (Corollary 8) has the same $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ scaling as [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang 2017]]. The advantage is conceptual simplicity (no LCU needed for mixed parity) rather than query count. The actual $2\times$ query reduction came later in [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes|Berry et al. 2024]], which combined GQSP with [[Directional Walk Control for Phase Doubling|directional walk control]].
 
 ---
 

@@ -1,11 +1,10 @@
-# Bessel Linearisation of Quantum Walk Phases
 
 > **Source:** Berry, Childs, Kothari. arXiv:1501.01715 (FOCS 2015)
 > **Tags:** #trick #hamiltonian-simulation #quantum-walk #bessel-functions #LCU
 
 ## What it does
 
-Converts the nonlinear eigenphases $\pm e^{\pm i\arcsin(\nu)}$ of a Szegedy quantum walk into the desired linear phases $e^{i\nu z}$ for Hamiltonian simulation, using a [[Linear Combination of Unitaries (LCU)|linear combination]] of walk steps with Bessel function coefficients.
+Converts the nonlinear eigenphases $\pm e^{\pm i\arcsin(\nu)}$ of a Szegedy quantum walk into the desired linear phases $e^{i\nu z}$ for [[Hamiltonian simulation]], using a [[Linear Combination of Unitaries (LCU)|linear combination]] of walk steps with Bessel function coefficients.
 
 ## The trick
 
@@ -25,7 +24,7 @@ via [[Linear Combination of Unitaries (LCU)|LCU]] (PREPARE the normalised Bessel
 
 ## When to reach for it
 
-- Hamiltonian simulation from a walk operator when you want $\log(1/\varepsilon)$ precision *and* linear-in-$d$ sparsity scaling
+- [[Hamiltonian simulation]] from a walk operator when you want $\log(1/\varepsilon)$ precision *and* linear-in-$d$ sparsity scaling
 - Any situation where you have a unitary with eigenvalues $e^{\pm i\arcsin(\nu)}$ and want to implement $e^{i\nu z}$
 - When phase estimation is too expensive (gives $O(1/\sqrt{\varepsilon})$ error) and self-inverse decomposition is too wasteful (costs an extra factor of $d$)
 

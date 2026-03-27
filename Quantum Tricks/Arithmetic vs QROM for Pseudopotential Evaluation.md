@@ -1,4 +1,3 @@
-# Arithmetic vs QROM for Pseudopotential Evaluation
 
 > **Source:** Berry, Rubin, Babbush et al., arXiv:2312.07654
 > **Tags:** #trick #block-encoding #pseudopotential #design-principle #QROM #arithmetic #scaling

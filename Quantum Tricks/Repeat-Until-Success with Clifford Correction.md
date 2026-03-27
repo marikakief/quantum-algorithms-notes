@@ -1,4 +1,3 @@
-# Repeat-Until-Success with Clifford Correction
 
 > **Source:** Wiebe, Kliuchnikov, arXiv:1305.5528 (also Paetznick-Svore 2013, arXiv:1311.1074)
 > **Tags:** #trick #gate-synthesis #non-deterministic #fault-tolerance #repeat-until-success

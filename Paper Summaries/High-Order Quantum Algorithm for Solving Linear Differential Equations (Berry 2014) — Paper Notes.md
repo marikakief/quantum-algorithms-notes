@@ -90,11 +90,11 @@ This idea spawned an entire subfield. Follow-ups:
 
 ## Comparison with prior and subsequent work
 
-| | Berry (2014) | Berry-Childs-Ostrander-Wang (2017) | Costa et al. (2022) |
+| | [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] | Berry-Childs-Ostrander-Wang (2017) | Costa et al. (2022) |
 |---|---|---|---|
 | $\Delta t$ scaling | $\tilde{O}((\|A\|\Delta t)^{2+2/p})$ | $\tilde{O}((\|A\|\Delta t)^2)$ | $O(\|A\|\Delta t \cdot \text{polylog})$ |
 | $\varepsilon$ scaling | $\text{poly}(1/\varepsilon)$ | $\text{polylog}(1/\varepsilon)$ | $\text{polylog}(1/\varepsilon)$ |
-| Approach | History state + HHL | History state + LCU/Taylor | Hamiltonian simulation (direct) |
+| Approach | History state + HHL | History state + LCU/Taylor | [[Hamiltonian simulation]] (direct) |
 | Key innovation | History state for ODEs | Taylor-series propagator | Spectral methods + Hamiltonian embedding |
 
 ---
@@ -122,8 +122,8 @@ This idea spawned an entire subfield. Follow-ups:
 - Feynman (1982, 1985) — original clock construction ("Feynman's computer")
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes|Kitaev (1999)]] — formalised history state for QMA-completeness
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — quantum simulation of Hamiltonian dynamics (the $A = iH$ special case)
-- Berry-Ahokas-Cleve-Sanders (2007) — efficient sparse Hamiltonian simulation
-- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry-Childs (2011)]] — black-box Hamiltonian simulation
+- Berry-Ahokas-Cleve-Sanders (2007) — efficient sparse [[Hamiltonian simulation]]
+- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry-Childs (2011)]] — black-box [[Hamiltonian simulation]]
 - Leyton-Osborne (2008) — earlier attempt at nonlinear differential equations (exponential in time steps)
 - Ambainis (2010, 2012) — variable time amplitude amplification (explored but found insufficient)
 

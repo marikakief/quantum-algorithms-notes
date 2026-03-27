@@ -1,4 +1,3 @@
-# Decoupled Derivative Dependence in Dyson ODE Algorithms
 
 > **Source:** Berry and Costa, arXiv:2212.03544
 > **Tags:** #trick #dyson-series #ODE #time-discretization #oracle-complexity

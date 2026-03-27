@@ -1,4 +1,3 @@
-# Projected Quantum Kernel via Local Observables
 
 > **Source:** Huang, Broughton, Mohseni, Babbush, Boixo, Neven, McClean, arXiv:2011.01938
 > **Tags:** #trick #quantum-ml #kernel-methods #classical-shadows #projected-quantum-kernel

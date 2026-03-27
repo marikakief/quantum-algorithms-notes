@@ -152,8 +152,8 @@ The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponentia
 
 ## References within this paper
 
-- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse Hamiltonian simulation via [[Sparse Hamiltonian Simulation via Coloring Decomposition|coloring decomposition]]; polynomial-in-$t$ scaling that this paper improves on
-- Lloyd (1996) — original proposal for simulating local Hamiltonians via [[Order-Condition Cancellation in Product Formulas|product formulas]] (Science 273, 1073)
+- [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov & Ta-Shma (2003)]] — first sparse [[Hamiltonian simulation]] via [[Sparse Hamiltonian Simulation via Coloring Decomposition|coloring decomposition]]; polynomial-in-$t$ scaling that this paper improves on
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — original proposal for simulating local Hamiltonians via [[Order-Condition Cancellation in Product Formulas|product formulas]] (Science 273, 1073)
 - Suzuki (1991) — the recursive higher-order integrator construction used throughout (Phys. Lett. A 146, 319)
 - Childs (2004, unpublished) — quantum walk approach to sparse simulation that later achieved linear-in-$d$ scaling
 
@@ -166,9 +166,9 @@ The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponentia
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — improved the sparsity dependence to linear in $d$
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern analysis of the [[Order-Condition Cancellation in Product Formulas|product-formula error]] used here
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves the truly optimal scaling this paper approaches
-- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]] — alternative to product formulas for sparse simulation
+- [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]] — alternative to [[product formula]]s for sparse simulation
 - [[Limitations on Simulation of Non-Sparse Hamiltonians (Childs-Kothari-Somma 2010) — Paper Notes]] — what happens when sparsity fails
-- [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — uses symmetry to improve the product formulas introduced here
+- [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — uses symmetry to improve the [[product formula]]s introduced here
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — the adiabatic equivalence result that placed sparse simulation in BQP
 
 ### Trick cards
@@ -177,4 +177,4 @@ The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponentia
 - [[Suzuki Order as a Tunable Knob for Time Scaling]]
 - [[Order-Condition Cancellation in Product Formulas]]
 - [[Trotter Commutator-Scaling Bound]]
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimizes the constant factors in high-order product formulas that this paper first applied to quantum simulation
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimizes the constant factors in high-order [[product formula]]s that this paper first applied to quantum simulation

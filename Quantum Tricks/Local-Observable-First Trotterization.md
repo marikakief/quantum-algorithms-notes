@@ -1,4 +1,3 @@
-# Local-Observable-First Trotterization
 
 > **Tags:** #trick #locality #trotter #observables
 > **Source:** Childs, Su, Tran, Wiebe, Zhu, arXiv:1912.08854

@@ -1,4 +1,3 @@
-# Uniform Singular Value Amplification for Block-Encoding Norm Matching
 
 > **Source:** Fang, Lin & Tong, arXiv:2208.06941, Quantum **7**, 955 (2023). Technique based on [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019), Theorem 17]].
 > **Tags:** #trick #QSVT #block-encoding #singular-value-transformation #amplification

@@ -84,7 +84,7 @@ For non-reversible ergodic chains, the discriminant matrix $D(P) = (\sqrt{p_{xy}
 
 ## Comparison with prior work
 
-| | Ambainis (2004) | Szegedy (2004) | **MNRS (2007)** |
+| | Ambainis (2004) | [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] | **MNRS (2007)** |
 |---|---|---|---|
 | Cost | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ | $S + \frac{1}{\sqrt{\delta\varepsilon}}(U + C)$ | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ |
 | Finds element? | ✓ | ✗ (detection only) | ✓ |

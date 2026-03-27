@@ -1,4 +1,3 @@
-# Near-Optimal Hardy-Space Kernel for LCHS
 
 > **Source:** An, Liu, Lin, arXiv:2303.01029; formally developed in An, Childs, Lin, arXiv:2312.03916; used in An, Childs, Lin, arXiv:2411.04010
 > **Tags:** #trick #LCHS #kernel #Hardy-space #quadrature

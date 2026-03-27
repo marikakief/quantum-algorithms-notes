@@ -1,4 +1,3 @@
-# Affine Spectrum Compression for QSP Parity Bypass
 
 > **Tags:** #trick #QSP #QET #block-encoding #parity #spectrum #affine-transform
 > **Source:** Martyn, Liu, Chin, Chuang (2023), Sec. III.A.1, Lemma 4, Figs. 4–5
@@ -47,7 +46,7 @@ Total overhead: a constant number of ancilla qubits and queries to $H/\alpha$.
 ## Parameter choices
 
 - $\beta$ controls the compression: smaller $\beta$ → narrower interval → polynomial approximation on a smaller domain → potentially lower degree needed for a given approximation accuracy. But too small $\beta$ means the time parameter $\tau$ must be rescaled and the effective query complexity may not improve.
-- For Hamiltonian simulation $e^{-iHt}$, set $\tau = \alpha t / \beta$ (so that $e^{-i\tilde{H}\tau}$ recovers $e^{-iHt}$ on the compressed spectrum). This keeps the query count $\Theta(\alpha|t|)$.
+- For [[Hamiltonian simulation]] $e^{-iHt}$, set $\tau = \alpha t / \beta$ (so that $e^{-i\tilde{H}\tau}$ recovers $e^{-iHt}$ on the compressed spectrum). This keeps the query count $\Theta(\alpha|t|)$.
 - Optimal $\beta$ is typically close to 1.
 
 ## Approximation degree

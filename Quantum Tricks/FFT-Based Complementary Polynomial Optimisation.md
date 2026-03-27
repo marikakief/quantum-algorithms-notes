@@ -1,4 +1,3 @@
-# FFT-Based Complementary Polynomial Optimisation
 
 > **Source:** Motlagh and Wiebe, arXiv:2308.01501 (2023)
 > **Tags:** #trick #phase-synthesis #QSP #GQSP #numerics #polynomial-completion
@@ -25,7 +24,7 @@ Run gradient descent (or L-BFGS) with FFT-accelerated objective and gradient eva
 
 ## When to reach for it
 
-- You have a target polynomial $P$ from a physics/algorithm problem (e.g., Hamiltonian simulation, eigenvalue filter) and need the full GQSP circuit angles.
+- You have a target polynomial $P$ from a physics/algorithm problem (e.g., [[Hamiltonian simulation]], eigenvalue filter) and need the full GQSP circuit angles.
 - The degree is too high for algebraic complementary polynomial methods (e.g., Riesz-Fejér factorisation requires finding polynomial roots, which is numerically fragile at high degree).
 - You want the complementary polynomial for [[Generalized Quantum Signal Processing (GQSP)|GQSP]] without caring which specific $Q$ you get — any valid $Q$ will do.
 

@@ -1,4 +1,3 @@
-# Eigenvalue Error as the Correct Product Formula Metric
 
 > **Source:** Morales, Costa, Pantaleoni, Burgarth, Sanders, Berry, arXiv:2210.15817 (2025)
 > **Tags:** #trick #product-formulas #error-analysis #hamiltonian-simulation
@@ -27,13 +26,13 @@ This vanishes for large $T$. So eigenvalue error dominates precisely when it mat
 
 ## When to reach for it
 
-- Selecting product formulas for long-time Hamiltonian simulation or [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|phase estimation]]: optimize for eigenvalue error $\zeta$, not spectral-norm error $\chi$.
+- Selecting [[product formula]]s for long-time [[Hamiltonian simulation]] or [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|phase estimation]]: optimize for eigenvalue error $\zeta$, not spectral-norm error $\chi$.
 - Evaluating whether [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomised product formulas]] actually help: if successive steps aren't identical, basis error cancellation breaks. Randomisation may improve spectral-norm error per step but not eigenvalue error, limiting the total improvement.
 - Understanding why some product formulas with larger spectral-norm error outperform those with smaller spectral-norm error in practice.
 
 ## Complexity
 
-No additional computational cost — this is a change of metric, not algorithm. But it changes which product formula you should choose by up to two orders of magnitude in error.
+No additional computational cost — this is a change of metric, not algorithm. But it changes which [[product formula]] you should choose by up to two orders of magnitude in error.
 
 ## Caveat
 

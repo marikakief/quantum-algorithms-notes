@@ -142,7 +142,7 @@ The improvement is not just asymptotic — the constants are better too. Previou
 | Aspuru-Guzik et al. (2005), Science 309 | Original quantum chemistry simulation proposal; Trotter + phase estimation | No |
 | Wecker, Hastings, Troyer (2015) | Prior Trotter-step analysis; $N^2$ Slater-det. gates [41] | No |
 | Babbush et al. (2016), NJP | Second-quantized Taylor series simulation ($\tilde{O}(N^4\|H\|t)$) | No |
-| Babbush et al. (2018), arXiv:1506.01029 | CI-representation first-quantized simulation | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] |
+| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush et al. (2018)]], arXiv:1506.01029 | CI-representation first-quantized simulation | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] |
 | Kivlichan, Wiebe, Babbush, Aspuru-Guzik (2017) | Real-space simulation with truncated Taylor series; same group, different approach | [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] |
 | O'Malley, Babbush et al. (2016) | First hardware VQE experiment; motivates need for practical Trotter circuits | [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] |
 | [40] (prior swap network + planar connectivity) | Achieves 2N depth with planar connectivity; this work halves depth with less connectivity | No |

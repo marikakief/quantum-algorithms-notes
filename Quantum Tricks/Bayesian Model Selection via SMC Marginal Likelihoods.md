@@ -1,4 +1,3 @@
-# Bayesian Model Selection via SMC Marginal Likelihoods
 
 > **Source:** Wiebe, Granade, Ferrie, Cory, arXiv:1311.5269 (PRA 89, 042314, 2014)
 > **Tags:** #trick #bayesian-inference #model-selection #SMC #hamiltonian-learning #Bayes-factor

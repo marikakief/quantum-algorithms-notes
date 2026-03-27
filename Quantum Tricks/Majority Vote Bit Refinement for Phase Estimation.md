@@ -1,4 +1,3 @@
-# Majority Vote Bit Refinement for Phase Estimation
 
 > **Source:** Lanyon, Whitfield, Aspuru-Guzik, White et al., Nature Chemistry 2, 106 (2010); arXiv:0905.0887
 > **Tags:** #trick #phase-estimation #error-mitigation #classical-postprocessing

@@ -1,4 +1,3 @@
-# Kaiser-Window Amplitude Estimation
 
 > **Tags:** #trick #amplitude-estimation #signal-processing #tda
 > **Source:** Babbush et al. arXiv:2209.13581, "Analyzing Prospects for Quantum Advantage in Topological Data Analysis" (PRX Quantum 2024)

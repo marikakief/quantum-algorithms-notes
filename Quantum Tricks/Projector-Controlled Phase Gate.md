@@ -1,4 +1,3 @@
-# Projector-Controlled Phase Gate
 
 > **Source:** Martyn, Rossi, Tan & Chuang, *Grand Unification of Quantum Algorithms*, PRX Quantum **2**, 040203 (2021), Fig. 3. Also implicit in [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. 2019]].
 > **Tags:** #trick #QSVT #QET #circuit #block-encoding

@@ -1,4 +1,3 @@
-# Compression Gadget for Sequential Block-Encoding Composition
 
 > **Source:** Fang, Lin & Tong, arXiv:2208.06941, Quantum **7**, 955 (2023). Adapted from [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2018)]].
 > **Tags:** #trick #block-encoding #composition #ancilla-efficient #time-marching

@@ -138,7 +138,7 @@ This is one of the most-cited papers in quantum complexity for good reason:
 
 1. **It established the limits of Grover-style speedups.** The quadratic speedup is the best you can do with unstructured oracle access. Every subsequent quantum algorithm paper implicitly benchmarks against this: is the speedup better than $\sqrt{N}$? If so, the algorithm must be exploiting structure.
 
-2. **It settled whether quantum search can be improved.** Between Grover (1996) and BBBV (1997), it wasn't obvious that $\sqrt{N}$ was tight. BBBV closed the question.
+2. **It settled whether quantum search can be improved.** Between [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] and BBBV (1997), it wasn't obvious that $\sqrt{N}$ was tight. BBBV closed the question.
 
 3. **It made BQP subroutine composition rigorous.** Without the tidy subroutine result, the entire framework of oracle-relativised quantum complexity would be on shaky ground.
 

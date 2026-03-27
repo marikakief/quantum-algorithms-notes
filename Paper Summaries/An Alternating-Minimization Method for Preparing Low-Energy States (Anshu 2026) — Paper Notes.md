@@ -151,7 +151,7 @@ The sparse Hamiltonian numerics are the most striking: the algorithm navigates e
 - White (1992) — DMRG; alternating minimization over tensor components; not in vault
 - Landau, Vazirani, Vidick (2015); Arad, Landau, Vazirani, Vidick (2017) — rigorous DMRG-inspired algorithms; not in vault
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes|Kitaev (1999)]] — local Hamiltonian is QMA-complete; Feynman-Kitaev mapping mentioned for frustration reduction
-- Childs (2010) — sparse Hamiltonian simulation; not in vault
+- [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — sparse [[Hamiltonian simulation]]; not in vault
 
 ---
 

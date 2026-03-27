@@ -1,11 +1,10 @@
-# Discrete Adiabatic Theorem for Quantum Walks
 
 > **Source:** Costa, An, Sanders, Su, Babbush, Berry, arXiv:2111.08152
 > **Tags:** #trick #adiabatic #quantum-walk #qubitization #spectral-gap #error-bound
 
 ## What it does
 
-Bounds the error of a discrete-time adiabatic evolution (a sequence of slowly varying [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] walk operators) in terms of the spectral gap, without requiring any continuous Hamiltonian simulation.
+Bounds the error of a discrete-time adiabatic evolution (a sequence of slowly varying [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] walk operators) in terms of the spectral gap, without requiring any continuous [[Hamiltonian simulation]].
 
 ## The trick
 
@@ -27,7 +26,7 @@ The proof uses the wave operator $\Omega_T = (U_T^A)^\dagger U_T$, a Volterra-ty
 
 ## When to reach for it
 
-- Any time you want to adiabatically prepare a ground state using a [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized walk]] instead of continuous Hamiltonian simulation.
+- Any time you want to adiabatically prepare a ground state using a [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized walk]] instead of continuous [[Hamiltonian simulation]].
 - When the Dyson series overhead ($\log$ factors from truncation) is the bottleneck.
 - Quantum optimization via adiabatic paths where the cost function has a known gap.
 - Replacing the [[Stroboscopic Adiabatic Walk]] with a rigorously bounded version.
@@ -45,7 +44,7 @@ The theorem requires the walk operators to have bounded first *and* second finit
 ## Related notes
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]]
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — Numerically validates that the constant factor is ~1,500× tighter than the analytical bound
-- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Uses the discrete adiabatic theorem to show product formula time steps can be $\varepsilon$-independent; extends to boundary cancellation regime
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Uses the discrete adiabatic theorem to show [[product formula]] time steps can be $\varepsilon$-independent; extends to boundary cancellation regime
 - [[Discrete Adiabatic View of Numerical Integrators]] — The conceptual framework that makes this theorem the right tool for analysing digitised AQC
 - [[Stroboscopic Adiabatic Walk]]
 - [[Qubitization (Quantum Walk for Spectral Encoding)]]

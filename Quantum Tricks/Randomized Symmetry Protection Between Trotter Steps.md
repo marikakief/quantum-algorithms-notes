@@ -1,4 +1,3 @@
-# Randomized Symmetry Protection Between Trotter Steps
 
 > **Source:** Minh C. Tran, Yuan Su, Andrew M. Childs, and Nathan Wiebe, *Faster Digital Quantum Simulation by Symmetry Protection*, arXiv:2006.16248, PRX Quantum **2**, 010323 (2021)  
 > **Links:** [arXiv](https://arxiv.org/abs/2006.16248) · [PRX Quantum](https://doi.org/10.1103/PRXQuantum.2.010323)  

@@ -1,4 +1,3 @@
-# Search Lower Bound for Spectral Gap Impossibility
 
 > **Source:** Somma & Boixo, SIAM J. Comput. 42, 593 (2013); arXiv:1110.2494
 > **Tags:** #trick #lower-bound #search #spectral-gap #proof-technique

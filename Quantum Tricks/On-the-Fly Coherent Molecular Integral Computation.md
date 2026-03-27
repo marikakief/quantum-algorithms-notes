@@ -1,4 +1,3 @@
-# On-the-Fly Coherent Molecular Integral Computation
 
 > **Source:** Babbush, Berry, Kivlichan, Wei, Love, Aspuru-Guzik, arXiv:1506.01020
 > **Tags:** #trick #quantum-chemistry #LCU #state-preparation #integral-computation

@@ -1,4 +1,3 @@
-# Semiclassical Phase Estimation via QSVT
 
 > **Source:** Martyn, Rossi, Tan & Chuang, *Grand Unification of Quantum Algorithms*, PRX Quantum **2**, 040203 (2021) — Section V.C. Related to [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev 1995]] semiclassical QPE.
 > **Tags:** #trick #phase-estimation #QSVT #semiclassical #bit-extraction
@@ -54,7 +53,7 @@ Cost of $U^{2^j}$: repeated squaring, so $O(j)$ applications of $U$, or $O(2^j)$
 | Total $U$ uses | $O(2^\ell)$ worst case | $O(2^\ell)$ worst case |
 | Ancilla overhead | $O(\ell)$ | $O(m)$ per round ($m$ = block-encoding width) |
 
-The key difference: classical feedback replaces the quantum Fourier transform. This was first proposed by Kitaev (1995) in a different form; here it falls out naturally as a QSVT instance.
+The key difference: classical feedback replaces the quantum Fourier transform. This was first proposed by [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] in a different form; here it falls out naturally as a QSVT instance.
 
 ## Error analysis
 

@@ -1,4 +1,3 @@
-# Quantum Shannon Counting Argument
 
 > **Source:** The circuit-counting observation is folklore (see e.g. Knill 1995, Nielsen & Chuang 2000). The extension to arbitrary time-dependent Hamiltonian evolution — which requires proving a derivative-free simulation result first — is due to Poulin, Qarry, Somma & Verstraete, arXiv:1102.1360 (2011).
 > **Tags:** #trick #complexity-theory #counting-argument #hilbert-space

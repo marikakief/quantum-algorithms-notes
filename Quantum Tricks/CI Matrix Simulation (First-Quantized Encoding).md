@@ -1,5 +1,3 @@
-# CI Matrix Simulation (First-Quantized Encoding)
-
 > **Source:** Babbush, Berry, Sanders, Kivlichan, Scherer, Wei, Love, Aspuru-Guzik, arXiv:1506.01029 (2018)
 > **Tags:** #trick #quantum-simulation #first-quantized #CI-matrix #fermionic #qubit-efficiency
 

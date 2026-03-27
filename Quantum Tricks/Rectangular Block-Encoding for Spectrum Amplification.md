@@ -1,4 +1,3 @@
-# Rectangular Block-Encoding for Spectrum Amplification
 
 > **Source:** Low, King, Berry et al., arXiv:2502.15882
 > **Tags:** #trick #block-encoding #spectrum-amplification #quantum-walk #singular-value-estimation

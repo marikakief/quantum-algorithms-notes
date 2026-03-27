@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-This is the paper where the LCU viewpoint really enters Hamiltonian simulation in a recognizable form.
+This is the paper where the LCU viewpoint really enters [[Hamiltonian simulation]] in a recognizable form.
 
 The core move is to implement a weighted sum of unitaries coherently rather than only composing unitaries in sequence. In modern language, this sits upstream of PREPARE/SELECT, block-encodings, and robust oblivious amplitude amplification.
 
@@ -18,7 +18,7 @@ $$
 $$
 using an ancilla rotation, controlled application of the two branches, and postselection. Failure probability is $\leq \Delta^2 \kappa/(\kappa+1)^2$ where $\Delta = \|U_a - U_b\|$, so the trick works well when the two unitaries are close. Repeating and organizing this carefully gives a way to implement larger linear combinations of unitaries.
 
-This primitive is then applied to **multi-product formulas**: classical sums of product formulas (Trotter/Suzuki pieces) chosen so low-order Taylor error terms cancel. The coefficients in a multi-product formula can be negative, which is the core difficulty — Childs–Wiebe show how to realize these signed combinations coherently via a subtraction step, and how to manage the failure branch when subtraction fails.
+This primitive is then applied to **multi-[[product formula]]s**: classical sums of [[product formula]]s (Trotter/Suzuki pieces) chosen so low-order Taylor error terms cancel. The coefficients in a multi-product formula can be negative, which is the core difficulty — Childs–Wiebe show how to realize these signed combinations coherently via a subtraction step, and how to manage the failure branch when subtraction fails.
 
 Note: the multi-product formula idea has classical roots in numerical analysis (Blanes, Casas, Ros; also Richardson extrapolation), where it is used to boost integration accuracy without increasing the number of exponentials exponentially. Childs–Wiebe adapt this for quantum implementation.
 
@@ -28,7 +28,7 @@ For $H = \sum_{j=1}^m H_j$ with $\|H_j\| \leq h$, the gate count is
 $$
 \tilde{O}\!\left(m^2 h t \, e^{1.6\sqrt{\log(mht/\varepsilon)}}\right),
 $$
-an improvement over prior product-formula bounds (which had exponent constant ≈2.06 or ≈2.54). The exponent is subexponential in the precision parameter — much better than product formulas but not the polylog(1/ε) that later Taylor/QSP methods achieve. The sign problem (negative LCU coefficients) is the obstacle.
+an improvement over prior product-formula bounds (which had exponent constant ≈2.06 or ≈2.54). The exponent is subexponential in the precision parameter — much better than [[product formula]]s but not the polylog(1/ε) that later Taylor/QSP methods achieve. The sign problem (negative LCU coefficients) is the obstacle.
 
 ## What is actually new here
 
@@ -36,7 +36,7 @@ an improvement over prior product-formula bounds (which had exponent constant �
 |---|---|
 | two-unitary addition gadget | basic coherent LCU primitive |
 | recursive construction | scales from two branches to many |
-| application to multi-product formulas | concrete simulation payoff |
+| application to multi-[[product formula]]s | concrete simulation payoff |
 | failure-branch analysis | E(−λ)E(λ) ≈ I recovery; approximate inversion of failed subtraction |
 | coefficient engineering | choose ℓ_q schedule to make dominant positive coefficient suppress subtraction failure |
 
@@ -46,7 +46,7 @@ an improvement over prior product-formula bounds (which had exponent constant �
 
 2. **[[Failure Branch Inversion via E(-λ)E(λ)]]** — when the LCU subtraction step fails (projecting onto the wrong ancilla state), apply $E(-\lambda)E(\lambda) \approx I$ to approximately undo the damage. Exploits near-unitarity of the two branches.
 
-3. **[[Coefficient Engineering for Subtractive LCUs]]** — choose the multi-product formula coefficients $\ell_q$ so the dominant positive term is large enough to suppress subtraction failure probability. The first systematic approach to managing signed LCU coefficients.
+3. **[[Coefficient Engineering for Subtractive LCUs]]** — choose the multi-[[product formula]] coefficients $\ell_q$ so the dominant positive term is large enough to suppress subtraction failure probability. The first systematic approach to managing signed LCU coefficients.
 
 4. **[[Near-Unitary Pairing for High-Success LCU]]** — pair unitaries that are close to each other ($\|U_a - U_b\|$ small) so the coherent addition has high success probability $\sim 1 - \Delta^2\kappa/(\kappa+1)^2$.
 
@@ -66,7 +66,7 @@ The central idea is recognizable, though. If you want to understand where the LC
 ## Caveats
 
 - Does not achieve polylog(1/ε) gate complexity. That requires the Taylor-series approach of Berry et al. (1412.4687) or QSP/qubitization.
-- The multi-product formula approach is sensitive to coefficient engineering: choosing the Vandermonde parameters poorly makes the subtraction step nearly always fail.
+- The multi-[[product formula]] approach is sensitive to coefficient engineering: choosing the Vandermonde parameters poorly makes the subtraction step nearly always fail.
 
 ## Cross-links
 

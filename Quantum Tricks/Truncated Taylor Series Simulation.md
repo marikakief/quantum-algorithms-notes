@@ -1,4 +1,3 @@
-# Truncated Taylor Series Simulation
 
 > **Source:** Berry, Childs, Cleve, Kothari, Somma, FOCS 2015 (original); applied to chemistry in Babbush et al., arXiv:1506.01029 (2018)
 > **Tags:** #trick #LCU #hamiltonian-simulation #taylor-series #precision-scaling #amplitude-amplification
@@ -65,7 +64,7 @@ The Taylor series approach is polynomially better than Trotter in precision and 
 - The 1-norm $\Lambda$ can be large even when $\|H\|$ (spectral norm) is small. For chemistry, $\Lambda$ scales as $O(N^4)$ in second-quantized and $O(\eta^2 N^2)$ in first-quantized, so there is still polynomial overhead.
 - Oblivious amplitude amplification requires the state preparation oracle $B$ to be efficient and the success probability $1/\Lambda$ not exponentially small. If $\Lambda$ is exponentially large, the method fails.
 - For real chemistry simulations, the constants hidden in $\tilde{O}$ matter. Practical estimates suggest fault-tolerant resource requirements are still very large.
-- Superseded for Hamiltonian simulation by qubitization/QSVT in terms of asymptotic gate complexity (by a $\log(1/\varepsilon)$ factor). However, QSVT is conceptually and technically harder to implement.
+- Superseded for [[Hamiltonian simulation]] by qubitization/QSVT in terms of asymptotic gate complexity (by a $\log(1/\varepsilon)$ factor). However, QSVT is conceptually and technically harder to implement.
 
 ## Related notes
 - [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]]

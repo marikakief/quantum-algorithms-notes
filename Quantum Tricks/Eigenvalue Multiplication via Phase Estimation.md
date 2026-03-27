@@ -1,4 +1,3 @@
-# Eigenvalue Multiplication via Phase Estimation
 
 > **Source:** Wiebe, Braun, Lloyd, arXiv:1204.5242 (2012); implicit in Harrow, Hassidim, Lloyd, arXiv:0811.3171 (2009)
 > **Tags:** #trick #phase-estimation #eigenvalue #HHL #linear-algebra #quantum-simulation
@@ -24,7 +23,7 @@ Postselecting on $|1\rangle$ multiplies the amplitude of each eigenvector by $\t
 
 ## When to reach for it
 
-- You need to apply a Hermitian operator $H$ to a state (as a map, not as time evolution) and you have efficient Hamiltonian simulation for $e^{iHt}$.
+- You need to apply a Hermitian operator $H$ to a state (as a map, not as time evolution) and you have efficient [[Hamiltonian simulation]] for $e^{iHt}$.
 - You need to implement a non-unitary linear map via its block-embedding (e.g., [[Rectangular Matrix Pseudoinverse via Hermitian Isometry Embedding]]).
 - More generally: any eigenvalue transformation $f(E_j)$ where $f$ is a polynomial or smooth function can be implemented this way; [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] generalises this to arbitrary polynomial transforms.
 

@@ -1,4 +1,3 @@
-# QROM Interpolation for Negative Exponential
 
 > **Source:** Berry, Rubin, Babbush et al., arXiv:2312.07654; also Sanders, Berry, Babbush et al., arXiv:1902.10673
 > **Tags:** #trick #circuit-primitive #function-evaluation #QROM #interpolation #exponential #arithmetic

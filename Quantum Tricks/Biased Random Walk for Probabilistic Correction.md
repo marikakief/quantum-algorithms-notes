@@ -1,4 +1,3 @@
-# Biased Random Walk for Probabilistic Correction
 
 > **Source:** Cleve, Gottesman, Mosca, Somma, Yonge-Mallo (CGMSY 2009); Berry, Cleve, Gharibian, arXiv:1211.4637
 > **Tags:** #trick #error-correction #probabilistic #simulation

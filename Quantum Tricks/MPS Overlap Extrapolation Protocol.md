@@ -1,4 +1,3 @@
-# MPS Overlap Extrapolation Protocol
 
 > **Source:** Berry, Tong, Khattar, White, Kim, Boixo, Lin, Lee, Chan, Babbush, Rubin, arXiv:2409.11748 (2024)
 > **Tags:** #trick #state-preparation #MPS #DMRG #overlap #extrapolation #FeMoCo

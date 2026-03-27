@@ -1,4 +1,3 @@
-# Quantum Self-Tomography via Phase Estimation
 
 > **Source:** Lloyd, Mohseni & Rebentrost, arXiv:1307.0401 (2014)
 > **Tags:** #trick #tomography #PCA #phase-estimation #quantum-ML

@@ -49,7 +49,7 @@ Total 1-sparse pieces: at most $M' = 6 M d^2$.
 
 ### Constant-timestep integrator (Theorem 5)
 
-On $[t_0, t_0 + \Delta t]$, apply the order-$k$ Suzuki product formula, splitting into $r$ equal subintervals as needed. The formula at each subinterval evaluates all Hamiltonian terms at the **midpoint** of the subinterval. Error budget: $\varepsilon/2$ from the integrator (Lemma 4), $\varepsilon/2$ from discretization (Lemma 1).
+On $[t_0, t_0 + \Delta t]$, apply the order-$k$ Suzuki [[product formula]], splitting into $r$ equal subintervals as needed. The formula at each subinterval evaluates all Hamiltonian terms at the **midpoint** of the subinterval. Error budget: $\varepsilon/2$ from the integrator (Lemma 4), $\varepsilon/2$ from discretization (Lemma 1).
 
 **Discretization precision requirements (Lemma 1):**
 
@@ -158,7 +158,7 @@ The 2018 Dyson-series paper supersedes this one in precision scaling (polylog vs
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — the sparse 1-sparse decomposition (BACS) and edge-coloring used here; time-independent predecessor
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — foundational product-formula simulation
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin, Qarry, Somma & Verstraete (2011)]] — concurrent work; derivative-free Trotter for time-dependent simulation (different approach: integrates coefficients rather than evaluating at midpoints)
-- Berry & Childs (2009), arXiv:0910.4157 — black-box Hamiltonian simulation via sparse oracles; informs the oracle model here
+- Berry & Childs (2009), arXiv:0910.4157 — black-box [[Hamiltonian simulation]] via sparse oracles; informs the oracle model here
 - Suzuki (1991) — recursive product-formula construction extended in the 2010 companion paper
 
 ---

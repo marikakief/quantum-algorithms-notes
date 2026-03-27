@@ -1,4 +1,3 @@
-# Lower-Shift Ancilla Encoding for Polynomial Degree Management
 
 > **Tags:** #trick #ancilla-encodings #polynomials #qevt
 > **Source:** arXiv:2401.06240 (Quantum eigenvalue processing, FOCS 2024)

@@ -1,4 +1,3 @@
-# Anticommutator Simulation via Qubit Dilation
 
 > **Source:** Childs & Wiebe, arXiv:1211.4945, J. Math. Phys. 54, 062202 (2013)
 > **Tags:** #trick #hamiltonian-simulation #dilation #many-body #product-formula
@@ -19,7 +18,7 @@ $$
 $$
 Repeating this construction and taking iterated commutators, one shows that for commuting Hermitian operators $A_1, \ldots, A_m$ with multiplicities $\alpha_\ell$, the total nesting depth $k = \sum_\ell \alpha_\ell - 1$ yields a nested commutator proportional to $A_1^{\alpha_1} \cdots A_m^{\alpha_m} \otimes P$ for some known Pauli $P$ on the ancilla register.
 
-The result (Theorem 13): $\exp(-i \, 2^{-k} A_1^{\alpha_1} \cdots A_m^{\alpha_m} t^{k+1})$ (on the target system) can be implemented using the nested commutator product formula $U_p$ on the dilated system, with cost $O(6^{pk}(6^{pk} \Lambda t)^{k+1+(k+1)^2/(2p)} \varepsilon^{-(k+1)/(2p)})$ elementary exponentials.
+The result (Theorem 13): $\exp(-i \, 2^{-k} A_1^{\alpha_1} \cdots A_m^{\alpha_m} t^{k+1})$ (on the target system) can be implemented using the nested commutator [[product formula]] $U_p$ on the dilated system, with cost $O(6^{pk}(6^{pk} \Lambda t)^{k+1+(k+1)^2/(2p)} \varepsilon^{-(k+1)/(2p)})$ elementary exponentials.
 
 ## When to reach for it
 

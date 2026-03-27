@@ -1,4 +1,3 @@
-# Shot-Noise vs Heisenberg-Scaling Observable Estimation Crossover
 
 > **Source:** Rubin, Berry, Kononov, Malone, Khattar, White, Lee, Neven, Babbush, Baczewski, arXiv:2308.12352
 > **Tags:** #trick #observable-estimation #mean-estimation #sampling #Heisenberg-scaling #resource-estimation

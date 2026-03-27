@@ -3,7 +3,6 @@
 > **Tags:** #quantum-chemistry #spectrum-amplification #sum-of-squares #block-encoding #qubitization #FeMoCo #fault-tolerant #tensor-factorization #DFTHC #resource-estimation #phase-estimation
 
 ---
-
 ## The computational problem
 
 Estimate the ground-state energy $E_{\text{gs}}$ of a molecular electronic Hamiltonian
@@ -12,13 +11,12 @@ $$H = \sum_{pq} h^{(1)}_{pq} E_{pq} + \frac{1}{2}\sum_{pqrs} h^{(2)}_{pqrs} E_{p
 
 (spin-free second-quantized form, $E_{pq} = \sum_\sigma a^\dagger_{p\sigma} a_{q\sigma}$) to chemical accuracy $\varepsilon_{\text{chem}} = 1.6\;\text{mHa}$ on a fault-tolerant quantum computer. The standard approach: compress the Coulomb operator via tensor factorizations, [[Qubitization (Quantum Walk for Spectral Encoding)|qubitize]] the resulting [[Linear Combination of Unitaries (LCU)|LCU]], and run [[Phase Estimation as Eigenvalue Filter for Walk-Based Search|phase estimation]]. The bottleneck is the [[Linear Combination of Unitaries (LCU)|LCU]] 1-norm $\Lambda$, which enters the total cost linearly: $O(\Lambda / \varepsilon)$.
 
-This paper asks: can we break through the $O(\Lambda)$ barrier?
+This paper asks: can we break through the $O(\Lambda)$ barrier? Yes.
 
 ---
-
 ## What the paper does
 
-Yes. By expressing $H$ as a sum of squares (SOS), the Hamiltonian becomes positive semidefinite (up to a shift $E_{\text{SOS}}$). Spectrum amplification then exploits the nonlinearity of $\sqrt{x}$ near zero: small eigenvalues $E_{\text{gap}} = E_{\text{gs}} - E_{\text{SOS}}$ of $H - E_{\text{SOS}}$ map to $\sqrt{E_{\text{gap}}}$ in the "square root" Hamiltonian $H_{\text{sqrt}}$. Phase estimation on $H_{\text{sqrt}}$ resolves $E_{\text{gs}}$ with effective normalization $\lambda_{\text{eff}} = \sqrt{2\Lambda E_{\text{gap}}}$ instead of $\Lambda$. Since $E_{\text{gap}} \ll \Lambda$ for real molecules, this is a major win.
+By expressing $H$ as a sum of squares (SOS), the Hamiltonian becomes positive semidefinite (up to a shift $E_{\text{SOS}}$). Spectrum amplification then exploits the nonlinearity of $\sqrt{x}$ near zero: small eigenvalues $E_{\text{gap}} = E_{\text{gs}} - E_{\text{SOS}}$ of $H - E_{\text{SOS}}$ map to $\sqrt{E_{\text{gap}}}$ in the "square root" Hamiltonian $H_{\text{sqrt}}$. Phase estimation on $H_{\text{sqrt}}$ resolves $E_{\text{gs}}$ with effective normalization $\lambda_{\text{eff}} = \sqrt{2\Lambda E_{\text{gap}}}$ instead of $\Lambda$. Since $E_{\text{gap}} \ll \Lambda$ for real molecules, this is a major win.
 
 To make this practical, they:
 
@@ -80,9 +78,7 @@ Parameters $(R, B, C)$ interpolate between:
 - **DFTHC sweet spot:** $R = \tilde{O}(1)$, $B = \Theta(N)$, $C = \Theta(N)$ — balances the two dominant table-lookup oracles (Rot and Qroam)
 
 This representation is already in SOS form: each squared term is a non-negative operator. The one-body terms split into D1 (positive eigenvalues) and Q1 (negative eigenvalues, rewritten via anticommutation) generators plus the spin-free SF generators.
-
 ### Step 5: Combined cost
-
 The block-encoding normalization:
 
 $$\Lambda = \frac{1}{2}\left(\lambda_{D1} + \lambda_{Q1} + \lambda_{\text{SF}}\right)$$
@@ -197,7 +193,7 @@ Key citations (vault notes linked where they exist):
 - **[18]** Loaiza & Izmaylov (2023) — BLISS (block-invariant symmetry shift)
 - **[21]** [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|Somma & Boixo (2013)]] — original spectral gap amplification
 - **[22]** Low & Chuang (2017) — uniform spectral amplification
-- **[23]** Zlokapa & Somma (2024) — Hamiltonian simulation for low-energy states
+- **[23]** Zlokapa & Somma (2024) — [[Hamiltonian simulation]] for low-energy states
 - **[25]** Gilyen, Su, Low, Wiebe (2019) — QSVT / quantum singular value transformation
 - **[37]** [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher et al. (2017)]] — original FeMoCo resource estimate (~$10^{14}$ T gates); this paper achieves ~$300{,}000\times$ improvement
 - **[38]** Li et al. (2019) — FeMoCo-76 active space definition
@@ -206,9 +202,9 @@ Key citations (vault notes linked where they exist):
 
 ---
 
-## My assessment
+## My assessment (as an AI)
 
-This is a genuinely significant paper — probably the most important quantum chemistry resource estimation result since THC (Lee et al. 2021). The key insight is that the $O(\Lambda/\varepsilon)$ scaling of qubitization-based phase estimation is not a hard wall: if the Hamiltonian has SOS structure (and all fermionic Hamiltonians do), the effective normalization can be brought down to $O(\sqrt{\Lambda E_{\text{gap}}}/\varepsilon)$.
+This is a genuinely significant paper. The key insight is that the $O(\Lambda/\varepsilon)$ scaling of qubitization-based phase estimation is not a hard wall: if the Hamiltonian has SOS structure (and all fermionic Hamiltonians do), the effective normalization can be brought down to $O(\sqrt{\Lambda E_{\text{gap}}}/\varepsilon)$.
 
 The $4\times$ improvement on FeMoCo-76 is impressive but understates the method's potential. The CO₂ series shows $100\times$+ improvements, and the scaling fits suggest the advantage grows with system size. The DFTHC factorization is also a solid contribution independent of spectrum amplification — the idea that you can smoothly interpolate between DF and THC to hit the Amdahl's-law sweet spot on the circuit cost is elegant.
 

@@ -1,4 +1,3 @@
-# LHPST Rotation via Energy Difference Oracle
 
 > **Source:** Sanders, Berry, Costa, Tessler, Wiebe, Gidney, Neven, Babbush, arXiv:2007.07391 (improving on Lemieux, Heim, Poulin, Svore, Troyer 2020)
 > **Tags:** #trick #quantum-simulated-annealing #quantum-walk #QROM #dense-hamiltonian

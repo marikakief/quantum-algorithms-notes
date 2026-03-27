@@ -1,4 +1,3 @@
-# Controlled Momentum-Register Swaps for Periodic Block Encodings
 
 > **Source:** Rubin, Berry, Malone, White, Khattar, DePrince, Sicolo, Kühn, Kaicher, Lee, Babbush, arXiv:2302.05531
 > **Tags:** #trick #block-encoding #periodic-systems #qubitization #circuit-primitive #data-movement

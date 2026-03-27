@@ -1,4 +1,3 @@
-# Dynamic SELECT for Second-Quantized Hamiltonians
 
 > **Source:** Babbush, Berry, Kivlichan, Wei, Love, Aspuru-Guzik, arXiv:1506.01020
 > **Tags:** #trick #LCU #quantum-chemistry #select-oracle #fermionic

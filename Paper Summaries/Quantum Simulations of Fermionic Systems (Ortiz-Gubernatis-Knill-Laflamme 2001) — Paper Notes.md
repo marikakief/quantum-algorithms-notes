@@ -44,7 +44,7 @@ The decomposition into Pauli terms is what makes both [[Gapped Phase Estimation|
 ## References within this paper
 
 - Jordan & Wigner (1928) — original fermion-to-spin mapping
-- Lloyd (1996) — Hamiltonian simulation via [[Order-Condition Cancellation in Product Formulas|Trotter]]
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — [[Hamiltonian simulation]] via [[Order-Condition Cancellation in Product Formulas|Trotter]]
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes|Abrams & Lloyd (1999)]] — eigenvalue algorithm that this paper provides the Hamiltonian encoding for
 
 ---

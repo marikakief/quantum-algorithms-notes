@@ -1,4 +1,3 @@
-# Analytical Gradient Estimation for Variational Quantum Circuits
 
 > **Source:** Romero, Babbush, McClean, Hempel, Love, Aspuru-Guzik, arXiv:1701.02691 (2018)
 > **Tags:** #trick #VQE #gradient #variational #Hadamard-test #optimization

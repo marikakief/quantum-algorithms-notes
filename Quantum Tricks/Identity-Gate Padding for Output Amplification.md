@@ -1,4 +1,3 @@
-# Identity-Gate Padding for Output Amplification
 
 > **Source:** Aharonov, van Dam, Kempe, Landau, Lloyd, Regev, arXiv:quant-ph/0405098, Lemma 3.10
 > **Tags:** #trick #history-state #amplification

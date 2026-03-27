@@ -66,7 +66,7 @@ The guiding state overlap improvement is the technically interesting part. Class
 
 ### Why classical algorithms can't exploit the guiding state
 
-The classical bottleneck is not the number of iterations — it's the per-iteration cost. Even with a perfect guiding vector, the Power Method on an $N \times N$ matrix costs $\Omega(N)$ per step (matrix-vector multiplication). The quantum algorithm avoids this because sparse Hamiltonian simulation queries individual matrix entries rather than multiplying the full matrix.
+The classical bottleneck is not the number of iterations — it's the per-iteration cost. Even with a perfect guiding vector, the Power Method on an $N \times N$ matrix costs $\Omega(N)$ per step (matrix-vector multiplication). The quantum algorithm avoids this because sparse [[Hamiltonian simulation]] queries individual matrix entries rather than multiplying the full matrix.
 
 This connects to a deeper complexity-theoretic point: the Guided Local Hamiltonian problem with $1/\text{poly}(N)$ overlap is BQP-complete (Gharibian & Le Gall 2022), while with $2^{-N}$ overlap it's QMA-complete. The transition from exponential to polynomial overlap changes the quantum complexity dramatically (exponential → polynomial), but classical complexity stays exponential throughout. Planted inference problems naturally land in the intermediate regime — polynomial but not constant overlap — which is where quantum advantage lives.
 
@@ -116,13 +116,13 @@ Key differences from Hastings: (1) works for $k$XOR, not just Tensor PCA; (2) si
 
 ## Reusable ideas
 
-1. [[Kikuchi Method for Degree Reduction]] — Transform a degree-$k$ polynomial optimization problem into a degree-2 problem by introducing $\binom{n}{\ell}$ new "lifted" variables and mapping constraints to matchings on the Kikuchi graph. The resulting sparse Hamiltonian is amenable to spectral methods (classically) and Hamiltonian simulation (quantumly).
+1. [[Kikuchi Method for Degree Reduction]] — Transform a degree-$k$ polynomial optimization problem into a degree-2 problem by introducing $\binom{n}{\ell}$ new "lifted" variables and mapping constraints to matchings on the Kikuchi graph. The resulting sparse Hamiltonian is amenable to spectral methods (classically) and [[Hamiltonian simulation]] (quantumly).
 
 2. [[Input-Derived Guiding State for Planted Problems]] — When a planted inference problem gives you constraint right-hand sides correlated with the planted solution, the normalized constraint vector $|\psi\rangle = \frac{1}{\sqrt{m}} \sum_i b_i |S_i\rangle$ is automatically a useful guiding state. Taking $\ell/k$ copies and symmetrizing gives overlap $\widetilde{\Theta}(n^{-\ell/2})$ with the Kikuchi eigenspace — a quadratic improvement over a random vector.
 
 3. [[Independent Batch Splitting for Hamiltonian-Guiding State Decoupling]] — Split the input randomly into two independent batches: one to build the Hamiltonian, one to build the guiding state. This decouples the two objects (which are otherwise correlated through the shared random input), enabling a clean second-moment proof of overlap. The signal loss from splitting is only polynomial ($\zeta^{\ell}$), absorbed into the overall complexity.
 
-4. [[Guided Sparse Hamiltonian Framework]] — When a planted inference problem maps to a sparse Hamiltonian with an efficiently preparable guiding state having $\gamma^2 = 1/\text{poly}(N)$ overlap with the cutoff eigenspace, combine sparse Hamiltonian simulation + phase estimation + amplitude amplification to decide in $\widetilde{O}(s/(\gamma \alpha \lambda))$ queries. This is a general framework — not specific to $k$XOR.
+4. [[Guided Sparse Hamiltonian Framework]] — When a planted inference problem maps to a sparse Hamiltonian with an efficiently preparable guiding state having $\gamma^2 = 1/\text{poly}(N)$ overlap with the cutoff eigenspace, combine sparse [[Hamiltonian simulation]] + phase estimation + amplitude amplification to decide in $\widetilde{O}(s/(\gamma \alpha \lambda))$ queries. This is a general framework — not specific to $k$XOR.
 
 ---
 
@@ -136,8 +136,8 @@ Key citations that locate this work intellectually:
 - **Gharibian & Le Gall (2022)** — STOC 2022. Guided Local Hamiltonian is BQP-complete with $1/\text{poly}$ overlap. Provides the complexity-theoretic foundation for why guiding states enable quantum advantage.
 - **Raghavendra, Rao, Schramm (2017)** — STOC 2017. SoS-based algorithm for Planted Noisy $k$XOR; the Kikuchi method improves on this.
 - **Dalzell, Pancotti, Campbell, Brandão (2023)** — STOC 2023. "Mind the gap" — another super-Grover speedup using guiding states + phase estimation. Similar conceptual toolkit, different problem domain.
-- Berry, Childs, Kothari (2015) — FOCS 2015. Optimal sparse Hamiltonian simulation used as a subroutine.
-- Gilyen, Su, Low, Wiebe (2019) — STOC 2019. [[Qubitization (Quantum Walk for Spectral Encoding)|QSVT]] framework; provides the block-encoding and Hamiltonian simulation primitives.
+- Berry, Childs, Kothari (2015) — FOCS 2015. Optimal sparse [[Hamiltonian simulation]] used as a subroutine.
+- Gilyen, Su, Low, Wiebe (2019) — STOC 2019. [[Qubitization (Quantum Walk for Spectral Encoding)|QSVT]] framework; provides the block-encoding and [[Hamiltonian simulation]] primitives.
 
 ---
 

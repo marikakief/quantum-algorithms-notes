@@ -1,4 +1,3 @@
-# Reversible Modular Exponentiation with Garbage Cleanup
 
 > **Source:** Shor, arXiv:quant-ph/9508027 (1994), §3; using Bennett (1973) reversible computation
 > **Tags:** #trick #reversible-computation #modular-arithmetic #factoring

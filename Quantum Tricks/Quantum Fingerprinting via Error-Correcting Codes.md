@@ -1,4 +1,3 @@
-# Quantum Fingerprinting via Error-Correcting Codes
 
 > **Source:** Buhrman, Cleve, Watrous & de Wolf, arXiv:quant-ph/0102001 (2001)
 > **Tags:** #trick #fingerprinting #communication-complexity #error-correcting-codes

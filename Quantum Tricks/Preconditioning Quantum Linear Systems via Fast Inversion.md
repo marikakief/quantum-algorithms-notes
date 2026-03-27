@@ -1,4 +1,3 @@
-# Preconditioning Quantum Linear Systems via Fast Inversion
 
 > **Source:** Tong, An, Wiebe & Lin, arXiv:2008.13295, Phys. Rev. A **104**, 032422 (2021)
 > **Tags:** #trick #QLSA #preconditioning #block-encoding #QSVT

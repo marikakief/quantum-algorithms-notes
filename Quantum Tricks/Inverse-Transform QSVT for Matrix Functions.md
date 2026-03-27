@@ -1,4 +1,3 @@
-# Inverse-Transform QSVT for Matrix Functions
 
 > **Source:** Tong, An, Wiebe & Lin, arXiv:2008.13295, Phys. Rev. A **104**, 032422 (2021)
 > **Tags:** #trick #QSVT #matrix-function #Chebyshev #Gevrey #block-encoding

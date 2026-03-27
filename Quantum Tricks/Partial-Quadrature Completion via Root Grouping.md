@@ -1,4 +1,3 @@
-# Partial-Quadrature Completion via Root Grouping
 
 > **Tags:** #trick #QSP-precursor #sum-of-squares #root-finding
 > **Source:** Low–Yoder–Chuang PRX 2016

@@ -1,4 +1,4 @@
-> **Source:** Chien Hung Cho, Dominic W. Berry, Min-Hsiu Hsieh, *Doubling the order of approximation via the randomized product formula*, arXiv:2210.11281, Phys. Rev. A **109**, 062431 (2024)
+> **Source:** Chien Hung Cho, Dominic W. Berry, Min-Hsiu Hsieh, *Doubling the order of approximation via the randomized [[product formula]]*, arXiv:2210.11281, Phys. Rev. A **109**, 062431 (2024)
 > **Links:** [arXiv](https://arxiv.org/abs/2210.11281) · [PRA](https://doi.org/10.1103/PhysRevA.109.062431)
 > **Tags:** #hamiltonian-simulation #product-formulas #randomization #trotter #diamond-norm
 
@@ -92,7 +92,7 @@ The improvement over deterministic Suzuki is in all parameters simultaneously.
 
 4. **No numerical experiments.** 12 pages, no figures, no numerical validation. The paper is purely analytical, so the practical tightness of the bounds is unknown. Compare with [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su]] and [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|Bagherimehrab-Berry]] which provide extensive numerics showing their bounds are often much tighter than the asymptotic analysis suggests.
 
-5. **Comparison with corrected product formulas.** The [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|Bagherimehrab-Berry (2024)]] corrected product formulas achieve a similar goal — injecting corrections to cancel error terms — but deterministically and ancilla-free. CPFs gain two orders in error for a single unitarily implementable correction at the boundary. The randomised approach here gains more orders $(2k \to 4k+1)$ but at the cost of producing a channel rather than a unitary. This is a genuine trade-off, not a strict domination in either direction.
+5. **Comparison with corrected [[product formula]]s.** The [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|Bagherimehrab-Berry (2024)]] corrected [[product formula]]s achieve a similar goal — injecting corrections to cancel error terms — but deterministically and ancilla-free. CPFs gain two orders in error for a single unitarily implementable correction at the boundary. The randomised approach here gains more orders $(2k \to 4k+1)$ but at the cost of producing a channel rather than a unitary. This is a genuine trade-off, not a strict domination in either direction.
 
 ## My assessment
 
@@ -102,17 +102,17 @@ But the paper sits in an awkward competitive landscape. It appeared in 2022, bet
 
 The connection to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann et al. (2022)]] is interesting: both papers use randomization to boost the effective order of a product-formula-based method, but Faehrmann et al. average over different step counts (multi-product structure) while Cho-Berry-Hsieh average over correction unitaries within a single step count. The underlying machinery — mixing lemma, diamond-norm analysis — is shared.
 
-The Pauli-string requirement is the biggest practical limitation. Quantum chemistry fits naturally, but this cuts out oracle-based sparse Hamiltonian simulation, which is where much of the theoretical interest in product formulas lies.
+The Pauli-string requirement is the biggest practical limitation. Quantum chemistry fits naturally, but this cuts out oracle-based sparse [[Hamiltonian simulation]], which is where much of the theoretical interest in [[product formula]]s lies.
 
 ## Reusable ideas
 
-1. [[Randomized Correction to Double Product-Formula Order]] — the core construction: sandwich a random correction unitary between two half-steps of a symmetric product formula to double the error order, using the mixing lemma for the diamond-norm guarantee
+1. [[Randomized Correction to Double Product-Formula Order]] — the core construction: sandwich a random correction unitary between two half-steps of a symmetric [[product formula]] to double the error order, using the mixing lemma for the diamond-norm guarantee
 2. [[Time-Reversibility Parity Trick for Error Cancellation]] — the observation that $(V^\dagger S_{2k})^{-1}(S_{2k} V^\dagger)^{-1}$ contains only odd-order error terms (via Yoshida's time-reversibility lemma), automatically killing half the correction orders
 
 ## References within this paper
 
-- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — first-order product formula simulation
-- Suzuki (1991) — systematic $(2k)$-th order product formulas
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — first-order [[product formula]] simulation
+- Suzuki (1991) — systematic $(2k)$-th order [[product formula]]s
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomized product formulas via permutation averaging; the direct predecessor
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT protocol
 - Campbell (2017, PRA 95 042306) — the [[Diamond-Norm Channel Averaging for Random Compilers|mixing lemma]] used throughout the analysis
@@ -127,14 +127,14 @@ The Pauli-string requirement is the biggest practical limitation. Quantum chemis
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — direct predecessor; this paper improves the scaling in one regime
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — the [[Trotter Commutator-Scaling Bound|commutator scaling]] framework; deterministic bounds that this method beats
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrections achieving similar goals without randomization
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — parallel work using randomization for multi-product formulas; shared mixing-lemma machinery
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — parallel work using randomization for multi-[[product formula]]s; shared mixing-lemma machinery
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — the Suzuki recursion framework this paper builds on
 - [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]] — later work using randomization (Stochastic QSP) for more general order-halving; same mixing-lemma philosophy
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — alternative randomized simulation; different regime (short time / many terms)
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry kicks as a different randomized error-reduction strategy; both papers target practical Trotter cost reduction beyond what norm bounds suggest
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — showed empirically that norm Trotter bounds overestimate by $10^{16}$; the order-doubling here addresses the same regime of practical improvement
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — concrete Trotter resource estimates for condensed-phase Hamiltonians; demonstrates the kind of simulation where doubled effective order would reduce gate costs
-- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimized high-order product formulas; using those as the base formula instead of Suzuki would tighten the $5^{k-1}$ prefactor in this paper's bounds
+- [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — optimized high-order [[product formula]]s; using those as the base formula instead of Suzuki would tighten the $5^{k-1}$ prefactor in this paper's bounds
 
 ### Trick cards
 - [[Randomized Correction to Double Product-Formula Order]] — the main construction from this paper

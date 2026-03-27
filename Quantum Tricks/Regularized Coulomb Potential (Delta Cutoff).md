@@ -1,5 +1,3 @@
-# Regularized Coulomb Potential (Delta Cutoff)
-
 > **Source:** Kivlichan, Wiebe, Babbush, Aspuru-Guzik, arXiv:1608.05696 (2017)
 > **Tags:** #trick #coulomb #regularization #LCU #bounded-potential #real-space
 

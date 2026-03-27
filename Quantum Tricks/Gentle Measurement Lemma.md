@@ -1,4 +1,3 @@
-# Gentle Measurement Lemma
 
 > **Source:** Andreas Winter (1999), "Coding Theorem and Strong Converse for Quantum Channels"; popularised and applied widely in quantum information
 > **Tags:** #trick #gentle-measurement #trace-distance #quantum-information

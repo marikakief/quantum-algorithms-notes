@@ -1,4 +1,3 @@
-# Generalised Grover Lemma for Quantum Walks
 
 > **Source:** Ambainis, arXiv:quant-ph/0311001 (2003), Lemma 3; improved by Childs & Eisenberg (2005)
 > **Tags:** #trick #quantum-walk #Grover #spectral-gap #search

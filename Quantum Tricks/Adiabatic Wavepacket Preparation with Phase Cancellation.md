@@ -1,4 +1,3 @@
-# Adiabatic Wavepacket Preparation with Phase Cancellation
 
 > **Source:** Jordan, Lee, Preskill, Science 336, 1130 (2012); arXiv:1111.3633
 > **Tags:** #trick #adiabatic #state-preparation #scattering #wavepacket #QFT
@@ -25,7 +24,7 @@ The forward and backward evolutions approximately cancel the dynamical phases ac
 - When you need to adiabatically dress a state (e.g., turning on interactions) without it dispersing
 
 ## Complexity
-Each sandwich step costs 3 Hamiltonian simulations of duration $\tau/2J$. Total: $3J$ simulations, each of time $\sim \tau/J$. The dominant cost is the adiabatic slowness requirement ($\tau$ scales inversely with the energy gap squared), not the phase cancellation overhead.
+Each sandwich step costs 3 [[Hamiltonian simulation]]s of duration $\tau/2J$. Total: $3J$ simulations, each of time $\sim \tau/J$. The dominant cost is the adiabatic slowness requirement ($\tau$ scales inversely with the energy gap squared), not the phase cancellation overhead.
 
 ## Caveat
 The gap must remain open throughout the adiabatic path. Near a phase transition ($m \to 0$), the gap closes and $\tau$ diverges as $(\lambda_c - \lambda_0)^{-\nu}$. The $J \to \infty$ limit is an idealisation; finite $J$ gives residual phase errors that must be bounded separately.

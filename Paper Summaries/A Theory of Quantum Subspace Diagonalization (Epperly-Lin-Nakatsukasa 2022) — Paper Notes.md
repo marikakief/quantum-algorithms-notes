@@ -114,7 +114,7 @@ QSD and Lin-Tong (2022) share the same quantum circuit (Hadamard test with contr
 - **The $n^3$ factor in Theorem 2.7** (from the projector perturbation bound) is likely an artefact of the proof technique. Numerics suggest the true dependence is milder.
 - **Initial overlap** $|\gamma_0|^2$ must be non-negligible. For strongly correlated systems where Hartree-Fock or other simple initial states have exponentially small overlap, QSD suffers the same problem as all other methods.
 - **The Krylov bound requires a spectral gap** $\Delta E_1 > 0$. For gapless systems, the exponential convergence in $k$ degrades.
-- **Hamiltonian simulation overhead** is not analysed in detail; the paper treats controlled $e^{it\hat{H}}$ as a primitive.
+- **[[Hamiltonian simulation]] overhead** is not analysed in detail; the paper treats controlled $e^{it\hat{H}}$ as a primitive.
 
 ## Reusable ideas
 

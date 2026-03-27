@@ -1,5 +1,5 @@
 
-> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box Hamiltonian simulation and unitary implementation*, arXiv:0910.4157  
+> **Source:** Dominic W. Berry and Andrew M. Childs, *Black-box [[Hamiltonian simulation]] and unitary implementation*, arXiv:0910.4157  
 > **Tags:** #trick #state-preparation #amplitude-amplification #quantum-walk
 
 ## Idea

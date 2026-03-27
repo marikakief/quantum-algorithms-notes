@@ -1,4 +1,3 @@
-# Adaptive Kernel Parameter for LCHS
 
 > **Source:** An, Childs, Lin, arXiv:2312.03916 (Corollary 19)
 > **Tags:** #trick #LCHS #kernel #optimisation

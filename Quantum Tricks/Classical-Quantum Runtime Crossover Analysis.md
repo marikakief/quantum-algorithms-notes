@@ -1,4 +1,3 @@
-# Classical-Quantum Runtime Crossover Analysis
 
 > **Source:** Goings, White, Lee, Tautermann, Degroote, Gidney, Shiozaki, Babbush, Rubin, arXiv:2202.01244
 > **Tags:** #trick #quantum-advantage #resource-estimation #DMRG #qubitization #surface-code #fault-tolerant

@@ -1,4 +1,3 @@
-# Parallelised Importance Sampling for Vector Estimation
 
 > **Source:** O'Brien, Streif, Rubin, Santagati, Su, Huggins et al., arXiv:2111.12437
 > **Tags:** #trick #measurement #importance-sampling #NISQ #estimation

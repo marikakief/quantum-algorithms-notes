@@ -12,7 +12,7 @@ The idea is clean: run qDRIFT at $m$ different step sizes $s_k = 1/N_k$, measure
 
 This is not a new simulation method — qDRIFT is still the underlying quantum primitive. It's a classical post-processing trick that exploits the fact that the qDRIFT channel error expands cleanly in powers of the step size.
 
-**Verdict:** Clean result. Not earth-shattering — this is essentially the randomised analogue of deterministic multiproduct formulas, and the connection to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] is direct. But it's a real improvement for the near-term setting: no ancilla qubits, no controlled gates, and the depth is now $\log(1/\varepsilon)$ rather than $1/\varepsilon$.
+**Verdict:** Clean result. Not earth-shattering — this is essentially the randomised analogue of deterministic multi[[product formula]]s, and the connection to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] is direct. But it's a real improvement for the near-term setting: no ancilla qubits, no controlled gates, and the depth is now $\log(1/\varepsilon)$ rather than $1/\varepsilon$.
 
 ---
 
@@ -85,13 +85,13 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 | [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes\|qDRIFT (Campbell 2019)]] | $O((\lambda T)^2/\varepsilon)$ | $O(1)$ per estimate | 0 | Baseline; depth linear in $1/\varepsilon$ |
 | **qFLO (Watson 2025)** | $O((\lambda T)^2 \log(1/\varepsilon))$ | $O(1/\varepsilon^2)$ total | 0 | This paper; exponential depth improvement |
 | [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes\|Randomized multiproduct (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022)]] | Order-dependent | $O(1)$ | 0 | Different approach: linear combinations of randomized circuits coherently |
-| Deterministic multiproduct formulas | Order-dependent; can be deep | $O(1)$ | Ancillas needed for coherent combination | Full state output; harder to implement |
+| Deterministic multi[[product formula]]s | Order-dependent; can be deep | $O(1)$ | Ancillas needed for coherent combination | Full state output; harder to implement |
 | [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes\|Taylor series / LCU (Berry et al. 2015)]] | $O(\lambda T \log(1/\varepsilon)/\log\log(1/\varepsilon))$ | $O(1)$ | Yes | Near-optimal depth; substantial overhead |
 | [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP (Low-Chuang 2017)]] | $O(\lambda T + \log(1/\varepsilon))$ | $O(1)$ | Yes | Optimal; requires block-encoding machinery |
 
 **The key comparison:** qFLO converts qDRIFT's $1/\varepsilon$ depth to $\log(1/\varepsilon)$ depth at the cost of $1/\varepsilon^2$ shots. The total query complexity is worse than QSP (which is near-optimal), but the implementation is far simpler: no ancilla registers, no coherent linear combinations, no block-encoding oracles.
 
-**Relationship to Kieferová et al. 2022:** This is the most direct ancestor. The randomised multiproduct paper uses linear combinations of product formula circuits to cancel error terms — the same mathematical idea as Richardson extrapolation, but done coherently. Watson's contribution is showing it works just as well classically (for observables, not states), using the simpler incoherent Richardson combination.
+**Relationship to Kieferová et al. 2022:** This is the most direct ancestor. The randomised multiproduct paper uses linear combinations of [[product formula]] circuits to cancel error terms — the same mathematical idea as Richardson extrapolation, but done coherently. Watson's contribution is showing it works just as well classically (for observables, not states), using the simpler incoherent Richardson combination.
 
 ---
 
@@ -125,7 +125,7 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 ## References within this paper
 
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT; the base protocol that qFLO extends
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomised multiproduct formulas; closest prior work
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomised multi[[product formula]]s; closest prior work
 - LKW19 (Lin-Tong-Wu 2019 or similar) — multiproduct weights; Vandermonde conditioning result used in Lemma 4
 - AAT24 — series expansion technique for qDRIFT channels; cited for Lemma 3 setup
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2021)]] — Trotter error theory; comparison context

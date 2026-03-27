@@ -40,7 +40,7 @@ This is the quantum analogue of a Mach-Zehnder interferometer, where $\phi$ is t
 
 | Algorithm | What plays the role of $U$ | Eigenphase $\phi$ |
 |---|---|---|
-| Deutsch (1985) | $U_f: |y\rangle \to |y \oplus f(x)\rangle$ | $\pi f(x)$ |
+| [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] | $U_f: |y\rangle \to |y \oplus f(x)\rangle$ | $\pi f(x)$ |
 | Deutsch-Jozsa (1992) | Same, $n$-bit version | $\pi f(x)$ for each $x$ |
 | Bernstein-Vazirani (1993) | $f(x) = s \cdot x$ | $\pi(s \cdot x)$ |
 | [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] | $U: |x\rangle \to |ax \bmod N\rangle$ | $2\pi k/r$ (order $r$) |
@@ -90,7 +90,7 @@ When the eigenvectors of $U$ are unknown (as in Shor's algorithm), use the simpl
 
 ## Improved Deutsch-Jozsa (Section 3)
 
-The paper gives a slightly improved version of Deutsch-Jozsa: one $f$-evaluation instead of two. The original Deutsch (1985) algorithm for the single-bit case was probabilistic; this paper gives the deterministic version that's now standard.
+The paper gives a slightly improved version of Deutsch-Jozsa: one $f$-evaluation instead of two. The original [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] algorithm for the single-bit case was probabilistic; this paper gives the deterministic version that's now standard.
 
 Also generalises to:
 - $f: \{0,1\}^n \to \{0,1\}^m$ with parity promise
@@ -144,7 +144,7 @@ The QFT circuit construction is standard enough that it doesn't need a separate 
 ## Limits / caveats
 
 - **Not a new algorithm.** This is a review / unification paper. The individual algorithms (Deutsch, Shor, etc.) are cited as prior work. The contribution is the framework and the explicit QPE circuit.
-- **Requires controlled-$U^{2^k}$.** Phase estimation as presented needs efficient implementation of controlled powers of $U$. For some unitaries (like Hamiltonian simulation), constructing these is the hard part.
+- **Requires controlled-$U^{2^k}$.** Phase estimation as presented needs efficient implementation of controlled powers of $U$. For some unitaries (like [[Hamiltonian simulation]]), constructing these is the hard part.
 - **Eigenstate preparation.** The "$|1\rangle$ trick" for Shor's algorithm works because $|1\rangle$ decomposes nicely into eigenstates of the modular multiplication operator. For general unitaries, preparing or having the eigenstate is non-trivial.
 
 ---

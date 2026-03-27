@@ -1,4 +1,3 @@
-# Gentle Search via Quantum OR
 
 > **Source:** Scott Aaronson, arXiv:1711.01053 (Shadow Tomography, STOC 2018)
 > **Tags:** #trick #shadow-tomography #quantum-search #gentle-measurement #sample-complexity

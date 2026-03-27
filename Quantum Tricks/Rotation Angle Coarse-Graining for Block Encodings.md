@@ -1,4 +1,3 @@
-# Rotation Angle Coarse-Graining for Block Encodings
 
 > **Source:** Lee, Berry, Gidney, Huggins, McClean, Wiebe, Babbush, arXiv:2011.03494
 > **Tags:** #trick #block-encoding #rotation-synthesis #error-budget #qubitization #circuit-optimization

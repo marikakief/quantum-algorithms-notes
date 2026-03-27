@@ -1,4 +1,3 @@
-# Chi-Bounded Induction for Majorana Monomials
 
 > **Source:** King, Gosset, Kothari, Babbush, arXiv:2404.19211
 > **Tags:** #trick #chi-boundedness #graph-coloring #fermionic #Majorana #shadow-tomography #induction

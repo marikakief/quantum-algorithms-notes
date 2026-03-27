@@ -1,4 +1,3 @@
-# Higher-Order Stencil Encoding for Quantum Gradient Estimation
 
 > **Source:** Gilyén, Arunachalam, Wiebe, arXiv:1711.00465 (2019)
 > **Tags:** #trick #gradient #finite-differences #oracle
@@ -19,7 +18,7 @@ where the $c_j$ are chosen so that terms through order $k$ in the Taylor expansi
 This requires $O(\log d)$ oracle queries instead of Jordan's 1, because the stencil state can't be prepared with a single query. But the precision savings more than compensate.
 
 ## When to reach for it
-- Quantum gradient estimation where oracle precision is expensive (e.g., the oracle involves Hamiltonian simulation or amplitude estimation)
+- Quantum gradient estimation where oracle precision is expensive (e.g., the oracle involves [[Hamiltonian simulation]] or amplitude estimation)
 - Smooth functions with controlled higher derivatives
 - Optimisation of quantum circuit parameters (VQE, QAOA) where each function evaluation is a full quantum circuit run
 

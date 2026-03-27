@@ -1,4 +1,4 @@
-> **Source:** A. Yu. Kitaev, A. H. Shen, and M. N. Vyalyi, *Classical and Quantum Computation*, AMS Graduate Studies in Mathematics **47** (2002); results from Kitaev (1999)
+> **Source:** A. Yu. Kitaev, A. H. Shen, and M. N. Vyalyi, *Classical and Quantum Computation*, AMS Graduate Studies in Mathematics **47** (2002); results from [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes|Kitaev (1999)]]
 > **Links:** [AMS](https://bookstore.ams.org/gsm-47)
 > **Tags:** #QMA #local-hamiltonian #complexity #history-state #foundational
 

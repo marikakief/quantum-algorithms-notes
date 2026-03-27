@@ -1,11 +1,10 @@
-# Recursive Group-Commutator Product Formula
 
 > **Source:** Childs & Wiebe, arXiv:1211.4945, J. Math. Phys. 54, 062202 (2013)
 > **Tags:** #trick #product-formula #commutator #hamiltonian-simulation #recursion
 
 ## What it does
 
-Builds a product formula of arbitrary approximation order for $e^{[A,B]T}$ using only elementary exponentials $e^{\pm At}$ and $e^{\pm Bt^k}$. At each recursion step the approximation order increases by 2, so you can get as high an order as desired by iterating.
+Builds a [[product formula]] of arbitrary approximation order for $e^{[A,B]T}$ using only elementary exponentials $e^{\pm At}$ and $e^{\pm Bt^k}$. At each recursion step the approximation order increases by 2, so you can get as high an order as desired by iterating.
 
 ## The trick
 
@@ -28,7 +27,7 @@ Each level multiplies the exponential count by 6; after $p$ levels from the base
 
 **For $k=1$ only (Corollary 3):** Compose $V_{p,1}(t/\sqrt{2})\, V_{p,1}(-t/\sqrt{2})$ to cancel the odd-order error term, raising from $O(t^{2p+1})$ to $O(t^{2p+2})$.
 
-**Nested commutators (Lemma 6):** For $Z_k = [A_k, [\cdots[A_1,A_0]\cdots]]$, build $U_p$ by recursively replacing exponentials of inner commutators in the outer formula with their product formula approximations. The result satisfies $U_p = e^{Z_k t^{k+1}} + O(t^{2p+k+1})$.
+**Nested commutators (Lemma 6):** For $Z_k = [A_k, [\cdots[A_1,A_0]\cdots]]$, build $U_p$ by recursively replacing exponentials of inner commutators in the outer formula with their [[product formula]] approximations. The result satisfies $U_p = e^{Z_k t^{k+1}} + O(t^{2p+k+1})$.
 
 ## When to reach for it
 

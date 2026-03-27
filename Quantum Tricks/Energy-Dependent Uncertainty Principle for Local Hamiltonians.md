@@ -1,4 +1,3 @@
-# Energy-Dependent Uncertainty Principle for Local Hamiltonians
 
 > **Source:** Anurag Anshu, arXiv:2603.15495
 > **Tags:** #trick #local-Hamiltonian #uncertainty-principle #variance #frustration-free #complexity

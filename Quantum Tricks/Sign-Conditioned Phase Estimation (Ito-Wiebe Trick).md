@@ -1,5 +1,3 @@
-# Sign-Conditioned Phase Estimation (Ito-Wiebe Trick)
-
 > **Source:** Reiher, Wiebe, Svore, Wecker, Troyer, arXiv:1605.03590 (Lemma 2; attributed to unpublished work by Tsuyoshi Ito, 2012)
 > **Tags:** #trick #phase-estimation #controlled-unitary #T-depth-reduction #quantum-simulation
 

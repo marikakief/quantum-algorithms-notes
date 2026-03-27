@@ -1,4 +1,3 @@
-# Polynomial Completion via Sum-of-Squares
 
 > **Tags:** #trick #QSP #polynomials #synthesis
 > **Source:** Low–Chuang PRL 2017 (+ companion QSP synthesis work)

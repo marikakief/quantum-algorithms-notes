@@ -92,7 +92,7 @@ Projecting onto $|+\rangle$ on the ancilla qubit recovers $\cos[\tau\sin(H/\lamb
 
 ## Key results
 
-**Main result:** Hamiltonian simulation via GQSP with directionally controlled walk steps uses
+**Main result:** [[Hamiltonian simulation]] via GQSP with directionally controlled walk steps uses
 
 $$\frac{K+1}{2} + 1 \approx \frac{K}{2}$$
 
@@ -152,7 +152,7 @@ The factor-of-2 improvement from [[Encoding Electronic Spectra in Quantum Circui
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén–Su–Low–Wiebe (2019)]] [Ref 11] — QSVT unifying framework
 - Motlagh–Wiebe (arXiv:2308.01501) [Ref 12] — GQSP, the key ingredient enabling complex polynomial pairs
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney, Berry, Wiebe, et al. (2018)]] [Ref 15] — first used $U$-vs-$U^\dagger$ control to double phase for eigenvalue estimation; direct precursor to this work
-- Lloyd (1996) [Ref 1] — first product-formula simulation
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] [Ref 1] — first product-formula simulation
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry–Ahokas–Cleve–Sanders (2007)]] [Ref 2] — early product-formula simulation
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry–Childs (2012)]] [Ref 4] — quantum walk simulation
 - Childs–Wiebe (2012) [Ref 5] — LCU simulation

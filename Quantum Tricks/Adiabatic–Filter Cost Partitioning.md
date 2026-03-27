@@ -1,4 +1,3 @@
-# Adiabatic–Filter Cost Partitioning
 
 > **Source:** Costa, An, Babbush, Berry, arXiv:2312.07690
 > **Tags:** #trick #QLSP #resource-estimation #optimization #adiabatic #eigenstate-filtering

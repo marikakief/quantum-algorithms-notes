@@ -1,6 +1,6 @@
 
 > **Tags:** #trick #block-encoding #fermionic #quantum-chemistry
-> **Source:** Babbush et al. (2019) "Quantum simulation of chemistry with sublinear scaling in basis set size," arXiv:1902.02134; used in arXiv:2505.01528 (SOSSA) for degree-2 Majorana SOS operators
+> **Source:** [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush et al. (2019)]] "Quantum simulation of chemistry with sublinear scaling in basis set size," arXiv:1902.02134; used in arXiv:2505.01528 (SOSSA) for degree-2 Majorana SOS operators
 
 ## What it does
 Efficiently block-encodes operators that are quadratic in fermion operators by diagonalising the coefficient matrix via basis rotations.

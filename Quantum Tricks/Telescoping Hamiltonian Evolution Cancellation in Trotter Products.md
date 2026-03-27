@@ -1,10 +1,9 @@
-# Telescoping Hamiltonian Evolution Cancellation in Trotter Products
 
 > **Source:** Ding, Chen & Lin, arXiv:2308.15676 (Proposition 5)
 > **Tags:** #trick #Trotter #Hamiltonian-simulation #circuit-optimisation
 
 ## What it does
-Reduces the total Hamiltonian simulation cost in a Trotter product where each factor involves conjugation by $e^{\pm iH s_l}$ at different times $s_l$, by cancelling consecutive forward-backward evolutions.
+Reduces the total [[Hamiltonian simulation]] cost in a Trotter product where each factor involves conjugation by $e^{\pm iH s_l}$ at different times $s_l$, by cancelling consecutive forward-backward evolutions.
 
 ## The trick
 
@@ -22,7 +21,7 @@ So the product rewrites as:
 
 $$\overrightarrow{\prod_l} A_l(s_l) = e^{-iHS_s}\left(\overrightarrow{\prod_l} A_l\, e^{iH\tau_s}\right) e^{iH(S_s + \tau_s)}$$
 
-Each interior step costs only $O(\tau_s)$ Hamiltonian simulation instead of $O(s_l)$. Total cost: $O(M \cdot \tau_s) = O(S_s)$ — **independent of the ordering of the $s_l$ values**.
+Each interior step costs only $O(\tau_s)$ [[Hamiltonian simulation]] instead of $O(s_l)$. Total cost: $O(M \cdot \tau_s) = O(S_s)$ — **independent of the ordering of the $s_l$ values**.
 
 For second-order Trotter (forward then backward products), the outer $e^{\pm iHS_s}$ factors from consecutive time steps also cancel, leaving only short $e^{\pm iH\tau_s}$ evolutions throughout.
 

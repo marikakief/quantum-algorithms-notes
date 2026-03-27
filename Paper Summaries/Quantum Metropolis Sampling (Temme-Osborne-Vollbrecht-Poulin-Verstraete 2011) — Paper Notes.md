@@ -6,7 +6,7 @@
 
 ## The problem
 
-Lloyd (1996) showed quantum computers can simulate Hamiltonian dynamics. But for condensed matter, chemistry, and high-energy physics, what you usually want are *static* properties: ground states, thermal expectation values, phase diagrams. These require preparing Gibbs states $\rho_G = e^{-\beta H}/Z$. Classically, Metropolis sampling solves this by a random walk that converges to the Boltzmann distribution. But the quantum version faces three obstacles:
+[[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] showed quantum computers can simulate Hamiltonian dynamics. But for condensed matter, chemistry, and high-energy physics, what you usually want are *static* properties: ground states, thermal expectation values, phase diagrams. These require preparing Gibbs states $\rho_G = e^{-\beta H}/Z$. Classically, Metropolis sampling solves this by a random walk that converges to the Boltzmann distribution. But the quantum version faces three obstacles:
 
 1. You don't know the eigenvectors of $H$ (that's what you're trying to learn)
 2. Energy measurement is irreversible — but rejection requires undoing the measurement
@@ -76,7 +76,7 @@ This guarantees $\sigma$ is a fixed point. Combined with ergodicity (ensured by 
 |---|---|
 | Fixed point | Gibbs state $\rho_G = e^{-\beta H}/Z$ (exact for perfect PE) |
 | Rejection cost | $O(1/\varepsilon)$ iterations for failure prob $< \varepsilon$; exponential convergence |
-| Per-step complexity | Polynomial in system size (dominated by phase estimation / Hamiltonian simulation) |
+| Per-step complexity | Polynomial in system size (dominated by phase estimation / [[Hamiltonian simulation]]) |
 | Sign problem | Absent — samples directly from eigenbasis |
 | Approximate PE error | $\|σ^* - \rho_G\|_1 \leq \varepsilon_{sg}/(1-\eta_1)$ where $\eta_1$ is ergodicity coefficient |
 | Mixing time | Problem-dependent; for XX chain with transverse field, gap $\sim O(1/N)$ even at criticality |
@@ -99,7 +99,7 @@ The sign problem bypass is the headline for fermions. Classical quantum Monte Ca
 ## Limits / caveats
 
 - **Mixing time is problem-dependent.** The algorithm converges in polynomial time only if the Markov chain mixes fast, which depends on the Hamiltonian and the choice of updates $\{C\}$. No general proof of rapid mixing exists (this would solve QMA-complete problems).
-- **Phase estimation overhead.** Each Metropolis step requires coherent phase estimation, which itself requires Hamiltonian simulation for various times $t$. The total gate count per step scales polynomially but the constants are large.
+- **Phase estimation overhead.** Each Metropolis step requires coherent phase estimation, which itself requires [[Hamiltonian simulation]] for various times $t$. The total gate count per step scales polynomially but the constants are large.
 - **Finite PE precision** introduces errors. The fixed point deviates from the true Gibbs state by $O(\beta \cdot 2^{-r})$ for $r$-bit precision. Cost grows linearly with $\beta$ (low temperature is harder).
 - **State preparation not solved.** The algorithm assumes you can start from *some* state and mix to equilibrium. For gapped systems at low temperature, mixing may be exponentially slow.
 - **The 5-qubit example** (2-qubit Heisenberg model) is a proof of concept, not a practical demonstration.

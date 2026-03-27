@@ -1,4 +1,3 @@
-# Greedy Peak Search with Blocking
 
 > **Source:** Ding, Li, Lin, Ni, Ying, Zhang, arXiv:2402.01013
 > **Tags:** #trick #spectral-estimation #peak-finding #multiple-eigenvalues #classical-postprocessing

@@ -1,4 +1,3 @@
-# Glued Trees as Coupled Oscillators
 
 > **Source:** Babbush, Berry, Kothari, Somma, Wiebe, arXiv:2303.13012; original glued trees problem from Childs, Cleve, Deotto, Farhi, Gutmann, Spielman (2003)
 > **Tags:** #trick #oracle-separation #glued-trees #quantum-walk #coupled-oscillators #classical-lower-bound

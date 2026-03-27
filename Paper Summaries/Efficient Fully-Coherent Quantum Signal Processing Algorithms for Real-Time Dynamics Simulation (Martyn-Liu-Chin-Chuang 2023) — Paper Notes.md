@@ -9,7 +9,7 @@
 
 Simulate $e^{-iHt}$ to error $\epsilon$ with success probability at least $1-\delta$, where the simulation subroutine must be **fully coherent**: it cannot discard the ancilla register via postselection, because it will be embedded inside a larger coherent algorithm or a time-dependent simulation scheme that needs to concatenate the subroutine with other operations.
 
-"Fully coherent" is a precision-of-interface issue, not an asymptotic-theory issue. If you're running Hamiltonian simulation as a standalone query, postselection is fine. But if you're feeding the output into another block-encoding, or using simulation as a subroutine in a time-dependent scheme (e.g., interaction-picture or Dyson-series based algorithms), you need the failure branch to not contaminate subsequent operations. That makes the problem non-trivial.
+"Fully coherent" is a precision-of-interface issue, not an asymptotic-theory issue. If you're running [[Hamiltonian simulation]] as a standalone query, postselection is fine. But if you're feeding the output into another block-encoding, or using simulation as a subroutine in a time-dependent scheme (e.g., interaction-picture or Dyson-series based algorithms), you need the failure branch to not contaminate subsequent operations. That makes the problem non-trivial.
 
 The relevant access model is a block-encoding oracle for $H/\alpha$, where $\alpha \ge \|H\|$.
 
@@ -27,7 +27,7 @@ The three constructions studied:
 
 2. **QSP-LCU + robust oblivious amplitude amplification (ROAA):** Same LCU construction but using the $A = -WRW^\dagger RW$ style robust OAA rather than standard AA. This handles the fact that the success amplitude is only approximately known and avoids a multiplicative $\ln(1/\delta)$ overhead.
 
-3. **Coherent one-shot Hamiltonian simulation (new):** Apply an affine pre-transformation to the Hamiltonian spectrum, then approximate the complex exponential only on the compressed (one-sided) interval. No amplitude amplification needed at all.
+3. **Coherent one-shot [[Hamiltonian simulation]] (new):** Apply an affine pre-transformation to the Hamiltonian spectrum, then approximate the complex exponential only on the compressed (one-sided) interval. No amplitude amplification needed at all.
 
 ---
 
@@ -158,7 +158,7 @@ Existing trick cards directly used or illustrated:
 ## References within this paper
 
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes|Martyn-Rossi-Tan-Chuang (2021)]] — QET framework and QSP tutorial; pedagogical foundation
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2016–2017)]] — original QSP-based Hamiltonian simulation
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2016–2017)]] — original QSP-based [[Hamiltonian simulation]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low-Chuang (2019)]] — qubitization and block-encoding framework
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — QSVT unification; QET is the Hermitian-case restriction
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2015)]] — Taylor-LCU + ROAA; precursor to the ROAA variant here

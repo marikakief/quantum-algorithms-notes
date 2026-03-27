@@ -34,7 +34,7 @@ That shift is the real intellectual contribution.
 
 | Route | Main idea | Strength |
 |---|---|---|
-| Fourier / LCU | express \(1/x\) using oscillatory integral representations | conceptually direct if Hamiltonian simulation is available |
+| Fourier / LCU | express \(1/x\) using oscillatory integral representations | conceptually direct if [[Hamiltonian simulation]] is available |
 | Chebyshev | approximate a regularized inverse by polynomial expansion | closer in spirit to later polynomial-transform frameworks |
 
 So the paper is interesting not just for the theorem but because it exhibits two different ways to think about matrix inversion algorithmically.
@@ -61,7 +61,7 @@ Sparsity-dependence and condition-number dependence remain similar to HHL in bas
 
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — HHL algorithm; this paper improves its precision dependence
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] framework underlying both Fourier and Chebyshev approaches
-- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]] — quantum walk approach to Hamiltonian simulation
+- [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]] — quantum walk approach to [[Hamiltonian simulation]]
 - Ambainis (2012, arXiv:1010.4458) — variable-time amplitude amplification used for condition-number reduction
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT framework that later unified these approaches
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard, Høyer, Mosca & Tapp (2002)]] — [[Standard Amplitude Amplification|amplitude amplification]] and [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]]

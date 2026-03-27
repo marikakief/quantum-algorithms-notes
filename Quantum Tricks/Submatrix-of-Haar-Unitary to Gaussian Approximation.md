@@ -1,4 +1,3 @@
-# Submatrix-of-Haar-Unitary to Gaussian Approximation
 
 > **Source:** Aaronson & Arkhipov, arXiv:1011.3245 (Section 5)
 > **Tags:** #trick #random-matrices #linear-optics #BosonSampling #Haar-measure

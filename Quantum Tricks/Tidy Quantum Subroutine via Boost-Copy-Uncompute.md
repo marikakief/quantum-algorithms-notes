@@ -1,4 +1,3 @@
-# Tidy Quantum Subroutine via Boost-Copy-Uncompute
 
 > **Source:** Bennett, Bernstein, Brassard & Vazirani, arXiv:quant-ph/9701001 (1997)
 > **Tags:** #trick #subroutine #BQP #uncomputation #error-reduction

@@ -54,9 +54,9 @@ The number of states reachable by circuits of size $G_{\mathrm{tot}}$ from a uni
 
 This is the quantum Shannon argument: just as most Boolean functions have no polynomial-size classical circuits (Shannon: $2^{\mathrm{poly}(N)}$ circuits vs $2^{2^N}$ functions), most quantum states have no polynomial-time local Hamiltonian preparation (polynomially many circuit outputs vs an exponentially high-dimensional state space).
 
-### Randomised product formula (bonus result)
+### Randomised [[product formula]] (bonus result)
 
-The time-dependent Trotter decomposition above produces time-ordered exponentials $\mathcal{T}\exp(-i\int H_X(s)\,ds)$, not simple exponentials $\exp(-iH_X(t)\Delta t)$. For practical simulation, the paper shows how to recover a genuine product formula using randomness:
+The time-dependent Trotter decomposition above produces time-ordered exponentials $\mathcal{T}\exp(-i\int H_X(s)\,ds)$, not simple exponentials $\exp(-iH_X(t)\Delta t)$. For practical simulation, the paper shows how to recover a genuine [[product formula]] using randomness:
 
 1. **Drop the time-ordering.** For a single operator-valued term $H_X(t)$, the time-ordered exponential differs from the ordinary exponential of the integral by $O(\|H_X\|^2 \Delta t)$ — linear in $\Delta t$ (Eq. (4) / Appendix A). Note: if the term has the form $f_X(t) H_X$ (scalar coefficient, fixed operator), then $[H_X(u), H_X(v)] = 0$ and the time-ordering is exact — zero error.
 
@@ -82,7 +82,7 @@ Result: a standard product formula for arbitrary time-dependent $H(t)$, at the c
 | Smooth time-dependence | ✓ (trivially) | ✓ | ✓ |
 | Arbitrary time-dependence | ✗ (error $\sim \|\partial H/\partial t\|$) | ✗ | ✓ |
 | Error bound depends on $\|\partial H/\partial t\|$? | N/A | Yes | **No** |
-| Practical product formula? | Yes | Yes | Only via randomisation |
+| Practical [[product formula]]? | Yes | Yes | Only via randomisation |
 
 The paper fills a conceptual gap: prior to this work, it was widely believed but not formally proved that fast-changing Hamiltonians couldn't enable computation beyond BQP. The derivative-free error bound from the [[Generalised Trotter for Time-Dependent Hamiltonians|generalised Trotter]] makes this rigorous.
 
@@ -90,7 +90,7 @@ The paper fills a conceptual gap: prior to this work, it was widely believed but
 
 - The gate count is $O(L^3 T^2 / \varepsilon)$ — cubic in the number of terms. This is significantly worse than modern methods ([[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]], [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Taylor-LCU]]) which achieve near-linear scaling and polylogarithmic precision dependence. The paper's value is existential (proving the polynomial bound exists), not algorithmic (providing the best bound).
 
-- The Trotter decomposition produces time-ordered exponentials, not standard gates. The randomised product formula that recovers standard gates adds Monte Carlo overhead and only converges in expectation.
+- The Trotter decomposition produces time-ordered exponentials, not standard gates. The randomised [[product formula]] that recovers standard gates adds Monte Carlo overhead and only converges in expectation.
 
 - The counting argument gives an *existence* result about unreachable states but says nothing about *which* states are unreachable or how to decide whether a specific state is physical.
 
@@ -102,7 +102,7 @@ The paper fills a conceptual gap: prior to this work, it was widely believed but
 
 1. [[Generalised Trotter for Time-Dependent Hamiltonians]] — the Huyghebaert–De Raedt decomposition that eliminates derivative dependence from Trotter error. Already has a trick card in the vault (sourced to Huyghebaert–De Raedt 1990 and An-Fang-Liu 2021); this paper is its first major application to a complexity-theoretic question. **Note:** the vault trick card covers the scalar-coefficient case $f_j(t)H_j$, where the per-term exponentials are ordinary (commuting). This paper uses the general operator-valued $H_X(t)$ version, where per-term factors are *time-ordered* exponentials — recovering ordinary exponentials then requires the Monte Carlo trick below.
 
-2. [[Monte Carlo Average-Hamiltonian Product Formula]] — replacing time-ordered exponentials with Monte Carlo sampling of the average Hamiltonian, then applying standard Trotter on the samples. Converts any time-dependent simulation into a randomised product formula without smoothness assumptions.
+2. [[Monte Carlo Average-Hamiltonian Product Formula]] — replacing time-ordered exponentials with Monte Carlo sampling of the average Hamiltonian, then applying standard Trotter on the samples. Converts any time-dependent simulation into a randomised [[product formula]] without smoothness assumptions.
 
 3. [[Quantum Shannon Counting Argument]] — the quantum version of Shannon's classical circuit counting: combine a poly-size circuit simulation result with Solovay-Kitaev discretisation to show that reachable states are exponentially sparse in Hilbert space.
 
@@ -113,9 +113,9 @@ The paper fills a conceptual gap: prior to this work, it was widely believed but
 - [[Solovay-Kitaev Recursive Gate Compilation]] — used to discretise continuous gates into a finite gate set for the counting argument
 - Feynman (1982) — original proposal for quantum simulation
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — first product-formula quantum simulation
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — higher-order product formulas for sparse Hamiltonians
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — higher-order [[product formula]]s for sparse Hamiltonians
 - [[Quantum Metropolis Sampling (Temme-Osborne-Vollbrecht-Poulin-Verstraete 2011) — Paper Notes|Temme-Osborne-Vollbrecht-Poulin-Verstraete (2011)]] — contemporary work by overlapping authors
-- Wiebe, Berry, Høyer, Sanders (2010) — product formulas with derivative-dependent complexity that this paper improves upon
+- Wiebe, Berry, Høyer, Sanders (2010) — [[product formula]]s with derivative-dependent complexity that this paper improves upon
 
 ## Cross-links
 

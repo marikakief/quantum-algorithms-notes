@@ -1,4 +1,3 @@
-# Adaptive Timestep via Local Smoothness Control
 
 > **Source:** Wiebe, Berry, Høyer & Sanders, arXiv:1011.3489 (2011)
 > **Tags:** #trick #adaptive #hamiltonian-simulation #time-dependent #product-formulas

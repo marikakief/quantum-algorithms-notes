@@ -61,7 +61,7 @@ So sequence design is polynomial-time classical preprocessing, not exponential p
 
 ## References within this paper
 
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP for Hamiltonian simulation; uses composite gate sequences from this paper
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP for [[Hamiltonian simulation]]; uses composite gate sequences from this paper
 - Wimperis (1994) — composite pulse theory in NMR (classical precursor)
 - Jones (2003) — NMR composite rotations
 - Brown, Harrow & Chuang (2004) — arbitrary single-qubit rotations from fixed gates

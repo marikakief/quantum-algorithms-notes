@@ -1,5 +1,3 @@
-# Generalized Quantum Signal Processing (GQSP)
-
 > **Source:** Motlagh and Wiebe, arXiv:2308.01501 (2023)
 > **Tags:** #trick #QSP #GQSP #polynomials #unitary-transformation
 
@@ -38,7 +36,7 @@ When both $P$ and $Q$ are known, the recursive angle extraction (Algorithm 1 in 
 - [[Generalized Quantum Signal Processing (Motlagh-Wiebe 2023) — Paper Notes]] — source paper
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — the standard (real-polynomial) QSP this generalises
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — QSVT framework (real polynomials)
-- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — first application of GQSP to Hamiltonian simulation
+- [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — first application of GQSP to [[Hamiltonian simulation]]
 - [[Directional Walk Control for Phase Doubling]] — the trick that necessitates GQSP
 - [[Parity Shifting via Spectral Multiplication in GQSP]] — companion technique
 - [[FFT-Based Complementary Polynomial Optimisation]] — finding $Q$ from $P$ to enable angle extraction

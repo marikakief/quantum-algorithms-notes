@@ -1,4 +1,3 @@
-# Norm Tension Between PDE Stability and Quantum Rescaling
 
 > **Source:** Costa, Schleich, Morales, Berry, arXiv:2312.09518 (Section VI.B)
 > **Tags:** #trick #PDE #Carleman-linearisation #stability #discretisation #norm

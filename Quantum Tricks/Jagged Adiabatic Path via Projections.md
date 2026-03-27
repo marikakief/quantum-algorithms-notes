@@ -1,4 +1,3 @@
-# Jagged Adiabatic Path via Projections
 
 > **Source:** Aharonov & Ta-Shma, arXiv:quant-ph/0301023 (2003), Lemma 2
 > **Tags:** #trick #adiabatic #spectral-gap #state-generation

@@ -26,7 +26,7 @@ Adaptive-order finite differences are used to discretize the PDE. The key is cho
 **2. Spectral algorithm (for general second-order elliptic equations)**  
 Spectral methods expand the solution in a basis that diagonalizes (or nearly diagonalizes) the differential operator. For periodic boundary conditions, this is the Fourier basis, and the QFT diagonalizes the relevant circulant operators exactly. For Dirichlet/Neumann conditions, the discrete cosine or sine transform serves the same role and is implementable via QFT plus sparse permutation/phase corrections. The method-of-images construction extends this to non-periodic cases by embedding into a larger symmetric domain.
 
-The spectral route is where the QFT-based circuit tricks are most visible: structured operators become diagonal in the transform basis, operator application reduces to phase rotations, and the overall Hamiltonian simulation cost is polylogarithmic in the grid size.
+The spectral route is where the QFT-based circuit tricks are most visible: structured operators become diagonal in the transform basis, operator application reduces to phase rotations, and the overall [[Hamiltonian simulation]] cost is polylogarithmic in the grid size.
 
 ---
 

@@ -1,15 +1,14 @@
-# Cross-Order Product Formula Threshold
 
 > **Source:** Morales, Costa, Pantaleoni, Burgarth, Sanders, Berry, arXiv:2210.15817 (2025)
 > **Tags:** #trick #product-formulas #complexity-comparison #hamiltonian-simulation
 
 ## What it does
 
-Gives a principled method to determine at what simulation parameters ($T/\varepsilon$) a higher-order product formula becomes preferable to a lower-order one.
+Gives a principled method to determine at what simulation parameters ($T/\varepsilon$) a higher-order [[product formula]] becomes preferable to a lower-order one.
 
 ## The trick
 
-For two product formulas of orders $k_1 < k_2$ with eigenvalue error constants $\zeta_1, \zeta_2$ and $M_1, M_2$ stages, equate their total exponential count:
+For two [[product formula]]s of orders $k_1 < k_2$ with eigenvalue error constants $\zeta_1, \zeta_2$ and $M_1, M_2$ stages, equate their total exponential count:
 
 $$
 \frac{T}{\varepsilon} = \left(\frac{M_2 \zeta_2^{1/k_2}}{M_1 \zeta_1^{1/k_1}}\right)^{\frac{1}{1/k_1 - 1/k_2}}

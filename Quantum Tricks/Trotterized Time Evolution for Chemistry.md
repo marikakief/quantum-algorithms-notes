@@ -1,4 +1,3 @@
-# Trotterized Time Evolution for Chemistry
 
 > **Source:** Trotter (1959), Proc. Am. Math. Soc. 10, 545; Aspuru-Guzik et al., Science 309, 1704 (2005); O'Malley, Babbush et al., arXiv:1512.06860 (2016)
 > **Used in:** [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]]

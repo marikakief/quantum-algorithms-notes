@@ -1,4 +1,3 @@
-# Perturbative Error Correction for Truncated Hamiltonians
 
 > **Source:** Motta, Ye, McClean, Li, Minnich, Babbush, Chan, arXiv:1808.02625
 > **Tags:** #trick #error-correction #classical-postprocessing #quantum-chemistry #truncation #perturbation-theory
