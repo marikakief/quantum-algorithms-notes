@@ -179,7 +179,7 @@ All the reusable techniques from this paper already have trick cards in the vaul
 
 This is the paper that made [[Linear Combination of Unitaries (LCU)|LCU]]-based [[Hamiltonian simulation]] practical and comprehensible. The STOC 2014 predecessor achieved the same asymptotics but via a complicated fractional-query reduction. Here the algorithm is direct: write down the Taylor series, implement it as an LCU, amplify with OAA. The entire paper is four pages.
 
-The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially better than any [[product formula]] — established LCU as the dominant paradigm for high-precision quantum simulation, later refined by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] but never conceptually replaced. If you want to understand why modern quantum algorithms use block-encoding instead of Trotter, start here.
+The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially better than any [[Product Formulas]] — established LCU as the dominant paradigm for high-precision quantum simulation, later refined by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] but never conceptually replaced. If you want to understand why modern quantum algorithms use block-encoding instead of Trotter, start here.
 
 ---
 

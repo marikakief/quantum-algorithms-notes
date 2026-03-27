@@ -44,7 +44,7 @@ The theorem requires the walk operators to have bounded first *and* second finit
 ## Related notes
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]]
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — Numerically validates that the constant factor is ~1,500× tighter than the analytical bound
-- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Uses the discrete adiabatic theorem to show [[product formula]] time steps can be $\varepsilon$-independent; extends to boundary cancellation regime
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Uses the discrete adiabatic theorem to show [[Product Formulas]] time steps can be $\varepsilon$-independent; extends to boundary cancellation regime
 - [[Discrete Adiabatic View of Numerical Integrators]] — The conceptual framework that makes this theorem the right tool for analysing digitised AQC
 - [[Stroboscopic Adiabatic Walk]]
 - [[Qubitization (Quantum Walk for Spectral Encoding)]]

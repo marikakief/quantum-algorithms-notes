@@ -21,7 +21,7 @@ Decompose $H = \sum_j H_j$ and approximate $e^{-iHt}$ by alternating simpler exp
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2011]] — Trotter for chemistry
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2010]] — higher-order ordered exponentials
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu 2019]] — tight commutator-scaling error bounds
-- [[product formula|Product formula]] (concept page)
+- [[Product Formulas|Product formula]] (concept page)
 
 ### Taylor series / LCU
 Truncate the Dyson/Taylor series and implement via linear combination of unitaries.
@@ -50,5 +50,5 @@ Move part of $H$ into the interaction picture to reduce effective norm.
 ## See also
 
 - [[Hamiltonian Simulation — Comparison Tables]] — cost comparison across methods
-- [[product formula]]
+- [[Product Formulas]]
 - [[Amplitude Amplification and Estimation]]

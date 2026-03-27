@@ -33,7 +33,7 @@ This yields $\|\vec{a}''\|_1 \in \Theta(\log m)$ and exponent sum $\|\vec{k}''\|
 
 ## Complexity
 
-For order $2m$: $O(m^2\log m)$ queries to the base [[product formula]] (integer exponents), $O(\log m)$ condition number. Combined with [[Oblivious Amplitude Amplification (Robust)|OAA]], the per-step cost is $O(m^2\log^2 m)$ queries.
+For order $2m$: $O(m^2\log m)$ queries to the base [[Product Formulas]] (integer exponents), $O(\log m)$ condition number. Combined with [[Oblivious Amplitude Amplification (Robust)|OAA]], the per-step cost is $O(m^2\log^2 m)$ queries.
 
 ## Caveat
 

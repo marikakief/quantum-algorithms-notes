@@ -46,7 +46,7 @@ Quantum Foundations/
 
 **Comparison Tables** — resource estimate and method comparison tables, split by topic. The hub note [[Hamiltonian Simulation — Comparison Tables]] links to all five sub-notes. Includes NISQ experiments, fault-tolerant resource estimates (FeMoCo, CYP P450, Diamond, LNO, stopping power), circuit primitives (product formulas, Trotter depth, state preparation), a technique crosswalk mapping tricks to papers, and time-dependent simulation methods.
 
-**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., [[Hamiltonian simulation]], [[product formula]]s, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
+**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., [[Hamiltonian simulation]], [[Product Formulas]]s, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
 
 **[[Paper Index]]** — all paper notes organised by topic.
 

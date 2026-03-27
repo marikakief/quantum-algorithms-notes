@@ -10,7 +10,7 @@ Three things that turned out to be deeply connected:
 
 1. **Unifies continuous- and discrete-time quantum walks:** Gives an exact correspondence via Szegedy's quantization — the first general proof that continuous-time walk is a limit of discrete-time walk.
 
-2. **Linear-time [[Hamiltonian simulation]] via walks:** Simulates $e^{-iHt}$ using $O(\|H\|_{\mathrm{abs}} t/\sqrt{\delta})$ steps of a discrete-time walk. This is **linear** in $t$, beating the $t^{3/2}$ of direct Trotter and the $t \cdot \mathrm{polylog}$ of [[product formula]]s. Works for **non-sparse** Hamiltonians.
+2. **Linear-time [[Hamiltonian simulation]] via walks:** Simulates $e^{-iHt}$ using $O(\|H\|_{\mathrm{abs}} t/\sqrt{\delta})$ steps of a discrete-time walk. This is **linear** in $t$, beating the $t^{3/2}$ of direct Trotter and the $t \cdot \mathrm{polylog}$ of [[Product Formulas]]s. Works for **non-sparse** Hamiltonians.
 
 3. **Seeds quantum signal processing:** The spectral relationship $\lambda \mapsto e^{\pm i\arcsin\lambda}$ between Hamiltonian eigenvalues and walk eigenphases is exactly the structure that Low and Chuang later exploited for [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]].
 
@@ -145,7 +145,7 @@ For the glued-trees Hamiltonian (Childs-Farhi-Gutmann), $\|\mathrm{abs}(H)\|$ is
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis (2007)]] — discrete-time element distinctness; this paper gives the continuous-time version
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes|Childs & Goldstone (2004)]] — continuous-time search on lattices
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — survey posing the open question of continuous/discrete relationship
-- Berry, Ahokas, Cleve & Sanders (2007) — sparse [[Hamiltonian simulation]] via [[product formula]]s
+- Berry, Ahokas, Cleve & Sanders (2007) — sparse [[Hamiltonian simulation]] via [[Product Formulas]]s
 - Childs, Cleve, Deotto, Farhi, Gutmann & Spielman (2003) — exponential speedup by continuous-time walk (glued trees)
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — [[Gapped Phase Estimation|phase estimation]] used for the linear-time simulation
 

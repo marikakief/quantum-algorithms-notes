@@ -6,7 +6,7 @@
 Recovers from a failed subtractive [[Linear Combination of Unitaries (LCU)|LCU]] step by approximately inverting the failure map using a second [[Linear Combination of Unitaries (LCU)|LCU]] with sign-flipped parameter.
 
 ## The trick
-In subtractive LCUs, failure produces a "wrong branch" operation $E_k(\lambda)$ (the all-positive-coefficient version of the multi-[[product formula]]). The identity
+In subtractive LCUs, failure produces a "wrong branch" operation $E_k(\lambda)$ (the all-positive-coefficient version of the multi-[[Product Formulas]]). The identity
 $$E_k(-\lambda)E_k(\lambda) = I + O(\lambda^{4k+2})$$
 is a result from classical numerical analysis (Blanes, Casas, Ros), adapted here to the quantum setting. Childs–Wiebe use it to approximately invert the failure map: apply $E_k(-\lambda)$ to restore the state up to error $O(\lambda^{4k+2})$.
 

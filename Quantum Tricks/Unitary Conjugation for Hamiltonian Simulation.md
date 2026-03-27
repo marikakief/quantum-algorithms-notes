@@ -15,7 +15,7 @@ This lets you "change basis" in [[Hamiltonian simulation]] for free — useful w
 
 ## Where it appears
 
-- [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes|Childs et al. 2003]] — listed as a primitive simulation technique (alongside direct simulation, [[product formula]]s, and Taylor series)
+- [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes|Childs et al. 2003]] — listed as a primitive simulation technique (alongside direct simulation, [[Product Formulas]]s, and Taylor series)
 - Implicitly used throughout [[Hamiltonian simulation]] whenever a block-encoding is conjugated by a Clifford or other efficiently-implementable unitary
 
 ---
@@ -23,4 +23,4 @@ This lets you "change basis" in [[Hamiltonian simulation]] for free — useful w
 ## See also
 
 - [[Hamiltonian simulation]]
-- [[product formula]]
+- [[Product Formulas]]

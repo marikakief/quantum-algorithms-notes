@@ -29,7 +29,7 @@ oracle calls and additional gates, where $\tau = \|H\|t$, $\tau' = \|H'\|t$ (for
 
 Using the edge-coloring technique of [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]], decompose $H$ into $O(d^2)$ real/imaginary 1-sparse Hamiltonians $H_j$.
 
-### Step 2: Lie-Trotter [[product formula]]
+### Step 2: Lie-Trotter [[Product Formulas]]
 
 Approximate the time-ordered exponential via first-order Trotter:
 
@@ -136,7 +136,7 @@ The subsequent papers simplified dramatically:
 
 ## Why this matters
 
-This is the paper that broke the $\text{poly}(1/\varepsilon)$ barrier for [[Hamiltonian simulation]]. Before it, every simulation algorithm — [[product formula]]s, quantum walks, LCU — scaled polynomially in $1/\varepsilon$. After it, the question became how to simplify the approach, not whether polylog precision was achievable.
+This is the paper that broke the $\text{poly}(1/\varepsilon)$ barrier for [[Hamiltonian simulation]]. Before it, every simulation algorithm — [[Product Formulas]]s, quantum walks, LCU — scaled polynomially in $1/\varepsilon$. After it, the question became how to simplify the approach, not whether polylog precision was achievable.
 
 The core insight — that ancilla states in a Trotter-like decomposition concentrate on low Hamming weight, so you only need $O(\log(1/\varepsilon))$ queries per segment — came from the fractional-query literature. Transplanting it to [[Hamiltonian simulation]] was the breakthrough, even though the resulting algorithm was unwieldy.
 

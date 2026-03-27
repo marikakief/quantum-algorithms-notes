@@ -182,5 +182,5 @@ My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The
 
 ### Follow-up
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — Numerical validation showing the actual constant factor is ~1,500× smaller than the analytical bound.
-- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Extends the discrete adiabatic framework to show time step sizes can be $\varepsilon$-independent for any-order [[product formula]]s; boundary cancellation gives super-polynomial convergence.
+- [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — Extends the discrete adiabatic framework to show time step sizes can be $\varepsilon$-independent for any-order [[Product Formulas]]s; boundary cancellation gives super-polynomial convergence.
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]] — uses the optimal QLSP solver as subroutine for nonlinear ODEs after Carleman linearisation

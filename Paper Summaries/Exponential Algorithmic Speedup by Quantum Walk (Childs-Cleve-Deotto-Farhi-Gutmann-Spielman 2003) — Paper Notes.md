@@ -160,4 +160,4 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[Oracle-to-Hamiltonian Simulation via Swap Conjugation]]
 - [[Continuous-Time Quantum Walk Search]] — related continuous-time walk technique
 - [[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians]] — later development of the oracle-to-walk idea
-- [[Product-Formula Time-Slicing for Local Hamiltonians]] — used in the Lie [[product formula]] step
+- [[Product-Formula Time-Slicing for Local Hamiltonians]] — used in the Lie [[Product Formulas]] step

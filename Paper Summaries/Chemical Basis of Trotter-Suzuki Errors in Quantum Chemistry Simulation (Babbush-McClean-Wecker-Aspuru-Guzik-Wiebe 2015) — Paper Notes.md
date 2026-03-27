@@ -10,7 +10,7 @@ Simulate the electronic structure Hamiltonian
 
 $$H = \sum_{pq} h_{pq} a_p^\dagger a_q + \frac{1}{2}\sum_{pqrs} h_{pqrs} a_p^\dagger a_q^\dagger a_r a_s$$
 
-using second-order [[Order-Condition Cancellation in Product Formulas|Trotter-Suzuki]] [[product formula]]s on a quantum computer, via phase estimation. The key question: how many Trotter steps $\mu$ are actually needed to achieve chemical accuracy ($\sim 10^{-3}$ hartree) for real molecules?
+using second-order [[Order-Condition Cancellation in Product Formulas|Trotter-Suzuki]] [[Product Formulas]]s on a quantum computer, via phase estimation. The key question: how many Trotter steps $\mu$ are actually needed to achieve chemical accuracy ($\sim 10^{-3}$ hartree) for real molecules?
 
 Prior work bounded the error using the operator norm $\|V^{(1)}\|$ of the leading error term. This paper shows those bounds can be off by up to **sixteen orders of magnitude**.
 
@@ -148,10 +148,10 @@ This paper was one of the first to seriously question whether worst-case Trotter
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]]
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]]
 - [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes]]
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — randomized multi-[[product formula]]s as a follow-on strategy to close the gap between norm bounds and actual Trotter cost that this paper identified
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — randomized multi-[[Product Formulas]]s as a follow-on strategy to close the gap between norm bounds and actual Trotter cost that this paper identified
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry kicks as another route to achieve the practical Trotter error reduction this paper documented empirically
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — randomized corrections that double effective product-formula order; addresses the overestimation problem this paper raised
-- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected [[product formula]]s; achieves provable factor-$\alpha$ improvement for perturbed systems, vindicating the practical-error framing of this paper
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected [[Product Formulas]]s; achieves provable factor-$\alpha$ improvement for perturbed systems, vindicating the practical-error framing of this paper
 - [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]] — finds 8th-order product formulas ~100× more accurate; directly addresses the norm-bound looseness this paper identified
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]

@@ -43,7 +43,7 @@ This is optimal among all phase estimation strategies with $M$ queries.
 ## When to reach for it
 
 - Simulating non-sparse Hamiltonians (adjacency matrices of dense graphs)
-- When Trotter-based methods are too expensive (high-order [[product formula]]s have worse constant factors)
+- When Trotter-based methods are too expensive (high-order [[Product Formulas]]s have worse constant factors)
 - As a conceptual stepping stone to [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] (which replaces phase estimation with QSP phase factors)
 
 ## Complexity

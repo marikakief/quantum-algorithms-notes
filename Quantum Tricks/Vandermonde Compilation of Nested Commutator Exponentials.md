@@ -24,7 +24,7 @@ Set $a_\ell = \ell + 1$ (arbitrary distinct nonzero values). The coefficient mat
 
 ## When to reach for it
 
-- Compiling the [[Symplectic Corrector Injection for Product Formulas|symplectic correctors]] for corrected [[product formula]]s
+- Compiling the [[Symplectic Corrector Injection for Product Formulas|symplectic correctors]] for corrected [[Product Formulas]]s
 - Implementing $e^{c\lambda^{2m} \mathrm{ad}_A^{2m-1}(B)}$ for single-commutator correctors (Yoshida CPFs)
 - Synthesising unitaries from nested commutator generators on a quantum simulator with limited native gates
 - Any setting where you need a product-formula implementation of a commutator exponential and [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs-Wiebe recursion]] is too expensive

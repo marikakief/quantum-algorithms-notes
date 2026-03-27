@@ -8,7 +8,7 @@ Gives an exact closed-form expression for the leading error terms of PF2 (and ge
 
 ## The trick
 
-For the second-order [[product formula]] with splitting parameter $s$:
+For the second-order [[Product Formulas]] with splitting parameter $s$:
 
 $$e^{s\lambda A} e^{\lambda B} e^{(1-s)\lambda A} = \exp\!\left(\lambda(A + B) + \sum_{j=1}^{\infty} \frac{B_j(s)}{j!} \lambda^j \mathrm{ad}_A^j(B) + O(B^2)\right),$$
 
@@ -26,7 +26,7 @@ This tells you exactly what to cancel: the error at order $\lambda^{2j+1}$ is do
 
 ## When to reach for it
 
-- Analysing the error structure of any [[product formula]] with two partitions
+- Analysing the error structure of any [[Product Formulas]] with two partitions
 - Designing correctors for perturbed systems where first-order-in-$B$ terms dominate the error
 - Understanding why PF2 has time-reversal symmetry (odd terms vanish) at the BCH level
 - Extending results to Yoshida-type formulas where the kernel analysis at each order follows the same structure

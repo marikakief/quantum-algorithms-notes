@@ -49,7 +49,7 @@ Total 1-sparse pieces: at most $M' = 6 M d^2$.
 
 ### Constant-timestep integrator (Theorem 5)
 
-On $[t_0, t_0 + \Delta t]$, apply the order-$k$ Suzuki [[product formula]], splitting into $r$ equal subintervals as needed. The formula at each subinterval evaluates all Hamiltonian terms at the **midpoint** of the subinterval. Error budget: $\varepsilon/2$ from the integrator (Lemma 4), $\varepsilon/2$ from discretization (Lemma 1).
+On $[t_0, t_0 + \Delta t]$, apply the order-$k$ Suzuki [[Product Formulas]], splitting into $r$ equal subintervals as needed. The formula at each subinterval evaluates all Hamiltonian terms at the **midpoint** of the subinterval. Error budget: $\varepsilon/2$ from the integrator (Lemma 4), $\varepsilon/2$ from discretization (Lemma 1).
 
 **Discretization precision requirements (Lemma 1):**
 

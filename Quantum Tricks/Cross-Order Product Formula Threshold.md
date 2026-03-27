@@ -4,11 +4,11 @@
 
 ## What it does
 
-Gives a principled method to determine at what simulation parameters ($T/\varepsilon$) a higher-order [[product formula]] becomes preferable to a lower-order one.
+Gives a principled method to determine at what simulation parameters ($T/\varepsilon$) a higher-order [[Product Formulas]] becomes preferable to a lower-order one.
 
 ## The trick
 
-For two [[product formula]]s of orders $k_1 < k_2$ with eigenvalue error constants $\zeta_1, \zeta_2$ and $M_1, M_2$ stages, equate their total exponential count:
+For two [[Product Formulas]]s of orders $k_1 < k_2$ with eigenvalue error constants $\zeta_1, \zeta_2$ and $M_1, M_2$ stages, equate their total exponential count:
 
 $$
 \frac{T}{\varepsilon} = \left(\frac{M_2 \zeta_2^{1/k_2}}{M_1 \zeta_1^{1/k_1}}\right)^{\frac{1}{1/k_1 - 1/k_2}}

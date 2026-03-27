@@ -119,7 +119,7 @@ The full-rank $J$ matrices are the main advantage over analytical decompositions
 ## Limits / caveats
 
 - **Convergence slowdown:** The residual rank saturates at maximum, slowing convergence for high-accuracy targets. Not a problem for practical circuits (sub-milliHartree is usually sufficient), but the decomposition is not monotonically efficient.
-- **Trotter error not addressed:** The paper decomposes the *generator* but doesn't bound the Trotter error from the [[product formula]] approximation $e^G \approx \prod e^{Z_l^2}$. For near-term applications this is fine (variational parameters absorb it), but for fault-tolerant time evolution you'd need additional analysis.
+- **Trotter error not addressed:** The paper decomposes the *generator* but doesn't bound the Trotter error from the [[Product Formulas]] approximation $e^G \approx \prod e^{Z_l^2}$. For near-term applications this is fine (variational parameters absorb it), but for fault-tolerant time evolution you'd need additional analysis.
 - **Hamiltonian compression doesn't work well:** As shown in Appendix B, the greedy objective doesn't preserve spectral properties of the Hamiltonian. Don't use this for compressing $H$ directly — use it for compressing $e^{T-T^\dagger}$ generators.
 - **$O(n^5)$ per iteration** is cheap but not free. For large basis sets with many iterations, the total classical preprocessing cost could be non-trivial.
 - **Greedy only — no global optimality guarantee.** The compression ratio depends on the greedy path. Random vs. Takagi-seeded initialization gives similar results empirically, but there's no proof of optimality.
@@ -170,7 +170,7 @@ Key papers cited:
 - [[Givens Rotation Slater Determinant Preparation]] — Circuit primitive for implementing basis rotations $U_l$
 - [[Fermionic Swap Network]] — Circuit primitive for implementing Ising interaction layers
 - [[Unitary Coupled Cluster (UCC) Ansatz]] — The operator being compressed
-- [[Trotterized Time Evolution for Chemistry]] — The [[product formula]] approximation used
+- [[Trotterized Time Evolution for Chemistry]] — The [[Product Formulas]] approximation used
 - [[Greedy Sum-of-Squares Operator Decomposition]] — New trick card: the core algorithm
 - [[Full-Rank Ising Coupling via Numerical Basis Optimization]] — New trick card: the key improvement over analytical methods
 - [[Compressed UCC as ADAPT-VQE Initial State]] — New trick card: the application to warm-starting iterative methods

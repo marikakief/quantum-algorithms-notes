@@ -58,7 +58,7 @@ The companion paper (arXiv:1610.06546) gives the full qubitization treatment wit
 ## References within this paper
 
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — [[Linear Combination of Unitaries (LCU)|LCU]] approach to simulation that QSP improves upon
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki-based]] [[product formula]]s
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki-based]] [[Product Formulas]]s
 - Berry, Childs, Cleve, Kothari & Somma (2015, PRL 114, 090502) — Taylor-series LCU simulation
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low, Yoder & Chuang (2016)]] — composite pulse design underlying the QSP construction
 - Haah (2019) — efficient algorithm for finding QSP phase factors

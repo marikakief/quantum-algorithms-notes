@@ -28,7 +28,7 @@ A practical shortcut: a single ancilla qubit can be reused to simulate the envir
 ## Complexity
 - **Environment overhead:** at most $m^2$ dimensions (quadratic in local system dimension)
 - **Setup cost:** solving an $m^2 \times m^2$ matrix equation to find $U(t)$ — done classically once
-- **Simulation cost:** same as closed-system [[product formula]], applied to the enlarged space
+- **Simulation cost:** same as closed-system [[Product Formulas]], applied to the enlarged space
 - For local open systems with $\ell$ system terms and $\ell_E$ environment terms: $O((\ell m^2 + \ell_E m_E^4) \cdot n \cdot t^2/\varepsilon)$
 
 ## Caveat

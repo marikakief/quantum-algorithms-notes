@@ -111,7 +111,7 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 - **Cirac-Zoller (1995)** — ion-trap quantum computer proposal [22]. Lloyd specifically suggests this as a near-term platform for quantum simulation.
 - **Monroe et al. (1995)** — first experimental two-qubit gate (ion trap) [24].
 - **Kraus (1983)** — the Kraus representation theorem used for open-system simulation [39].
-- **Suzuki** — not explicitly cited, but higher-order [[product formula]]s are discussed. Later work by [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry et al. (2005)]] develops this.
+- **Suzuki** — not explicitly cited, but higher-order [[Product Formulas]]s are discussed. Later work by [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry et al. (2005)]] develops this.
 
 ## Cross-links
 
@@ -119,8 +119,8 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — direct follow-up: handles fermionic statistics, antisymmetrization, Hubbard model
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — extends product-formula simulation to sparse Hamiltonians with higher-order Suzuki formulas
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — provides the tight error analysis that Lloyd's first-order bounds were missing
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves optimal precision scaling, far beyond [[product formula]]s
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — unifying framework that subsumes [[product formula]]s
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieves optimal precision scaling, far beyond [[Product Formulas]]s
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — unifying framework that subsumes [[Product Formulas]]s
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — builds on simulation to extract eigenvalues via QPE
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — first explicit sparse simulation construction
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — randomised approach to the same product-formula framework

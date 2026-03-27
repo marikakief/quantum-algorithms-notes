@@ -136,7 +136,7 @@ Since computing parity of $N$ bits requires $\Omega(N)$ queries (even with unbou
 
 - **Still goes through fractional queries.** The algorithm structure is: Trotter → self-inverse decomposition → fractional-query gadgets → Hamming weight truncation → OAA. The [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|truncated Taylor paper]] showed all this machinery is unnecessary — just implement the Taylor series as an LCU.
 - **Self-inverse constraint persists.** The decomposition into eigenvalue-$\pm 1$ unitaries is unnatural and adds overhead.
-- **First-order Trotter.** The Lie [[product formula]] introduces polynomial overhead in the number of segments; only the compression makes the $\varepsilon$-dependence polylogarithmic.
+- **First-order Trotter.** The Lie [[Product Formulas]] introduces polynomial overhead in the number of segments; only the compression makes the $\varepsilon$-dependence polylogarithmic.
 - **Not what you'd implement.** Historically important, but the Taylor series version (1412.4687) is strictly simpler with the same asymptotics.
 
 ---

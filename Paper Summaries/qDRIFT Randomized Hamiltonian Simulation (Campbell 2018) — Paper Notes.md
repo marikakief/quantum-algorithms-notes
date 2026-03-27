@@ -32,7 +32,7 @@ The key point is that this $N$ is independent of $L$ and $\Lambda$ separately.
 
 The idea of using randomized circuits to reduce effective Hamiltonian cost was explored earlier (see Poulin, Qarry, Somma, Verstraete 2011 for a related random-walk approach), but qDRIFT gives a clean formulation where sampling probabilities are exactly proportional to term weights and the step size is uniform. The $\lambda$-scaling is explicit and the analysis is via diamond-norm channel composition.
 
-## Comparison with deterministic [[product formula]]s
+## Comparison with deterministic [[Product Formulas]]s
 
 | Method | Cost driver | Strength |
 |---|---|---|
@@ -74,5 +74,5 @@ The abstraction worth keeping: when a Hamiltonian is a weighted sum of many easy
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — qFLO: applies Richardson extrapolation on top of qDRIFT to get depth $O((\lambda T)^2 \log(1/\varepsilon))$
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — higher-order randomized simulation via multi-[[product formula]] importance sampling; direct generalization of qDRIFT's randomization idea
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — higher-order randomized simulation via multi-[[Product Formulas]] importance sampling; direct generalization of qDRIFT's randomization idea
 - [[Time-Dependent Hamiltonian Simulation with L1-Norm Scaling (Quantum 2020-04-20-254) — Paper Notes]] — generalizes qDRIFT to time-dependent Hamiltonians via continuous sampling; universality theorem shows same complexity; also proves factor-of-2 improvement in the original qDRIFT constant

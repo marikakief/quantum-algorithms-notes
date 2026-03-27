@@ -6,15 +6,15 @@
 
 ## The computational problem
 
-Approximate the time-evolution operator $e^{-iHt}$ for $H = \sum_{j=1}^N h_j$ using quantum gates. The cost measures are: queries to a base [[product formula]] $U_2$ (the symmetric second-order Trotter formula), total gate count, and the dependence on simulation time $t$ and target error $\epsilon$.
+Approximate the time-evolution operator $e^{-iHt}$ for $H = \sum_{j=1}^N h_j$ using quantum gates. The cost measures are: queries to a base [[Product Formulas]] $U_2$ (the symmetric second-order Trotter formula), total gate count, and the dependence on simulation time $t$ and target error $\epsilon$.
 
-The goal: combine the *system-size* advantages of [[product formula]]s (which exploit commutativity between Hamiltonian terms and scale almost-linearly in system size for local interactions) with the *time-and-error* advantages of [[Linear Combination of Unitaries (LCU)|LCU]] approaches (near-linear in $t$, logarithmic in $1/\epsilon$).
+The goal: combine the *system-size* advantages of [[Product Formulas]]s (which exploit commutativity between Hamiltonian terms and scale almost-linearly in system size for local interactions) with the *time-and-error* advantages of [[Linear Combination of Unitaries (LCU)|LCU]] approaches (near-linear in $t$, logarithmic in $1/\epsilon$).
 
 ---
 
 ## What the paper does
 
-Constructs **well-conditioned multiproduct formulas** — linear combinations of [[product formula]]s at different step sizes — that achieve near-optimal $O(t\lambda \log^2(t\lambda/\epsilon))$ query complexity while inheriting the commutator-dependent scaling of the base product formula. The key technical result is a super-exponential reduction in the condition number $\|\vec{a}\|_1$ from $e^{\Omega(m)}$ (prior multiproduct formulas) to $O(\log m)$, via an elegant connection to Chebyshev polynomials. This is the paper that made multiproduct formulas practical — both classically and quantumly.
+Constructs **well-conditioned multiproduct formulas** — linear combinations of [[Product Formulas]]s at different step sizes — that achieve near-optimal $O(t\lambda \log^2(t\lambda/\epsilon))$ query complexity while inheriting the commutator-dependent scaling of the base product formula. The key technical result is a super-exponential reduction in the condition number $\|\vec{a}\|_1$ from $e^{\Omega(m)}$ (prior multiproduct formulas) to $O(\log m)$, via an elegant connection to Chebyshev polynomials. This is the paper that made multiproduct formulas practical — both classically and quantumly.
 
 This work is the direct precursor to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]], which replaces the coherent [[Linear Combination of Unitaries (LCU)|LCU]] implementation with randomized sampling — eliminating the ancilla overhead entirely while keeping the error cancellation structure.
 
@@ -24,7 +24,7 @@ This work is the direct precursor to [[Randomizing Multi-Product Formulas for Ha
 
 A standard order-$2m$ integrator via the Suzuki recursion (Eq. 2) makes $5^{m-1}$ queries to $U_2$ — exponential in the order. The idea behind multiproduct formulas is to get high-order accuracy cheaply: take a *linear combination* of the base formula $U_2$ evaluated at different step sizes, and choose coefficients to cancel error terms via a Vandermonde system.
 
-Any symmetric [[product formula]] has a BCH expansion $U_2(\Delta) = e^{-iH\Delta + E_3\Delta^3 + E_5\Delta^5 + \cdots}$, so
+Any symmetric [[Product Formulas]] has a BCH expansion $U_2(\Delta) = e^{-iH\Delta + E_3\Delta^3 + E_5\Delta^5 + \cdots}$, so
 $$U_2^{k_j}(\Delta/k_j) = e^{-iH\Delta} + \frac{\Delta^3}{k_j^2}\tilde{E}_3(\Delta) + \frac{\Delta^5}{k_j^4}\tilde{E}_5(\Delta) + \cdots$$
 
 The multiproduct formula

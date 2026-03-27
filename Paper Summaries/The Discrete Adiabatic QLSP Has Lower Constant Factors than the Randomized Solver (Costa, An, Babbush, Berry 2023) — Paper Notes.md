@@ -92,7 +92,7 @@ The conclusion is clean: the discrete method wins on both asymptotic scaling and
 
 3. **$p = 1.4$ is not analytically justified.** The schedule parameter $p = 1.4$ is chosen empirically. The original paper analyzed $p = 3/2$ because it yields cleaner expressions. The optimal $p$ likely depends on $\kappa$ and the specific matrix.
 
-4. **The comparison with the randomized method is somewhat unfair in its favour.** The randomized method's complexity is given as total evolution time, not circuit depth. Converting to actual gates via [[Hamiltonian simulation]] (e.g., [[product formula]]s or LCU) would add at least a constant multiplicative factor, widening the gap.
+4. **The comparison with the randomized method is somewhat unfair in its favour.** The randomized method's complexity is given as total evolution time, not circuit depth. Converting to actual gates via [[Hamiltonian simulation]] (e.g., [[Product Formulas]]s or LCU) would add at least a constant multiplicative factor, widening the gap.
 
 5. **No T-count or surface code compilation.** This is a complexity comparison at the query level, not a full resource estimate. Translating to T-gates and physical qubits (as done for chemistry problems in other Babbush group papers) would be needed for practical assessment.
 

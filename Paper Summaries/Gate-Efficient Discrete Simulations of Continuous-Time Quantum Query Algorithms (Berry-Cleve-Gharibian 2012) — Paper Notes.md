@@ -135,7 +135,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 
 1. **Queries not optimal.** Lee et al. achieve $O(T)$; this paper has an extra $\log T / \log\log T$ factor. The authors note this seems inherent to the CGMSY approach.
 
-2. **Requires efficient driving Hamiltonian implementation.** If $G$ scales linearly in $\|H\|$, the gate cost becomes linear in $\|H\|T$ — no better than [[product formula]]s. The power is when $G = \text{polylog}(\|H\|T)$.
+2. **Requires efficient driving Hamiltonian implementation.** If $G$ scales linearly in $\|H\|$, the gate cost becomes linear in $\|H\|T$ — no better than [[Product Formulas]]s. The power is when $G = \text{polylog}(\|H\|T)$.
 
 3. **The approach is specific to self-inverse oracles.** The oracle $Q$ satisfies $Q^2 = I$, which gives $e^{-iH_Q t} = \cos(t/2)I + i\sin(t/2)Q$. Generalising to non-self-inverse Hamiltonians requires additional work (and is addressed in the subsequent [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] paper).
 
@@ -163,7 +163,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 - Lee-Mittal-Reichardt-Špalek-Szegedy (2011, arXiv:1011.3020) [Ref 3] — optimal $O(T)$ query cost for state conversion, but no gate-efficient construction.
 - Farhi-Goldstone-Gutmann (2008) [Ref 4] — continuous-time quantum algorithm for the Hamiltonian NAND tree. This paper's motivating example.
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes|Ambainis-Childs-Reichardt-Špalek-Zhang (2007)]] [Ref 6] — discrete-time AND-OR evaluation via coined walks.
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] [Ref 7] — Lie-Trotter-Suzuki [[product formula]]s for sparse Hamiltonians.
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] [Ref 7] — Lie-Trotter-Suzuki [[Product Formulas]]s for sparse Hamiltonians.
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] [Ref 8] — state preparation for probability distributions (mentioned as alternative for cleanup step).
 - Wiebe-Berry-Høyer-Sanders (2010) [Ref 9] — higher-order Suzuki decompositions for time-dependent Hamiltonians.
 
@@ -175,7 +175,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 - [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — extends the compression and fractional-query techniques from this paper to achieve $\log(1/\varepsilon)$ precision scaling for [[Hamiltonian simulation]]
 - [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — cites this paper for the gate-efficient implementation
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — related black-box simulation
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[product formula]]s used in the Lie-Trotter step
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[Product Formulas]]s used in the Lie-Trotter step
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — the quantum walk that motivates this work
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — the discrete algorithm that renders the continuous-time AND-OR result implementable
 

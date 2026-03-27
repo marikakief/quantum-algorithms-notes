@@ -44,7 +44,7 @@ For $n = 6$ bits per spatial direction (typical for plane-wave chemistry at $\si
 - Bit shifting: $n(n+1) + 15n = 132$ Toffolis
 - Total: $\sim 2395$ Toffolis per electron pair
 
-For comparison, a full [[product formula]] step over $\eta(\eta-1)/2$ pairs costs $\sim 2395 \cdot \eta(\eta-1)/2$ Toffolis, dominated by this subroutine.
+For comparison, a full [[Product Formulas]] step over $\eta(\eta-1)/2$ pairs costs $\sim 2395 \cdot \eta(\eta-1)/2$ Toffolis, dominated by this subroutine.
 
 ## Caveat
 

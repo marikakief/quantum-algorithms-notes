@@ -13,7 +13,7 @@ The natural target is $O(nT)$ gates — matching the spacetime volume of the phy
 | Prior method | Gate cost |
 |---|---|
 | Sparse simulation ([[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP]], [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes\|Taylor series]]) | $O(n^2 T \operatorname{polylog}(nT/\epsilon))$ — the oracle costs $O(n)$ gates |
-| High-order [[Product formula\|Suzuki formulas]] | $O(nT(nT/\epsilon)^\delta)$ for any $\delta > 0$ — no polylog in $1/\epsilon$ |
+| High-order [[Product Formulas\|Suzuki formulas]] | $O(nT(nT/\epsilon)^\delta)$ for any $\delta > 0$ — no polylog in $1/\epsilon$ |
 
 The extra factor of $n$ in sparse simulation comes from implementing the sparse-access oracle for a geometrically local Hamiltonian, which requires $O(n)$ gates per query because the oracle must be able to address any row of the $2^n \times 2^n$ matrix. Geometric locality should let you avoid this.
 

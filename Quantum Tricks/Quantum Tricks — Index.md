@@ -147,7 +147,7 @@ qmd query "low-energy phase estimation trick sqrt Delta lambda"
 - [[Magnitude-Banded Hamiltonian Decomposition]]
 - [[Block-Hamiltonian Embedding for Unitary Synthesis]]
 
-### From randomized [[product formula]]s (Quantum q-2019-09-02-182)
+### From randomized [[Product Formulas]]s (Quantum q-2019-09-02-182)
 - [[Permutation Averaging for Product-Formula Error Cancellation]]
 - [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm]]
 - [[Nondegenerate-vs-Degenerate Taylor-Term Bookkeeping]]

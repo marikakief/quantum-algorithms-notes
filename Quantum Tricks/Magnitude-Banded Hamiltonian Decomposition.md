@@ -14,7 +14,7 @@ $$
 H = \sum_{b \ge 0} H^{(b)},
 $$
 
-and the total simulation uses [[product formula]]s or [[Linear Combination of Unitaries (LCU)|LCU]] to combine the band simulations. Each band $H^{(b)}$ has all nonzero entries of magnitude $\sim 2^{-b}\|H\|_{\max}$, so the walk construction within each band has uniform-magnitude entries and simpler state preparation.
+and the total simulation uses [[Product Formulas]]s or [[Linear Combination of Unitaries (LCU)|LCU]] to combine the band simulations. Each band $H^{(b)}$ has all nonzero entries of magnitude $\sim 2^{-b}\|H\|_{\max}$, so the walk construction within each band has uniform-magnitude entries and simpler state preparation.
 
 ## Why this helps for non-sparse simulation
 

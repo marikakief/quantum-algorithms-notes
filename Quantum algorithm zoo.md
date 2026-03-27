@@ -787,7 +787,7 @@ Quantum data-fitting.
 _Physical Review Letters_ 109, 050505, 2012.
 [[arXiv:1204.5242](http://arxiv.org/abs/1204.5242)]
 
-**170.** Andrew Childs and Nathan Wiebe
+**170. ✓** Andrew Childs and Nathan Wiebe
 [[Hamiltonian simulation]] using linear combinations of unitary operations.
 _Quantum Information and Computation_ 12, 901-924, 2012.
 [[arXiv:1202.5822](http://arxiv.org/abs/1202.5822)]
@@ -1204,7 +1204,7 @@ Solving the shortest vector problem in lattices faster using quantum search
 _Proceedings of PQCrypto13_, pp. 83-101, 2013.
 [[arXiv:1301.6176](http://arxiv.org/abs/1301.6176)]
 
-**263.** Andrew M. Childs, Robin Kothari, and Rolando D. Somma
+**263. ✓** Andrew M. Childs, Robin Kothari, and Rolando D. Somma
 Quantum linear systems algorithm with exponentially improved dependence on precision
 _[arXiv:1511.02306](http://arxiv.org/abs/1511.02306)_, 2015.
 
@@ -1336,7 +1336,7 @@ _[arXiv:1603.07856](http://arxiv.org/abs/1603.07856)_, 2016.
 A Trotter-Suzuki approximation for Lie groups with applications to Hamiltonian simulation
 _[arXiv:1512.03416](http://arxiv.org/abs/1512.03416)_, 2015.
 
-**294.** Guang Hao Low and Isaac Chuang
+**294. ✓** Guang Hao Low and Isaac Chuang
 Optimal Hamiltonian simulation by quantum signal processing
 _[arXiv:1606.02685](http://arxiv.org/abs/1606.02685)_, 2016.
 
@@ -1703,7 +1703,7 @@ _[arXiv:1611.05543](https://arxiv.org/abs/1611.05543)_, 2016.
 Quantum simulation of dissipative processes without reservoir engineering
 _Scientific Reports_ 5:9981, 2015.
 
-**380.** R. Babbush, D. Berry, M. Kieferová, G. H. Low, Y. Sanders, A. Sherer, and N. Wiebe
+**380. ✓** R. Babbush, D. Berry, M. Kieferová, G. H. Low, Y. Sanders, A. Sherer, and N. Wiebe
 Improved techniques for preparing eigenstates of Fermionic Hamiltonians
 _[arXiv:1711.10460](https://arxiv.org/abs/1711.10460)_, 2017.
 
@@ -1976,7 +1976,7 @@ Improved quantum algorithms for linear and nonlinear differential equations
 _Quantum_ 7:913, 2023.
 [[arXiv:2202.01054](https://arxiv.org/abs/2202.01054)]
 
-**442.** Andrew M. Childs, Jin-Peng Liu, and Aaron Ostrander
+**442. ✓** Andrew M. Childs, Jin-Peng Liu, and Aaron Ostrander
 High-precision quantum algorithms for partial differential equations
 _Quantum_ 5:574, 2021.
 [[arXiv:2002.07868](https://arxiv.org/abs/2002.07868)]
@@ -2028,12 +2028,12 @@ The Quantum Approximate Optimization Algorithm at high depth for MaxCut on large
 _Proceedings of TQC22_ 7:1-7:21, 2022.
 [[arXiv:2110.14206](https://arxiv.org/abs/2110.14206)]
 
-**453.** Stephen P. Jordan, Noah Shutty, Mary Wootters, Adam Zalcman, Alexander Schmidhuber, Robbie King, Sergei V. Isakov, and Ryan Babbush
+**453. ✓** Stephen P. Jordan, Noah Shutty, Mary Wootters, Adam Zalcman, Alexander Schmidhuber, Robbie King, Sergei V. Isakov, and Ryan Babbush
 Optimization by Decoded Quantum Interferometry
 _Nature_ 646:831-836, 2025.
 [[arXiv:2408.08292](https://arxiv.org/abs/2408.08292)].
 
-**454.** Alexander Schmidhuber, Ryan O'Donnell, Robin Kothari, Ryan Babbush
+**454. ✓** Alexander Schmidhuber, Ryan O'Donnell, Robin Kothari, Ryan Babbush
 Quartic quantum speedups for planted inference
 _[arXiv:2406.19378](https://arxiv.org/abs/2406.19378)_, 2024.
 
@@ -2150,7 +2150,7 @@ _SIAM Journal on Computing_, 52(6):10.1137, 2018.
 [[arXiv:1801.03922](https://arxiv.org/abs/1801.03922)]
 
 **479.** Andrew M. Childs and Yuan Su
-Nearly optimal lattice simulation by [[product formula]]s
+Nearly optimal lattice simulation by [[Product Formulas]]s
 _Physical Review Letters_, 123(5):050503, 2019.
 [[arXiv:1901.00564](https://arxiv.org/abs/1901.00564)]
 
@@ -2170,7 +2170,7 @@ _Quantum_, 8:1409, 2024.
 [[arXiv:2312.08867](https://arxiv.org/abs/2312.08867)]
 
 **483.** Kasra Hejazi, Modjtaba Shokrian Zini, and Juan Miguel Arrazola
-Better bounds for low-energy [[product formula]]s
+Better bounds for low-energy [[Product Formulas]]s
 _[arXiv:2402.10362](https://arxiv.org/abs/2402.10362)_, 2024.
 
 **484.** Yu Tong, Victor V. Albert, Jarrod R. McClean, John Preskill, and Yuan Su
@@ -2201,7 +2201,7 @@ Quantum algorithm for persistent Betti numbers and topological data analysis
 _Quantum_, 6:873, 2022.
 [[arXiv:2111.00433](https://arxiv.org/abs/2111.00433)]
 
-**490.** Dominic W. Berry, Yuan Su, Casper Gyurik, Robbie King, Joao Basso, Alexander Del Toro Barba, Abhishek Rajput, Nathan Wiebe, Vedran Dunjko, and Ryan Babbush
+**490. ✓** Dominic W. Berry, Yuan Su, Casper Gyurik, Robbie King, Joao Basso, Alexander Del Toro Barba, Abhishek Rajput, Nathan Wiebe, Vedran Dunjko, and Ryan Babbush
 Analyzing prospects for quantum advantage in topological data analysis
 _PRX Quantum_, 5:010319, 2022.
 [[arXiv:2209.13581](https://arxiv.org/abs/2209.13581)]
@@ -2221,7 +2221,7 @@ A short path quantum algorithm for exact optimization
 _Quantum_, 2:78, 2018.
 [[arXiv:1802.10124](https://arxiv.org/abs/1802.10124)]
 
-**494.** Pedro C.S. Costa, Dong An, Yuval R. Sanders, Yuan Su, Ryan Babbush, and Dominic W. Berry
+**494. ✓** Pedro C.S. Costa, Dong An, Yuval R. Sanders, Yuan Su, Ryan Babbush, and Dominic W. Berry
 Optimal Scaling Quantum Linear-Systems Solver via Discrete Adiabatic Theorem
 _PRX Quantum_, 3:040303, 2022.
 [[arXiv:2111.08152](https://arxiv.org/abs/2111.08152)]

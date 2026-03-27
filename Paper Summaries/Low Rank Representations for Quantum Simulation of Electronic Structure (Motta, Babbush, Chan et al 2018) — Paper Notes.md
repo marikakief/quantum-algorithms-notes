@@ -133,7 +133,7 @@ The fermionic swap network gives $O(N^2)$ gates per Trotter step but treats all 
 
 3. **Trotter error not tightened.** The paper reduces the gate count per Trotter step but doesn't analyze the Trotter error of the truncated Hamiltonian $H'$ (vs. $H$). The truncation error and Trotter error interact — aggressive truncation may change the commutator structure.
 
-4. **Only first-order Trotter.** Higher-order Trotter-Suzuki formulas would reduce the number of steps but increase the per-step cost. The interplay between double factorization and higher-order [[product formula]]s isn't explored.
+4. **Only first-order Trotter.** Higher-order Trotter-Suzuki formulas would reduce the number of steps but increase the per-step cost. The interplay between double factorization and higher-order [[Product Formulas]]s isn't explored.
 
 5. **Classical amplitudes as proxy for uCC.** The uCC amplitude data uses classical CCSD amplitudes (equal to uCC in the weak-coupling limit). For strongly correlated systems where uCC and classical CC amplitudes diverge significantly, the compression ratios may differ.
 

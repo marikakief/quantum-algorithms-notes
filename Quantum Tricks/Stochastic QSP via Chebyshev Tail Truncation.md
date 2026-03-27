@@ -58,5 +58,5 @@ For real-time simulation: reduces from $O(\alpha t + \log(1/\epsilon)/\log\log(1
 - [[Diamond-Norm Channel Averaging for Random Compilers]]
 - [[QSVT Meta-Template]]
 - [[Term-Weighted Random Hamiltonian Sampling (qDRIFT)]] — same randomization philosophy at the Hamiltonian term level
-- [[Randomized Multi-Product Sampling]] — same philosophy at the multi-[[product formula]] level
+- [[Randomized Multi-Product Sampling]] — same philosophy at the multi-[[Product Formulas]] level
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — the coherent alternative

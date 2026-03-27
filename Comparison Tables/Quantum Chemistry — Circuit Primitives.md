@@ -4,9 +4,9 @@ _Split from [[Hamiltonian Simulation — Comparison Tables]]._
 
 ---
 
-### Best [[product formula]]s by order (eigenvalue error)
+### Best [[Product Formulas]]s by order (eigenvalue error)
 
-Best-performing [[product formula]]s for each order, as benchmarked in [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes|Morales et al. (2025)]]. Performance metric is $M\zeta^{1/k}$ where $M$ = stages, $\zeta$ = eigenvalue error constant, $k$ = order. Lower is better.
+Best-performing [[Product Formulas]]s for each order, as benchmarked in [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes|Morales et al. (2025)]]. Performance metric is $M\zeta^{1/k}$ where $M$ = stages, $\zeta$ = eigenvalue error constant, $k$ = order. Lower is better.
 
 | Order | Formula | Stages ($M$) | Processed? | $\zeta$ (eigenvalue) | $M\zeta^{1/k}$ | Source |
 |---|---|---|---|---|---|---|

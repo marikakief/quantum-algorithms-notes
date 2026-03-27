@@ -20,7 +20,7 @@ Since the one-body terms dominate ($\Theta(Z^2)$ vs $\Theta(Z)$), the double com
 
 - Estimating Trotter step counts for quantum chemistry simulations — use $Z_{\max}$ rather than $N$ as the scaling parameter.
 - Choosing which molecules benefit most from higher-order Trotter formulas or non-Trotter methods ([[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]], [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]): heavy atoms with large $Z$ pay the biggest Trotter penalty.
-- Understanding why light-element chemistry (H, He, Li) is relatively cheap to simulate with [[product formula]]s.
+- Understanding why light-element chemistry (H, He, Li) is relatively cheap to simulate with [[Product Formulas]]s.
 
 ## Complexity
 

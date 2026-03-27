@@ -23,10 +23,10 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ### Product formulas (Trotter / Suzuki)
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — foundational product-formula simulation of local Hamiltonians; proves Feynman's conjecture
-- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2010)]] — higher-order Suzuki [[product formula]]s for time-dependent Hamiltonians; explicit bounds without analyticity; smoothness-order saturation
+- [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2010)]] — higher-order Suzuki [[Product Formulas]]s for time-dependent Hamiltonians; explicit bounds without analyticity; smoothness-order saturation
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2011)]] — end-to-end quantum algorithm for time-dependent sparse simulation; constant- and adaptive-step variants; explicit oracle precision requirements; discontinuity handling
 - [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes|Raeisi-Wiebe-Sanders (2012)]] — autonomous gate-level circuit synthesis for $k$-local Hamiltonians; Pauli-string primitives via parity-CNOT ladder; commuting-group parallelisation; $O(n^{2+o(1)})$ gates for physically local models
-- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin-Qarry-Somma-Verstraete (2011)]] — derivative-free Trotter for arbitrary time-dependent Hamiltonians; quantum Shannon counting argument; randomised [[product formula]]
+- [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin-Qarry-Somma-Verstraete (2011)]] — derivative-free Trotter for arbitrary time-dependent Hamiltonians; quantum Shannon counting argument; randomised [[Product Formulas]]
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — first efficient sparse [[Hamiltonian simulation]]
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs-Wiebe (2013)]] — recursive product formulas for commutator exponentials; nearly-optimal via quantum search lower bound
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe (2015)]] — Trotter error scales with $Z_{\max}^6$ not $N$; norm bounds loose by 10¹⁶; classical error subtraction
@@ -195,6 +195,8 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Hamiltonian Learning and Certification Using Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2014, PRL)]] — Bayesian Hamiltonian learning via IQLE + PGH + SMC; $O(d \log 1/\delta)$ experiments; certifies unknown quantum simulators; noiseless analysis
 - [[Quantum Hamiltonian Learning Using Imperfect Quantum Resources (Wiebe-Granade-Ferrie-Cory 2014) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2014, PRA)]] — sequel: robustness of QHL to depolarizing noise (rate degrades by $(1-\mathcal{N})$, not catastrophically); noisy swap gates via superoperator modeling; model mismatch saturates at residual scale; free Bayesian model selection via SMC marginal likelihoods
 - [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]] — shadow tomography: $\tilde{O}(\log^4 M \cdot \log D / \varepsilon^4)$ copies to estimate $M$ observables on an unknown $D$-dimensional state; polylog in both $M$ and $D$
+- [[Robust Online Hamiltonian Learning (Granade-Ferrie-Wiebe-Cory 2012) — Paper Notes|Granade-Ferrie-Wiebe-Cory (2012)]] — 🚧 STUB — robust online Bayesian Hamiltonian learning; predecessor to QHL
+- [[Quantum Bootstrapping via Compressed Quantum Hamiltonian Learning (Wiebe-Granade-Ferrie-Cory 2015) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2015)]] — 🚧 STUB — compressed QHL for bootstrapping quantum simulators
 
 ---
 
@@ -205,6 +207,9 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[The Theory of Variational Hybrid Quantum-Classical Algorithms (McClean-Romero-Babbush-Aspuru-Guzik 2015) — Paper Notes|McClean-Romero-Babbush-Aspuru-Guzik (2015)]] — VQE theory: variational adiabatic paths, generalized UCC, variational error suppression, measurement cost reduction, derivative-free optimization
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley, Babbush et al. (2016)]] — first scalable hardware VQE experiment; Bravyi-Kitaev encoding; chemical accuracy on H₂; experimental confirmation of variational error suppression
 - [[An Alternating-Minimization Method for Preparing Low-Energy States (Anshu 2026) — Paper Notes|Anshu (2026)]] — alternating variational minimisation over a family of altered Hamiltonians; addresses eigenstate stalling; complements VQE with a Hamiltonian-switching escape heuristic
+- [[Hardware-Efficient Variational Quantum Eigensolver for Small Molecules and Quantum Magnets (Kandala, Mezzacapo, Temme, Takita, Brink, Chow, Gambetta 2017) — Paper Notes|Kandala et al. (2017)]] — hardware-efficient VQE on IBM superconducting qubits; H₂, LiH, BeH₂ and Heisenberg magnets; demonstrates entangler blocks adapted to hardware connectivity rather than chemical structure
+- [[Progress Towards Practical Quantum Variational Algorithms (Wecker, Hastings, Troyer 2015) — Paper Notes|Wecker-Hastings-Troyer (2015)]] — resource analysis for VQE with adiabatic and Hamiltonian variational ansätze; measurement scaling studies; practical bottleneck analysis for NISQ chemistry
+- [[Entanglement-Induced Barren Plateaus (Ortiz Marrero-Kieferová-Wiebe 2021) — Paper Notes|Ortiz Marrero-Kieferová-Wiebe (2021)]] — 🚧 STUB — entanglement across subsystem boundary causes barren plateaus in variational algorithms regardless of circuit structure
 
 ---
 
@@ -254,6 +259,18 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 - [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — CHP algorithm; destabilizer tableau; $O(n^2)$ simulation; stabilizer circuits are ⊕L-complete; canonical form $O(n^2/\log n)$ gates
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes|Bremner-Jozsa-Shepherd (2011)]] — IQP circuits are classically hard to sample (also in Quantum Supremacy section)
+
+### Classical algorithms for quantum partition functions
+
+- [[Efficient Algorithms for Approximating Quantum Partition Functions (Mann-Helmuth 2021) — Paper Notes|Mann-Helmuth (2021)]] — FPTAS for quantum partition functions at high temperature ($|\beta| \leq 1/(e^4 \Delta)$) via quantum cluster expansion; optimal convergence radius under RP ≠ NP
+
+### Free-fermion solvability
+
+- [[A Unified Graph-Theoretic Framework for Free-Fermion Solvability (Chapman-Elman-Mann 2023) — Paper Notes|Chapman-Elman-Mann (2023)]] — spin Hamiltonian is free-fermion solvable if frustration graph is claw-free with simplicial clique; unifies Jordan-Wigner and Fendley approaches; extends to arbitrary spatial dimension
+
+### Classical algorithms for Ising / graph polynomials
+
+- [[Approximation Algorithms for Complex-Valued Ising Models on Bounded Degree Graphs (Mann-Bremner 2019) — Paper Notes|Mann-Bremner (2019)]] — deterministic FPTAS for complex-valued Ising partition function on bounded-degree graphs when $|\omega_e|, |\upsilon_v| = O(1/\Delta)$; via Barvinok interpolation + Patel-Regts; extends to IQP circuit amplitudes
 
 ---
 
@@ -327,9 +344,12 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 - [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush, Berry, McClean, Neven (2019)]] — First-quantized plane-wave simulation using interaction picture; gate complexity $\widetilde{O}(N^{1/3}\eta^{8/3} t)$ — sublinear in basis size; $O(\eta \log N)$ qubits; best scaling for molecular simulation when $N \gg \eta$.
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry, Wiebe, Rubin, Babbush (2021)]] — First constant-factor compilation of first-quantized plane-wave chemistry; qubitization Toffoli cost $\widetilde{O}(\eta^{4/3}N^{2/3} + \eta^{8/3}N^{1/3})/\varepsilon$; ~$1000\times$ circuit-level improvement over naive; first-quantized qubitization often beats second-quantized Gaussian methods by orders of magnitude in surface-code spacetime volume.
 - [[Quantum Simulation of Realistic Materials in First Quantization Using Non-Local Pseudopotentials (Berry, Rubin, Babbush et al 2024) — Paper Notes|Berry, Rubin, Babbush et al. (2024)]] — Extends first-quantized plane-wave methods to realistic materials with GTH pseudopotentials; full nonlocal pseudopotential block encoding; heterogeneous catalysis and battery cathode resource estimates.
-- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — Non-BO dynamics for ICF stopping power; extends [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. (2021)]] block encoding; hybrid QROM+Newton-Raphson inverse square root; bespoke 8th-order [[product formula]].
+- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — Non-BO dynamics for ICF stopping power; extends [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. (2021)]] block encoding; hybrid QROM+Newton-Raphson inverse square root; bespoke 8th-order [[Product Formulas]].
 
 - [[Quantum Simulation of Chemistry via Quantum Fast Multipole Method (Berry, Wan, Baczewski, Eklund, Tikku, Babbush 2025) — Paper Notes|Berry, Wan, Baczewski, Eklund, Tikku, Babbush (2025)]] — Quantum FMM for first-quantized real-space chemistry; $\widetilde{O}(\eta)$ Coulomb evaluation replaces $O(\eta^2)$; best known complexity for $N < \eta^6$.
+- [[Quantum Computing Enhanced Computational Catalysis (von Burg, Low, Häner, Steiger, Reiher, Roetteler, Troyer 2020) — Paper Notes|von Burg et al. (2020)]] — double factorization qubitization for Rh catalysis and FeMoCo; $3.5\times 10^{10}$ Toffolis for FeMoCo (DF, 152 spin-orbitals); introduces regularised DF with reduced 1-norm
+- [[Accelerating Quantum Computations of Chemistry Through Regularized Compressed Double Factorization (Oumarou, Scheurer, Parrish, Hohenstein, Gogolin 2024) — Paper Notes|Oumarou et al. (2024)]] — regularized compressed DF with $L_1$ penalty reduces 1-norm and Toffoli counts; follow-up to von Burg et al.; Quantum **8**, 1371
+- [[Faster Quantum Chemistry Simulations via Improved Tensor Factorization and Active Volume Compilation (Caesura, Cortes, Pol, Sim, Steudtner, Anselmetti, Degroote, Moll, Santagati, Streif, Tautermann 2025) — Paper Notes|Caesura et al. (2025)]] — improved THC factorisation (BLISS) + active volume compilation for photonic architecture; Phys. Rev. Research
 
 ## Quantum Simulation of Materials / Periodic Systems
 
@@ -377,7 +397,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 
 ---
 
-## Hamiltonian Simulation ([[product formula]]s / Trotter)
+## Hamiltonian Simulation ([[Product Formulas]]s / Trotter)
 
 - [[Discontinuous Galerkin Discretization for Quantum Simulation of Chemistry (McClean, Babbush, Lin et al 2019) — Paper Notes|McClean, Babbush, Lin et al. (2019)]] — Block-diagonal swap network for DG Hamiltonian: Trotter step depth $O(N_b n_\kappa^3)$, interpolating between $O(N)$-depth diagonal and $O(N^3)$-depth general regimes; also supports low-rank factorization within blocks.
 - [[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes|Motta, Babbush, Chan et al. (2018)]] — Double factorization reduces Trotter step gates from $O(N^4)$ to $O(N^2 \log N)$ for molecular Hamiltonians; each factor is a Givens rotation layer + swap network Ising layer on a linear chain.
@@ -386,7 +406,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes|Kivlichan, McClean, Babbush et al. (2018)]] — Fermionic swap network achieves Trotter step depth $N$ with $N(N-1)/2$ gates on a linear chain; Slater determinant preparation in depth $\leq N/2$; conjectured gate-count optimal.
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes|Babbush, Wiebe, McClean et al. (2018)]] — Plane-wave dual basis Trotter step at depth $O(N)$ on planar lattice; total depth $O(N^{7/2}/\sqrt{\varepsilon})$ at fixed density; uses FFFT to alternate between diagonal representations.
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan, Gidney, Babbush et al. (2020)]] — Optimized second-order Trotter for Hubbard and jellium with Hamming weight phasing; $O(1)$ T complexity for Hubbard with extensive error; compiled surface-code estimates show classically intractable instances in $<1$ hour on $\sim 300$K physical qubits.
-- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|Bagherimehrab-Berry-Aspuru-Guzik et al. (2024)]] — Corrected [[product formula]]s: boundary-injected commutator correctors improve PF$_{2k}$ error from $O(\alpha t^{2k+1})$ to $O(\alpha^2 t^{2k+1})$ for perturbed systems; $O(t^{2k+3})$ for non-perturbed; ancilla-free; validated on Heisenberg, Ising, Hubbard and IBM hardware.
+- [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|Bagherimehrab-Berry-Aspuru-Guzik et al. (2024)]] — Corrected [[Product Formulas]]s: boundary-injected commutator correctors improve PF$_{2k}$ error from $O(\alpha t^{2k+1})$ to $O(\alpha^2 t^{2k+1})$ for perturbed systems; $O(t^{2k+3})$ for non-perturbed; ancilla-free; validated on Heisenberg, Ising, Hubbard and IBM hardware.
 
 ## Hamiltonian Simulation (LCU / Taylor series)
 
@@ -412,11 +432,12 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 ## Quantum Simulation of Holographic / Strongly Correlated Models
 
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes|Babbush, Berry, Neven (2019)]] — SYK model simulation via asymmetric qubitization; $O(N^{7/2}t)$ gate complexity; motivated by AdS/CFT and holographic duality; T-count makes SYK among the most viable early surface-code applications.
+- [[Digital Quantum Simulation of Minimal AdS-CFT (García-Álvarez, Egusquiza, Lamata, del Campo, Sonner, Solano 2017) — Paper Notes|García-Álvarez et al. (2017)]] — digital Trotter simulation of SYK$_4$ at $N=4,6,8$ Majorana modes; gate complexity scaling; early holographic simulation proposal
 - [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes|King, Low, Babbush, Somma, Rubin (2025)]] — SOSSA applied to SYK: degree-2 Majorana SOS + double factorization achieves $\sqrt{\Delta_{\text{SOS}}\lambda_{\text{SOS}}} \sim N^{3/2}$ vs $\lambda_{\text{LCU}} \sim N^2$ — a $\sqrt{N}$ asymptotic speedup.
 
 ## Quantum Dynamics / Stopping Power / Warm Dense Matter
 
-- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — First constant-factor resource estimate for a quantum dynamics simulation of practical relevance; computes ICF stopping power via non-BO first-quantized plane-wave simulation; $10^{13}$–$10^{17}$ Toffoli gates (8th-order Trotter) for 28–1729 electrons; $\sim 10^3$ logical qubits; introduces hybrid QROM+Newton-Raphson inverse square root and bespoke 8th-order [[product formula]].
+- [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2023)]] — First constant-factor resource estimate for a quantum dynamics simulation of practical relevance; computes ICF stopping power via non-BO first-quantized plane-wave simulation; $10^{13}$–$10^{17}$ Toffoli gates (8th-order Trotter) for 28–1729 electrons; $\sim 10^3$ logical qubits; introduces hybrid QROM+Newton-Raphson inverse square root and bespoke 8th-order [[Product Formulas]].
 - [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes|Babbush, Huggins, Berry et al. (2023)]] — Asymptotic advantage of quantum dynamics over classical mean-field; motivates the stopping power application.
 
 ## First-Quantized Methods / Sparse Simulation
@@ -454,6 +475,10 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 ## Benchmark Systems
 
 - [[FeMoCo Resource Estimation Timeline]] — Synthesis note tracking all FeMoCo resource estimates from 2017–2025; covers Trotter → qubitization → SF → DF → THC → DFTHC+spectrum amplification progression; 50,000× improvement in eight years
+- [[NMR Implementation of a Molecular Hydrogen Quantum Simulation with Adiabatic State Preparation (Du, Xu, Peng, Wang, Wu, Lu 2010) — Paper Notes|Du et al. (2010)]] — NMR H₂ simulation with adiabatic state preparation and phase estimation; PRL **104**, 030502
+- [[Quantum Implementation of Unitary Coupled Cluster for Simulating Molecular Electronic Structure (Shen, Zhang, Chen, Zhang, Yung, Kim 2015) — Paper Notes|Shen et al. (2015)]] — trapped-ion UCC implementation for HeH⁺; PRA **95**, 020501(R)
+- [[Quantum Simulation of Helium Hydride in a Solid-State Spin Register (Wang, Dolde, Biamonte, Babbush, Bergholm et al. 2015) — Paper Notes|Wang et al. (2015)]] — NV-center HeH⁺ simulation via phase estimation; ACS Nano **9**(8), 7769
+- [[Observation of Separated Dynamics of Charge and Spin in the Fermi-Hubbard Model (Arute et al. 2020) — Paper Notes|Arute et al. (2020)]] — Google Sycamore observation of spin-charge separation in 1D Fermi-Hubbard; NISQ dynamics experiment
 
 ---
 

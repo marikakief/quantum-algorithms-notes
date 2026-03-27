@@ -21,7 +21,7 @@ where $S = \sum_{ij}|ij\rangle\langle ji|$ is the swap operator. This is $e^{-i\
 2. For each of $n$ fresh copies of $\rho$: apply $e^{-iS\Delta t}$ to (copy, $\sigma$-register), then discard the copy
 3. After $n$ steps: $\sigma \mapsto e^{-i\rho t}\sigma\,e^{i\rho t}$ up to error $\epsilon$
 
-**Copy count:** $n = O(t^2/\epsilon)$ by Suzuki-Trotter analysis of the first-order [[product formula]].
+**Copy count:** $n = O(t^2/\epsilon)$ by Suzuki-Trotter analysis of the first-order [[Product Formulas]].
 
 **Why $e^{-iS\Delta t}$ is efficient:** $S$ is a permutation matrix (sparse, 2-local in the sense of swapping two registers), so $e^{-iS\Delta t}$ can be implemented in $O(\log d)$ gates.
 

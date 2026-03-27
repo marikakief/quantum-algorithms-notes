@@ -129,7 +129,7 @@ The $n^2$ (vs $n^3$ in some earlier work) improvement for physically local Hamil
 
 ## Limits / caveats
 
-- Not optimal in precision scaling: $\varepsilon^{o(1)}$ vs the $\log(1/\varepsilon)$ now achievable via [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]. For precision-sensitive applications, [[product formula]]s are outdated.
+- Not optimal in precision scaling: $\varepsilon^{o(1)}$ vs the $\log(1/\varepsilon)$ now achievable via [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]. For precision-sensitive applications, [[Product Formulas]]s are outdated.
 - Rigorous Trotter-error bounds are extremely loose. The paper's own numerics show they overestimate by ~$10^6$ for random Hamiltonians. The commutator-aware bounds of [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs et al. (2019)]] improve this significantly.
 - The $5^{\chi-1}$ factor in gate counts grows rapidly with Suzuki order $\chi$. High-order formulas have large constants.
 - Assumes $k$-local structure is explicitly given. Not applicable to black-box sparse Hamiltonians.

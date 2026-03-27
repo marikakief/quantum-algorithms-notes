@@ -5,7 +5,7 @@
 
 ## Idea
 
-For a $p$-th order [[product formula]] with anti-Hermitian summands, define the $(p+1)$-fold nested-commutator norm:
+For a $p$-th order [[Product Formulas]] with anti-Hermitian summands, define the $(p+1)$-fold nested-commutator norm:
 $$
 \tilde{\alpha}_{\mathrm{comm}} = \sum_{\gamma_1,\ldots,\gamma_{p+1}} \bigl\| [H_{\gamma_{p+1}}, [H_{\gamma_p}, \cdots, [H_{\gamma_2}, H_{\gamma_1}]\cdots]] \bigr\|.
 $$
@@ -15,13 +15,13 @@ This is a **finite** representation — no BCH tail, no locality assumption need
 
 ## Why it matters
 
-This is what explains the gap between worst-case Trotter bounds (which can be enormous) and observed performance on local or structured Hamiltonians. For a locally interacting spin chain, $\tilde{\alpha}_{\mathrm{comm}}$ scales geometrically rather than with the full operator norm. Proving that [[product formula]]s are competitive with [[Qubitization Iterate|qubitization]]-based methods in physical regimes requires something like this bound.
+This is what explains the gap between worst-case Trotter bounds (which can be enormous) and observed performance on local or structured Hamiltonians. For a locally interacting spin chain, $\tilde{\alpha}_{\mathrm{comm}}$ scales geometrically rather than with the full operator norm. Proving that [[Product Formulas]]s are competitive with [[Qubitization Iterate|qubitization]]-based methods in physical regimes requires something like this bound.
 
 ## When to use it
 
 - Hamiltonian has locality or sparse interaction structure.
 - Naïve Trotter bounds are embarrassingly pessimistic.
-- Comparing [[product formula]]s fairly against [[Block-Encoding Composition Algebra|block-encoding]]-based methods.
+- Comparing [[Product Formulas]]s fairly against [[Block-Encoding Composition Algebra|block-encoding]]-based methods.
 
 ## What to remember
 

@@ -4,11 +4,11 @@
 
 ## What it does
 
-Finds dramatically better [[product formula]]s by using more stages than the minimum required for a given order, creating excess free parameters for numerical optimization of the error constant.
+Finds dramatically better [[Product Formulas]]s by using more stages than the minimum required for a given order, creating excess free parameters for numerical optimization of the error constant.
 
 ## The trick
 
-For an order-$k$ Yoshida [[product formula]] with $M = 2m+1$ stages, there are $m$ free parameters (the coefficients $w_1, \ldots, w_m$) and a fixed number of nonlinear equations from the order conditions. At 8th order, the minimum is $m=7$ (7 equations for 7 unknowns). Increasing to $m=10$ gives 10 unknowns for the same ~7 equations — 3 extra degrees of freedom.
+For an order-$k$ Yoshida [[Product Formulas]] with $M = 2m+1$ stages, there are $m$ free parameters (the coefficients $w_1, \ldots, w_m$) and a fixed number of nonlinear equations from the order conditions. At 8th order, the minimum is $m=7$ (7 equations for 7 unknowns). Increasing to $m=10$ gives 10 unknowns for the same ~7 equations — 3 extra degrees of freedom.
 
 The procedure:
 1. **Random-start Levenberg-Marquardt** from $\vec{w} \sim \mathcal{N}(0, \sigma^2 I)$ with $\sigma \approx 0.6$
@@ -22,7 +22,7 @@ Critical observation: **the best solutions have no pattern in their coefficients
 
 ## When to reach for it
 
-- Constructing [[product formula]]s for a specific simulation: don't use minimal-length formulas. Go 2–4 stages beyond the minimum.
+- Constructing [[Product Formulas]]s for a specific simulation: don't use minimal-length formulas. Go 2–4 stages beyond the minimum.
 - The same idea applies more broadly: whenever you're solving a system of equations with a design goal (not just feasibility), add extra parameters and optimize.
 - Also useful for [[Processed Product Formula Kernel-Processor Decomposition|processed formulas]], where the kernel already has fewer constraints — over-parameterization compounds the advantage.
 

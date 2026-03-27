@@ -14,7 +14,7 @@ $$H = \sum_k \lambda_k U_k \;\;\longrightarrow\;\; \sum_k \lambda_k U_k + \frac{
 
 This changes the PREPARE state to include the extra identity terms, and the SELECT oracle gains one additional control qubit. The resulting walk $W_r(s)$ has eigenvalues encoding $r \arcsin(E_k / (r\lambda))$, which for large $r$ approximates $E_k / \lambda$. Each application advances by time $\sim 1/r$.
 
-A [[product formula]] over adiabatic parameter values $s_1, s_2, \ldots$ gives:
+A [[Product Formulas]] over adiabatic parameter values $s_1, s_2, \ldots$ gives:
 
 $$\prod_m W_r(s_m) \approx \text{adiabatic evolution along } \{s_m\}$$
 

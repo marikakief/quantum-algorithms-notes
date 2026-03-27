@@ -153,7 +153,7 @@ $$C \leq 4n(z_n + 2) + 3n_H + 2\left\lceil\log_2\!\left(\frac{6\Gamma\max_j T_j}
 - [[Quantum Search by Local Adiabatic Evolution (Roland-Cerf 2002) — Paper Notes]]
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]]
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes]]
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — Marika's later paper; shares the ancilla-based LCU trick used here, applied to randomized [[product formula]] combinations
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — Marika's later paper; shares the ancilla-based LCU trick used here, applied to randomized [[Product Formulas]] combinations
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes]] — Marika's subsequent paper; the coherent LCU philosophy developed here reappears in the Dyson series simulation framework
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — revisits the boundary-term problem this paper addresses; uses boundary cancellation to get $\varepsilon$-independent time steps rather than coherent path averaging
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — applies discrete adiabatic walks to QLSP; the adiabatic error-reduction challenge motivating this paper reappears in QLSP solvers

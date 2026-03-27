@@ -4,11 +4,11 @@
 
 ## What it does
 
-Converts a time-dependent [[Hamiltonian simulation]] (with arbitrarily fast-varying coefficients) into a standard [[product formula]] using Monte Carlo sampling, eliminating the need for time-ordered exponentials or smoothness assumptions.
+Converts a time-dependent [[Hamiltonian simulation]] (with arbitrarily fast-varying coefficients) into a standard [[Product Formulas]] using Monte Carlo sampling, eliminating the need for time-ordered exponentials or smoothness assumptions.
 
 ## The trick
 
-Start from the [[Generalised Trotter for Time-Dependent Hamiltonians|generalised Trotter]] decomposition, which produces time-ordered exponentials $\mathcal{T}\exp(-i\int_{t_j}^{t_j+\Delta t} H_X(s)\,ds)$ for each term. These aren't standard gates. To get a usable [[product formula]]:
+Start from the [[Generalised Trotter for Time-Dependent Hamiltonians|generalised Trotter]] decomposition, which produces time-ordered exponentials $\mathcal{T}\exp(-i\int_{t_j}^{t_j+\Delta t} H_X(s)\,ds)$ for each term. These aren't standard gates. To get a usable [[Product Formulas]]:
 
 **Step 1 — Drop the time-ordering.** For a single bounded term $H_X$:
 
@@ -30,7 +30,7 @@ in increasing order of $\tau_j^k$. This is a genuine product formula — each fa
 
 ## When to reach for it
 
-- You need a [[product formula]] for time-dependent $H(t)$ but the time-dependence is non-smooth or rapidly oscillating, so standard "freeze the Hamiltonian" Trotter breaks down.
+- You need a [[Product Formulas]] for time-dependent $H(t)$ but the time-dependence is non-smooth or rapidly oscillating, so standard "freeze the Hamiltonian" Trotter breaks down.
 - The simulation result only needs to hold in expectation (averaged over the random sampling), not for every individual circuit.
 - Conceptual arguments where you need to show *existence* of a polynomial-size circuit for arbitrary time-dependent evolution, without caring about tight constants.
 
@@ -45,7 +45,7 @@ The Monte Carlo sample count $m$ must be large enough that the total sampling er
 ## Caveat
 
 - Convergence is in expectation / average-case. Individual circuit instances have random errors.
-- The Monte Carlo overhead is non-trivial. For practical simulation, [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|qDRIFT]] gives a much cleaner randomised [[product formula]] with explicit $\ell_1$-norm scaling.
+- The Monte Carlo overhead is non-trivial. For practical simulation, [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|qDRIFT]] gives a much cleaner randomised [[Product Formulas]] with explicit $\ell_1$-norm scaling.
 - Requires black-box access to $H_X(t)$ at arbitrary times $t$. If evaluating $H_X(\tau)$ is classically expensive, the sampling step adds hidden cost.
 - Superseded for practical purposes by later randomised methods, but the conceptual idea — Monte Carlo to eliminate smoothness requirements — is clean and reusable.
 

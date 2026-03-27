@@ -6,7 +6,7 @@
 
 ## The trick
 
-A multi-[[product formula]] (MPF) approximates $U(T)$ as a linear combination of product-formula unitaries:
+A multi-[[Product Formulas]] (MPF) approximates $U(T)$ as a linear combination of product-formula unitaries:
 $$U(T) \approx \frac{1}{\Xi} \sum_q C_q V_q$$
 where $\Xi = \sum_q |C_q|$ and each $V_q = S_{2\chi}(T/\ell_q)^{\ell_q}$ is a standard Suzuki product formula at step count $\ell_q$.
 

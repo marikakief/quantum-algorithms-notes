@@ -4,7 +4,7 @@
 
 ## What it does
 
-Proves that any product-formula simulation of $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The argument works by embedding a quantum search problem into the commutator evolution, so a too-efficient [[product formula]] would contradict the $\Omega(\sqrt{n})$ search lower bound.
+Proves that any product-formula simulation of $e^{[A,B]T}$ for generic $A, B$ requires $\Omega(T)$ elementary exponentials. The argument works by embedding a quantum search problem into the commutator evolution, so a too-efficient [[Product Formulas]] would contradict the $\Omega(\sqrt{n})$ search lower bound.
 
 ## The trick
 
@@ -18,7 +18,7 @@ $$
 $$
 acts as $-i$ times a rotation generator. Evolving for time $T = \Theta(\sqrt{n})$ under $[A,B]$ maps $|+\rangle \to |w\rangle$, solving the search problem.
 
-**Query reduction:** Each elementary exponential $e^{\pm A\tau}$ or $e^{\pm B\tau}$ requires at most 2 oracle queries to the search function (to implement the projectors coherently). So a [[product formula]] using $N_{\rm exp}$ exponentials gives a quantum search algorithm with $O(N_{\rm exp})$ oracle queries.
+**Query reduction:** Each elementary exponential $e^{\pm A\tau}$ or $e^{\pm B\tau}$ requires at most 2 oracle queries to the search function (to implement the projectors coherently). So a [[Product Formulas]] using $N_{\rm exp}$ exponentials gives a quantum search algorithm with $O(N_{\rm exp})$ oracle queries.
 
 **Lower bound:** By the Bennett–Bernstein–Brassard–Vazirani $\Omega(\sqrt{n})$ search lower bound, any quantum algorithm solving $n$-item search uses $\Omega(\sqrt{n})$ queries. Therefore $N_{\rm exp} \geq \Omega(\sqrt{n}) = \Omega(T)$.
 

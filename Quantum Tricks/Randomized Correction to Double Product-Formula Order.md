@@ -4,11 +4,11 @@
 
 ## What it does
 
-Converts a $(2k)$-th order symmetric [[product formula]] into a $(4k+1)$-th order randomized channel — more than doubling the error order from $2k+1$ to $4k+2$.
+Converts a $(2k)$-th order symmetric [[Product Formulas]] into a $(4k+1)$-th order randomized channel — more than doubling the error order from $2k+1$ to $4k+2$.
 
 ## The trick
 
-Given a symmetric [[product formula]] $S_{2k}(\lambda)$ for $H = \sum_j H_j$, write $S_{2k}(\lambda/2) = V(\lambda/2) + D(\lambda/2)$. The error correction $V^\dagger D + D V^\dagger$ decomposes into Hermitian operators $\mathcal{H}_l$ at odd orders $l \in \{2k+1, 2k+3, \ldots, 4k+1\}$:
+Given a symmetric [[Product Formulas]] $S_{2k}(\lambda)$ for $H = \sum_j H_j$, write $S_{2k}(\lambda/2) = V(\lambda/2) + D(\lambda/2)$. The error correction $V^\dagger D + D V^\dagger$ decomposes into Hermitian operators $\mathcal{H}_l$ at odd orders $l \in \{2k+1, 2k+3, \ldots, 4k+1\}$:
 
 $$V^\dagger D + D V^\dagger = \sum_{l \in \gamma} \frac{\lambda^l}{2^l} \mathcal{H}_l + O(\lambda^{4k+2})$$
 

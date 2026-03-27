@@ -1,5 +1,5 @@
 
-**Source:** Watson, arXiv:2411.04240 (2025). Builds on multiproduct weights from LKW19 and the randomised multi[[product formula]] line (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022).
+**Source:** Watson, arXiv:2411.04240 (2025). Builds on multiproduct weights from LKW19 and the randomised multi[[Product Formulas]] line (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022).
 
 ---
 
@@ -25,7 +25,7 @@ The trick relies on the randomised channel's expected observable having a clean 
 $$\mathbb{E}_{s}[\langle O \rangle] = \langle O \rangle_{\text{exact}} + c_1 s + c_2 s^2 + \cdots$$
 (see [[Channel Series Expansion via Variation-of-Parameters]]). The Vandermonde weights are precisely designed to zero out the $c_1, \ldots, c_{m-1}$ terms.
 
-This is the incoherent/classical analogue of deterministic multi[[product formula]]s, which cancel error terms by taking coherent linear combinations of product formula circuits. Here the combination is classical: you're averaging measurement outcomes, not superposing quantum states.
+This is the incoherent/classical analogue of deterministic multi[[Product Formulas]]s, which cancel error terms by taking coherent linear combinations of product formula circuits. Here the combination is classical: you're averaging measurement outcomes, not superposing quantum states.
 
 ---
 

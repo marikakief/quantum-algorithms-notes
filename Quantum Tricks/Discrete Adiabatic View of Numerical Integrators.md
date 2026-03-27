@@ -15,7 +15,7 @@ These two terms pull in opposite directions: smaller $h$ reduces discretisation 
 
 The new view: let $W(j/T_d) = U_{\text{num}}((j+1)h, jh)$ be the numerical propagator at step $j$. Verify that:
 1. $W(s)$ varies slowly: $\|D^{(k)} W(s)\| \leq c_k(s)/T_d^k$. This is automatic because $H(t/T)$ varies on the slow scale $s = t/T$.
-2. $W(s)$ has a spectral gap. For the exponential integrator $e^{-ihH(s)}$ with $h \leq 1/\alpha$, the gap is $h\Delta_*$. For [[product formula]]s, reduce $h$ until the [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter error]] is small enough to preserve the gap.
+2. $W(s)$ has a spectral gap. For the exponential integrator $e^{-ihH(s)}$ with $h \leq 1/\alpha$, the gap is $h\Delta_*$. For [[Product Formulas]]s, reduce $h$ until the [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter error]] is small enough to preserve the gap.
 3. The final walk operator's eigenstate matches the target.
 
 Then the discrete adiabatic theorem gives the total error directly — one bound, not a sum of two.
@@ -35,7 +35,7 @@ No extra gates. The trick is purely analytical — it changes how you set $h$ an
 
 ## Caveat
 
-The walk operators must satisfy the gap condition. For the exponential integrator this is straightforward; for [[product formula]]s at large $h$, the gap of the walk operator can differ from the Hamiltonian's gap in unpredictable ways (see [[Trotter Gap Independence from Hamiltonian Gap]]). The "simplified" product formula (all scheduling evaluations at the same time point) is needed for a clean analysis — the full higher-order Trotter-Suzuki formula with staggered evaluations doesn't fit directly.
+The walk operators must satisfy the gap condition. For the exponential integrator this is straightforward; for [[Product Formulas]]s at large $h$, the gap of the walk operator can differ from the Hamiltonian's gap in unpredictable ways (see [[Trotter Gap Independence from Hamiltonian Gap]]). The "simplified" product formula (all scheduling evaluations at the same time point) is needed for a clean analysis — the full higher-order Trotter-Suzuki formula with staggered evaluations doesn't fit directly.
 
 ## Related notes
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]]

@@ -4,7 +4,7 @@
 
 ## What it does
 
-Extends the Suzuki recursive [[product formula]] from the time-independent case to ordered operator exponentials $\mathcal{T}\exp\!\int_\mu^\lambda H(u)\,du$, achieving error $O(\Delta\lambda^{2k+1})$ at order $k$ — the same scaling as time-independent Suzuki — provided $H(u)$ has $2k$ bounded derivatives.
+Extends the Suzuki recursive [[Product Formulas]] from the time-independent case to ordered operator exponentials $\mathcal{T}\exp\!\int_\mu^\lambda H(u)\,du$, achieving error $O(\Delta\lambda^{2k+1})$ at order $k$ — the same scaling as time-independent Suzuki — provided $H(u)$ has $2k$ bounded derivatives.
 
 ## The trick
 
