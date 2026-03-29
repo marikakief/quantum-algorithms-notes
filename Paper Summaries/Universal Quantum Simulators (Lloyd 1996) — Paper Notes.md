@@ -6,7 +6,7 @@
 
 ## The problem
 
-Feynman conjectured in 1982 that quantum computers could efficiently simulate quantum systems with local interactions. Classical simulation of $N$ quantum variables requires $2^N$-dimensional state vectors and $2^N \times 2^N$ matrix exponentials — exponentially hard in general. Can a quantum computer do better?
+[[Simulating Physics with Computers (Feynman 1982) — Paper Notes|Feynman conjectured in 1982]] that quantum computers could efficiently simulate quantum systems with local interactions. Classical simulation of $N$ quantum variables requires $2^N$-dimensional state vectors and $2^N \times 2^N$ matrix exponentials — exponentially hard in general. Can a quantum computer do better?
 
 ## What the paper does
 

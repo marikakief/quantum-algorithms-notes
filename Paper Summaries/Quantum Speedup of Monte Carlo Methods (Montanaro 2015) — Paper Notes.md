@@ -156,6 +156,8 @@ All bounds are optimal up to polylog factors.
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — related: gap amplification speeds up adiabatic state preparation for related problems
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — related walk-based algorithms
 - [[Quantum Computational Finance — Monte Carlo Pricing of Financial Derivatives (Rebentrost-Gupt-Bromley 2018) — Paper Notes]] — applies this paper's quantum mean estimation to derivative pricing
+- [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes]] — same author's companion paper; quadratic speedup for deterministic backtracking via quantum walk on trees
+- [[Applying Quantum Algorithms to Constraint Satisfaction Problems (Campbell-Khurana-Montanaro 2019) — Paper Notes]] — practical follow-up combining backtracking walk with Grover and Monte Carlo speedup
 
 ### Trick cards
 - [[Quantum Mean Estimation via Amplitude Estimation]]

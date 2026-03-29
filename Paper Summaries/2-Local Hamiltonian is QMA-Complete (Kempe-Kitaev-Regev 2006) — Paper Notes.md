@@ -53,8 +53,11 @@ This is more sophisticated than the [[Perturbation Lemma for Locality Reduction|
 - [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes]]
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]]
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — attempts to solve instances of this problem
+- [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes]] — generalises this result to a full complexity classification of all 2-qubit Hamiltonians
+- [[Universal Quantum Hamiltonians (Cubitt-Montanaro-Piddock 2018) — Paper Notes]] — builds on this and Cubitt-Montanaro 2016 to construct universal Hamiltonians
 
 ### Trick cards
 - [[Perturbation Gadgets for Locality Reduction]]
 - [[Perturbation Lemma for Locality Reduction]]
 - [[Kitaev Geometric Lemma for Ground Space Angles]]
+- [[Mediator Qubit Gadget for Interaction Generation]]

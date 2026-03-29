@@ -186,8 +186,10 @@ The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant ma
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — [[Hamiltonian-to-Markov-Chain Spectral Gap Mapping|Markov chain ↔ Hamiltonian]] connection
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — [[QSVT Meta-Template|QSVT]] as the polynomial-transform generalization
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — unifies this framework with Ambainis's; uses phase estimation on $W(P)$ for approximate reflection
+- [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes]] — applies quantum walks to triangle finding; Szegedy is co-author
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — generalises the walk construction $G = UPU - P$ from discriminants to all frustration-free Hamiltonians
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]] — uses Szegedy walks for quantum sampling in partition function estimation
+- [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes]] — coinless quantum walk on implicitly-defined backtracking trees; related construction but starts from root instead of stationary distribution
 
 ### Trick cards
 - [[Quantized Bipartite Walk Construction]]

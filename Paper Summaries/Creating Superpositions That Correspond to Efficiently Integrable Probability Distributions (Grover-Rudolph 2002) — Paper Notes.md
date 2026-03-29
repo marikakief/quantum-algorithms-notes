@@ -133,6 +133,7 @@ This is the standard reference for "quantum state preparation of structured dist
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — state preparation as a subroutine
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — amplitude estimation applied after state preparation
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — search with non-uniform priors
+- [[Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes]] — uses Grover-Rudolph to prepare uniform superposition over grid points inside an $n$-ball for the lattice reduction
 
 ### Trick cards
 - [[Recursive Bisection State Preparation for Integrable Distributions]] — the main trick

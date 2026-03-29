@@ -95,7 +95,7 @@ The polynomial hierarchy collapses.
 | Terhal & DiVincenzo (2004) | Depth-4 circuits hardness via gate teleportation |
 | **This paper (2011)** | **post-IQP = PP; Hadamard gadget; IQP hardness of sampling** |
 | [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes|Aaronson & Arkhipov (2011)]] | BosonSampling — similar PH-collapse argument for linear optics |
-| Bremner, Montanaro, Shepherd (2016) | Average-case hardness and noise tolerance for IQP |
+| [[Average-Case Complexity Versus Approximate Simulation of Commuting Quantum Computations (Bremner-Montanaro-Shepherd 2016) — Paper Notes\|Bremner, Montanaro, Shepherd (2016)]] | Average-case hardness; strengthens to additive-error simulation; proves anticoncentration |
 
 This paper, together with Aaronson-Arkhipov's BosonSampling, launched the quantum supremacy programme — the idea that near-term quantum devices, even without full error correction, could demonstrate computational advantages via sampling problems.
 
@@ -130,6 +130,7 @@ This paper, together with Aaronson-Arkhipov's BosonSampling, launched the quantu
 ## Cross-links
 
 ### Paper notes
+- [[Average-Case Complexity Versus Approximate Simulation of Commuting Quantum Computations (Bremner-Montanaro-Shepherd 2016) — Paper Notes]] — direct successor; strengthens this result from multiplicative to additive error tolerance using anticoncentration and average-case conjectures
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes]] — IQP circuits generalise the Deutsch-Jozsa structure ($H$-diagonal-$H$)
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes]] — foundational computation model
 - [[The Computational Complexity of Linear Optics (Aaronson-Arkhipov 2011) — Paper Notes]] — concurrent; BosonSampling uses the same PH-collapse template; connects to permanent \#P-hardness
@@ -138,5 +139,7 @@ This paper, together with Aaronson-Arkhipov's BosonSampling, launched the quantu
 ### Trick cards
 - [[Hadamard Gadget for IQP Reduction]]
 - [[Post-Selection Boosting for Hardness of Sampling]]
+- [[Paley-Zygmund Anticoncentration for Quantum Amplitudes]] — the technique that extended this result to additive error (Bremner-Montanaro-Shepherd 2016)
+- [[X-Gate Random Self-Reduction for IQP]] — the self-reduction used to lift worst-case to average-case
 - [[Hadamard Sandwich for Global Function Properties]] — the structure IQP generalises
 - [[Phase Kickback from Oracle Queries]] — related phase-encoding technique

@@ -30,5 +30,8 @@ The spectral gap of the gadget Hamiltonian shrinks polynomially with $\Delta$. T
 
 - [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes]]
 - [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes]]
+- [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes]] — uses gadgets systematically for the full dichotomy classification
+- [[Universal Quantum Hamiltonians (Cubitt-Montanaro-Piddock 2018) — Paper Notes]] — uses gadgets to construct universal Hamiltonians
 - [[Perturbation Lemma for Locality Reduction]] — the simpler penalty-based approach
+- [[Mediator Qubit Gadget for Interaction Generation]] — a second-order variant for generating new interactions
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes]]

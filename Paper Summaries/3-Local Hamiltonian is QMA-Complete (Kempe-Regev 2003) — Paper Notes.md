@@ -36,6 +36,7 @@ The [[Perturbation Lemma for Locality Reduction|perturbation lemma]] (Lemma 3.17
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes]] — the 5-local result this improves
 - [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes]] — further reduces to 2-local
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — uses the perturbation technique from this paper
+- [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes]] — extends to a full classification of all 2-qubit interaction types
 
 ### Trick cards
 - [[Perturbation Lemma for Locality Reduction]]

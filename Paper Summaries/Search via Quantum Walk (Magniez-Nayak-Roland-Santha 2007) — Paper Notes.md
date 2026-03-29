@@ -140,7 +140,7 @@ Phase estimation on the walk then discriminates $|\pi\rangle$ (eigenvalue 1) fro
 - Høyer, Mosca, de Wolf (2003) — recursive amplitude amplification; basis for RAA technique
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]], Cleve-Ekert-Macchiavello-Mosca (1998) — phase estimation
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the original $O(\sqrt{N})$ search
-- Magniez-Santha-Szegedy (2005) — Triangle Finding via quantum walk
+- [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes|Magniez-Santha-Szegedy (2005)]] — Triangle Finding via recursive quantum walk
 - Magniez-Nayak (2005) — Group Commutativity via quantum walk
 
 ---
@@ -154,6 +154,7 @@ Phase estimation on the walk then discriminates $|\pi\rangle$ (eigenvalue 1) fro
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — MNRS generalises Grover to walk-based settings
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — continuous-time walk-based speedup; different walk paradigm
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — uses Szegedy walk for formula evaluation
+- [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes]] — applies the MNRS framework to triangle finding; Magniez and Santha are co-authors on both
 
 ### Trick cards
 - [[Phase Estimation as Eigenvalue Filter for Walk-Based Search]]

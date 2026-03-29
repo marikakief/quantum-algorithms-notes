@@ -148,13 +148,15 @@ The paper's real contribution is the *technique* — the two-reflection rotation
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — polynomial-time factoring, the result that made the field
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — exponential quantum speedup for Simon's problem, key influence
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — $\Omega(\sqrt{N})$ lower bound for quantum search (Grover is optimal)
-- Boyer, Brassard, Høyer & Tapp (1996) — tight bounds on iterations, multiple solutions
+- [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes|Boyer, Brassard, Høyer & Tapp (1996/1998)]] — tight bounds on iterations, multiple solutions, unknown-$t$ algorithm
 
 ---
 
 ## Cross-links
 
 ### Paper notes
+- [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes]] — exact analysis, multiple solutions, unknown-$t$ search
+- [[Quantum Counting (Brassard-Høyer-Tapp 1998) — Paper Notes]] — quantum counting via Grover + phase estimation
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — the direct generalisation of Grover search to arbitrary quantum algorithms
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes]] — applies Grover-style search to the collision problem
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — quantum walk framework that generalises Grover's approach to graph search

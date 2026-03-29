@@ -133,6 +133,7 @@ This is the generic "quadratic speedup for search" result. It's the reason ampli
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — uses amplitude amplification to boost $1/\kappa^2$ success probability
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — [[QSVT Meta-Template|QSVT]] subsumes amplitude amplification as a polynomial transform
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — uses amplitude amplification for ground state extraction
+- [[Quantum Algorithms for Testing Properties of Distributions (Bravyi-Harrow-Hassidim 2011) — Paper Notes]] — uses amplitude estimation as core subroutine for distribution property testing; $O(N^{1/2})$ statistical difference, $O(N^{1/3})$ uniformity/orthogonality
 
 ### Trick cards
 - [[Standard Amplitude Amplification]]

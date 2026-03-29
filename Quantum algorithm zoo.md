@@ -5,16 +5,16 @@ Simulation of many-body Fermi systems on a universal quantum computer.
 _Physical Review Letters_, 79(13):2586-2589, 1997.
 [[arXiv:quant-ph/9703054](http://arxiv.org/abs/quant-ph/9703054)]
 
-**2.** Dorit Aharonov and Itai Arad
+**2. ✓** Dorit Aharonov and Itai Arad
 The BQP-hardness of approximating the Jones polynomial.
 _New Journal of Physics_ 13:035019, 2011.
 [[arXiv:quant-ph/0605181](http://arxiv.org/abs/quant-ph/0605181)]
 
-**3.** Dorit Aharonov, Itai Arad, Elad Eban, and Zeph Landau
+**3. ✓** Dorit Aharonov, Itai Arad, Elad Eban, and Zeph Landau
 Polynomial quantum algorithms for additive approximations of the Potts model and other points of the Tutte plane.
 _[arXiv:quant-ph/0702008](http://arxiv.org/abs/quant-ph/0702008)_, 2007.
 
-**4.** Dorit Aharonov, Vaughan Jones, and Zeph Landau
+**4. ✓** Dorit Aharonov, Vaughan Jones, and Zeph Landau
 A polynomial quantum algorithm for approximating the Jones polynomial.
 In _Proceedings of the 38th ACM Symposium on Theory of Computing_, 2006.
 [[arXiv:quant-ph/0511096](http://arxiv.org/abs/quant-ph/0511096)]
@@ -38,12 +38,12 @@ Every AND-OR formula of size N can be evaluated in time  on a quantum computer
 In _Proceedings of the 48th IEEE Symposium on the Foundations of Computer Science_, pages 363-372, 2007.
 [ [arXiv:quant-ph/0703015](http://arxiv.org/abs/quant-ph/0703015) and [arXiv:0704.3628](http://arxiv.org/abs/0704.3628)]
 
-**9.** Dave Bacon, Andrew M. Childs, and Wim van Dam
+**9. ✓** Dave Bacon, Andrew M. Childs, and Wim van Dam
 From optimal measurement to efficient quantum algorithms for the hidden subgroup problem over semidirect product groups.
 In _Proceedings of the 46th IEEE Symposium on Foundations of Computer Science_, pages 469-478, 2005.
 [[arXiv:quant-ph/0504083](http://arxiv.org/abs/quant-ph/0504083)]
 
-**10.** Michael Ben-Or and Avinatan Hassidim
+**10. ✓** Michael Ben-Or and Avinatan Hassidim
 Quantum search in an ordered list via adaptive learning.
 _[arXiv:quant-ph/0703231](http://arxiv.org/abs/quant-ph/0703231)_, 2007.
 
@@ -64,11 +64,11 @@ In _Proceedings of the 30th Conference on Current Trends in Theory and Practive
 Quantum cryptanalysis of hidden linear functions.
 In Don Coppersmith, editor, _CRYPTO '95_, Lecture Notes in Computer Science, pages 424-437. Springer-Verlag, 1995.
 
-**15.** M. Boyer, G. Brassard, P. Høyer, and A. Tapp
+**15. ✓** M. Boyer, G. Brassard, P. Høyer, and A. Tapp
 Tight bounds on quantum searching.
 _Fortschritte der Physik_, 46:493-505, 1998.
 
-**16.** G. Brassard, P. Høyer, and A. Tapp
+**16. ✓** G. Brassard, P. Høyer, and A. Tapp
 Quantum counting.
 _[arXiv:quant-ph/9805082](http://arxiv.org/abs/quant-ph/9805082)_, 1998.
 
@@ -181,11 +181,11 @@ _Theory of Computing_ 4:169-190, 2008.
 Invariant quantum algorithms for insertion into an ordered list.
 _[arXiv:quant-ph/9901059](http://arxiv.org/abs/quant-ph/9901059)_, 1999.
 
-**40.** Richard P. Feynman
+**40. ✓** Richard P. Feynman
 Simulating physics with computers.
 _International Journal of Theoretical Physics_, 21(6/7):467-488, 1982.
 
-**41.** Michael Freedman, Alexei Kitaev, and Zhenghan Wang
+**41. ✓** Michael Freedman, Alexei Kitaev, and Zhenghan Wang
 Simulation of topological field theories by quantum computers.
 _Communications in Mathematical Physics_, 227:587-603, 2002.
 
@@ -223,7 +223,7 @@ Quantum mechanics helps in searching for a needle in a haystack.
 _Physical Review Letters_, 79(2):325-328, 1997.
 [[arXiv:quant-ph/9605043](http://arxiv.org/abs/quant-ph/9605043)]
 
-**49.** Sean Hallgren
+**49. ✓** Sean Hallgren
 Polynomial-time quantum algorithms for Pell's equation and the principal ideal problem.
 In _Proceedings of the 34th ACM Symposium on Theory of Computing_, 2002.
 
@@ -303,7 +303,7 @@ Quantum computation and quadratically signed weight enumerators.
 _Information Processing Letters_, 79(4):173-179, 2001.
 [[arXiv:quant-ph/9909094](http://arxiv.org/abs/quant-ph/9909094)]
 
-**66.** Greg Kuperberg
+**66. ✓** Greg Kuperberg
 A subexponential-time quantum algorithm for the dihedral hidden subgroup problem.
 _SIAM Journal on Computing_, 35(1):170-188, 2005.
 [[arXiv:quant-ph/0302112](http://arxiv.org/abs/quant-ph/0302112)]
@@ -322,7 +322,7 @@ _Physical Review E_, 59(2):2429-2438, 1999.
 The hidden subgroup problem - review and open problems.
 _[arXiv:quant-ph/0411037](http://arxiv.org/abs/quant-ph/0411037)_, 2004.
 
-**70.** Frédéric Magniez, Miklos Santha, and Mario Szegedy
+**70. ✓** Frédéric Magniez, Miklos Santha, and Mario Szegedy
 Quantum algorithms for the triangle problem.
 _SIAM Journal on Computing_, 37(2):413-424, 2007.
 [[arXiv:quant-ph/0310134](http://arxiv.org/abs/quant-ph/0310134)]
@@ -358,12 +358,12 @@ Quantum complexity of integration.
 _Journal of Complexity_, 17:2-16, 2001.
 [[arXiv:quant-ph/0008124](http://arxiv.org/abs/quant-ph/0008124)]
 
-**78.** Oded Regev
+**78. ✓** Oded Regev
 Quantum computation and lattice problems.
 In _Proceedings of the 43rd Symposium on Foundations of Computer Science_, 2002.
 [[arXiv:cs/0304005](http://arxiv.org/abs/cs/0304005)]
 
-**79.** Oded Regev
+**79. ✓** Oded Regev
 A subexponential time algorithm for the dihedral hidden subgroup problem with polynomial space.
 _[arXiv:quant-ph/0406151](http://arxiv.org/abs/quant-ph/0406151)_, 2004.
 
@@ -540,7 +540,7 @@ _Journal of Knot Theory_, Vol. 16, No. 3, pg. 267-332, 2007.
 Polynomial time quantum algorithm for the computation of the unit group of a number field.
 In _Proceedings of the 37th Symposium on the Theory of Computing_, pg. 475-480, 2005.
 
-**117.** Sergey Bravyi, Aram Harrow, and Avinatan Hassidim
+**117. ✓** Sergey Bravyi, Aram Harrow, and Avinatan Hassidim
 Quantum algorithms for testing properties of distributions.
 _IEEE Transactions on Information Theory_ 57(6):3971-3981, 2011.
 [[arXiv:0907.3920](http://arxiv.org/abs/0907.3920)]
@@ -1208,7 +1208,7 @@ _Proceedings of PQCrypto13_, pp. 83-101, 2013.
 Quantum linear systems algorithm with exponentially improved dependence on precision
 _[arXiv:1511.02306](http://arxiv.org/abs/1511.02306)_, 2015.
 
-**264.** Ashley Montanaro
+**264. ✓** Ashley Montanaro
 Quantum walk speedup of backtracking algorithms
 _[arXiv:1509.02374](http://arxiv.org/abs/1509.02374)_, 2015.
 
