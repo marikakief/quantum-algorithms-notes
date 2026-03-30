@@ -1,95 +1,101 @@
-# quantum-algorithms-notes
+# Quantum Foundations
 
-A personal Obsidian knowledge base for quantum algorithms, complexity, and related theory. Started in early 2026 as a way to get back into the literature after a research hiatus.
+A zettelkasten-style knowledge base for quantum algorithms, built as an [Obsidian](https://obsidian.md) vault of interconnected Markdown files. ~1,050 notes covering ~300 papers and ~740 reusable technique cards, heavily cross-linked with `[[wikilinks]]`.
 
-> **Best experience: open this vault in [Obsidian](https://obsidian.md).** The notes are heavily cross-linked with `[[wikilinks]]` — reading them as plain markdown files works, but you lose the graph view, backlinks panel, and hover previews that make the connections between papers visible. See [Recommended Obsidian Setup](#recommended-obsidian-setup) below.
+Started in early 2026 as a way to get back into the literature after a research hiatus. Grew into something more structured than planned.
 
-## What this is
+> **Open this in Obsidian.** The notes are plain Markdown, but the value is in the link structure — graph view, backlinks, and hover previews make the connections between papers visible. Reading these as flat files works, but you'll miss the point.
 
-Structured notes on quantum algorithms papers, built around a network of paper summaries and reusable "trick cards" — atomic technique notes that can be linked across papers. The goal is a graph of connected ideas rather than a flat list of summaries.
+## What's in here
 
-Paper notes cover the problem being solved, the main result, the algorithm or construction in detail, key theorems with exact complexity bounds, comparison with prior work, limitations, and reusable techniques. Trick cards are standalone explanations of a single idea — a technique, construction, or proof method that can be applied in different contexts. Everything is cross-linked.
+The vault has two primary note types, connected by wikilinks:
 
-The collection skews toward quantum algorithms ([[Hamiltonian simulation]], quantum walk, linear systems, ground state preparation), complexity (QMA, BQP), and quantum machine learning. Coverage is uneven and reflects what I was thinking about at the time, not a systematic survey of the field.
+**Paper notes** (~300) — one per paper. Each covers: the problem being solved, main results with exact complexity statements, the full algorithm or construction, key theorems, comparison with prior work, limitations, and links to extracted techniques. These aren't summaries — they're detailed enough to reconstruct the main argument without reopening the PDF.
 
-## What this isn't
+**Trick cards** (~740) — atomic, reusable technique notes. Each explains a single idea: what it does, how it works, when to reach for it, what it costs, and where it breaks. They link back to their source papers and forward to related techniques. This is the zettelkasten layer — ideas separated from the papers they came from, available to recombine.
 
-- **Complete.** Papers were added based on whatever I was reading or thinking about at the time. Large and important areas are missing. If your paper isn't here, it's not a comment on its quality.
+The trick cards are the heart of the vault. A technique like "block encoding via LCU" or "Chebyshev spectral discretisation" shows up across many papers. Extracting it into a standalone card and linking it everywhere it appears turns a collection of paper summaries into a network of ideas.
 
-- **Error-free.** Notes were written by AI and spot-checked by me. I can't guarantee every complexity bound, proof sketch, or cross-reference is correct. If you find an error, open an issue or email me.
+**Also:**
+- **Concept hubs** (6) — landing pages for major topics: Hamiltonian simulation, product formulas, quantum phase estimation, amplitude amplification, hidden subgroup problem, Lieb-Robinson bounds. Define the concept, link out to relevant papers and tricks.
+- **Comparison tables** (7) — resource estimates and method comparisons for quantum chemistry (NISQ experiments, fault-tolerant estimates, circuit primitives, technique crosswalk) and Hamiltonian simulation (time-dependent methods, general comparison).
+- **Paper Index** — all papers organised by topic (~30 sections).
+- **Quantum Algorithm Zoo tracker** — marks which zoo entries have vault notes.
 
-- **A reference.** Read the actual papers. These notes are for navigation and connection-building, not as a substitute for the source material.
+## Topic coverage
+
+The coverage reflects what I was reading, not a systematic survey. Strongest areas:
+
+- **Hamiltonian simulation** — product formulas (Trotter error theory, randomised/multi-product/corrected formulas), LCU methods, QSP/QSVT, Taylor series, Dyson series, interaction picture. The densest cluster.
+- **Quantum chemistry** — resource estimation pipeline from VQE through fault-tolerant (FeMoCo, materials, catalysis). Includes a FeMoCo resource estimation timeline tracking the drop from ~10¹⁴ to ~10⁹ Toffolis.
+- **Linear systems and differential equations** — HHL through Carleman linearisation, spectral methods, LCHS for non-unitary dynamics. Includes the negative results (Linden-Montanaro-Shao).
+- **Complexity theory** — QMA-completeness, BQP, quantum interactive proofs, query complexity lower bounds.
+- **Quantum walks** — Szegedy, MNRS, element distinctness, formula evaluation, walk search on arbitrary graphs.
+- **Quantum machine learning** — Boltzmann machines, barren plateaus, topological data analysis.
+- **State preparation** — adiabatic, Lindbladian, spectral amplification methods.
+- **Foundational** — Grover, Shor-era results, communication complexity, quantum information theory.
+
+Weaker or absent: quantum error correction (beyond fault-tolerance theory), quantum networking, experimental implementations (beyond chemistry benchmarks), continuous-variable QC.
 
 ## Structure
 
 ```
 Quantum Foundations/
-├── Paper Summaries/       (~187 paper notes)
-├── Quantum Tricks/        (~513 technique cards)
-├── Comparison Tables/     (resource estimate & method comparison tables)
-│   ├── Quantum Chemistry — NISQ Experiments & VQE.md
-│   ├── Quantum Chemistry — Fault-Tolerant Resource Estimates.md
-│   ├── Quantum Chemistry — Circuit Primitives.md
-│   ├── Quantum Chemistry — Technique Crosswalk.md
-│   └── Hamiltonian Simulation — Time-Dependent Methods.md
-├── Concept Hubs/          (topic overview pages)
-├── Paper Index.md         (topical index)
-├── Hamiltonian Simulation — Comparison Tables.md  (hub → links to Comparison Tables/)
-├── FeMoCo Resource Estimation Timeline.md
+├── Paper Summaries/       (~300 paper notes)
+├── Quantum Tricks/        (~740 technique cards)
+├── Comparison Tables/     (7 resource/method comparison tables)
+├── Concept Hubs/          (6 topic overview pages)
+├── Paper Index.md         (topical index, ~30 sections)
 ├── Quantum algorithm zoo.md
 └── README.md
 ```
 
-**Paper Summaries** — one note per paper, covering: problem statement, main result, algorithm or construction in detail, key theorems with exact complexity bounds, comparison with prior work, limitations, reusable ideas (linking to trick cards), and cross-references to related notes.
+All files are standard Markdown with YAML frontmatter. Maths uses `$...$` and `$$...$$` (LaTeX). Links use Obsidian `[[wikilinks]]`. Tags in frontmatter (`#hamiltonian-simulation`, `#product-formulas`, etc.) provide an alternative navigation axis.
 
-**Quantum Tricks** — self-contained technique cards. Each one explains a single reusable idea: what it does, how it works, when to use it, what it costs, and where it breaks. They link back to the papers they came from and forward to related techniques.
+## Navigating
 
-**Comparison Tables** — resource estimate and method comparison tables, split by topic. The hub note [[Hamiltonian Simulation — Comparison Tables]] links to all five sub-notes. Includes NISQ experiments, fault-tolerant resource estimates (FeMoCo, CYP P450, Diamond, LNO, stopping power), circuit primitives (product formulas, Trotter depth, state preparation), a technique crosswalk mapping tricks to papers, and time-dependent simulation methods.
+**Start with a concept hub** if you want an overview of a topic area. They define the concept and link to relevant papers and tricks.
 
-**Concept Hubs** — topic overview pages for heavily-linked concepts (e.g., [[Hamiltonian simulation]], [[Product Formulas]]s, amplitude amplification). These serve as landing pages — they define the concept briefly and link out to the relevant paper notes and trick cards. Good starting points for exploring a topic cluster.
+**Start with the Paper Index** if you're looking for a specific paper or want to browse by topic.
 
-**[[Paper Index]]** — all paper notes organised by topic.
+**Start with a trick card** if you remember a technique but not which paper it came from. The backlinks panel shows every paper that uses it.
 
-**[[FeMoCo Resource Estimation Timeline]]** — standalone synthesis note tracking how FeMoCo quantum resource estimates dropped from ~10¹⁴ to ~10⁹ Toffolis across 8 years of algorithmic improvements.
+**Use graph view** filtered by folder (`path:Paper Summaries` or `path:Quantum Tricks`) to see the link structure. Colour by folder to see the bipartite structure: papers on one side, tricks on the other, with links crossing between them.
 
-## Recommended Obsidian Setup
+## Recommended Obsidian setup
 
-### Core plugins (built-in, just enable them)
+### Core plugins (built-in)
 
-- **Backlinks** — shows which notes link to the current note. Essential for trick cards (you can see every paper that uses a technique). Enable "Backlinks in document" to see them inline.
-- **Graph view** — visualise the link structure. Try filtering to just `path:Paper Summaries` or `path:Quantum Tricks` to see clusters. The [[Hamiltonian simulation]] cluster is particularly dense.
-- **Page preview** — hover over a `[[wikilink]]` to see the target note without leaving the current one. Very useful for quickly checking a trick card while reading a paper note.
+- **Backlinks** — which notes link to the current one. Essential for trick cards. Enable "Backlinks in document."
+- **Graph view** — the link structure visualised. Filter by path or tag to see topic clusters.
+- **Page preview** — hover over a wikilink to see the target note inline.
 - **Outline** — table of contents for long paper notes.
-- **Search** — Obsidian's search handles `[[wikilinks]]` natively and can filter by path, tag, etc.
-- **Tags** — paper notes use tags like `#hamiltonian-simulation`, `#quantum-chemistry`, `#product-formulas`. Enable the tag pane to browse by topic.
+- **Tags** — browse by topic tag.
 
 ### Community plugins (recommended)
 
-- **Dataview** — query your vault like a database. Useful for things like "list all papers by Berry sorted by year" or "show all trick cards tagged #block-encoding". Install from Community Plugins → Browse.
-- **Latex Suite** — if you want to edit the maths. The notes use `$...$` and `$$...$$` extensively. This plugin gives you snippets and auto-completion for LaTeX.
-- **Admonition / Callouts** — some notes use `> [!note]` and `> [!warning]` callout blocks. Obsidian renders these natively since v0.14, but a callout plugin can add more types.
-- **Graph Analysis** — goes beyond the built-in graph view. Can find clusters, shortest paths between papers, and identify hub notes. Good for seeing which trick cards are most connected.
-- **Local Graph** — shows the immediate neighbourhood of the current note. Faster than the full graph for seeing what's connected to what you're reading.
+- **Dataview** — query the vault like a database ("list all papers by Berry sorted by year").
+- **Graph Analysis** — find clusters, shortest paths, hub identification.
 
-### Settings worth changing
+### Settings
 
-- **Files & Links → Default location for new notes** → set to vault root (so new notes don't end up in a random subfolder)
-- **Files & Links → Use [[Wikilinks]]** → make sure this is ON (it should be by default)
-- **Editor → Readable line length** → ON (the paper notes can get wide)
-- **Editor → Show frontmatter** → OFF (cleaner reading experience; the metadata is there if you need it)
+- **Use [[Wikilinks]]** → ON
+- **Readable line length** → ON
+- **Show frontmatter** → OFF for reading
 
-### Graph view tips
+## On "zettelkasten"
 
-The vault has 680+ notes, so the full graph is dense. Try these filters:
-- `path:Paper Summaries` — just the paper network
-- `path:Quantum Tricks` — just the technique network
-- `tag:#hamiltonian-simulation` — one topic cluster
-- Depth slider → 1 or 2 for local exploration
-
-Colour groups by folder (`Paper Summaries` vs `Quantum Tricks`) to see the bipartite structure: papers on one side, tricks on the other, with links crossing between them.
+This borrows from the zettelkasten method — particularly the idea of atomic notes (trick cards) that exist independently of their source and can be linked into new contexts. But it's more structured than a pure zettelkasten: paper notes are organised by folder and indexed by topic, not just linked freely. Think of it as zettelkasten principles applied to a literature review, with the trick cards as the permanent notes and the paper summaries as the literature notes.
 
 ## AI disclosure
 
-Notes were written by Claude (AI). I directed what to include and spot-checked the output, but I didn't write them. Errors are possible, particularly on complexity bounds and proof details. If you find one, open an issue.
+Notes were generated by Claude (Anthropic) and directed/spot-checked by me. I didn't write them by hand. Errors are possible — particularly on exact complexity bounds and proof details. If you find one, open an issue.
 
+Read the actual papers. These notes are for navigation and connection-building, not as a substitute for the source material.
 
+## What this isn't
+
+- **Complete.** Coverage reflects what I was working on. Major areas are missing.
+- **Error-free.** AI-generated, spot-checked. Complexity bounds may be wrong.
+- **A textbook.** Assumes graduate-level quantum computing background.
+- **Stable.** Notes get added and revised regularly. Cross-links may dangle temporarily.
