@@ -55,6 +55,7 @@ This is more sophisticated than the [[Perturbation Lemma for Locality Reduction|
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — attempts to solve instances of this problem
 - [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes]] — generalises this result to a full complexity classification of all 2-qubit Hamiltonians
 - [[Universal Quantum Hamiltonians (Cubitt-Montanaro-Piddock 2018) — Paper Notes]] — builds on this and Cubitt-Montanaro 2016 to construct universal Hamiltonians
+- [[Computational Complexity of Interacting Electrons and Fundamental Limitations of DFT (Schuch-Verstraete 2009) — Paper Notes]] — uses similar perturbation gadgets to show Hubbard model is QMA-complete, implying DFT universal functional is QMA-hard
 
 ### Trick cards
 - [[Perturbation Gadgets for Locality Reduction]]

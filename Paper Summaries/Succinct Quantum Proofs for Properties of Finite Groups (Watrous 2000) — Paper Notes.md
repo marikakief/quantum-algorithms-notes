@@ -1,0 +1,158 @@
+> **Source:** John Watrous, *Succinct quantum proofs for properties of finite groups*, Proceedings of FOCS 2000, pp. 537–546; arXiv:cs/0009002
+> **Links:** [arXiv](https://arxiv.org/abs/cs/0009002) · [IEEE](https://doi.org/10.1109/SFCS.2000.892141)
+> **Tags:** #QMA #quantum-proofs #group-theory #black-box-groups #complexity-theory #oracle-separation
+
+---
+
+## The computational problem
+
+**Group Non-Membership (GNM):** Given group elements $g_1, \ldots, g_k$ and $h$ in a finite group $G$ (accessed via a black-box group oracle $B$), decide whether $h \notin \langle g_1, \ldots, g_k \rangle$.
+
+The group oracle $B$ provides multiplication and inversion as reversible gates: $|c, b, x, y\rangle \mapsto |c, b', x, z\rangle$ where $z = yx$ (if $c=0$) or $z = yx^{-1}$ (if $c=1$), and $b' = b$ for valid group elements (error bit flipped otherwise).
+
+**Classical status:** Babai showed GNM(B) $\in$ AM$^B$ for any group oracle $B$, but there exists $B$ such that GNM(B) $\notin$ BPP$^B$ and GNM(B) $\notin$ NP$^B$. The paper extends this to GNM(B) $\notin$ MA$^B$ for some $B$.
+
+---
+
+## What the paper does
+
+Proves that group non-membership is in QMA for any group oracle — the first natural problem shown to separate QMA from MA in a relativised setting. The quantum proof is simply the uniform superposition $|H\rangle = |H|^{-1/2}\sum_{h \in H}|h\rangle$ over the subgroup $H = \langle g_1, \ldots, g_k \rangle$. A quantum verifier can check this proof in polynomial time with bounded error. Since no classical proof of polynomial length can achieve this (relative to certain group oracles), this gives the first evidence that quantum proofs are strictly more powerful than classical ones for natural problems.
+
+The paper also gives an oracle separation BQP $\not\subseteq$ MA (via the special case $k=1$, solvable by Shor's order-finding algorithm), and extends the non-membership proof technique to several other group properties.
+
+This is an early and clean demonstration of QMA's power. The proof is elegant — the quantum certificate is a natural mathematical object (the uniform superposition over a subgroup), and the verification procedure is short enough to explain in a paragraph.
+
+---
+
+## The verification procedure
+
+The verifier receives a purported quantum proof $|\psi\rangle$ on register $R$ and proceeds in two steps.
+
+### Step 1: Invariance test
+
+Check that $|\psi\rangle$ is (approximately) invariant under right multiplication by elements of $H = \langle g_1, \ldots, g_k \rangle$.
+
+1. Apply transformation $F$ to an ancilla register $S$ (initialised to $|0\rangle$), producing:
+   $$F|0\rangle = \sum_{g \in H} \alpha_g |g\rangle|\text{garbage}(g)\rangle$$
+   where $|\alpha_g|^2 \in (1/|H| - 2^{-2n}, 1/|H| + 2^{-2n})$ for each $g$. This uses Babai's nearly-uniform random generation for black-box groups.
+2. Using the group oracle, multiply the contents of $R$ by the group element in $S$.
+3. Apply $F^\dagger$ to $S$.
+4. Measure $S$. If the result is not $|0\rangle$, reject.
+
+**Key point:** If $R$ contains a state invariant under $H$-multiplication, $S$ returns to $|0\rangle$ with certainty. If not, there is some probability of detecting the deviation. Moreover — and this is the quantum magic — conditioned on $S$ returning $|0\rangle$, the state of $R$ is *projected* to one that is invariant under $H$-multiplication, making it suitable for Step 2.
+
+### Step 2: Non-membership test
+
+1. Prepare a single-qubit register $B$ in state $(|0\rangle + |1\rangle)/\sqrt{2}$.
+2. Perform a controlled-multiply-by-$h$ on $R$, controlled by $B$.
+3. Apply Hadamard to $B$ and measure.
+
+After this, the state is:
+$$\frac{1}{2}|0\rangle(|H\rangle + |Hh\rangle) + \frac{1}{2}|1\rangle(|H\rangle - |Hh\rangle)$$
+
+- If $h \in H$: $|H\rangle = |Hh\rangle$, so $B$ is always measured as $|0\rangle$ → acceptance probability is 0.
+- If $h \notin H$: $|H\rangle$ and $|Hh\rangle$ are orthogonal, so $B$ is measured as $|1\rangle$ with probability $1/2$ → acceptance probability is $1/2$.
+
+Multiple copies of the proof run in parallel boost the gap to the standard QMA thresholds.
+
+---
+
+## Key results
+
+| Result | Statement |
+|---|---|
+| GNM $\in$ QMA | For any group oracle $B$, GNM($B$) $\in$ QMA$^B$ |
+| GNM $\notin$ MA | There exists a group oracle $B$ such that GNM($B$) $\notin$ MA$^B$ |
+| Oracle separation | There exists an oracle $B$ such that BQP$^B \not\subseteq$ MA$^B$ |
+| Soundness bound | For $h \in H$, acceptance probability $\leq 2^{-2n}$ (exponentially small) |
+| Completeness | For $h \notin H$, acceptance probability $= 1/2$ (boosted by parallel repetition) |
+
+---
+
+## The oracle separation: GNM $\notin$ MA
+
+The construction uses $\mathbb{Z}_p \times \mathbb{Z}_p$ as the underlying group (with $p$ prime, $2^{n-2} < p^2 < 2^n$). Two families of group oracles are defined:
+
+- **$F_1$:** Element 1 maps to $(1,0)$, element 2 maps to $(0,1)$ — so element 2 is NOT in the group generated by element 1. GNM is a YES instance.
+- **$F_0$:** Element 1 maps to $(1,0)$, element 2 maps to $(a,0)$ for some $a$ — so element 2 IS in $\langle\text{element 1}\rangle$. GNM is a NO instance.
+
+The core technical inequality (proved via linear algebra over $GF(p^2)$) shows that any deterministic oracle machine $M$ that accepts many $F_1$ oracles must also accept many $F_0$ oracles — too many for MA soundness. Specifically, for each certificate $y$ and random string $z$:
+
+$$|\{g \in F_0 \mid M(B_g, y, z) = 1\}| \geq (p - t(m)^2) \cdot |\{f \in F_1 \mid M(B_f, y, z) = 1\}|$$
+
+where $t(m)$ is the running time. This works because the machine makes at most $t(m)$ queries, which reveal at most $t(m)$ group elements — insufficient to distinguish the two cases over $GF(p^2)$.
+
+A standard diagonalisation over all polynomial-time machines then constructs the desired oracle $B$.
+
+---
+
+## Comparison with prior work
+
+| Result | What it shows |
+|---|---|
+| Babai (1992) | GNM $\in$ AM for any oracle; GNM $\notin$ NP and GNM $\notin$ BPP for some oracles |
+| [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes\|Watrous (2001)]] | Full algorithms for solvable groups; uses $\|H\rangle$ preparation via subnormal chains |
+| [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes\|Kitaev (1999)]] | QMA defined (as BQNP); Local Hamiltonian is QMA-complete |
+| **This paper (2000)** | **First natural problem in QMA $\setminus$ MA (relative to oracle); first non-trivial quantum proof** |
+
+---
+
+## Extensions to other group properties
+
+The non-membership proof combines with classical certificates to handle:
+
+- **Proper Subgroup:** Classical certificate shows $\langle h_1, \ldots, h_l \rangle \leq \langle g_1, \ldots, g_k \rangle$; quantum certificate proves $\exists a \in \langle g_1, \ldots, g_k \rangle$ with $a \notin \langle h_1, \ldots, h_l \rangle$.
+- **Divisor of Order:** For each prime power $p^l \mid N$, identify a tower of $p$-subgroups with quantum proofs of strict containment at each level.
+- **Non-simple Group:** In co-QMA — prove a group IS simple by proving non-membership of a normal subgroup candidate.
+- **Intersection, Centralizer, Maximal Normal Subgroup:** All in co-QMA via similar hybrid classical-quantum certificates.
+
+---
+
+## Limits / caveats
+
+- The separation is relative to a group oracle — it doesn't prove QMA $\neq$ MA unconditionally. But this is the natural setting for black-box group problems.
+- The acceptance probability for YES instances is only $1/2$, requiring parallel repetition on a compound certificate. Whether QMA error can always be made one-sided (as for MA) was left open and remains open.
+- For matrix groups over finite fields, GNM might be in NP $\cap$ co-NP (Babai conjectures this, contingent on the classification of finite simple groups).
+- The $k = 1$ case (2-Element GNM) is in BQP by Shor's order-finding algorithm, giving the oracle separation BQP $\not\subseteq$ MA, but the general case requires a quantum proof.
+
+---
+
+## Reusable ideas
+
+1. **[[Uniform Superposition as Quantum Proof]].** The state $|H\rangle = |H|^{-1/2}\sum_{h \in H}|h\rangle$ is a succinct quantum certificate for properties of $H$ that no polynomial-length classical string can certify. The key insight: a quantum state can encode exponential information about a set (its uniform superposition) while a classical string cannot.
+
+2. **[[Invariance Testing via Reversible Random Generation]].** To verify that a quantum state $|\psi\rangle$ is invariant under a group action, generate a nearly-uniform random group element in superposition, apply it, reverse the generation, and check the ancilla returns to $|0\rangle$. This tests invariance without knowing the group structure. The conditional projection property (on passing, the state becomes truly invariant) is a bonus.
+
+3. **[[Coset Distinguishing via Controlled Multiplication]].** The controlled-multiply-by-$h$ trick followed by a Hadamard distinguishes $|H\rangle$ from $|Hh\rangle$ (orthogonal coset states) with probability $1/2$ per trial. Simple, but a clean primitive for testing set membership quantumly.
+
+---
+
+## References within this paper
+
+- [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes|Kitaev (1999)]] — defined QMA (as BQNP), proved QMA $\subseteq$ P$^{\#P}$
+- Babai (1992) — AM protocol for GNM; proved GNM $\notin$ NP and GNM $\notin$ BPP relative to certain group oracles
+- Babai-Szemerédi (1984) — introduced black-box groups; the Reachability Theorem gives GNM $\in$ co-NP
+- Knill (1996) — apparently first to discuss quantum verification
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein-Vazirani (1993)]] — claimed (without proof) existence of oracle with EQP $\not\subseteq$ MA
+- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — follow-up: full quantum algorithms for group problems, building on the $|H\rangle$ preparation technique
+- [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — order-finding algorithm used for the $k=1$ BQP result
+
+---
+
+## Cross-links
+
+### Paper notes
+- [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes]] — QMA definition and first QMA-complete problem
+- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — follow-up using the same $|H\rangle$ preparation ideas
+- [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes]] — another Watrous paper exploring quantum advantages in communication
+- [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — order-finding for the $k=1$ case
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — BQP definition, earlier oracle separation claims
+- [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes]] — later QMA-completeness refinements
+- [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes]] — reducing locality of QMA-complete problems
+
+### Trick cards
+- [[Uniform Superposition as Quantum Proof]]
+- [[Invariance Testing via Reversible Random Generation]]
+- [[Coset Distinguishing via Controlled Multiplication]]
+- [[Subgroup State Preparation via Subnormal Chain]] — related trick from the follow-up Watrous (2001) paper
+- [[Quantum States as Coset Representatives]] — related trick using $|gH\rangle$ states

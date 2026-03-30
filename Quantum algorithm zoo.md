@@ -24,7 +24,7 @@ Adiabatic quantum state generation and statistical zero knowledge.
 In _Proceedings of the 35th ACM Symposium on Theory of Computing_, 2003.
 [[arXiv:quant-ph/0301023](http://arxiv.org/abs/quant-ph/0301023)]
 
-**6.** A. Ambainis, H. Buhrman, P. Høyer, M. Karpinizki, and P. Kurur
+**6. ✓** A. Ambainis, H. Buhrman, P. Høyer, M. Karpinizki, and P. Kurur
 Quantum matrix verification.
 Unpublished Manuscript, 2002.
 
@@ -91,7 +91,7 @@ In _Proceedings of the 17th ACM-SIAM Symposium on Discrete Algorithms_, pages 8
 Quantum basin hopping with gradient-based local optimisation.
 _[arXiv:quant-ph/0507193](http://arxiv.org/abs/quant-ph/0507193)_, 2005.
 
-**21.** Harry Burhrman, Christoph Dürr, Mark Heiligman, Peter Høyer, Frédéric Magniez, Miklos Santha, and Ronald de Wolf
+**21. ✓** Harry Burhrman, Christoph Dürr, Mark Heiligman, Peter Høyer, Frédéric Magniez, Miklos Santha, and Ronald de Wolf
 Quantum algorithms for element distinctness.
 In _Proceedings of the 16th IEEE Annual Conference on Computational Complexity_, pages 131-137, 2001.
 [[arXiv:quant-ph/0007016](http://arxiv.org/abs/quant-ph/0007016)]
@@ -120,7 +120,7 @@ Exponential algorithmic speedup by quantum walk.
 In _Proceedings of the 35th ACM Symposium on Theory of Computing_, pages 59-68, 2003.
 [[arXiv:quant-ph/0209131](http://arxiv.org/abs/quant-ph/0209131)]
 
-**27.** Andrew M. Childs, Richard Cleve, Stephen P. Jordan, and David Yonge-Mallo
+**27. ✓** Andrew M. Childs, Richard Cleve, Stephen P. Jordan, and David Yonge-Mallo
 Discrete-query quantum algorithm for NAND trees.
 _Theory of Computing_, 5:119-123, 2009.
 [[arXiv:quant-ph/0702160](http://arxiv.org/abs/quant-ph/0702160)]
@@ -136,7 +136,7 @@ In _Theory of Quantum Computation, Communication, and Cryptography_, pages 11-1
 Springer, 2008. (LNCS Vol. 5106)
 [[arXiv:0710.5794](http://arxiv.org/abs/0710.5794)]
 
-**30.** J. Niel de Beaudrap, Richard Cleve, and John Watrous
+**30. ✓** J. Niel de Beaudrap, Richard Cleve, and John Watrous
 Sharp quantum versus classical query complexity separations.
 _Algorithmica_, 34(4):449-461, 2002.
 [[arXiv:quant-ph/0011065v2](http://arxiv.org/abs/quant-ph/0011065)]
@@ -167,7 +167,7 @@ _[arXiv:quant-ph/9607014](http://arxiv.org/abs/quant-ph/9607014)_, 1996.
 Quantum query complexity of graph connectivity.
 _[arXiv:quant-ph/0303169](http://arxiv.org/abs/quant-ph/0303169)_, 2003.
 
-**37.** Mark Ettinger, Peter Høyer, and Emanuel Knill
+**37. ✓** Mark Ettinger, Peter Høyer, and Emanuel Knill
 The quantum query complexity of the hidden subgroup problem is polynomial.
 _Information Processing Letters_, 91(1):43-48, 2004.
 [[arXiv:quant-ph/0401083](http://arxiv.org/abs/quant-ph/0401083)]
@@ -189,7 +189,7 @@ _International Journal of Theoretical Physics_, 21(6/7):467-488, 1982.
 Simulation of topological field theories by quantum computers.
 _Communications in Mathematical Physics_, 227:587-603, 2002.
 
-**42.** Michael Freedman, Michael Larsen, and Zhenghan Wang
+**42. ✓** Michael Freedman, Michael Larsen, and Zhenghan Wang
 A modular functor which is universal for quantum computation.
 _Comm. Math. Phys._ 227(3):605-622, 2002.
 [[arXiv:quant-ph/0001108](http://arxiv.org/abs/quant-ph/0001108)]
@@ -344,7 +344,7 @@ In R. Freivalds, editor, _Proceedings of International Workshop on Randomized A
 _[Quantum Computer Algorithms](http://www.iqc.ca/~mmosca/web/papers/moscathesis.pdf)_.
 PhD thesis, University of Oxford, 1999.
 
-**75.** Ashwin Nayak and Felix Wu
+**75. ✓** Ashwin Nayak and Felix Wu
 The quantum query complexity of approximating the median and related statistics.
 In _Proceedings of 31st ACM Symposium on the Theory of Computing_, 1999.
 [[arXiv:quant-ph/9804066](http://arxiv.org/abs/quant-ph/9804066)]
@@ -562,7 +562,7 @@ Sampling from the thermal quantum Gibbs state and evaluating partition functions
 _Physical Review Letters_ 103:220502, 2009.
 [[arXiv:0905.2199](http://arxiv.org/abs/0905.2199)]
 
-**122.** Pawel Wocjan, Chen-Fu Chiang, Anura Abeyesinghe, and Daniel Nagaj
+**122. ✓** Pawel Wocjan, Chen-Fu Chiang, Anura Abeyesinghe, and Daniel Nagaj
 Quantum speed-up for approximating partition functions.
 _Physical Review A_ 80:022340, 2009.
 [[arXiv:0811.0596](http://arxiv.org/abs/0811.0596)]
@@ -666,7 +666,7 @@ On quantum algorithms for noncommutative hidden subgroups.
 _Advances in Applied Mathematics_, Vol. 25, No. 3, pg. 239-251, 2000.
 [[arXiv:quant-ph/9807029](http://arxiv.org/abs/quant-ph/9807029)]
 
-**144.** Andris Ambainis, Andrew Childs, and Yi-Kai Liu
+**144. ✓** Andris Ambainis, Andrew Childs, and Yi-Kai Liu
 Quantum property testing for bounded-degree graphs.
 In _Proceedings of RANDOM '11_: Lecture Notes in Computer Science 6845, pp. 365-376, 2011.
 [[arXiv:1012.3174](http://arxiv.org/abs/1012.3174)]
@@ -828,7 +828,7 @@ _Physical Review Letters_ 101:130504, 2008.
 Quantum algorithms for the subset-sum problem.
 [from cr.yp.to](http://cr.yp.to/qsubsetsum/qsubsetsum-20130407.pdf).
 
-**179.** Boris Altshuler, Hari Krovi, and Jérémie Roland
+**179. ✓** Boris Altshuler, Hari Krovi, and Jérémie Roland
 Anderson localization casts clouds over adiabatic quantum optimization.
 _Proceedings of the National Academy of Sciences_ 107(28):12446-12450, 2010.
 [[arXiv:0912.0746](http://arxiv.org/abs/0912.0746)]
@@ -880,7 +880,7 @@ _Quantum Information and Computation_, 11(9/10):840-854, 2011.
 Quantum adiabatic evolution algorithms with different paths.
 _[arXiv:quant-ph/0208135](http://arxiv.org/abs/quant-ph/0208135)_, 2002.
 
-**190.** Wim van Dam, Michele Mosca, and Umesh Vazirani
+**190. ✓** Wim van Dam, Michele Mosca, and Umesh Vazirani
 How powerful is adiabatic quantum computation?
 In _Proceedings of FOCS 2001_, pg. 279-287.
 [arXiv:quant-ph/0206003](http://arxiv.org/abs/quant-ph/0206003) [See also [this](http://www.cs.berkeley.edu/~vazirani/pubs/qao.ps).]
@@ -1344,7 +1344,7 @@ _[arXiv:1606.02685](http://arxiv.org/abs/1606.02685)_, 2016.
 Corrected quantum walk for optimal Hamiltonian simulation
 _[arXiv:1606.03443](http://arxiv.org/abs/1606.03443)_, 2016.
 
-**296.** Ashley Montanaro and Sam Pallister
+**296. ✓** Ashley Montanaro and Sam Pallister
 Quantum algorithms and the finite element method
 _[arXiv:1512.05903](http://arxiv.org/abs/1512.05903)_, 2015.
 
@@ -1479,7 +1479,7 @@ Preparing projected entangled pair states on a quantum computer
 _Physical Review Letters_, 108:110502, 2012.
 [[arXiv:1104.1410](http://arxiv.org/abs/1104.1410)]
 
-**327.** Martin Schwarz, Toby S. Cubitt, Kristan Temme, Frank Verstraete, and David Perez-Garcia
+**327. ✓** Martin Schwarz, Toby S. Cubitt, Kristan Temme, Frank Verstraete, and David Perez-Garcia
 Preparing topological PEPS on a quantum computer
 _Physical Review A_, 88:032321, 2013.
 [[arXiv:1211.4050](http://arxiv.org/abs/1211.4050)]
@@ -1838,7 +1838,7 @@ Quantum algorithm for linear differential equations with exponentially improved 
 _Communications in Mathematical Physics_, 356(3):1057-1081, 2017.
 [[arXiv:1701.03684](https://arxiv.org/abs/1701.03684)]
 
-**411.** Sarah K. Leyton and Tobias J. Osborne
+**411. ✓** Sarah K. Leyton and Tobias J. Osborne
 Quantum algorithm to solve nonlinear differential equations
 _[arXiv:0812.4423](https://arxiv.org/abs/0812.4423)_
 
@@ -1856,12 +1856,12 @@ Concrete resource analysis of the quantum linear system algorithm used to comput
 _Quantum Information Processing_ 16:60, 2017.
 [[arXiv:1505.06552](https://arxiv.org/abs/1505.06552)]
 
-**415.** Juan Miguel Arrazola, Timjan Kalajdziavski, Christian Weedbrook, and Seth Lloyd
+**415. ✓** Juan Miguel Arrazola, Timjan Kalajdziavski, Christian Weedbrook, and Seth Lloyd
 Quantum algorithm for nonhomogeneous linear partial differential equations
 _Physical Review A_ 100:032306, 2019.
 [[arXiv:1809.02622](https://arxiv.org/abs/1809.02622)]
 
-**416.** Andrew Childs and Jin-Peng Liu
+**416. ✓** Andrew Childs and Jin-Peng Liu
 Quantum spectral methods for differential equations
 _[arXiv:1901.00961](https://arxiv.org/abs/1901.00961)_
 
@@ -1905,7 +1905,7 @@ Quantum SDP-Solvers: Better upper and lower bounds
 _Quantum_ 4:230, 2020.
 [[arXiv:1705.01843](https://arxiv.org/abs/1705.01843)]
 
-**426.** J-P Liu, H. Kolden, H. Krovi, N. Loureiro, K. Trivisa, and A. M. Childs
+**426. ✓** J-P Liu, H. Kolden, H. Krovi, N. Loureiro, K. Trivisa, and A. M. Childs
 Efficient quantum algorithm for dissipative nonlinear differential equations
 _[arXiv:2011.03185](https://arxiv.org/abs/2011.03185)_
 
@@ -1971,7 +1971,7 @@ Exponential quantum speedup in simulating coupled classical oscillators
 _Physical Review X_ 13:041041, 2024.
 [[arXiv:2303.13012](https://arxiv.org/abs/2303.13012)]
 
-**441.** Hari Krovi
+**441. ✓** Hari Krovi
 Improved quantum algorithms for linear and nonlinear differential equations
 _Quantum_ 7:913, 2023.
 [[arXiv:2202.01054](https://arxiv.org/abs/2202.01054)]
@@ -1994,7 +1994,7 @@ _AIAA Journal_ 56(2):687-699, 2018.
 Quantum algorithm for the computation of the reactant conversion rate in homogeneous turbulence
 _Combustion Theory and Modelling_ 23(6):1090-1104, 2018.
 
-**446.** Noah Linden, Ashley Montanaro, Changpeng Shao
+**446. ✓** Noah Linden, Ashley Montanaro, Changpeng Shao
 Quantum vs. classical algorithms for solving the heat equation
 _Communications in Mathematical Physics_ 395:601, 2022.
 [[arXiv:2004.06516](https://arxiv.org/abs/2004.06516)]
@@ -2050,7 +2050,7 @@ _[arXiv:2311.03408](https://arxiv.org/abs/2311.03408)_.
 Quantum Thermal State Preparation
 _[arXiv:2303.18224](https://arxiv.org/abs/2303.18224)_.
 
-**458.** Dong An, Jin-Peng Liu and Lin Lin
+**458. ✓** Dong An, Jin-Peng Liu and Lin Lin
 Linear combination of Hamiltonian simulation for nonunitary dynamics with optimal state preparation cost
 _Physical Review Letters_ 131(15):150603, 2023.
 [[arXiv:2303.01029](https://arxiv.org/abs/2303.01029)]

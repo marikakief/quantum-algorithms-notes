@@ -42,6 +42,7 @@ Requires controlled-$Q^{2^k}$, which means controlled versions of $A$, $A^{-1}$,
 ## Related notes
 
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]]
+- [[Quantum Speed-Up for Approximating Partition Functions (Wocjan-Chiang-Abeyesinghe-Nagaj 2009) — Paper Notes]] — applies AE to estimate partition function ratios via quantum walk stationary state preparation
 - [[Standard Amplitude Amplification]]
 - [[Gapped Phase Estimation]]
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]]

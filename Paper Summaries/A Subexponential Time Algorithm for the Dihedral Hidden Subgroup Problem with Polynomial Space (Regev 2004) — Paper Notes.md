@@ -96,6 +96,7 @@ The space reduction is significant for near-term considerations: polynomial-spac
 ## Cross-links
 
 ### Paper notes
+- [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes]] — proves poly queries suffice for all groups; the computational complexity that Regev addresses is the hard part
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes]] — the original algorithm that Regev modifies; same problem, same overall approach, different space/time tradeoff
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]] — complementary approach to nonabelian HSP via PGM
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — the abelian HSP foundation

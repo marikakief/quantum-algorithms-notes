@@ -153,7 +153,7 @@ This is **optimal**: any fixed-point search with error $\delta$ over range $[\la
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes]] — generalises the composite gate framework; same authors
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — QSVT unifies this and QSP into a single framework
 - [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes]] — eigenvalue filtering uses related polynomial design
-- [[Recursive Amplitude Amplification with Approximate Reflections (Høyer-Mosca-de Wolf).md|Recursive Amplitude Amplification (Høyer-Mosca-de Wolf)]] — earlier recursive approach
+- [[Recursive Amplitude Amplification (Høyer-Mosca-de Wolf)|Recursive Amplitude Amplification (Høyer-Mosca-de Wolf)]] — earlier recursive approach
 
 ### Trick cards
 - [[Chebyshev Polynomial Design for Fixed-Point Amplitude Amplification]]

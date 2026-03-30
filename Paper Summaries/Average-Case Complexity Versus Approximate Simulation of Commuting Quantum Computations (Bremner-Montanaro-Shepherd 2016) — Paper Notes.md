@@ -4,7 +4,7 @@
 
 ---
 
-## The problem
+## The computational problem
 
 Can IQP circuits be approximately simulated classically, up to *additive error* in total variation distance?
 
@@ -20,7 +20,7 @@ This is the IQP analogue of Aaronson-Arkhipov's approximate hardness result for 
 
 ---
 
-## The argument
+## The algorithm / construction
 
 The proof has three ingredients: (1) Stockmeyer's counting theorem, (2) random self-reducibility of IQP, and (3) anticoncentration bounds.
 
@@ -29,7 +29,7 @@ The proof has three ingredients: (1) Stockmeyer's counting theorem, (2) random s
 Given a classical sampler $A$ that approximates any IQP circuit's output distribution to $\ell_1$ error $\epsilon$:
 
 - For an IQP circuit $C$, define $C_x$ by appending $X$ gates for each bit $x_i = 1$. This randomly permutes the output probabilities: $\Pr[C_0 \text{ outputs } y] = |\langle 0 | C_y | 0 \rangle|^2$.
-- Run the sampler $A$ on $C_0$, then use [[Stockmeyer's Counting Theorem]] to estimate individual output probabilities $q_{0y}$ to multiplicative error $1/\text{poly}(n)$.
+- Run the sampler $A$ on $C_0$, then use Stockmeyer's approximate counting theorem to estimate individual output probabilities $q_{0y}$ to multiplicative error $1/\text{poly}(n)$.
 - By Markov's inequality, the $\ell_1$ guarantee means $|p_{0y} - q_{0y}| \leq \epsilon / (2^n \delta)$ for at least a $1 - \delta$ fraction of outcomes $y$.
 - Combining: if $|\langle 0|C_x|0\rangle|^2 = \Omega(2^{-n})$, we get a multiplicative approximation.
 

@@ -35,8 +35,11 @@ The Carleman order needed for error $\varepsilon$ is $N = O((M-1)\log(1/\varepsi
 - The truncated linear system only approximates the true nonlinear dynamics. Qualitative nonlinear phenomena (bifurcations, chaos, blowup) are not captured.
 
 ## Related notes
+- [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes]] — the original quantum Carleman paper
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]]
 - [[Carleman Vector Rescaling for Measurement Probability Boost]]
 - [[Norm Tension Between PDE Stability and Quantum Rescaling]]
 - [[History-State Linear System Encoding for ODE Trajectories]] — used to solve the resulting linear ODE
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — the original quantum linear system solver
+- [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes]] — the earlier approach (direct nonlinear amplitude transformation) that Carleman linearisation replaced
+- [[Nonlinear Amplitude Transformation via Tensor Product and Postselection]] — the Leyton-Osborne technique; exponential-in-$t$ cost was its downfall

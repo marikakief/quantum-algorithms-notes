@@ -138,6 +138,7 @@ The approximation is **additive** — the error window has size $\sim d^{n-1}$, 
 
 ### Paper notes
 - [[Simulation of Topological Field Theories by Quantum Computers (Freedman-Kitaev-Wang 2002) — Paper Notes]] — proves TQFTs can be simulated by quantum circuits; the implicit foundation that AJL made explicit
+- [[Topological Quantum Computation (Freedman-Kitaev-Larsen-Wang 2003) — Paper Notes]] — survey of anyonic TQC; the universality result that AJL makes algorithmic
 - [[The BQP-Hardness of Approximating the Jones Polynomial (Aharonov-Arad 2011) — Paper Notes]] — the companion universality proof
 - [[Polynomial Quantum Algorithms for the Tutte Plane (Aharonov-Arad-Eban-Landau 2007) — Paper Notes]] — extension to the full Tutte plane
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — another Aharonov BQP-completeness result

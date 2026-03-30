@@ -19,6 +19,30 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — unstructured search in $O(\sqrt{N})$ queries
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation, abelian stabiliser problem
 - [[Quantum Algorithms Revisited (Cleve-Ekert-Macchiavello-Mosca 1998) — Paper Notes|Cleve-Ekert-Macchiavello-Mosca (1998)]] — unified phase estimation framework; standard QPE circuit; QFT construction; Shor = phase estimation
+- [[Quantum Teleportation is a Universal Computational Primitive (Gottesman-Chuang 1999) — Paper Notes|Gottesman-Chuang (1999)]] — gate teleportation: any gate via teleportation through entangled resource states; Clifford hierarchy; origin of magic states for fault tolerance
+- [[A One-Way Quantum Computer (Raussendorf-Briegel 2001) — Paper Notes|Raussendorf-Briegel (2001)]] — measurement-based quantum computation: universal QC via single-qubit measurements on cluster states; no unitary gates after initial entanglement
+- [[Quantum Computation and Quantum-State Engineering Driven by Dissipation (Verstraete-Wolf-Cirac 2009) — Paper Notes|Verstraete-Wolf-Cirac (2009)]] — universal QC via engineered dissipation; local Lindblad operators drive system to steady state encoding computation output; also dissipative preparation of frustration-free ground states (MPS, PEPS, topological codes)
+- [[Efficient Classical Simulation of Slightly Entangled Quantum Computations (Vidal 2003) — Paper Notes|Vidal (2003)]] — classical simulation via MPS when Schmidt rank $\chi = \text{poly}(n)$; entanglement growth is necessary for quantum advantage; launched tensor network simulation
+- [[Efficient Simulation of One-Dimensional Quantum Many-Body Systems (Vidal 2004) — Paper Notes|Vidal (2004)]] — TEBD algorithm: practical MPS simulation of 1D dynamics via Trotter decomposition into local gates; cost $O(n(d\chi)^3)$ per step
+- [[Renormalization Algorithms for Quantum-Many Body Systems in Two and Higher Dimensions (Verstraete-Cirac 2004) — Paper Notes|Verstraete-Cirac (2004)]] — introduces PEPS; extends MPS/TEBD/DMRG to 2D via projected entangled pairs with area-law entanglement
+- [[Power of One Bit of Quantum Information (Knill-Laflamme 1998) — Paper Notes|Knill-Laflamme (1998)]] — DQC1: one clean qubit + $n$ maximally mixed qubits can estimate normalised traces; intermediate complexity class between BPP and BQP
+- [[A Scheme for Efficient Quantum Computation with Linear Optics (Knill-Laflamme-Milburn 2001) — Paper Notes|KLM (2001)]] — universal QC from linear optics + single-photon sources + photon detection; measurement-induced nonlinearity + gate teleportation; no optical nonlinearity required
+- [[On the Role of Entanglement in Quantum-Computational Speed-Up (Jozsa-Linden 2003) — Paper Notes|Jozsa-Linden (2003)]] — bounded multi-partite entanglement implies efficient classical simulation; exponential quantum speedup requires $\omega(\log n)$-partite entanglement; mixed-state case remains open
+- [[Entanglement in a Simple Quantum Phase Transition (Osborne-Nielsen 2002) — Paper Notes|Osborne-Nielsen (2002)]] — entanglement (von Neumann entropy, concurrence) peaks at quantum critical point in transverse Ising model; establishes entanglement-criticality connection
+- [[Quantum Circuits for Strongly Correlated Quantum Systems (Verstraete-Cirac-Latorre 2009) — Paper Notes|Verstraete-Cirac-Latorre (2009)]] — exact diagonalising circuits for free-fermion Hamiltonians (XY model, Ising chain, Kitaev honeycomb); $O(n^2)$ gates, $O(n \log n)$ depth; time evolution cost independent of $t$
+- [[Lieb-Robinson Bounds and the Generation of Correlations and Topological Quantum Order (Bravyi-Hastings-Verstraete 2006) — Paper Notes|Bravyi-Hastings-Verstraete (2006)]] — effective light cone for local Hamiltonians; finite speed for correlation generation; $\Omega(L)$ lower bound for creating topological order; entanglement area law in time
+- [[Quantum Matrix Verification (Ambainis-Buhrman-Høyer-Karpinski-Kurur 2002) — Paper Notes|Ambainis-Buhrman-Høyer-Karpinski-Kurur (2002)]] — $O(n^{7/4})$ quantum matrix product verification via recursive Grover + Freivalds; first quantum speedup for linear algebra verification
+- [[Quantum Computations with Cold Trapped Ions (Cirac-Zoller 1995) — Paper Notes|Cirac-Zoller (1995)]] — original proposal for ion-trap quantum computing; internal electronic states as qubits, shared phonon mode as quantum bus for two-qubit gates; blueprint for all ion-trap experiments
+
+## Communication Complexity
+
+- [[Quantum vs. Classical Communication and Computation (Buhrman-Cleve-Wigderson 1998) — Paper Notes|Buhrman-Cleve-Wigderson (1998)]] — first quantum-classical communication separations: near-quadratic for DISJ (bounded-error), exponential for EQ' (exact vs. zero-error); introduces black-box to communication reduction
+- [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes|Buhrman-Cleve-Watrous-de Wolf (2001)]] — exponential quantum communication advantage for equality in SMP via quantum fingerprints; $O(\log n)$ vs. $\Theta(\sqrt{n})$ qubits
+- [[Exponential Separation of Quantum and Classical Communication Complexity (Raz 1999) — Paper Notes|Raz (1999)]] — first unconditional exponential separation for a partial function in the standard bounded-error model; $O(\log n)$ qubits vs. $\Omega(n^{1/4})$ classical bits; distributional method for classical lower bounds
+
+## Nonlocal Games / Bell Inequalities / MIP*
+
+- [[Consequences and Limits of Nonlocal Strategies (Cleve-Hoyer-Toner-Watrous 2004) — Paper Notes|Cleve-Høyer-Toner-Watrous (2004)]] — formalises nonlocal games as computational framework; CHSH, Odd Cycle, Magic Square, Kochen-Specker examples; shows entangled provers break graph colouring and 3-SAT proof systems; Tsirelson/Grothendieck bounds on XOR game quantum values; introduces MIP vs. MIP* question
 
 ---
 
@@ -35,6 +59,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe (2015)]] — Trotter error scales with $Z_{\max}^6$ not $N$; norm bounds loose by 10¹⁶; classical error subtraction
 - [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher, Wiebe, Svore, Wecker, Troyer (2017)]] — The FeMoCo benchmark paper: first complete fault-tolerant resource estimate for a scientifically important molecule (nitrogenase FeMoCo, 108–114 spin-orbitals); 2nd-order Trotter + QPE + surface code compilation; ~$10^{14}$ T gates, 111 logical qubits; subsequently improved by ~$300{,}000\times$ via qubitization and tensor factorization
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — tight commutator-based Trotter error bounds
+- [[Nearly Tight Trotterization of Interacting Electrons (Su-Huang-Campbell 2021) — Paper Notes|Su-Huang-Campbell (2021)]] — nearly tight Trotter bounds for fermionic Hamiltonians via fermionic seminorm; $(n^{5/3}/\eta^{2/3} + n^{4/3}\eta^{2/3})n^{o(1)}$ gates for plane-wave electronic structure
 - [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized product-formula ordering; permutation averaging improves error bounds
 - [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low-Kliuchnikov-Wiebe (2019)]] — well-conditioned multiproduct formulas via Chebyshev nodes; $O(t\lambda\log^2(t\lambda/\epsilon))$ simulation combining commutativity exploitation with near-optimal time/error scaling
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized sampling of multi-product formulas; trades circuit depth for shots
@@ -49,6 +74,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes|An-Costa-Berry (2025)]] — for near-adiabatic dynamics, product formulas can use $\varepsilon$-independent step sizes; discrete adiabatic theorem as analysis tool; first-order Trotter + boundary cancellation → super-polynomial convergence
 
 ### Lattice / geometrically local simulation
+- [[Lieb-Robinson Bounds and the Generation of Correlations and Topological Quantum Order (Bravyi-Hastings-Verstraete 2006) — Paper Notes|Bravyi-Hastings-Verstraete (2006)]] — foundational: Lieb-Robinson bounds constrain information, correlation, and entanglement propagation speeds; TQO creation requires $\Omega(L)$ time; area law for entropy generation in time
 - [[Quantum Algorithm for Simulating Real Time Evolution of Lattice Hamiltonians (Haah-Hastings-Kothari-Low 2021) — Paper Notes|Haah-Hastings-Kothari-Low (2021)]] — optimal $O(nT\operatorname{polylog}(nT/\epsilon))$ gate count for geometrically local lattice Hamiltonians via Lieb-Robinson decomposition; matching $\tilde{\Omega}(nT)$ gate lower bound; commutator-sensitive Lieb-Robinson velocity
 
 ### Taylor series / LCU methods
@@ -96,6 +122,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ### Quantum field theory
 - [[Quantum Algorithms for Quantum Field Theories (Jordan-Lee-Preskill 2012) — Paper Notes|Jordan-Lee-Preskill (2012)]] — first algorithm for scattering in $\phi^4$ QFT; polynomial in particles, energy, precision; EFT discretisation analysis
+- [[BQP-Completeness of Scattering in Scalar Quantum Field Theory (Jordan-Krovi-Lee-Preskill 2018) — Paper Notes|Jordan-Krovi-Lee-Preskill (2018)]] — vacuum-to-vacuum amplitude in $(1+1)$D $\phi^4$ with classical sources is BQP-complete; qubits as double-well potentials, gates via adiabatic parameter variation; even weakly-coupled QFT is classically intractable
 
 ### Fermionic systems
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams-Lloyd (1997)]] — first fermionic simulation algorithms; antisymmetrization, Hubbard model
@@ -103,6 +130,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Exponentially More Precise Quantum Simulation of Fermions in Second Quantization (Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik 2015) — Paper Notes|Babbush-Berry-Kivlichan-Wei-Love-Aspuru-Guzik (2015)]] — first truncated Taylor series for chemistry; database $\widetilde{O}(N^8 t)$ and on-the-fly $\widetilde{O}(N^5 t)$ algorithms with $\log(1/\varepsilon)$ precision
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Fermionic Eigenstate Prep (2018)]] — improved eigenstate preparation for fermionic systems
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley, Babbush et al. (2016)]] — first scalable hardware quantum chemistry; VQE + Bravyi-Kitaev on 2-qubit H₂; chemical accuracy achieved; PEA comparison
+- [[Nearly Tight Trotterization of Interacting Electrons (Su-Huang-Campbell 2021) — Paper Notes|Su-Huang-Campbell (2021)]] — nearly tight Trotter bounds for electronic Hamiltonians; fermionic seminorm + commutator scaling + sparse path counting; $(n^{5/3}/\eta^{2/3} + n^{4/3}\eta^{2/3})n^{o(1)}$ for plane-wave electronic structure
 
 ---
 
@@ -126,6 +154,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard-Høyer-Mosca-Tapp (2002)]] — amplitude amplification and estimation, general framework
 - [[Fixed-Point Quantum Search with an Optimal Number of Queries (Yoder-Low-Chuang 2014) — Paper Notes|Yoder-Low-Chuang (2014)]] — first fixed-point amplitude amplification with optimal $O(1/\sqrt{\lambda})$ queries; Chebyshev polynomial design seeded the entire QSP programme
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|Brassard-Høyer-Tapp (1997)]] — collision finding via Grover
+- [[Quantum Speed-Up for Approximating Partition Functions (Wocjan-Chiang-Abeyesinghe-Nagaj 2009) — Paper Notes|Wocjan-Chiang-Abeyesinghe-Nagaj (2009)]] — quantum FPRAS for partition functions via quantum walks + phase estimation; $\tilde{O}(\ell^2/(\sqrt{\delta}\varepsilon))$ cost; predates Montanaro's general framework
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes|Montanaro (2015)]] — near-quadratic speedup for Monte Carlo mean estimation; partition function applications via quantum walks
 - [[Quantum Computational Finance — Monte Carlo Pricing of Financial Derivatives (Rebentrost-Gupt-Bromley 2018) — Paper Notes|Rebentrost-Gupt-Bromley (2018)]] — quantum amplitude estimation applied to European and Asian option pricing; quadratic speedup over classical MC
 
@@ -136,16 +165,20 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes|Childs-Cleve-Deotto-Farhi-Gutmann-Spielman (2003)]] — first exponential speedup via quantum walks (not QFT); continuous-time walk on glued trees
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — quantum walk algorithmic survey and framework
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes|Ambainis-Childs-Reichardt-Špalek-Zhang (2007)]] — optimal $O(\sqrt{N})$ quantum evaluation of AND-OR formulas via coined walk
+- [[Quantum Algorithms for Element Distinctness (Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf 2001) — Paper Notes|Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf (2001)]] — first quantum speedup for element distinctness: $O(N^{3/4} \log N)$ via nested amplitude amplification + classical sorting
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis (2007)]] — element distinctness via quantum walk
 - [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes|Magniez-Santha-Szegedy (2007)]] — triangle finding in $\tilde{O}(n^{13/10})$ via recursive quantum walk; combinatorial algorithm in $\tilde{O}(n^{10/7})$
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — quadratic speedup for Markov chain algorithms
+- [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes|Childs-Cleve-Jordan-Yonge-Mallo (2009)]] — converts FGG continuous-time NAND tree algorithm to $O(N^{1/2+\varepsilon})$ discrete queries via product formula simulation; pins quantum query complexity to $\Theta(N^{1/2+o(1)})$
 - [[Gate-Efficient Discrete Simulations of Continuous-Time Quantum Query Algorithms (Berry-Cleve-Gharibian 2012) — Paper Notes|Berry-Cleve-Gharibian (2012)]] — makes continuous-time quantum walk algorithms (e.g., AND-OR tree evaluation) gate-efficient; $N^{1/2+o(1)}$ gates for NAND tree
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|Magniez-Nayak-Roland-Santha (2007)]] — unified quantum walk search; combines Ambainis and Szegedy frameworks with separated $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ cost
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes|Childs-Goldstone (2004)]] — continuous-time spatial search
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — equivalence of continuous and discrete quantum walks
 - [[Quantum Simulations of Classical Annealing Processes (Knill-Ortiz-Somma 2007) — Paper Notes|Knill-Ortiz-Somma (2007)]] — quantum walk simulation of classical annealing
+- [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes|Krovi-Magniez-Ozols-Roland (2016)]] — resolves open question: quantum walk search achieves $O(\sqrt{\mathrm{HT}})$ for finding a marked vertex on any reversible Markov chain; interpolated walk + eigenvalue estimation
 - [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes|Montanaro (2015)]] — near-quadratic speedup for backtracking algorithms via quantum walk on implicitly-defined trees; $O(\sqrt{Tn})$ detection
 - [[Applying Quantum Algorithms to Constraint Satisfaction Problems (Campbell-Khurana-Montanaro 2019) — Paper Notes|Campbell-Khurana-Montanaro (2019)]] — concrete resource estimates for quantum backtracking and Grover applied to random $k$-SAT and graph colouring; speedup factors $10^3$–$10^5$ in optimistic regime
+- [[Quantum Property Testing for Bounded-Degree Graphs (Ambainis-Childs-Liu 2011) — Paper Notes|Ambainis-Childs-Liu (2011)]] — quantum graph property testing via derandomization + element distinctness; $\tilde{O}(N^{1/3})$ for bipartiteness and expansion
 
 ---
 
@@ -153,8 +186,10 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — HHL: exponential speedup for linear systems
 - [[Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes|Wiebe-Braun-Lloyd (2012)]] — extends HHL to least-squares fitting via isometry embedding; fit-quality estimation via swap test; sparse classical readout via quantum-aided compressed sensing
+- [[Quantum Algorithms and the Finite Element Method (Montanaro-Pallister 2016) — Paper Notes|Montanaro-Pallister (2016)]] — honest end-to-end complexity analysis for applying QLSA/HHL to FEM; discretisation-accuracy tradeoff kills generic exponential claims, leaving polynomial speedups in fixed dimension and better prospects in high-dimensional PDEs
 - [[Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes|Tong-An-Wiebe-Lin (2021)]] — preconditioned QLSP via fast inversion; Green's function computation; Gibbs state preparation via contour integral and inverse-transform approaches
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] — first quantum algorithm for general linear ODEs; history-state encoding + HHL, $\tilde{O}(\Delta t^2)$ scaling
+- [[Quantum Spectral Methods for Differential Equations (Childs-Liu 2020) — Paper Notes|Childs-Liu (2020)]] — Chebyshev spectral methods for quantum ODE solving; $\mathrm{polylog}(1/\varepsilon)$ for time-dependent linear ODEs; also handles boundary value problems
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] — linear ODEs via quantum simulation
 - [[Quantum Linear Matrix Equations — Paper Notes|Quantum Linear Matrix Equations]] — matrix equation generalisation
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs-Kothari-Somma (2015)]] — improved linear system solvers
@@ -164,7 +199,13 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching ODE solver via uniform singular value amplification + compression gadget; linear dependence on amplification ratio $Q$ (proven tight); handles non-diagonalisable, non-smooth $A(t)$
 - [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes|An-Childs-Lin (2023)]] — improved LCHS: generalised kernel identity + Hardy-space kernel gives polylog precision scaling with optimal state-prep cost; first quantum ODE solver near-optimal on all parameters simultaneously
 - [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes|An-Childs-Lin (2024)]] — Lap-LCHS: general eigenvalue transforms $h(A)$ via Laplace representation + LCHS; covers fractional powers, $e^{-TA^{-1}}$, inhomogeneous ODEs; optimal state-preparation cost; requires dissipative $A$
+- [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu-Kolden-Krovi et al. (2021)]] — THE Carleman linearisation paper: embeds quadratic nonlinear ODEs into infinite-dimensional linear systems, solves with QLSA; $T^2 q \cdot \mathrm{poly}(\log)/\varepsilon$ complexity for $R < 1$; lower bound $\Omega(2^T)$ for $R \ge \sqrt{2}$
+- [[Improved Quantum Algorithms for Linear and Nonlinear Differential Equations (Krovi 2023) — Paper Notes|Krovi (2023)]] — improves Liu et al. (2021): characterises ODE complexity via $C(A) = \sup_t \|e^{At}\|$; handles non-normal/non-diagonalisable matrices; exponentially better $\varepsilon$-dependence for nonlinear ODEs via truncated Taylor series; log-norm condition
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes|Costa-Schleich-Morales-Berry (2023)]] — nonlinear ODEs/PDEs via Carleman linearisation with rescaling, higher-order time/space discretisation; eliminates exponential-in-$N$ amplitude penalty; $\log(1/\varepsilon)$ error scaling, near-linear $T$
+- [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes|Leyton-Osborne (2008)]] — first quantum algorithm for nonlinear ODEs; nondeterministic Euler method on amplitudes via tensor products + postselection; poly($\log n$) but exponential in $t/h$; historical precursor to Carleman approach
+- [[Quantum Algorithm for Nonhomogeneous Linear PDEs (Arrazola-Kalajdzievski-Weedbrook-Lloyd 2019) — Paper Notes|Arrazola-Kalajdzievski-Weedbrook-Lloyd (2019)]] — continuous-variable version of matrix inversion for inhomogeneous linear PDEs; Fourier decomposition of $A^{-1}$ + CV Hamiltonian simulation; exact gate decompositions for polynomial CV Hamiltonians
+- [[Quantum vs. Classical Algorithms for Solving the Heat Equation (Linden-Montanaro-Shao 2022) — Paper Notes|Linden-Montanaro-Shao (2022)]] — systematic comparison of 10 classical/quantum algorithms for the heat equation; finds at most quadratic quantum speedup; QLSA-based approaches never competitive; best quantum method is amplitude estimation on random walks
+- [[Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes|An-Liu-Lin (2023)]] — LCHS: express non-unitary propagator as weighted integral over Hamiltonian simulations via Cauchy kernel; optimal state-preparation cost $O(q)$; hybrid and coherent implementations; near-optimal for open quantum dynamics with complex absorbing potentials
 
 ---
 
@@ -197,9 +238,12 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 - [[Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes|Wiebe-Braun-Lloyd (2012)]] — quantum least-squares fitting; foundational quantum ML paper; exponential speedup in $N$ under strict conditions (sparse $F$, efficient state prep, sparse solution)
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes|Aaronson (2006)]] — PAC learning quantum states
+- [[Efficient Quantum State Tomography (Cramer-Plenio-Flammia-Somma-Gross-Bartlett-Landon-Cardinal-Poulin-Liu 2010) — Paper Notes|Cramer-Plenio et al. (2010)]] — MPS tomography: $O(N)$ local measurements + polynomial classical processing; two schemes (sequential disentanglement, MPS-SVT); rigorous fidelity certification via parent Hamiltonian witness
+- [[An Efficient High Dimensional Quantum Schur Transform (Krovi 2019) — Paper Notes|Krovi (2019)]] — quantum Schur transform in $O(\mathrm{poly}(n, \log d, \log(1/\varepsilon)))$ via symmetric group permutation modules; exponential improvement over BCH in local dimension; primitive for spectrum estimation and tomography
 
 ## Property Testing / Distribution Testing
 
+- [[Quantum Property Testing for Bounded-Degree Graphs (Ambainis-Childs-Liu 2011) — Paper Notes|Ambainis-Childs-Liu (2011)]] — $\tilde{O}(N^{1/3})$ quantum testing of bipartiteness and expansion for bounded-degree graphs; derandomize classical testers + element distinctness; $\tilde{\Omega}(N^{1/4})$ lower bound for expansion
 - [[Quantum Algorithms for Testing Properties of Distributions (Bravyi-Harrow-Hassidim 2011) — Paper Notes|Bravyi-Harrow-Hassidim (2011)]] — quantum property testing of distributions; $O(N^{1/2})$ for statistical difference, $\Theta(N^{1/3})$ for uniformity and orthogonality; all via amplitude estimation
 
 ## Hamiltonian Learning and Certification
@@ -209,6 +253,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes|Aaronson (2018)]] — shadow tomography: $\tilde{O}(\log^4 M \cdot \log D / \varepsilon^4)$ copies to estimate $M$ observables on an unknown $D$-dimensional state; polylog in both $M$ and $D$
 - [[Robust Online Hamiltonian Learning (Granade-Ferrie-Wiebe-Cory 2012) — Paper Notes|Granade-Ferrie-Wiebe-Cory (2012)]] — 🚧 STUB — robust online Bayesian Hamiltonian learning; predecessor to QHL
 - [[Quantum Bootstrapping via Compressed Quantum Hamiltonian Learning (Wiebe-Granade-Ferrie-Cory 2015) — Paper Notes|Wiebe-Granade-Ferrie-Cory (2015)]] — 🚧 STUB — compressed QHL for bootstrapping quantum simulators
+- [[Experimental Quantum Hamiltonian Learning (Wang, Paesani, Santagati et al 2017) — Paper Notes|Wang, Paesani, Santagati et al. (2017)]] — First experimental demonstration of QHL; silicon-photonics simulator learns NV$^-$ Rabi frequency via QLE and IQLE; model deficiency detection via variance saturation; Bayes factor model comparison
 
 ---
 
@@ -221,6 +266,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[An Alternating-Minimization Method for Preparing Low-Energy States (Anshu 2026) — Paper Notes|Anshu (2026)]] — alternating variational minimisation over a family of altered Hamiltonians; addresses eigenstate stalling; complements VQE with a Hamiltonian-switching escape heuristic
 - [[Hardware-Efficient Variational Quantum Eigensolver for Small Molecules and Quantum Magnets (Kandala, Mezzacapo, Temme, Takita, Brink, Chow, Gambetta 2017) — Paper Notes|Kandala et al. (2017)]] — hardware-efficient VQE on IBM superconducting qubits; H₂, LiH, BeH₂ and Heisenberg magnets; demonstrates entangler blocks adapted to hardware connectivity rather than chemical structure
 - [[Progress Towards Practical Quantum Variational Algorithms (Wecker, Hastings, Troyer 2015) — Paper Notes|Wecker-Hastings-Troyer (2015)]] — resource analysis for VQE with adiabatic and Hamiltonian variational ansätze; measurement scaling studies; practical bottleneck analysis for NISQ chemistry
+- [[Solving Strongly Correlated Electron Models on a Quantum Computer (Wecker, Hastings, Wiebe, Clark, Nayak, Troyer 2015) — Paper Notes|Wecker-Hastings-Wiebe-Clark-Nayak-Troyer (2015)]] — complete fault-tolerant pipeline for 2D Hubbard: adiabatic state prep from mean-field/plaquette states, $O(N)$-gate $O(\log N)$-depth Trotter circuits, QPE with $4\times$ fewer rotations, static/dynamic correlation measurements, non-destructive measurement with quadratic speedup
 - [[Entanglement-Induced Barren Plateaus (Ortiz Marrero-Kieferová-Wiebe 2021) — Paper Notes|Ortiz Marrero-Kieferová-Wiebe (2021)]] — 🚧 STUB — entanglement across subsystem boundary causes barren plateaus in variational algorithms regardless of circuit structure
 
 ---
@@ -228,6 +274,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ## Adiabatic Quantum Computation
 
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes|Farhi-Goldstone-Gutmann-Sipser (2000)]] — adiabatic quantum computation proposal
+- [[How Powerful is Adiabatic Quantum Computation (van Dam-Mosca-Vazirani 2001) — Paper Notes|van Dam-Mosca-Vazirani (2001)]] — AQC matches Grover via local adiabatic schedule; $O(n^3)$ counting queries determine 3SAT; exponential lower bound for perturbed Hamming weight
 - [[Quantum Search by Local Adiabatic Evolution (Roland-Cerf 2002) — Paper Notes|Roland-Cerf (2002)]] — local adiabatic schedule recovers $O(\sqrt{N})$ for search; proves optimality
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes|Aharonov et al. (2004)]] — adiabatic ↔ circuit equivalence
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov-Ta-Shma (2003)]] — adiabatic state generation and SZK
@@ -236,29 +283,70 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Improved Error Bounds for the Adiabatic Approximation (Cheung-Høyer-Wiebe 2011) — Paper Notes|Cheung-Høyer-Wiebe (2011)]] — rigorous upper/lower bounds on adiabatic error; asymptotically tight; resolves Marzlin–Sanders counterexample
 - [[On The Power of Coherently Controlled Quantum Adiabatic Evolutions (Kieferová-Wiebe 2014) — Paper Notes|Kieferová-Wiebe (2014)]] — coherent averaging of two adiabatic paths via LCU gadget; cancels $O(1/T)$ diabatic error leaving $O(1/T^2)$; symmetric-spectrum case cancels all transitions simultaneously; polynomial equivalence to circuit model
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes|An-Costa-Berry (2025)]] — time step for digitally simulated AQC can be independent of $\varepsilon$ and $T$; discrete adiabatic view of numerical integrators; boundary cancellation gives super-polynomial convergence for first-order Trotter; Trotterised Grover matches $O(\sqrt{N})$; shows Trotter can open gaps in gapless Hamiltonians
+- [[Anderson Localization Makes Adiabatic Quantum Optimization Fail (Altshuler-Krovi-Roland 2010) — Paper Notes|Altshuler-Krovi-Roland (2010)]] — Anderson localisation on the hypercube gives super-exponentially small gaps $\exp(-\Omega(N \ln N))$ for random EC3 near satisfiability threshold; typical-case failure of standard AQO
 
 ---
 
 ## Complexity Theory (QMA, BQP)
 
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes|Kitaev (1999)]] — local Hamiltonian is QMA-complete
+- [[Succinct Quantum Proofs for Properties of Finite Groups (Watrous 2000) — Paper Notes|Watrous (2000)]] — group non-membership in QMA; first natural problem separating QMA from MA relative to an oracle; quantum proof is uniform superposition over subgroup
 - [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes|Kempe-Regev (2003)]] — 3-local Hamiltonian QMA-completeness
 - [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes|Kempe-Kitaev-Regev (2006)]] — 2-local Hamiltonian QMA-completeness
 - [[QMA-Completeness of N-Representability (Liu-Christandl-Verstraete 2007) — Paper Notes|Liu-Christandl-Verstraete (2007)]] — N-representability is QMA-complete
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — quantum algorithms for group-theoretic problems
+- [[Quantum Arthur-Merlin Games (Marriott-Watrous 2005) — Paper Notes|Marriott-Watrous (2005)]] — QMA amplification without extra witness qubits via Jordan's lemma; QMA ⊆ PP; QIP(1) = QMA; QMAM = QIP
+- [[PSPACE Has Constant-Round Quantum Interactive Proof Systems (Watrous 2003) — Paper Notes|Watrous (1999/2003)]] — $\mathrm{PSPACE} \subseteq \mathrm{QIP}(2)$; quantum transcript compression collapses multi-round classical proofs to 2 quantum messages; the precursor to QIP = PSPACE
+- [[QIP = PSPACE (Jain-Ji-Upadhyay-Watrous 2011) — Paper Notes|Jain-Ji-Upadhyay-Watrous (2009/2011)]] — completes the classification: $\mathrm{QIP} = \mathrm{PSPACE}$ via matrix multiplicative weights update method applied to SDPs capturing quantum interactive proofs
 - [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes|Buhrman-Cleve-Watrous-de Wolf (2001)]] — exponential quantum communication advantage
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|BBBV (1997)]] — $\Omega(\sqrt{N})$ search lower bound (Grover is optimal); BQP$^{\text{BQP}}$ = BQP via tidy subroutines
+- [[Computational Complexity of Interacting Electrons and Fundamental Limitations of DFT (Schuch-Verstraete 2009) — Paper Notes|Schuch-Verstraete (2009)]] — 2D Hubbard model with local fields is QMA-complete; computing the DFT universal functional to polynomial accuracy is QMA-hard; Hartree-Fock is NP-complete
 - [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] — full complexity dichotomy for all 2-qubit $S$-Hamiltonian problems: P / NP-complete / StoqMA-complete / QMA-complete; Heisenberg and XY models QMA-complete without local terms
-- [[Universal Quantum Hamiltonians (Cubitt-Montanaro-Piddock 2018) — Paper Notes|Cubitt-Montanaro-Piddock (2018)]] — universal quantum Hamiltonians: certain simple 2D spin models (Heisenberg, XY) can simulate any local Hamiltonian by varying coupling strengths; rigorous analogue simulation framework
+- [[Universal Quantum Hamiltonians (Cubitt-Montanaro-Piddock 2018) — Paper Notes|Cubitt-Montanaro-Piddock (2018)]] — rigorous analogue simulation framework; Heisenberg and XY with variable couplings are universal, and the simulation-power classification matches the 2-qubit complexity classification
+- [[BQP and the Polynomial Hierarchy (Aaronson 2010) — Paper Notes|Aaronson (2010)]] — introduced Forrelation and Fourier Checking; first evidence BQP $\not\subseteq$ PH; unconditional FBQP $\not\subseteq$ FBPP$^{\text{PH}}$ oracle separation; conditional BQP $\not\subseteq$ PH via Generalized Linial-Nisan Conjecture (later proved by Tal 2017 / Raz-Tal 2019)
+- [[Sharp Quantum vs Classical Query Complexity Separations (de Beaudrap-Cleve-Watrous 2002) — Paper Notes|de Beaudrap-Cleve-Watrous (2002)]] — 1 exact quantum query vs $\Omega(2^{n/2})$ bounded-error classical queries for hidden linear structure over $\mathrm{GF}(2^n)$; introduces QFT over finite fields with control/target inversion
 - [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes|Aaronson-Ambainis (2015)]] — optimal 1-vs-$\tilde{\Omega}(\sqrt{N})$ quantum-classical query separation; simulation theorem ($t$ quantum queries → $O(N^{1-1/(2t)})$ classical); $k$-fold Forrelation is BQP-complete
+- [[BQP-Completeness of Scattering in Scalar Quantum Field Theory (Jordan-Krovi-Lee-Preskill 2018) — Paper Notes|Jordan-Krovi-Lee-Preskill (2018)]] — vacuum-to-vacuum amplitude in $(1+1)$D $\phi^4$ is BQP-complete; first natural QFT problem shown BQP-hard
 
+
+## Query Complexity / Lower Bound Methods
+
+- [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|Beals-Buhrman-Cleve-Mosca-de Wolf (1998)]] — THE polynomial method: $T$-query acceptance probability is degree-$2T$ polynomial; $D(f) = O(Q_2(f)^6)$ for total functions; tight symmetric function characterisation
+- [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes|Ambainis (2000)]] — THE adversary method: run algorithm on superposition of inputs, track entanglement growth; tight $\Omega(\sqrt{N})$ for search, AND-of-ORs, permutation inversion
+- [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — first superlinear separation between polynomial degree and quantum query complexity ($M$ vs $\Omega(M^{1.321})$); introduces weighted adversary method and adversary composition theorem
+- [[All Quantum Adversary Methods Are Equivalent (Špalek-Szegedy 2006) — Paper Notes|Špalek-Szegedy (2006)]] — unifies all positive-weight adversary variants (spectral, weighted, strong weighted, Kolmogorov) into a single SDP; proves certificate complexity barrier $\sqrt{C_0 C_1}$
+- [[Optimal Lower Bounds for Quantum Automata and Random Access Codes (Nayak 1999) — Paper Notes|Nayak (1999)]] — Nayak's bound: $m \geq (1 - H(p))n$ for quantum random access codes; QFA exponential lower bounds via Holevo's theorem
+- [[The Quantum Query Complexity of Approximating the Median (Nayak-Wu 1999) — Paper Notes|Nayak-Wu (1999)]] — $\Omega(1/\varepsilon)$ quantum query complexity for $\varepsilon$-approximate median via polynomial method; cubic quantum-classical separation
+- [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|BBBV (1997)]] — hybrid method: $\Omega(\sqrt{N})$ search lower bound
+- [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes|Aaronson-Ambainis (2015)]] — optimal quantum-classical query separation via polynomial method
+
+## Quantum Information Theory / Coding Bounds
+
+- [[Optimal Lower Bounds for Quantum Automata and Random Access Codes (Nayak 1999) — Paper Notes|Nayak (1999)]] — operational form of Holevo bound for random access; tight bounds on quantum finite automata
+
+---
 
 ## Jones Polynomial / Topological Quantum Computation
 
+- [[Fault-Tolerant Quantum Computation by Anyons (Kitaev 2003) — Paper Notes|Kitaev (1997/2003)]] — introduces the toric code and topological quantum computation via anyonic braiding; abelian anyons from $\mathbb{Z}_2$ lattice gauge theory; non-abelian anyons from quantum double $D(G)$; fault tolerance from topology
 - [[Simulation of Topological Field Theories by Quantum Computers (Freedman-Kitaev-Wang 2002) — Paper Notes|Freedman-Kitaev-Wang (2002)]] — quantum computers efficiently simulate UTMFs/TQFTs; TQFTs cannot exceed BQP; pants decomposition embedding technique
+- [[Topological Quantum Computation (Freedman-Kitaev-Larsen-Wang 2003) — Paper Notes|Freedman-Kitaev-Larsen-Wang (2003)]] — braiding of anyons in $\mathrm{SU}(2)$ Chern-Simons at level $k \geq 3$, $k \neq 4$ is universal for QC; topological error protection via $e^{-\alpha \ell}$ scaling
 - [[A Polynomial Quantum Algorithm for Approximating the Jones Polynomial (Aharonov-Jones-Landau 2006) — Paper Notes|AJL (2006)]] — explicit quantum algorithm for Jones polynomial at roots of unity via Temperley-Lieb path model; BQP-complete for plat closure
 - [[The BQP-Hardness of Approximating the Jones Polynomial (Aharonov-Arad 2011) — Paper Notes|Aharonov-Arad (2006/2011)]] — extends BQP-hardness to polynomial $k$; elementary universality proof via Bridge and Decoupling Lemmas
 - [[Polynomial Quantum Algorithms for the Tutte Plane (Aharonov-Arad-Eban-Landau 2007) — Paper Notes|Aharonov-Arad-Eban-Landau (2007)]] — extends to entire Tutte polynomial (Potts model, etc.) for planar graphs; handles non-unitary TL representations; new BQP-complete problems
+- [[Power of One Bit of Quantum Information (Knill-Laflamme 1998) — Paper Notes|Knill-Laflamme (1998)]] — DQC1 model; Jones polynomial estimation is DQC1-complete (Shor-Jordan 2007); normalised trace of braid group representations
+
+- [[Preparing Topological PEPS on a Quantum Computer (Schwarz-Cubitt-Verstraete 2012) — Paper Notes|Schwarz-Cubitt-Verstraete (2012)]] — efficient quantum algorithm for preparing G-injective PEPS including topological states (toric code, RVB, quantum doubles); extends Marriott-Watrous rewinding to degenerate ground spaces
+
+## Fault Tolerance Theory
+
+- [[Theory of Quantum Error-Correcting Codes (Knill-Laflamme 1997) — Paper Notes|Knill-Laflamme (1997)]] — the Knill-Laflamme conditions: necessary and sufficient conditions for a quantum code to correct a given set of errors; general theory of QEC; quantum Hamming bound; pure-state vs entangled-state fidelity
+- [[Fault-Tolerant Quantum Computation with Constant Error Rate (Aharonov-Ben-Or 2008) — Paper Notes|Aharonov-Ben-Or (1996/2008)]] — first rigorous proof that fault-tolerant QC is possible with constant error rate; concatenated CSS and polynomial codes; extends to general (non-independent) noise models; threshold $\sim 10^{-6}$
+- [[Quantum Computing with Realistically Noisy Devices (Knill 2005) — Paper Notes|Knill (2005)]] — the "Knill threshold" paper; $C_4/C_6$ architecture with error-detecting codes + postselection achieves threshold $\sim 3\%$; changed near-term feasibility expectations
+- [[A Scheme for Efficient Quantum Computation with Linear Optics (Knill-Laflamme-Milburn 2001) — Paper Notes|KLM (2001)]] — linear optical QC via gate teleportation + detected-error threshold; erasure codes exploit heralded failure for dramatically higher thresholds
+- [[Topological Quantum Computation (Freedman-Kitaev-Larsen-Wang 2003) — Paper Notes|Freedman-Kitaev-Larsen-Wang (2003)]] — alternative: topological error protection via anyonic braiding; error rates scale as $e^{-\alpha \ell}$ rather than requiring combinatorial fault tolerance
+
+---
 
 ## Hidden Subgroup Problem
 
@@ -266,6 +354,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg (2005)]] — first subexponential $2^{O(\sqrt{\log N})}$ algorithm for dihedral HSP via quantum sieve on coset states; requires superpolynomial space
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes|Regev (2004)]] — polynomial-space variant of Kuperberg's dihedral HSP algorithm; trades space for slightly higher time $2^{O(\sqrt{\log N \log \log N})}$
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes|Bacon-Childs-van Dam (2005)]] — PGM-based HSP algorithms for semidirect products $A \rtimes \mathbb{Z}_p$; first efficient entangled multi-copy measurement; metacyclic groups and $\mathbb{Z}_p^r \rtimes \mathbb{Z}_p$ solved
+- [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes|Ettinger-Høyer-Knill (2004)]] — $O(\log^4 |G|)$ queries suffice for HSP over any finite group; separates query complexity (polynomial) from computational complexity (exponential); the information is in the coset states — extracting it is the hard part
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — quantum algorithms for group-theoretic problems
 - [[Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes|Regev (2002)]] — first connection between dihedral HSP and lattice problems; quantum reduction from unique-SVP to DCP to average-case subset sum
 
@@ -286,6 +375,14 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ---
 
+## Quantum Shannon Theory / Information Theory
+
+- [[Randomizing Quantum States (Hayden-Leung-Shor-Winter 2004) — Paper Notes|Hayden-Leung-Shor-Winter (2004)]] — $O(n)$ random bits suffice to approximately randomize an $n$-qubit state; approximate private quantum channels; LOCC data hiding; locked correlations
+- [[Quantum State Merging and Negative Information (Horodecki-Oppenheim-Winter 2005) — Paper Notes|Horodecki-Oppenheim-Winter (2005)]] — state merging protocol: optimal entanglement cost = conditional entropy $S(A|B)$; negative partial quantum information; solves distributed compression, multiple access channel, entanglement of assistance
+- [[The Mother of All Protocols (Abeyesinghe-Devetak-Hayden-Winter 2006) — Paper Notes|Abeyesinghe-Devetak-Hayden-Winter (2006)]] — unifies all quantum Shannon protocols via the decoupling theorem; FQSW protocol simultaneously achieves state transfer and entanglement distillation; collapses mother/father families into one
+
+---
+
 ## State Preparation
 
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] — recursive bisection state preparation for log-concave distributions; $O(\log N)$ rotations
@@ -296,7 +393,14 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ## Classical Simulation of Quantum Circuits
 
+- [[Entanglement in a Simple Quantum Phase Transition (Osborne-Nielsen 2002) — Paper Notes|Osborne-Nielsen (2002)]] — entanglement peaks at quantum critical point in transverse Ising model; entanglement delocalises at criticality; connects to the Vidal/Jozsa-Linden entanglement-simulability picture
+- [[On the Role of Entanglement in Quantum-Computational Speed-Up (Jozsa-Linden 2003) — Paper Notes|Jozsa-Linden (2003)]] — $p$-blocked pure-state quantum computations (bounded multi-partite entanglement) are efficiently classically simulable; exponential speedup requires $\omega(\log n)$-partite entanglement
 - [[Improved Simulation of Stabilizer Circuits (Aaronson-Gottesman 2004) — Paper Notes|Aaronson-Gottesman (2004)]] — CHP algorithm; destabilizer tableau; $O(n^2)$ simulation; stabilizer circuits are ⊕L-complete; canonical form $O(n^2/\log n)$ gates
+- [[Efficient Classical Simulation of Slightly Entangled Quantum Computations (Vidal 2003) — Paper Notes|Vidal (2003)]] — if the Schmidt rank $\chi$ across any bipartition stays poly$(n)$, the computation is classically simulable in poly time; MPS/tensor network simulation origin; entanglement growth is necessary for quantum advantage
+- [[An Area Law for One-Dimensional Quantum Systems (Hastings 2007) — Paper Notes|Hastings (2007)]] — first rigorous area law: gapped 1D local Hamiltonians have ground-state entanglement entropy bounded by $\exp(O(v/\Delta E))$, independent of system size; proves why MPS/DMRG works for gapped 1D systems
+- [[Exponential Decay of Correlations Implies Area Law (Brandão-Horodecki 2013) — Paper Notes|Brandão-Horodecki (2013)]] — exponential decay of correlations alone (no Hamiltonian needed) implies area law in 1D; MPS approximation of poly bond dimension; completes the picture with Hastings
+- [[Efficient Simulation of One-Dimensional Quantum Many-Body Systems (Vidal 2004) — Paper Notes|Vidal (2004)]] — TEBD: Trotter-based MPS simulation of 1D Hamiltonian dynamics; the practical algorithm for classical simulation of 1D quantum many-body systems
+- [[Renormalization Algorithms for Quantum-Many Body Systems in Two and Higher Dimensions (Verstraete-Cirac 2004) — Paper Notes|Verstraete-Cirac (2004)]] — PEPS: 2D generalisation of MPS; variational ansatz with area-law entanglement scaling; algorithms for ground states, dynamics, and finite temperature in 2D and higher dimensions
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes|Bremner-Jozsa-Shepherd (2011)]] — IQP circuits are classically hard to sample (also in Quantum Supremacy section)
 - [[Average-Case Complexity Versus Approximate Simulation of Commuting Quantum Computations (Bremner-Montanaro-Shepherd 2016) — Paper Notes|Bremner-Montanaro-Shepherd (2016)]] — strengthens to additive-error hardness under average-case conjectures
 
@@ -307,6 +411,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 ### Free-fermion solvability
 
 - [[A Unified Graph-Theoretic Framework for Free-Fermion Solvability (Chapman-Elman-Mann 2023) — Paper Notes|Chapman-Elman-Mann (2023)]] — spin Hamiltonian is free-fermion solvable if frustration graph is claw-free with simplicial clique; unifies Jordan-Wigner and Fendley approaches; extends to arbitrary spatial dimension
+- [[Quantum Circuits for Strongly Correlated Quantum Systems (Verstraete-Cirac-Latorre 2009) — Paper Notes|Verstraete-Cirac-Latorre (2009)]] — explicit quantum circuits that exactly diagonalise free-fermion Hamiltonians via Jordan-Wigner + fermionic FFT + Bogoliubov; $O(n^2)$ gates
 
 ### Classical algorithms for Ising / graph polynomials
 
@@ -398,6 +503,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 - [[Simulating Challenging Correlated Molecules and Materials on the Sycamore Processor (Tazhigulov, Sun, Babbush, Chan et al 2022) — Paper Notes|Tazhigulov, Sun, Babbush, Chan et al. (2022)]] — NISQ benchmark: QITE with classical recompilation on Weber/Sycamore for Fe-S cluster and α-RuCl₃ spin models (up to 11 qubits, 310 gates); deployable gate budget ~1/5 of random circuit supremacy for physically meaningful results; 10-site simulation fails without hardware-tuned parameters.
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes|Babbush, Wiebe, McClean et al. (2018)]] — Plane-wave dual basis reduces Hamiltonian terms to $\Theta(N^2)$; FFFT enables $O(N)$-depth Trotter steps on planar lattice; depth $\widetilde{O}(N^{8/3})$ via LCU; measurement cost $O(N^4/\varepsilon^2)$; proposes jellium as NISQ supremacy target.
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan, Gidney, Babbush et al. (2020)]] — Optimized Trotter for Hubbard/jellium/periodic materials; extensive error framing gives $O(1)$ T cost for Hubbard; resource estimates for lithium, diamond, silicon, graphite.
+- [[Solving Strongly Correlated Electron Models on a Quantum Computer (Wecker, Hastings, Wiebe, Clark, Nayak, Troyer 2015) — Paper Notes|Wecker-Hastings-Wiebe-Clark-Nayak-Troyer (2015)]] — End-to-end fault-tolerant pipeline for 2D Hubbard: adiabatic state prep (mean-field + plaquettes), $O(\log N)$-depth Trotter, improved QPE, correlation function measurements, non-destructive measurement; $20 \times 20$ lattice feasible with $\sim 2000$ qubits.
 
 ---
 
@@ -503,6 +609,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 
 ## Quantum Machine Learning
 
+- [[Tomography and Generative Training with Quantum Boltzmann Machines (Kieferová-Wiebe 2017) — Paper Notes|Kieferová-Wiebe (2017)]] — quantum Boltzmann machine training via relative entropy minimisation and Golden-Thompson lower bound; enables tomography + generative modelling; fermionic Hamiltonian model
 - [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes|Huang, Babbush, McClean et al. (2021)]] — Rigorous framework for assessing quantum prediction advantage in supervised learning; introduces geometric difference $g_{CQ}$ as function-independent pre-screening test; shows data can elevate classical ML to match quantum models even on quantum-generated labels; proposes projected quantum kernels with provable speedup (discrete log) and empirical advantage up to 30 qubits on engineered datasets.
 
 ---

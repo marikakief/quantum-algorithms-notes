@@ -190,6 +190,7 @@ The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant ma
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — generalises the walk construction $G = UPU - P$ from discriminants to all frustration-free Hamiltonians
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]] — uses Szegedy walks for quantum sampling in partition function estimation
 - [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes]] — coinless quantum walk on implicitly-defined backtracking trees; related construction but starts from root instead of stationary distribution
+- [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes]] — extends Szegedy detection to finding on any reversible chain via interpolated walk; $O(\sqrt{\mathrm{HT}})$ for single marked element
 
 ### Trick cards
 - [[Quantized Bipartite Walk Construction]]

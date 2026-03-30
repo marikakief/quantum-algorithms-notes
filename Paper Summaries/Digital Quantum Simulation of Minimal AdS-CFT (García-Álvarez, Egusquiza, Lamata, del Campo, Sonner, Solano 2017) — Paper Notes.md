@@ -142,7 +142,7 @@ The improvement from Trotter to qubitization is dramatic: from $N^{10}$ to $N^{3
 
 1. **Majorana-to-Qubit Encoding via Jordan-Wigner** — Map $N$ Majorana fermions to $N/2$ qubits. Each two-qubit Jordan-Wigner pair represents a complex fermion; Majorana operators map to $X$ and $Y$ Pauli operators with a JW string.
 
-2. [[Product Formula (Trotter-Suzuki)]] — First-order Lie-Trotter decomposition applied to all-to-all $N^4$ interaction terms. The per-step cost is $O(N^5)$ gates.
+2. [[Product Formulas]] — First-order Lie-Trotter decomposition applied to all-to-all $N^4$ interaction terms. The per-step cost is $O(N^5)$ gates.
 
 3. **OTOC Circuit Construction** — Time-forward + insert $V$ + time-backward + insert $W$ + measure. The OTOC circuit is the teleportation-based protocol for quantum chaos diagnostics.
 
@@ -162,5 +162,5 @@ The improvement from Trotter to qubitization is dramatic: from $N^{10}$ to $N^{3
 ### Trick cards
 - [[Trotterized Time Evolution for Chemistry]]
 - [[Jordan-Wigner Transformation for Chemistry Hamiltonians]]
-- [[Product Formula (Trotter-Suzuki)]]
+- [[Product Formulas]]
 - [[Chi-Bounded Induction for Majorana Monomials]]

@@ -147,9 +147,9 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] — Taylor-series-based ODE solver with exponentially improved precision
 - Berry-Costa (2022, arXiv:2212.03544) — the truncated Taylor series ODE solver used as the time-evolution subroutine; not yet in the vault
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa-An-Sanders-Su-Babbush-Berry (2022)]] — the optimal quantum linear system solver
-- Liu-Kolden-Krovi-Loureiro-Trivisa-Childs (2021) — first quantum Carleman algorithm (quadratic nonlinearity, forward Euler)
+- [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu-Kolden-Krovi-Loureiro-Trivisa-Childs (2021)]] — first quantum Carleman algorithm (quadratic nonlinearity, forward Euler)
 - Liu-An-Fang-Wang-Low-Jordan (2023) — nonlinear reaction-diffusion via Carleman with max-norm stability; the direct predecessor this paper improves on
-- Krovi (2023, arXiv:2202.01054) — improved quantum algorithms for linear and nonlinear DEs; mentions rescaling but implementation unclear
+- [[Improved Quantum Algorithms for Linear and Nonlinear Differential Equations (Krovi 2023) — Paper Notes|Krovi (2023)]] — improved quantum algorithms for linear and nonlinear DEs; $C(A)$ characterisation, log-norm condition, polylog error
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — alternative time-marching approach for linear ODEs
 - [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes|An-Childs-Lin (2023)]] — near-optimal linear ODE solver via LCHS
 - Carleman (1932) — the original linearisation technique
@@ -159,6 +159,7 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 ## Cross-links
 
 ### Paper notes
+- [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes]] — the original quantum Carleman paper; this paper directly improves on it
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — foundational; history-state encoding for linear ODEs
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — Taylor-series linear ODE solver that this paper's time-evolution subroutine builds on
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — optimal QLSP solver used as subroutine
@@ -168,6 +169,7 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — HHL; the starting point for all QLSP-based approaches
 - [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — exponential speedup for a *linear* classical dynamics problem; shows what's achievable without nonlinearity
 - [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes]] — time-dependent linear ODE solver that this paper extends from linear to nonlinear dynamics via Carleman linearisation
+- [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes]] — first attempt at nonlinear ODEs on a quantum computer; exponential-in-$t$ cost via direct nonlinear amplitude transformation; the approach that Carleman linearisation replaced
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — later Costa/Berry work pushing adiabatic discretisation further; same broader program of reducing simulation overheads in differential-equation-style algorithms
 
 ### Trick cards

@@ -19,7 +19,7 @@ The naive approach checks clauses sequentially, giving depth $O(m)$. Instead:
 
 4. **Uncompute** all ancillas.
 
-Total Toffoli depth: $4\lceil\log k - 1\rceil + 2\lceil\log m - 1\rceil + 3$.
+Total Toffoli depth: $4(\lceil\log k\rceil - 1) + 2(\lceil\log m\rceil - 1) + 3$. For the parameters used in the paper ($k=14$, $m\approx 8.86\times 10^5$), this gives depth 53.
 
 For $k = 14$, $m \approx 886{,}000$: Toffoli depth **53**. Compare with Toffoli count $2.4 \times 10^7$ — the parallelism buys enormous depth reduction.
 

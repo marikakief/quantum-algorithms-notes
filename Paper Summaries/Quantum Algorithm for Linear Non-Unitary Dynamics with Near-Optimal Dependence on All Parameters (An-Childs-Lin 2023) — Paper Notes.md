@@ -158,7 +158,7 @@ The truncated Dyson method achieves $(\log 1/\varepsilon)^2$ matrix-query scalin
 
 ## References within this paper
 
-- [[LCHS Kernel for Non-Unitary Dynamics|An-Liu-Lin (PRL 2023)]] — the original LCHS method this paper improves. arXiv:2303.01029.
+- [[Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes|An-Liu-Lin (PRL 2023)]] — the original LCHS method this paper improves. arXiv:2303.01029.
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching approach. The main competitor for quantum ODE solving.
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] — truncated Dyson series, used as the [[Hamiltonian simulation]] subroutine for the time-dependent case.
 - Berry, Childs, Ostrander, and Wang (2017) — QLSA-based ODE solver. arXiv:1701.05552. Not in vault.

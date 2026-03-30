@@ -25,6 +25,7 @@ Useful only when the resulting unitary family is implementable efficiently and t
 
 ## Related notes
 
+- [[Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes]] — the original LCHS paper introducing this identity
 - [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes]] — generalises to tuneable kernels with near-optimal precision scaling
 - [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes]] — extends LCHS to general eigenvalue transforms via Laplace representation
 - [[Generalised LCHS Identity]] — the generalised version of this identity with freely choosable kernel

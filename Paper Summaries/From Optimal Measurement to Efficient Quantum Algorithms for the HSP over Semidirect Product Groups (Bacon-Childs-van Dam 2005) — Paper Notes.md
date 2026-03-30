@@ -126,6 +126,7 @@ The paper shows:
 ## Cross-links
 
 ### Paper notes
+- [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes]] — proves poly queries suffice; the computational barrier this paper addresses
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — normal HSP algorithms
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — Simon's problem as abelian HSP
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — factoring as abelian HSP

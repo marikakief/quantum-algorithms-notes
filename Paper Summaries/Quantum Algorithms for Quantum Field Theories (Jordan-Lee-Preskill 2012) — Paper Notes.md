@@ -136,6 +136,7 @@ The effective field theory approach to discretisation is transferable: any quant
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — fermionic simulation, earlier step
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]] — quantum chemistry application of simulation
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — Berry's ODE algorithm for classical differential equations (complementary direction)
+- [[BQP-Completeness of Scattering in Scalar Quantum Field Theory (Jordan-Krovi-Lee-Preskill 2018) — Paper Notes]] — proves the matching BQP-hardness lower bound: vacuum-to-vacuum amplitude in $\phi^4$ with classical sources is BQP-complete
 
 ### Trick cards
 - [[Adiabatic Wavepacket Preparation with Phase Cancellation]]

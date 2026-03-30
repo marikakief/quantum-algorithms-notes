@@ -13,7 +13,7 @@
 | Algorithm | Queries | Notes |
 |---|---|---|
 | Classical (sorting) | $\Theta(N)$ | Optimal classically |
-| [[Quantum Fingerprinting (Buhrman-Cleve-Watrous-de Wolf 2001) — Paper Notes|Buhrman et al. (2001)]] | $O(N^{3/4})$ | First quantum improvement |
+| [[Quantum Algorithms for Element Distinctness (Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf 2001) — Paper Notes|Buhrman et al. (2001)]] | $O(N^{3/4})$ | First quantum improvement |
 | [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes\|BHT]] (collision, $r$-to-1) | $O(N^{1/3})$ | Requires $r$-to-1 promise |
 | Aaronson-Shi lower bound | $\Omega(N^{2/3})$ | Polynomial method |
 | **This paper** | $O(N^{2/3})$ | **Tight** |
@@ -162,7 +162,7 @@ This paper launched the **quantum walk search** paradigm:
 - Aaronson & Shi (2004) — $\Omega(N^{2/3})$ lower bound via polynomial method
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes|Childs & Goldstone (2004)]] — continuous walk search on lattices
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — generalised the walk framework to Markov chains
-- Buhrman, Dürr, Heiligman, Høyer, Magniez, Santha & de Wolf (2001) — previous $O(N^{3/4})$ algorithm
+- [[Quantum Algorithms for Element Distinctness (Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf 2001) — Paper Notes|Buhrman, Dürr, Heiligman, Høyer, Magniez, Santha & de Wolf (2001)]] — previous $O(N^{3/4})$ algorithm via nested amplitude amplification
 - Childs & Eisenberg (2005) — improved analysis of Algorithm 2
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — gives continuous-time element distinctness via walk–Hamiltonian correspondence
 
@@ -171,6 +171,9 @@ This paper launched the **quantum walk search** paradigm:
 ## Cross-links
 
 ### Paper notes
+- [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes]] — Ambainis's adversary method; proves $\Omega(N^{2/3})$ for element distinctness as an application
+- [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes]] — polynomial method; the Aaronson-Shi $\Omega(N^{2/3})$ lower bound uses polynomial degree arguments
+- [[Quantum Algorithms for Element Distinctness (Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf 2001) — Paper Notes]] — predecessor: $O(N^{3/4})$ via nested amplitude amplification
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes]] — Ambainis's own survey covering this work
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — abstracts the walk framework to arbitrary Markov chains
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes]] — continuous walk approach

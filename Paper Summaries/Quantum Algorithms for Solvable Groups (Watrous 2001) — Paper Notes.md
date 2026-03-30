@@ -146,6 +146,7 @@ The original version claimed an isomorphism-testing algorithm for solvable group
 ## Cross-links
 
 ### Paper notes
+- [[Succinct Quantum Proofs for Properties of Finite Groups (Watrous 2000) — Paper Notes]] — predecessor: uses $|H\rangle$ as quantum proof for group non-membership; this paper makes $|H\rangle$ preparable
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — the order-finding subroutine used at each step
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — the Abelian HSP special case
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — the Abelian stabilizer framework that Watrous extends

@@ -193,6 +193,7 @@ The major advantage is operational simplicity: one ancilla, no multi-qubit contr
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — spectral gap as a resource for ground state preparation
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — variational alternative
 - [[An Alternating-Minimization Method for Preparing Low-Energy States (Anshu 2026) — Paper Notes]] — heuristic Hamiltonian-switching approach; unlike this paper, changes $H$ rather than adding jump operators; both avoid eigenstate stalling
+- [[Quantum Computation and Quantum-State Engineering Driven by Dissipation (Verstraete-Wolf-Cirac 2009) — Paper Notes]] — the foundational paper on dissipative quantum computation and state engineering; this work extends beyond frustration-free Hamiltonians
 
 ### Trick cards
 - [[Single-Ancilla Lindbladian Dilation for Dissipative Simulation]] — new trick card

@@ -17,7 +17,7 @@ $$|\phi\rangle = \sqrt{n}|r\rangle + \sum_{x \neq r,\, x \rightsquigarrow x_0} (
 
 with $|\langle r | \phi' \rangle| \geq 1/\sqrt{2}$. Detection reduces to distinguishing eigenvalue 1 from non-1 via [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]].
 
-The no-marked-vertex case uses the [[Effective Spectral Gap Lemma]] to bound the weight of $|r\rangle$ on near-1 eigenvalues.
+The no-marked-vertex case uses the effective spectral gap lemma to bound the weight of $|r\rangle$ on near-1 eigenvalues.
 
 This is Belovs' quantum-walk–effective-resistance connection specialised to trees: the detection complexity scales with $\sqrt{R_{\text{eff}} \cdot T}$ where $R_{\text{eff}}$ is the effective resistance from root to marked set. For trees of depth $n$, this gives $O(\sqrt{Tn})$.
 

@@ -180,4 +180,5 @@ with $\gamma \sim O(1/d)$, implying $N_{\mathrm{steps}}(\delta) = O(d \log(1/\de
 - [[PGH Adaptation for Single-Parameter Phase Estimation]] — closed-form PGH for phase estimation, derived from the multi-parameter PGH introduced here
 
 ### Subsequent work
+- [[Experimental Quantum Hamiltonian Learning (Wang, Paesani, Santagati et al 2017) — Paper Notes]] — first experimental demonstration; silicon-photonics simulator learns NV$^-$ Rabi frequency; validates QLE, IQLE, and model selection on real hardware
 - [[Efficient Bayesian Phase Estimation (Wiebe-Granade 2016) — Paper Notes]] — applies the QHL Bayesian/PGH framework to single-parameter phase estimation; replaces full SMC with Gaussian + rejection sampling (RFPE)

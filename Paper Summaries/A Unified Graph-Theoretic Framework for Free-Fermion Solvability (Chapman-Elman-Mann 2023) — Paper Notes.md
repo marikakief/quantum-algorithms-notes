@@ -28,7 +28,7 @@ Neither class contains the other, but both satisfy the simplicial-claw-free (SCF
 
 ### Frustration graph setup
 
-Write $H = \sum_j b_j \sigma_j$ and build the frustration graph $G$: vertices are non-zero Pauli terms, edges join anticommuting pairs. The **scalar commutator** $[[\sigma_j, \sigma_k]] = (-1)^{\langle j, k \rangle}$ where $\langle \cdot, \cdot \rangle$ is the binary symplectic inner product.
+Write $H = \sum_j b_j \sigma_j$ and build the frustration graph $G$: vertices are non-zero Pauli terms, edges join anticommuting pairs. The **scalar commutator** $\lbrack\lbrack\sigma_j, \sigma_k\rbrack\rbrack = (-1)^{\langle j, k \rangle}$ where $\langle \cdot, \cdot \rangle$ is the binary symplectic inner product.
 
 ### Generalized cycle symmetries (Theorem 1)
 

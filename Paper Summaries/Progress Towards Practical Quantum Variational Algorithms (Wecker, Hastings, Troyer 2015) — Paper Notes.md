@@ -134,6 +134,7 @@ This paper is an early honest accounting of VQE scalability — an important cou
 ## Cross-links
 
 ### Paper notes
+- [[Solving Strongly Correlated Electron Models on a Quantum Computer (Wecker, Hastings, Wiebe, Clark, Nayak, Troyer 2015) — Paper Notes]] — Companion paper by overlapping author group; fault-tolerant pipeline for Hubbard (adiabatic state prep + QPE + correlation functions). This paper is the VQE perspective; that one is the QPE perspective on the same physics.
 - [[The Theory of Variational Hybrid Quantum-Classical Algorithms (McClean-Romero-Babbush-Aspuru-Guzik 2015) — Paper Notes]] — Concurrent theory paper; Wecker et al. is the practical companion.
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — VQE original; this paper provides the resource-scaling analysis missing from the experimental demo.
 - [[Application of Fermionic Marginal Constraints to Hybrid Quantum Algorithms (Rubin, Babbush, McClean 2018) — Paper Notes]] — Shows that fermionic marginal constraints reduce the measurement count scaling from $O(N^{5.7})$ to $O(N^5)$.

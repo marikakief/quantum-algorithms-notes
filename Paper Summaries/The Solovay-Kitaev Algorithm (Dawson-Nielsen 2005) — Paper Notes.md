@@ -132,6 +132,8 @@ Concrete application: Shor's algorithm uses $\pi/2^k$ rotations. With Clifford +
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — Kitaev independently proved the theorem
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes]] — modern composite pulse techniques that complement SK compilation
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes]] — Section 5 shows adiabatic evolution can be compiled via [[Order-Condition Cancellation in Product Formulas|Trotter]]; SK handles the per-gate compilation
+- [[Fault-Tolerant Quantum Computation with Constant Error Rate (Aharonov-Ben-Or 2008) — Paper Notes]] — uses Solovay-Kitaev (Theorem 6/12) to extend fault tolerance to arbitrary gate sets
+- [[Topological Quantum Computation (Freedman-Kitaev-Larsen-Wang 2003) — Paper Notes]] — uses SK to compile quantum circuits into braid words
 
 ### Trick cards
 - [[Solovay-Kitaev Recursive Gate Compilation]]

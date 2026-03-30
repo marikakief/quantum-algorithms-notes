@@ -155,6 +155,7 @@ Phase estimation on the walk then discriminates $|\pi\rangle$ (eigenvalue 1) fro
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — continuous-time walk-based speedup; different walk paradigm
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — uses Szegedy walk for formula evaluation
 - [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes]] — applies the MNRS framework to triangle finding; Magniez and Santha are co-authors on both
+- [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes]] — supersedes for finding: achieves $O(\sqrt{\mathrm{HT}})$ on any reversible chain via interpolated walk; removes state-transitivity requirement
 
 ### Trick cards
 - [[Phase Estimation as Eigenvalue Filter for Walk-Based Search]]

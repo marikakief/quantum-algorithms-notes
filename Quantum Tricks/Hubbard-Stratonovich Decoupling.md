@@ -31,3 +31,4 @@ The trick is only valuable if the Gaussian integral can be discretized cleanly a
 - [[Quantum Linear Matrix Equations — Paper Notes]]
 - [[LCHS Kernel for Non-Unitary Dynamics]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
+- [[Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes]] — references Hubbard-Stratonovich as related Gaussian integral technique for quadratic operator exponentials

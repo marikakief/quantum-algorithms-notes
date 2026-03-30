@@ -38,6 +38,7 @@ The same argument applies to any function class $\{E \mapsto \text{Tr}(A_\rho E)
 
 ## Related notes
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes]]
+- [[Optimal Lower Bounds for Quantum Automata and Random Access Codes (Nayak 1999) — Paper Notes]] — the tight $(1 - H(p))n$ bound for QRACs that underpins this trick
 - [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes]]
 - [[Block-Multilinear Polynomial Simulation of Quantum Queries]]
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes]] — BQP model context; the QRAC lower bound is analogous in spirit to the hybrid argument for query lower bounds

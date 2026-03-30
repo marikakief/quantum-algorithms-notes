@@ -52,4 +52,6 @@ If $\mathbf{x}^- \approx \mathbf{x}$ (reference particle near the true parameter
 - [[Sequential Monte Carlo for Quantum Parameter Estimation]]
 - [[Noise-Robust Bayesian Hamiltonian Learning]]
 - [[Superoperator Noise Incorporation for Robust QHL]]
+- [[Experimental Quantum Hamiltonian Learning (Wang, Paesani, Santagati et al 2017) — Paper Notes]] — first experimental demonstration; uses an entanglement-based forward-only variant
+- [[Entanglement-Based Overlap Estimation for Quantum Likelihood]] — the forward-only IQLE variant demonstrated in Wang et al. 2017
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]] — efficient simulation of the forward/backward evolutions needed here

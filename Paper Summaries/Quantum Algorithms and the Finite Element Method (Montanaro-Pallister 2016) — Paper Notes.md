@@ -20,7 +20,11 @@ Works through the full complexity analysis of applying quantum linear systems al
 
 ---
 
-## The finite element method (background)
+## The algorithm / construction
+
+The paper is not proposing a new FEM discretisation. It asks what happens when you take a standard FEM pipeline, plug in a [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|quantum linear systems algorithm]], and then honestly account for the cost of getting a classical answer back out.
+
+### FEM discretisation
 
 The FEM discretises a PDE into a system of linear equations $M\tilde{u} = \tilde{f}$, where:
 - $M$ is the stiffness matrix with entries $M_{ij} = a(\phi_i, \phi_j)$ (inner product from the weak formulation)
@@ -38,7 +42,7 @@ where $|u|_{k+1}$ is the Sobolev $(k+1)$-seminorm. To achieve accuracy $\epsilon
 
 ---
 
-## Classical algorithm: conjugate gradient
+### Classical baseline: conjugate gradient
 
 Runtime: $O(Ns\sqrt{\kappa}\log(1/\epsilon_{CG}))$, which becomes:
 
@@ -51,7 +55,7 @@ The classical runtime scales as $\epsilon^{-O(d)}$ — exponentially in the dime
 
 ---
 
-## Quantum algorithm
+### Quantum algorithm
 
 Uses the [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs-Kothari-Somma (2015)]] QLSA as the linear system solver, which produces $|x\rangle$ in $O(s\kappa\,\text{polylog}(s\kappa/\epsilon))$ queries.
 
@@ -87,7 +91,50 @@ The $\epsilon$-dependence of the quantum algorithm does not depend on $d$. The c
 
 ---
 
-## Comparison: where does quantum win?
+## Key results
+
+$$
+T_{\mathrm{quant}}=\widetilde{O}\!\left(\frac{\sqrt{s}\,\kappa\,\|u\|_1}{\epsilon}\right)
+$$
+for the output-extraction stage once the discretised system is in place, and in fixed spatial dimension with no preconditioning this becomes
+
+$$
+\widetilde{O}\!\left(\frac{\|u\|\,|u|_{k+1}^{4/(k+1)}}{\epsilon^{(k+5)/(k+1)}}+\frac{\|u\|_1\,|u|_{k+1}^{2/(k+1)}}{\epsilon^{(k+3)/(k+1)}}\right),
+$$
+
+while with ideal preconditioning it becomes
+
+$$
+\widetilde{O}\!\left(\frac{\|u\|_1}{\epsilon}\right).
+$$
+
+The matching classical conjugate-gradient runtimes are
+
+$$
+\widetilde{O}\!\left(\left(\frac{|u|_{k+1}}{\epsilon}\right)^{(d+1)/(k+1)}\right)
+\quad\text{and}\quad
+\widetilde{O}\!\left(\left(\frac{|u|_{k+1}}{\epsilon}\right)^{d/(k+1)}\right)
+$$
+
+without and with optimal preconditioning respectively.
+
+Two conceptual results matter as much as the formulas:
+
+1. The apparent exponential-in-$N$ QLSA gain shrinks to a polynomial-in-$\epsilon$ gain once one substitutes the discretisation relation $N = O((|u|_{k+1}/\epsilon)^{d/(k+1)})$.
+2. The $O(1/\epsilon)$ output-measurement cost is not an artefact of their proof. Section IV gives black-box lower bounds showing that this overhead is basically unavoidable for generic classical-output tasks.
+
+## Comparison with prior work
+
+| Work | Main claim | What this paper changes |
+|---|---|---|
+| [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] | QLSA can prepare $|A^{-1}b\rangle$ with polylogarithmic dependence on system dimension | This paper asks the harder application-level question: after discretisation and measurement, what is the true end-to-end complexity for PDE output functionals? |
+| Clader-Jacobs-Sprouse (2013) | Suggested an exponential quantum speedup for FEM via preconditioned QLSA | This paper shows that once $N$ is tied to the target error $\epsilon$, the speedup is generally not exponential in fixed dimension |
+| Standard conjugate gradient + FEM | Runtime polynomial in $N$ and $\sqrt{\kappa}$ | Re-expressed in terms of $\epsilon$, this becomes $\epsilon^{-O(d)}$, which is where high-dimensional quantum advantage can still survive |
+| **This paper (2016)** | End-to-end quantum FEM complexity with discretisation, QLSA, and measurement all included | Separates the regimes: polynomial speedup in fixed $d$, potentially much larger gains when $d$ is large or higher derivatives are large |
+
+The comparison the paper keeps forcing is the one earlier QLSA application papers tended to dodge: not “how fast can I prepare the solution state?” but “how fast can I obtain the classical quantity I actually asked for?” That is the right comparison, and it is why the result is more sober than the early HHL-era application claims.
+
+### Where quantum still wins
 
 | Regime | Quantum advantage |
 |---|---|
@@ -159,6 +206,8 @@ If the input $f$ is given as a black box, solving even trivial FEM instances req
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]] — another quantum PDE approach (finite difference, not FEM); similar measurement bottleneck
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]] — linear ODE quantum algorithm; related limitations on classical output extraction
 - [[Quantum Computational Finance — Monte Carlo Pricing of Financial Derivatives (Rebentrost-Gupt-Bromley 2018) — Paper Notes]] — financial applications where high-dimensional PDEs arise (Black-Scholes); related quantum advantage regime
+- [[Quantum vs. Classical Algorithms for Solving the Heat Equation (Linden-Montanaro-Shao 2022) — Paper Notes]] — extends this paper's analysis to a specific PDE (heat equation), comparing 10 algorithms; confirms QLSA approaches are not competitive; at most quadratic speedup via amplitude estimation on random walks
+- [[Quantum Algorithm for Nonhomogeneous Linear PDEs (Arrazola-Kalajdzievski-Weedbrook-Lloyd 2019) — Paper Notes]] — CV version of QLSA for inhomogeneous linear PDEs; subject to the same extraction-cost limitations identified here
 
 ### Trick cards
 - [[Discretisation-Accuracy Tradeoff in Quantum PDE Solvers]]

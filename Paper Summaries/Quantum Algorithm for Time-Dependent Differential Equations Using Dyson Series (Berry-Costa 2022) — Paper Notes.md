@@ -150,7 +150,7 @@ The acknowledgments thank Maria Kieferova for helpful discussions — not surpri
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] — truncated Dyson series for time-dependent Hamiltonians; provides the block-encoding machinery
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low-Wiebe (2018)]] — interaction-picture Dyson simulation; provides the alternative sort-vs-gap analysis
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa et al. (2022)]] — optimal QLSA used as subroutine
-- Childs and Liu, *Quantum spectral methods for differential equations*, Commun. Math. Phys. 375, 1427–1457 (2020) — spectral method for time-dependent ODEs; this paper's main comparison point
+- [[Quantum Spectral Methods for Differential Equations (Childs-Liu 2020) — Paper Notes|Childs and Liu (2020)]] — spectral method for time-dependent ODEs; this paper's main comparison point
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching alternative with $O(T^2)$ scaling
 - Krovi, *Improved quantum algorithms for linear and nonlinear differential equations*, Quantum 7, 913 (2023) — logarithmic-norm stability condition for time-independent case
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — HHL

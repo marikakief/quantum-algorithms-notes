@@ -114,9 +114,11 @@ The procedure is optimal up to a $\sqrt{k}$ factor. This is a clean result on qu
 ## Cross-links
 
 ### Paper notes
+- [[Quantum vs. Classical Communication and Computation (Buhrman-Cleve-Wigderson 1998) — Paper Notes]] — direct predecessor by Buhrman and Cleve; first quantum communication separations (near-quadratic for DISJ, exponential for partial EQ'); the present paper achieves exponential for a total function
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — another exponential quantum-classical gap (but for query complexity, not communication)
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes]] — the conceptual origin of quantum advantages
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — same author (Watrous); group-theoretic quantum algorithms
+- [[Exponential Separation of Quantum and Classical Communication Complexity (Raz 1999) — Paper Notes]] — exponential separation for a partial function in the standard model; the present paper achieves exponential for a total function but in the SMP model
 
 ### Trick cards
 - [[Quantum Fingerprinting via Error-Correcting Codes]]

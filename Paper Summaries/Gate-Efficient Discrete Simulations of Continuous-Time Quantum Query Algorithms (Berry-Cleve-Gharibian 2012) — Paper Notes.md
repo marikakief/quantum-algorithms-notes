@@ -177,6 +177,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — related black-box simulation
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[Product Formulas]]s used in the Lie-Trotter step
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — the quantum walk that motivates this work
+- [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes]] — simpler predecessor: converts FGG to discrete queries via product formulas, without addressing gate efficiency
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — the discrete algorithm that renders the continuous-time AND-OR result implementable
 
 ### Trick cards

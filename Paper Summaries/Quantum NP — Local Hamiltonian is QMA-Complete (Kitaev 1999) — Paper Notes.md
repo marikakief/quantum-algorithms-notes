@@ -79,6 +79,8 @@ This is used throughout the local Hamiltonian complexity literature and in the [
 - [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes]] — reduces locality to 2
 - [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes]] — VQE attempts to solve instances of this problem heuristically
 
+- [[Quantum Arthur-Merlin Games (Marriott-Watrous 2005) — Paper Notes]] — strong QMA error reduction without increasing witness length; uses Jordan's lemma
+
 ### Trick cards
 - [[History-State Encoding with Unary Clock]]
 - [[Kitaev Geometric Lemma for Ground Space Angles]]

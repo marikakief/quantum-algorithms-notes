@@ -174,6 +174,8 @@ Key papers cited:
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes]] — Clifford gate compilation
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — stabilizer language (Kitaev's stabilizer problem)
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — Shor's circuit contains non-stabilizer gates; the T-gate is what makes it hard
+- [[Quantum Teleportation is a Universal Computational Primitive (Gottesman-Chuang 1999) — Paper Notes]] — Clifford hierarchy classification; stabilizer circuits are exactly the efficiently simulable part
+- [[A One-Way Quantum Computer (Raussendorf-Briegel 2001) — Paper Notes]] — MBQC: computation via measurements on stabiliser (cluster) states; non-Clifford measurements needed for universality
 
 ### Trick cards
 - [[Destabilizer Tableau for Stabilizer Simulation]]

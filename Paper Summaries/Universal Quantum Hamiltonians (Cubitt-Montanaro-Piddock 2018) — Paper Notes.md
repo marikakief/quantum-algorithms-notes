@@ -1,152 +1,203 @@
-> **Source:** Toby Cubitt, Ashley Montanaro, Stephen Piddock, *Universal quantum Hamiltonians*, Proc. Natl. Acad. Sci. **115**(38):9497–9502, 2018
+> **Source:** Toby Cubitt, Ashley Montanaro, Stephen Piddock, *Universal quantum Hamiltonians*, Proceedings of the National Academy of Sciences **115**(38):9497–9502, 2018
 > **Links:** [arXiv](https://arxiv.org/abs/1701.05182) · [PNAS](https://doi.org/10.1073/pnas.1804949115)
-> **Tags:** #universal-Hamiltonian #analogue-simulation #perturbation #QMA #Heisenberg #encoding
+> **Tags:** #universal-Hamiltonian #Hamiltonian-simulation #encoding #QMA #analogue-simulation #perturbation
+
+---
+
+## The computational problem
+
+The paper asks a stronger question than ground-energy hardness: **when does one family of Hamiltonians simulate the entire physics of another?**
+
+That requires making analogue Hamiltonian simulation precise. A simulator Hamiltonian $H'$ should not merely reproduce the lowest eigenvalue of a target Hamiltonian $H$; it should reproduce, in an encoded low-energy sector,
+
+- the relevant part of the spectrum,
+- eigenstates,
+- local observables,
+- partition functions and Gibbs states,
+- time evolution,
+- and the effect of local noise.
+
+The technical problem is therefore twofold:
+
+1. define a mathematically sharp notion of analogue simulation and local encoding; and
+2. classify which simple 2-body interaction families are powerful enough to simulate arbitrary many-body physics.
 
 ---
 
 ## What the paper does
 
-Proves that certain simple 2D spin-lattice models — including the Heisenberg model and the XY model with variable coupling strengths — are **universal**: they can simulate the entire physics of *any* quantum many-body system to arbitrary precision. "Entire physics" means the full energy spectrum, all eigenstates, partition function, time-evolution, local observables, correlation functions, and local noise processes are all reproduced.
+This paper puts analogue Hamiltonian simulation on a rigorous footing and then classifies the simulation power of all 2-qubit interactions. The upshot is striking: the same interaction families that were QMA-complete in [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] are exactly the **universal** ones here.
 
-This is a much stronger statement than QMA-completeness (which only concerns ground-state energy). The paper makes analogue Hamiltonian simulation rigorous by defining precisely what it means for one Hamiltonian to simulate another, proving that a short list of operational requirements forces the simulation map to have a specific algebraic form, and then showing that the QMA-complete interactions from [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] are exactly the universal ones.
-
----
-
-## The simulation framework
-
-### Hamiltonian encodings
-
-An encoding map $E$ takes a Hamiltonian $H$ to a simulator Hamiltonian $E(H)$. The paper requires $E$ to satisfy:
-1. $E(A) = E(A)^\dagger$ (Hermiticity preservation)
-2. $\mathrm{spec}(E(A)) = \mathrm{spec}(A)$ (spectrum preservation)
-3. $E(\sum_i \alpha_i h_i) = \sum_i \alpha_i E(h_i)$ (linearity — encode terms separately)
-
-Using Jordan- and C*-algebra techniques, they prove that any map satisfying just these three conditions must have the form:
-$$
-E(H) = U(H^{\oplus p} \oplus \bar{H}^{\oplus q})U^\dagger
-$$
-for some unitary $U$ and non-negative integers $p, q$ with $p + q \geq 1$, where $\bar{H}$ is complex conjugation. This is the key structural result — the form of the encoding is forced by very basic operational requirements.
-
-### Approximate simulation
-
-In practice, $H'$ simulates $H$ to precision $(\eta, \varepsilon)$ below an energy cutoff $\Delta$ if:
-- There exists a local encoding $E$ (with local isometries $V = \bigotimes_i V_i$) such that the low-energy subspace of $H'$ (below $\Delta$) approximately implements $E$
-- $\|H'_{\leq \Delta} - \tilde{E}(H)\| \leq \varepsilon$
-- The encoding isometry is $\eta$-close to exact: $\|\tilde{V} - V\| \leq \eta$
-
-### What simulation preserves
-
-For a simulation to precision $(\eta, \varepsilon)$ with cutoff $\Delta$:
-
-- **Static properties:** All energy levels preserved to $\varepsilon$. All local observables, order parameters, correlation functions reproduced via local maps.
-- **Thermodynamic properties:** Partition function error: $|Z_{H'}(\beta) - (p+q)Z_H(\beta)| / ((p+q)Z_H(\beta)) \leq d^{m-n} e^{-\beta\Delta}/((p+q)e^{-\beta\|H\|}) + (e^{\varepsilon\beta} - 1)$
-- **Dynamical properties:** Time-evolution error grows linearly in time: $\|e^{-iH't} E_{\mathrm{state}}(\rho) e^{iH't} - E_{\mathrm{state}}(e^{-iHt}\rho\, e^{iHt})\|_1 = O(t\varepsilon + \eta)$
-- **Noise:** Local errors on the simulator approximate local errors on the original system: $E_{\mathrm{state}}(\mathcal{N}(\rho)) = \mathcal{N}'(E_{\mathrm{state}}(\rho)) + O(\sqrt{\eta})$
+In particular, the paper shows that the 2D **Heisenberg** and **XY** models with variable coupling strengths are universal quantum Hamiltonian simulators. They can reproduce not just ground energies, but the whole physics of arbitrary local Hamiltonians on qubits, qudits, fermions, and bosons.
 
 ---
 
-## The universality classification
+## The algorithm / construction
 
-The paper completely classifies all 2-qubit interactions by simulation power. The classification coincides exactly with the [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro complexity classification]]:
+There are really two constructions in the paper: an algebraic one, which characterises what any valid encoding must look like, and a gadget one, which proves universality for specific interactions.
 
-| Simulation class | Complexity class | Can simulate | Examples |
-|---|---|---|---|
-| **Universal** | QMA-complete | Any local Hamiltonian (qubits, qudits, bosons, fermions) | Heisenberg ($XX{+}YY{+}ZZ$), XY ($XX{+}YY$) |
-| **Stoquastic-universal** | StoqMA-complete | Any stoquastic Hamiltonian | Transverse Ising ($ZZ + X$) |
-| **Classical-universal** | NP-complete | Any classical (diagonal) Hamiltonian | Classical Ising ($ZZ$) |
-| **Trivial** | P | Only 1-local Hamiltonians | Single-qubit terms |
+### 1. Characterise valid Hamiltonian encodings
 
-The identity between the complexity classification and the simulation classification is not coincidental — it's a consequence of the gadget constructions in both proofs being simulation-preserving (not just preserving ground-state energy).
+The paper starts from three very basic requirements on an encoding map $E$:
 
----
+1. Hermiticity is preserved;
+2. spectra are preserved;
+3. linear combinations are encoded termwise.
 
-## The construction (proof of universality)
-
-The proof chains together a sequence of simulations, each building on the previous:
-
-### Step 1: Breaking symmetry (Heisenberg → Pauli interactions without $\sigma_y$)
-
-The Heisenberg interaction $XX + YY + ZZ$ has full $\mathrm{SU}(2)$ symmetry. Same idea as in [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]]: encode each logical qubit into a 4-qubit gadget where strong Heisenberg interactions create a 2-dimensional ground space, using the [[Symmetry-Breaking Encoding via Degenerate Ground Spaces|symmetry-breaking encoding]]. Within this encoded subspace, general 2-qubit Pauli interactions (without $\sigma_y$) can be generated.
-
-### Step 2: Pauli interactions without $\sigma_y$ → all odd-weight real terms
-
-Use [[Mediator Qubit Gadget for Interaction Generation|mediator qubit gadgets]]: a mediator with a strong penalty, flanked by 2-body interactions, generates effective cross-interactions at second order. This lifts the locality from 2 to $(2k+1)$ for arbitrary real interactions without $\sigma_y$.
-
-### Step 3: Odd-weight real terms → all real $k$-local
-
-Further mediator gadgets convert $(2k+1)$-local interactions to arbitrary $2k$-local real interactions.
-
-### Step 4: Real Hamiltonians → complex Hamiltonians (the complex-to-real encoding)
-
-All matrix elements of the Heisenberg or XY interactions are real, so any Hamiltonian built from them is real. To simulate a complex Hamiltonian $H$, use the encoding:
+Using Jordan-algebra and $C^*$-algebra structure theorems, the authors show that these innocent-looking requirements already force the encoding to have the form
 $$
-H' = \mathrm{Re}(H) \oplus \mathrm{Im}(H) = H \otimes |{+_y}\rangle\langle{+_y}| + \bar{H} \otimes |{-_y}\rangle\langle{-_y}|
+E(H) = U\bigl(H^{\oplus p} \oplus \overline{H}^{\oplus q}\bigr)U^\dagger,
 $$
-where $|\pm_y\rangle = (|0\rangle \pm i|1\rangle)/\sqrt{2}$. This is manifestly real and encodes $H$ with $p = q = 1$. Made local by adding one ancilla per physical qubit and forcing them into $\mathrm{span}\{|{+_y}\rangle^{\otimes n}, |{-_y}\rangle^{\otimes n}\}$ via strong local interactions.
+for some unitary $U$ and integers $p,q \ge 0$ with $p+q \ge 1$.
 
-### Step 5: Qubits → qudits, fermions, bosons
+That is [[Jordan-Algebra Classification of Hamiltonian Encodings]]. It is the conceptual centre of the paper: analogue simulation is much less arbitrary than one might expect.
 
-- **Qudits:** Encode each $d$-dimensional spin into $\lceil \log_2 d \rceil$ qubits
-- **Fermions:** Standard Jordan-Wigner or Bravyi-Kitaev transformation gives a qubit simulation
-- **Bosons:** Truncate to finite local dimension, then encode as qudits
+### 2. Define approximate low-energy simulation
 
-### Spatial embedding
+Exact simulation is too rigid for gadget constructions, so the paper defines $(\eta,\varepsilon)$-simulation below an energy cutoff $\Delta$. Roughly, a local encoding $E$ is implemented by the low-energy subspace of $H'$ if
 
-Arbitrary interaction graphs can be embedded in a 2D square lattice using crossing gadgets (Oliveira-Terhal technique). This costs an exponential energy overhead for dense graphs but is efficient for spatially sparse Hamiltonians (including all 2D models).
+- the low-energy part of $H'$ is within $\varepsilon$ of the encoded target Hamiltonian, and
+- the actual encoded subspace is within $\eta$ of an ideal local isometry.
+
+This is enough to control not only eigenvalues but also observables, thermal quantities, time evolution, and local noise channels.
+
+### 3. Prove universality of Heisenberg and XY interactions
+
+The hard part is symmetry. The Heisenberg interaction
+$$
+h_{\mathrm{Heis}} = XX + YY + ZZ
+$$
+is invariant under $U\otimes U$ for every $U\in \mathrm{SU}(2)$, and the XY interaction
+$$
+h_{\mathrm{XY}} = XX + YY
+$$
+has a strong continuous symmetry as well. A direct simulation of arbitrary target Hamiltonians is impossible in the physical qubits because these symmetries are too restrictive.
+
+The fix is the same general move as in [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]], but upgraded from hardness to full simulation. Use [[Symmetry-Breaking Encoding via Degenerate Ground Spaces]]: encode logical qubits into a 2-dimensional ground space of a 4-qubit gadget, then couple gadgets perturbatively to generate effective logical interactions.
+
+This gives arbitrary real 2-local Pauli interactions with no $Y$ terms.
+
+### 4. Climb from simple real interactions to arbitrary real $k$-local Hamiltonians
+
+The next steps use [[Mediator Qubit Gadget for Interaction Generation]] and related perturbative gadgets:
+
+- Heisenberg / XY $\to$ 2-local real Pauli interactions without $Y$;
+- from these, simulate odd-body and then general real $k$-local qubit Hamiltonians;
+- embed the construction locally so that the simulation remains a genuine local encoding rather than only a spectrum-preserving reduction.
+
+### 5. Convert complex Hamiltonians to real ones
+
+Because Heisenberg and XY interactions are real in the standard basis, the constructions so far only reach real Hamiltonians. To remove that restriction, the paper introduces [[Complex-to-Real Hamiltonian Encoding]].
+
+The clean algebraic statement is
+$$
+\varphi(H) = U(H \oplus \overline{H})U^\dagger,
+$$
+with a specific fixed unitary $U$. In a basis where the encoded Hamiltonian is manifestly real, this is equivalent to adjoining an ancilla that tracks whether one is in the $H$ or $\overline{H}$ block. The paper then shows how to make this encoding local.
+
+### 6. Extend from qubits to qudits, fermions, and bosons
+
+Once arbitrary qubit Hamiltonians are available, the rest is standard but important:
+
+- qudits are encoded into qubits;
+- fermions are mapped to qubits by Jordan–Wigner or Bravyi–Kitaev type transforms;
+- bosons are truncated to finite local dimension and then encoded as qudits.
+
+### 7. Put the simulator on a 2D square lattice
+
+Using crossing, fork, and subdivision gadgets from the Oliveira–Terhal toolkit and later refinements, arbitrary spatially sparse interaction graphs can be embedded in a square lattice efficiently. Dense graphs can also be embedded, but then the required coupling strengths blow up exponentially.
 
 ---
 
 ## Key results
 
-**Theorem (informal):** The 2D Heisenberg model with variable coupling strengths is universal — it can simulate any local Hamiltonian on qubits, qudits, fermions, or bosons, to any desired precision.
+### The encoding theorem
 
-The same holds for the 2D XY model with variable coupling strengths.
+Any Hermiticity-preserving, spectrum-preserving, real-linear encoding must have the form
+$$
+E(H) = U\bigl(H^{\oplus p} \oplus \overline{H}^{\oplus q}\bigr)U^\dagger.
+$$
 
-For spatially sparse target Hamiltonians: simulation is **efficient** — polynomial overhead in system size, energy, and inverse precision. For dense graphs: polynomial space overhead but exponential energy overhead.
+This is the paper's most structural theorem. It says that once you insist on preserving the operational meaning of a Hamiltonian, there is not much freedom left.
+
+### Universality of Heisenberg and XY models
+
+The 2D Heisenberg model with variable nearest-neighbour couplings is a **universal quantum Hamiltonian simulator**. The same is true for the 2D XY model with variable couplings.
+
+In the authors' simulation framework, this means they can simulate any finite-dimensional local Hamiltonian to arbitrary precision in a local encoded low-energy sector.
+
+### Full classification of 2-qubit interaction families (Theorem 44)
+
+For any fixed set $S$ of 1- and 2-qubit interactions containing at least one genuinely 2-local interaction:
+
+- if some $U\in\mathrm{SU}(2)$ locally diagonalises $S$, then $S$-Hamiltonians are **universal classical Hamiltonian simulators**;
+- otherwise, if after a common local basis change every 2-qubit interaction has the form
+  $$
+  \alpha_i Z\otimes Z + A_i\otimes I + I\otimes B_i,
+  $$
+  then $S$-Hamiltonians are **universal stoquastic Hamiltonian simulators**;
+- otherwise, $S$-Hamiltonians are **universal quantum Hamiltonian simulators**.
+
+This is exactly the simulation-side analogue of the complexity classification in [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]]. The match is not cosmetic. The same gadget structure that proved hardness there is strong enough to preserve the whole low-energy physics here.
+
+### Preservation guarantees
+
+If $H'$ $(\eta,\varepsilon)$-simulates $H$ below a large enough cutoff $\Delta$, then:
+
+- eigenvalues are preserved up to $\varepsilon$;
+- local observables and correlation functions are reproduced through local encodings;
+- thermal partition functions agree up to the stated exponentially suppressed cutoff error and $\varepsilon$-level simulation error;
+- time evolution is reproduced with error $O(t\varepsilon + \eta)$;
+- local noise on the simulator corresponds to local noise on the target up to controlled encoding error.
+
+That is a much stronger statement than QMA-hardness. It is why the paper matters beyond complexity theory.
 
 ---
 
 ## Comparison with prior work
 
-| Concept | Lloyd (1996) | This paper |
+| Topic | Before this paper | What this paper adds |
 |---|---|---|
-| Type of simulation | Digital (gate-based) | Analogue (Hamiltonian engineering) |
-| Error correction needed? | Yes (for scalability) | No (local errors map to local errors) |
-| What's preserved? | Time-evolution | Everything: spectrum, observables, dynamics, thermodynamics, noise |
-| Universality of? | Quantum computation | Quantum many-body physics |
+| Digital simulation | [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] showed universal **gate-model** simulation of local Hamiltonian dynamics | rigorous notion of **analogue** Hamiltonian simulation preserving much more than time evolution |
+| Local Hamiltonian complexity | [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] classified 2-qubit interactions by complexity | shows the same classes are exactly the simulation-power classes |
+| Classical universality | de las Cuevas–Cubitt gave universal classical spin models | extends the picture to quantum Hamiltonians |
+| Stoquastic simulation | Bravyi–Hastings and related work identified transverse Ising as the key stoquastic case | places it in a full simulation hierarchy between classical and fully quantum universality |
 
-Related classical results: De las Cuevas-Cubitt (2016) showed universality for classical spin systems. This paper extends the idea to the quantum setting.
+My assessment: the Heisenberg/XY universality result is the flashy headline, but the more lasting part may be the encoding theorem. It gives a language for analogue simulation that people can actually prove things in.
 
 ---
 
 ## Limits / caveats
 
-- **Energy overhead:** Simulating higher-dimensional or long-range Hamiltonians on a 2D lattice requires exponentially large coupling strengths. The paper does not claim this is avoidable.
-- **Coupling control:** The constructions require precise, site-by-site control of coupling strengths over many orders of magnitude. This is beyond current experimental capability.
-- **Not translationally invariant:** The coupling strengths must vary from site to site. Translational invariance is a fundamental constraint not addressed here (though Hamiltonian complexity results suggest it shouldn't be an obstacle to hardness).
-- **Time-evolution error:** Grows linearly in $t$. Without active error correction, long-time dynamics will drift. The paper argues this is acceptable because the physical system being simulated has the same issue.
-- **The encoding is perturbative:** Relies on energy scale separation. In practice, finite-size effects and thermal fluctuations could disrupt the simulation.
+- The simulator couplings can span **many energy scales**. For dense target interaction graphs, the required coupling strengths become **exponentially large** when embedded in 2D.
+- The universal models are **not translationally invariant**. The interaction type is simple, but the couplings vary site by site.
+- The constructions are perturbative, so the universality proof is not a recipe for near-term laboratory implementation.
+- The efficient square-lattice embedding only holds cleanly for **spatially sparse** targets.
+- The paper is about exact simulation in principle and efficient simulation in favourable regimes, not about practical calibration, noise thresholds, or fault tolerance.
+
+So while the paper makes analogue simulation mathematically clean, it does not say that a present-day Heisenberg device with modest control is automatically a universal simulator in practice.
 
 ---
 
 ## Reusable ideas
 
-1. **[[Jordan-Algebra Classification of Hamiltonian Encodings]]:** Any spectrum-preserving, Hermiticity-preserving, linear encoding of Hamiltonians must have the form $E(H) = U(H^{\oplus p} \oplus \bar{H}^{\oplus q})U^\dagger$. This is an algebraic constraint, not a choice — it follows from Jordan algebra structure theorems. Useful for characterising what any analogue simulation can look like.
-
-2. **[[Complex-to-Real Hamiltonian Encoding]]:** Encode a complex Hamiltonian $H$ into a real one via $H' = H \otimes |{+_y}\rangle\langle{+_y}| + \bar{H} \otimes |{-_y}\rangle\langle{-_y}|$. Made local by adding ancilla qubits forced into a symmetric subspace. Converts any real-Hamiltonian simulation into a complex-Hamiltonian simulation at constant overhead.
+1. **[[Jordan-Algebra Classification of Hamiltonian Encodings]]** — very weak operational axioms already force an encoding to be a direct sum of copies of $H$ and $\overline{H}$ up to unitary conjugation.
+2. **[[Complex-to-Real Hamiltonian Encoding]]** — simulate arbitrary complex Hamiltonians using only real Hamiltonians by encoding $H$ together with its complex conjugate.
+3. **[[Symmetry-Breaking Encoding via Degenerate Ground Spaces]]** — use an encoded ground space to get around overly symmetric physical interactions such as Heisenberg and XY.
+4. **[[Mediator Qubit Gadget for Interaction Generation]]** — promote a hardness gadget into a genuine simulation gadget that preserves low-energy physics, not just the ground energy.
 
 ---
 
 ## References within this paper
 
-- [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] — the complexity classification that this paper builds on; the universal class = the QMA-complete class
-- [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes|Kempe-Kitaev-Regev (2006)]] — perturbative gadget techniques that underpin the constructions
-- [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes|Kempe-Regev (2003)]] — early locality reduction techniques
-- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — digital quantum simulation; the analogue counterpart to this paper's results
-- Oliveira-Terhal (2008) — perturbation theory framework; crossing gadgets for 2D embedding
-- Bravyi-Hastings (2014/2017) — StoqMA-completeness of transverse Ising; stoquastic simulation results used here
-- De las Cuevas-Cubitt (2016) — classical universality for spin systems; precursor to this work
-- Piddock-Montanaro (2017) — resolved antiferromagnetic cases; extended lattice restrictions
+- [[Complexity Classification of Local Hamiltonian Problems (Cubitt-Montanaro 2016) — Paper Notes|Cubitt-Montanaro (2016)]] — classification of 2-qubit interactions by complexity; this paper turns that into a universality classification.
+- [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes|Kempe-Kitaev-Regev (2006)]] — original perturbative gadget machinery behind many later Hamiltonian simulations.
+- [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes|Kempe-Regev (2003)]] — earlier locality-reduction ideas in Hamiltonian complexity.
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — digital Hamiltonian simulation, conceptually distinct from the analogue notion developed here.
+- Oliveira–Terhal (2008) — mediator, crossing, and lattice-embedding gadgets.
+- de las Cuevas–Cubitt (2016) — universal classical spin systems, the classical precursor.
+- Childs–Leung–Mancinska–Ozols (2011) and Piddock–Montanaro (2017) — simulation power of 2-body interactions and lattice-restricted follow-ups.
+- Bravyi–Hastings — stoquastic universality of transverse Ising.
 
 ---
 
@@ -157,13 +208,12 @@ Related classical results: De las Cuevas-Cubitt (2016) showed universality for c
 - [[2-Local Hamiltonian is QMA-Complete (Kempe-Kitaev-Regev 2006) — Paper Notes]]
 - [[3-Local Hamiltonian is QMA-Complete (Kempe-Regev 2003) — Paper Notes]]
 - [[Quantum NP — Local Hamiltonian is QMA-Complete (Kitaev 1999) — Paper Notes]]
-- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — digital simulation counterpart
-- [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — adiabatic universality relates to this paper's analogue universality
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]]
 
 ### Trick cards
-- [[Perturbation Gadgets for Locality Reduction]]
-- [[Symmetry-Breaking Encoding via Degenerate Ground Spaces]]
-- [[Mediator Qubit Gadget for Interaction Generation]]
 - [[Jordan-Algebra Classification of Hamiltonian Encodings]]
 - [[Complex-to-Real Hamiltonian Encoding]]
+- [[Symmetry-Breaking Encoding via Degenerate Ground Spaces]]
+- [[Mediator Qubit Gadget for Interaction Generation]]
 - [[Normal Form for 2-Qubit Interactions via Pauli Correlation Matrix]]
+- [[Perturbation Gadgets for Locality Reduction]]

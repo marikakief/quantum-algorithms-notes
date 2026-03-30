@@ -140,6 +140,8 @@ Non-product bordisms (3-manifolds with boundary) correspond to 2-handle attachme
 ## Cross-links
 
 ### Paper notes
+- [[Fault-Tolerant Quantum Computation by Anyons (Kitaev 2003) — Paper Notes]] — introduces the toric code and anyonic models; the physical realisation that this paper proves can be simulated
+- [[Topological Quantum Computation (Freedman-Kitaev-Larsen-Wang 2003) — Paper Notes]] — companion survey: universality of braiding for $\mathrm{SU}(2)$ CS at level $k \geq 3$, $k \neq 4$
 - [[Simulating Physics with Computers (Feynman 1982) — Paper Notes]] — the vision paper that started quantum simulation
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]] — Hamiltonian simulation for $H \neq 0$
 - [[A Polynomial Quantum Algorithm for Approximating the Jones Polynomial (Aharonov-Jones-Landau 2006) — Paper Notes]] — the quantum algorithm that TQFTs inspired
@@ -150,3 +152,5 @@ Non-product bordisms (3-manifolds with boundary) correspond to 2-handle attachme
 - [[Pants Decomposition Embedding for TQFT Simulation]]
 - [[F-Move and S-Move as Quantum Gates]]
 - [[Algebraic Gate Design via Temperley-Lieb Representations]]
+- [[Topological Code Space as Physical Error Protection]]
+- [[Anyon Fusion Channel Encoding]]

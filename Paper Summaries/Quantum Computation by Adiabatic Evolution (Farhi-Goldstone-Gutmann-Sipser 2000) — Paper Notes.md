@@ -153,6 +153,7 @@ The paper also shows sensitivity to the choice of $H_B$: using $H_B' = \sum_i H_
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — simulates the $e^{iAt}$ that adiabatic evolution requires
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — modern analysis of the [[Order-Condition Cancellation in Product Formulas|Trotter formulas]] used in Section 5
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes]] — QAOA: the Trotterised, parametrised version of adiabatic evolution for combinatorial optimisation
+- [[How Powerful is Adiabatic Quantum Computation (van Dam-Mosca-Vazirani 2001) — Paper Notes]] — analyses AQC power: matches Grover via local scheduling, proves exponential lower bound for local-minimum traps
 
 ### Trick cards
 - [[Order-Condition Cancellation in Product Formulas]]

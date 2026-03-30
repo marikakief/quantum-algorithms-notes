@@ -140,6 +140,7 @@ Query complexity: $O(\sqrt{N})$. Optimal.
 
 ### Paper notes
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — Szegedy's quantization theorem is the backbone of the analysis
+- [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes]] — alternative route to $O(N^{1/2+\varepsilon})$ for balanced NAND trees via FGG + product formulas
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — first exponential walk speedup; same authors, same lineage
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes]] — generalises the continuous-to-discrete walk correspondence used here
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — OR evaluation as the $k=1$ case

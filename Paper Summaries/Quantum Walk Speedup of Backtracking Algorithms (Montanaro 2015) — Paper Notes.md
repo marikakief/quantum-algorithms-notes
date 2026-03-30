@@ -57,7 +57,7 @@ $$|\phi\rangle = \sqrt{n}|r\rangle + \sum_{x \neq r,\, x \rightsquigarrow x_0} (
 
 where $x \rightsquigarrow x_0$ means $x$ is on the path from root to $x_0$. One can verify $R_B R_A |\phi\rangle = |\phi\rangle$ (it's orthogonal to all diffusion states $|\psi_x\rangle$ for unmarked $x$), and $|\langle r | \phi\rangle / \|\phi\|| \geq 1/\sqrt{2}$. So phase estimation on $|r\rangle$ returns eigenvalue 1 with probability $\geq 1/2$.
 
-If there's *no* marked vertex, the [[Effective Spectral Gap Lemma]] (Lee-Mittal-Reichardt-Špalek-Szegedy) bounds the weight of $|r\rangle$ on near-eigenvalue-1 components to $\|P_\chi |r\rangle\| \leq \chi\sqrt{Tn}$. Choosing $\chi = O(1/\sqrt{Tn})$ makes the false positive probability $< 1/4$.
+If there's *no* marked vertex, the effective spectral gap lemma (Lee-Mittal-Reichardt-Špalek-Szegedy) bounds the weight of $|r\rangle$ on near-eigenvalue-1 components to $\|P_\chi |r\rangle\| \leq \chi\sqrt{Tn}$. Choosing $\chi = O(1/\sqrt{Tn})$ makes the false positive probability $< 1/4$.
 
 **Complexity:** $O(\sqrt{Tn} \log(1/\delta))$ uses of $R_A$ and $R_B$.
 

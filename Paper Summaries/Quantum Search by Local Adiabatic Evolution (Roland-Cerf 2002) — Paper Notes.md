@@ -111,6 +111,7 @@ The local adiabatic idea — slow down where the gap is small — is the templat
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes]] — the constant-rate predecessor; this paper fixes it
 - [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes]] — generalises the local adiabatic idea to QLSP with power-law and smooth schedules
 - [[Improved Error Bounds for the Adiabatic Approximation (Cheung-Høyer-Wiebe 2011) — Paper Notes]] — uses the search Hamiltonian as a test case; shows the $O(1/T)$ boundary term vanishes at specific $T$ values (Eq. 71)
+- [[How Powerful is Adiabatic Quantum Computation (van Dam-Mosca-Vazirani 2001) — Paper Notes]] — independently derived $O(\sqrt{N})$ adiabatic search; also proves exponential lower bound for perturbed problems
 
 ### Trick cards
 - [[Local Adiabatic Schedule via Gap-Dependent Evolution Rate]]

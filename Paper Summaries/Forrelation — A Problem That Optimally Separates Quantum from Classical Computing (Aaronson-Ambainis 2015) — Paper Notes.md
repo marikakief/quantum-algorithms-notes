@@ -167,7 +167,7 @@ The simulation works via **block-multilinear polynomial approximation**:
 - [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein-Vazirani (1993)]] — BQP definition, first quantum-vs-randomised separation
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — Simon's problem, exponential quantum speedup
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes|Deutsch-Jozsa (1992)]] — exact query separation vs. deterministic
-- Aaronson (2010), *BQP and the polynomial hierarchy* — introduced Forrelation, proved $\Omega(N^{1/4})$ lower bound; also showed $k$-fold Forrelation $\in$ PH (via approximate Fourier sampling)
+- [[BQP and the Polynomial Hierarchy (Aaronson 2010) — Paper Notes|Aaronson (2010)]], *BQP and the polynomial hierarchy* — introduced Forrelation, proved $\Omega(N^{1/4})$ lower bound; also showed $k$-fold Forrelation $\in$ PH (via approximate Fourier sampling); first evidence BQP $\not\subseteq$ PH
 - Buhrman, Cleve, de Wolf, Zalka (2002) — open question on whether $Q=O(1), R=\Omega(N)$ is achievable
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis (2007)]] — quantum walk approach to query complexity, separations
 - Nisan and Szegedy (1994) — polynomial method for query complexity lower bounds (influential technique for this line of work)
@@ -178,10 +178,14 @@ The simulation works via **block-multilinear polynomial approximation**:
 ## Cross-links
 
 ### Paper notes
+- [[BQP and the Polynomial Hierarchy (Aaronson 2010) — Paper Notes]] — predecessor paper introducing Forrelation and Fourier Checking
+- [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes]] — the polynomial method; classical simulation theorem in Forrelation paper extends ideas from this line
+- [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes]] — Ambainis is a coauthor; adversary method provides complementary lower bound techniques
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes]] — source of the hybrid argument and Grover lower bound
 - [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — BQP definition
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — exponential quantum speedup
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes]] — earlier exact-query separation
+- [[Sharp Quantum vs Classical Query Complexity Separations (de Beaudrap-Cleve-Watrous 2002) — Paper Notes]] — earlier 1-vs-$\Omega(2^{n/2})$ exact quantum separation over finite fields; this paper's gap matches it but for a more natural problem and with the optimal simulation theorem
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — the $O(\sqrt{N})$ upper bound that matches this lower bound for total functions
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — query complexity separations via walk methods
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes]] — related quantum-classical separation story via sampling

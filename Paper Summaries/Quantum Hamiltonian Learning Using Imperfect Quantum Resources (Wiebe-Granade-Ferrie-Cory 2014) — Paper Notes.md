@@ -193,3 +193,6 @@ The paper explicitly positions itself as the "noise" sequel: "A major caveat of 
 - [[IQLE Loschmidt-Echo for Quantum Likelihood Evaluation]]
 - [[Particle Guess Heuristic for Adaptive Quantum Metrology]]
 - [[Sequential Monte Carlo for Quantum Parameter Estimation]]
+
+### Subsequent work
+- [[Experimental Quantum Hamiltonian Learning (Wang, Paesani, Santagati et al 2017) — Paper Notes]] — first experimental demonstration of QHL; validates the model selection and variance saturation predictions from this paper

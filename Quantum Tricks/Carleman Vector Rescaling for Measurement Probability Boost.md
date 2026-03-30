@@ -34,6 +34,7 @@ The rescaling itself is free (just a redefinition of variables). The cost is imp
 - For PDEs, the rescaling is by $\|\mathbf{u}\|_2$ but PDE stability is in $\|\mathbf{u}\|_{\max}$. This [[Norm Tension Between PDE Stability and Quantum Rescaling|norm mismatch]] can make the rescaled system unstable even when the original PDE is stable.
 
 ## Related notes
+- [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes]] — identifies the measurement probability problem this trick fixes
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]]
 - [[Carleman Linearisation for Quantum Nonlinear ODE Solvers]]
 - [[Norm Tension Between PDE Stability and Quantum Rescaling]]

@@ -37,4 +37,6 @@ The convergence rate constant depends on the overlap structure between the two p
 
 ## Related notes
 - [[Quantum Metropolis Sampling (Temme-Osborne-Vollbrecht-Poulin-Verstraete 2011) — Paper Notes]]
+- [[Quantum Arthur-Merlin Games (Marriott-Watrous 2005) — Paper Notes]] — the original paper where the Jordan's lemma technique is developed for QMA amplification
+- [[Jordan's Lemma Subspace Decomposition for Alternating Measurements]] — the general trick card for this technique
 - [[Coherent Metropolis Accept-Reject via Phase Estimation]]

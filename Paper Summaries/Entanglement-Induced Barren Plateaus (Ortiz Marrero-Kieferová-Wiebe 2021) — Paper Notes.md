@@ -33,9 +33,16 @@ This gives a *structural* explanation for barren plateaus that goes beyond the e
 
 ---
 
+## Connection to Jozsa-Linden
+
+[[On the Role of Entanglement in Quantum-Computational Speed-Up (Jozsa-Linden 2003) — Paper Notes|Jozsa-Linden (2003)]] proved that exponential quantum speedup on pure states *requires* large multi-partite entanglement. This paper shows the flip side: *too much* entanglement across a subsystem boundary causes barren plateaus, killing gradient signal exponentially. Together, the two results bracket the useful entanglement regime for variational quantum algorithms — you need enough entanglement for computational power, but not so much that gradients vanish.
+
+---
+
 ## TODO
 
 - [ ] Full derivation of the purity-gradient bound
 - [ ] Comparison with noise-induced barren plateaus (Wang et al. 2021)
 - [ ] Links to subsequent mitigation strategies in the vault
 - [ ] Relation to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Kieferová's other work on Trotter]]
+- [ ] Relation to [[Tomography and Generative Training with Quantum Boltzmann Machines (Kieferová-Wiebe 2017) — Paper Notes|Kieferová-Wiebe (2017)]] — earlier QBM work by the same authors; the relative entropy gradient used there doesn't obviously suffer from barren plateaus (signal from expectation differences, not random unitaries), but the question is open for deep QBMs

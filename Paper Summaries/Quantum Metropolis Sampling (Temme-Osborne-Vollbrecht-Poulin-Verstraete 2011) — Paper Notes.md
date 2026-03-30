@@ -121,9 +121,11 @@ The sign problem bypass is the headline for fermions. Classical quantum Monte Ca
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — eigenvalue estimation; related approach to ground state preparation
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]] — quantum chemistry application; quantum Metropolis provides the missing thermal/ground state prep
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]] — Jordan-Wigner mapping used for fermionic Hamiltonians
+- [[Quantum Arthur-Merlin Games (Marriott-Watrous 2005) — Paper Notes]] — origin of the Jordan's lemma alternating-measurement technique used for rejection recovery
 
 ### Trick cards
 - [[Marriott-Watrous Iterative Rejection for Quantum Metropolis]]
 - [[Coherent Metropolis Accept-Reject via Phase Estimation]]
 - [[Phase Kickback from Oracle Queries]] — underlying mechanism in phase estimation
+- [[Tomography and Generative Training with Quantum Boltzmann Machines (Kieferová-Wiebe 2017) — Paper Notes]] — uses quantum Metropolis as one of two Gibbs sampler options for quantum Boltzmann machine training
 - [[Parity-Counted Fermionic Sign Tracking]] — Jordan-Wigner transformation for fermionic systems

@@ -107,6 +107,7 @@ Ettinger-Høyer showed that $O(\log N)$ queries suffice *information-theoretical
 ## Cross-links
 
 ### Paper notes
+- [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes]] — proves the query complexity is polynomial for all groups; the computational complexity (which Kuperberg addresses) is the real barrier
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes]] — Regev's polynomial-space variant (same problem, different tradeoff)
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]] — PGM approach; dihedral case reduces to average-case subset sum
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — the abelian HSP that Kuperberg generalises beyond
