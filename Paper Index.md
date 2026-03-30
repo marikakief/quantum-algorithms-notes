@@ -457,6 +457,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 ## Quantum Advantage / Topological Data Analysis
 
 - [[Analyzing Prospects for Quantum Advantage in Topological Data Analysis (Berry, Su, Babbush et al 2024) — Paper Notes|Berry, Su, Babbush et al. (2024)]] — Optimized fault-tolerant quantum algorithm for Betti number estimation with ~3–4 orders of magnitude improvement over prior work; ~6.8B Toffolis for a classically intractable instance ($K(16,16)$, $n=256$); super-quadratic speedup only for multiplicative error when Betti number is large; partial dequantization via path-integral Monte Carlo shows exponential dimension alone is insufficient for quantum advantage.
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes|Gyurik, Schmidhuber, King, Dunjko, Hayakawa (2024)]] — BQP$_1$-hardness and BQP containment for Harmonic Persistence (deciding whether a topological hole persists across length scales); exponential quantum speedup under standard assumptions; encodes persistence in a variant of the guided sparse Hamiltonian problem via harmonic representatives.
 
 ---
 

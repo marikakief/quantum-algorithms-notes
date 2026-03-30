@@ -42,6 +42,9 @@ If the guiding state has overlap $\gamma^2 = 2^{-N}$ (like a random state), the 
 
 ## Related notes
 - [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]]
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]] — Kernel Overlap and Low-Energy Overlap variants of this framework
+- [[Kernel Overlap as BQP-Complete Primitive]] — The variant where the task is overlap with the kernel (not energy estimation)
+- [[Pre-History State as Guided Sparse Hamiltonian Input]] — Specific guiding state construction for BQP$_1$-hardness
 - [[Kikuchi Method for Degree Reduction]]
 - [[Input-Derived Guiding State for Planted Problems]]
 - [[Independent Batch Splitting for Hamiltonian-Guiding State Decoupling]]

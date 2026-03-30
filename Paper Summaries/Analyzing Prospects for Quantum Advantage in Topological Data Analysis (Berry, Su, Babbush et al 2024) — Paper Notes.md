@@ -182,6 +182,7 @@ For data drawn from a probability measure on $\mathbb{R}^d$: Betti numbers grow 
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — Cited for qubitization complexity estimates
 - [[Expressing and Analyzing Quantum Algorithms with Qualtran (Harrigan, Khattar, Babbush, Rubin 2024) — Paper Notes]]
 - [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes]] — same cluster of Babbush-group "when does quantum advantage actually exist?" papers; both use dequantization arguments to sharpen the case for/against advantage
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]] — BQP$_1$-hardness for harmonic persistence; identifies a TDA problem that resists the dequantization attacks this paper highlights
 
 ### Trick cards
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — Core walk operator construction

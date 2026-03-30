@@ -32,5 +32,6 @@ Requires a spectral gap $\lambda_{\min}^q$ for the persistent Laplacian AND a ga
 
 ## Related notes
 - [[Quantum Algorithm for Persistent Betti Numbers (Hayakawa 2022) — Paper Notes]]
-- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]]
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]] — Uses the combinatorial Laplacian (not persistent Laplacian) but addresses the related persistence question via harmonic overlap
 - [[Schur Complement Block-Encoding for Projected Operators]]
+- [[Kernel Overlap as BQP-Complete Primitive]]

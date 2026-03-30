@@ -1020,7 +1020,7 @@ In _Proceedings of STOC 2013_ pg. 881-890.
 Quantum deep learning
 _[arXiv:1412.3489](http://arxiv.org/abs/1412.3489)_
 
-**222.** Seth Lloyd, Silvano Garnerone, and Paolo Zanardi
+**222. ✓** Seth Lloyd, Silvano Garnerone, and Paolo Zanardi
 Quantum algorithms for topological and geometric analysis of big data
 _[arXiv:1408.3106](http://arxiv.org/abs/1408.3106)_
 
@@ -2196,7 +2196,7 @@ Quantum persistent homology
 _Journal of Applied and Computational Topology_, 1-20, 2024.
 [[arXiv:2202.12965](https://arxiv.org/abs/2202.12965)]
 
-**489.** Ryu Hayakawa
+**489. ✓** Ryu Hayakawa
 Quantum algorithm for persistent Betti numbers and topological data analysis
 _Quantum_, 6:873, 2022.
 [[arXiv:2111.00433](https://arxiv.org/abs/2111.00433)]

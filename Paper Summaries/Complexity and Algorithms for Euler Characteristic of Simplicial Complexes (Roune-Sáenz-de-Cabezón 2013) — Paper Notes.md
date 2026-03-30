@@ -101,6 +101,7 @@ No quantum tricks — this is a classical paper. The SAT-to-Euler-characteristic
 - [[Quantum Algorithms for Topological and Geometric Analysis of Data (Lloyd-Garnerone-Zanardi 2016) — Paper Notes]] — Quantum algorithm that aims to circumvent this classical hardness
 - [[Towards Quantum Advantage via Topological Data Analysis (Gyurik-Cade-Dunjko 2022) — Paper Notes]] — DQC1-hardness of the quantum-solvable variant
 - [[Analyzing Prospects for Quantum Advantage in Topological Data Analysis (Berry, Su, Babbush et al 2024) — Paper Notes]] — Includes classical PIMC algorithm as partial dequantization
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]] — BQP$_1$-hardness for persistence; broader context for classical vs quantum complexity of simplicial topology
 
 ### Trick cards
 (No trick cards — purely classical complexity/algorithms paper)

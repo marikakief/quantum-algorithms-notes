@@ -27,5 +27,7 @@ Only works when simplices are naturally described as subsets of vertices. Doesn'
 ## Related notes
 - [[Quantum Algorithms for Topological and Geometric Analysis of Data (Lloyd-Garnerone-Zanardi 2016) — Paper Notes]]
 - [[Analyzing Prospects for Quantum Advantage in Topological Data Analysis (Berry, Su, Babbush et al 2024) — Paper Notes]]
+- [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes]] — Uses this encoding for the BQP$_1$-hardness reduction
+- [[Subset States for Succinct Description of High-Dimensional Chains]] — Efficient classical descriptions of states in this encoding
 - [[Fermionic-to-Qubit Mapping for Simplicial Dirac Operators]]
 - [[Dicke State Preparation via Inequality Testing]]
