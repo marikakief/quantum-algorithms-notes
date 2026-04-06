@@ -126,6 +126,7 @@ Dropping the scalar $\gamma N I$, this is the Farhi-Gutmann "analog analogue" of
 ## Cross-links
 
 ### Paper notes
+- [[Universal Computation by Quantum Walk (Childs 2009) — Paper Notes]] — later universality result for continuous-time quantum walk; this paper is one of the main algorithmic precedents
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — the standard (non-spatial) amplitude amplification framework
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — discrete-time walk framework for search; complementary approach
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes]] — another application of structured quantum search

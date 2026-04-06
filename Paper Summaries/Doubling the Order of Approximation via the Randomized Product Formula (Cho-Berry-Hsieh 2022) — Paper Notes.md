@@ -16,7 +16,7 @@ $$\mathcal{E}(\rho) = \sum_{l,h} p_{h,l} \bigl[S_{2k}(\lambda/2)\, U_h^{(l)}\, S
 
 The correction terms are products of the original Hamiltonian summands $H_j$, so they're efficiently implementable when $H$ is a sum of Pauli strings (as in quantum chemistry).
 
-The number of exponentials to achieve error $\varepsilon$ is $O\bigl(tL^2 (tL/\varepsilon)^{1/(4k+1)}\bigr)$, which improves over both the deterministic Suzuki formula and (in certain regimes) the [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Ostrander-Su randomized formula]].
+The number of exponentials to achieve error $\varepsilon$ is $O\bigl(tL^2 (tL/\varepsilon)^{1/(4k+1)}\bigr)$, which improves over both the deterministic Suzuki formula and (in certain regimes) the [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su randomized formula]].
 
 ## The algorithm / construction
 
@@ -78,7 +78,7 @@ $$g_{4k+1}^m = O\!\left(tL^2 \left(\frac{tL}{\varepsilon}\right)^{\!1/(4k+1)}\ri
 | $(2k)$-th order randomized (Childs et al.) | $\max\bigl\{O\bigl(tL^2 (tL/\varepsilon)^{1/(4k+1)}\bigr),\, O\bigl(tL^2 (t/\varepsilon)^{1/(2k)}\bigr)\bigr\}$ | Diamond norm |
 | **$(4k+1)$-th order modified randomized (this paper)** | $O\bigl(tL^2 (tL/\varepsilon)^{1/(4k+1)}\bigr)$ | Diamond norm |
 
-The advantage over [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Ostrander-Su]] is the elimination of the second term in the max. When $L = o\bigl((t/\varepsilon)^{1+1/(2k)}\bigr)$, that second term dominates and Cho-Berry-Hsieh does strictly better. For the other regime where $L$ is large relative to $t/\varepsilon$, both methods match.
+The advantage over [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su]] is the elimination of the second term in the max. When $L = o\bigl((t/\varepsilon)^{1+1/(2k)}\bigr)$, that second term dominates and Cho-Berry-Hsieh does strictly better. For the other regime where $L$ is large relative to $t/\varepsilon$, both methods match.
 
 The improvement over deterministic Suzuki is in all parameters simultaneously.
 
@@ -98,7 +98,7 @@ The improvement over deterministic Suzuki is in all parameters simultaneously.
 
 The central idea is clean: exploit the symmetric structure of Suzuki formulas to identify which error terms survive, then kill them with randomized corrections via the mixing lemma. The order-doubling is real and the construction is general.
 
-But the paper sits in an awkward competitive landscape. It appeared in 2022, between the [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Ostrander-Su (2019)]] randomized formula (which already gets the same $tL$ scaling in one regime) and the later [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|corrected product formulas]] and [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes|Stochastic QSP]] (which offer deterministic and more general improvements respectively). The advantage window — when $L$ is moderate and $t/\varepsilon$ is large, but you don't want to leave the product-formula framework — is real but narrow.
+But the paper sits in an awkward competitive landscape. It appeared in 2022, between the [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]] randomized formula (which already gets the same $tL$ scaling in one regime) and the later [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes|corrected product formulas]] and [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes|Stochastic QSP]] (which offer deterministic and more general improvements respectively). The advantage window — when $L$ is moderate and $t/\varepsilon$ is large, but you don't want to leave the product-formula framework — is real but narrow.
 
 The connection to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann et al. (2022)]] is interesting: both papers use randomization to boost the effective order of a product-formula-based method, but Faehrmann et al. average over different step counts (multi-product structure) while Cho-Berry-Hsieh average over correction unitaries within a single step count. The underlying machinery — mixing lemma, diamond-norm analysis — is shared.
 
@@ -113,7 +113,7 @@ The Pauli-string requirement is the biggest practical limitation. Quantum chemis
 
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — first-order [[Product Formulas]] simulation
 - Suzuki (1991) — systematic $(2k)$-th order [[Product Formulas]]s
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomized product formulas via permutation averaging; the direct predecessor
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomized product formulas via permutation averaging; the direct predecessor
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT protocol
 - Campbell (2017, PRA 95 042306) — the [[Diamond-Norm Channel Averaging for Random Compilers|mixing lemma]] used throughout the analysis
 - Hastings (2016, arXiv:1612.01011) — mixing lemma precursor
@@ -124,7 +124,7 @@ The Pauli-string requirement is the biggest practical limitation. Quantum chemis
 ## Cross-links
 
 ### Paper notes
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — direct predecessor; this paper improves the scaling in one regime
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — direct predecessor; this paper improves the scaling in one regime
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — the [[Trotter Commutator-Scaling Bound|commutator scaling]] framework; deterministic bounds that this method beats
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrections achieving similar goals without randomization
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — parallel work using randomization for multi-[[Product Formulas]]s; shared mixing-lemma machinery

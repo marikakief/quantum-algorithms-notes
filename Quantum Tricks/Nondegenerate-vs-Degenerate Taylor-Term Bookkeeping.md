@@ -18,4 +18,4 @@ Improves $L$-scaling in theoretical error bounds.
 Technical counting arguments can become intricate at high order.
 
 ## Related Paper Notes
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]

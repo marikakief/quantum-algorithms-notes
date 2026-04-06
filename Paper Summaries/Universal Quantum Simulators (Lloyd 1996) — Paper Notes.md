@@ -124,7 +124,7 @@ Lloyd's error analysis here is first-order only. The $O(t^2/\varepsilon)$ step s
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]] — builds on simulation to extract eigenvalues via QPE
 - [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes]] — first explicit sparse simulation construction
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — randomised approach to the same product-formula framework
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — randomised ordering of Trotter steps
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — randomised ordering of Trotter steps
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes]] — develops the fermionic simulation that Lloyd discusses informally
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]] — Lloyd co-authored; uses simulation ideas in the adiabatic setting
 - [[Quantum Algorithms for Quantum Field Theories (Jordan-Lee-Preskill 2012) — Paper Notes]] — extends simulation to interacting QFTs; completes Feynman's programme for $\phi^4$ scattering

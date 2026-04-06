@@ -142,7 +142,7 @@ The limitation is that this stays firmly within the product-formula paradigm. If
 
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe, Zhu (2021)]] — the [[Trotter Commutator-Scaling Bound|commutator-scaling framework]] that CPFs improve upon
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe (2013)]] — recursive commutator [[Product Formulas]]s; CPF compilations extend this work
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomised [[Product Formulas]]s; alternative error-reduction strategy
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs, Ostrander, Su (2019)]] — randomised [[Product Formulas]]s; alternative error-reduction strategy
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe (2019)]] — interaction-picture simulation; CPFs avoid its ancilla/controlled-evolution requirements
 - Suzuki (1990, 1995) — the standard recursive product formulas and an early "hybrid" fourth-order formula that foreshadows correctors
 - Yoshida (1990) — alternative higher-order product formulas with fewer exponentials
@@ -158,7 +158,7 @@ The limitation is that this stays firmly within the product-formula paradigm. If
 ### Paper notes
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes]]
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]]
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — randomized approach to error-order boosting; doubles order from $2k+1$ to $4k+2$ but outputs a channel; complementary to the deterministic CPF approach here
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]]

@@ -154,6 +154,7 @@ For the glued-trees Hamiltonian (Childs-Farhi-Gutmann), $\|\mathrm{abs}(H)\|$ is
 ## Cross-links
 
 ### Paper notes
+- [[Universal Computation by Quantum Walk (Childs 2009) — Paper Notes]] — clarifies how the continuous-time walk model used for universality sits relative to discrete-time walk constructions
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — directly builds on the $\arcsin$ spectral relationship; replaces phase estimation with QSP phase factors
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — generalises to arbitrary polynomial transformations of block-encoded matrices
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — the walk quantization framework this paper extends

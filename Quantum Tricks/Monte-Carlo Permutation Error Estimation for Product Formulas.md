@@ -18,4 +18,4 @@ Small sample sets can guide useful segment/order choices in practice.
 Estimates depend on sampling variance and may underresolve worst-case tails.
 
 ## Related Paper Notes
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]

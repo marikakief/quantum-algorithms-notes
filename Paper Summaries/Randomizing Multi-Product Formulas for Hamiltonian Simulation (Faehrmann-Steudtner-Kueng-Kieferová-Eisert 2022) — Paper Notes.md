@@ -150,7 +150,7 @@ Key references:
 
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT: the direct precursor in randomized [[Hamiltonian simulation]]; this paper can be seen as a higher-order generalization
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — LCU origins; the multi-[[Product Formulas]] construction (Vandermonde MPF) is from here; also where $\Xi$ appears as the LCU normalization constant
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2019)]] — randomized product-formula ordering; the other major randomized simulation result; a complementary approach (randomize *ordering*, not *which term in a linear combination*)
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]] — randomized product-formula ordering; the other major randomized simulation result; a complementary approach (randomize *ordering*, not *which term in a linear combination*)
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — Trotter error theory providing the foundation for MPF error analysis
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry et al. (2015)]] — Taylor series + LCU, the standard LCU-based simulation method this paper offers an alternative to
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2016–2017)]] — QSP: the asymptotic standard; comparison upper bound
@@ -164,7 +164,7 @@ Key references:
 **Paper notes:**
 - [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes]] — the conditioning result that makes MPFs practical
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes]] — early randomised [[Product Formulas]] approach (Monte Carlo time-sampling); different randomisation strategy from the MPF importance sampling here

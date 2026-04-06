@@ -81,7 +81,8 @@ Prior to this paper, commutator-based Trotter bounds existed (e.g., Descombes–
 
 ## Cross-links
 
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes]] — specialises the general commutator/error-representation machinery to 1D lattice geometry and gets the sharp linear-in-$n$ bound
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]

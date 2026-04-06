@@ -56,11 +56,13 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Quantum Simulation of Time-Dependent Hamiltonians and the Convenient Illusion of Hilbert Space (Poulin-Qarry-Somma-Verstraete 2011) — Paper Notes|Poulin-Qarry-Somma-Verstraete (2011)]] — derivative-free Trotter for arbitrary time-dependent Hamiltonians; quantum Shannon counting argument; randomised [[Product Formulas]]
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2005)]] — first efficient sparse [[Hamiltonian simulation]]
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs-Wiebe (2013)]] — recursive product formulas for commutator exponentials; nearly-optimal via quantum search lower bound
+- [[Efficient Product Formulas for Commutators and Applications to Quantum Simulation (Chen-Childs-Hafezi-Jiang-Kim-Xu 2022) — Paper Notes|Chen-Childs-Hafezi-Jiang-Kim-Xu (2022)]] — third-order commutator base formula + improved recursive constructions ($\sqrt{4}$/$\sqrt{5}$/$\sqrt{6}$/$\sqrt{10}$-copy); sum-and-commutator for free; applications to counterdiabatic driving and lattice gauge theories
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe (2015)]] — Trotter error scales with $Z_{\max}^6$ not $N$; norm bounds loose by 10¹⁶; classical error subtraction
 - [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher, Wiebe, Svore, Wecker, Troyer (2017)]] — The FeMoCo benchmark paper: first complete fault-tolerant resource estimate for a scientifically important molecule (nitrogenase FeMoCo, 108–114 spin-orbitals); 2nd-order Trotter + QPE + surface code compilation; ~$10^{14}$ T gates, 111 logical qubits; subsequently improved by ~$300{,}000\times$ via qubitization and tensor factorization
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — tight commutator-based Trotter error bounds
+- [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes|Childs-Su (2019)]] — local-error analysis gives $O(nt^{2k+1})$ per-step error for 1D lattice Hamiltonians, yielding near-optimal $(nt)^{1+o(1)}$ simulation
 - [[Nearly Tight Trotterization of Interacting Electrons (Su-Huang-Campbell 2021) — Paper Notes|Su-Huang-Campbell (2021)]] — nearly tight Trotter bounds for fermionic Hamiltonians via fermionic seminorm; $(n^{5/3}/\eta^{2/3} + n^{4/3}\eta^{2/3})n^{o(1)}$ gates for plane-wave electronic structure
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2019)]] — randomized product-formula ordering; permutation averaging improves error bounds
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]] — randomized product-formula ordering; permutation averaging improves error bounds
 - [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low-Kliuchnikov-Wiebe (2019)]] — well-conditioned multiproduct formulas via Chebyshev nodes; $O(t\lambda\log^2(t\lambda/\epsilon))$ simulation combining commutativity exploitation with near-optimal time/error scaling
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomized sampling of multi-product formulas; trades circuit depth for shots
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes|Cho-Berry-Hsieh (2022)]] — randomized corrections double the error order of symmetric product formulas from $2k+1$ to $4k+2$; requires Pauli-string structure
@@ -162,7 +164,9 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 
 ## Quantum Walks
 
+- [[An Example of the Difference Between Quantum and Classical Random Walks (Childs-Farhi-Gutmann 2002) — Paper Notes|Childs-Farhi-Gutmann (2002)]] — ballistic quantum walk vs. diffusive classical walk on glued trees; exponential transport speedup; foundational continuous-time quantum walk result
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes|Childs-Cleve-Deotto-Farhi-Gutmann-Spielman (2003)]] — first exponential speedup via quantum walks (not QFT); continuous-time walk on glued trees
+- [[Universal Computation by Quantum Walk (Childs 2009) — Paper Notes|Childs (2009)]] — continuous-time quantum walk is universal for quantum computation via graph-scattering widgets on degree-3 unweighted graphs
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — quantum walk algorithmic survey and framework
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes|Ambainis-Childs-Reichardt-Špalek-Zhang (2007)]] — optimal $O(\sqrt{N})$ quantum evaluation of AND-OR formulas via coined walk
 - [[Quantum Algorithms for Element Distinctness (Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf 2001) — Paper Notes|Buhrman-Dürr-Heiligman-Høyer-Magniez-Santha-de Wolf (2001)]] — first quantum speedup for element distinctness: $O(N^{3/4} \log N)$ via nested amplitude amplification + classical sorting
@@ -388,6 +392,7 @@ All paper notes in this vault, organised by topic. A paper may appear under mult
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] — recursive bisection state preparation for log-concave distributions; $O(\log N)$ rotations
 - [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] — arithmetic-free state preparation via inequality test; 286–375× Toffoli reduction over Grover's arcsine approach
 - [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low-Kliuchnikov-Schaeffer (2024)]] — SelectSwap network trades dirty qubits for T gates; achieves $\widetilde{O}(\sqrt{N})$ T-count for $N$-dimensional state preparation — quadratic improvement; optimal up to log factors; underlies QROAM
+- [[Quantum CORDIC — Arcsin on a Budget (Burge-Barbeau-Garcia-Alfaro 2024) — Paper Notes|Burge-Barbeau-Garcia-Alfaro (2024)]] — reversible quantum arcsine via CORDIC; $O(n)$ qubits, $O(n \log n)$ depth, $O(n^2)$ CNOTs; for when arcsine can't be avoided (HHL, quantum Monte Carlo)
 
 ---
 
@@ -605,6 +610,7 @@ _Papers added from Ryan Babbush's body of work, cross-referenced with each other
 
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa, An, Sanders, Su, Babbush, Berry (2021)]] — First optimal QLSP solver: $O(\kappa \log(1/\varepsilon))$ query complexity matching the lower bound; discrete adiabatic theorem with explicit gap dependence avoids Dyson series overhead; Dolph-Chebyshev eigenstate filtering with closed-form angles and two ancilla qubits.
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes|Costa, An, Babbush, Berry (2023)]] — Numerical validation of the optimal QLSP solver: actual constant factor $\alpha \approx 1.56$ is ~1,500× smaller than the analytical bound; discrete walk ~20× cheaper than randomized adiabatic method; settles the comparison with Jennings et al. (2023).
+- [[Quantum CORDIC — Arcsin on a Budget (Burge-Barbeau-Garcia-Alfaro 2024) — Paper Notes|Burge-Barbeau-Garcia-Alfaro (2024)]] — reversible arcsine via CORDIC for the eigenvalue rotation step in HHL; $O(n^2)$ CNOTs, $O(n)$ qubits
 
 ---
 

@@ -68,7 +68,7 @@ The abstraction worth keeping: when a Hamiltonian is a weighted sum of many easy
 - [[Fixed-Angle Randomized Product Formula]]
 - [[Diamond-Norm Channel Averaging for Random Compilers]]
 - [[Error-Budget Allocation Across Controlled-Time Schedules]]
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]

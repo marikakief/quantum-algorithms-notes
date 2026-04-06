@@ -39,4 +39,4 @@ First-order Trotter scaling is $O(t^2/\varepsilon)$ in the step count — far fr
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]

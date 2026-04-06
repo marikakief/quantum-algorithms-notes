@@ -120,7 +120,7 @@ For an 8-qubit chain with time step $t=1$ (not small!), Y8m10b achieves eigenval
 | Error metric | Spectral-norm error | Eigenvalue error (more relevant for long-time simulation) |
 | Comparison method | Ad hoc | Principled $M\zeta^{1/k}$ metric with non-asymptotic threshold analysis |
 
-The paper also tests the recently proposed formulas of [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Blanes-Casas-Escorihuela-Tomàs (2024)]] and Ostmeyer (2023), finding them competitive at 4th and 6th order but not at 8th.
+The paper also tests the recently proposed formulas of [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]] and Ostmeyer (2023), finding them competitive at 4th and 6th order but not at 8th.
 
 ---
 
@@ -180,7 +180,7 @@ Key citations and their roles:
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — first systematic use of high-order [[Product Formulas]]s in quantum simulation
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes]] — showed norm bounds dramatically overestimate Trotter error
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes]] — related [[Product Formulas]] constructions
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — randomisation may be less helpful than expected given eigenvalue error analysis
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — randomisation may be less helpful than expected given eigenvalue error analysis
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — multi-product approaches; different error trade-offs
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — randomised approach whose improvement may be limited by basis error issues
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes]] — earlier work from overlapping author set on product formulas

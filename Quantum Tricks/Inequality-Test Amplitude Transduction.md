@@ -43,3 +43,5 @@ $n$ Toffoli gates per round of [[Standard Amplitude Amplification|amplitude ampl
 - [[Standard Amplitude Amplification]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]]
+- [[Quantum CORDIC — Arcsin on a Budget (Burge-Barbeau-Garcia-Alfaro 2024) — Paper Notes]] — for when you genuinely need arcsine (e.g., intermediate reversible computation), CORDIC gives $O(n^2)$ CNOTs vs. $>4800$ Toffolis for polynomial methods at $n=17$
+- [[CORDIC as Reversible Angle Computation]] — the CORDIC technique as a reusable trick

@@ -1,4 +1,4 @@
-> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe, [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Quantum (2019)]], arXiv:1805.00675
+> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe, [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]], arXiv:1805.00675
 > **Tags:** #trick #interaction-picture #LCU #Hamiltonian-simulation #first-quantized #sublinear #Dyson-series
 
 ## What it does

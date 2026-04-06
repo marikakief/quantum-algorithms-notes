@@ -136,3 +136,5 @@ The paper cites Babbush et al. (2018, 1805.03662) as a key consumer: their fault
 - [[Inequality-Test Amplitude Transduction]] — the main trick from this paper
 - [[Comparator-Based Direct Amplitude Sampling from Fixed-Point Coefficients]] — later generalisation of the same idea
 - [[Standard Amplitude Amplification]] — used for boosting success probability
+- [[CORDIC as Reversible Angle Computation]] — for cases where arcsine is genuinely needed (can't use the comparator trick), CORDIC gives $O(n^2)$ CNOTs
+- [[Fibonacci-Accelerated Reversible Multiplication]] — reversible $(1+2^{-m})$ multiplication used inside quantum CORDIC

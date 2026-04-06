@@ -23,7 +23,7 @@ Implementation: one oracle query to find the neighbor $y$ and read off $H_{xx}, 
 
 ## Why it matters
 
-This is the base case for all [[Order-Condition Cancellation in Product Formulas|product-formula]] sparse simulation. Every higher-level scheme ([[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter]], [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki]], [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|randomized formulas]]) ultimately calls this as the primitive for simulating individual terms.
+This is the base case for all [[Order-Condition Cancellation in Product Formulas|product-formula]] sparse simulation. Every higher-level scheme ([[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Trotter]], [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki]], [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|randomized formulas]]) ultimately calls this as the primitive for simulating individual terms.
 
 ## Complexity
 

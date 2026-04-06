@@ -25,7 +25,7 @@ Does not make [[Order-Condition Cancellation in Product Formulas|product formula
 
 ## Related notes
 
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[Nondegenerate-vs-Degenerate Taylor-Term Bookkeeping]]
 - [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm]]
 - [[Monte-Carlo Permutation Error Estimation for Product Formulas]]

@@ -155,4 +155,5 @@ This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-
 - [[Vandermonde Compilation of Nested Commutator Exponentials]]
 
 ### Subsequent work
+- [[Efficient Product Formulas for Commutators and Applications to Quantum Simulation (Chen-Childs-Hafezi-Jiang-Kim-Xu 2022) — Paper Notes]] — direct extension: better 3rd-order base formula $S_3(x)$ + four improved recursive constructions ($\sqrt{4}$/$\sqrt{5}$/$\sqrt{6}$/$\sqrt{10}$-copy); also shows sum-and-commutator simulation at no extra cost; applications to counterdiabatic driving and lattice gauge theories
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — extends the commutator product-formula compilation to systematically build correctors for Suzuki/Yoshida [[Product Formulas]]s; uses Vandermonde systems to determine compilation coefficients

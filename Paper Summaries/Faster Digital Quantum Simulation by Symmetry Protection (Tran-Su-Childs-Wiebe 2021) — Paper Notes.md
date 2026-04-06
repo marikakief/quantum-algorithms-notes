@@ -64,7 +64,7 @@ The same underlying principle — use a known symmetry/group structure to averag
 ## References within this paper
 
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu (2021)]] — [[Trotter Commutator-Scaling Bound|commutator-scaling bounds]] that this paper uses
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander & Su (2019)]] — randomized formulas (complementary approach)
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs, Ostrander & Su (2019)]] — randomized formulas (complementary approach)
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT (alternative randomization)
 - Facchi & Pascazio (2002) — quantum Zeno effect; symmetry protection uses related ideas
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — original Suzuki-based simulation
@@ -74,7 +74,7 @@ The same underlying principle — use a known symmetry/group structure to averag
 ## Cross-links
 
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]
 - [[Hamiltonian Simulation — Comparison Tables]]
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — resource estimates for Hubbard and jellium using second-order Trotter; the translation symmetry of both target Hamiltonians makes them prime candidates for the symmetry-protection kicks developed here

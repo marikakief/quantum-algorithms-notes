@@ -2149,7 +2149,7 @@ Quantum algorithm for simulating real time evolution of lattice Hamiltonians
 _SIAM Journal on Computing_, 52(6):10.1137, 2018.
 [[arXiv:1801.03922](https://arxiv.org/abs/1801.03922)]
 
-**479.** Andrew M. Childs and Yuan Su
+**479. ✓** Andrew M. Childs and Yuan Su
 Nearly optimal lattice simulation by [[Product Formulas]]s
 _Physical Review Letters_, 123(5):050503, 2019.
 [[arXiv:1901.00564](https://arxiv.org/abs/1901.00564)]

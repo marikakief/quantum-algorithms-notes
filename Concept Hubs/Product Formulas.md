@@ -114,7 +114,7 @@ Deterministic formulas must have all error terms cancel algebraically. Randomisa
 | Method | Idea | Error scaling |
 |---|---|---|
 | [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes\|qDRIFT (Campbell 2019)]] | Randomly sample one $H_j$ per step, weighted by $\|H_j\|$ | $O(\lambda^2 t^2/r)$ where $\lambda = \sum_j \|H_j\|$ |
-| [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes\|Childs, Ostrander & Su 2019]] | Randomly permute the ordering within each Trotter step | Doubles effective order (2nd → 4th in expectation) |
+| [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes\|Childs, Ostrander & Su 2019]] | Randomly permute the ordering within each Trotter step | Doubles effective order (2nd → 4th in expectation) |
 | [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes\|Cho, Berry & Hsieh 2022]] | Randomised Suzuki-like correction | Doubles order of any deterministic formula |
 
 qDRIFT is notable because its cost depends on $\lambda = \sum_j \|H_j\|$ (the 1-norm) rather than $\Gamma$ (the number of terms). For Hamiltonians with many small terms, this can be much better than deterministic Trotterization.
@@ -165,10 +165,11 @@ Product formulas have no ancilla overhead, simple circuit structure, and often w
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2011]] — companion algorithm paper
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu 2019]] — tight commutator-scaling bounds
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe 2013]] — product formulas for $e^{[A,B]t}$
+- [[Efficient Product Formulas for Commutators and Applications to Quantum Simulation (Chen-Childs-Hafezi-Jiang-Kim-Xu 2022) — Paper Notes|Chen, Childs et al. 2022]] — improved commutator formulas: 3rd-order base + $\sqrt{10}$-copy recursion; applications to lattice gauge theories
 - [[Nearly Tight Trotterization of Interacting Electrons (Su-Huang-Campbell 2021) — Paper Notes|Su, Huang & Campbell 2021]] — fermionic seminorm refinement
 
 ### Randomised product formulas
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs, Ostrander & Su 2019]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs, Ostrander & Su 2019]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell 2019 (qDRIFT)]]
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes|Cho, Berry & Hsieh 2022]]
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann, Steudtner, Kueng, Kieferová & Eisert 2022]]

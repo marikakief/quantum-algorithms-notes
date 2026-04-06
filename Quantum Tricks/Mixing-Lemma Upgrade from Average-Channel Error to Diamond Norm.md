@@ -27,7 +27,7 @@ The workflow is: prove average-channel improvement → bound spread/variance →
 
 ## Related notes
 
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]]
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]]
 - [[Permutation Averaging for Product-Formula Error Cancellation]]
 - [[Diamond-Norm Channel Averaging for Random Compilers]]
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]]

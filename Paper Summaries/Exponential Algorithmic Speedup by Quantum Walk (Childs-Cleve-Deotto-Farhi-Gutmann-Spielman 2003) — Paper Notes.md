@@ -14,7 +14,7 @@ The problem: given an oracle for a graph (vertex names and their neighbours), fi
 
 ## The graph
 
-Start with two balanced binary trees of height $n$, joined at the leaves. The original version $G_n$ (from Childs, Farhi & Gutmann 2002) connects leaves by a simple identification — but this can be classically traversed in $O(n^2)$ time by backtracking from the central column (you can detect the column by vertex degree).
+Start with two balanced binary trees of height $n$, joined at the leaves. The original version $G_n$ (from [[An Example of the Difference Between Quantum and Classical Random Walks (Childs-Farhi-Gutmann 2002) — Paper Notes|Childs, Farhi & Gutmann 2002]]) connects leaves by a simple identification — but this can be classically traversed in $O(n^2)$ time by backtracking from the central column (you can detect the column by vertex degree).
 
 The fix: $G'_n$ connects the $2^n$ left-tree leaves to the $2^n$ right-tree leaves via a **random alternating cycle** instead of a simple identification. You can no longer detect which way is "forward" once you reach the leaves.
 
@@ -137,7 +137,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — exponential separation via QFT
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — factoring; all prior exponential speedups used QFT
 - Farhi & Gutmann (1998, PRA 58, 915) — introduced continuous-time quantum walks
-- Childs, Farhi & Gutmann (2002) — exponentially faster hitting time for quantum vs classical walk on $G_n$ (but not an algorithmic separation)
+- [[An Example of the Difference Between Quantum and Classical Random Walks (Childs-Farhi-Gutmann 2002) — Paper Notes|Childs, Farhi & Gutmann (2002)]] — exponentially faster hitting time for quantum vs classical walk on $G_n$ (but not an algorithmic separation)
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] — [[Hamiltonian simulation]] tools used in the implementation (ref [26])
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — discrete-time walk framework (appeared shortly after)
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] — later unified continuous and discrete walks
@@ -148,6 +148,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 
 ### Paper notes
 - [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes]] — establishes equivalence of continuous and discrete quantum walks; builds on this paper
+- [[Universal Computation by Quantum Walk (Childs 2009) — Paper Notes]] — takes continuous-time walk from an algorithmic primitive to a universal computational model via scattering on graph widgets
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes]] — continuous-time walk for spatial search (same technique, different problem)
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — discrete-time walk framework with quadratic speedup
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — algorithmic application of discrete quantum walks

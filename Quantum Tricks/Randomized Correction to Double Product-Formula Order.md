@@ -28,7 +28,7 @@ The even-order terms ($2k+2, 2k+4, \ldots, 4k$) vanish automatically because of 
 
 ## Complexity
 
-Number of exponentials: $O\bigl(tL^2(tL/\varepsilon)^{1/(4k+1)}\bigr)$, where $L$ is the number of Hamiltonian terms. Improves over deterministic $(2k)$-th order Suzuki ($\varepsilon^{-1/(2k)}$) and matches or improves the [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes|Childs-Ostrander-Su]] randomized formula.
+Number of exponentials: $O\bigl(tL^2(tL/\varepsilon)^{1/(4k+1)}\bigr)$, where $L$ is the number of Hamiltonian terms. Improves over deterministic $(2k)$-th order Suzuki ($\varepsilon^{-1/(2k)}$) and matches or improves the [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su]] randomized formula.
 
 ## Caveat
 

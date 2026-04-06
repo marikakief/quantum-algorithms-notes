@@ -80,7 +80,7 @@ The trick is not specific to qDRIFT. Any randomised simulation protocol whose ch
 - [[Channel Series Expansion via Variation-of-Parameters]] — the analytic engine that justifies the power series
 - [[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes]] — source paper
 - [[Term-Weighted Random Hamiltonian Sampling (qDRIFT)]] — the base protocol Watson applies this to
-- [[Randomized Product Formulas for Hamiltonian Simulation (Quantum 2019-09-02-182) — Paper Notes]] — coherent multiproduct version of the same idea
+- [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — coherent multiproduct version of the same idea
 - [[Permutation Averaging for Product-Formula Error Cancellation]] — related error cancellation by averaging
 - [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes]] — the conditioning result that keeps the Richardson extrapolation weights bounded
 - [[Chebyshev-Node Conditioning for Multiproduct Formulas]] — how to choose step-size ratios for well-conditioned extrapolation
