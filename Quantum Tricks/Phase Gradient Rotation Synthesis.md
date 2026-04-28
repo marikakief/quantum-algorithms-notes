@@ -48,6 +48,8 @@ Compare: standard synthesis of $M$ rotations costs $O(M\log(1/\varepsilon))$. Th
 - The technique assumes the rotation angles are available in a quantum register. If angles must be computed on the fly (not loaded from a table), the data-lookup cost dominates.
 
 ## Related notes
+- [[Addition on a Quantum Computer (Draper 2000) — Paper Notes]] — the original QFT-based adder; the phase gradient state is an eigenstate of Draper's addition operation (see [[Fourier State as Eigenstate of Addition]])
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — the adder used for the controlled addition into the phase gradient state
 - [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes]]
 - [[Phase Gradient State for Controlled Rotations]] — the underlying resource state trick
 - [[SelectSwap Network for Data Lookup]] — loads the angle data into registers

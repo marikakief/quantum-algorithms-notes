@@ -63,3 +63,6 @@ The controlled phase gates $S_{j,k}$ require interaction between potentially dis
 - [[Coset Sampling via Fourier Transform]]
 - [[Gapped Phase Estimation]]
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]]
+- [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] — optimistic QFT in $O(\log(n/\varepsilon))$ depth with zero ancillae; uses block QPE to parallelise
+- [[Quantum Phase Estimation on Blocks for QFT Parallelisation]] — the trick that enables the log-depth optimistic QFT
+- [[Optimistic Quantum Circuits]] — framework formalising circuits with small average error

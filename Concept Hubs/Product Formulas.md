@@ -164,6 +164,7 @@ Product formulas have no ancilla overhead, simple circuit structure, and often w
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2010]] — extension to time-dependent / ordered exponentials
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2011]] — companion algorithm paper
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu 2019]] — tight commutator-scaling bounds
+- [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes|Childs & Su 2019]] — locality-exploiting local error analysis gives $O(nt^{2k+1})$ per-step error for 1D lattice Hamiltonians; $(nt)^{1+o(1)}$ total, nearly matching the $\tilde{\Omega}(nt)$ lower bound
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes|Childs & Wiebe 2013]] — product formulas for $e^{[A,B]t}$
 - [[Efficient Product Formulas for Commutators and Applications to Quantum Simulation (Chen-Childs-Hafezi-Jiang-Kim-Xu 2022) — Paper Notes|Chen, Childs et al. 2022]] — improved commutator formulas: 3rd-order base + $\sqrt{10}$-copy recursion; applications to lattice gauge theories
 - [[Nearly Tight Trotterization of Interacting Electrons (Su-Huang-Campbell 2021) — Paper Notes|Su, Huang & Campbell 2021]] — fermionic seminorm refinement
@@ -183,6 +184,8 @@ Product formulas have no ancilla overhead, simple circuit structure, and often w
 - [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes|Babbush et al. 2015]]
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes|Tran, Su, Childs & Wiebe 2021]]
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes|Kivlichan et al. 2020]]
+- [[Entanglement Accelerates Quantum Simulation (Zhao-Zhou-Childs 2025) — Paper Notes|Zhao, Zhou & Childs 2025]] — local reduced-state mixedness on leading-error supports pushes Trotter error from worst-case toward average-case scaling; product states can be worst case; adaptive step sizing via checkpoint measurements
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes|Childs, Leng, Li, Liu & Zhang 2022]] — product formulas achieve $(Nt)^{1+o(1)}$ for real-space simulation; qubitization loses by factor $N$ due to kinetic energy subnormalization
 
 ---
 

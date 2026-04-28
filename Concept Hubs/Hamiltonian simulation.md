@@ -21,6 +21,7 @@ Decompose $H = \sum_j H_j$ and approximate $e^{-iHt}$ by alternating simpler exp
 - [[Simulating Quantum Dynamics on a Quantum Computer (Wiebe-Berry-Høyer-Sanders 2011) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2011]] — Trotter for chemistry
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe, Berry, Høyer & Sanders 2010]] — higher-order ordered exponentials
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs, Su, Tran, Wiebe & Zhu 2019]] — tight commutator-scaling error bounds
+- [[Entanglement Accelerates Quantum Simulation (Zhao-Zhou-Childs 2025) — Paper Notes|Zhao, Zhou & Childs 2025]] — local entanglement on Trotter-error supports reduces product-formula error toward the Frobenius / average-case regime; product states can be worst case; adaptive checkpoint-based step selection
 - [[Product Formulas|Product formula]] (concept page)
 
 ### Taylor series / LCU
@@ -44,6 +45,11 @@ Apply polynomial transformations to block-encoded matrices; unifies and improves
 Move part of $H$ into the interaction picture to reduce effective norm.
 
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low & Wiebe 2018]]
+
+### Real-space / first-quantized simulation
+Simulate $\eta$ particles on a position-space grid; kinetic energy handled via QFT basis switching.
+
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes|Childs, Leng, Li, Liu & Zhang 2022]] — tight analysis showing product formulas achieve $(Nt)^{1+o(1)}$ while qubitization costs $O(N^2 t)$; near-optimal lower bound
 
 ---
 

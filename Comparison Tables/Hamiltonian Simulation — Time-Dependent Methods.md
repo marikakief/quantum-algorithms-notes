@@ -2,6 +2,16 @@ _Comparison tables for time-dependent Hamiltonian simulation algorithms and clas
 
 _Split from [[Hamiltonian Simulation — Comparison Tables]]._
 
+## Adiabatic / Hamiltonian-Based QLSP Line
+
+| Paper | Year | Core idea | Complexity | What changed |
+|---|---|---|---|---|
+| [[Quantum Algorithms for Systems of Linear Equations Inspired by Adiabatic Quantum Computing (Subaşı-Somma-Orsucci 2018) — Paper Notes\|Subaşı-Somma-Orsucci]] | 2018/2019 | [[Randomization Method for Eigenpath Traversal]] on a null-space path, plus [[Spectral Gap Amplification]] | $O(\kappa\log\kappa/\varepsilon)$ | First competitive adiabatic-style QLSA |
+| [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes\|An-Lin]] | 2019 | Gap-adapted schedule and smooth endpoint scheduling | $O(\kappa/\varepsilon)$ or $O(\kappa\,\mathrm{polylog}(\kappa/\varepsilon))$ | Removes the extra $\log\kappa$ in the randomized route; introduces QAOA warm-start viewpoint |
+| [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes\|Costa et al.]] | 2021 | Discrete adiabatic walk plus eigenstate filtering | $O(\kappa\log(1/\varepsilon))$ | Optimal scaling; avoids Dyson-series overhead |
+
+This is a useful lineage to keep separate from the main QLSA table because it tracks a specific idea: turn linear-system solving into eigenpath following, then progressively remove the inefficiencies of continuous adiabatic evolution.
+
 ---
 
 ## Time-Dependent Hamiltonian Simulation

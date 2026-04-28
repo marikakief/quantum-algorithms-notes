@@ -142,7 +142,7 @@ The time-dependent Hamiltonian $H(f(s))$ is simulated using the [[Time-Dependent
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|Somma and Boixo (2013)]] — spectral gap amplification, related adiabatic techniques.
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes|Farhi, Goldstone, Gutmann (2014)]] — the original QAOA proposal.
 - [[Quantum Computation by Adiabatic Evolution (Farhi-Goldstone-Gutmann-Sipser 2000) — Paper Notes|Farhi, Goldstone, Gutmann, Sipser (2000)]] — the foundational AQC proposal.
-- Subası, Somma, Orsucci (2019) — the randomisation method (RM) for adiabatic QLSP that AQC(p) improves upon. Not yet in the vault.
+- [[Quantum Algorithms for Systems of Linear Equations Inspired by Adiabatic Quantum Computing (Subaşı-Somma-Orsucci 2018) — Paper Notes|Subaşı, Somma, Orsucci (2018/2019)]] — the randomisation method (RM) for adiabatic QLSP that AQC(p) improves upon.
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová, Scherer, Berry (2018)]] — truncated Dyson series for time-dependent Hamiltonians, used for gate implementation.
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes|Low and Wiebe (2018)]] — interaction-picture Dyson series simulation.
 - Nenciu (1993) — superadiabatic theory underlying AQC(exp). Not in the vault; classical adiabatic perturbation theory reference.
@@ -164,6 +164,7 @@ The time-dependent Hamiltonian $H(f(s))$ is simulated using the [[Time-Dependent
 - [[Grand Unification of Quantum Algorithms (Martyn-Rossi-Tan-Chuang 2021) — Paper Notes]]
 - [[Optimal Polynomial Based Quantum Eigenstate Filtering (Dong-An-Lin 2020) — Paper Notes]] — follow-up adding eigenstate filtering to make the AQC approach rigorous; also introduces Zeno alternative
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes]] — direct follow-on; achieves optimal $O(\kappa\log(1/\varepsilon))$ by replacing continuous adiabatic simulation with discrete qubitized walk, removing the $\log\kappa$ overhead left here
+- [[Quantum Algorithms for Systems of Linear Equations Inspired by Adiabatic Quantum Computing (Subaşı-Somma-Orsucci 2018) — Paper Notes]] — immediate conceptual predecessor: introduces the randomized eigenpath-traversal QLSP that this paper sharpens with better scheduling
 - [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes]] — numerically validates that the discrete approach is ~20× cheaper in practice than the randomized adiabatic method
 
 ### Trick cards

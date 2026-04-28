@@ -20,7 +20,7 @@ Adapts the classical CORDIC algorithm — a staple of FPGA and embedded computin
 - **$O(n \log n)$ circuit depth** (layer count)
 - **$O(n^2)$ CNOT count**
 
-for $n$ bits of precision. This gives a direct quantum implementation of arcsine that's cheaper than prior approaches (piecewise polynomial [Häner-Roetteler-Svore 2018] or binary search [Wang et al. 2020]), though still much more expensive than the [[Inequality-Test Amplitude Transduction|inequality-test trick]] of [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] when arcsine can be avoided entirely.
+for $n$ bits of precision. This gives a direct quantum implementation of arcsine that's cheaper than prior approaches (piecewise polynomial [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes|Häner-Roetteler-Svore 2018]] or binary search [Wang et al. 2020]), though still much more expensive than the [[Inequality-Test Amplitude Transduction|inequality-test trick]] of [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] when arcsine can be avoided entirely.
 
 ## The algorithm
 
@@ -82,7 +82,7 @@ The direction bits $d_j$ encode the arcsine in a "unary-angle" representation �
 
 | Method | Approach | Gate cost | Qubits | Notes |
 |---|---|---|---|---|
-| **Häner-Roetteler-Svore (2018)** | Piecewise polynomial approx. | $>4800$ Toffoli ($n=17$) | More | Needs multiplications, square roots for $|x| > 0.5$ |
+| **[[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes|Häner-Roetteler-Svore (2018)]]** | Piecewise polynomial approx. | $>4800$ Toffoli ($n=17$) | More | Needs multiplications, square roots for $|x| > 0.5$ |
 | **Wang et al. (2020)** | Binary search | Many squarings | More | Very general but expensive |
 | **This paper (CORDIC)** | Iterative pseudo-rotations | $O(n^2)$ CNOT | $5n - 1$ | Only shifts + additions |
 | **[[Inequality-Test Amplitude Transduction\|Inequality test]]** | Comparator trick | $n$ Toffoli | $2n + 1$ | **Avoids arcsine entirely** |
@@ -119,7 +119,7 @@ The Sanders-Low-Scherer-Berry comparator wins overwhelmingly when the goal is am
 
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — HHL, primary application for arcsine
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes|Montanaro (2015)]] — quantum Monte Carlo speedup, another consumer of amplitude loading
-- Häner-Roetteler-Svore (2018, arXiv:1805.12445) — piecewise polynomial quantum arithmetic for arcsine; main comparison point
+- [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes|Häner-Roetteler-Svore (2018)]] — piecewise polynomial quantum arithmetic for arcsine; main comparison point
 - Mitarai-Kitagawa-Fujii (2019) — quantum analog-digital conversion; formalises the problem this paper solves
 - Wang et al. (2020) — binary search method for transcendental functions on quantum circuits
 - Mazenc-Merrheim-Muller (1993) — classical CORDIC arcsine algorithm that this paper adapts
@@ -132,6 +132,7 @@ The Sanders-Low-Scherer-Berry comparator wins overwhelmingly when the goal is am
 
 ### Paper notes
 - [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes]] — the key comparison: when you can avoid arcsine entirely
+- [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes]] — piecewise polynomial + Newton approach to arcsine; this paper's main comparison point
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — HHL uses arcsine rotation
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]] — quantum Monte Carlo needs amplitude loading
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — modern alternative that avoids arcsine in HHL-type algorithms

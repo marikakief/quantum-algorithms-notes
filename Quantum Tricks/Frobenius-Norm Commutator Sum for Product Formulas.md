@@ -52,6 +52,7 @@ No computational overhead. The bounds apply to the same product formula circuits
 ## Related notes
 
 - [[Hamiltonian Simulation with Random Inputs (Zhao-Zhou-Shaw-Li-Childs 2022) — Paper Notes]]
+- [[Entanglement Accelerates Quantum Simulation (Zhao-Zhou-Childs 2025) — Paper Notes]] — extends the Frobenius-norm framework to entanglement-dependent bounds; this commutator sum is the building block for the Schmidt-rank-dependent generalisation
 - [[Frobenius-Norm Average-Case Error Bound]]
 - [[Trotter Commutator-Scaling Bound]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]

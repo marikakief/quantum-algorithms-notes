@@ -49,6 +49,10 @@ For first-order formulas on a 1D lattice, **any** ordering of nearest-neighbour 
 
 So even-odd ordering is not the only asymptotically valid choice, but it is the cleanest one for proofs and implementations.
 
+## Complexity
+
+One Trotter step is two layers of commuting gates: $e^{-itH_{\rm odd}}$ (all odd bonds in parallel) and $e^{-itH_{\rm even}}$ (all even bonds in parallel). With full parallelism this is $O(1)$ depth per step and $O(n)$ gates. To achieve accuracy $\varepsilon$, the $(2k)$-th order formula needs $r = O(t(nt/\varepsilon)^{1/(2k)})$ segments, giving total gate count $O((nt)^{1+1/(2k)}/\varepsilon^{1/(2k)})$.
+
 ## When to reach for it
 
 - Simulating 1D nearest-neighbour spin chains
@@ -65,5 +69,6 @@ So even-odd ordering is not the only asymptotically valid choice, but it is the 
 
 - [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes]]
 - [[Local Error Representation for Lattice Product Formulas]]
+- [[Ordering Robustness for First-Order Lattice Trotter]]
 - [[Product-Formula Time-Slicing for Local Hamiltonians]]
 - [[Product Formulas]]

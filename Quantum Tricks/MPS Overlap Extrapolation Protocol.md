@@ -1,54 +1,47 @@
+# MPS Overlap Extrapolation Protocol
 
-> **Source:** Berry, Tong, Khattar, White, Kim, Boixo, Lin, Lee, Chan, Babbush, Rubin, arXiv:2409.11748 (2024)
-> **Tags:** #trick #state-preparation #MPS #DMRG #overlap #extrapolation #FeMoCo
+> **Source:** Berry, Tong, Khattar, White, Kim, Boixo, Lin, Lee, Chan, Babbush, Rubin, arXiv:2409.11748
+> **Tags:** #trick #MPS #DMRG #overlap #state-preparation #FeMoco
 
 ## What it does
 
-Estimates the squared overlap $|\langle\Phi(M)|\Phi(\infty)\rangle|^2$ between a finite bond dimension MPS (from DMRG) and the exact ground state, using only data from finite bond dimension calculations. No access to the true ground state is needed.
+Estimates the overlap of a finite-bond-dimension MPS with an effectively exact state using only overlaps among lower-bond-dimension MPS approximations.
 
 ## The trick
 
-Two empirically observed linear relations (in the systems tested):
+Suppose direct access to $|\langle \Phi(M)|\Phi(\infty)\rangle|^2$ is impossible because the exact state is out of classical reach. Fit two empirical linear relations in $(\log M)^2$ instead:
 
-**Relation 1 (infidelity vs. bond dimension):**
+$$
+\log\!\bigl(1-|\langle \Phi(M')|\Phi(\infty)\rangle|^2\bigr)
+\text{ vs. } (\log M')^2,
+$$
 
-$$\log(1 - |\langle\Phi(M')|\Phi(\infty)\rangle|^2) \quad \text{is linear in} \quad (\log M')^2$$
+and, for $M' \ll M''$,
 
-**Relation 2 (overlap error vs. reference bond dimension):**
+$$
+\log\!\bigl(|\langle \Phi(M')|\Phi(M'')\rangle|^2 - |\langle \Phi(M')|\Phi(\infty)\rangle|^2\bigr)
+\text{ vs. } (\log M'')^2.
+$$
 
-$$\log(|\langle\Phi(M')|\Phi(M'')\rangle|^2 - |\langle\Phi(M')|\Phi(\infty)\rangle|^2) \quad \text{is linear in} \quad (\log M'')^2 \quad (M' \ll M'')$$
+Use lower-bond-dimension states $M'$ and somewhat larger reference states $M''$ to infer the unknown infinite-bond-dimension overlap, then extrapolate to the target $M$.
 
-**Protocol:**
-1. Compute DMRG wavefunctions at bond dimensions $M_1' < M_2' < \ldots$ (small) and $M_1'' < M_2'' < \ldots$ (large, from reverse sweep).
-2. For each small $M'$, compute overlaps $|\langle\Phi(M')|\Phi(M'')\rangle|^2$ for several large $M''$ values.
-3. Use Relation 2 to extrapolate $|\langle\Phi(M')|\Phi(\infty)\rangle|^2$ for each small $M'$.
-4. Use Relation 1 to extrapolate $|\langle\Phi(M_{\text{target}})|\Phi(\infty)\rangle|^2$ for the target bond dimension.
-
-For FeMoCo: uses $M' = 1000, 1500$ and $M'' = 3000$–$6000$ (depending on MPS candidate), producing overlap estimates of $0.95$–$0.99$ for the three candidate MPS states.
+The point is not rigor. The point is to get a workable overlap estimate for QPE resource counting in systems where DMRG can still generate useful candidate states but not a certifiably exact ground state.
 
 ## When to reach for it
 
-- Before running QPE, to estimate how many repetitions will be needed (the cost scales as $\sim 1/p$ for sampling).
-- For any quantum chemistry resource estimation that needs to account for state preparation overhead — this converts the abstract "assume overlap $p$" into a concrete estimate.
-- To compare classical DMRG fidelity with QPE cost: if the extrapolated overlap at a given bond dimension is high enough that only 2–3 QPE samples are needed, the quantum overhead from imperfect state preparation is small.
-- For benchmarking MPS quality in strongly correlated systems where exact diagonalisation is infeasible.
+- DMRG/MPS-based QPE resource estimates for strongly correlated molecules.
+- Cases where energy extrapolation is possible but overlap with the exact eigenstate is the quantity you actually need.
+- Fe-S style problems with several competing low-energy states.
 
 ## Complexity
 
-The classical cost is modest: computing DMRG at a few bond dimensions ($M' \sim 10^2$–$10^3$ and $M'' \sim 10^3$–$10^4$), plus overlaps between the resulting MPS states. The bottleneck is the largest-$M''$ DMRG calculation, which scales as $O(M''^3 N)$ per sweep for $N$ orbitals.
+Classical post-processing only. The benefit is indirect: it lets you replace a vague overlap assumption with a fitted value, which then determines the QPE repetition cost.
 
 ## Caveat
 
-**This is entirely empirical.** The two linear relations have no rigorous theoretical justification. They are validated on Fe$_2$S$_2$ and Fe$_4$S$_4$ (where exact ground states can be computed), but there is no guarantee they hold for larger or qualitatively different systems.
-
-For FeMoCo specifically: at finite bond dimension, the energy ordering of competing spin-coupled states may differ from the true ordering. The MPS labelled "lowest energy" at $\chi = 2000$ may not correspond to the actual ground state. The paper handles this by preparing multiple candidates and using QPE to resolve the energies — but this multiplies the total cost.
-
-The protocol also cannot distinguish between the prepared MPS having high overlap with the ground state vs. a low-lying excited state. If the MPS converges to an excited state, the extrapolated overlap is with that excited state, not the ground state.
+This is empirical. It is not a theorem, and if the linear trends in $(\log M)^2$ break down, the estimate can drift badly. It is best used with validation on smaller instances from the same family.
 
 ## Related notes
 - [[Rapid Initial State Preparation for the Quantum Simulation of Strongly Correlated Molecules (Berry, Tong, Babbush, Rubin et al 2024) — Paper Notes]]
-- [[ASCI Overlap Estimation for QPE Initial State]]
-- [[EQA Assessment Framework (State Preparation vs Classical Heuristic)]]
 - [[Is There Evidence for Exponential Quantum Advantage in Quantum Chemistry (Lee, Babbush, Chan et al 2022) — Paper Notes]]
-- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]]
-- [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes]] — the original FeMoCo benchmark that deferred state preparation; this trick enables concrete overlap estimates for FeMoCo
+- [[Postponing the Orthogonality Catastrophe (Tubman, Mejuto-Zaera, Babbush et al 2018) — Paper Notes]]

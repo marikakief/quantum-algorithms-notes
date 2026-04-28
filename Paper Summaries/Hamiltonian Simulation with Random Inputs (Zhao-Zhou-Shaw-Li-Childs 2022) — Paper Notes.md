@@ -152,6 +152,7 @@ In OTOC measurements, the initial state is $\rho \otimes I_{d_1}/d_1$ — one qu
 ## Cross-links
 
 ### Paper notes
+- [[Entanglement Accelerates Quantum Simulation (Zhao-Zhou-Childs 2025) — Paper Notes]] — direct follow-up by the same group; extends the Frobenius-norm / 1-design framework to fixed inputs via local reduced-state mixedness on error supports; the average-case bound here is the limiting regime where those local subsystems are close to maximally mixed
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — worst-case commutator-scaling framework that this paper generalises
 - [[Destructive Error Interference in Product-Formula Lattice Simulation (Tran-Chu-Su-Childs-Gorshkov 2020) — Paper Notes]] — worst-case interference analysis; this paper extends it to average case
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — complementary error-reduction strategy via symmetry protection

@@ -48,9 +48,9 @@ $$
 - You want to prove linear-in-volume error scaling for local lattice Hamiltonians
 - BCH or naïve Taylor expansion is obscuring where locality actually enters
 
-## Why it matters
+## Complexity
 
-The representation isolates the real source of error: not just noncommutativity, but **where supports overlap under repeated commutation/conjugation**. That makes the linear-in-$n$ bound transparent.
+The representation is a proof tool, not an algorithmic modification — it adds no gates. The simulation itself uses $r = O(t(nt/\varepsilon)^{1/(2k)})$ segments of a $(2k)$-th order formula, each with $O(n)$ gates, for total gate count $O((nt)^{1+1/(2k)}/\varepsilon^{1/(2k)})$. Optimising $k \sim \sqrt{\log(nt/\varepsilon)}$ gives $(nt)^{1+o(1)}$.
 
 ## Caveat
 

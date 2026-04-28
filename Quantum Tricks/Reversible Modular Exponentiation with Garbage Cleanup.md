@@ -56,3 +56,5 @@ The $O(n^3)$ gate count dominates Shor's algorithm. Optimising this subroutine (
 - [[Reversible Computation via Compute-Copy-Uncompute]]
 - [[Order-Finding via QFT and Continued Fractions]]
 - [[Quantum Fourier Transform Circuit]]
+- [[Improved Reversible and Quantum Circuits for Karatsuba-Based Integer Multiplication (Parent-Roetteler-Mosca 2017) — Paper Notes]] — reduces the cost of the underlying multiplier via Karatsuba recursion
+- [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes]] — uses this trick with a Toffoli-based modular multiplier to achieve $2n + 2$ qubit Shor's algorithm

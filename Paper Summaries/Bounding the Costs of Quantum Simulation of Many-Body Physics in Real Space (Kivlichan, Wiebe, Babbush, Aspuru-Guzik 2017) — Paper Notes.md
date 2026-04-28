@@ -174,6 +174,7 @@ The $\tilde{O}(\eta^2)$ claim is real but conditional on a fixed grid spacing. O
 ## Cross-links
 
 ### Paper notes
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes]] — directly tightens the product formula analysis for real-space Hamiltonians and proves high-order Trotter beats qubitization in the large-$N$ regime; this paper's LCU cost is matched there by qubitization at $O(N^2 t)$
 - [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes]] — companion paper using same [[Truncated Taylor Series Simulation]] for first-quantized simulation but in the orbital/CI basis rather than real space; achieves $\tilde{O}(\eta^2 N^3 t)$ with $\tilde{O}(\eta)$ qubits
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — hardware experiment using Trotter; motivates why better simulation algorithms (both LCU-based) are needed
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — overlapping authors (Babbush, Wiebe); sister paper using second-quantized plane-wave dual basis for periodic systems; both apply LCU/Taylor series to periodic-boundary Hamiltonians but use entirely different representations (first-quantized position grid here vs. second-quantized dual basis there)

@@ -35,8 +35,11 @@ Only works when $T$ and $V$ are diagonal in dual (Fourier-related) bases. For no
 
 ## Related notes
 
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes]] — provides tight complexity analysis for this trick applied to real-space Hamiltonian simulation; proves high-order product formulas using this switching are near-optimal
 - [[Quantum Simulations of Fermionic Systems (Ortiz-Gubernatis-Knill-Laflamme 2001) — Paper Notes]]
 - [[Quantum Algorithm Providing Exponential Speed Increase for Finding Eigenvalues and Eigenvectors (Abrams-Lloyd 1999) — Paper Notes]]
 - [[Structured PDE Hamiltonian Simulation via QFT-QSFT-QCT (Quantum 2021-11-10-574) — Paper Notes]]
 - [[QFT Diagonalization for Circulant Laplacians]]
 - [[Order-Condition Cancellation in Product Formulas]]
+- [[Trotter Error via Nested Commutators for Real-Space Hamiltonians]]
+- [[Split-Operator Real-Space Simulation on a Quantum Computer]]

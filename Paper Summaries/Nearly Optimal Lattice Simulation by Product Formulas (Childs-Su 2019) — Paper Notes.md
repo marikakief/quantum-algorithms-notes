@@ -142,6 +142,7 @@ The analysis extends to:
 
 1. [[Local Error Representation for Lattice Product Formulas]] — represent product-formula error as an integral where the integrand consists of commutators nested with unitary conjugations, with the number of terms independent of $n$ and $t$. The commutator structure then gives the correct locality-dependent bound.
 2. [[Even-Odd Term Ordering for Lattice Simulation]] — grouping lattice terms into even and odd sets so each group consists of commuting terms, enabling efficient parallelisation and simplified error analysis.
+3. [[Ordering Robustness for First-Order Lattice Trotter]] — for first-order Trotter on a 1D lattice, any term ordering gives the same $O(nt^2)$ error bound. Any permutation can be reached from even-odd via at most $2n$ adjacent-exponential swaps, each costing $O(t^2)$.
 
 ---
 
@@ -162,6 +163,7 @@ The analysis extends to:
 ## Cross-links
 
 ### Paper notes
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes]] — extends the near-optimal product formula analysis to real-space Hamiltonians (non-local kinetic term), using QFT basis switching in place of the lattice locality argument; also proves qubitization does not improve over high-order Trotter for real-space dynamics
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — sister paper developing the general commutator framework; this paper specialises it to lattice geometry for sharper bounds
 - [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — complementary improvement via randomization; doesn't achieve linear-in-$n$ scaling
 - [[Quantum Algorithm for Simulating Real Time Evolution of Lattice Hamiltonians (Haah-Hastings-Kothari-Low 2021) — Paper Notes]] — alternative near-optimal algorithm via Lieb-Robinson decomposition; larger constant prefactor
@@ -174,6 +176,7 @@ The analysis extends to:
 ### Trick cards
 - [[Local Error Representation for Lattice Product Formulas]]
 - [[Even-Odd Term Ordering for Lattice Simulation]]
+- [[Ordering Robustness for First-Order Lattice Trotter]]
 - [[Trotter Commutator-Scaling Bound]] — the general commutator framework from the sister paper
 - [[Order-Condition Cancellation in Product Formulas]] — used in the higher-order analysis
 - [[Product-Formula Time-Slicing for Local Hamiltonians]] — the basic idea this paper makes rigorous

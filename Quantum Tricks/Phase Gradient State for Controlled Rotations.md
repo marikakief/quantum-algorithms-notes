@@ -32,7 +32,10 @@ The addition into the phase gradient state costs $b - 2$ Toffolis ($b - 3$ if $\
 Angles are discretized to multiples of $2\pi / 2^b$. To achieve rotation error $\leq \varepsilon$, need $b = O(\log(1/\varepsilon))$ plus overhead for multiplication precision (extra $O(\log n)$ bits). The state $|\phi\rangle$ must be maintained coherently throughout the computation.
 
 ## Related notes
+- [[Addition on a Quantum Computer (Draper 2000) — Paper Notes]] — the original QFT-based adder that introduced Fourier-basis addition; the phase gradient state is a direct descendant of this idea (see [[Fourier State as Eigenstate of Addition]] and [[Arithmetic in the Fourier Basis]])
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — the addition circuit whose T-count determines the per-rotation cost
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes]]
 - [[QROM (Quantum Read-Only Memory)]]
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]]
 - [[Adaptive QROM for Function Evaluation]]
+- [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] — cites phase gradient technique for practical implementation of local QFT blocks; also uses the phase gradient $Z_{2^n}^{r_2}$ in the Weyl–Heisenberg 1-design for the worst-to-average-case reduction

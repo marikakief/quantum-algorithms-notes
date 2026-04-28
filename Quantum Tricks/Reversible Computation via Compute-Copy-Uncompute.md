@@ -57,3 +57,4 @@ Requires running the computation forward AND backward. If $G^{-1}$ is much harde
 - [[Sorting Networks as Quantum Control-Flow Compilers]]
 - [[Reversible Comparator with Swap Record]]
 - [[Hamiltonian-to-Projection via Phase Estimation]]
+- [[Improved Reversible and Quantum Circuits for Karatsuba-Based Integer Multiplication (Parent-Roetteler-Mosca 2017) — Paper Notes]] — applies compute-copy-uncompute at each recursion level; [[Pebble Game Space Reduction for Recursive Circuits|pebble game analysis]] optimises when to uncompute

@@ -32,6 +32,7 @@ The rotation synthesis cost drops from $n \cdot c \log(1/\varepsilon)$ to $(\log
 Only works when the $n$ rotations have exactly the same angle. If angles differ, you need to decompose into equiangular groups first — see [[Translation-Invariant Hamming Weight Grouping]] for how translation symmetry enables this. Randomized Trotter methods (e.g., Campbell 2019) typically destroy the equiangular structure, making Hamming weight phasing inapplicable.
 
 ## Related notes
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — introduces the adder (T-count $4n$) and [[Temporary Logical-AND]] used to compute Hamming weights
 - [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes]] — primary application paper
 - [[Translation-Invariant Hamming Weight Grouping]] — ordering trick that maximizes equiangular groups
 - [[Rotation Catalysis via Hamming Weight Phasing]] — further optimization for specific angles

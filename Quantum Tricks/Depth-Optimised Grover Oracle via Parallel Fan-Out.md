@@ -13,7 +13,7 @@ The naive approach checks clauses sequentially, giving depth $O(m)$. Instead:
 
 1. **Fan-out** each input bit $x_i$ to $m$ copies using a CNOT tree of depth $\lceil\log m\rceil$. In the surface code, fan-out (CNOT with multiple targets) takes the same time as a single CNOT, so this is essentially free in terms of Toffoli depth.
 
-2. **Check all clauses in parallel:** Each clause is a Toffoli controlled on $k$ bits (with some NOTs for negated literals). Since all clauses are now on separate copies of the input, they can all be checked simultaneously. Toffoli depth: $2(\lceil\log k\rceil - 1) + 1$ using the binary tree decomposition of multi-controlled Toffolis, with Gidney's "uncompute AND" trick replacing half the Toffolis with classically-controlled Cliffords.
+2. **Check all clauses in parallel:** Each clause is a Toffoli controlled on $k$ bits (with some NOTs for negated literals). Since all clauses are now on separate copies of the input, they can all be checked simultaneously. Toffoli depth: $2(\lceil\log k\rceil - 1) + 1$ using the binary tree decomposition of multi-controlled Toffolis, with Gidney's [[Temporary Logical-AND|"uncompute AND" trick]] replacing half the Toffolis with classically-controlled Cliffords.
 
 3. **AND of all clause results:** A Toffoli controlled on $m$ bits, implemented as a depth-$2(\lceil\log m\rceil - 1)$ binary tree.
 
@@ -40,4 +40,5 @@ The qubit overhead is large — $O(mn)$ copies of the input. For problems where 
 ## Related notes
 - [[Applying Quantum Algorithms to Constraint Satisfaction Problems (Campbell-Khurana-Montanaro 2019) — Paper Notes]]
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]]
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — source of the temporary logical-AND trick used here
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes]]

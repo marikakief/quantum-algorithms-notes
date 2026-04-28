@@ -32,5 +32,6 @@ Not suitable when high precision is needed — the error is polynomial in $2^{-b
 
 ## Related notes
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes]]
+- [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes]] — the piecewise polynomial approach to function evaluation; this QROM trick is a cheaper alternative for low-precision cases
 - [[QROM (Quantum Read-Only Memory)]]
 - [[Qubitization (Quantum Walk for Spectral Encoding)]]

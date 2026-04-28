@@ -35,6 +35,8 @@ Only works cleanly when $\hat{H} = \hat{T}(p) + \hat{V}(x)$. Velocity-dependent 
 
 ## Related notes
 - [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]]
+- [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes]] — proves that high-order product formulas using this same QFT splitting achieve near-optimal $(Nt)^{1+o(1)}$ complexity, and that qubitization does not improve on it
 - [[Fourier-Eigenstate Kickback for Arithmetic Oracles]]
 - [[Product-Formula Time-Slicing for Local Hamiltonians]]
 - [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes]]
+- [[Trotter Error via Nested Commutators for Real-Space Hamiltonians]]

@@ -44,7 +44,10 @@ No additional runtime cost. This is a tighter analysis of the same simulation al
 ## Related notes
 
 - [[Hamiltonian Simulation with Random Inputs (Zhao-Zhou-Shaw-Li-Childs 2022) — Paper Notes]]
+- [[Entanglement Accelerates Quantum Simulation (Zhao-Zhou-Childs 2025) — Paper Notes]] — extends this bound to arbitrary entangled states via Schmidt rank; this 1-design bound is the special case of maximum entanglement
+- [[Entanglement-Entropy-Dependent Trotter Error Bound]] — the generalisation: replaces $1/\sqrt{d}$ with $\chi^{-1/2}$ (Schmidt rank of input)
 - [[Frobenius-Norm Commutator Sum for Product Formulas]]
 - [[Trotter Commutator-Scaling Bound]]
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]]
 - [[Fermionic Seminorm for Trotter Error]] — complementary approach: restrict to physical subspace rather than average over inputs
+- [[Optimistic Quantum Circuits]] — related framework using Frobenius-norm error for circuit approximation (average over basis states rather than random input states)

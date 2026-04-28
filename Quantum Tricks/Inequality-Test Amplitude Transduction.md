@@ -20,7 +20,7 @@ $$\frac{\alpha_\ell^{(n)}}{\sqrt{2^n}} \approx \sqrt{2^n}\, \alpha_\ell$$
 
 — proportional to the coefficient $\alpha_\ell$. For **root coefficients** ($\sqrt{\alpha_\ell}$), skip the Hadamard un-preparation of `ref`: the amplitude is then $\sqrt{\alpha_\ell^{(n)}/2^n}$.
 
-**Cost:** The comparator is a ripple-carry comparison requiring exactly $n$ Toffoli gates. Compare to computing $\arcsin(\alpha/2^n)$: $>4800$ Toffolis at $n=17$, $>11000$ at $n=30$.
+**Cost:** The comparator is a [[A New Quantum Ripple-Carry Addition Circuit (Cuccaro-Draper-Kutin-Moulton 2004) — Paper Notes|ripple-carry comparison]] requiring exactly $n$ Toffoli gates. Compare to computing $\arcsin(\alpha/2^n)$: $>4800$ Toffolis at $n=17$, $>11000$ at $n=30$.
 
 ## When to reach for it
 - Any black-box state preparation (PREPARE oracle) where coefficients are given as $n$-bit fixed-point values

@@ -116,7 +116,7 @@ The paper cites Babbush et al. (2018, 1805.03662) as a key consumer: their fault
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low-Chuang (2019)]] — qubitization uses state preparation as PREPARE oracle
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT uses PREPARE
 - Babbush et al. (2018, 1805.03662) — fault-tolerant chemistry simulation consuming this state preparation
-- Häner-Roetteler-Svore (2018, 1805.12445) — optimised quantum arithmetic; Table II provides the arcsine Toffoli counts
+- [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes|Häner-Roetteler-Svore (2018)]] — optimised quantum arithmetic; Table II provides the arcsine Toffoli counts
 - Gidney (2018) — Toffoli gate constructions
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes|Berry-Kieferová-Scherer-Sanders-Low-Wiebe-Gidney-Babbush (2018)]] — shares three authors; uses state preparation for eigenstate preparation in chemistry
 
@@ -128,6 +128,7 @@ The paper cites Babbush et al. (2018, 1805.03662) as a key consumer: their fault
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — primary consumer of this state preparation primitive
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes]] — LCU framework requires PREPARE oracle
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — QSVT block encodings use PREPARE
+- [[Optimizing Quantum Circuits for Arithmetic (Häner-Roetteler-Svore 2018) — Paper Notes]] — the arcsine arithmetic that this paper's inequality test replaces; Table II is the Toffoli-count baseline
 - [[Fermionic Eigenstate Prep Techniques (Nature 2018) — Paper Notes]] — same research group; shares three authors
 - [[Sublinear-T Block-Encodings for Second-Quantized Hamiltonians (arXiv 2510.08644) — Paper Notes]] — later work using comparator-based amplitude loading (SELECT-SWAP)
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — amplitude amplification subroutine

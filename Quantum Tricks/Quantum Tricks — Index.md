@@ -185,6 +185,21 @@ qmd query "low-energy phase estimation trick sqrt Delta lambda"
 - [[Faber-Polynomial Region Mapping for Complex-Spectrum Eigenvalue Transforms]]
 - [[Fourier-Convolution Coefficient-State Preparation in Polylog Time]]
 
+### From log-depth carry-lookahead adder (arXiv:quant-ph/0406142)
+- [[Carry-Lookahead Tree for Logarithmic-Depth Addition]]
+- [[Two's-Complement Carry Erasure for In-Place Adders]]
+- [[Phase Overlapping in Tree Circuits]]
+
+### From approximate encoded permutations and piecewise adders (arXiv:1905.08488)
+- [[Approximate Encoded Permutation Framework]]
+- [[Oblivious Carry Runway]]
+- [[Coset Representation for Approximate Modular Arithmetic]]
+
+### From log-depth optimistic QFT (arXiv:2505.00701)
+- [[Optimistic Quantum Circuits]]
+- [[Worst-to-Average-Case Reduction for Optimistic Circuits]]
+- [[Quantum Phase Estimation on Blocks for QFT Parallelisation]]
+
 ## Card template (for future additions)
 
 - What it does

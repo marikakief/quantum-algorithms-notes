@@ -24,7 +24,7 @@ The key insight is that dirty qubits are **free** in many fault-tolerant algorit
 - Fault-tolerant resource estimation: when counting T gates, check whether idle qubits could be borrowed as dirty ancillae.
 - Any subroutine where parallelism reduces non-Clifford cost (data lookup, controlled-swap networks, multi-target CNOT).
 - The [[SelectSwap Network for Data Lookup]] is the primary application, but the pattern generalises.
-- Addition circuits also exhibit T-count/dirty-qubit tradeoffs (Gidney 2018), and so do AND gates (Barenco et al. 1995).
+- Addition circuits also exhibit T-count/dirty-qubit tradeoffs ([[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney 2018]]), and so do AND gates (Barenco et al. 1995).
 
 ## Complexity
 
@@ -45,4 +45,7 @@ The benefit is proportional to the number of dirty qubits $\lambda$ available:
 - [[SelectSwap Network for Data Lookup]] — primary application
 - [[QROM (Quantum Read-Only Memory)]]
 - [[QROAM (Space-Time Tradeoff for QROM)]]
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — the adder that motivates ancilla-vs-T-gate tradeoff analysis
+- [[Temporary Logical-AND]] — the primitive whose ancilla cost is the tradeoff subject
+- [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes]] — builds a constant adder entirely from dirty ancillae; see [[Dirty Ancilla Constant Addition]]
 - [[Error Budget Optimization for Fault-Tolerant Algorithms]]

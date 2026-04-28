@@ -38,6 +38,7 @@ Requires mid-circuit measurement and classical feedforward. In the surface code 
 The fixup table $F$ must be computed classically in real time from the measurement outcomes. For large $d$, this classical computation (essentially a bitwise inner product) must complete within the coherence window.
 
 ## Related notes
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — introduces the [[Measurement-Asymmetric Uncomputation|measure-and-fixup principle]] that this trick generalises to data lookup
 - [[QROAM (Space-Time Tradeoff for QROM)]]
 - [[QROM (Quantum Read-Only Memory)]]
 - [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]]

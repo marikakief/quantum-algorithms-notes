@@ -32,7 +32,7 @@ Compare with naive approaches:
 - Persistent ancilla: $\lceil \log(L+1) \rceil$ (output register)
 - Temporary ancilla: $2\log L + O(1)$
 
-When paired with uncomputation (compute + uncompute the sum), the average Toffoli cost drops to $< L$ because the tree sums can be uncomputed with no Toffoli cost using Gidney's measurement-based uncomputation.
+When paired with uncomputation (compute + uncompute the sum), the average Toffoli cost drops to $< L$ because the tree sums can be uncomputed with no Toffoli cost using Gidney's [[Measurement-Asymmetric Uncomputation|measurement-based uncomputation]].
 
 ## Caveat
 The $< 2L$ bound is asymptotic; for small $L$ the group size $\lceil \log L \rceil$ doesn't buy much. The technique is most useful when $L$ is large enough that $L / \log L \ll L$. For $L < 16$ or so, a direct tree sum is simpler.
@@ -40,4 +40,6 @@ The $< 2L$ bound is asymptotic; for small $L$ the group size $\lceil \log L \rce
 ## Related notes
 - [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes]]
 - [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]]
+- [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — source of the measurement-based uncomputation technique
+- [[Temporary Logical-AND]] — the AND primitive used in the tree sums
 - [[Unary Iteration]]
