@@ -41,3 +41,4 @@ Only gives magnitudes, not signs. Sign recovery requires additional techniques: 
 - [[Clique Bound from Uncertainty Principle]]
 - [[Mimicking State via Matrix Multiplicative Weights]]
 - [[Shadow Tomography for QMC Overlap Estimation]]
+- [[Information-Theoretic Bounds on Quantum Advantage in ML (Huang-Kueng-Preskill 2021) — Paper Notes]]

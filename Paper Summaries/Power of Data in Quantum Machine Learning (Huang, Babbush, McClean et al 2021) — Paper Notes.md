@@ -158,7 +158,7 @@ That said, the elephant in the room is that no one has found a natural, practica
 
 - Havlíček, Córcoles, Temme et al. (2019) — defines the quantum kernel method $k_Q = \text{Tr}(\rho(x_i)\rho(x_j))$; Nature 567, 209
 - Liu, Arunachalam, Temme (2020) — discrete logarithm learning problem that provides provable quantum speedup; arXiv:2010.02174
-- Huang, Kueng, Preskill (2020) — [[Shadow Tomography for QMC Overlap Estimation|classical shadow formalism]] used for projected quantum kernels and RDM estimation; Nat. Phys.
+- [[Predicting Many Properties from Very Few Measurements (Huang-Kueng-Preskill 2020) — Paper Notes|Huang, Kueng, Preskill (2020)]] — classical shadow formalism used for projected quantum kernels and RDM estimation; Nat. Phys.
 - Jacot, Gabriel, Hongler (2018) — neural tangent kernel: wide neural networks are equivalent to kernel regression; arXiv:1806.07572
 - McClean, Boixo, Smelyanskiy, Babbush, Neven (2018) — barren plateaus in quantum neural network training; Nature Comms 9, 1
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|Peruzzo, McClean et al. (2014)]] — VQE on photonic processor; Nature Comms 5, 4213 (cited as precursor to quantum neural networks)
@@ -170,6 +170,10 @@ That said, the elephant in the room is that no one has found a natural, practica
 ## Cross-links
 
 ### Paper notes
+- [[Predicting Many Properties from Very Few Measurements (Huang-Kueng-Preskill 2020) — Paper Notes]] — classical-shadows foundation used for the projected quantum kernel / all-RDM construction
+- [[Provably efficient machine learning for quantum many-body problems (Huang-Kueng-Torlai-Albert-Preskill 2022) — Paper Notes]] — later shadow-based classical ML result for gapped many-body systems and phase classification.
+- [[Learning to predict arbitrary quantum processes (Huang-Chen-Preskill 2023) — Paper Notes]] — pushes the same big theme further: sufficiently informative data can make prediction easy even when direct simulation of the quantum process is hopeless.
+- [[Learning shallow quantum circuits (Huang-Liu-Broughton-Kim-Anshu-Landau-McClean 2024) — Paper Notes]] — complementary learning-vs-simulation separation: shallow circuits can be classically hard to sample from and still classically learnable from the right measurement data.
 - [[Unbiasing Fermionic Quantum Monte Carlo with a Quantum Computer (Huggins, Babbush et al 2021) — Paper Notes]] — uses classical shadows for overlap estimation; same shadow tomography formalism used here for projected quantum kernels
 - [[Efficient and Noise Resilient Measurements for Quantum Chemistry on Near-Term Quantum Computers (Huggins, McClean, Rubin, Babbush et al 2021) — Paper Notes]] — shares authors (McClean, Babbush); both address measurement strategies for quantum advantage
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — VQE as precursor to variational quantum ML models
