@@ -1,115 +1,112 @@
 # Quantum Foundations
 
-A zettelkasten-style knowledge base for quantum algorithms, built as an [Obsidian](https://obsidian.md) vault of interconnected Markdown files. ~1,200 notes covering ~340 papers and ~850 reusable technique cards, heavily cross-linked with `[[wikilinks]]`.
+A working Obsidian vault for quantum algorithms: interconnected Markdown notes on papers, reusable technique cards, concept hubs, and comparison tables.
 
-Started in early 2026 as a way to get back into the literature after a research hiatus. It has since become a fairly large working knowledge base rather than a small side project.
-
-> **Open this in Obsidian.** The notes are plain Markdown, but the value is in the link structure — graph view, backlinks, and hover previews make the connections between papers visible. Reading these as flat files works, but you'll miss the point.
-
-## What's in here
-
-The vault has two primary note types, connected by wikilinks:
-
-**Paper notes** (~340) — one per paper. Each covers: the problem being solved, main results with exact complexity statements, the full algorithm or construction, key theorems, comparison with prior work, limitations, and links to extracted techniques. These aren't summaries — they're detailed enough to reconstruct the main argument without reopening the PDF.
-
-**Trick cards** (~850) — atomic, reusable technique notes. Each explains a single idea: what it does, how it works, when to reach for it, what it costs, and where it breaks. They link back to their source papers and forward to related techniques. This is the zettelkasten layer — ideas separated from the papers they came from, available to recombine.
-
-The trick cards are the heart of the vault. A technique like "block encoding via LCU" or "Chebyshev spectral discretisation" shows up across many papers. Extracting it into a standalone card and linking it everywhere it appears turns a collection of paper summaries into a network of ideas instead of a long shelf of disconnected notes.
-
-**Also:**
-- **Concept hubs** (6) — landing pages for major topics: Hamiltonian simulation, product formulas, quantum phase estimation, amplitude amplification, hidden subgroup problem, Lieb-Robinson bounds. Define the concept, link out to relevant papers and tricks.
-- **Comparison tables** (7) — resource estimates and method comparisons for quantum chemistry (NISQ experiments, fault-tolerant estimates, circuit primitives, technique crosswalk) and Hamiltonian simulation (time-dependent methods, general comparison).
-- **Paper Index** — all papers organised by topic (~30 sections).
-- **Quantum Algorithm Zoo tracker** — marks which zoo entries have vault notes.
-
-## Topic coverage
-
-The coverage reflects what I was reading, not a systematic survey. Strongest areas:
-
-- **Hamiltonian simulation** — product formulas (Trotter error theory, randomised/multi-product/corrected formulas), LCU methods, QSP/QSVT, Taylor series, Dyson series, interaction picture. The densest cluster.
-- **Quantum chemistry** — resource estimation pipeline from VQE through fault-tolerant (FeMoCo, materials, catalysis). Includes a FeMoCo resource estimation timeline tracking the drop from ~10¹⁴ to ~10⁹ Toffolis.
-- **Linear systems and differential equations** — HHL through Carleman linearisation, spectral methods, LCHS for non-unitary dynamics. Includes the negative results (Linden-Montanaro-Shao).
-- **Complexity theory** — QMA-completeness, BQP, quantum interactive proofs, query complexity lower bounds.
-- **Quantum walks** — Szegedy, MNRS, element distinctness, formula evaluation, walk search on arbitrary graphs.
-- **Quantum machine learning** — Boltzmann machines, barren plateaus, topological data analysis.
-- **State preparation** — adiabatic, Lindbladian, spectral amplification methods.
-- **Foundational** — Grover, Shor-era results, communication complexity, quantum information theory.
-
-Weaker or absent: quantum error correction (beyond fault-tolerance theory), quantum networking, experimental implementations (beyond chemistry benchmarks), continuous-variable QC.
-
-## Structure
-
-```
-Quantum Foundations/
-├── Paper Summaries/       (~340 paper notes)
-├── Quantum Tricks/        (~850 technique cards)
-├── Comparison Tables/     (7 resource/method comparison tables)
-├── Concept Hubs/          (6 topic overview pages)
-├── Paper Index.md         (topical index, ~30 sections)
-├── Quantum algorithm zoo.md
-└── README.md
-```
-
-All files are standard Markdown. Maths uses `$...$` and `$$...$$` (LaTeX). Links use Obsidian `[[wikilinks]]`. Some notes use tags, but the vault is navigated mainly through links, the Paper Index, hubs, and backlinks rather than a frontmatter-heavy metadata scheme.
-
-## Navigating
-
-**Start with a concept hub** if you want an overview of a topic area. They define the concept and link to relevant papers and tricks.
-
-**Start with the Paper Index** if you're looking for a specific paper or want to browse by topic.
-
-**Start with a trick card** if you remember a technique but not which paper it came from. The backlinks panel shows every paper that uses it.
-
-**Use graph view** filtered by folder (`path:Paper Summaries` or `path:Quantum Tricks`) to see the link structure. Colour by folder to see the bipartite structure: papers on one side, tricks on the other, with links crossing between them.
-
-## Recommended Obsidian setup
-
-### Core plugins (built-in)
-
-- **Backlinks** — which notes link to the current one. Essential for trick cards. Enable "Backlinks in document."
-- **Graph view** — the link structure visualised. Filter by path or tag to see topic clusters.
-- **Page preview** — hover over a wikilink to see the target note inline.
-- **Outline** — table of contents for long paper notes.
-- **Tags** — browse by topic tag.
-
-### Community plugins (recommended)
-
-- **Dataview** — query the vault like a database ("list all papers by Berry sorted by year").
-- **Graph Analysis** — find clusters, shortest paths, hub identification.
-
-### Settings
-
-- **Use [[Wikilinks]]** → ON
-- **Readable line length** → ON
-- **Show frontmatter** → OFF for reading
-
-## On "zettelkasten"
-
-This borrows from the zettelkasten method — particularly the idea of atomic notes (trick cards) that exist independently of their source and can be linked into new contexts. But it's more structured than a pure zettelkasten: paper notes are organised by folder and indexed by topic, not just linked freely. Think of it as zettelkasten principles applied to a literature review, with the trick cards as the permanent notes and the paper summaries as the literature notes.
-
-## AI disclosure
-
-Notes in this vault were produced with help from multiple frontier AI systems over time, not a single model. Different parts of the collection were generated, expanded, or revised using different frontier AIs, then directed and spot-checked by me. I did not write the whole vault by hand.
-
-Errors are possible — especially on exact complexity bounds, technical assumptions, and proof details. If you find one, open an issue.
-
-Read the actual papers. These notes are for navigation, synthesis, and connection-building, not as a substitute for the source material.
-
-## What this isn't
-
-- **Complete.** Coverage reflects what I was working on. Major areas are missing.
-- **Error-free.** AI-generated, spot-checked. Complexity bounds may be wrong.
-- **A textbook.** Assumes graduate-level quantum computing background.
-- **Stable.** Notes get added and revised regularly. Cross-links may dangle temporarily.
-- **Uniform.** The style is broadly consistent, but the vault was built over time and different note batches reflect slightly different drafting workflows.
-
-## Current scale
-
-Current snapshot of the `Quantum Foundations` folder:
-- **~1,200 Markdown notes total**
+Current snapshot: **1,207 notes total**
 - **344 paper notes**
 - **847 trick cards**
 - **6 concept hubs**
 - **7 comparison tables**
 
-If these numbers drift again, trust the folder contents over the README.
+This is not a textbook or a polished survey. It is a research knowledge base built for navigation, synthesis, and reconnecting ideas across the literature.
+
+> **Open this in Obsidian.** The files are plain Markdown, but the point of the vault is the link structure: backlinks, hover previews, graph view, and local traversal through `[[wikilinks]]`.
+
+## What is in the vault
+
+### Paper notes
+One note per paper. These are closer to reconstruction notes than summaries: problem setting, main result, complexity statements, proof or construction skeleton, limitations, and links out to reusable techniques.
+
+### Trick cards
+Atomic technique notes extracted from papers. Each card is meant to answer: what is the idea, what does it buy, when should you use it, what does it cost, and what are its failure modes? These are the core of the vault.
+
+### Concept hubs
+Landing pages for major topics such as Hamiltonian simulation, product formulas, phase estimation, amplitude amplification, hidden subgroup problem, and Lieb-Robinson bounds.
+
+### Comparison tables
+Cross-paper tables for resource estimates and method comparison, especially around Hamiltonian simulation and quantum chemistry.
+
+### Indices and trackers
+- **Paper Index.md** for topical browsing
+- **Quantum algorithm zoo.md** for coverage tracking against the Quantum Algorithm Zoo
+
+## Strengths of the current coverage
+
+The vault is deep rather than uniform. Strongest areas:
+
+- **Hamiltonian simulation** — product formulas, randomization, QSP/QSVT, Taylor/Dyson/interaction-picture methods
+- **Quantum chemistry** — from VQE-era methods to fault-tolerant resource estimates
+- **Linear systems and differential equations** — HHL, spectral methods, Carleman linearisation, non-unitary dynamics
+- **Complexity theory** — QMA-completeness, BQP, query lower bounds, interactive proofs
+- **Quantum walks** — Szegedy/MNRS, search, element distinctness, formula evaluation
+- **Quantum machine learning** — selected theory-heavy notes rather than broad application coverage
+- **State preparation and energy estimation**
+- **Foundational algorithm papers** — Grover/Shor-era results and adjacent landmarks
+
+Weaker or sparse: error correction beyond fault-tolerance theory, networking, experimental systems work, and continuous-variable quantum computing.
+
+## Folder structure
+
+```text
+Quantum Foundations/
+├── Paper Summaries/
+├── Quantum Tricks/
+├── Comparison Tables/
+├── Concept Hubs/
+├── Paper Index.md
+├── Quantum algorithm zoo.md
+└── README.md
+```
+
+All notes are standard Markdown. Maths uses LaTeX (`$...$`, `$$...$$`). Links use Obsidian `[[wikilinks]]`.
+
+## Best ways to navigate
+
+- **Start with a concept hub** for a topic-level overview.
+- **Start with Paper Index.md** if you want a paper by area.
+- **Start with a trick card** if you remember the method but not the source paper.
+- **Use backlinks** to move from a technique to every paper that uses it.
+- **Use graph view** with folder filters to see the paper/trick structure.
+
+A useful graph filter is to colour by folder and view papers and tricks as a bipartite network: papers on one side, extracted methods on the other.
+
+## Recommended Obsidian setup
+
+### Core plugins
+- **Backlinks**
+- **Graph view**
+- **Page preview**
+- **Outline**
+- **Tags**
+
+### Useful community plugins
+- **Dataview**
+- **Graph Analysis**
+
+### Settings
+- **Use `[[Wikilinks]]`** → ON
+- **Readable line length** → ON
+- **Show frontmatter** → OFF for reading
+
+## What this vault is and is not
+
+### It is
+- a linked literature knowledge base
+- a place to extract reusable algorithmic ideas from papers
+- a way to recover context quickly without reopening every PDF
+
+### It is not
+- **complete** — coverage reflects reading priorities
+- **error-free** — exact bounds, assumptions, and proof details can be wrong
+- **stable** — notes are revised and links may occasionally lag behind
+- **introductory** — assumes graduate-level quantum computing background
+
+## AI disclosure
+
+The vault was built with assistance from multiple frontier AI systems over time, then directed and spot-checked by a human curator. It was not written fully by hand, and it should not be treated as a substitute for the papers themselves.
+
+If something important depends on an exact theorem statement, complexity bound, or hidden assumption, verify against the source.
+
+## Maintenance note
+
+If the counts above drift, trust the folder contents over this README.
