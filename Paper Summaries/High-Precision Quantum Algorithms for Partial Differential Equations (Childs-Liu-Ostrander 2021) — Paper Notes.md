@@ -112,6 +112,7 @@ The exponential improvement is in $\varepsilon$-dependence: from $\mathrm{poly}(
 - Costa, Jordan & Ostrander (2019, arXiv:1901.02510) — quantum algorithm for hyperbolic PDEs via FVM; also poly$(1/\varepsilon)$
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow, Hassidim & Lloyd (2009)]] — original QLSA
 - [[Quantum Algorithm for Nonhomogeneous Linear PDEs (Arrazola-Kalajdzievski-Weedbrook-Lloyd 2019) — Paper Notes|Arrazola et al. (2019)]] — nonhomogeneous linear PDEs
+- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes|Bagherimehrab et al. (2023)]] — later PDE solver that attacks the finite-difference condition-number bottleneck using wavelet preconditioning rather than spectral discretisation
 
 ## Cross-links
 
@@ -121,6 +122,7 @@ The exponential improvement is in $\varepsilon$-dependence: from $\mathrm{poly}(
 - [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes]] — related; nonlinear ODE solving by the same group
 - [[Quantum Simulation of Real-Space Dynamics (Childs-Leng-Li-Liu-Zhang 2022) — Paper Notes]] — applies spectral discretisation to real-space quantum simulation
 - [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] — earlier real-space discretisation analysis with poly$(1/\varepsilon)$
+- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes]] — later wavelet-preconditioned PDE solver with $N$-independent effective condition number for elliptic problems
 - [[Structured PDE Hamiltonian Simulation via QFT-QSFT-QCT (Quantum 2021-11-10-574) — Paper Notes]] — closely related; may be a duplicate entry for QSFT/QCT techniques from this paper
 
 ### Trick cards

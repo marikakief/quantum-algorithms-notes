@@ -120,6 +120,7 @@ The discrete approach (e.g., [[Quantum Algorithm for Linear Differential Equatio
 - Lloyd-Braunstein (1999) — universality of CV quantum computation
 - Sefi-van Loock (2011) — commutator approximations for CV gates that this paper's exact decompositions replace
 - [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes|Leyton-Osborne (2008)]] — cited for nonlinear ODE quantum algorithms
+- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes|Bagherimehrab et al. (2023)]] — later PDE solver that removes the finite-difference condition-number bottleneck for elliptic problems using wavelet preconditioning
 
 ---
 
@@ -133,6 +134,7 @@ The discrete approach (e.g., [[Quantum Algorithm for Linear Differential Equatio
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes]]
 - [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes]]
 - [[Quantum vs. Classical Algorithms for Solving the Heat Equation (Linden-Montanaro-Shao 2022) — Paper Notes]]
+- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes]]
 
 ### Trick cards
 - [[Fourier Decomposition Technique for Operator Inversion]]

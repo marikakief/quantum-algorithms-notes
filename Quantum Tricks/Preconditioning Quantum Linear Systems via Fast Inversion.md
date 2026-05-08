@@ -53,5 +53,7 @@ The $1/\xi$ lower bound (tight by reduction to search) means that even with perf
 - [[Block-Encoding Composition Algebra]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]]
+- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes]]
+- [[Wavelet Preconditioning for Quantum PDE Solvers]]
 - [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Paper Notes]]
 - [[Interaction-Picture Norm Reduction]]
