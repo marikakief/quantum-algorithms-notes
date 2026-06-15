@@ -1,0 +1,1807 @@
+
+
+--- PAGE 1 ---
+An eﬃcient quantum algorithm for lattice problems
+achieving subexponential approximation factor
+Lior Eldar∗
+Sean Hallgren†
+Abstract
+We give a quantum algorithm for solving the Bounded Distance Decoding (BDD)
+problem with a subexponential approximation factor on a class of integer lattices.
+The quantum algorithm uses a well-known but challenging-to-use quantum state on
+lattices as a type of approximate quantum eigenvector to randomly self-reduce the
+BDD instance to a random BDD instance which is solvable classically. The running
+time of the quantum algorithm is polynomial for one range of approximation factors
+and subexponential time for a second range of approximation factors.
+The subclass of lattices we study has a natural description in terms of the lattice’s
+periodicity and ﬁnite abelian group rank. This view makes for a clean quantum algo-
+rithm in terms of ﬁnite abelian groups, uses very relatively little from lattice theory,
+and suggests exploring approximation algorithms for lattice problems in parameters
+other than dimension alone.
+A talk on this paper sparked many lively discussions and resulted in a new classical
+algorithm matching part of our result. We leave it as a challenge to give a classcial
+algorithm matching the general case.
+1
+Introduction
+We give an eﬃcient quantum algorithm for a special case of the closest lattice vector problem
+in a new range of approximation factors, namely the subexponential range. In this type of
+problem a basis B ∈Zn×n and a target vector t ∈Zn are given and the goal is to compute
+the closest lattice vector Bc to t for integer coeﬃcients. This paper is about the important
+special case called Bounded Distance Decoding (BDD) with parameter ε1. It has the extra
+promise that the distance is bounded in the sense that there exists Bc ∈L such that
+∥Bc −t∥< ε1λ1, where λ1 is the shortest nonzero vector length in L, and ε1 ≤1/2, making
+the answer unique. The term ε1 is the approximaton factor and it is typically a function of
+n, the lattice dimension. A lattice can be speciﬁed by an inﬁnite number of bases, making
+the problem diﬃcult.
+There are three broad ranges of approximation factors where lattice problems are unlikely
+to be NP-complete. Starting at the right end, the exponential range typically has the form
+∗eldar.lior@gmail.com
+†Department of Computer Science and Engineering, Pennsylvania State University, 350W Westgate Build-
+ing, University Park, PA 16802, USA. Partially supported by National Science Foundation awards CNS-
+2001470 and OIA-2040667, and by a Vannevar Bush Faculty Fellowship from the US Department of Defense.
+This work was done in part while visiting the Simons Institute for the Theory of Computing.
+1
+arXiv:2201.13450v1  [quant-ph]  31 Jan 2022
+
+
+--- PAGE 2 ---
+ε−1
+1
+= 2n and was solved eﬃciently in the 80’s. Lentra, Lenstra, and Lov´asz [LLL82] gave an
+algorithm to compute an approximate shortest lattice vector, Babai [Bab86] gave algorithms
+for computing an approximate closest lattice vector to a target point, Kannan [Kan87] gave
+an exponential time enumeration algorithm, and Schnorr [Sch87, Sch94] extended these three
+by trading oﬀrunning time in exchange for better approximation factors.
+Adjacent to the exponential range is the subexponential range, which is the focus of this
+paper. Despite several decades of big advances in lattices, this region appears to either be
+very diﬃcult, or has been neglected. In special-case lattices that allow more more eﬃcient
+cryptography because of additional algebraic structure, a sequence of papers work led to an
+eﬃcient quantum algorithm for approximating the shortest vector [EHKS14, BS16, CGS14,
+CDPR16]. Lattices with small determinant have also been examined [CL15]. The subexpo-
+nential region has played a crucial role in recent advances in fully homomorphic encryption
+(FHE) [BV11a, BV11b, GSW13], where it is assumed that certain parameters cannot be
+solved eﬃciently.
+At the hardest end of the range for algorithms and cryptography are polynomial approx-
+imation factors and very important questions about how well existing algorithms work and
+can be optimized for concrete security for the NIST standardization process.
+Cryptography built on the LWE problem, which is as hard as worst-case lattice problems
+for good theoretical security, also allows many new primitives such as FHE and testing
+whether or not machines are quantum [BCM+18, Mah18b], and quantum FHE [Mah18a].
+Therefore, the most important and pressing question is whether or not eﬃcient algorithms
+exist for the polynomial approximation factor range.
+The realistic approach is to start
+with problems in the range adjacent to the ones that are already solvable, which is the
+subexponential range. Even if an eﬃcient algorithm exists for the polynomial range it may
+be too diﬃcult to ﬁnd in one step, but the hope is that the techniques here will be applicable
+to a broader range of cases.
+We propose a partition of lattices into ﬁner blocks than just by dimension alone. The
+partition consists of sets of lattices L(n, q, r) indexed by lattice dimension n, periodicity q,
+and ﬁnite group rank r. The periodicity q of a lattice is the minimum integer q such that
+lattice contains the subgroup q · Zn ⊆L. Therefore L mod q is a ﬁnite abelian subgroup of
+Zn
+q and can be decomposed as Zq1 × · · · × Zqr.
+Through this lens we give a quantum algorithm on a subset of lattices with parameter
+r log q achieving a subexponential approximation factor of the form 2−√r log q and running in
+time poly(n, log q) (Theorem 21). To give a simpliﬁed comparison to existing algorithms an-
+alyzed in terms of dimension, for example, lattices with √r log q < n we get an improvement
+2
+
+
+--- PAGE 3 ---
+over Babai’s algorithm, and BDD on lattices with ﬁnite group rank r = n1/4 and periodicity
+q = 2
+√n can be solved for approximation factor 2−n3/8. The periodicity q cannot be smaller
+than r or BDD becomes trivial. More generally, the new parameter range can be seen in the
+ﬁgures for r = 1 and general r. Changing r changes the trivial region. The left axis has the
+parameter r log q and the bottom axis plots the log of the approximation factor.
+Moving beyond polynomial time, Schnorr’s hierarchy can also be applied to the output of
+the quantum algorithm as a black box to achieve an approximation factor of exp(−r(log q) log β
+β
+)
+in time ββpoly(n, log q). For example, with ε ≤1/2, there is a quantum algorithm achieving
+approximation factor 2nε log n in time 2n1−2ε, while applying Schnorr to the original lattice
+gives time 2n1−ε, i.e., with an extra nε in the time exponent.
+Idea of proof. In the context of the partition, we reduce BDD on worst-case lattices
+in L(n, q, r), to a problem we’ll call ˜ε1-random-BDD where a random matrix ˜B ∈[q]m×r is
+chosen and ˜L ∈L(m, q, r) has as generators the columns of [B|q · I], and a target vector ˜t
+is given with distance at most ˜ε1˜λ1 to ˜L. From lattice theory we need that these types of
+lattices have a long shortest vector with high probability [Mica]. The problem can be solved
+for approximation factor ε1 = 2−√r log q when the dimension is m = √r log q by running
+LLL and Babai’s algorithm. Diﬀerent from the worst-case BDD problem, the random-BDD
+problem can be solved for higher dimensions too because deleting rows until √r log q is
+reached is still a random instance.
+To randomly reduce the BDD instance to a random-BDD instance in a lower dimension,
+we revisit an old state with a “phase problem” and ﬁnd a way to use it. Given a lattice
+basis and a radius, a goal for the last 20+ years has been to compute the quantum state
+|ψ0⟩= P
+v∈L
+P
+z∈C |v + z⟩, where C is some shape with the prescribed radius such as a
+cube, Gaussian, or sphere (also see [AR05]). We use a cube for simplicity.
+The main approach for computing |ψ0⟩is to compute a superposition over coeﬃcients c
+in the ﬁrst register and over the cube in the second register to get P
+c |c⟩⊗P
+z∈C |z⟩, then
+to entangle the registers by adding the corresponding lattice vector into the second register
+to get P
+c
+P
+z∈C |c, Bc + z⟩. The last step would be to “uncompute” in the ﬁrst register and
+this is where the state becomes diﬃcult to use. If an algorithm could solve BDD at this
+point then it could use Bc + z to compute c and uncompute the ﬁrst register, but this is
+circular.
+This challenge of uncomputing a register appears in lattice problems, graph isomorphism
+approaches, as well as other problems [ATS07]. Nevertheless, Regev [Reg09] found a way to
+use this in a constructive way by using an LWE oracle to erase the coeﬃcient, and as a result
+3
+
+
+--- PAGE 4 ---
+of his construction, reduce worst-case lattice problems to LWE. The more typical approach
+for algorithms might be to compute the quantum Fourier transform of the ﬁrst register,
+because it is possible, and measure it. The resulting state is |ψa⟩= P
+c ωc·a
+q
+P
+z∈C |Bc + z⟩,
+for a random vector a. This changes the “uncomputing” problem into a “phase” problem
+because |ψa⟩is similiar to |ψ0⟩, the desired a = 0 case, but has the phase ωc·a
+q
+mixed in in a
+problematic way. The diﬃculty is that it is no longer clear how to use |ψa⟩. In [BKSW18]
+states related to this but with Gaussians were used to show an equivalence between LWE and
+an extension of a certain nonabelian hidden subgroup problem. In [CLZ21] the Arora-Ge
+algorithm [AG10] for LWE was used to uncompute projections.
+Overcoming the diﬃculty. In this paper we revisit the state |ψa⟩= P
+c ωc·a
+q
+P
+z∈C |Bc + z⟩
+which we call a Phased Cube State (PCS), because there is a cube around each lattice point,
+and each cube has single phase across it. The value q is chosen as the periodicity of the
+lattice, and L mod q is a subgroup Zn
+q where computations are done. This state can be
+eﬃciently created for any side length, and with a uniformly random and known a. The main
+idea is to see that |ψa⟩is almost an eigenvector of shifts by vectors close to the lattice, as in
+BDD instances, and that quantum phase estimation can compute an approximation of that
+information. More speciﬁcally, for x ∈Zn
+q , let Ux|y⟩= |y + x⟩be a shift operator inside Zn
+q .
+Then for Bc ∈L, UBc|ψa⟩= ωa·c
+q |ψa⟩. If desired, the quantum phase estimation algorithm
+can be used to compute the inner product a · c, and repeating the process results in these
+inner products for diﬀerent random a, and the coeﬃcients c can be computed.
+For a BDD instance with t = Bc+∆and ∆controlled by the BDD promise, shifting by t
+results in Ut|ψa⟩= ωc·a
+q U∆|ψa⟩≈ωc·a
+q |ψa⟩and we show that quantum phase estimation still
+returns an approximation of c · a. Quantum phase estimation exponentiates the operator to
+the power of the precision requested, and because of degradation of |ψa⟩for higher powers,
+because U k
+t |ψa⟩= ωka·s
+q
+Uk∆|ψa⟩, this limits how much information can be extracted. To
+accomodate the set of possible BDD target vectors we deﬁne the notation of having a set
+of operators together with a single approximate eigenvector. With the worst-case lattice
+problem BDD as input, this quantum subroutine is used to sample noisy inner products and
+construct a random BDD instance in a lower solvable dimension.
+To summarize, we give a new quantum algorithm solving BDD on a range of subexpo-
+nential approximation factors.
+1.1
+Comparison to classical algorithms and open problems
+The case of r = 1 and exponential q includes the well-studied Hidden Number Prob-
+lem [BV96, Aka09] which appears to need structure beyond the worst-case to solve until
+this work.
+Remark. A talk given on this work in September 2021 at the Simons Institute for the The-
+ory of Computing sparked much productive discussion. In particular, the paper [DvW21] was
+posted with a classical algorithm solving a part of what we solve that had not appeared in the
+literature before. After going through existing literature, having discussions with the commu-
+nity, and waiting for responses, we leave it as a challenge to provide a classical algorithm
+matching the subexponential-time quantum algorithm.
+For the polynomial-time range, we show
+4
+
+
+--- PAGE 5 ---
+Theorem 21. There is a poly(n, log q)-time quantum algorithm solving 2−Ω(√r log q)-BDD on
+lattices of dimension n, periodicity q, and ﬁnite group rank r.
+This inspired the posting of a classical algorithm for this problem. In that paper [DvW21],
+the r = 1 case matches Theorem 20, but details are left out about how to match the r > 1
+case.
+In Section 7 we complete the analysis and also generalize it to rectangle-periodic
+lattices, rather than just cubes. Our quantum algorithm already handles this type of lattice
+because it works for any ﬁnite group, so classical and quantum have the same performance,
+even though the ideas are completely diﬀerent. The paper does not address our next theorem,
+which is exponentially faster than the best available classical algorithm:
+Theorem 23. Let L(B) be an n-dimensional q-periodic lattice with ﬁnite group rank r.
+Given an instance of ε1-BDD (B, t), with 2 ≤β ≤r log q, and
+ε1 =
+
+exp
+
+−4
+q
+r log q log β
+β
+
+· 22mp20(n, log q)2
+.
+Algorithm 22 runs in quantum time ≈ββpoly(n, log(q)) and returns the closest vector to t
+with probability at least 0.9.
+One other suggestion for a classical approach for this problem was using [GMPW20,
+Theorem 5.3]. It is not clear how the details would work, and in particular, how to handle
+the non-primitive case.
+It is still open if the Schnorr trade-oﬀwe give in Section 6 can be done classically. These
+questions are out-of-scope for this paper and we leave them as open problems. The parameter
+k log q for a matrix of dimension k×n has appeared as a boundary for LWE where algorithms
+more carefully use the Gaussian error [MR09, LP11, BLP+13, BCM+18].
+There are many open problems and possible extensions. The most interesting is to try
+variations of the quantum algorithm. It is relatively clean and is easy to experiment with. For
+example, solving approximate arithmetic progressions is a posssibility. Another is analyzing
+diﬀerent worst-case lattice problems such as uSVP, using reductions between instances of
+LWE, which is a type of random BDD where the errors for each coordinate are i.i.d., to map
+between diﬀerent dimensions and q values, and use groups [BLP+13, GINX16]. These new
+BDD algorithms can also be used to sample vectors of length q/(ε1λ1) ≥η(L⊥)2
+√r log q in
+L⊥. This can be done via quantum ([Reg09, Theorem 1.3]) or classical sampling ([GPV08]).
+2
+Background
+2.1
+Lattices, ﬁnite abelian groups, and distances
+Every integer lattice in Zn has minimum q such that qZn ⊆L, and L is called q-periodic,
+or q-ary. Because qZn is a subgroup of L, L mod q := L/qZn has all information about the
+lattice in the sense that distances are preserved mod q and L = (L ∩[q]) + qZn. Computing
+the closest vector to a lattice over Zn can be reduced to this case by reducing the lattice and
+vector mod q, solving the problem in L mod q, and then mapping back to the integer solution
+of the original problem. Starting from the ﬁnite group the associated lattice is constructed
+by reintroducing qZn, so the columns of [B, q · I] generate L.
+5
+
+
+--- PAGE 6 ---
+A ﬁnite abelian group can be decomposed as L mod q ∼= Zq1 × · · · × Zqr. The representa-
+tion is the ﬁnite group decomposition (G, q, r) ∈Zn×r
+q
+× Zr, where the columns of G ∈Zn×r
+q
+span G := L mod q ≤Zn
+q , the vector q = (q1, . . . , qr) ∈Zr gives the orders of each column
+in G in the decomposition, and r makes the rank visibile in the notation. The speciﬁc de-
+composition can be chosen but in this case the unique one will be used where qi|qi+1. The
+set ˜C := [q1] × · · · × [qr] will be viewed a the set of coeﬃcients of the group elements v ∈G,
+where each has a unique coeﬃcient vector c ∈˜C such that v = Gc.
+The setup is similar to the matrix A ∈Zn×m
+q
+used in lattice-cryptography, but not exactly
+the same. In the worst-case to average-case reduction the input lattice L has dimension n
+and q is arbitrary subject to sampling in the dual. The matrix A is typically chosen randomly
+and as a result has ﬁnite group decomposition Zn
+q with high probability. Here we also are
+using q-ary lattices, but we start with a worst-case lattice L, use the speciﬁc periodicity q of
+L, and decompose it mod q.
+An arbitrary full-dimensional integer lattice L ⊆Zn is a q-periodic lattice for q = det(L).
+This can be seen from the fact that qB−1 ∈Zn×n, because using Cramer’s rule for inverting
+B results in each entry having det(L) in the denominator an integer in the numerator. Then
+using the integer vectors from the columns of qB−1 takes B to qI = B(qB−1), which is
+0 mod q. The parameters set this way may not always work in the quantum algorithms, for
+example, when det(L) is too large relative to n.
+Given a lattice L ⊆Zn the ﬁnite group decomposition can be eﬃciently computed.
+The quantum Fourier transform over the cyclic group Zq maps |c⟩to
+1
+√q
+Pq−1
+a=0 ωac
+q |a⟩. In
+general for a ﬁnite group G the Fourier transform maps vectors over the group to vectors
+over the character group ˆG = {χa : G →C∗: a ∈G}.
+There will be a reindexing step for the eigenvector/eigenvalue calculation when a register
+holding a superposition of coeﬃcients P
+c∈˜C |c⟩is transformed by the Fourier transform over
+Zr
+q. This uses the subgroup embedding of ˜C into Zr
+q. Concretely this means that (c1, . . . , cr) ∈
+˜C maps to the element ( q
+q1c1, . . . , q
+qr cr) ∈Zr
+q, and χa(c) has phase
+Pr
+i=1
+q
+qi ci
+q
+= Pr
+i=1
+ci
+qi. Then
+P
+c∈˜C χa(c)|G(c + d)⟩= P
+e∈˜C χa(e −d)|Ge⟩= χa(−d) P
+e∈˜C χa(e)|Ge⟩.
+A distance on Zn
+q will be needed to deﬁne and solve BDD on subgroups G of Zn
+q , and also
+for the phase estimation statement. Following Cassels [Cas97] specialized to ﬁnite groups,
+with Λ = qZn, the modular distance on the quotient Zn
+q = Zn/Λ = Zn/(qZn) is deﬁned from
+the Euclidean distance on Zn by ∥y∥q = mina∈y+qZn ∥a∥. For any y ∈Zn
+q , ∥· ∥q satisﬁes (1)
+∥ky∥q ≤k∥y∥q for integers k ≥0, (2) ∥y + z∥q ≤∥y∥q + ∥z∥q for z ∈Zn
+q , (3) and there
+exists a ∈y + qZn such that ∥y∥q = ∥a∥. In one dimension we may write |y|q for ∥y∥q. The
+distance between points in Zn
+q matches the Euclidean distance as long as it is at most q/2.
+This deﬁnition also allows any choice of coset representatives for Zq = Z/qZ. It is equal to
+the zero-centered set for Zq where the class y mod q is represented by an integer x so that
+−q/2 ≤x ≤q/2, then it holds that x ∈Zn
+q , ∥x∥q = ∥x∥when ∥x∥≤q
+2, and ∥x∥q = q −∥x∥
+when ∥x∥≥q
+2.
+For phase estimation we will also use a distance mod 1. In this case take the Euclidean
+distance on R and deﬁne the distance on R/Z by |y|1 = mina∈y+Z |a|. This has the same
+properties listed above, but to 1/2 instead of q/2.
+6
+
+
+--- PAGE 7 ---
+Given a subgroup G of Zn
+q , deﬁne a shortest (nonzero) element length to be
+λ1(G) =
+min
+v∈G\{0} ∥v∥q.
+Also deﬁne distq(y, G) = minv∈G ∥y −v∥q for any y ∈Zn
+q . Note that all group elements
+have length at most q/2. In particular, for the trivial case when Λq = qZn, λ1(Λq) = 0.
+The main tool with q-ary lattices in dimension m is that for a randomly chosen one, the
+shortest vector length is known within a constant with high probability. The following can
+be found in [Mica].
+Claim 1. There exists a constant δ > 0 such that if ˜G is a uniformly chosen matrix from
+Zm×r
+q
+, and let L( ˜G) denote the corresponding q-ary lattice. Then
+1. Pr ˜G(λ1(L( ˜G)) < δ√mq1−r/m) ≤1/2m,
+2. Pr ˜G(Zm
+q ˜G = Zr
+q) ≥1 −1/qm−r.
+To distinguish the underlying operations, ranges for integers will be donoted by [q] :=
+{0, 1, . . . , q −1}. In this case, for example, addition and multiplication of numbers from [q]
+are over Z. If an element g ∈Zm
+q , for example, then addition is mod q. An integer times
+a group element represents the number of operations to perform, for example, for g ∈Zm
+q ,
+3 ∈[q], 3g = g + g + g.
+The following basis reduction algorithm will be used:
+Lemma 2 ([MG02, Lemma 7.1]). There is a polynomial time algorithm that on input a
+lattice basis B and linearly independent lattice vectors S ⊂L(B) such that ∥s1∥≤∥s2∥≤
+· · · ≤∥sn∥, outputs a basis R equivalent to B such that ∥rk∥≤max{(
+√
+k/2)∥sk∥, ∥sk∥} for
+all k = 1, . . . , n. Moreover, the new basis satisﬁes span(r1, . . . , rk) = span(s1, . . . , sk) and
+∥r∗
+k∥≤∥s∗
+k∥for all k = 1, . . . , n.
+Deﬁnition 3 (ε1-BDD). Given a lattice L ⊆Zn and a vector t such that dist(t, L) < ε1λ1,
+with ε1 ≤1/2, output the closest vector.
+The nearest plane algorithm due to Babai is an algorithm that given L ⊆Zn, and t ∈Zn
+returns a vector v ∈L such that ∥v −t∥≤dist(t, L) · 2n/2. BDD can be solved with this
+algorithm when 2n/2dist(t, L) ≤λ1/2 because the answer is unique. The BDD problem can
+be solved with an approximation factor/time tradeoﬀwith an approximate CVP algorithm
+based on the following two theorems.
+Theorem 4 ([Sch94, Theorem 8]). Let b1, . . . , bm ∈Rn be a β-reduced basis and let x =
+Pm
+i=1 xib∗
+i .
+Suppose that ∥b∗
+k∥= max(∥b∗
+m−β+1∥, . . . , ∥b∗
+m∥), m −β + 1 ≤k ≤m.
+Let
+v = Pm
+i=1 vibi be a lattice point such that Pm
+j=k |xj −Pm
+i=j viµi,j|2∥b∗
+i ∥2 is minimal for
+all vk, . . . , vm ∈Z, and |xj −Pm
+i=j viµi,j| ≤1/2 for j = k −1, . . . , 1, then ∥t −v∥2 ≤
+mγ2(m−1)/(β−1)
+β
+minu∈L ∥t −u∥2.
+Theorem 5 (βm/β-Approximate CVP in time ββ log B). There is an algorithm that on input
+a CVP instance (L, t) for an m-dimensional lattice and a vector t in the span of L, returns
+a vector v such that
+∥t −v∥≤√mβ(m−1)/(β−1) min
+u∈L ∥t −u∥.
+7
+
+
+--- PAGE 8 ---
+The running time is O(nm(βO(β) + m2) log B), where B is the maximal length of the given
+basis vectors.
+Proof. To compute the approximate closest vector, following Page 516 of [Sch94], use [Sch87]
+to compute an “approximate” β-reduced basis as in Theorem 4 using O(nm(βO(β)+m2) log B)
+steps, then use Kannan’s algorithm to compute the closest vector using enumeration, and
+then use Theorem 4 for the bound. By the statement on page 511, γβ ≤(2/3)β for m ≥2.
+■
+2.2
+Quantum computation
+For a positive integer q, let Fq denote the Fourier transform over Zq.
+On a basis state
+with 0 ≤x < q, this operation maps |x⟩7→
+1
+√q
+Pq−1
+i=0 ωix
+q |i⟩and can be computed in time
+poly(log(q)). The Fourier transform over a direct product Zq×Zr is Fq⊗Fr = (Fq⊗I)(I⊗Fr),
+and can be computed on one register at a time.
+Claim 6. For quantum states |φ⟩and |ψ⟩, ∥|φ⟩−|ψ⟩∥=
+p
+2(1 −Re(⟨φ|ψ⟩)).
+Lemma 7 ([BV97, Lemma 3.2.6]). For quantum states |φ⟩and |φ′⟩, if ∥|φ⟩−|φ′⟩∥≤ε, then
+the total variation distance between the probability distributions resulting from measurements
+of the two states is at most 4ε.
+For superpositions the representatives Zq = {0, . . . , q −1} will be used. It is convenient
+because of the typical quantum Fourier transform deﬁnition.
+Note that the norm ∥· ∥q
+deﬁned earlier is independent of the choice of representatives.
+Two main subroutines are for computing the quantum Fourier transform and computing
+the phase of an eigenvalue of a unitary. Given a unitary U and an eigenvector |ψ⟩with
+eigenvalue ωθ ∈C∗, and a power T, the phase estimation algorithm approximates the phase
+θ of the eigenvalue. The ﬁrst step of the algorithm computes the Hadamard transform on
+log m qubits and then computes the controlled-k-U in superposition, resulting in the phase
+state
+1
+√
+T
+PT−1
+k=0 |k⟩⊗U k|ψ⟩=
+1
+√
+T
+PT−1
+k=0 ωkθ|k⟩⊗|ψ⟩.
+The Fourier transform over ZT is
+computed in the ﬁrst register and it is measured, resulting in a value h ∈[T], where
+h
+T
+approximates θ.
+Theorem 8 (Phase estimation). Let |ψ⟩denote a quantum state on n qubits and U unitary
+on n qubits for which |ψ⟩is an eigenstate with eigenvalue θ. Let
+ˆx
+2t be an integer multiple
+of
+1
+2t closest to θ. The phase estimation algorithm returns ˆx with probability at least
+4
+π2. If
+t = m + r + 1 and T = 2t, then h ∈[T] is returned such that h
+T satisﬁes | h
+T −θ|1 ≤
+1
+2r with
+probability at least 1 −
+1
+2m. The running time of the algorithm is poly(n, t) times the time to
+compute U T.
+3
+Approximate eigenvector of many operators
+In this section we deﬁne the notion of an approximate eigenvector and show how well the
+phase estimation algorithm works compared to the exact eigenvector case.
+8
+
+
+--- PAGE 9 ---
+Deﬁnition 9. For a unitary U, an εev-approximate eigenvector is a vector |ψ⟩with associ-
+ated eigenvalue λ ∈C∗satisﬁes ∥U|ψ⟩−λ|ψ⟩∥≤εev. This may be denoted (U, |ψ⟩, λ, εev),
+and where U and |ψ⟩are given as input.
+This notion will be used where one vector is used as an approximate eigenvector of a
+set of unitaries. From that point of view, it may be helpful to say that U approximates the
+unitary V = λI on the subspace spanned by |ψ⟩because V |ψ⟩= λI|ψ⟩= λ|ψ⟩. This may
+be denoted (λI, |ψ⟩, λ, 0). This also means that |λ| = 1, as in the deﬁnition.
+Lemma 10. Let U be a unitary and |ψ⟩be an εev-approximate eigenvector with eigenvalue
+λ. Then ∀k, ∥U k|ψ⟩−λk|ψ⟩∥≤kεev.
+Proof. Proof by induction on k. The base case is k = 1 where ∥U 1|ψ⟩−λ1|ψ⟩∥≤1 · εev by
+assumption. Assume the claim is true for k −1, that is, ∥U k−1|ψ⟩−λk−1|ψ⟩∥≤(k −1)εev.
+Let U k−1|ψ⟩= λk−1|ψ⟩+ εk−1|Ek−1⟩, where εk−1 ≤(k −1)εev. Then
+∥U k|ψ⟩−λk|ψ⟩∥= ∥U · U k−1|ψ⟩−λk|ψ⟩∥
+(1)
+= ∥U(λk−1|ψ⟩+ εk−1|Ek−1⟩) −λk|ψ⟩∥
+induction hypothesis
+(2)
+= ∥U|ψ⟩+ λ−(k−1)εk−1U|Ek−1⟩−λ|ψ⟩∥
+multiply by λ−(k−1)
+(3)
+≤∥U|ψ⟩−λ|ψ⟩∥+ ∥λ−(k−1)εk−1U|Ek−1⟩∥
+(4)
+≤εev + εk−1 ≤kεev.
+(5)
+The fact that λ has norm one was used, and the last inequality is by deﬁnition of εev-
+approximate eigenvector.
+■
+Lemma 11. Consider the step before measuring in the phase estimation routine run up
+to power T on an approximate eigenvector instance (U, |ψ⟩, λ, εev) versus an exact instance
+(λI, |ψ⟩, λ, 0). Then the distance between these two states is at most Tεev.
+Proof. If |ψ⟩is an eigenvector with eigenvalue λ for some operator V , the ﬁrst step of the
+eigenvalue estimation algorithm when given power T would be to create the phase state
+1
+√
+T
+PT−1
+i=0 |k⟩⊗(V k|ψ⟩) =
+1
+√
+T
+PT−1
+i=0 λk|k⟩⊗|ψ⟩. Instead, the approximate eigenvector in-
+stance (U, |ψ⟩, λ, εev) is given, and the state computed is
+1
+√
+T
+PT−1
+i=0 |k⟩⊗(U k|ψ⟩).
+By Lemma 10, for each k, let the diﬀerence vector be εk|Ek⟩= U k|ψ⟩−λk|ψ⟩with
+|εk| ≤kεev. Comparing the distance between the approximate eigenvector and the exact
+9
+
+
+--- PAGE 10 ---
+eigenvector state before measurement gives
+(FT ⊗I) 1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗(U k|ψ⟩) −(FT ⊗I) 1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗(λk|ψ⟩)
+
+(6)
+=
+ 1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗(U k|ψ⟩) −
+1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗(λk|ψ⟩)
+
+FT is unitary
+(7)
+=
+ 1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗
+ U k|ψ⟩−λk|ψ⟩
+  =
+ 1
+√
+T
+T−1
+X
+k=0
+|k⟩⊗(εk|Ek⟩)
+
+(8)
+=
+ 1
+√
+T
+T−1
+X
+k=0
+εk|k⟩⊗|Ek⟩
+ =
+v
+u
+u
+t 1
+T
+T−1
+X
+k=0
+ε2
+k
+the |k⟩|Ek⟩states are orthonormal
+(9)
+≤
+v
+u
+u
+t 1
+T
+T−1
+X
+k=0
+(kεev)2 ≤εev
+v
+u
+u
+t 1
+T
+T−1
+X
+k=0
+k2
+(10)
+= εev
+q
+1
+T
+1
+6(T −1)T(2(T −1) + 1) ≤εev
+q
+1
+6(2T 2 −3T + 1) ≤εevT/
+√
+3.
+(11)
+■
+Lemma 12 (Phase Estimation on an approximate eigenvector).
+There exists a quantum algorithm that on input
+Tin = (U, |ψ⟩, q, εev, perr)
+where p2
+err/(128εev) ≥1, etime(U, T) is the time it takes to compute U T, |ψ⟩is supported on
+vectors in Zn
+q , where (U, |ψ⟩, ωs
+q, εev) is an approximate eigenvector for some s ∈Zq, returns
+O ∈Zq such that
+Pr
+ O −s|q ≤129qεev/p2
+err
+
+≥1 −perr.
+The running time of the algorithm is poly(n log(q), etime(U, perr/(8εev)).
+Proof. Let
+b = ⌈log(2/perr)⌉
+a = ⌈log(p2
+err/(27εev)⌉,
+T = 2a+b+1,
+and then T ≤2(log(2/perr)+1)+(log(p2
+err/(27εev)+1))+1 =
+2
+perr
+p2
+err
+27εev 23 = perr/(23εev). First consider
+running phase estimation on V = ωs
+qI, eigenvector |ψ⟩and power T returns h such that
+Pr
+ h
+T −s
+q
+
+1 ≤
+1
+2a
+
+≥1 −1
+2b
+by Theorem 8. By the choice of a,
+1
+2a = 2−⌈log(p2
+err/(27εev))⌉≤27εev/p2
+err, and by choice of b,
+1
+2b = 2−⌈log(2/perr)⌉≤perr/2. Therefore
+Pr
+ h
+T −s
+q
+
+1 ≤27εev/p2
+err
+
+≥1 −perr/2.
+10
+
+
+--- PAGE 11 ---
+Scaling by q, the condition is equivalent to
+q h
+T −s
+
+q ≤27qεev/p2
+err. Let O = ⌊q h
+T ⌉. Then
+|O −s|q =
+⌊q h
+T ⌉−q h
+T + q h
+T −s
+
+q ≤
+⌊q h
+T ⌉−q h
+T
+
+q+
+q h
+T −s
+
+q ≤1
+2+27qεev/p2
+err ≤129qεev/p2
+err.
+For the error bound, consider using U instead on the εev-approximate eigenvector |ψ⟩. By
+Lemma 11 and Lemma 7 the error increases by at most 4Tεev ≤perr/2. The union bound
+on the phase estimation error and the approximate eigenvector error gives a total error at
+most perr/2 + perr/2 ≤perr.
+■
+4
+An approximate eigenvector of shift operators close
+to group elements
+In this section a quantum state with a random phase is deﬁned that is an approximate
+eigenvector of shift operators whose shifts are close to points in the lattice L. As described
+in Section 2.1, formally the setting will be in the ﬁnite abelian group G = L mod q, which
+is a subgroup of Zn
+q , together with a distance ∥· ∥q on Zn
+q . This setup makes it possible to
+take a q-periodic lattice and target vector, reduce them mod q, deﬁne and solve BDD over
+Zn
+q , and to map the solution back to the integers. For clarity this section will be restricted
+to ﬁnite groups.
+4.1
+Phased Cube States and BDD on Subgroups of Zn
+q
+The approximate eigenvector is a superposition of lattice points with a phased cube around
+each point. The cube’s side length controls how much cubes around two nearby Zn
+q points
+overlap.
+For σ ∈N deﬁne the zero-centered set of “radius” σ as [±σ] = {q −σ + 1, . . . , σ} ⊆Zq.
+The set [±σ] has 2σ elements.
+Deﬁnition 13. Let 2σ ∈N be a side length.
+1. Deﬁne the cube state around a point y ∈Zn
+q by
+|C(y)⟩=
+1
+(2σ)n/2
+X
+z∈[±σ]n
+|y + z⟩.
+2. Let G be a subgroup of Zn
+q with r = ﬁnite-group-rank(G), generator matrix G and
+coeﬃcient space ˜C. Deﬁne the phased cube state with label a ∈Zr
+q to be
+|ψa⟩=
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc)⟩=
+1
+√
+|G|(2σ)n
+X
+c∈˜C
+χa(c)
+X
+z∈[±σ]n
+|Gc + z⟩.
+Lemma 14 (Cube state properties).
+1. Given y ∈Zn
+q , |C(y)⟩|y⟩is computable in time poly(n log q).
+11
+
+
+--- PAGE 12 ---
+2. Deﬁne the shift operator Ux by Ux|y⟩= |x + y⟩.
+∀x, y ∈Zn
+q , Ux|C(y)⟩= |C(x + y)⟩, and the transformation |C(y)⟩|x⟩to |C(x + y)⟩|x⟩
+is computable in time poly(n log q).
+3. Let |C(y)⟩be a cube state of side length 2σ and let ∆∈Zn
+q .
+(a) Then
+|C(y)⟩−|C(y + ∆)⟩
+ ≤
+q
+n∥∆∥q
+σ .
+(b) If ∥∆∥q ≥√n2σ + 1 then ⟨C(y)|C(y + ∆)⟩= 0.
+Proof.
+|0, y⟩
+F ⊗n
+2σ
+−→
+1
+(2σ)n/2
+X
+z∈Zn
+2σ
+|z, y⟩
+(12)
+(−(σ)i)1
+−→
+1
+(2σ)n/2
+X
+z∈[±σ]n
+|z, y⟩
+z →z −(σ, . . . , σ), and reindex
+(13)
+(+y)1
+−→
+1
+(2σ)n/2
+X
+z∈[±σ]n
+|y + z, y⟩
+(14)
+= |C(y)⟩|y⟩.
+(15)
+For x ∈Zn
+q , Ux|C(y)⟩=
+1
+(2σ)n/2
+P
+z∈[±σ]n Ux|y + z⟩=
+1
+(2σ)n/2
+P
+z∈[±σ]n |x + y + z⟩=
+|C(x + y)⟩. Therefore, given |C(y)⟩|x⟩, one addition from the second register into the ﬁrst
+register results in |C(x + y)⟩|x⟩.
+For (3a), start with
+|C(y)⟩−|C(y + ∆)⟩
+
+2
+= 2 · (1 −ℜ(⟨C(y)|C(y + ∆)⟩)).
+Since
+⟨C(y)|C(y + ∆)⟩= ⟨C(0)|C(∆)⟩
+invariant under shift by −y
+(16)
+=
+1
+(2σ)n
+X
+z∈[±σ]n
+X
+z′∈[±σ]n
+⟨z|z′ + ∆⟩
+(17)
+= # common points in [±σ]n and [±σ]n + ∆
+(2σ)n
+(18)
+≥(2σ −∥∆∥q)n
+(2σ)n
+= (1 −∥∆∥q
+2σ )n ≥1 −n∥∆∥q
+2σ .
+Bernouli’s inequality
+(19)
+Therefore
+|C(y)⟩−|C(y + ∆)⟩
+ ≤
+q
+n∥∆∥q
+σ .
+For (3b) assume ∥∆∥q ≥√n2σ + 1. To have a common point, there must exist z, z′ ∈
+[±σ]n such that z = z′ + ∆∈Zn
+q . For this to happen, z −z′ = ∆, and so √n2σ + 1 ≤
+∥∆∥q = ∥z −z′∥q ≤∥z∥q + ∥z′∥q ≤2√nσ, which is a contradiction, so no points are in
+common.
+■
+12
+
+
+--- PAGE 13 ---
+Algorithm 15 (Computing a PCS state).
+Input: A decomposed subgroup (G, q, r) of Zn
+q and a cube side length 2σ.
+Output: |ψa⟩and a ∈R Zr
+q.
+|0, 0⟩−→|C(0)⟩|0⟩
+by Lemma 14(1)
+(20)
+(F ˜
+C)2
+−→
+1
+√
+|G|
+X
+c∈˜C
+|C(0)⟩|c⟩
+(21)
+(+Gc)1
+−→
+1
+√
+|G|
+X
+c∈˜C
+|C(Gc)⟩|c⟩
+(22)
+(FZrq )2
+−→
+1
+√
+|G|
+X
+c∈˜C
+|C(Gc)⟩
+
+1
+√
+|Zrq|
+X
+a∈Zrq
+χa(c)|a⟩
+
+(23)
+M2
+−→
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc)⟩|a⟩
+(24)
+= |ψa⟩|a⟩.
+(25)
+Lemma 16 (Phased Cube State Approximate Eigenvector Properties).
+Let G be a subgroup of Zn
+q with decomposition (G, q, r) ∈Zn×r
+q
+×Zr, with shortest (nonzero)
+element length λ1 = minv∈G\{0} ∥v∥q, and a phased cube state |ψa⟩for a ∈Zr
+q and side length
+1
+4
+λ1
+√n ≤2σ ≤1
+2
+λ1
+√n. Then
+1. If c ∈˜C, let Gc = v ∈G, and then Uv|ψa⟩= χa(−c)|ψa⟩.
+2. ∀∆∈Zn
+q with ∥∆∥q ≤λ1
+2 , ∥U∆|ψa⟩−|ψa⟩∥≤4n3/4
+q
+∥∆∥q
+λ1 .
+3. ∀y ∈Zn
+q , let Gs ∈G with coeﬃcients s ∈˜C be such that ∆= y −Gs satisﬁes
+∥∆∥q ≤λ1
+2 . Then ∥Uy|ψa⟩−χa(−s)|ψa⟩∥≤4n3/4
+q
+∥∆∥q
+λ1
+=: εev. In particular, for all
+a ∈Zr
+q, the state |ψa⟩is an εev-approximate eigenvector of Uy for any element y where
+distq(y, G) ≤λ1
+2 .
+4. Given a decomposed group (G, q, r), Algorithm 15 with side length 2σ computes the
+state |ψa⟩|a⟩in time poly(n log q), where a is a uniformly chosen element from Zr
+q.
+13
+
+
+--- PAGE 14 ---
+Proof. For (1), let v = Gc ∈G and a ∈Zr
+q, then
+Uv|ψa⟩=
+1
+√
+|G|
+X
+d∈˜C
+χa(d)Uv|C(Gd)⟩
+(26)
+=
+1
+√
+|G|
+X
+d∈˜C
+χa(d)|C(Gc + Gd)⟩
+(27)
+=
+1
+√
+|G|
+X
+d′∈˜C
+χa(d′ −c)|C(Gd′)⟩
+reindex coeﬀs with d′ = c + d
+(28)
+=
+1
+√
+|G|
+X
+d′∈˜C
+χa(d′)χa(−c)|C(Gd′)⟩
+(29)
+= χa(−c)|ψa⟩.
+(30)
+For (2), let ∆∈Zn
+q , and then
+U∆|ψa⟩−|ψa⟩
+
+(31)
+=
+U∆
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc)⟩−
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc)⟩
+
+(32)
+=
+
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc + ∆)⟩−
+1
+√
+|G|
+X
+c∈˜C
+χa(c)|C(Gc)⟩
+
+apply U∆
+(33)
+=
+
+1
+√
+|G|
+X
+c∈˜C
+χa(c) (|C(Gc + ∆)⟩−|C(Gc)⟩)
+
+group terms
+(34)
+=
+
+1
+√
+|G|
+X
+c∈˜C
+χa(c)εc|Ec⟩
+ by Lemma 14(3a),
+(35)
+let εc|Ec⟩be the diﬀerence, with |εc| ≤
+q
+n∥∆∥q
+σ
+(36)
+≤max
+c∈˜C |εc| ≤
+q
+n∥∆∥q
+σ
+≤
+q
+8n3/2 ∥∆∥q
+λ1
+≤4n3/4
+q
+∥∆∥q
+λ1 .
+(37)
+For (3), let y ∈Zn
+q satisfy distq(y, G) ≤ε1λ1, let Gs ∈G be the closest element to
+y, and let ∆= y −Gs. Then ∥Uy|ψa⟩−χa(−s)|ψa⟩∥= ∥UGs+∆|ψa⟩−χa(−s)|ψa⟩∥=
+|χa(−s)| · ∥U∆|ψa⟩−|ψa⟩∥≤4n3/4
+q
+∥∆∥q
+λ1
+by part (1) and then part (2).
+Finally, for (4), the algorithm computes the Fourier transform, addition in Zn
+q , and
+measurement, which are all polynomial time in n and log q. By Lemma 14 the |C(v)⟩’s
+form an orthogonal set of states. The probability of measuring a is hence proportional to
+P
+c∈˜C χc(a)|C(Gc)⟩
+2 = P
+v∈G ∥|C(v)⟩∥2 which is independent of a.
+■
+Using PCS states and the phase estimation algorithm on approximate eigenvectors we
+deﬁne the following algorithm which outputs LWE samples but with error diﬀerent than the
+typical Gaussian error. In order keep the terminology more closely related to lattices we
+phrase it as sampling inner products.
+14
+
+
+--- PAGE 15 ---
+Algorithm 17. SampleHIP((G, q, r), 2σ, ε1, t, perr)
+Input: ﬁnite group decomposition (G, q, r), side length 2σ, target vector t ∈Zn
+q .
+1. Compute a PCS state using Algorithm 15 on (G, q, r) and 2σ to get a random label
+a and state |ψa⟩on (n + r) log q qubits.
+2. Let εev = √ε1 · 4n3/4. Run phase estimation on Tin = (Ut, |ψa⟩, q, εev, perr) to get
+output O and return (a, O) ∈Zr
+q × Zq.
+Lemma 18 (Sampling Hidden Inner Products). If 2σ ∈
+h
+1
+4
+λ1(G)
+√n , 1
+2
+λ1(G)
+√n
+i
+, 0 < ε1 < 1
+2 and
+distq(t, G) ≤ε1λ1 then Algorithm 17 runs in time poly(n log q, log(perr/ε1)) and returns a
+uniformly random a ∈Zr
+q, and an O ∈Zq satisfying
+Pr
+
+|O −(−s) · a|q ≤129 · q · √ε1 · 4n3/4 · p−2
+err
+
+≥1 −perr.
+where the element Gs is the closest group element to t in G.
+Proof. In the ﬁrst step of Algorithm 17 on input (G, q, r) with given side length 2σ Algorithm
+15 returns a state |ψa⟩on (n + r) log q qubits, where a ∈Zr
+q is uniformly random by Lemma
+16. Since by assumption distq(t, G) ≤ε1λ1 < λ1
+2 the element Gs is the closest group element
+to G.
+In the next step the tuple T0 =
+ Ut, |ψa⟩, χa(−s), εev = √ε1 · 4n3/4
+is an approximate
+eigenvector instance by Lemma 16. In addition, since Ut is the shift operator, U t
+t can be
+computed in time poly(n, log(t)) by repeated squaring. It follows by Lemma 12 that running
+phase estimation on the tuple Tin = (Ut, |ψa⟩, q, εev, perr) returns a value O ∈Zq that satisﬁes
+Pr
+ |O −(−s) · a|q ≤129 · q · εev · p−2
+err = 129 · q · √ε1 · 4n3/4 · p−2
+err
+
+≥1 −perr.
+The running time requires poly(n log q) time for the PCS generation Algorithm 15 and
+an additional poly(n log q, log(perr/εev)) for the phase estimation algorithm on approximate
+eigenvectors by Lemma 12, for a total of poly(n log q, log(perr/ε1)).
+■
+5
+Random Self Reducibility for subgroups G of Zn
+q of
+ﬁnite group rank r
+This section establishes RSR for instances of BDD over subgroups of Zn
+q using a quantum
+algorithm.
+Algorithm 19. SampleBDD((G, q, r), ˆλ1, t, ε1, m, perr)
+Input: A decomposed subgroup (G, q, r) of Zn
+q , a target vector t ∈Zn
+q , an estimate
+of the length of the shortest vector ˆλ1, required error probability perr, and a target
+dimension m.
+15
+
+
+--- PAGE 16 ---
+1. Let pPE
+err = perr/(2m), 2σ = 1
+2
+ˆλ1
+√n.
+2. For each i ∈[m] run
+ ai ∈Zr
+q, Oi ∈Zq
+
+= SampleHIP((G, q, r), 2σ, pPE
+err , ε1, t).
+3. Let ˜G ∈Zm×r
+q
+have rows formed by the ai, let ˜gi denote the ith column of ˜G, and
+let ˜G = ⟨˜g1, . . . , ˜gr⟩⊆Zm
+q .
+4. Deﬁne the target element ˜t = (O1, . . . , Om).
+5. Return ˜G,˜t.
+Lemma 20 (Coeﬃcient-preserving random group sampling). Let (G, q, r) be a decomposed
+subgroup of Zn
+q , t ∈Zn
+q , and ε1 > 0. Let ˆλ1 be an estimate of λ1 such that ˆλ1 ∈[λ1, 2λ1].
+If distq(t, G) ≤ε1λ1(G), then SampleBDD((G, q, r), ˆλ1, t, ε1, m, perr) returns a random sub-
+group ˜G = ⟨˜g1, . . . , ˜gr⟩⊆Zm
+q , a vector ˜t ∈Zm
+q
+such that w.p. at least 1 −perr, when
+perr/2 ≥1/2m + 1/qm−r,
+1. Preservation of bounded distance to lattice:
+distq(˜t, ˜G) ≤√ε1 · qr/mλ1( ˜G) · 260n3/4m2.5p−2
+err.
+2. Preservation of coeﬃcients:
+If s ∈Zr
+q is such that ∥t −Gs∥q ≤ε1λ1(G), then ∥˜t −˜Gs∥q ≤ε1λ1( ˜G),
+Let s be such that Gs ∈G, denote the closest group element to t in G. Then s is the
+unique element such that ˜Gs is the closest element to ˜t in ˜G.
+The running time of the procedure is poly(n log q, m, log(m · perr/ε1)).
+Proof. For the distance, by Lemma 18 and the union bound over m samples,
+Pr
+
+∀i ∈[m], |Oi −(−s) · ai|q ≤129 · q√ε14n3/4(pPE
+err )−2
+≥1 −m · pPE
+err ≥1 −perr/2.
+When this condition holds,
+distq(˜t, ˜G) ≤∥˜t −˜Gs∥q
+(38)
+= ∥(O1, . . . , Om) −(s · a1, . . . , s · am)∥q
+(39)
+≤√m max
+i
+Oi −s · ai
+
+q
+(40)
+≤129√mq√ε14n3/4(pPE
+err )−2
+by Lemma 18
+(41)
+≤δ129 · √ε1˜λ1( ˜G)qr/m4n3/4 · √m · (perr/(2m))−2
+w.p. ≥1 −1/2m by Claim 1
+(42)
+= δ129 · √ε1˜λ1( ˜G)qr/m42n3/4m2.5p−2
+err.
+(43)
+Hence by the union bound, the distance is bounded w.p. at least 1 −perr/2 −1/2m.
+16
+
+
+--- PAGE 17 ---
+For the secret coeﬃcients s, let ˜G denote the m × r matrix whose rows are ai. Observe
+that by deﬁnition we have that ˜G · s is at distance at most distq(˜t, ˜G) from ˜t. Hence for s
+to be the unique vector that satisﬁes this equation we need to additionally require that ˜G
+is primitive. By Claim 1 we have Pr( ˜G is primitive) ≥1 −1/qm−r.
+It follows that both conditions of the lemma are satisﬁed w.p. at least 1−perr/2−1/2m −
+1/qm−r ≥1 −perr.
+By Lemma 18 the running time is poly(n log q, log(perr/ε1), m).
+■
+Theorem 21. There is a poly(n, log q)-time quantum algorithm solving 2−Ω(√r log q)-BDD on
+lattices of dimension n, periodicity q, and ﬁnite group rank r.
+Proof. Compute the ﬁnite abelian group decomposition (G, q, r) of L(B) mod q. Call Sam-
+pleBDD with (G, q, r), ˆλ1, t mod q, ε1, m = √r log q, perr = 1/10. By Lemma 20, ˜G and ˜t
+are returned satisfying
+2mdistq(˜t, ˜G) ≤2m√ε1˜λ1( ˜G)qr/mδ129 · 42n3/4m2.5100
+(44)
+≤√ε12m+r log q/m˜λ1( ˜G)δ129 · 42n3/4m2.5100
+(45)
+= c√ε122√r log q˜λ1( ˜G)nc′
+(46)
+≤˜λ1( ˜G)/2
+(47)
+Choose ε1 = (c2−4√r log qn−2c′′). Mapping back up to the integers, Babai’s nearest plane
+algorithm computes the closest vector modq in polynomial time, and that can be mapped
+to the original problem. See the steps of the algorithm in the next section for details.
+■
+As discussed in the introduction, r log q < n2, 2n-approximation algorithm. For example,
+subexponential approximation factors such as ε1 = 2−nδ are possible when √r log q ≤nδ, or
+r log q ≤n2δ.
+6
+Trading oﬀrunning time for approximation factor
+The algorithm in this section applies Schnorr’s hierarchy theorem as a black box, rather
+than applying Babai’s algorithm. The algorithm will ﬁrst compute the ﬁnite abelian group
+decomposition of the lattice, solve BDD in that group, then map the solution back to the
+integers.
+Algorithm 22 (Algorithm Q: α-BDD on n-dimensional q-periodic lattices).
+Input: A lattice basis B ∈Zn×n, for a q-periodic lattice with ﬁnite group rank r, a target
+vector t ∈Zn, a trade-oﬀparameter β.
+1. Compute the ﬁnite abelian group decomposition (G, q, r) of L(B) mod q.
+2. Iterate over powers of 2 for ˆλ1 = 2, 4, 8 . . . , q:
+(a) Let m = (β −1)√βr log q+1 ≤
+q
+βr log q
+log β
+and sample random instance of BDD
+17
+
+
+--- PAGE 18 ---
+in Zn
+q :
+( ˜G,˜t) = SampleBDD((G, q, r), ˆλ1, t mod q, ε1, m, perr = 1/10).
+(b) With operations over the integers, compute HNF([ ˜G | q·I ]) to get a basis ˜B ∈
+Zm×m. Treating ˜t as an integer vector, run the √mβ(m−1)/(β−1)-approximate
+CVP algorithm (Theorem 5) on ( ˜B,˜t). Denote output by ˜v ∈L( ˜B).
+(c) Compute s ∈Zr such that ˜v = ˜Bs.
+If ∥t −Bs∥q ≤ˆλ1/2, then output
+Bs + t −(t mod q).
+Theorem 23. Let L(B) be an n-dimensional q-periodic lattice with ﬁnite group rank r.
+Given an instance of ε1-BDD (B, t), with 2 ≤β ≤r log q, and
+ε1 =
+
+exp
+
+−4
+q
+r log q log β
+β
+
+· 22mp20(n, log q)2
+.
+Algorithm 22 runs in quantum time ≈ββpoly(n, log(q)) and returns the closest vector to t
+with probability at least 0.9.
+Proof. For a lattice of dimension m, Schnorr’s algorithm returns ˜v such that
+∥˜v −˜t∥≤√mβ
+m−1
+β−1 dist(˜t, L( ˜B))
+by Theorem 5
+(48)
+≤√ε1β
+m−1
+β−1 qr/m√mp20(n, log q)λ1( ˜G)
+by Lemma 20, w.p. .9
+(49)
+= √ε1 exp
+
+(m−1) log β
+β−1
++ r log q
+m
+√mp20(n, log q)λ1( ˜G)
+(50)
+≤√ε1 exp
+
+2
+q
+r log q log β
+β
+√mp20(n, log q)λ1( ˜G)
+Choose m =
+q
+βr log q
+log β
+(51)
+≤λ1( ˜G)/2.
+(52)
+The dimension m was chosen to maximize the decoding radius for a given r log q and β.
+■
+Corollary 24. If r log q = n log n, 0 ≤ε ≤1/2, then BDD can be solved with factor
+ε1 ≈exp
+
+−4nε log n
+
+in time (n1−2ε)n1−2εpoly(n, log q) ≤2n1−2ε log npoly(n, log q).
+This running time has an nε factor less than using Schnorr directly, without reanalyzing
+it for q-periodic lattices.
+Proof. Choose β = n1−2ε and then exp
+
+−4
+q
+r log q log β
+β
+
+= exp
+
+−4
+q
+n log n log n1−2ε
+n1−2ε
+
+=
+exp
+
+−4nε log n
+
+. The time is (n1−2ε)n1−2εpoly(n, log q) ≤2n1−2ε log npoly(n, log q).
+■
+Corollary 25. If r log q = (log nc)3 and r = log nc, choose β = log nc, and then BDD can
+be solved with factor ε1 ≈exp
+
+−4
+q
+r log q log β
+β
+
+= exp
+
+−4
+q
+(log nc)(log nc)2 log log nc
+log nc
+
+= exp
+
+−4
+p
+(log nc)2 log log nc
+
+= n−4c√log log nc in time (log nc)log ncpoly(n, log q)
+≤2log nc log log ncpoly(n, log q) = nc log log ncpoly(n, log q) because β = log nc.
+18
+
+
+--- PAGE 19 ---
+7
+Using LLL for BDD and SIVP on rectangle-periodic
+lattices
+In this section extend the algorithm in [DvW21] to meet the bounds of Theorem 21 for
+polynomial-time algorithms and generalize it further to handle rectangle-periodic lattices.
+We also record that it can be used to solve SIVP for related parameters. The quantum
+algorithm also handles rectangle-periodic lattices without change.
+More details about [DvW21] can also be found in [ABCG21], and about LLL in [MG02].
+Call a lattice L ⊆Zn r-periodic for a vector r = (r1, . . . , rn) if H := r1Z × · · · × rnZ is
+a subgroup of L. All information about the lattice is contained in the ﬁnite abelian group
+L/H ≤Zr1×· · ·×Zrn. Let (G, q, r) be the ﬁnite group decomposition of L/H. This notation
+uses r and ri for the rectangle side lengths, and is separate from the ﬁnite group rank r.
+Recall that the coeﬃcient space is Zq1 ×· · ·×Zqr with generators g1, . . . , gr ∈Zr1 ×· · ·×Zrn.
+Let q = max{r1, . . . , rn}.
+Lemma 26. There is an algorithm running in time poly(r, ln q) that takes a lattice L ⊆Zn
+and returns a basis with minimum Gram-Schmidt length at least exp(−c√r ln q) · λ1, for a
+constant c.
+Proof. Given a basis B′ of a lattice, compute the minimum axis-aligned rectangle in L
+computing a lattice vector on each axis, and dividing by the gcd of the coordinates in each
+axis. Next compute the ﬁnite group decomposition (G, q, r), and lift g1, . . . , gr to Zn. Sort
+the lengths and label so that r1 ≤. . . ≤rn and run the algorithm in Lemma 2 on a basis
+from HNF([g1, . . . , gr, r1e1, . . . , rnen]) and the linearly independent set S = {r1e1, . . . , rnen},
+resulting in basis B. Then run LLL on with constant ∆> 1 and let C = LLL(B, ∆).
+The Lovasz Condition (LC) in LLL implies for j ≤i,
+∥c∗
+j ∥
+∆i−j ≤· · · ≤
+∥c∗
+i−2∥
+∆2
+≤
+∥c∗
+i−1∥
+∆1
+≤∥c∗
+i ∥
+∆0 .
+Let m be the cutoﬀpoint for case 1 and case 2, to be chosen below.
+In case 1, deﬁned by i ≤m,
+λ1
+∆m−1 ≤∥c∗
+1∥
+∆m−1 ≤· · · ≤∥c∗
+i ∥
+∆m−i ≤· · · ≤∥c∗
+m∥
+∆0 ,
+which by the choice of m below, satisﬁes the bound. The ﬁrst inequality is because 0 ̸= c∗
+1 =
+c1 ∈L.
+For case 2, assume m ≤i.
+1. Using LC again, multiply m consecutive vector lengths to get
+∥c∗
+i−m+1∥· · · ∥c∗
+i ∥
+∆m(m−1)/2
+= ∥c∗
+i−m+1∥· · · ∥c∗
+i ∥
+∆
+Pm−1
+j=0 j
+≤∥c∗
+i ∥m.
+This will be used below.
+2. r-periodic, block of m vectors. Let R contain the indices of the r largest values in
+r = (r1, . . . , rn). When sorted it will contain rn−r+1, . . . , rn. Then
+19
+
+
+--- PAGE 20 ---
+ri−m+1 · · · ri
+Q
+j∈R rj
+=
+1
+(r1 · · · ri−m) · (ri+1 · · · rn)
+r1 · · · rn
+Q
+j∈R rj
+≤(∥c∗
+1∥· · · ∥c∗
+i−m∥) · (∥c∗
+i−m+1∥· · · ∥c∗
+i ∥) · (∥c∗
+i+1∥· · · ∥c∗
+n∥)
+∥c∗
+1∥· · · ∥c∗
+i−m∥
+∥c∗
+i+1∥· · · ∥c∗
+n∥
+= ∥c∗
+i−m+1∥· · · ∥c∗
+i ∥.
+The three terms are bounded as follows.
+(a) Numerator:
+r1···rn
+Q
+j∈R rj ≤det(L) = ∥c∗
+1∥· · · ∥c∗
+n∥.
+Minimize the determinant with input matrix G consisting of columns ei, i ∈R.
+(b) Left side of denominator is ∥c∗
+1∥· · · ∥c∗
+i ∥≤∥b∗
+1∥· · · ∥b∗
+i ∥≤r1 · · · ri, ∀i ∈[n].
+∥c∗
+i ∥≤∥b∗
+i ∥by LLL, and ∥b∗
+i ∥≤ri by Lemma 2.
+(c) Right side of denominator: ∥c∗
+i+1∥· · · ∥c∗
+n∥=
+1
+∥d†
+i+1∥· · ·
+1
+∥d†
+n∥≤ri+1 · · · rn, where
+d1, . . . , dn is the reversed dual basis of the dual lattice ˆL.
+The ﬁrst equality
+is by Corollary 6, second bullet, in Micciancio Lecture 3 [Micb]. By deﬁnition,
+the middle quantity is 1/determinant of the lattice ˆLi+1 generated by vectors
+di+1, . . . , dn. The dual lattice ˆL ⊆ˆH :=
+1
+r1Z × · · · × 1
+rnZ because L and H have
+the same span so H ⊆L if and only if ˆH ⊇ˆL. Then
+1
+ri+1 · · · 1
+rn ≤det(ˆLi+1)
+because it is minimized by choosing the lattice ˆL with basis
+1
+r1e1, . . . , 1
+rnen.
+3. Let rmax = maxj∈R rj. Then Q
+j∈R rj ≤rr
+max. Combine 1 and 2 to get
+λ1
+rr/m
+max∆(m−1)/2 ≤(ri−m+1 · · · ri)1/m
+(Q
+j∈R rj)1/m∆(m−1)/2 ≤(∥c∗
+i−m+1∥· · · ∥c∗
+i ∥)1/m
+∆(m−1)/2
+≤∥c∗
+i ∥,
+where the ﬁrst inequality follows from the fact that for all m ≤i ≤n, λm
+1
+≤
+min{ri−m+1, . . . , ri}m ≤ri−m+1 · · · ri because λ1 ≤ri, for all i.
+It remains to choose the smallest m so that the bound in case 2 is at least the bound
+in case 1, where i ≤m, i.e., so that
+λ1
+∆m−1 ≤
+λ1
+rr/m
+max ∆(m−1)/2. This is optimized if rr/m
+max ≈
+∆(m−1)/2, or
+r
+m ln rmax ≈m−1
+2
+ln ∆, so choose m ≈√r ln q ln ∆≥√r ln rmax ln ∆.
+■
+Theorem 27. There is an algorithm running in time poly(n, log q) that takes a lattice L ⊆
+Zn and a vector t ∈Zn, and solves BDD with approximation factor exp(−Ω(√r ln q)).
+Furthermore, SIVP in L⊥= qL∗can be solved with length q · exp(O(√r ln q))/λ1(L).
+Proof. Babai’s BDD algorithm works up to a decoding radius of mini ∥c∗
+i ∥, which is lower
+bounded in Lemma 26.
+For computing short vectors, [GPV08, Lemma 1.3] gives an upper bound on the smooth-
+ing radius of L⊥by the max basis length of the Gram-Schmidt vectors in the dual. This
+is equal to the minimum basis length in the Gram-Schmidt vectors in the primal, which by
+Lemma 26 gives a bound on the lengths of q · exp(O(√r ln q))/λ1(L).
+■
+20
+
+
+--- PAGE 21 ---
+Sampling short vectors can also be done using a quantum algorithm using BDD to create
+phaseless Gaussian superpositions so that computing the Fourier transform and measuring
+samples lattice points from a discrete Gaussian of a similar length.
+Acknowledgements: Thanks to Kirsten Eisentraeger for valuable help. This paper
+would probably not be possible without the lecture notes of Daniele Micciancio and the
+lecture notes of Vinod Vaikuntanathan. Thanks also to L´eo Ducas and Chris Peikert for
+helpful conversations.
+References
+[ABCG21]
+Richard Allen, Ratip Emin Berker, S´ılvia Casacuberta, and Michael Gul. Quan-
+tum and classical algorithms for BDD. 2021. Manuscript.
+[AG10]
+Sanjeev Arora and Rong Ge. Learning parities with structured noise. Electron.
+Colloquium Comput. Complex., page 66, 2010. URL: https://eccc.weizmann.
+ac.il/report/2010/066.
+[Aka09]
+Adi Akavia. Solving Hidden Number Problem with one bit oracle and advice.
+In Advances in Cryptology - CRYPTO 2009, Proceedings, volume 5677, pages
+337–354. Springer, 2009. doi:10.1007/978-3-642-03356-8\_20.
+[AR05]
+Dorit Aharonov and Oded Regev. Lattice problems in NP ∩CoNP. J. ACM,
+52(5):749–765, September 2005. doi:10.1145/1089023.1089025.
+[ATS07]
+Dorit Aharonov and Amnon Ta-Shma. Adiabatic quantum state generation.
+SIAM Journal on Computing, 37(1):47–82, 2007.
+[Bab86]
+L. Babai. On Lovasz’ lattice reduction and the nearest lattice point problem.
+Combinatorica, 6(1):1–13, 1986.
+[BCM+18]
+Zvika Brakerski, Paul F. Christiano, Urmila Mahadev, Umesh V. Vazirani,
+and Thomas Vidick. A cryptographic test of quantumness and certiﬁable ran-
+domness from a single quantum device.
+In FOCS’18, pages 320–331, 2018.
+doi:10.1109/FOCS.2018.00038.
+[BKSW18]
+Zvika Brakerski, Elena Kirshanova, Damien Stehl´e, and Weiqiang Wen. Learn-
+ing with errors and extrapolated dihedral cosets. In Public-Key Cryptography –
+PKC 2018, pages 702–727, 2018.
+[BLP+13]
+Zvika Brakerski, Adeline Langlois, Chris Peikert, Oded Regev, and Damien
+Stehl´e. Classical hardness of learning with errors. In STOC’13, pages 575–584,
+2013. doi:10.1145/2488608.2488680.
+[BS16]
+Jean-Fran¸cois Biasse and Fang Song. Eﬃcient quantum algorithms for comput-
+ing class groups and solving the principal ideal problem in arbitrary degree num-
+ber ﬁelds. In SODA’16, pages 893–902, 2016. doi:10.1137/1.9781611974331.
+ch64.
+21
+
+
+--- PAGE 22 ---
+[BV96]
+Dan Boneh and Ramarathnam Venkatesan. Hardness of computing the most
+signiﬁcant bits of secret keys in Diﬃe-Hellman and related schemes. In CRYPTO
+’96, pages 129–142, 1996.
+[BV97]
+E. Bernstein and U. Vazirani. Quantum complexity theory. SIAM Journal of
+Computing, 26(5):1411–1473, 1997.
+[BV11a]
+Zvika Brakerski and Vinod Vaikuntanathan. Eﬃcient fully homomorphic en-
+cryption from (standard) LWE.
+In STOC’11, pages 97–106, 2011.
+doi:
+10.1007/978-3-642-22792-9_29.
+[BV11b]
+Zvika Brakerski and Vinod Vaikuntanathan.
+Fully homomorphic encryption
+from Ring-LWE and security for key dependent messages.
+In CRYPTO’11,
+volume 6841, pages 505–524. 2011. doi:10.1007/978-3-642-22792-9\_29.
+[Cas97]
+J.W.S Cassels. An Introduction to the Geometry of Numbers. Springer-Verlag
+Berlin Heidelberg, 1997.
+[CDPR16]
+Ronald Cramer, L´eo Ducas, Chris Peikert, and Oded Regev. Recovering short
+generators of principal ideals in cyclotomic rings. In EUROCRYPT’16. Part II,
+volume 9666, pages 559–585. 2016. doi:10.1007/978-3-662-49896-5_20.
+[CGS14]
+P. Campbell, M. Groves, and D. Shepherd. Soliloquy: A cautionary tale. In
+ETSI 2nd Quantum-Safe Crypto Workshop, 2014.
+[CL15]
+Jung Hee Cheon and Changmin Lee. Approximate algorithms on lattices with
+small determinant, 2015. https://ia.cr/2015/461.
+[CLZ21]
+Yilei Chen, Qipeng Liu, and Mark Zhandry. Quantum algorithms for variants
+of average-case lattice problems via ﬁltering, 2021. arXiv:2108.11015.
+[DvW21]
+L´eo Ducas and Wessel van Woerden. A note on a claim of Eldar & Hallgren:
+LLL already solves it, 2021. https://ia.cr/2021/1391.
+[EHKS14]
+Kirsten Eisentr¨ager, Sean Hallgren, Alexei Kitaev, and Fang Song. A quantum
+algorithm for computing the unit group of an arbitrary degree number ﬁeld. In
+STOC’14, pages 293–302, 2014. doi:10.1145/2591796.2591860.
+[GINX16]
+Nicolas Gama, Malika Izabach`ene, Phong Q. Nguyen, and Xiang Xie. Struc-
+tural lattice reduction: Generalized worst-case to average-case reductions and
+homomorphic cryptosystems. In EUROCRYPT’16, Proceedings, Part II, vol-
+ume 9666, pages 528–558, 2016. doi:10.1007/978-3-662-49896-5\_19.
+[GMPW20] Nicholas Genise, Daniele Micciancio, Chris Peikert, and Michael Walter. Im-
+proved discrete gaussian and subgaussian analysis for lattice cryptography. page
+337, 2020. URL: https://eprint.iacr.org/2020/337.
+[GPV08]
+Craig Gentry, Chris Peikert, and Vinod Vaikuntanathan. Trapdoors for hard
+lattices and new cryptographic constructions. In STOC’08, STOC ’08, page
+197–206, 2008. doi:10.1145/1374376.1374407.
+22
+
+
+--- PAGE 23 ---
+[GSW13]
+Craig Gentry, Amit Sahai, and Brent Waters. Homomorphic encryption from
+learning with errors:
+Conceptually-simpler, asymptotically-faster, attribute-
+based. In CRYPTO’13 Proceedings, Part I, volume 8042, pages 75–92, 2013.
+doi:10.1007/978-3-642-40041-4\_5.
+[Kan87]
+Ravi Kannan.
+Minkowski’s convex body theorem and integer programming.
+Mathematics of Operations Research, 12(3):415–440, 1987.
+arXiv:https://
+doi.org/10.1287/moor.12.3.415, doi:10.1287/moor.12.3.415.
+[Kup05]
+Greg Kuperberg. A subexponential-time quantum algorithm for the dihedral
+hidden subgroup problem. SIAM J. Comput., 35(1):170–188, July 2005. doi:
+10.1137/S0097539703436345.
+[LLL82]
+A. K. Lenstra, H. W. Lenstra, and L. Lov´asz.
+Factoring polynomials with
+rational coeﬃcients. Mathematische Annalen, 261(4):515–534, 1982.
+[LP11]
+Richard Lindner and Chris Peikert. Better key sizes (and attacks) for LWE-
+based encryption. In CT-RSA’11, volume 6558, pages 319–339, 2011. doi:
+10.1007/978-3-642-19074-2\_21.
+[Mah18a]
+Urmila Mahadev. Classical homomorphic encryption for quantum circuits. In
+FOCS’18, pages 332–338, 2018. doi:10.1109/FOCS.2018.00039.
+[Mah18b]
+Urmila Mahadev. Classical veriﬁcation of quantum computations. In FOCS’18,
+pages 259–267, 2018. doi:10.1109/FOCS.2018.00033.
+[MG02]
+Daniele Micciancio and ShaﬁGoldwasser. Complexity of Lattice Problems: a
+cryptographic perspective, volume 671. Kluwer Academic Publishers, Boston,
+Massachusetts, 2002.
+[Mica]
+Daniele Micciancio.
+Lecture notes on random lattices and lattice-based
+cryptography.
+URL: https://cseweb.ucsd.edu/classes/fa21/cse206A-a/
+Lec4-Random.pdf.
+[Micb]
+Daniele Micciancio. Lecture notes on the dual lattice. URL: https://cseweb.
+ucsd.edu/classes/fa21/cse206A-a/Lec3-Dual.pdf.
+[MR09]
+Daniele
+Micciancio
+and
+Oded
+Regev.
+Lattice-based
+cryptography.
+In
+Post-Quantum
+Cryptography,
+pages
+147–191,
+2009.
+doi:10.1007/
+978-3-540-88702-7_5.
+[Reg09]
+Oded Regev. On lattices, learning with errors, random linear codes, and cryp-
+tography. J. ACM, 56(6):1–40, 2009.
+[Sch87]
+Claus Schnorr. A hierarchy of polynomial time basis reduction algorithms. The-
+oretical Computer Science, 53, 12 1987. doi:10.1016/0304-3975(87)90064-8.
+[Sch94]
+C. P. Schnorr.
+Block reduced lattice bases and successive minima.
+Com-
+binatorics, Probability and Computing, 3(4):507–522, 1994.
+doi:10.1017/
+S0963548300001371.
+23

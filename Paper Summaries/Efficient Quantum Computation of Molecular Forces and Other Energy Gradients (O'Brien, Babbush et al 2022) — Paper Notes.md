@@ -20,8 +20,8 @@ This is the first systematic costing of force estimation on quantum computers, c
 
 - **NISQ:** Force vector estimation (to fixed 2-norm) costs roughly the same as energy estimation — possibly cheaper by a constant factor. Optimised tomography schemes (parallelised importance sampling, [[Basis Rotation Grouping for VQE Measurement|basis rotation grouping]], fermionic shadow tomography) reduce circuit repetitions by orders of magnitude over naive approaches.
 - **Fault-tolerant:** Three Heisenberg-limited algorithms are developed and compared: (1) higher-order finite differences using phase estimation as a subroutine, (2) the overlap estimation algorithm (OEA) for direct expectation value estimation, and (3) the [[Gradient Encoding for Multi-Observable Estimation|gradient-based expectation value estimation]] algorithm from [[Nearly Optimal Quantum Algorithm for Estimating Multiple Expectation Values (Huggins, Wan, McClean, Babbush et al 2022) — Paper Notes|Huggins et al. (2022)]].
-- **Key finding:** The cost of block-encoding a force operator is at most a constant or polylog factor above the cost of block-encoding the Hamiltonian. For [[THC Non-Orthogonal Diagonal Coulomb Representation|THC]] encodings, the circuit cost grows by $\sim\sqrt{2}\times$ and the rescaling factor $\lambda_F$ by $\leq 2\times$. For plane-wave first-quantised systems, $\lambda_F \in O(\eta N^{2/3}/\Omega^{2/3})$ — the same asymptotic scaling as $\lambda_H$.
-- **Surprising conclusion:** In fault tolerance, force estimation is *not* cheaper than energy estimation (unlike NISQ). All three FT methods are dominated by [[Hamiltonian simulation]] costs — either directly (finite differences require repeated phase estimation) or via the ground-state reflection operator (OEA and gradient-based methods). The gradient-based algorithm strictly dominates OEA by $N_a^{1/2}$, and in some regimes finite differences are competitive or better (when state preparation is cheap).
+- **Key finding:** The cost of block-encoding a force operator is at most a constant or polylog factor above the cost of block-encoding the Hamiltonian in the constructions analysed. For the paper's [[THC Non-Orthogonal Diagonal Coulomb Representation|THC]] derivative construction, the circuit cost grows by about $\sqrt{2}\times$ and the rescaling factor $\lambda_F$ by at most $2\times$; these are construction-specific bounds, not universal force/Hamiltonian relations. For plane-wave first-quantised systems, $\lambda_F \in O(\eta N^{2/3}/\Omega^{2/3})$ — the same asymptotic scaling as $\lambda_H$.
+- **Surprising conclusion:** In fault tolerance, force estimation is *not* cheaper than energy estimation (unlike NISQ). All three FT methods are dominated by [[Hamiltonian simulation]] costs — either directly (finite differences require repeated phase estimation) or via the ground-state reflection operator (OEA and gradient-based methods). Under the same ground-state reflection, overlap, observable-access, and 2-norm accuracy model used in the paper, the gradient-based algorithm improves OEA by $N_a^{1/2}$; finite differences can still be competitive or better in regimes where state preparation is cheap or the derivative constants are favourable.
 - **Practical outlook:** Single-point force estimation is feasible at roughly the same cost as energy estimation. But MD requires $10^6$–$10^9$ force evaluations, each taking hours on a fault-tolerant device. MD on a quantum computer is not tractable with current approaches. Geometry optimisation and property estimation (dipoles, coupling constants) are more promising near-term targets.
 
 My assessment: This paper is a careful, honest accounting of what quantum computers can and cannot do for molecular dynamics. The "forces are basically free in NISQ" result is encouraging but largely academic given VQE's other problems. The FT analysis is where the real value lies: it identifies the ground-state reflection as the fundamental bottleneck and shows that the Huggins et al. gradient method is optimal for this task. The pessimistic conclusion about MD is important — it steers the field away from an overhyped application and toward geometry optimisation, where the quantum advantage story is more plausible.
@@ -51,11 +51,11 @@ $$\frac{dH}{dR_A} = \sum_{pq} a_p^\dagger a_q \left[\frac{dh_{pq}}{dR_A} - \sum_
 
 where the terms involving $dS/dR_A$ are the **Pulay forces** from the nuclear-position-dependent basis.
 
-**THC block encoding:** Differentiate the THC factorisation $G_{pqrs} = \sum_{\mu\nu} \chi_p^{(\mu)} \chi_q^{(\mu)} \zeta_{\mu\nu} \chi_r^{(\nu)} \chi_s^{(\nu)}$. The derivative introduces five terms instead of one, each with the same diagonal structure. Circuit cost: $T_F \sim \sqrt{2}\, T_H$. Rescaling factor: $\lambda_{F_i} = \sum_{\mu\nu} (|\zeta_{\mu\nu}| + \frac{1}{2}|d\zeta_{\mu\nu}/dR_i|)$.
+**THC block encoding:** Differentiate the THC factorisation $G_{pqrs} = \sum_{\mu\nu} \chi_p^{(\mu)} \chi_q^{(\mu)} \zeta_{\mu\nu} \chi_r^{(\nu)} \chi_s^{(\nu)}$. The derivative introduces five terms instead of one, because differentiated leaf tensors, differentiated central tensors, and Pulay/orbital-response choices can all contribute depending on the basis convention. Each term preserves the same diagonal structure. Circuit cost in the paper's construction: $T_F \sim \sqrt{2}\, T_H$. The displayed rescaling formulas should be read as absorbing all differentiated THC data into the derivative tensors; differentiating only the central tensor $\zeta$ is not the general force operator.
 
 **[[Double Factorization of Two-Electron Integrals|Low-rank factorisation]]:** Differentiate $V = \sum_l W^{(l)} W^{(l)\dagger}$ via the identity $dV/dR_i = \frac{1}{2}\sum_l [(W^{(l)} + dW^{(l)}/dR_i)^2 - (W^{(l)} - dW^{(l)}/dR_i)^2]$. Circuit cost: $T_F \sim O(\sqrt{NL})$ — same as the Hamiltonian. Rescaling factor: $\lambda_{F_i} = \frac{1}{2}\sum_l [(\sum_p |f_p^{(l+)}|)^2 + (\sum_p |f_p^{(l-)}|)^2]$, with $\lambda_F \sim 4\lambda_H$ in the worst case.
 
-**First-quantised plane waves:** The force operator is a **one-body operator** (no Pulay force, since plane-wave overlap is $\delta_{pq}$), diagonal under the FFFT/QFT:
+**First-quantised plane waves:** The nuclear force operator from differentiating the electron-nuclear potential is a **one-body operator** (no Pulay force, since plane-wave overlap is $\delta_{pq}$), diagonal under the FFFT/QFT:
 
 $$\frac{dH}{dR_{l,\alpha}} = \text{QFT}\left(-\frac{4\pi i Z_l}{\Omega} \sum_{i=1}^{\eta} \sum_{p,s \in G_0} \frac{k_s\, e^{ik_s \cdot (R_l - r_p)}}{|k_s|^2} |p\rangle\langle p|_i\right) \text{QFT}^\dagger$$
 
@@ -69,7 +69,7 @@ Use the quantum computer as an energy oracle. For each displaced configuration $
 
 $$\frac{dE}{dR_i} = \frac{1}{dR}\sum_{l=-m}^{m} a_l^{(m)} E(R + l\,dR\cdot v_i) + \varepsilon_{\text{fd}}^{(m)}$$
 
-where $\varepsilon_{\text{fd}}^{(m)} \sim dR^{2m+1}$ and the phase estimation error scales as $\varepsilon_{\text{PE}} \sim \lambda_H/(dR \cdot T)$. Optimising over $dR$ and $m$:
+where $\varepsilon_{\text{fd}}^{(m)}$ is the truncation/discretisation error (controlled by higher derivatives and scaling like $dR^{2m}$ for the derivative estimate after the $1/dR$ prefactor), while the phase-estimation contribution scales as $\varepsilon_{\text{PE}} \sim \lambda_H/(dR \cdot T)$. Optimising over $dR$ and $m$:
 
 $$T_{\text{FD}} \in \tilde{O}\left(\frac{N_a^{3/2} \lambda_H c \log^{5/2}(e)}{\varepsilon}\right)$$
 
@@ -84,7 +84,7 @@ Block-encode the force operator $dH/dR_i$ as a unitary $U_i$ with rescaling fact
 The paper contributes several optimisations:
 - Factor-of-2 speedup by using $|0\rangle\langle 0| S^{-2^{n-1}} + |1\rangle\langle 1| S^{2^{n-1}}$ instead of controlling $S^{2^n}$
 - Factor-of-4 optimisation for real-valued expectation values via the identity $\langle\psi|U|\psi\rangle = \frac{1}{2}(4|\widehat{(1+\langle U\rangle)/2}|^2 - |\widehat{\langle U\rangle}|^2 - 1)$
-- **State recycling:** After OEA completes, the system register has overlap $1/\sqrt{2}$ with $|\psi\rangle$ regardless of the expectation value. Repeated Hadamard tests on the reflection operator $I - 2|\psi\rangle\langle\psi|$ recover $|\psi\rangle$ at average cost $\leq 2T_R$.
+- **State recycling:** In the paper's serial OEA routine, the post-measurement system register has at least the constant overlap needed for recycling (quoted as $1/\sqrt{2}$ in the analysed case) with $|\psi\rangle$. Repeated Hadamard tests on the reflection operator $I - 2|\psi\rangle\langle\psi|$ recover $|\psi\rangle$ at average cost $\leq 2T_R$. This is a sufficient feature of that routine, not a universal property of arbitrary expectation-estimation circuits.
 
 Total cost:
 
@@ -153,15 +153,16 @@ The force operator's $\lambda$ is dramatically smaller than the Hamiltonian's. T
 3. **Ground-state reflection dominates FT cost.** Both HF-based FT algorithms (OEA and gradient) pay $O(\lambda_H / \gamma)$ per reflection. For small-gap systems this overwhelms any savings from cheap force block-encodings.
 4. **$\lambda_F$ numerics are for small systems.** The scaling $\lambda_F \in O(N_H^{0.06})$ is fitted from H-chains up to $N_H = 100$ in a minimal basis. Whether this holds for larger, more realistic systems (or larger basis sets) is open.
 5. **Direct force factorisation vs. Hamiltonian differentiation.** Directly applying THC/DF to the force operator (instead of differentiating the factorised Hamiltonian) likely gives smaller $\lambda_F$ but introduces a systematic bias — the force manifold doesn't exactly match the THC-factorised energy surface.
-6. **NISQ variance bounds are not tight.** The paper uses worst-case bounds on $\sigma_{i,j}$, so the comparison between methods is indicative rather than exact.
+6. **Derivative data can change the oracle.** Differentiating a Hamiltonian block encoding can introduce new PREPARE tables, SELECT branches, differentiated factor tensors, and basis/orbital-response terms. The constant-factor overhead claims apply after these derivative data are organized into the paper's specific THC, DF, sparse, or plane-wave constructions.
+7. **NISQ variance bounds are not tight.** The paper uses worst-case bounds on $\sigma_{i,j}$, so the comparison between methods is indicative rather than exact.
 
 ## Reusable ideas
 
 1. [[Parallelised Importance Sampling for Vector Estimation]] — Optimise shot allocation across basis rotations to target the 2-norm of a vector of expectation values, not individual components. Saves up to $3N_a$ over separate estimation.
 2. [[Force Operator Block Encoding via Hamiltonian Differentiation]] — Differentiate the factorised Hamiltonian (THC or double factorisation) to obtain a block encoding of the force operator with at most constant-factor overhead.
-3. [[Ground-State Recycling in Serial Amplitude Estimation]] — After OEA, the system register always has overlap $1/\sqrt{2}$ with the ground state. Iterated Hadamard tests on the reflection operator recover $|\psi\rangle$ at average cost $\leq 2T_R$.
+3. [[Ground-State Recycling in Serial Amplitude Estimation]] — In the analysed OEA routine, the system register keeps constant overlap (quoted as $1/\sqrt{2}$ for the relevant branch) with the ground state. Iterated Hadamard tests on the reflection operator recover $|\psi\rangle$ at average cost $\leq 2T_R$.
 4. [[Finite Difference Order Optimisation for Quantum Gradient Estimation]] — Balance phase estimation error ($\sim 1/(dR \cdot T)$) against discretisation error ($\sim dR^{2m+1}$) by jointly optimising step size $dR$ and finite difference degree $m$.
-5. [[FFFT Diagonalisation of Force Operators in Plane-Wave Basis]] — In plane-wave bases, all force operators are strictly one-body and mutually commuting under the [[Fermionic Fast Fourier Transform (FFFT)|FFFT]]/QFT, making them trivially simultaneous.
+5. [[FFFT Diagonalisation of Force Operators in Plane-Wave Basis]] — The electron-nuclear potential-gradient operators in the plane-wave construction are one-body and diagonal in a common position/dual basis after the [[Fermionic Fast Fourier Transform (FFFT)|FFFT]]/QFT, making the potential-force components straightforward to encode jointly.
 
 ## References within this paper
 

@@ -1,0 +1,442 @@
+
+
+--- PAGE 1 ---
+arXiv:quant-ph/9508005v3  1 Dec 1996
+IASSNS-HEP-95/69; quant-ph:9508005
+Primality Test Via Quantum Factorization
+H. F. Chau∗and H.-K. Lo†
+School of Natural Sciences, Institute for Advanced Study, Olden Lane, Princeton, NJ 08540
+(November 6, 2018)
+Abstract
+We consider a probabilistic quantum implementation of a variation of
+the Pocklington-Lehmer N −1 primality test using Shor’s algorithm.
+O(log3 N log log N log log log N) elementary q-bit operations are required to
+determine the primality of a number N, making it (asymptotically) the fastest
+known primality test. Thus, the potential power of quantum mechanical com-
+puters is once again revealed.
+PACS numbers: 03.65.Bz, 89.80.+h, 02.10.Lh,
+AMS 1991 subject classiﬁcation: (Primary) 11Y05, 11Y11, 68Q10, 81V99
+(Secondary) 11A51, 11Y16, 68Q20
+Keywords: Computational Complexity, Pocklington-Lehmer N −1 Primality Test,
+Quantum Computation, Quantum Factorization, Shor’s Algorithm
+Typeset using REVTEX
+∗Present address: Department of Physics, University of Hong Kong, Pokfulam Road, Hong Kong.
+E-mail: hfchau@hkusua.hku.hk
+†Present address: BRIMS, Hewlett-Packard Labs, Filton Road, Stoke Giﬀord, Bristol, Bs12 6QZ,
+U. K. E-mail: hkl@hplb.hpl.hp.com
+1
+
+
+--- PAGE 2 ---
+]
+Finding large primes and factorizing large composite numbers are two classic mathemat-
+ical problems of great practical interest. For instance, in the RSA public key cryptography,
+the key, which is made public, is the product of two large primes whose values are kept
+secret. The secret values of the two primes are needed to decode the encoded messages
+(ciphertexts). The security of this scheme lies in the diﬃculty in factoring large composites.
+More concretely, while multiplying two integers can be done in a time polynomial in the
+number of digits of the two integers (and hence “eﬃcient”), the fastest factorization algo-
+rithm that runs on classical computers (or Turing machines) takes almost an exponential
+amount of time (∼exp(L1/3) where L is the number of digits of the number to be fac-
+torized) [1]. Consequently, given the value of the public key, it is almost hopeless for an
+eavesdropper to attempt to break the RSA cryptographic scheme by factoring the key into
+two large primes. For this reason, ﬁnding an eﬃcient factorization method is the dream of
+eavesdroppers. On the other hand, for additional security of the RSA scheme, the public
+key has to be changed frequently to avoid “accidental” factorization of the key. To fulﬁll
+this need, an eﬃcient algorithm for proving the primality of a large integer is required.
+The possibility of performing classical computation by using quantum mechanical ma-
+chines has been investigated by various people [2–6]. Recently, Shor discovered an eﬃcient
+quantum factorization algorithm [7,8]: By using the massive parallelism and interference
+eﬀect in quantum mechanics, which have no classical counterparts, Shor found an eﬃcient
+method to compute the period of a function. This method immediately leads to eﬃcient
+algorithms for both the discrete logarithm and factorization problems [7]. Therefore, if a
+quantum mechanical computer is ever built, the RSA crypto-system will no longer be se-
+cure. Some people have even proposed that quantum cryptography will ultimately be the
+only way to ensure the security of a cryptosystem [9–12].
+Primality tests1 are generally much easier than factorization. The APRCL test (based
+on Jacobi sum) is one of the most commonly used algorithms. The number of elementary
+bit operations needed for testing the primality of a number N is O((log N)c log log log N) for
+some constant c > 0 [13]. Although the run time of this algorithm is not truly polynomial
+in log N, it works reasonably fast for numbers of less than 1,000 decimal digits [14]. The
+ﬁrst polynomial time probabilistic primality test was proposed by Goldwasser and Kilian
+[15] using ideas from elliptic curves. Their algorithm was later implemented by Atkin and
+Morain [14,16]. Its run time scales as O(log6 N). However, their algorithm assumes some
+unproven (although very plausible) conjectures in analytic number theory [16] and may
+fail to work for an inﬁnite sequence of (non-random) prime numbers [17] even though it
+will never mis-identify a composite number as a prime. Finally, using ideas from Abelian
+varieties, Adleman and Huang [17] discovered a polynomial time probabilistic primality test
+without any unproven hypothesis. However, their algorithm is extremely complicated and
+is totally impractical to implement [14].
+Further improvements may be possible. In fact, if we assume that validity of the (yet still
+1A primality test is an algorithm which outputs “true” if and only if the input is a prime. It may
+not halt if the input is composite. This is to be distinguished from a compositeness test that may
+occasionally indicate a number as prime even when it is in fact composite.
+2
+
+
+--- PAGE 3 ---
+unproven) Extended Riemann Hypothesis, then there is a deterministic primality test whose
+run time scales as O((log N)4 log log log N) [18]. More recently, there is statistical evidence
+supporting the conjecture that the primality of a number N can be proven deterministically
+in O((log N)3 log log N log log log N) time [19].
+In this paper, we propose a straightforward probabilistic primality test based on the
+Pocklington-Lehmer N −1 method using the quantum factorization algorithm. Its run time
+scales as O((log N)3 log log N log log log N) and is thus asymptotically faster than all known
+classical primality tests. In the discussion below, we will always assume that the number N
+has failed all common compositeness tests and hence is very likely to be a prime (see, for
+example, Refs. [1,14,20] for some simple and eﬃcient compositeness tests).
+Note that the number of primitive residue classes (mod N) is N−1 and the multiplicative
+group formed by the primitive residue classes has a generator of order N −1 if and only if
+N is a prime [20]. This leads us to the following theorem:
+Theorem 1: (Pocklington-Lehmer N −1 test) Suppose N −1 = Qm
+j=1 p
+βj
+j with all pj’s distinct
+primes. If there exists a ∈ZN such that
+
+
+
+a(N−1)/pj ̸≡1 (mod N)
+for j = 1, 2, . . . , m
+aN−1 ≡1 (mod N)
+,
+(1)
+then N is a prime [14,20].
+Thus, the test consists of two parts, namely, the complete factorization of the num-
+ber N −1, and the veriﬁcation of conditions in Eq. (1).
+Since the test requires the
+complete factorization of a number, it is not a good general purpose primality test be-
+fore the discovery of Shor’s quantum factorization algorithm. (As mentioned earlier, no
+eﬃcient classical factorization method is known. The fastest known classical method for
+factorization is the number ﬁeld sieve.
+Under reasonable heuristic assumptions, it takes
+O(exp(c(log M)1/3(log log M)2/3)) elementary operations for some constant c > 0 [21] to
+ﬁnd a factor of a number M.)
+The situation is completely diﬀerent after Shor’s discovery. As shown in the Appendix A,
+Shor’s algorithm requires O((log M)2(log log M)2 log log log M) elementary q-bit operations2
+to ﬁnd a factor of a composite number M, provided that M is not in the form of pn or 2pn
+for some odd prime number p. In the case that M is of the form pn for an odd prime p,
+there exists a classical algorithm to ﬁnd p and n in O((log M)2(log log M)2 log log log M)
+time [14]. Alternatively, we show in Appendix B that this can be done equally eﬃciently
+by using a quantum algorithm similar to Shor’s algorithm. Since factorization of a prime
+power is much easier than that of a composite number with distinct prime factors, we shall
+only consider the latter in our computational complexity analysis.
+2A quantum mechanical bit is now commonly called a “q-bit”. Loosely speaking, coherent su-
+perposition of states allows a q-bit to hold more information than a classical bit. In addition,
+“elementary” here refers to operation in the form of unitary operator acting on one or two q-bits.
+Please refer to Refs. [22–24] for constructions of “elementary” logical operators.
+3
+
+
+--- PAGE 4 ---
+Let us consider the ﬁrst part of the test — the complete factorization of the number
+N −1. Suppose we would like to factorize M ≡N −1 completely. Using Shor’s algorithm,
+we can ﬁnd a non-trivial factor f of M in O((log M)2(log log M)2 log log log M) elementary
+operations. The problem then reduces to the factorization of the numbers f and M/f. We
+can further speed up the process by extracting multiple factors of M, if any, by computing
+gcd(f, M/f). Clearly, this takes negligible time as compared to the Shor’s algorithm. And
+the complete factorization of M is obtain by recursively applying Shor’s algorithm m−1 times
+where m is the number of distinct primes of M. Since the product of the ﬁrst m primes is of
+order of 2m [20], so complete factorization of M requires the running of Shor’s algorithm for at
+most O(log M) times. Thus, no more than O((log M)3(log log M)2 log log log M) elementary
+operations are needed for running Shor’s algorithm alone. In addition, we also need to verify
+that a complete factorization of M ≡N −1 has been obtained. That is, the pj’s we have
+found in Theorem 1 are indeed prime numbers. Let us denote the number of elementary
+operations needed for the ﬁrst and second parts of the primality test for a M by P1(M) and
+P2(M) respectively. Also, let P(M) = P1(M) + P2(M). From the above discussion,
+P1(N)
+≤
+m
+X
+i=1
+P(pi) + O((log N)3(log log N)2 log log log N) .
+(2)
+Let us come to the second part of the test — the application of the Pocklington-Lehmer
+N −1 test. We choose an integer m randomly and test if all the conditions in Eq. (1)
+are satisﬁed.
+Now there are at most O(log N) such conditions.
+Using the power algo-
+rithm [25], veriﬁcation of each condition in Eq. (1) requires O(log N) multiplications. Using
+the Sch¨onhangen and Strassen method, multiplying two number of size at most N can be
+done in O(log N log log N log log log N) elementary operations [25,26]. Therefore, altogether
+O((log N)3 log log N log log log N) elementary operations are needed for each random num-
+ber m chosen.
+It can be shown that the probability that a randomly chosen integer m
+satisfying all the conditions in Eq. (1) is at least O(1/ log log N) [27]. Consequently, the
+total number of elementary operations needed for the second part of the test is given by
+P2(N) ≤O((log N)3(log log N)2 log log log N) .
+(3)
+Notice that if Πm
+i=1pβi
+i
+is the prime number decomposition of a positive integer N (with
+pi are distinct primes), then
+m
+X
+i=1
+log pi ≤log N ,
+(4a)
+m
+X
+i=1
+log log pi ≤log log N ,
+(4b)
+and hence
+m
+X
+i=1
+(log pi)3 ≤
+ m
+X
+i=1
+log pi
+!3
+≤(log N)3 .
+(4c)
+4
+
+
+--- PAGE 5 ---
+Therefore,
+m
+X
+i=1
+(log pi)3(log log pi)2(log log log pi)
+≤(log N)3(log log N)2(log log log N) .
+(5)
+By induction, it is straightforward to prove from Eqs. (2)–(5) that
+P(N) = P1(N) + P2(N)
+≤O((log N)3(log log N)2 log log log N) .
+(6)
+Note that if N is in fact a composite number, this primality test will never terminate.
+The Pocklington-Lehmer test gives a certiﬁcate for primality once the number N passes it.
+On the other hand, Shor’s algorithm is eﬃcient for ﬁnding non-trivial factors of a number.
+Thus, Shor’s algorithm and our quantum primality test are complimentary to each other.
+Although Eq. (6) already tells us that the above quantum primality test algorithm is
+already better than all the classical algorithms known to date, we now go on to describe a
+ﬁne tuning of our quantum algorithm which reduces the run time by a factor of log log N.
+As shown in the operation counting analysis above, both the quantum factorization and the
+veriﬁcation of Eq. (1) are equally fast. Thus, in order to reduce the run time of the quantum
+Pocklington-Lehmer algorithm, we have to speed up both parts.
+To speed up the quantum factorization, we can perform trial divisions to eliminate
+all the prime factors of N −1 that are smaller than k.
+This can be done by ≈k
+divisions, taking O(k log N log log N log log log N) time [26].
+After the trial division, we
+can concentrate on the prime factors of N −1 that are greater than k.
+Clearly, at
+most O(log N/ log k) distinct prime factors of N −1 are greater than k.
+So by com-
+bining the trial division with Shor’s algorithm, N −1 can be factorized completely in
+O(log N log log N log log log N(k + (log N)2 log log N/ log k)) time. Optimal solution is ob-
+tained when we take the number of trial divisions k ∼(log N)2/ log log N. Therefore, factor-
+ization of N −1 requires only O((log N)3 log log N log log log N) elementary q-bit operations.
+(In case we have a prime number table up to the number k, then prime number theorem
+tells us that only O(k/ log k) trial divisions are required. Using the same argument, we know
+that optimal solution occurs when k ∼log2 N. However, the optimal number of elementary
+q-bit operations is still O((log N)3 log log N log log log N). That is, only a constant factor
+speed up is gained when we use a prime number table.)
+To speed up the veriﬁcation of primality, we employ a variation of the Pocklington-
+Lehmer test by Brillhart et al. [20,28]:
+Theorem 2: (Brillhart et al.) Suppose N −1 = Qm
+j=1 p
+βj
+j
+with all pj’s distinct primes. And
+if, for each j = 1, 2, . . . , m, there exists aj ∈ZN such that
+
+
+
+a
+(N−1)/pj
+j
+̸≡1 (mod N)
+aN−1
+j
+≡1 (mod N)
+,
+(7)
+then N is a prime.
+5
+
+
+--- PAGE 6 ---
+Once again, we randomly choose an integer m and test if it satisﬁes Eq. (7). For each pj,
+the probability that a randomly chosen m satisﬁes the constraint m(N−1)/pj ̸≡1 (mod N)
+in Eq. (7) is at least 1/2. Thus, for each m, half of the constraints in Eq. (7) are satis-
+ﬁed on average. Thus, we are almost sure to have found all the required aj by randomly
+picking m’s and checking Eq. (7) a few times. Obviously, our new veriﬁcation process takes
+O((log N)3 log log N log log log N) time.
+Combining the quantum factorization with trial
+division, and Theorem 2, we have a O((log N)3 log log N log log log N) run time quantum
+primality test as promised.
+In summary, we have presented a probabilistic quantum primality test using a variation
+of the Pocklington-Lehmer N −1 test and Shor’s quantum factorization algorithm. Its run
+time scales as O((log N)3 log log N log log log N). (Moreover, it requires O(log2 N) bits of
+extra working space.) As far as we know, this is the (asymptotically) fastest primality test
+to date. Our quantum primality test can be further speeded up by a constant factor if we
+replace Theorem 2 by another variation of the Pocklington-Lehmer algorithm which involve
+only a partial factorization of N −1 (see Ref. [20], for example).
+It is interesting to know if there exist an even faster primality test. In particular, if the
+conjecture by Bach and Huelsbergen is correct, then there is a deterministic primality test,
+whose run time is as good as ours (i.e. O((log N)3 log log N log log log N) [19].
+ACKNOWLEDGMENTS
+This work is supported by the DOE grant DE-FG02-90ER40542.
+APPENDIX A: SHOR’S ALGORITHM
+We outline the idea of Shor’s algorithm below (See Refs. [7,8] for details). To factorize a
+composite number M (which is assumed not to be a prime power), we prepare our system
+in the state
+|Ψ⟩=
+1
+2L/2
+2L
+X
+a=1
+|a⟩,
+(A1)
+with 2L ≈M2. This can be achieved by, say, setting L quantum spin-1/2 particles with their
+spins pointing towards the positive x-direction (and all our measurements are performed in
+the z-direction).
+Then we evolve our wavefunction to
+|Ψ⟩=
+1
+2L/2
+2L
+X
+a=1
+|a, mamod M⟩,
+(A2)
+for some randomly chosen integer 1 < m < M with gcd(m, M) = 1. (If gcd(m, M) > 1, then
+we are so lucky that we have found a non-trivial factor of M by chance. The probability for
+this to happen scales exponentially with log M, and is therefore negligible.) The above evo-
+lution can be done using the power algorithm [25], which takes O(L) multiplications in ZM.
+6
+
+
+--- PAGE 7 ---
+As mentioned in the text, multiplying two L-bit numbers using the Sch¨onhagen and Strassen
+method, which is asymptotically the fastest known algorithm, requires O(L log L log log L)
+elementary bit operations [25,26]. Consequently, evolving the wavefunction from state (A1)
+to state (A2) takes O(L2 log L log log L) elementary q-bit operations. Besides, it requires
+O(L) extra q-bits as working space during the computation.
+Now we make a measurement on the second set of q-bits in our system (which should
+take at most O(L) time). Thus, the wavefunction of our system for the ﬁrst set of q-bits
+collapses to
+|Ψ⟩=
+1
+√
+k
+k
+X
+a=0
+|a0 + pa⟩,
+(A3)
+where p is the order of the number m under multiplication modulo M, 0 ≤a0 < k is some
+constant, and k =
+
+(2L −a0)/p
+
+.
+To extract the order p, we perform a discrete Fourier transform, which evolves our system
+to
+|Ψ⟩=
+1
+√
+ksL
+2L−1
+X
+c=0
+k
+X
+a=0
+exp
+2πi(a0 + pa)c
+2L
+
+|c⟩.
+(A4)
+This can be done in O(L2) elementary q-bit operations [8].
+Now the amplitude of our
+wavefunction is sharply peaked at |p⟩. It can be shown that by making a measurement on
+the ﬁrst set of q-bits, we have a probability of at least O(1/ log L) of getting the correct order
+p [7,8]. So, by repeatedly running our machine O(log L) times, we are almost sure to get
+the order p of the multiplicative group modulo M generated by the integer m. Therefore, it
+requires O((log M)2(log log M)2 log log log M) elementary q-bit operations to ﬁnd the order
+p of the group ⟨m⟩.
+Now we hope that p is an even number and that gcd((mp/2 −1)mod M, M) is a non-
+trivial factor of M. It can be shown that for a randomly chosen m, the probability that the
+above algorithm does give a non-trivial factor of M is at least 1/2 provided that M is not
+of the form pk or 2pk for some odd prime p [8].
+The remaining case is to recognize and factorize an odd number M in the form of a
+prime power. This can be done by classical probabilistic algorithms whose run time scales
+like O((log M)2(log log M)2 log log log M) [14], which is negligible in comparison with Shor’s
+algorithm. (See Appendix B for an equally eﬃcient quantum prime power factorization
+algorithm.) Thus, we have an eﬃcient way to factorize a composite number M.
+Combining Shor’s algorithm with the classical factorization of prime powers, we are
+almost sure to ﬁnd a non-trivial factor of M after O((log M)2(log log M)2 log log log M)
+elementary q-bit operations.
+Moreover, the power algorithm is one of the major bottle
+necks in this method.
+APPENDIX B: QUANTUM PRIME POWER FACTORIZATION ALGORITHM
+Here we discuss a variant of Shor’s algorithm that is useful for factoring a number M that
+is of the form pn for some odd prime p. Following Shor, we can ﬁnd the order of a number
+7
+
+
+--- PAGE 8 ---
+m which is relatively prime to M ≡pn in O((log M)2(log log M)2 log log log M) time. We
+denote the set of all integers in ZM which are relatively prime to M by U(ZM). It can be
+shown that U(ZM) is a cyclic group of order pn−1(p −1) under multiplication modulo M
+[29]. The group generated by m under multiplication modulo M, ⟨m⟩, is a sub-group of
+U(ZM). The probability that the order of ⟨m⟩is divisible by pn−1 equals the probability
+that a randomly chosen element of Zpn−1(p−1) is relatively prime to pn−1, which is in turn
+equal to 1 −1/p ≥2/3. So, the greatest common divisor of the order of m and M has at
+least 2/3 chance of being pn−1. Thus, we have a probability of at least 2/3 of ﬁnding p by
+calculating M/ gcd(M, r) where r is the order of m. Once p is found, M can be factorized
+easily. The total time required scales as O((log M)2(log log M)2 log log log M).
+8
+
+
+--- PAGE 9 ---
+REFERENCES
+[1] See for example, N. Koblitz, A Course in Number Theory and Cryptography (Springer-
+Verlag, New York, ed. 2, 1994), chap. 2–3.
+[2] P. Benioﬀ, Phys. Rev. Lett. 48, 1581 (1982).
+[3] R. P. Feynman, Int. J. Theo. Phys. 21, 467 (1982).
+[4] R. P. Feynman, Found. Phys. 16, 507 (1986).
+[5] D. Deutsch, Proc. Roy. Soc. Lond. A400, 97 (1985).
+[6] D. Deutsch, Proc. Roy. Soc. Lond. A425, 73 (1989).
+[7] P. Shor, in Proceedings of the 35th Annual Symposium on the Foundation of Computer
+Science (IEEE Computer Society, Los Alamitos, CA, 1994), p. 124.
+[8] See also A. Ekert, and R. Jozsa, Rev. Mod. Phys., 68, 733 (1996).
+[9] C. H. Bennett, Phys. Rev. Lett. 68, 3121 (1992).
+[10] R. Jozsa and B. Schumacher, J. Mod. Optics 41, 2343 (1994).
+[11] B. Schumacher, Phys. Rev. A51, 2738 (1995).
+[12] A. Barenco, Proc. Roy. Soc. Lond. A449, 679 (1995).
+[13] L. Adleman, C. Pomerance, and R. Rumely, Ann. Math. 117, 173 (1983).
+[14] H. Cohen, A Course in Computational Algebraic Number Theory (Springer-Verlag, New
+York, 1993), chap. 1,8–9.
+[15] S. Goldwasser, and J. Kilian, in Proceedings of the 18th Annual ACM Symposium on
+Theory of Computing (ACM, New York, 1986), p. 316.
+[16] A. O. L. Atkin, and F. Morain, Math. Comp. 60, 399 (1993).
+[17] L. M. Adleman, and M.-D. A. Huang, Primality Testing And Abelian Varieties Over
+Finite Fields (Springer-Verlag, New York, 1992).
+[18] G. L. Miller, J. Comp. & Sys. Sci. 13, 300 (1976).
+[19] E. Bach, and L. Huelsbergen, Math. Comp. 61, 69 (1993).
+[20] H. Riesel,
+Prime Numbers and Computer Methods for Factorization (2nd ed.,
+Birkh¨auser, Boston, 1994), chap. 4–7.
+[21] A. K. Lenstra, and H. W. Lenstra, Jr., eds., The Development of the Number Field Sieve
+(Springer-Verlag, New York, 1993).
+[22] C. H. Bennett, IBM J. Res. Dev. 17, 525 (1973).
+[23] T. Sleator, and H. Weinfurter, Phys. Rev. Lett. 74, 4087 (1995).
+[24] H. F. Chau, and F. Wilczek, Phys. Rev. Lett. 75, 748 (1995).
+[25] D. E. Knuth, The Art of Computer Programming (Addison-Wesley, Reading, Mas-
+sachusetts, ed. 2, 1981), Vol 2, chap. 4.
+[26] A. Sch¨onhagen, and V. Strassen, Computing 7, 281 (1971).
+[27] G. H. Hardy, and E. M. Wright, An Introduction to the Theory of Numbers (Oxford,
+London, 1938), p. 265, 348.
+[28] J. Brillhart, D. H. Lehmer, and J. Selfridge, Math. Comp. 29, 620 (1975).
+[29] K. Ireland, and M. Rosen, A Classical Introduction to Modern Number Theory (Springer-
+Verlag, New York, 1982), Theorem 2 of chap. 4 on p. 43.
+9

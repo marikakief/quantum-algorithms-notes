@@ -1,3 +1,5 @@
+# Quantum Spectral Methods for Differential Equations (Childs-Liu 2020) — Paper Notes
+
 > **Source:** Andrew M. Childs and Jin-Peng Liu, *Quantum spectral methods for differential equations*, Communications in Mathematical Physics 375:1427–1457, 2020; arXiv:1901.00961
 > **Links:** [arXiv](https://arxiv.org/abs/1901.00961) · [CMP](https://doi.org/10.1007/s00220-019-03575-z)
 > **Tags:** #linear-ODE #spectral-method #Chebyshev #quantum-algorithm #differential-equations #QLSA #boundary-value-problem #time-dependent
@@ -24,7 +26,7 @@ where $T_k$ are Chebyshev polynomials. The coefficients $c_{i,k}$ are determined
 
 The result: **$\mathrm{poly}(\log(1/\varepsilon))$ complexity for time-dependent linear ODEs** — the first algorithm to achieve this. Previous work by [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry et al. (2017)]] achieved $\mathrm{polylog}(1/\varepsilon)$ only for time-independent equations. [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] handled time-dependent equations but with $\mathrm{poly}(1/\varepsilon)$ scaling.
 
-**My assessment:** This is a clean, elegant paper. The core insight — use a global (spectral) approximation instead of local (finite difference) methods — is natural from a numerical analysis perspective but hadn't been brought to quantum algorithms before. The exponential convergence of spectral methods for smooth solutions is the key: if the solution is $C^\infty$, the Chebyshev approximation error decreases faster than any polynomial of $1/n$, so $n = \mathrm{polylog}(1/\varepsilon)$ suffices. The construction is straightforward once you see the idea: the Chebyshev coefficients satisfy a linear system, which you hand to the [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|QLSA]].
+**My assessment:** This is a clean, elegant paper. The core insight — use a global (spectral) approximation instead of local (finite difference) methods — is natural from a numerical analysis perspective but hadn't been brought to quantum algorithms before. The exponential convergence used here is not a consequence of bare qualitative $C^\infty$ smoothness; it depends on quantitative bounds on high derivatives, captured in the paper by parameters such as $g'$. Under those derivative-growth assumptions, $n = \mathrm{polylog}(1/\varepsilon)$ suffices. The construction is straightforward once you see the idea: the Chebyshev coefficients satisfy a linear system, which you hand to the [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|QLSA]].
 
 The BVP extension is a nice bonus — BVPs are naturally suited to spectral methods (they're global problems), and the quantum algorithm handles them with similar complexity.
 
@@ -63,7 +65,7 @@ Measurement success probability is $\Omega(n/(mq^2))$. Apply amplitude amplifica
 
 ### Spectral convergence
 
-The critical point: for solutions in $C^{r+1}$, the spectral method error is $O(\|x^{(n+1)}\|/n^{r-2})$ (Lemma 1). For $C^\infty$ solutions (which time-dependent linear ODEs with smooth coefficients produce), the error is $O(g' \cdot (e/(2n))^n)$ (Lemma 2) — super-exponential in $n$. So $n = O(\log \Omega / \log\log \Omega)$ suffices for error $\delta$, where $\Omega$ involves $g'$ (a smoothness parameter).
+The critical point: for solutions in $C^{r+1}$ with controlled derivatives, the spectral method error is $O(\|x^{(n+1)}\|/n^{r-2})$ (Lemma 1). Under the paper's stronger derivative-growth assumptions, summarized by $g'$, the error is $O(g' \cdot (e/(2n))^n)$ (Lemma 2) — super-exponential in $n$. So $n = O(\log \Omega / \log\log \Omega)$ suffices for error $\delta$, where $\Omega$ involves $g'$. A merely $C^\infty$ function without quantitative derivative bounds need not have this rate.
 
 This is where the exponential improvement over finite-difference methods comes from: finite differences give $O(h^k)$ error requiring $n = O(1/\varepsilon^{1/k})$ points, while spectral methods give $O((e/2n)^n)$ error requiring $n = O(\log(1/\varepsilon))$ points.
 
@@ -96,7 +98,7 @@ The $\kappa_V$ dependence is a weakness compared to [[Improved Quantum Algorithm
 
 ## Limits / caveats
 
-- **Smoothness requirement.** The exponential convergence of Chebyshev approximation requires the solution to be $C^\infty$ (or at least $C^{r+1}$ for $O(1/n^{r-2})$ convergence). Solutions with discontinuities or low regularity degrade to algebraic convergence. In practice, linear ODEs with smooth $A(t)$ and $f(t)$ produce smooth solutions, so this is rarely a binding constraint.
+- **Smoothness requirement.** The exponential convergence of Chebyshev approximation requires quantitative control of high derivatives, not just the qualitative property \(C^\infty\). With only \(C^{r+1}\) regularity and bounded derivatives, the guarantee degrades to algebraic convergence. Solutions with discontinuities or low regularity degrade further.
 
 - **$\kappa_V$ dependence.** The complexity depends on $\kappa_V = \max_t \kappa(V(t))$, the condition number of the diagonalising matrix. For non-normal $A(t)$, this can be exponentially large. [[Improved Quantum Algorithms for Linear and Nonlinear Differential Equations (Krovi 2023) — Paper Notes|Krovi (2023)]] eliminates this by using $C(A)$ instead.
 

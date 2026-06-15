@@ -3,19 +3,19 @@
 > **Tags:** #trick #phase-estimation #quantum-chemistry #qubit-efficiency
 
 ## What it does
-Extracts a phase (energy eigenvalue) to $k$ bits of precision using only a small fixed-size readout register (e.g., 4 qubits), by iteratively refining the estimate.
+Extracts a phase (energy eigenvalue) to high precision using only a small fixed-size readout register (e.g., 4 qubits), by first obtaining a coarse multi-bit estimate and then iteratively refining it.
 
 ## The trick
 
 Standard [[Gapped Phase Estimation|phase estimation]] needs $k$ readout qubits for $k$ bits of precision. The recursive version:
 
-1. Run a small (4-qubit) PEA on $U = e^{iH\tau}$ to get the first 4 bits of $\phi$
+1. Run a small (4-qubit) PEA on $V_0=U=e^{iH\tau}$ to get an initial 4-bit estimate of $\phi$
 2. Construct a lower bound $\phi_0$ from this estimate
 3. Define $V_1 = (e^{-i2\pi\phi_0} V_0)^2$ — shift the phase and square the operator
-4. Run 4-qubit PEA on $V_1$ — get the next bit
-5. Repeat: each iteration $k$ gives one more bit of $\phi$
+4. Run 4-qubit PEA on $V_1$ — resolve the next refinement block/bit of the shifted phase
+5. Repeat: each iteration shifts the already-estimated phase branch and squares to magnify the remaining uncertainty
 
-The shift centres the remaining phase near $1/2$ on each iteration, and the squaring doubles the resolution. After $k$ iterations, you have $k$ bits of precision using only 4 readout qubits.
+The shift centres the remaining phase near the intended branch on each iteration, and the squaring doubles the resolution. After the initial 4-bit block, additional recursive iterations refine more bits while reusing the same 4 readout qubits.
 
 ## When to reach for it
 - Quantum chemistry eigenvalue calculations where qubits are precious
@@ -28,7 +28,7 @@ The shift centres the remaining phase near $1/2$ on each iteration, and the squa
 - **Classical overhead:** Essentially none; just track the running estimate $\phi_k$
 
 ## Caveat
-The squaring means later iterations have exponentially deeper circuits — you're trading qubit width for circuit depth. This is fine for classical simulation of quantum circuits (as in the original paper) but may be problematic on real hardware where decoherence limits circuit depth. Later variants (Bayesian/iterative PEA by Svore, Wiebe et al.) handle noise more gracefully.
+The squaring means later iterations have exponentially deeper controlled powers — you're trading qubit width for circuit depth. The phase shift must keep the refined phase in the intended branch to avoid aliasing. This is fine for classical simulation of quantum circuits (as in the original paper) but may be problematic on real hardware where decoherence limits circuit depth. Later iterative/Bayesian PEA variants use related width-saving ideas with different statistical postprocessing.
 
 ## Related notes
 - [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes]]

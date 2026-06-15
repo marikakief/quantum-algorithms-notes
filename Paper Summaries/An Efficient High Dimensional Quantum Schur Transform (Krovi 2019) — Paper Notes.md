@@ -22,7 +22,7 @@ The Schur transform maps the computational basis $|e_1, \ldots, e_n\rangle$ with
 
 ## What the paper does
 
-Gives the first fully-detailed quantum algorithm for the Schur transform that runs in $O(\mathrm{poly}(n, \log d, \log(1/\varepsilon)))$ time — polynomial in $\log d$ rather than $d$. This is an exponential improvement in dimension over Bacon, Chuang, and Harrow (BCH, 2006–2007), whose algorithm is $O(\mathrm{poly}(n, d, \log(1/\varepsilon)))$.
+Gives the first fully-detailed quantum algorithm for the Schur transform that runs in $O(\mathrm{poly}(n, \log d, \log(1/\varepsilon)))$ time — polynomial in $\log d$ rather than $d$. This is an exponential improvement in dimension over [[The Quantum Schur Transform I Efficient Qudit Circuits (Bacon-Chuang-Harrow 2006) — Paper Notes|Bacon, Chuang, and Harrow]] (BCH, 2006–2007), whose algorithm is $O(\mathrm{poly}(n, d, \log(1/\varepsilon)))$.
 
 The key idea: instead of iteratively applying Clebsch-Gordan decompositions for $U(d)$ (the BCH approach), work with the **symmetric group** side. Block-diagonalise the **permutation modules** of $S_n$ — which are induced representations from Young subgroups — using a QFT over the symmetric group plus generalised phase estimation. This "dual" approach avoids any $U(d)$-specific subroutines whose cost scales with $d$.
 
@@ -90,7 +90,7 @@ $$O(\mathrm{poly}(n, \log d, \log(1/\varepsilon))).$$
 
 | | BCH (2006–2007) | Harrow thesis sketch (2005) | **Krovi (2019)** |
 |---|---|---|---|
-| **Approach** | Clebsch-Gordan for $U(d)$, iterated | Modified BCH with $U(d)$ tower | Permutation modules of $S_n$ |
+| **Approach** | [[Clebsch-Gordan Cascade for Schur Transforms|Clebsch--Gordan cascade]] for $U(d)$ | Modified BCH with $U(d)$ tower | Permutation modules of $S_n$ |
 | **Complexity** | $O(\mathrm{poly}(n, d, \log(1/\varepsilon)))$ | $O(\mathrm{poly}(n, \log d, \log(1/\varepsilon)))$ (claimed) | $O(\mathrm{poly}(n, \log d, \log(1/\varepsilon)))$ |
 | **Detailed proof** | Yes | No (footnote-level sketch) | Yes |
 | **Key subroutines** | CG decomposition for $U(d)$ | CG + GT labelling trick | QFT over $S_n$, GPE, RSK |
@@ -117,7 +117,7 @@ $$O(\mathrm{poly}(n, \log d, \log(1/\varepsilon))).$$
 
 ## References within this paper
 
-- **Bacon, Chuang, Harrow (2006, 2007)** — Original Schur transform for qubits [4] and qudits [5]. The baseline this paper improves upon. Not in the vault.
+- [[The Quantum Schur Transform I Efficient Qudit Circuits (Bacon-Chuang-Harrow 2006) — Paper Notes|Bacon, Chuang, Harrow (2006, 2007)]] — original Schur transform for qubits [4] and qudits [5]. The baseline this paper improves upon.
 - **Harrow (2005)** — PhD thesis [18] sketching the $\log d$ extension of BCH. Also introduces GPE for weak Schur sampling. Not in the vault.
 - **Beals (1997)** — QFT over the symmetric group [6]. Used as a subroutine. Not in the vault.
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — Phase estimation, the foundation of GPE.
@@ -133,6 +133,7 @@ $$O(\mathrm{poly}(n, \log d, \log(1/\varepsilon))).$$
 
 ### Paper notes
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — phase estimation, which underpins GPE
+- [[The Quantum Schur Transform I Efficient Qudit Circuits (Bacon-Chuang-Harrow 2006) — Paper Notes]] — original qudit Schur-transform circuit improved here
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — group-theoretic quantum algorithms, related representation-theoretic techniques
 - [[Anderson Localization Makes Adiabatic Quantum Optimization Fail (Altshuler-Krovi-Roland 2010) — Paper Notes]] — another Krovi paper (different topic)
 

@@ -9,17 +9,17 @@ On a uniform infinite line with hopping rate $\sqrt{2}\gamma$, the quantum walk 
 
 ## The trick
 
-The transition amplitude on a translationally invariant line with hopping $\sqrt{2}\gamma$ and diagonal $3\gamma$ is:
+The transition amplitude on a translationally invariant line with hopping $\sqrt{2}\gamma$ and diagonal $3\gamma$ is, in the Childs-Farhi-Gutmann sign convention:
 
 $$
 \langle m | e^{-iHt} | l \rangle = e^{-i3\gamma t} \, i^{m-l} \, J_{m-l}(2\sqrt{2}\gamma t)
 $$
 
-where $J_k$ is a Bessel function of the first kind, order $k$.
+where $J_k$ is a Bessel function of the first kind, order $k$. Other Hamiltonian sign conventions change only phases or time orientation, not the ballistic speed.
 
 Key properties of this propagator:
 - **Wavefront speed:** $v = 2\sqrt{2}\gamma$. For $|m-l| \gg 1$ and $t < (v^{-1} - \varepsilon)|m-l|$, the amplitude is exponentially small.
-- **Near-front amplitude:** $O(|m-l|^{-1/2})$ at the wavefront, giving probability $O(1/|m-l|)$.
+- **Amplitude scale:** Away from the leading caustic, ordinary stationary-phase points give amplitude $O(t^{-1/2})$. At the leading front, the asymptotics are Airy-type rather than the same $t^{-1/2}$ law.
 - **Ballistic vs. diffusive:** Position spreads linearly with time, not as $\sqrt{t}$.
 
 For a finite line of length $2n+1$ (as in the [[Symmetry Reduction to Column Subspace in Quantum Walks|column-reduced]] glued trees), the propagation approximates the infinite-line result until the wavepacket hits the boundary, where it reflects.
@@ -32,11 +32,11 @@ For a finite line of length $2n+1$ (as in the [[Symmetry Reduction to Column Sub
 
 ## Complexity
 
-The propagation time to traverse a line of length $L$ is $T = O(L/\gamma)$. Combined with [[Symmetry Reduction to Column Subspace in Quantum Walks]], this gives $O(n)$ traversal time on glued trees with $2^{O(n)}$ vertices.
+The propagation time for appreciable amplitude to reach distance $L$ is $T = O(L/\gamma)$. Combined with [[Symmetry Reduction to Column Subspace in Quantum Walks]], this gives ballistic $O(n)$ transport on the symmetric glued-tree walk with $2^{O(n)}$ vertices.
 
 ## Caveat
 
-The exact Bessel form requires translational invariance. Small defects (like the different diagonal at column $n$ in glued trees) cause partial reflections but don't destroy ballistic transport. Larger inhomogeneities or disorder can localise the walk (cf. Anderson localisation), breaking ballistic transport entirely.
+The exact Bessel form requires translational invariance on the infinite line. Finite lines, boundaries, and defects (like the different diagonal at column $n$ in glued trees) add reflected/scattered components; the Bessel formula remains the local model for the leading ballistic component, not the full finite-graph propagator. Larger inhomogeneities or disorder can localise the walk (cf. Anderson localisation), breaking ballistic transport entirely.
 
 ## Related notes
 - [[An Example of the Difference Between Quantum and Classical Random Walks (Childs-Farhi-Gutmann 2002) — Paper Notes]]

@@ -16,7 +16,7 @@ This is the decision version of evaluating a game tree: AND-OR formulas capture 
 
 **Theorem:** Any NAND formula of size $N$ can be evaluated with bounded error using $N^{1/2 + o(1)}$ quantum queries. For balanced or "approximately balanced" formulas, the query complexity is $O(\sqrt{N})$, which is optimal.
 
-The algorithm is based on a **coined quantum walk** on the formula tree, with phase estimation to distinguish the two cases ($\varphi(x) = 0$ vs. $\varphi(x) = 1$). The analysis connects the coined walk to a continuous-time quantum walk via [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy's quantization theorem]].
+The algorithm is based on a **coined quantum walk** on the formula tree, with phase estimation to distinguish the two cases ($\varphi(x) = 0$ vs. $\varphi(x) = 1$). The analysis uses Szegedy's product-of-reflections spectral theorem to convert the Hamiltonian-style zero-energy test into a discrete-query coined walk.
 
 This almost resolves the Laplante-Lee-Szegedy conjecture: the formula size of a Boolean function $f$ is at least $Q_2(f)^{2 - o(1)}$, where $Q_2(f)$ is the bounded-error quantum query complexity.
 
@@ -35,7 +35,7 @@ Define a symmetric weighted adjacency matrix $H$ on $T$ (plus tail):
 $$H_{pv} = \left(\frac{s_v}{s_p}\right)^{1/4}$$
 
 where $s_v$ is the number of inputs under vertex $v$. Two exceptions:
-1. If leaf $v$ evaluates to 1 ($x_v = 1$), set $H_{pv} = 0$ — disconnect it
+1. If leaf $v$ evaluates to 1 ($x_v = 1$) in the paper's NAND convention, set $H_{pv} = 0$ — disconnect it
 2. The tail edge $H_{r'' r'}$ gets a special weight involving $\sigma_-(r)$ and $N^{1/4}$
 
 The input dependence enters only through which leaves are disconnected.
@@ -49,12 +49,12 @@ So the formula's value is encoded in whether or not $H$ has a zero-energy eigens
 
 ### From Hamiltonian to coined walk
 
-Use [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy's theorem]] (Theorem 7) to convert $H$ into a coined quantum walk $U = (2\Pi - I)S$:
-- Factor $H = P \circ P^T$ where $P$ is a row-stochastic matrix (Claim 8)
+Use [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy's theorem]] (Theorem 7) to convert the constructed, normalized $H$ into a coined quantum walk $U = (2\Pi - I)S$:
+- Factor this $H$ as $H = P \circ P^T$ where $P$ is a row-stochastic matrix (Claim 8); this is a feature of the construction, not a generic factorization of arbitrary Hamiltonians
 - The walk operator $U$ acts on directed edges: swap $S$, then reflect about the coin state $|\tilde{v}\rangle$ at each vertex
 - Eigenvalues of $U$ are $\beta_{a,\pm} = -\lambda_a \pm i\sqrt{1 - \lambda_a^2}$ where $\lambda_a$ are eigenvalues of $H$
 
-The spectral gap of $H$ near zero maps to a phase gap of $U$ near $\pm i$.
+The spectral gap of $H$ near zero maps, under this phase convention, to a phase gap of $U$ around $\pi/2$ and $3\pi/2$ (the eigenvalues near $\pm i$).
 
 ### Phase estimation
 
@@ -104,14 +104,14 @@ Query complexity: $O(\sqrt{N})$. Optimal.
 | Høyer-Mosca-de Wolf (2003) | Constant-depth AND-OR in $O(\sqrt{N})$ via noisy Grover |
 | Barnum-Saks (2004) | $\Omega(\sqrt{N})$ lower bound for any AND-OR formula |
 | Farhi-Goldstone-Gutmann (2007) | $O(\sqrt{N})$ for balanced NAND tree in continuous-time model |
-| Childs-Cleve-Jordan-Yeung (2007) | Discretisation of FGG to $N^{1/2+\varepsilon}$ |
+| Childs-Cleve-Jordan-Yonge-Mallo (2007) | Discretisation of FGG to $N^{1/2+\varepsilon}$ for balanced NAND trees |
 | **This paper (2007)** | **$O(\sqrt{N})$ for balanced, $N^{1/2+o(1)}$ for general, discrete-query model** |
 
 ---
 
 ## Limits / caveats
 
-- The $o(1)$ in the exponent for general formulas comes from formula rebalancing. Whether $O(\sqrt{N})$ suffices for all formulas (not just balanced ones) was left open. (Reichardt later achieved this for read-once formulas via span programs.)
+- The $o(1)$ in the exponent for general formulas comes from formula rebalancing. Whether $O(\sqrt{N})$ suffices for all formulas (not just balanced ones) was left open here. Reichardt's later span-program algorithm reaches the optimal $\Theta(\sqrt{N})$ query bound for read-once formulas.
 - Preprocessing requires knowing the formula structure (to compute coin biases from the principal eigenvector of $H$). The classical preprocessing takes $\mathrm{poly}(N)$ time.
 - The algorithm doesn't find a *winning strategy* in a game tree — it only evaluates whether one exists.
 
@@ -119,7 +119,7 @@ Query complexity: $O(\sqrt{N})$. Optimal.
 
 ## Reusable ideas
 
-1. [[Szegedy Walk for Formula Evaluation]] — use Szegedy's quantization to convert a weighted adjacency Hamiltonian $H$ into a coined quantum walk $U$, then use phase estimation to detect zero-energy eigenstates. The formula's value is encoded in the spectral gap near zero.
+1. [[Szegedy Walk for Formula Evaluation]] — use Szegedy's product-of-reflections theorem to convert the specially normalized weighted adjacency Hamiltonian $H$ into a coined quantum walk $U$, then use phase estimation to detect zero-energy eigenstates. The formula's value is encoded in the spectral gap near zero.
 2. [[Formula Rebalancing for Quantum Evaluation]] — classically preprocess an unbalanced formula into a balanced one (depth $O(k \log N)$, size $N^{1+1/\log k}$) to ensure the spectral gap is polynomially large, at the cost of a sub-polynomial blowup in formula size.
 
 ---
@@ -142,7 +142,7 @@ Query complexity: $O(\sqrt{N})$. Optimal.
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — Szegedy's quantization theorem is the backbone of the analysis
 - [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes]] — alternative route to $O(N^{1/2+\varepsilon})$ for balanced NAND trees via FGG + product formulas
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — first exponential walk speedup; same authors, same lineage
-- [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes]] — generalises the continuous-to-discrete walk correspondence used here
+- [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes]] — later general continuous/discrete correspondence; related, but not the provenance of the 2007 discrete formula walk
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — OR evaluation as the $k=1$ case
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — Ambainis's other major quantum walk result
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes]] — survey of quantum walk algorithms

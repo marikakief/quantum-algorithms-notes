@@ -16,7 +16,7 @@ construct a [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] quan
 
 ## What the paper does
 
-Achieves the lowest known Toffoli complexity for quantum simulation of chemistry in an arbitrary orbital basis: $\widetilde{O}(N \lambda_\zeta / \varepsilon)$ with $\widetilde{O}(N)$ space. The trick is to use tensor hypercontraction (THC) to factorize the Coulomb operator, then rewrite the Hamiltonian in a larger non-orthogonal basis where the Coulomb interaction becomes diagonal. [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]] of the resulting diagonal-Coulomb operator — with [[Givens Rotation Slater Determinant Preparation|Givens rotation]] basis changes loaded from [[QROM (Quantum Read-Only Memory)|QROM]] — gives an $\widetilde{O}(N)$-Toffoli block encoding per walk step, matching the scaling previously available only for plane-wave dual bases. The $\lambda_\zeta$ norm is comparable to (and sometimes smaller than) the double low rank factorization's $\lambda_{\rm DF}$, so this isn't just an asymptotic win — it's a concrete win at finite size too.
+Achieves the lowest known Toffoli complexity for quantum simulation of chemistry in an arbitrary orbital basis at publication: $\widetilde{O}(N \lambda_\zeta / \varepsilon)$ with $\widetilde{O}(N)$ space. The trick is to use tensor hypercontraction (THC) to factorize the Coulomb operator, then express each LCU term through a non-orthogonal THC orbital representation where the selected two-body factor is diagonal after term-dependent rotations. [[Qubitization (Quantum Walk for Spectral Encoding)|Qubitization]] of this diagonal-Coulomb structure — with [[Givens Rotation Slater Determinant Preparation|Givens rotation]] basis changes loaded from [[QROM (Quantum Read-Only Memory)|QROM]] — gives an $\widetilde{O}(N)$-Toffoli block encoding per walk step, matching the scaling previously available only for plane-wave dual bases. In benchmarked instances $\lambda_\zeta$ is comparable to, and sometimes smaller than, double-factorized norms, so this is a concrete finite-size win as well as an asymptotic one.
 
 For FeMoCo (Reiher Hamiltonian): 2,142 logical qubits and $5.3 \times 10^9$ Toffolis. That's $\sim 2 \times$ fewer Toffolis than the next best method (double factorization, von Burg et al.) and $\sim 10{,}000 \times$ fewer than Reiher et al.'s original Trotter estimate. Surface code compilation: $\sim 4$ million physical qubits and $< 4$ days runtime at 1 µs cycle time and $0.1\%$ physical error rate.
 
@@ -40,11 +40,11 @@ Rather than directly qubitizing the THC form (which gives a large $\lambda$, see
 
 $$\tilde{\phi}_\mu(\mathbf{r}) = \sum_{p=1}^{N/2} \chi_p^{(\mu)} \phi_p(\mathbf{r})$$
 
-These form a non-orthogonal basis. In this basis, the Coulomb operator becomes diagonal:
+These form a non-orthogonal basis. Formally, the THC factorization has diagonal density-density structure in these non-orthogonal orbitals:
 
 $$V \approx \frac{1}{2} \sum_{\alpha,\beta} \sum_{\mu \neq \nu} \zeta_{\mu\nu}\, \tilde{n}_{\mu,\alpha}\, \tilde{n}_{\nu,\beta}$$
 
-where $\tilde{n}_{\mu,\alpha}$ is the number operator in the THC orbital basis. The two-body interaction is now a sum of $n_\mu n_\nu$ terms — the same structure as the [[Plane-Wave Dual Basis]] Hamiltonian from [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes|Babbush et al. 2018]]. The catch: the THC orbitals are non-orthogonal, so the standard second-quantized formalism doesn't directly apply.
+where $\tilde{n}_{\mu,\alpha}$ is the number operator in the THC orbital basis. The two-body interaction is now represented as a sum of $n_\mu n_\nu$-type terms — the same diagonal-Coulomb template as the [[Plane-Wave Dual Basis]] Hamiltonian from [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes|Babbush et al. 2018]]. The catch is crucial: the THC orbitals are non-orthogonal, so this is not a global orthonormal basis change that makes the whole Hamiltonian diagonal.
 
 ### Step 3: Handling non-orthogonality via per-term basis rotations
 
@@ -60,7 +60,7 @@ The key insight that makes the non-orthogonal picture work for qubitization: wri
 
 3. The one-body part $T_{pq}$ is absorbed into the LCU in a standard way.
 
-The non-orthogonality is sidestepped because each LCU term independently rotates into and out of its own THC basis. The overlap matrix of the non-orthogonal basis never needs to be inverted or diagonalized on the quantum computer.
+The non-orthogonality is sidestepped because each LCU term independently rotates into and out of the corresponding basis needed for that term. The overlap matrix of the non-orthogonal basis never needs to be inverted or diagonalized on the quantum computer, and the SELECT oracle remains unitary.
 
 ### Step 4: Angle coarse-graining
 
@@ -68,11 +68,11 @@ The Givens rotation angles from QROM contribute significantly to the cost: there
 
 ### Step 5: Qubitized phase estimation
 
-Repeat the walk operator $O(\lambda_\zeta / \varepsilon)$ times for phase estimation. The total Toffoli cost per walk step is:
+Repeat the walk operator $O(\lambda_\zeta / \varepsilon)$ times for phase estimation. The theorem-level cost is:
 
-$$\text{Cost per step} = 2M\left\lceil\frac{N/2}{2}\right\rceil + O(N + M\log M + b_\theta N)$$
+$$\text{Toffoli cost per walk step}=\widetilde{O}(N), \qquad \text{total}=\widetilde{O}(N\lambda_\zeta/\varepsilon),$$
 
-where the first term is the Givens rotation cost (two passes per step: one for $\mu$, one for $\nu$), and the remaining terms cover QROM lookups, alias sampling, and arithmetic. The dominant scaling is $O(MN) = O(N^2)$ per step, but since there are $O(\lambda_\zeta/\varepsilon)$ steps, the total is $\widetilde{O}(N\lambda_\zeta/\varepsilon)$ after accounting for the $\sqrt{\Gamma}$ QROM cost reduction.
+under the THC rank and precision assumptions used in the paper. The compiled circuit still pays substantial constants for QROM/QROAM angle loading and for applying data-dependent Givens rotations, including the $b_\theta$-bit synthesis cost. Those constants are part of the resource estimates, but they should not be summarized as an $O(MN)=O(N^2)$ asymptotic walk-step cost.
 
 ---
 
@@ -83,7 +83,7 @@ where the first term is the Givens rotation cost (two passes per step: one for $
 - **Toffoli complexity per step:** $\widetilde{O}(N)$
 - **Total Toffoli complexity:** $\widetilde{O}(N \lambda_\zeta / \varepsilon)$
 - **Space complexity:** $\widetilde{O}(N)$ logical qubits
-- **$\lambda_\zeta$ norm:** $\lambda_\zeta \leq \lambda_{\rm DF} \leq \lambda_V \leq \lambda_{\rm SF}$ (ordering holds in general; sometimes $\lambda_\zeta$ beats $\lambda_{\rm DF}$ significantly)
+- **$\lambda_\zeta$ norm:** reported as the smallest or comparable norm in the benchmarked instances; no universal theorem says $\lambda_\zeta \leq \lambda_{\rm DF} \leq \lambda_V \leq \lambda_{\rm SF}$ for every Hamiltonian and optimization procedure
 
 **FeMoCo resource estimates (Table 3 of paper):**
 
@@ -116,7 +116,7 @@ The thermodynamic limit scaling of $N^{2.1}$ is striking — it's barely above $
 |---|---|---|---|---|
 | Toffoli per step | $\widetilde{O}(N + \sqrt{S})$ | $\widetilde{O}(N^{3/2})$ | $\widetilde{O}(N\sqrt{\Xi})$ | $\widetilde{O}(N)$ |
 | Space | $\widetilde{O}(N + \sqrt{S})$ | $\widetilde{O}(N^{3/2})$ | $\widetilde{O}(N\sqrt{\Xi})$ | $\widetilde{O}(N)$ |
-| $\lambda$ ordering | $\lambda_V$ | $\lambda_{\rm SF}$ (largest) | $\lambda_{\rm DF}$ (smallest prior) | $\lambda_\zeta$ (smallest) |
+| $\lambda$ ordering | $\lambda_V$ | $\lambda_{\rm SF}$ (often largest in benchmarks) | $\lambda_{\rm DF}$ (smallest prior in the reported FeMoCo comparisons) | $\lambda_\zeta$ (reported smallest in the benchmarked THC instances) |
 | Works with arbitrary basis? | Yes | Yes | Yes | Yes |
 | Requires orthogonal basis? | No | No | No | No |
 
@@ -132,7 +132,7 @@ The paper also corrects errors in von Burg et al.'s algorithm (Appendix C) and s
 
 3. **Angle coarse-graining error.** The rotation angle precision $b_\theta$ must be chosen carefully: too few bits and the Hamiltonian approximation error dominates; too many bits and the QROM cost grows. The paper handles this via an explicit error bound (Section III.5), but the tradeoff is system-dependent.
 
-4. **Non-orthogonal basis adds cost.** Each walk step requires two full Givens rotation circuits (one for $\mu$, one for $\nu$), each costing $O(N)$ gates. This constant factor overhead is the price of using a non-orthogonal basis. For the plane-wave dual basis (which is already diagonal), no rotations are needed — so the THC approach is always slower than dual-basis qubitization per step, though it achieves similar *asymptotic* scaling.
+4. **Non-orthogonal basis adds cost.** Each walk step requires term-dependent Givens rotation circuits, each costing $O(N)$ gates plus angle-loading and rotation-synthesis overhead. This constant factor overhead is the price of using the non-orthogonal THC representation. For the plane-wave dual basis (which is already diagonal), no analogous rotations are needed, so THC has a larger per-step constant even when it achieves similar *asymptotic* scaling.
 
 5. **FeMoCo is a small-molecule benchmark.** The $\sim 2\times$ improvement over double factorization is real but modest at FeMoCo scale. The asymptotic advantage ($\widetilde{O}(\sqrt{N})$ better spacetime volume) matters more for larger systems.
 
@@ -219,7 +219,7 @@ This paper is a genuine advance, not just an incremental improvement. The idea o
 
 The practical impact is real: for FeMoCo, the gap between "conceivable on a future quantum computer" and "actually worth building" narrows measurably. Going from $10^{10}$ to $5 \times 10^9$ Toffolis and from 3,725 to 2,142 logical qubits (vs. double factorization) is the kind of constant-factor improvement that matters when you're trying to fit inside a surface code budget. The surface code compilation analysis (4M physical qubits, 4 days) puts this firmly in the "ambitious but not absurd" range for a mid-term fault-tolerant machine.
 
-The asymptotic advantage is even more important for the long game: $\widetilde{O}(N)$ per walk step in an arbitrary basis is optimal up to logarithmic factors. Prior methods that achieve this scaling require bases that diagonalize the Coulomb operator (plane-wave dual), which demand many more qubits to reach chemical accuracy for molecules. THC bridges this gap.
+The asymptotic advantage is even more important for the long game: $\widetilde{O}(N)$ per walk step in an arbitrary basis matches the best known plane-wave-dual scaling without requiring a plane-wave basis. Prior methods that achieve this scaling require bases that diagonalize the Coulomb operator (plane-wave dual), which demand many more basis functions to reach chemical accuracy for molecules. THC bridges this gap.
 
 The paper also does the community a service by carefully reanalyzing and correcting prior algorithms (Berry et al., von Burg et al.), making the comparison table in Table 3 the most reliable resource estimate compilation available as of publication. The qDRIFT analysis in Appendix D, showing that mean-square-error cost is $10^{18}\times$ more expensive than qubitization for FeMoCo, is a useful sanity check on randomized methods.
 
@@ -231,6 +231,6 @@ Remaining open questions: Can THC rank be rigorously bounded as $O(N)$ for gener
 
 **Update:** [[Expressing and Analyzing Quantum Algorithms with Qualtran (Harrigan, Khattar, Babbush, Rubin 2024) — Paper Notes|Harrigan, Khattar, Babbush, Rubin (2024)]] — the THC block encoding from this paper is implemented as a Qualtran bloq; FeMoCo resource estimates reproduced (17,150 Toffoli block encoding cost vs 16,891 in OpenFermion, slight discrepancy from primitive implementation differences).
 
-**Update:** [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low, King, Berry et al. (2025)]] — introduces [[DFTHC Factorization|DFTHC]], which generalizes both DF and THC via a three-parameter $(R, B, C)$ ansatz. Combined with [[SOS Spectral Amplification|spectrum amplification]], this achieves $9.99 \times 10^8$ Toffolis for FeMoCo-76 — a $4.3\times$ improvement over THC+BLISS. The THC factorization can be seen as the special case $(R, B, C) = (1, N, N)$ of DFTHC.
+**Update:** [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low, King, Berry et al. (2025), *Fast Quantum Simulation of Electronic Structure by Spectral Amplification*]] — introduces [[DFTHC Factorization|DFTHC]], which generalizes both DF and THC via a three-parameter $(R, B, C)$ ansatz. Combined with [[SOS Spectral Amplification|spectral amplification]], it reports substantial benchmark-dependent speedups over prior THC/DF pipelines. The THC factorization can be seen as the special case $(R, B, C) = (1, N, N)$ of DFTHC.
 
 See [[FeMoCo Resource Estimation Timeline]] for how this estimate fits in the broader progression.

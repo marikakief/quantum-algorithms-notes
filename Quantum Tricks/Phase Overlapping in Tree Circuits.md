@@ -18,6 +18,13 @@ The key observation is data independence:
 
 This compresses the schedule from $4\lfloor \log n \rfloor$ to roughly $\lfloor \log n \rfloor + \lfloor \log(n)/3 \rfloor + O(1)$ — close to a $3\times$ improvement in depth for the carry computation phase.
 
+| Logical phase | Level-$t$ work uses | Can overlap with |
+|---|---|---|
+| P-round $t+1$ | $P_t$ values to build the next propagate level | G-round $t$, which reads $G$ and $P_{t-1}$ |
+| G-round $t$ | generate values and the previous propagate level $P_{t-1}$ | P-round $t+1$ |
+| C-round $t-1$ | carries/generates and lower propagate level $P_{t-2}$ | P$^{-1}$-round $t$ |
+| P$^{-1}$-round $t$ | $P_t$ and $P_{t-1}$ values to erase propagate scratch | C-round $t-1$ |
+
 ## When to reach for it
 
 - Any tree-structured quantum computation where the up-sweep (compute) and down-sweep (propagate or erase) phases touch different levels of the tree at each step

@@ -1,3 +1,5 @@
+# Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes
+
 > **Source:** Aram W. Harrow, Avinatan Hassidim, and Seth Lloyd, *Quantum algorithm for linear systems of equations*, arXiv:0811.3171, Phys. Rev. Lett. **103**, 150502 (2009)
 > **Links:** [arXiv](https://arxiv.org/abs/0811.3171) · [PRL](https://doi.org/10.1103/PhysRevLett.103.150502)
 > **Tags:** #linear-systems #QLSA #phase-estimation #hamiltonian-simulation #BQP-complete
@@ -6,11 +8,11 @@
 
 ## What the paper does
 
-Gives the first quantum algorithm for solving linear systems of equations with exponential speedup in the system dimension $N$. Given an $s$-sparse $N \times N$ matrix $A$ with condition number $\kappa$, produces a quantum state $|x\rangle \propto A^{-1}|b\rangle$ in time $\tilde{O}(\log(N) s^2 \kappa^2 / \epsilon)$, versus $O(Ns\sqrt{\kappa}\log(1/\epsilon))$ classically.
+Gives the first quantum algorithm for solving linear systems of equations with exponential speedup in the system dimension $N$. Given an $s$-sparse $N \times N$ matrix $A$ with condition number $\kappa$, produces a quantum state $|x\rangle \propto A^{-1}|b\rangle$ in time $\tilde{O}(\log(N) s^2 \kappa^2 / \epsilon)$ in the original HHL analysis. The common classical comparison $O(Ns\sqrt{\kappa}\log(1/\epsilon))$ is a conjugate-gradient-style benchmark for suitable positive-definite sparse systems, not a universal baseline for every sparse linear system.
 
 The speedup is exponential in $N$ but polynomial in $\kappa$ — so the advantage is greatest when $N$ is huge and $\kappa$ is small.
 
-The paper also proves matrix inversion is **BQP-complete**: improving the $\kappa$-dependence to $\kappa^{1-\delta}$ for any $\delta > 0$ would imply BQP = PSPACE.
+The paper also proves a BQP-hardness/completeness result for the linear-system state-preparation problem under appropriate promises. Complexity-theoretic consequences for changing the $\kappa$ or precision dependence depend on the exact task being solved, especially whether one asks only for a normalized solution state or for additive expectation/output estimates.
 
 ---
 
@@ -23,6 +25,14 @@ The paper also proves matrix inversion is **BQP-complete**: improving the $\kapp
 **Complexity measure:** Number of gates / queries to $A$ and the state preparation procedure for $|b\rangle$.
 
 The paper emphasizes that $|x\rangle$ is useful not for reading out all of $\vec{x}$, but for estimating expectation values $\langle x|M|x\rangle$ — things like normalization, weights, moments.
+
+It is useful to keep three tasks separate:
+
+1. **State preparation:** prepare the normalized solution state $|x\rangle$.
+2. **Observable estimation:** estimate quantities such as $\langle x|M|x\rangle$ or norms.
+3. **Classical readout:** output many entries, or the full vector, in classical form.
+
+HHL addresses the first task and can help with selected observables. It does not efficiently solve the full classical readout problem.
 
 ---
 
@@ -122,13 +132,13 @@ $$
 
 which applies $U^t$ for a geometrically distributed $t$. Measuring the time register and obtaining $T+1 \leq t \leq 2T$ (probability $\geq 1/10$) yields the circuit output.
 
-**Consequences:**
+**Consequences, with task scope:**
 - $A$ has $\kappa = O(T)$, dimension $N = O(2^n T)$
 - A classical $\mathrm{poly}(\log N, \kappa)$ solver would simulate BQP in polynomial time → BPP = BQP (unlikely)
 - A quantum algorithm with $\kappa^{1-\delta}$ dependence would give BQP = PSPACE
-- Improving $\epsilon$ dependence to $\mathrm{poly}\log(1/\epsilon)$ would give BQP ⊇ PP
+- Stronger lower-bound statements about $\epsilon$ apply to output/expectation-estimation variants; later QLSP algorithms achieved polylogarithmic precision dependence for normalized state preparation
 
-This means the $\kappa^2$ dependence is essentially tight (up to the linear improvement to $\kappa$), and the $1/\epsilon$ polynomial dependence is unavoidable for sampling-based algorithms.
+This means sublinear $\kappa$ dependence would have serious complexity-theoretic consequences, while the original $1/\epsilon$ state-preparation dependence was not fundamental.
 
 ---
 
@@ -166,7 +176,7 @@ Scott Aaronson's essay [*Quantum Machine Learning Algorithms: Read the Fine Prin
 
 2. **[[Hamiltonian simulation]] access.** Applying $e^{iAt}$ requires $A$ to be sparse (or have other special structure) with efficiently-queryable entries. For dense or unstructured $A$, this step alone kills the speedup.
 
-3. **Condition number.** HHL's runtime grows linearly in $\kappa$. If $\kappa = n^c$, the advantage disappears. The BQP-completeness result (Theorem 4 above) shows that improving $\kappa$-dependence below linear would have complexity-theoretic consequences.
+3. **Condition number.** Any QLSP solver must pay at least linear dependence on $\kappa$ in the standard state-preparation setting, and the original HHL algorithm pays quadratically. If $\kappa = n^c$, the advantage disappears. The BQP-completeness result (Theorem 4 above) shows that improving $\kappa$-dependence below linear would have complexity-theoretic consequences.
 
 4. **Readout.** The output is a quantum state $|x\rangle$, not the vector $x$. You can extract limited statistical information (inner products, locations of large entries) but reading any specific $x_i$ requires $\sim n$ repetitions — exponential overhead that negates the exponential speedup.
 

@@ -1,3 +1,5 @@
+# Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes
+
 > **Source:** Oded Regev, *Quantum Computation and Lattice Problems*, FOCS 2002; arXiv:cs/0304005
 > **Links:** [arXiv](https://arxiv.org/abs/cs/0304005) · [FOCS 2002](https://doi.org/10.1109/SFCS.2002.1181991)
 > **Tags:** #lattice-problems #hidden-subgroup-problem #quantum-reduction #cryptography #dihedral-group
@@ -12,6 +14,8 @@
 
 **Average-Case Subset Sum:** Given $r \approx \log N$ integers $a_1, \ldots, a_r$ and a target $t$ modulo $N$, find a subset summing to $t \pmod{N}$.
 
+Notation warning: the lattice dimension is $n$, while the dihedral-coset/subset-sum modulus is $N$. The paper moves between polynomial functions of $n$ and logarithmic functions of $N$, so these symbols should not be identified.
+
 ---
 
 ## What the paper does
@@ -21,7 +25,9 @@ This is the first explicit connection between quantum computation and lattice pr
 1. A quantum reduction from $\Theta(n^{1/2 + 2f})$-unique-SVP to the Dihedral Coset Problem (with failure parameter $f$).
 2. A quantum reduction from the DCP to average-case subset sum.
 
-Combining these gives a quantum worst-case-to-average-case reduction: if you can solve a $1/\text{poly}(\log N)$ fraction of random subset sum instances, you can solve $\Theta(n^{2.5})$-unique-SVP quantumly. This was the first result connecting quantum algorithms to the hardness of lattice problems, which later became the foundation of post-quantum cryptography.
+Combining these gives a quantum worst-case-to-average-case reduction: if you can solve a $1/\text{poly}(\log N)$ fraction of random subset sum instances, you can solve $\Theta(n^{2.5})$-unique-SVP quantumly. This was the first result connecting quantum algorithms to the hardness of lattice problems, and it is best viewed as an important predecessor and conceptual bridge. Regev's later LWE work, not this conditional DHSP route, became foundational for modern lattice-based post-quantum cryptography.
+
+The key caveat is conditionality: the paper reduces a promised unique-SVP problem to DCP/average-case subset sum; it does not give a standalone efficient algorithm for general SVP, unique-SVP, or LWE.
 
 ---
 
@@ -45,7 +51,7 @@ Combining these gives a quantum worst-case-to-average-case reduction: if you can
 ### Part 2: DCP → Average-Case Subset Sum
 
 1. Apply QFT to the second register of each coset state. Measuring value $a$ collapses the qubit to $\frac{1}{\sqrt{2}}(|0\rangle + e^{2\pi i ad/N}|1\rangle)$.
-2. Take $r \approx \log N$ registers. The measured values $a_1, \ldots, a_r$ are uniform in $\{0, \ldots, N-1\}$ — a random subset sum instance.
+2. Take $r \approx \log N$ registers. The measured values $a_1, \ldots, a_r$ are uniform in $\{0, \ldots, N-1\}$, producing a density-about-one random subset sum instance.
 3. For each $r$-bit string $\bar{\alpha}$, the phase is $e^{2\pi i d \sum_i \alpha_i a_i / N}$.
 4. Compute $\lfloor t_{\bar{\alpha}}/2 \rfloor$ where $t_{\bar{\alpha}} = \sum_i \alpha_i a_i$. Measuring collapses to a superposition of two strings whose sums differ by 1.
 5. Use the subset sum oracle to identify both strings. Apply a unitary mapping them to $|0\rangle$ and $|1\rangle$ (Claim 4.6). Now the phase difference $e^{2\pi i qd/N}$ can be measured on a single qubit.
@@ -62,7 +68,9 @@ $$\textbf{Theorem 1.3: } \text{Subset sum oracle solving } \frac{1}{\text{poly}(
 
 $$\textbf{Corollary 1.5: } \text{Average-case subset sum} \implies \text{quantum } \Theta(n^{2.5})\text{-unique-SVP}$$
 
-$$\textbf{Corollary 1.2: } \text{Dihedral HSP by coset sampling} \implies \text{quantum poly}(n)\text{-unique-SVP}$$
+$$\textbf{Corollary 1.2: } \text{Efficient solution of the relevant DCP/DHSP instance} \implies \text{quantum poly}(n)\text{-time algorithm for the corresponding unique-SVP promise}$$
+
+Here "solution" means both obtaining the coset information and efficiently post-processing it to recover the hidden shift. Coset samples by themselves are only quantum information; the missing efficient DHSP solver is exactly the hard part.
 
 ---
 
@@ -82,6 +90,8 @@ The quantum reduction achieves a better gap ($n^{2.5}$) than the classical reduc
 ## Limits / caveats
 
 1. **Conditional on dihedral HSP or subset sum.** Neither the dihedral HSP nor average-case subset sum with density 1 has a known efficient algorithm. Kuperberg's algorithm for dihedral HSP runs in subexponential $2^{O(\sqrt{\log N})}$ time, so the full chain doesn't give a polynomial-time algorithm.
+
+   Through Regev's reduction, Kuperberg-style subexponential DHSP algorithms give a subexponential route only for the corresponding unique-SVP parameters. They do not imply subexponential algorithms for unrestricted SVP or for breaking LWE.
 
 2. **Density-1 subset sum only.** The subset sum instances produced have $r \approx \log N$ elements — density approximately 1. Standard lattice-based subset sum algorithms (LLL) work well at low density, and known NP-hardness reductions produce high-density instances, but density-1 is an awkward middle ground. Impagliazzo-Naor cryptographic applications can't be used.
 
@@ -109,10 +119,10 @@ The quantum reduction achieves a better gap ($n^{2.5}$) than the classical reduc
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — square-root speedup reference
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] — state preparation for uniform superpositions over balls
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes|Bacon-Childs-van Dam (2005)]] — related HSP work on semidirect products
-- Kuperberg (2003) — subexponential dihedral HSP algorithm ($2^{O(\sqrt{\log N})}$); no vault note
+- [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg (2005)]] — subexponential dihedral HSP algorithm ($2^{O(\sqrt{\log N})}$)
 - Ajtai (1996) — first classical worst-to-average-case reduction for lattice problems; no vault note
 - Ajtai-Dwork (1997) — lattice-based cryptosystem based on unique-SVP hardness; no vault note
-- Ettinger-Høyer (2000) — polynomial coset sampling for dihedral HSP, but no efficient classical post-processing; no vault note
+- [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes|Ettinger--Høyer--Knill (2004)]] — polynomial-query hidden-subgroup information, but not an efficient DHSP post-processing algorithm
 - LLL (Lenstra-Lenstra-Lovász 1982) — lattice basis reduction, used throughout; no vault note
 
 ---
@@ -126,6 +136,8 @@ The quantum reduction achieves a better gap ($n^{2.5}$) than the classical reduc
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes]]
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]]
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]]
+- [[Solving the Shortest Vector Problem in Lattices Faster Using Quantum Search (Laarhoven-Mosca-van de Pol 2013) — Paper Notes]] — later quantum-search speedup for exact SVP solvers; adjacent to Regev's quantum/lattice bridge but based on Groverising classical lattice attacks rather than hidden-subgroup reductions.
+- [[An Efficient Quantum Algorithm for Lattice Problems Achieving Subexponential Approximation Factor (Eldar-Hallgren 2022) — Paper Notes]] — later BDD algorithm that reuses the old lattice-superposition obstruction in a different way: keep the Fourier phase and use it as an approximate shift eigenvalue.
 
 ### Trick cards
 - [[Lattice Point Spacing for Pairwise Isolation]]

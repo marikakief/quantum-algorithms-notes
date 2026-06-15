@@ -15,10 +15,10 @@ $$\alpha_{0^n} = \frac{1}{2^n} \sum_x (-1)^{f(x)}$$
 
 This is the **zeroth Fourier coefficient** of $(-1)^{f(x)}$. If all phases agree (constant $f$), $|\alpha_{0^n}| = 1$. If phases cancel (balanced $f$), $\alpha_{0^n} = 0$. Measuring distinguishes the two cases with certainty.
 
-The same structure, with $H^{\otimes n}$ replaced by the QFT, detects periodicity — this is how [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon's algorithm]] and [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]] work. The Hadamard sandwich is the special case where the relevant group is $\mathbb{Z}_2^n$.
+The same broad Fourier-sampling pattern, with $H^{\otimes n}$ replaced by an appropriate group Fourier transform, detects some forms of periodicity. [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon's algorithm]] is the exact $\mathbb{Z}_2^n$ case. [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]] uses a power-of-two QFT and continued fractions to recover an approximate period sample, so it is structurally related but not just a literal Hadamard swap.
 
 ## When to reach for it
-- Detecting any "global" property that corresponds to the Fourier spectrum of $f$ being concentrated or spread
+- Detecting a promised global property that corresponds to an efficiently accessible Fourier coefficient, support pattern, or spectral feature with a measurable gap
 - As the conceptual starting point for understanding QFT-based algorithms
 - Teaching quantum algorithms — this is the simplest nontrivial example of quantum interference doing useful computation
 
@@ -26,7 +26,7 @@ The same structure, with $H^{\otimes n}$ replaced by the QFT, detects periodicit
 Two layers of $H^{\otimes n}$ ($O(n)$ gates) plus one oracle query. Total: $O(n) + 1$ query.
 
 ## Caveat
-Only works for properties that show up in the Fourier spectrum. For unstructured problems (no algebraic structure to the function), this doesn't help — that's where [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover's algorithm]] (amplitude amplification) takes over instead.
+Only works for properties that show up as efficiently measurable Fourier/spectral information. It does not by itself solve generic balanced-vs-nearly-balanced estimation without a strong promise, arbitrary SAT structure, or literal database lookup. For unstructured search, the relevant primitive is [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover's algorithm]] / amplitude amplification, not a Hadamard sandwich.
 
 ## Related notes
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes]]

@@ -61,7 +61,7 @@ The Karatsuba recursion defines a complete ternary tree: each node (a multiplica
 
 Setting the level $k \leq \frac{\log_2 n}{2 - \log_3 2} \approx 0.731 \log_2 n$ balances the two contributions and yields:
 
-$$\text{Space}(n) = O\!\left(n^{\frac{3}{2} \cdot \frac{\log_2 3}{2\log_2 3 - 1}}\right) \approx O(n^{1.427})$$
+$$\text{Space}(n) = O\!\left(n^{1 + \frac{\log_2 3 - 1}{2 - \log_3 2}}\right) \approx O(n^{1.427})$$
 
 ### Adaptive cutoff
 
@@ -78,7 +78,7 @@ The recursion switches to schoolbook multiplication below a cutoff bit-size. A d
 | Space | $O(n^{\log_2 3})$ | $O(n^{\log_2 3})$ | $O(n^{1.427})$ |
 | Volume | $O(n^{2\log_2 3})$ | $O(n^{1+\log_2 3})$ | $O(n^{1+\log_2 3})$ |
 
-The Toffoli count with the adaptive cutoff at $n = 400$ is approximately 422,000 (vs. 640,000 for schoolbook).
+The reported Toffoli count for the forward multiplier comparison with adaptive cutoff at $n = 400$ is approximately 422,000 (vs. 640,000 for the schoolbook forward multiplier). Additional outer compute-copy-uncompute in a larger reversible algorithm must be counted separately.
 
 **Generalisation:** For any recursion splitting into $a$ subproblems of size $n/b$ with $a > b$ (so the recursion tree is $a$-ary), the same pebbling strategy reduces space from $O(n^{\log_b a})$ to $O(n^{1 + \frac{\log_b a - 1}{2 - \log_a b}})$. For Karatsuba ($a = 3, b = 2$), the exponent drops from $\log_2 3 \approx 1.585$ to $1.427$.
 
@@ -91,7 +91,7 @@ The Toffoli count with the adaptive cutoff at $n = 400$ is approximately 422,000
 | **This paper** | $O(n^{1.585})$ | **$O(n^{1.427})$** | Pebble game decouples space from size |
 | Kepley-Steinwandt (2015) | $O(n^{1.585})$ | — | Binary field $\mathbb{F}_{2^n}$, not integers |
 
-The space improvement is modest in the exponent ($1.427$ vs. $1.585$), but it matters: for $n = 2048$ (relevant to Shor's algorithm for RSA), the ratio $n^{1.585}/n^{1.427} \approx 4.6\times$, which is several thousand fewer logical qubits.
+The space improvement is modest in the exponent ($1.427$ vs. $1.585$), but it matters: for $n = 2048$ (relevant to Shor's algorithm for RSA), the exponent-only ratio $n^{1.585}/n^{1.427} \approx 3.3\times$ before constants, which is several thousand fewer logical qubits at this scale.
 
 The volume is unchanged at $O(n^{1 + \log_2 3})$, so the space saving is paid for entirely by the depth increase from $O(n)$ to $O(n^{1.158})$.
 

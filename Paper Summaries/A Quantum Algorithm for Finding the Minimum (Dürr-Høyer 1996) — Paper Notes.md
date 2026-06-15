@@ -1,3 +1,5 @@
+# A Quantum Algorithm for Finding the Minimum (Dürr-Høyer 1996)
+
 > **Source:** Christoph Dürr and Peter Høyer, *A Quantum Algorithm for Finding the Minimum*, arXiv:quant-ph/9607014 (1996)
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/9607014)
 > **Tags:** #quantum-algorithm #search #Grover #minimum-finding #oracle
@@ -6,7 +8,9 @@
 
 ## The problem
 
-Given an unsorted table $T[0..N-1]$ of $N$ items from an ordered set, find the index $y$ such that $T[y]$ is the minimum. Classically this requires $\Theta(N)$ probes. The BBBV lower bound implies any quantum algorithm needs $\Omega(\sqrt{N})$ queries.
+Given an unsorted table $T[0..N-1]$ of $N$ items from an ordered set, find the index $y$ such that $T[y]$ is the minimum. Classically this requires $\Theta(N)$ probes. Since unstructured search reduces to minimum finding, the BBBV search lower bound gives an $\Omega(\sqrt{N})$ quantum query lower bound.
+
+The query model assumes coherent comparison-oracle access: for a classical threshold index $y$, the quantum search subroutine can mark indices $j$ satisfying $T[j] < T[y]$.
 
 ## What the paper does
 
@@ -21,7 +25,7 @@ Two pages. No fat.
 **Quantum Minimum Searching:**
 
 1. Choose a threshold index $y$ uniformly at random from $\{0, \ldots, N-1\}$.
-2. Repeat (with a time-out of $22.5\sqrt{N} + 1.4 \lg^2 N$ steps):
+2. Repeat (with the paper's proof-convention time-out of $22.5\sqrt{N} + 1.4 \lg^2 N$ steps):
    - (a) Prepare $\frac{1}{\sqrt{N}} \sum_j |j\rangle |y\rangle$. Mark every index $j$ with $T[j] < T[y]$.
    - (b) Run the quantum exponential searching algorithm (Boyer-Brassard-Høyer-Tapp).
    - (c) Measure: get outcome $y'$. If $T[y'] < T[y]$, set $y \leftarrow y'$.
@@ -41,7 +45,7 @@ The key insight is a probabilistic analysis across all iterations.
 
 $$\sum_{r=2}^{N} \frac{1}{r+1} \cdot \frac{9}{2} \sqrt{\frac{N}{r-1}} \leq \frac{45}{4}\sqrt{N}$$
 
-Each iteration with $t$ marked items takes expected $\frac{9}{2}\sqrt{N/t}$ steps (exponential search cost). Sum over all possible intermediate thresholds, weighted by their probability, and the harmonic-like series telescopes to $O(\sqrt{N})$.
+Each iteration with $t$ marked items takes expected $\frac{9}{2}\sqrt{N/t}$ steps (exponential search cost). Sum over all possible intermediate thresholds, weighted by the rank-visitation probability from Lemma 1; the resulting weighted series is bounded by $O(\sqrt{N})$.
 
 The time-out at $2m_0 \approx 22.5\sqrt{N}$ guarantees success probability $\geq 1/2$ by Markov's inequality.
 
@@ -53,7 +57,7 @@ The time-out at $2m_0 \approx 22.5\sqrt{N}$ guarantees success probability $\geq
 |---|---|
 | Query complexity | $O(\sqrt{N})$ to find the minimum with probability $\geq 1/2$ |
 | Boosted | $O(c\sqrt{N})$ for success probability $\geq 1 - 1/2^c$ |
-| Optimality | Matches $\Omega(\sqrt{N})$ lower bound from BBBV |
+| Optimality | Matches the $\Omega(\sqrt{N})$ lower bound inherited from unstructured search |
 | Non-distinct values | Same algorithm, same bound (inequality replaces equality in Lemma 1) |
 
 ---
@@ -90,8 +94,9 @@ The analysis is also a nice example of how to handle Grover search when the numb
 ### Paper notes
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — the core search subroutine
 - [[Fast Quantum Algorithm for Numerical Gradient Estimation (Jordan 2005) — Paper Notes]] — gradient + Dürr-Høyer gives quantum gradient descent
-- [[Optimizing Quantum Optimization Algorithms via Faster Quantum Gradient Computation (Gilyén-Arunachalam-Wiebe 2019) — Paper Notes]] — uses Dürr-Høyer as optimisation subroutine
+- [[Quantum Basin Hopping with Gradient-Based Local Optimisation (Bulger 2005) — Paper Notes]] — threshold Grover search applied to basins of attraction rather than table entries
+- [[Optimizing Quantum Optimization Algorithms via Faster Quantum Gradient Computation (Gilyén-Arunachalam-Wiebe 2019) — Paper Notes]] — uses Dürr-Høyer as optimisation subroutine
 
 ### Trick cards
 - [[Grover Search with Evolving Threshold for Minimum Finding]]
-- [[Amplitude Amplification and Estimation]]
+- [[Standard Amplitude Amplification]]

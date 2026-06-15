@@ -31,7 +31,7 @@ Use it for query/sample lower bounds in learning problems where the hypothesis c
 
 The bound is problem-dependent: the size of the packing gives the information demand; Holevo bounds the information supply by the number and dimension of quantum systems queried.
 
-In Huang--Kueng--Preskill, this machinery underlies the average-case result that a quantum learner's query advantage over restricted classical learning is at most polynomial.
+In Huang--Kueng--Preskill, this machinery is one part of the average-case result that a quantum learner's query advantage over restricted classical learning is at most polynomial. The paper also constructs the restricted classical learner; the Holevo argument explains why a much larger information-theoretic separation cannot occur in that model.
 
 ## Caveat
 
@@ -42,3 +42,4 @@ Holevo controls information, not computation. It does not by itself prove that t
 - [[Information-Theoretic Bounds on Quantum Advantage in ML (Huang-Kueng-Preskill 2021) — Paper Notes]]
 - [[Average-Case vs Worst-Case QML Advantage Test]]
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — contrasts with the paper’s likelihood-ratio lower-bound method for noisy adaptive learning trees.

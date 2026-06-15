@@ -1,0 +1,1066 @@
+--- Page 1 ---
+arXiv:quant-ph/0409035v2  6 Jul 2005
+Quantum Veriﬁcation of Matrix Products
+Harry Buhrman∗
+buhrman@cwi.nl
+Robert ˇSpalek∗
+sr@cwi.nl
+Abstract
+We present a quantum algorithm that veriﬁes a product of two n×n matrices over any integral
+domain with bounded error in worst-case time O(n5/3) and expected time O(n5/3/ min(w, √n)1/3),
+where w is the number of wrong entries. This improves the previous best algorithm [ABH+02]
+that runs in time O(n7/4). We also present a quantum matrix multiplication algorithm that is
+eﬃcient when the result has few nonzero entries.
+1
+Introduction
+The computational complexity of matrix multiplication is a subject of extensive study. Matrix
+multiplication is the central algorithmic part of many applications like for example solving linear
+systems of equations and computing the transitive closure. A fast algorithm for matrix multiplica-
+tion thus implies a fast algorithm for a variety of computational tasks. Strassen [Str69] was the ﬁrst
+to show that surprisingly two n × n matrices can be multiplied in time n2+α for α < 1. His result
+was improved by many subsequent papers. The best known bound to date is an algorithm with
+α ≈0.376 by Coppersmith and Winnograd [CW90]. It is a main open problem to determine the
+true value of α. Freivalds showed [Fre79] that verifying whether the product of two n × n matrices
+is equal to a third can be done with high probability in time proportional to n2. We will refer to
+this latter problem as matrix veriﬁcation.
+We study the computational complexity of matrix multiplication and veriﬁcation on a quantum
+computer. The ﬁrst to study matrix veriﬁcation in the quantum mechanical setting were Ambainis,
+Buhrman, Høyer, Karpinski, and Kurur [ABH+02] who used a clever recursive version of Grover’s
+algorithm to verify whether two n × n matrices equal a third in time O(n7/4), thereby improving
+the optimal classical bound of Freivalds.
+In this paper we will construct a bounded error quantum algorithm for the matrix veriﬁcation
+problem that runs in time O(n5/3). Suppose we are verifying whether A × B = C. When the
+number of “wrong” entries in C is w, our algorithm runs in expected time O(n5/3/ min(w, √n)1/3).
+For w = √n we have a matching lower bound.
+Our algorithm uses the quantum random walk formalism by Szegedy [Sze04] that he developed
+as a generalization of the quantum random walk technique of Ambainis [Amb04]. Ambainis used
+a quantum random walk to obtain an optimal quantum algorithm for the element distinctness
+problem. If one were to adapt that method directly to the setting of matrix veriﬁcation, one does
+obtain a O(n5/3) algorithm in terms of queries to the input. However that algorithm still requires
+Ω(n2) time, because it computes several times a matrix product of sub-matrices that are loaded
+∗CWI and University of Amsterdam; supported in part by the EU ﬁfth framework project QAIP, IST-1999-11234,
+and RESQ, IST-2001-37559, and an NWO grant.
+1
+
+
+--- Page 2 ---
+into the memory. This costs no additional queries, but it will take additional time. The rest of the
+paper is devoted to improve the time complexity of the quantum algorithm to O(n5/3).
+We perform a quantum random walk on the product of two Johnson graphs, analyze its spectral
+gap, that is the second smallest eigenvalue of its Laplacian, and estimate that in our setting enough
+of the nodes are marked if A × B ̸= C. See Section 3 for a detailed description of our algorithm.
+We next introduce a combinatorial tool to analyze the behavior of our algorithm when many of
+the entries are wrong. Finally we use our fast quantum matrix veriﬁcation algorithm as a building
+block to construct a quantum algorithm for computing the actual matrix product A × B that is
+substantially faster than any known classical method, when there are not too many non-zero entries
+in the ﬁnal product.
+2
+Preliminaries
+2.1
+Quantum query complexity
+We assume familiarity with quantum computing [NC00] and sketch the model of quantum query
+complexity. Suppose we want to compute some function f. For input x ∈{0, 1}N, a query gives
+us access to the input bits. It corresponds to the unitary transformation
+O : |i, b, z⟩7→|i, b ⊕xi, z⟩.
+Here i ∈{1, . . . , N} and b ∈{0, 1}; the z-part corresponds to the workspace, which is not aﬀected
+by the query. We assume the input can be accessed only via such queries. A t-query quantum
+algorithm has the form A = UtOUt−1 · · · OU1OU0, where the Uk are ﬁxed unitary transformations,
+independent of x. This A depends on x via the t applications of O. The algorithm starts in the
+initial state |0k⟩and its output is the result of measuring a dedicated part of the ﬁnal state A|0k⟩,
+where k is the total amount of space used by the algorithm.
+2.2
+Quantum search
+One of the most interesting quantum algorithms is Grover’s search algorithm [Gro96, BBHT98].
+It can ﬁnd an index of an input bit xi in an n-bit input such that xi = 1 in expected number of
+O(
+p
+n/(|x| + 1)) queries, where |x| is the Hamming weight (number of ones) in the input. Grover’s
+algorithm can be cast in more general terms as amplitude ampliﬁcation: given a quantum algorithm
+A that accepts with probability p, then it can be ampliﬁed to have constant success probability
+with
+p
+1/p iterations of A.
+Given n numbers x1, . . . , xn as input, the element distinctness problem is the task to determine
+whether there are two distinct indices i and j such that xi = xj. Ambainis in a very nice paper
+[Amb04] applied quantum random walks in a novel way and constructed a quantum algorithm that
+solves element distinctness in O(n2/3) queries. This algorithm is faster than the algorithm [BDH+01]
+which is based on amplitude ampliﬁcation and uses O(n3/4) queries.
+Ambainis’s method was
+generalized by Szegedy [Sze04] for all graphs and even for all symmetric Markov chains (with non-
+uniform transition probabilities). Szegedy’s method can be regarded as a quantum walk version of
+amplitude ampliﬁcation [BHMT02].
+2.3
+Previous best algorithm for veriﬁcation of matrix products
+Ambainis et al. [ABH+02] discovered a quantum algorithm running in time O(n7/4). Since it was
+never published, we will brieﬂy sketch it here. Let A, B, C be n × n matrices. First, partition the
+2
+
+
+--- Page 3 ---
+matrices B and C into √n blocks of √n columns each. It holds that AB = C iﬀABi = Ci for every
+i, where Bi and Ci are the sub-matrices of size n × √n. The veriﬁcation of ABi = Ci can be done
+with bounded error in time O(n3/2) as follows: choose a random vector x of length √n, multiply
+both sides of the equation by x from the right side, compute classically y = Bix and z = Cix, and
+verify the matrix-vector product Ay = z by a Grover search. The search over n rows takes O(√n)
+iterations and a veriﬁcation of one row takes time n. Now, we apply amplitude ampliﬁcation on
+the top of this sub-routine Vi, and compute the And of all √n blocks using n1/4 calls to Vi.
+2.4
+Notation
+Let [n] denote the set {1, 2, . . . , n}. Let An×m denote a matrix A of dimension n × m. Let AT
+denote the transpose of A. For a R ⊆[n], let A|R denote the |R| × m sub-matrix of A restricted
+to the rows from R. Analogously, for every S ⊆[m], let A|S denote the n × |S| sub-matrix of A
+restricted to the columns from S. Let λ(M) denote the spectral norm of a matrix M; it is equal to
+the largest eigenvalue of M for symmetric M. For a set S, let (S
+k ) denote all subsets of S of size k.
+An integral domain is a commutative ring with identity and no divisors of 0.
+For a graph G, let VG denote the vertices of G and let EG denote the edges of G. The normalized
+Laplacian matrix L(G) of an undirected graph G is a symmetric |VG| × |VG| matrix deﬁned by
+Li,j(G) = 1 if i = j, it is −1/
+p
+didj if i ̸= j, and 0 otherwise. A spectral gap of a graph G, often
+called the Fiedler value of G, equals to the second smallest eigenvalue of L(G); it is nonzero if
+G is connected. The Johnson graph J(n, k) is deﬁned as follows: its vertices are subsets of [n] of
+size k, and two vertices are connected iﬀthey diﬀer in exactly one number. Let G = G1 × G2
+denote the graph categorical product of two graphs G1, G2, deﬁned as follows: VG = VG1 ×VG2, and
+((g1, g2), (g′
+1, g′
+2)) ∈EG iﬀ(g1, g′
+1) ∈EG1 and (g2, g′
+2) ∈EG2.
+3
+Algorithm for veriﬁcation of matrix products
+Let A, B, C be n × n matrices over any integral domain. A veriﬁcation of a matrix product is
+deciding whether AB = C. We construct an eﬃcient quantum walk algorithm for this problem. It
+is described in Figure 1 and its expected running time is analyzed in Sections 4 and 5.
+The basic outline is the following: Verify Once estimates the scalar product of the superposition
+computed by the quantum walk and the uniform superposition. The inequality aR · bS ̸= cR,S can
+only be true when A|R ·B|S ̸= C|S
+R, that is when C|S
+R contains at least one wrong entry. If AB = C,
+then the quantum walk does nothing, because the phase ﬂip is never performed and the diﬀusion
+on a uniform superposition is equal to identity. Hence the superposition computed by the quantum
+walk stays uniform, and the measurement of |z⟩always yields 0. On the other hand, if AB ̸= C
+and k is suﬃciently large, then for ℓdrawn uniformly from {1, 2, . . . , k}, with high probability, the
+quantum walk converges to a superposition almost orthogonal to the uniform superposition and
+the measurement of |z⟩yields 1 with probability close to 1
+2. The loop in Product Veriﬁcation tries
+a sequence of exponentially increasing k. The idea of multiplying the matrices in Verify Once from
+both sides by random vectors p, q is explained in Section 4.1. It allows us to achieve both a better
+running time and smaller space complexity.
+4
+Analysis of the algorithm
+In this section, we prove that Product Veriﬁcation has one-sided bounded error and estimate
+its expected running time depending on the set of wrong entries.
+We use a recent result by
+3
+
+
+--- Page 4 ---
+Product Veriﬁcation (input size n, matrices A, B, C) returns 1 when AB ̸= C:
+1. Take any 1 < λ < 8
+7, for example λ = 15
+14.
+2. For i = 0, 1, . . . , logλ(n2/3) + 9, repeat 16 times the following:
+• Run Verify Once (
+3√
+8 · λi).
+• If it returns 1, then return “not equal”.
+3. Return “equal”.
+Verify Once (number of rows k) returns 1 when AB ̸= C is detected:
+4. Pick the number of iterations ℓuniformly at random from {1, 2, . . . , k}.
+Pick a random row vector p and a random column vector q of length n.
+5. Initialization. Put the quantum register into superposition P
+R⊆[n]
+|R|=k
+P
+S⊆[n]
+|S|=k |R⟩|S⟩.
+(Think of R as a subset of the rows of A and S as a subset of the columns of B.)
+Compute aR = p|R ·A|R, bS = B|S ·q|S, and cR,S = p|R ·C|S
+R ·q|S in time 2kn+k2.
+Let |z⟩= |+⟩= |0⟩+|1⟩
+√
+2
+. The quantum state is now
+|+⟩
+X
+R,S
+|R, aR⟩|S, bS⟩|cR,S⟩.
+6. Quantum walk. Conditioned on |z⟩, perform ℓiterations of the following:
+(a) Phase ﬂip. Multiply the quantum phase by −1 iﬀaR · bS ̸= cR,S. The scalar
+product is veriﬁed in time n using no queries.
+(b) Diﬀusion. Perform one step of quantum walk on (R, S), that is exchange one
+row and one column. The update of aR, bS, and cR,S costs 2n queries to A,
+2n queries to B, and 4k queries to C.
+7. Apply the Hadamard transform on |z⟩, measure it, and return the outcome.
+Figure 1: Quantum algorithm for veriﬁcation of matrix products
+4
+
+
+--- Page 5 ---
+Szegedy [Sze04], which can be regarded as a quantum walk version of quantum amplitude am-
+pliﬁcation [BHMT02]. Its proof is outlined in Appendix A.
+Theorem 1 (Szegedy [Sze04]) Let G be an undirected graph on vertex set X, and let δG be the
+spectral gap of G. Some set of vertices M ⊆X are marked with the promise that |M| is either zero
+or at least ε|X|. For every m = Ω(1/√δGε), the following quantum algorithm decides whether M
+is non-empty with one-sided error γ ≤7
+8 in time O(TX + m · (TM + TG)):
+1. Initialization. Compute a uniform superposition over X; let the time be TX.
+2. Pick 1 ≤ℓ≤m uniformly at random. Repeat ℓtimes the following:
+(1) Phase ﬂip. Flip the quantum phase if an element is marked; let the time be TM.
+(2) Diﬀusion. Perform one step of quantum walk on G; let the time be TG.
+3. Estimate the scalar product of the quantum walk distribution and the uniform distribution.
+4.1
+Analysis of Product Veriﬁcation
+We analyze the expected running time of the algorithm as follows. Let Verify Full denote a modiﬁed
+version of Verify Once that does not use the random vectors p, q, but instead reads all the sub-
+matrices into memory and veriﬁes A|R · B|S = C|S
+R in the phase-ﬂip step (6a). Verify Full has
+the same query complexity as Verify Once, but its space complexity and running time are bigger.
+(Although the phase-ﬂip step (6a) costs no additional queries, the time needed to compute classically
+A|R·B|S is at least kn, whereas the scalar product aR·bS can be computed in time n.1) We analyze
+the error of Verify Full, because the multiplication by p, q complicates the analysis. For example,
+if there is exactly one wrong entry and the multiplication is over GF(2), then with probability 3
+4,
+the wrong entry is completely hidden by multiplication by zero. However, we prove the following
+statement:
+Lemma 2 Let AB ̸= C. The probability that Verify Once (
+3√
+8 · k) outputs 1 at least once in 16
+independent trials, each time with new random p, q, is bigger than the success probability of one
+call to Verify Full (k).
+Using this lemma, it is suﬃcient to analyze the error of the algorithm as if it is performing
+Verify Full in each step. Let W = {(i, j) |(AB −C)i,j ̸= 0} be the set of wrong entries of the matrix
+product and let R, S ⊆[n] denote subsets of rows of A and columns of B. We mark (R, S) iﬀC|S
+R
+contains a wrong entry, formally A|R·B|S ̸= C|S
+R, or equivalently W ∩R × S ̸= ∅. The performance
+of the algorithm depends on the fraction of marked pairs ε(W, k) = PrR,S[(R, S) is marked], where
+|R| = |S| = k. In Section 5, we prove the following lower bound on ε(W, k):
+Lemma 3 Let q(W) = max(|W ′|, min(|W|, √n)), where W ′ is the largest independent subset of
+W, that is it contains at most one 1 in every row and column. For every W and k ≤n2/3/q(W)1/3,
+it holds that ε(W, k) = Ω( k2
+n2q(W)).
+We also need the following two statements, whose proofs are in Appendix A:
+Lemma 4 Let 1 ≤k ≤n
+2 . The spectral gap of G = J(n, k) × J(n, k) is δG = Θ(1/k).
+1It seems that this slowdown “time ≫#queries” is a typical property of algorithms using quantum walks: the
+quantum algorithm for element distinctness [Amb04] needs to use random hash functions to remedy it, and it is open
+whether triangle ﬁnding [MSS05] can be improved this way.
+5
+
+
+--- Page 6 ---
+Lemma 5 Let |ϕ⟩and |ψ⟩be quantum states, let |X⟩=
+√
+2
+2 (|0, ϕ⟩+ |1, ψ⟩), and let |Y ⟩= (H ⊗
+I)|X⟩. If the ﬁrst qubit of |Y ⟩is measured in the computational basis, then Pr[Y = 1] = 1
+2(1−⟨ϕ|ψ⟩).
+Theorem 6 Product Veriﬁcation always returns “equal” if AB = C. If AB ̸= C, then it returns
+“not equal” with probability at least 2
+3. Its worst-case running time is O(n5/3), its expected running
+time is O(n5/3/q(W)1/3), and its space complexity is O(n).
+Proof. By Lemma 2, if we replace the calls to Verify Once by Verify Full in Figure 1 and skip
+repeating each loop 16 times and multiplication of k by
+3√
+8, the success probability is decreased.
+Hence if we compute an upper bound on the expected number of iterations of such an algorithm,
+it will also hold for the original algorithm. Let us thus analyze the running time of the original
+algorithm assuming the error analysis is of Verify Full. Verify Once walks ℓquantum steps on the
+graph categorical product of two Johnson graphs G = J(n, k) × J(n, k). The marked vertices of G
+correspond to marked pairs (R, S), that is the pairs such that A|R · B|S ̸= C|S
+R. The initialization
+costs time TX = O(kn), a phase ﬂip costs time TM = n, and one step of the quantum walk costs
+time TG = 4n + 4k = O(n). The running time of Verify Once is thus O((k + ℓ)n) = O(kn). The
+scalar product of two distributions is estimated using Lemma 5.
+Let W ̸= ∅. By Theorem 1, Verify Once recognizes a wrong matrix product with bounded error
+for every m ≥O(1/
+p
+δG ε(W, k)). Plug in ε(W, k) = Ω( k2
+n2 q(W)) by Lemma 3 and δG = Θ
+  1
+k
+
+by Lemma 4. We get that m ≥O(n/
+p
+kq(W)). In our algorithm, we use m = k, which gives
+the condition k ≥k0 = O(n2/3/q(W)1/3). Hence for every k ≥k0, Verify Once makes only small
+one-sided error. The algorithm Product Veriﬁcation does not know q(W) and k0, but it instead
+tries diﬀerent values of k from the exponentially increasing sequence 1 . . . λi.
+The total running time is dominated by the last run. The expected running time can be written
+as a telescopic sum E[T] = P∞
+t=0 t · Pr[T = t] = P∞
+t=1 Pr[T ≥t]. Product Veriﬁcation (PV) calls
+Verify Once with time kn = λin and each call after k ≥k0 fails with probability γ ≤7
+8, hence
+E[T]
+=
+X
+i
+λin · Pr[PV enters the i-th loop] ≤
+(logλ k0)−1
+X
+i=0
+λin +
+(logλ n2/3)+9
+X
+i=logλ k0
+λin · γi−logλ k0
+≤
+O(k0n)
+ 
+1 +
+∞
+X
+i=0
+(λγ)i
+!
+= O(k0n) = O
+ 
+n5/3
+q(W)1/3
+!
+,
+because λγ < 8
+7 · 7
+8 = 1. The probability that a wrong product is never recognized is ≤γ9 < 1
+3,
+where 9 is the number of loops after n2/3.
+PV never makes an error when AB = C. In this case, the phase ﬂip is equal to the identity
+operation. The diﬀusion is also equal to the identity on the uniform distribution, hence the whole
+quantum walk in Verify Once does nothing and the qubit |z⟩= |+⟩is untouched. Finally, PV
+always terminates when k ≥λ9n2/3, hence its total running time is O(n5/3).
+✷
+It remains to prove Lemma 2. Let us ﬁx random vectors p, q. We call (R, S) revealing iﬀ
+aR ·bS = (p|R ·A|R)·(B|S ·q|S) ̸= cR,S, which is equivalent to p|R ·(A|R ·B|S)·q|S ̸= p|R ·C|S
+R ·q|S
+due to the associativity of matrix multiplication. As we have already seen, not every marked pair is
+revealing. Let ζp,q(W, k) = PrR,S[(R, S) is revealing] denote the fraction of revealing pairs, where
+|R| = |S| = k. The proof of the following statement is in Appendix B:
+Lemma 7 Let p, q be picked uniformly at random. Then Pr[ζp,q(W, k) ≥1
+8ε(W, k)] > 1
+8.
+6
+
+
+--- Page 7 ---
+Now, we show that the constant probability of picking good random vectors is compensated by
+a constant number of repetitions.
+Proof of Lemma 2 By Lemma 7, the success probability of Verify Once is at least p
+8, where p is the
+success probability of Verify Once given that it guesses good vectors p, q with ζ(W, k) ≥1
+8ε(W, k).
+By Theorem 1 and the proof of Theorem 6, p = 1 −γ and 1
+2 ≥p ≥
+1
+8 for every k ≥k0 =
+O(n2/3/(q(W)/8)1/3); the factor 1
+8 in ε(W, k) is compensated by taking
+3√
+8-times bigger k. The
+success probability of 16 independent trials is at least 1−(1−p
+8)16 ≥1−(e−p)2 ≥1−(1−0.64p)2 ≥
+1.28p −0.4p2 ≥p, because 1 −x ≤e−x, e−x ≤1 −0.64x for x ∈[0, 1], and p < 0.7.
+✷
+4.2
+Comparison with other quantum walk search algorithms
+Product Veriﬁcation resembles a few other algorithms. The ﬁrst quantum algorithm of this type
+was the quantum walk algorithm for element distinctness [Amb04]. The same technique was subse-
+quently successfully applied to triangle ﬁnding [MSS05] and group commutativity testing [MN05].
+Both algorithms walk on the Johnson graph J(n, k). The analysis of Ambainis [Amb04] relies on
+the fact that the quantum state stays in a constant-dimensional subspace. This constraint is sat-
+isﬁed if there is at most one solution; then the subsets can be divided into a constant number of
+cases. In the non-promise version, the number of cases is, however, not constant. The latter pa-
+pers [Amb04, MSS05] solve the non-promise case by projecting the input into a random subspace.
+With high probability, there is exactly one solution in the subspace; this trick originally comes
+from Valiant and Vazirani [VV86]. Since it is not known whether this technique can be used in
+more than one dimension, we solve the non-promise version of product veriﬁcation using the more
+general quantum walk by Szegedy [Sze04] instead of the original one by Ambainis [Amb04].
+Theorem 1 is quite general, because it allows walking on an arbitrary undirected graph. On the
+other hand, the algorithm Verify Once obtained by it is a bit slower than the original Ambainis
+walk [Amb04, MSS05]. First, Verify Once only solves the decision version of the problem and it
+does not ﬁnd the actual position of a wrong entry. This can be resolved by a binary search. Second,
+Verify Once does the phase ﬂip after every step of quantum walk instead of doing it once per block
+of steps. However, for both element distinctness and product veriﬁcation, the additional cost is
+subsumed by the cost of the quantum walk.
+5
+Lower bounds on the fraction of marked pairs
+In this section, we try to solve the following combinatorial problem:
+Problem. Given an n × n Boolean matrix W and two integers 1 ≤r, s ≤n, what is the probability
+ε(W, r, s) that a random r × s sub-matrix of W contains a 1? Or, equivalently: Given a bipartite
+graph on n, n vertices, what is the probability that a randomly chosen induced subgraph with r, s
+vertices contains at least one edge?
+It is simple to prove that ε(W, r, s) is monotone in all its three parameters. As we have seen in
+Theorem 6, the expected running time of Product Veriﬁcation depends on the fraction of marked
+pairs, which is ε(W, k, k), also denoted there by ε(W, k).2 Let us compute ε when W contains exactly
+one 1: ε(W, r, s) = (n−1
+r−1 )(n−1
+s−1 )/(n
+r )(n
+s ) = rs
+n2 . With this bound, monotonicity, and Theorem 6, we
+conclude that Product Veriﬁcation ﬁnds the correct answer with bounded error in time O(n5/3).
+2Our algorithm only tries balanced choices r = s = k. Since the initialization costs O((r + s)n), setting one of the
+variables smaller does not decrease the query complexity, but it decreases the success probability of Verify Once.
+7
+
+
+--- Page 8 ---
+The rest of this section contains a more detailed analysis of the expected running time of the
+algorithm for larger W. Unfortunately, we are only able to prove weak lower bounds on ε for
+general W. However, if one improves them, then we automatically get an improved upper bound
+on the running time of the same algorithm.
+Henceforth, let r, s be suﬃciently small. The average probability over all sets W with t ones is
+EW :|W |=t[ε(W, r, s)] = Ω(|W| rs
+n2) (Lemma 8). We are able to prove the same bound for all |W| ≤√n
+(Lemma 9), when W is an independent set, that is it does not contain two ones in the same row
+or column (Lemma 10), or when the ones in W form a rectangle (again Lemma 9). However, the
+latter rectangle bound only holds for a limited class of r, s, which does not include the balanced
+case r = s = k in the range used by our algorithm. As a consequence, if the ones in W form a full
+row or a column, our algorithm is slower than what would follow from this formula. We, however,
+show that in this case our algorithm is optimal (Theorem 11); this is the only known tight lower
+bound for our algorithm. Most of the proofs are postponed to Appendix C.
+Lemma 8 Let rs ≤n2
+t . Then EW :|W |=t[ε(W, r, s)] = Ω(|W| rs
+n2).
+Lemma 9 Let w be the number of nonzero rows of W, and let w′ be maximal the number of nonzero
+entries in a row. Then for every r ≤n
+w and s ≤n
+w′ , ε(W, r, s) = Ω(|W| rs
+n2).
+Lemma 10 Let W have at most one entry in every row and column. Then for every r, s satisfying
+rs ≤n4/3/|W|2/3, ε(W, r, s) = Ω(|W| rs
+n2 ).
+The main Lemma 3 is a direct corollary of Lemmas 9 and 10.
+Proof of Lemma 3. Lemma 9 implies that ε(W, k) = Ω( k2
+n2 min(|W|, √n)): First, assume that
+|W| ≤√n and verify the restrictions on r = s = k. For every t ≤√n it holds that n2/3/t1/3 ≤n/t.
+Hence if |W| ≤√n, then for every k ≤n2/3/|W|1/3 it holds that k ≤n/|W| and, since w, w′ ≤|W|,
+also k ≤
+n
+w and k ≤
+n
+w′ . Hence the lower bound ε(W, k) = Ω( k2
+n2|W|) given by Lemma 9 holds
+for every k in the range required by Lemma 3. Now, if |W| > √n, the bound follows from the
+monotonicity of ε(W, k) in W.
+Lemma 10 says that ε(W ′, k) = Ω( k2
+n2|W ′|) for every independent W ′ and k in the range required
+by Lemma 3. The bound on W follows from the monotonicity of ε(W, k) in W. If we put these two
+bounds together, we obtain that ε(W, k) = Ω( k2
+n2q(W)), as desired.
+✷
+The bound cannot be strengthened to ε(W, k) = Ω( k2
+n2|W|) for general W and full range of k. We
+show that no quantum algorithm can be fast if the n ones in W form a full row. A straightforward
+calculation shows that q(W) for this W can be at most √n if we want the bound on ε to hold for
+all k ≤O(n2/3/q(W)1/3).
+Theorem 11 Any bounded-error quantum algorithm distinguishing a correct matrix product and
+a matrix product with one wrong row has query complexity Ω(n3/2).
+Proof. We reduce Or of n parities of length n + 1 to product veriﬁcation. Let
+z = (x1,1 ⊕. . . ⊕x1,n ⊕y1) ∨. . . ∨(xn,1 ⊕. . . ⊕xn,n ⊕yn).
+Using the quantum adversary lower bound method [Amb02], it follows that computing z requires
+Ω(n3/2) quantum queries, and the lower bounds holds even if we promise that at most one parity
+8
+
+
+--- Page 9 ---
+is equal to 1. Since z = 1 iﬀ∃i : yi ̸= Ln
+ℓ=1 xi,ℓ, we can reduce this problem to the veriﬁcation of
+the matrix product AB = C over GF(2), where Ai,j = xi,j, Bi,j = 1, and Ci,j = yi. The promise is
+transformed into that at most one row is wrong.
+✷
+6
+Concluding remarks
+6.1
+Algorithm for computation of matrix products
+Let m ≥n2/3. One can modify the algorithm to verify the product An×mBm×n = Cn×n in time
+proportional to n2/3m. The quantum walk stays the same and only the inner scalar products are
+of length m instead of n.
+Using the rectangular product veriﬁcation algorithm and binary search, one can construct a
+quantum algorithm that outputs the position of a wrong entry. By iterating this and correcting
+the wrong entries, one can compute the matrix product AB = C whenever a good approximation
+to C is known. One can always start by guessing C = 0, hence the following bound holds:
+Theorem 12 Let m ≥n2/3.
+The matrix product An×mBm×n = Cn×n can be computed with
+polynomially small error probability in expected time
+TM ≤O(1) ·
+
+
+
+m log n · n2/3w2/3;
+for
+1 ≤w ≤√n,
+m log n · √nw;
+√n ≤w ≤n,
+m log n · n√w;
+n ≤w ≤n2,
+(1)
+where w = |W| is the number of nonzero entries of C.
+The algorithm and its analysis are presented in Appendix D. Let us neglect the logarithmic
+term. It follows that matrix products with |W| = o(√n) non-zero entries can be computed in
+sub-quadratic time o(nm). We can also compare our algorithm to the best classical algorithms,
+however this comparison cannot be fair, since our algorithm depends on |W|, whereas all known
+classical algorithms depend on the sparseness of the input matrices. The fastest known algorithm
+for dense square matrices [CW90] works in time O(n2.376). Our algorithm can beat it when the
+number of nonzero elements of the result is |W| = o(n0.876).
+The fastest known algorithm for
+dense rectangular matrices [Cop97] works in time O(n1.844+o(1)m0.533 + n2+o(1)). The fastest known
+algorithm for sparse square matrices [YZ04] works in time O(n1.2z0.7 + n2+o(1)), where A and B
+have at most z non-zero elements.
+6.2
+Boolean matrices
+The algorithm Verify Once relies on the fact that arithmetical operations are over some integral
+domain. If the matrices are over the Boolean algebra {∨, &}, then the multiplication by random
+vectors from both sides does not work. However, Boolean matrix products can be veriﬁed even
+faster by the following algorithm:
+Theorem 13 There exists a quantum Boolean-matrix product veriﬁcation algorithm running in
+time O(n√m) and space O(log n + log m).
+Proof. The condition that three given matrices form a valid product can be written as an And-Or
+tree: And of n2 equalities, each being an Or of m products. There is a bounded-error quantum
+algorithm [HMW03] running in time O(
+√
+n2m) = O(n√m) and space O(log(n2m)).
+✷
+9
+
+
+--- Page 10 ---
+By standard techniques [BBHT98], one can speed up the veriﬁcation to time O(n
+p
+m/t), if the
+number of wrong entries t is known beforehand. If t is unknown, then the veriﬁcation can be done
+in expected time O(n
+p
+m/t) and the worst-case time stays O(n√m). The Boolean matrix product
+with t nonzero entries can be thus computed in expected time O(n
+√
+tm).
+6.3
+Open problems
+It would be interesting to strengthen the lower bound on the fraction ε(W, k) of marked pairs and
+thus also the upper bound on product veriﬁcation. As we have shown, this cannot be done in full
+generality, but perhaps one can show a stronger lower bound using some density argument.
+The time complexity of our algorithm goes up if the space complexity is bounded. Can one
+prove a time-space tradeoﬀfor the veriﬁcation problem similar to the tradeoﬀfor computation of
+matrix products [KˇSW04]? Note that we currently can’t show time-space tradeoﬀs for any decision
+problem.
+Can one prove a better lower bound on veriﬁcation of matrix products than Ω(n3/2)? This
+lower bound is tight when there are √n wrong entries. Is the true bound higher with only one
+wrong entry? Due to the small certiﬁcate complexity of this problem, one cannot prove such a
+bound using any of the adversary methods [ˇSS05], but it might be provable by the polynomial
+method [BBC+01].
+Acknowledgments
+We thank Ronald de Wolf and Troy Lee for useful discussions. We thank anonymous referees for
+their valuable comments.
+References
+[ABH+02] A. Ambainis, H. Buhrman, P. Høyer, M. Karpinski, and P. Kurur. Quantum matrix
+veriﬁcation. Unpublished Manuscript, 2002.
+[Amb02]
+A. Ambainis. Quantum lower bounds by quantum arguments. Journal of Computer
+and System Sciences, 64:750–767, 2002. Earlier version in STOC’2000.
+[Amb04]
+A. Ambainis. Quantum walk algorithm for element distinctness. In Proc. of 45th IEEE
+FOCS, pages 22–31, 2004.
+[BBC+01]
+R. Beals, H. Buhrman, R. Cleve, M. Mosca, and R. de Wolf. Quantum lower bounds
+by polynomials. Journal of the ACM, 48(4):778–797, 2001. Earlier version in FOCS’98.
+[BBHT98] M. Boyer, G. Brassard, P. Høyer, and A. Tapp. Tight bounds on quantum searching.
+Fortschritte der Physik, 46(4–5):493–505, 1998. Earlier version in Physcomp’96.
+[BDH+01] H. Buhrman, Ch. D¨urr, M. Heiligman, P. Høyer, F. Magniez, M. Santha, and R. de
+Wolf. Quantum algorithms for element distinctness. In Proc. of 16th IEEE Conf. on
+Comp. Complexity, pages 131–137, 2001.
+[BHMT02] G. Brassard, P. Høyer, M. Mosca, and A. Tapp. Quantum amplitude ampliﬁcation
+and estimation. In Quantum Computation and Quantum Information: A Millennium
+Volume, volume 305 of AMS Contemporary Mathematics Series, pages 53–74. 2002.
+10
+
+
+--- Page 11 ---
+[Cop97]
+D. Coppersmith. Rectangular matrix multiplication revisited. Journal of Complexity,
+13:42–49, 1997.
+[CW90]
+D. Coppersmith and S. Winograd. Matrix multiplication via arithmetic progressions.
+Journal of symbolic computation, 9:251–280, 1990. Earlier version in STOC’1987.
+[Fre79]
+R. Freivalds. Fast probabilistic algorithms. In Proc. of 8th Symp. on Math. Foundations
+of Computer Science, pages 57–69. Springer Verlag, 1979. LNCS 74.
+[Gro96]
+L. K. Grover. A fast quantum mechanical algorithm for database search. In Proc. of
+28th ACM STOC, pages 212–219, 1996.
+[HMW03]
+P. Høyer, M. Mosca, and R. de Wolf. Quantum search on bounded-error inputs. In
+Proc. of 30th ICALP, pages 291–299, 2003. LNCS 2719.
+[KˇSW04]
+H. Klauck, R. ˇSpalek, and R. de Wolf. Quantum and classical strong direct product
+theorems and optimal time-space tradeoﬀs. In Proc. of 45th IEEE FOCS, pages 12–21,
+2004.
+[MN05]
+F. Magniez and A. Nayak. Quantum complexity of testing group commutativity. In
+Proc. of 32nd ICALP, 2005. LNCS 3580. To appear.
+[MSS05]
+F. Magniez, M. Santha, and M. Szegedy. Quantum algorithms for the triangle problem.
+In Proc. of 16th SODA, pages 1109–1117, 2005.
+[NC00]
+M. A. Nielsen and I. L. Chuang. Quantum Computation and Quantum Information.
+Cambridge University Press, 2000.
+[ˇSS05]
+R. ˇSpalek and M. Szegedy. All quantum adversary methods are equivalent. In Proc. of
+32nd ICALP, pages 1299–1311, 2005. LNCS 3580. To appear. quant-ph/0409116.
+[Str69]
+V. Strassen. Gaussian elimination is not optimal. Numerische Mathematik, 13:354–356,
+1969.
+[Sze04]
+M. Szegedy. Quantum speed-up of Markov chain based algorithms. In Proc. of 45th
+IEEE FOCS, pages 32–41, 2004.
+[VV86]
+L. G. Valiant and V. V. Vazirani. NP is as easy as detecting unique solutions. Theoretical
+Computer Science, 47(1):85–93, 1986.
+[YZ04]
+R. Yuster and U. Zwick. Fast sparse matrix multiplication. In Proc. of 12th RSA, pages
+604–615, 2004.
+A
+Proofs for the quantum walk
+Proof of Theorem 1.
+This is a corollary of Lemma 7 from [Sze04]. To express the lower bound
+on m in terms of δG, ε, we use several other statements from that paper: Let P = L(G) be the
+Laplacian of G and let PM be obtained from P by leaving out all rows and columns indexed by
+some x ∈M. By [Sze04, Lemma 10], λ(PM) ≤1 −δGε/2. The lower bound on m can be restated
+as Ω(
+q
+1
+1−λ(PM)) = Ω(1/√δGε) like in [Sze04, Corollary 2].
+✷
+11
+
+
+--- Page 12 ---
+Proof of Lemma 4.
+It is not diﬃcult to show that the spectral gap of the Johnson graph
+J(n, k) is
+n
+(n−k)k, which is Θ(1/k) for 1 ≤k ≤n
+2. Furthermore, it is simple to prove that δG1×G2 =
+min(δG1, δG2). We conclude that δG = Θ(1/k).
+✷
+Proof of Lemma 5.
+|Y ⟩= 1
+2(|0, ϕ⟩+ |1, ϕ⟩) + 1
+2(|0, ψ⟩−|1, ψ⟩) = |0⟩|ϕ⟩+|ψ⟩
+2
++ |1⟩|ϕ⟩−|ψ⟩
+2
+, hence
+Pr[Y = 1] = ∥|ϕ⟩−|ψ⟩
+2
+∥2 = 1
+4(⟨ϕ| −⟨ψ|)(|ϕ⟩−|ψ⟩) = 1
+4(⟨ϕ|ϕ⟩+ ⟨ψ|ψ⟩−2⟨ϕ|ψ⟩) = 1
+2(1 −⟨ϕ|ψ⟩).
+✷
+B
+Proofs for the fraction of revealing pairs
+Lemma 14 Let G be an integral domain with g elements, let (R, S) be marked, and let p, q be
+picked uniformly at random from Gn. The probability that (R, S) is revealing is ≥(1 −1
+g)2 ≥1
+4.
+Proof. Let D = AB −C, that is the wrong entries are exactly the nonzero entries of D. Assume
+that (R, S) is marked and pick any Di0,j0 ̸= 0. Now, (R, S) is not revealing iﬀ
+0 =
+X
+i∈R,j∈S
+piqjDi,j =
+X
+i∈R,j∈S
+Di,j̸=0
+piqjDi,j = pi0(qj0Di0,j0 + c1) + c2qj0 + c3,
+where c1, c2, c3 are some constants depending on D and other coordinates of p, q.
+Fix these
+constants and pick pi0, qj0 at random from G. Since G is an integral domain with g elements,
+p = Pr[qj0Di0,j0 +c1 = 0] ≤1
+g. For every qj0 such that qj0Di0,j0 +c1 ̸= 0, the equality is equivalent
+to c4pi0 + c5 = 0 for another constants c4 ̸= 0 and c5, which is again satisﬁed by at most 1 value
+of pi0 ∈G. Hence the probability of having equality by chance is at most
+p · 1 + (1 −p) · 1
+g = 1
+g + p · g −1
+g
+≤1
+g + g −1
+g2
+= 2g −1
+g2
+.
+The probability that (R, S) is revealing is thus at least 1 −2g−1
+g2
+= (1 −1
+g)2 ≥1
+4 and the equality
+holds when g = 2.
+✷
+Lemma 15 Let 0 ≤X ≤1 and E[X] ≥α. Then Pr[X ≥β] > α −β.
+Proof. Decompose the expected value of X conditioned on X ≥β:
+E[X] = E[X|X < β] · (1 −Pr[X ≥β]) + E[X|X ≥β] · Pr[X ≥β].
+Rearrange, plug in 0 ≤X ≤1, and obtain Pr[X ≥β] =
+E[X]−E[X|X<β]
+E[X|X≥β]−E[X|X<β] > α−β
+1−0 = α −β.
+✷
+Proof of Lemma 7.
+Consider Boolean random variables VR,S,p,q = 1 iﬀ(R, S, p, q) is revealing.
+Let vp,q be the fraction of marked sets that are also revealing when p, q multiply the equation,
+formally vp,q = Emarked (R,S)[VR,S,p,q]. By Lemma 14, for every marked (R, S), Ep,q[VR,S,p,q] ≥1
+4. It
+follows that Emarked (R,S)[Ep,q[VR,S,p,q]] ≥1
+4 and hence Ep,q[Emarked (R,S)[VR,S,p,q]] = Ep,q[vp,q] ≥1
+4.
+By Lemma 15, when p, q is picked uniformly at random, Pr[vp,q ≥1
+8] > 1
+8. Hence in this lucky
+case, ζp,q(W, k) ≥1
+8ε(W, k).
+✷
+12
+
+
+--- Page 13 ---
+C
+Proofs for the fraction of marked pairs
+Proof of Lemma 8.
+Consider Boolean random variables VR,S,W = 1 iﬀW ∩R × S ̸= ∅. Then
+for every |R| = r and |S| = s, it holds that EW :|W |=t[VR,S,W] = PrW [W ∩R × S ̸= ∅] and
+PrW :|W |=t[W ∩R × S ̸= ∅]
+=
+1 −n2 −rs
+n2
+· n2 −rs −1
+n2 −1
+· · · n2 −rs −t + 1
+n2 −t + 1
+≥
+1 −
+n2 −rs
+n2
+t
+= 1 −
+
+1 −rs
+n2
+t
+≥1 −e−rs
+n2 t = Ω
+
+t rs
+n2
+
+,
+because 1 −x ≤e−x and, on any ﬁxed interval x ∈[0, A], also e−x ≤1 −1−e−A
+A
+x. The claim is now
+proved using standard arguments. Since ∀R, S : EW[VR,S,W] ≥t rs
+n2, also ER,S[EW[VR,S,W ]] ≥t rs
+n2.
+Exchange the order of summation and obtain EW [ER,S[VR,S,W]] = EW[ε(W, r, s)] ≥t rs
+n2.
+✷
+Proof of Lemma 9.
+Let Z denote the random event “W ∩R × S ̸= ∅”. For j = 0, 1, . . . , w, let
+Zj denote the random event “W ∩R × [n] has exactly j nonempty rows”. Since {Zj} are disjoint
+and Pw
+j=0 Pr[Zj] = 1, we can decompose the probability
+Pr[Z] =
+w
+X
+j=0
+Pr[Z | Zj] · Pr[Zj] ≥
+w
+X
+j=1
+Pr[Zj] · Pr[Z | Z1] = (1 −Pr[Z0]) · Pr[Z | Z1],
+because Pr[Z | Zj] ≥Pr[Z | Z1] for j ≥1.
+Now, Pr[Z0] = Pr[W ∩R × [n] = ∅] =
+n−w
+n
+·
+n−w−1
+n−1
+· · · n−w−r+1
+n−r+1
+≤(n−w
+n )r = (1 −w
+n )r ≤e−rw
+n , because 1 −x ≤e−x. Recall that for every
+x ∈[0, A], e−x ≤1 −1−e−A
+A
+x. If r ≤n
+w, then rw
+n ≤1 and hence e−rw
+n ≤1 −1−e−1
+1
+rw
+n = 1 −αrw
+n for
+α = 1 −e−1. We conclude that 1 −Pr[Z0] ≥αrw
+n .
+To lower-bound the other term, we decompose Z1. For i = 1, 2, . . . , n, let Yi denote the random
+event “W ∩R×[n] has the i-th row nonempty and all other rows are empty”. Let wi be the number
+of entries in the i-th row of W and let w′ = maxi wi. Since {Yi} are disjoint and Y1 ∪. . . ∪Yn = Z1,
+Pr[Z | Z1] =
+X
+i:wi̸=0
+Pr[Z | Yi] · Pr[Yi | Z1] = 1
+w
+X
+i:wi̸=0
+Pr[Z | Yi].
+Pr[Z | Yi] is easy to evaluate, since the i-th row of W contains exactly wi entries and S is picked
+uniformly at random. Let Wi = W ∩R × [n] be the i-th row of W. By the same arguments as
+above, Pr[Z | Yi] = Pr[Wi∩[n]×S ̸= ∅| |Wi| = wi] = 1−Pr[Wi ∩[n]×S = ∅| |Wi| = wi] ≥1−e−swi
+n .
+Analogously, if s ≤
+n
+wi , then e−swi
+n
+≤1 −αswi
+n
+and Pr[Z | Yi] ≥αswi
+n . Plug both bounds together
+and obtain Pr[Z] ≥αrw
+n
+1
+w
+P
+i:wi̸=0 αswi
+n = α2 rs
+n2
+P
+i:wi̸=0 wi = Ω(|W| rs
+n2), as desired.
+✷
+Proof of Lemma 10.
+If t ≤√n, then the result follows from Lemma 9. Let us assume that
+t > √n. Again, let Z denote the random event “W ∩R × S ̸= ∅” and, for j = 0, 1, . . . , r, let Zj
+denote the random event “W ∩R × [n] has exactly j nonempty rows”. Then
+1 −Pr[Z | Zj] = Pr[W ∩R × S = ∅| Zj] = n −s
+n
+· n −s −1
+n −1
+· · · n −s −j + 1
+n −j + 1
+≤
+n −s
+n
+j
+≤e−sj
+n .
+Since j ≤r and t > √n, we get that sj ≤rs ≤n4/3/t2/3 ≤n4/3/(√n)2/3 = n. Hence sj
+n ≤1 and
+by upper-bounding the exponential we get that Pr[Z | Zj] ≥1 −e−sj
+n ≥1 −(1 −αsj
+n ) = αsj
+n for
+13
+
+
+--- Page 14 ---
+α = 1−e−1. Now, {Zj} are disjoint and Pr
+j=0 Pr[Zj] = 1, hence we can decompose the probability
+Pr[Z] =
+r
+X
+j=0
+Pr[Z | Zj] · Pr[Zj] ≥
+r
+X
+j=0
+αsj
+n Pr[Zj] = α s
+n
+r
+X
+j=0
+j · Pr[Zj] = α s
+n · E[Y ],
+where Y is the number of nonempty rows. There are r rows among n in R and we pick t entries
+without returning uniformly at random. An application of E[Y ] = rt
+n completes the proof.
+✷
+D
+Computation of matrix products
+In this section, we show how to use (the rectangular version of) Product Veriﬁcation to obtain the
+actual position of a wrong entry. Furthermore, we present an algorithm for computation of matrix
+products. The algorithms are described in Figure 2.
+Theorem 16 Find Wrong Entry has one-sided polynomially small error, worst-case running time
+O(n2/3m log n), and expected running time O(n2/3m log n/q(W)1/3) for the set of wrong entries W.
+Proof. Assume that AB ̸= C. Let W ℓbe the set of wrong entries in the ℓ-th recursion level of
+the binary search. From the deﬁnition of q(W), if q(W ℓ) = q, then q(W ℓ
+i,j) ≥q
+4 for at least one
+quadrant i, j ∈{1, 2}. Find Wrong Entry descends into the ﬁrst quadrant it ﬁnds a solution in,
+hence it chooses W ℓ+1 = W ℓ
+i,j with high probability and then (n
+2 )2/q(W ℓ+1) ≤n2/q(W ℓ). There
+are log n levels of the recursion. Hence its expected running time is at most
+log n
+X
+ℓ=1
+4
+3
+s
+(n/2ℓ)2
+q(W ℓ) m ≤
+log n
+X
+ℓ=1
+4 3
+s
+n2
+q(W)m =
+n2/3m
+q(W)1/3
+log n
+X
+ℓ=1
+4 = O
+ 
+n2/3m
+q(W)1/3 log n
+!
+,
+as claimed. By Theorem 6, the probability that a wrong matrix product is not recognized in one
+iteration is at most 1
+3. The probability that it is not recognized in O(log n) iterations is 1/poly(n).
+If AB = C, then the ﬁrst iteration of binary search is repeated O(log n) times and the worst-case
+running time is O(n2/3m log n).
+✷
+Remark.
+It might be that the position of the wrong entry can be obtained from just one run
+of Product Veriﬁcation in the same way as in the quantum walk algorithm for element distinct-
+ness [Amb04] – by measuring the subsets R, S instead of the quantum coin register |z⟩. However,
+this is only known to follow from Theorem 1 for exactly one wrong entry, that is |W| = 1 [Sze04,
+Section 10]. The log-factor in the total running time is necessary for polynomially small error.
+Now we can prove the upper bound on matrix multiplication.
+Proof of Theorem 12. Finding all rℓwrong entries in the ℓ-th row is done by the Grover search
+with unknown number of solutions [BBHT98], and it takes time Prℓ
+i=1
+p n
+i m = O(√nrℓm), where
+the scalar products of length m are computed on-line. We ensure that there are no wrong entries
+left with probability polynomially close to one in additional time O(√nm log n). Let us condition
+the rest of the analysis by that the Grover searches indeed ﬁnd all ones.
+Let W ′ be the largest independent subset of W. Clearly, Matrix Multiplication ﬁnishes in at
+most |W ′| iterations, otherwise there would exist an independent set larger than |W ′|. The total
+running time is the sum of the time spent in Find Wrong Entry
+TF ≤
+|W ′|
+X
+ℓ=1
+n2/3m log n
+|W ′|1/3
+= O((n|W ′|)2/3m log n),
+14
+
+
+--- Page 15 ---
+Matrix Multiplication (input size n, m, matrices An×m, Bm×n) returns Cn×n = AB:
+1. Initialize C = 0.
+2. Run Find Wrong Entry (n, m, A, B, C).
+If it returns “equal”, return C.
+3. Otherwise let (r, c) be the wrong position. Recompute Cr,c.
+Find and recompute all wrong entries in the r-th row using the Grover Search.
+Find and recompute all wrong entries in the c-th column using the Grover Search.
+4. Go to step 2.
+Find Wrong Entry (input size n, m, matrices An×m, Bm×n, Cn×n)
+returns a position (r, c) if Cr,c ̸= P
+i Ar,iBi,c or “equal” if AB = C:
+1. If n = 1, verify the scalar product and exit.
+2. Let A1, A2 denote the top and bottom half of A,
+let B1, B2 denote the left and right half of B, and
+let C1,1, C1,2, C2,1, C2,2 denote the four quadrants of C.
+3. Repeat at most O(log n) times the following step:
+• Run in parallel Product Veriﬁcation (n
+2 , m, Ai, Bj, Ci,j) for i, j ∈{1, 2}.
+If some of them returns “not equal”, stop the other threads of computation
+and cancel the loop.
+4. If the product veriﬁcation was always successful, return “equal”.
+5. Let Ci,j ̸= AiBj be the found wrong sub-matrix.
+Let (r′, c′) = Find Wrong Entry (n
+2 , m, Ai, Bj, Ci,j).
+6. If i = 1, set r = r′, otherwise set r = r′ + n
+2 .
+If j = 1, set c = c′, otherwise set c = c′ + n
+2.
+Return (r, c).
+Figure 2: Quantum algorithm for computation of matrix products
+15
+
+
+--- Page 16 ---
+and the time spent in the Grover searches. By applying a Cauchy-Schwarz inequality several times,
+TG
+≤
+|W ′|
+X
+ℓ=1
+(√nrℓm + √ncℓm) log n = m√n log n
+
+
+|W ′|
+X
+ℓ=1
+1 · √rℓ+
+|W ′|
+X
+ℓ=1
+1 · √cℓ
+
+
+≤
+m√n log n
+v
+u
+u
+t
+|W ′|
+X
+ℓ=1
+1
+
+
+
+v
+u
+u
+t
+|W ′|
+X
+ℓ=1
+rℓ+
+v
+u
+u
+t
+|W ′|
+X
+ℓ=1
+cℓ
+
+
+= O(m√n log n
+p
+|W ′|
+p
+|W|).
+The algorithm is bounded-error, because both Find Wrong Entry and the iterated Grover searches
+have polynomially small error. Put the bounds together and obtain:
+TM = TF + TG ≤m log n√n
+p
+|W ′| · (n1/6|W ′|1/6 +
+p
+|W|).
+Evaluate separately the three cases |W| ∈[1, √n], |W| ∈[√n, n], and |W| ∈[n, n2], use that
+|W ′| ≤|W| and |W ′| ≤n, and obtain inequality (1), which we had to prove.
+✷
+16

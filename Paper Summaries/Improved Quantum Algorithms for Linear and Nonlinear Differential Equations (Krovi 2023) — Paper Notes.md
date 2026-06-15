@@ -1,3 +1,5 @@
+# Improved Quantum Algorithms for Linear and Nonlinear Differential Equations (Krovi 2023) — Paper Notes
+
 > **Source:** Hari Krovi, *Improved quantum algorithms for linear and nonlinear differential equations*, Quantum 7:913, 2023; arXiv:2202.01054
 > **Links:** [arXiv](https://arxiv.org/abs/2202.01054) · [Quantum](https://doi.org/10.22331/q-2023-02-02-913)
 > **Tags:** #nonlinear-ODE #linear-ODE #Carleman-linearisation #quantum-algorithm #differential-equations #QLSA #block-encoding #log-norm #matrix-exponential
@@ -8,9 +10,9 @@
 
 Two problems, really:
 
-**Linear ODE:** Solve $\dot{x} = Ax + b$, $x(0) = x_0$, where $A \in \mathbb{C}^{d \times d}$ is sparse and stable (all eigenvalues have negative real part). Produce a quantum state proportional to $x(T)$.
+**Linear ODE:** Solve $\dot{x} = Ax + b$, $x(0) = x_0$, where $A \in \mathbb{C}^{d \times d}$ is sparse. The basic stable setting has eigenvalues with negative real part, but the analysis is organized around the bounded-propagator quantity $C(A)=\sup_{t\ge 0}\|e^{At}\|$, which also covers non-diagonalizable and singular cases when this quantity is finite. Produce a quantum state proportional to $x(T)$.
 
-**Nonlinear ODE:** Solve $\dot{u} = F_2 u^{\otimes 2} + F_1 u + F_0$, $u(0) = u_{\mathrm{in}}$, same setting as [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu et al. (2021)]], but with the dissipativity condition relaxed from $\operatorname{Re}(\lambda_1) < 0$ (eigenvalue-based) to $\mu(F_1) < 0$ (log-norm-based), where $\mu(A) = \max\{\lambda : \lambda \in \sigma((A+A^\dagger)/2)\}$.
+**Nonlinear ODE:** Solve $\dot{u} = F_2 u^{\otimes 2} + F_1 u + F_0$, $u(0) = u_{\mathrm{in}}$, same setting as [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu et al. (2021)]], but with the dissipativity condition relaxed from $\operatorname{Re}(\lambda_1) < 0$ (eigenvalue-based) to $\mu(F_1) < 0$ (log-norm-based), where $\mu(A) = \max\{\lambda : \lambda \in \sigma((A+A^\dagger)/2)\}$. The theorem statements here use time-independent forcing $F_0$.
 
 ## What the paper does
 
@@ -18,7 +20,7 @@ Improves on both the linear ODE algorithm of [[Quantum Algorithm for Linear Diff
 
 1. **Characterises complexity via $\|e^{At}\|$ rather than eigenvalues of $A$.** Introduces the quantity $C(A) := \sup_{t \ge 0} \|e^{At}\|$ and shows the algorithm's complexity depends on $C(A)$, not on whether $A$ is diagonalisable or on $\kappa_V$ (condition number of the diagonalising matrix). This extends to non-diagonalisable, non-normal, and even singular matrices.
 
-2. **Exponentially improves error dependence for nonlinear ODEs** from $\sim 1/\varepsilon$ (Liu et al.'s forward Euler) to $\mathrm{polylog}(1/\varepsilon)$ by using truncated Taylor series instead of forward Euler for the time discretisation.
+2. **Exponentially improves error dependence for nonlinear ODEs** from $\sim 1/\varepsilon$ (Liu et al.'s forward Euler discretisation) to $\mathrm{polylog}(1/\varepsilon)$ by using truncated Taylor series instead of forward Euler for the time discretisation. This is a discretisation/linear-solver improvement, not a new feature of Carleman linearisation itself.
 
 For the nonlinear case, the log-norm condition $\mu(F_1) < 0$ is strictly weaker than requiring $F_1$ to be diagonalisable with all eigenvalues having negative real parts. The log-norm is the "symmetric part" of $F_1$, so it handles non-normal matrices naturally.
 
@@ -50,7 +52,7 @@ where $L = \mathrm{diag}(I) - \mathrm{subdiag}(W_k)$ and $\mathbf{c}$ encodes th
 
 After [[Carleman Linearisation for Quantum Nonlinear ODE Solvers|Carleman linearisation]] of $\dot{u} = F_2 u^{\otimes 2} + F_1 u + F_0$, the resulting linear system $\dot{x} = Ax + b$ has the Carleman block-tridiagonal matrix $A$.
 
-**The key observation (Lemma 16):** If $\mu(F_1) < 0$ and $|{\mu(F_1)}| > \|F_0\| + \|F_2\|$ (i.e., $R < 1$ with $R$ now defined using log-norm), then $C(A) \le N$. The proof uses a diagonal preconditioning: $D = \mathrm{diag}(I/j)$ for $j = 1, \ldots, N$, and shows $\mu(DAD^{-1} + (DAD^{-1})^\dagger)/2) < 0$ via a block decomposition argument, which gives $\|e^{At}\| \le \kappa(D) = N$.
+**The key observation (Lemma 16):** If $\mu(F_1) < 0$ and $|{\mu(F_1)}| > \|F_0\| + \|F_2\|$ (i.e., $R < 1$ with $R$ now defined using log-norm), then $C(A) \le N_{\mathrm{Carl}}$. The proof uses a diagonal preconditioning: $D = \mathrm{diag}(I/j)$ for $j = 1, \ldots, N_{\mathrm{Carl}}$, sets $B=DAD^{-1}$, and shows $\mu(B)=\lambda_{\max}((B+B^\dagger)/2)<0$ via a block decomposition argument, which gives $\|e^{At}\| \le \kappa(D) = N_{\mathrm{Carl}}$.
 
 The dissipativity ratio becomes:
 
@@ -63,13 +65,13 @@ Using log-norm instead of spectral abscissa is strictly more general: $\mu(A) \g
 | Result | Statement |
 |---|---|
 | Linear ODE query complexity (Theorem 7) | $O\!\left(g \cdot T\|A\| \cdot C(A) \cdot \mathrm{poly}\!\left(s, \log d, \log(1 + T\|b\|/\|x_T\|), \log(1/\varepsilon), \log(T\|A\|C(A))\right)\right)$ |
-| Nonlinear ODE query complexity (Theorem 8) | $O\!\left(g_u \cdot T\|A\| \cdot \mathrm{poly}\!\left(N, s, \log(1 + \|F_0\|/\|u(T)\|), \log(1/\varepsilon), \log(T\|A\|)\right)\right)$ |
-| $C(A)$ for Carleman system (Lemma 16) | $C(A) \le N$ when $\mu(F_1) < 0$ and $R < 1$ |
-| Carleman truncation order | $N = O\!\left(\frac{\log(T\|F_2\|/\varepsilon\|u(T)\|)}{\log(1/\|u_{\mathrm{in}}\|)}\right)$ |
-| Carleman error | $\|\eta_1(T)\| \le N^2 \|F_2\| T \|u(0)\|^{N+1}$ |
+| Nonlinear ODE query complexity (Theorem 8) | $O\!\left(g_u \cdot T\|A\| \cdot \mathrm{poly}\!\left(N_{\mathrm{Carl}}, s, \log(1 + \|F_0\|/\|u(T)\|), \log(1/\varepsilon), \log(T\|A\|)\right)\right)$ |
+| $C(A)$ for Carleman system (Lemma 16) | $C(A) \le N_{\mathrm{Carl}}$ when $\mu(F_1) < 0$ and $R < 1$ |
+| Carleman truncation order | $N_{\mathrm{Carl}} = O\!\left(\frac{\log(T\|F_2\|/\varepsilon\|u(T)\|)}{\log(1/\|u_{\mathrm{in}}\|)}\right)$, after the normalization regime where $\|u_{\mathrm{in}}\|<1$ makes the denominator positive |
+| Carleman error | $\|\eta_1(T)\| \le N_{\mathrm{Carl}}^2 \|F_2\| T \|u(0)\|^{N_{\mathrm{Carl}}+1}$ |
 | Condition number of linear system (Theorem 4) | $\kappa_L \le 3(2m+1) \cdot C(A)$ where $m = \lceil T\|A\| \rceil$ |
 | Solution error (Theorem 3) | $\|x_T - y_m\| \le \delta\|x_T\|$ for $k = O(\log \Omega / \log\log \Omega)$ |
-| Measurement probability | $\Omega(1/(N g_u^2))$ where $g_u = \|u_{\mathrm{in}}\|/\|u(T)\|$ |
+| Measurement probability | $\Omega(1/(N_{\mathrm{Carl}} g_u^2))$ where $g_u = \|u_{\mathrm{in}}\|/\|u(T)\|$ |
 
 ## Comparison with prior work
 
@@ -81,17 +83,17 @@ Using log-norm instead of spectral abscissa is strictly more general: $\mu(A) \g
 | Time dependence (nonlinear) | — | $T^2$ | $T \cdot \mathrm{poly}(\log T)$ |
 | Stability condition | Diag. + real neg. eigenvalues | Diag. + $\operatorname{Re}(\lambda_1) < 0$ | $\mu(F_1) < 0$ (log-norm) |
 | Non-normal matrices | Exponential penalty via $\kappa_V$ | Not handled | Efficient if $C(A)$ bounded |
-| Measurement penalty | — | $O(\|u_{\mathrm{in}}\|^{2N})$ | $O(\|u_{\mathrm{in}}\|^{2N})$ (not fixed) |
+| Measurement penalty | — | $O(\|u_{\mathrm{in}}\|^{2N_{\mathrm{Carl}}})$ | $O(\|u_{\mathrm{in}}\|^{2N_{\mathrm{Carl}}})$ (not fixed) |
 
-A notable gap: this paper does *not* introduce the [[Carleman Vector Rescaling for Measurement Probability Boost|Carleman vector rescaling]] that eliminates the $\|u_{\mathrm{in}}\|^{2N}$ factor. The measurement probability is still $\Omega(1/(Ng_u^2))$, and for PDEs where $\|u_{\mathrm{in}}\|_2 \propto \sqrt{n}$, the cost is $n^N$ after the $\sqrt{N}$ from amplitude amplification. The rescaling fix came later in [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes|Costa et al. (2023)]].
+A notable gap: this paper does *not* introduce the [[Carleman Vector Rescaling for Measurement Probability Boost|Carleman vector rescaling]] that eliminates the $\|u_{\mathrm{in}}\|^{2N_{\mathrm{Carl}}}$ factor. The measurement probability is still $\Omega(1/(N_{\mathrm{Carl}}g_u^2))$, and for PDEs where $\|u_{\mathrm{in}}\|_2 \propto \sqrt{n}$, the cost is $n^{N_{\mathrm{Carl}}}$ after the $\sqrt{N_{\mathrm{Carl}}}$ from amplitude amplification. The rescaling fix came later in [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes|Costa et al. (2023)]].
 
 ## Limits / caveats
 
 - **$R < 1$ still required.** The log-norm version is more general than the eigenvalue version, but the $R < 1$ condition itself is unchanged. Strongly nonlinear systems are still out of reach.
 
-- **Measurement penalty not addressed.** The $\|u_{\mathrm{in}}\|^{2N}$ problem from Liu et al. (2021) persists. For PDE applications this is the binding constraint, and it wasn't fixed until Costa et al. (2023).
+- **Measurement penalty not addressed.** The $\|u_{\mathrm{in}}\|^{2N_{\mathrm{Carl}}}$ problem from Liu et al. (2021) persists. For PDE applications this is the binding constraint, and it wasn't fixed until Costa et al. (2023).
 
-- **$C(A)$ can be hard to compute.** While $C(A) \le N$ for Carleman systems is clean, for general matrices $C(A) := \sup_{t \ge 0} \|e^{At}\|$ may not be easy to bound. The Kreiss matrix theorem gives $C(A) \le ed\mathcal{K}(A)$ where $\mathcal{K}(A)$ is the Kreiss constant, but this can be exponential in dimension.
+- **$C(A)$ can be hard to compute.** While $C(A) \le N_{\mathrm{Carl}}$ for Carleman systems is clean, for general matrices $C(A) := \sup_{t \ge 0} \|e^{At}\|$ may not be easy to bound. The Kreiss matrix theorem gives $C(A) \le ed\mathcal{K}(A)$ where $\mathcal{K}(A)$ is the Kreiss constant, but this can be exponential in dimension.
 
 - **Time-independent $F_0$ only.** Unlike Liu et al. (2021) which handles time-dependent $F_0(t)$, this paper restricts to time-independent forcing for simplicity. Not a fundamental limitation, but the analysis doesn't cover it.
 
@@ -101,7 +103,7 @@ A notable gap: this paper does *not* introduce the [[Carleman Vector Rescaling f
 
 1. [[Matrix Exponential Bound as ODE Solver Complexity Proxy]] — the insight that $C(A) = \sup_{t \ge 0} \|e^{At}\|$ is the right quantity for characterising quantum ODE solver complexity. Subsumes eigenvalue conditions, handles non-normal and non-diagonalisable matrices, and composes cleanly for block matrices (Carleman systems).
 
-2. [[Log-Norm Diagonal Preconditioning for Carleman Systems]] — the trick of using $D = \mathrm{diag}(I/j)$ to show $C(A) \le \kappa(D) = N$ for the Carleman block matrix. The diagonal preconditioning converts a non-normal block matrix into one whose symmetrised version has negative log-norm.
+2. [[Log-Norm Diagonal Preconditioning for Carleman Systems]] — the trick of using $D = \mathrm{diag}(I/j)$ to show $C(A) \le \kappa(D) = N_{\mathrm{Carl}}$ for the Carleman block matrix. The diagonal preconditioning converts a non-normal block matrix into one whose symmetrised version has negative log-norm.
 
 ## References within this paper
 

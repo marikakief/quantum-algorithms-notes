@@ -20,7 +20,7 @@ $$\alpha_{p_1 \cdots p_i \cdots p_j \cdots p_\eta} = -\alpha_{p_1 \cdots p_j \cd
 
 This means swapping any two electron registers induces a phase of $-1$. Time evolution under any fermionic Hamiltonian preserves antisymmetry (since fermionic Hamiltonians commute with the permutation operator), so once an antisymmetric initial state is prepared, it stays antisymmetric.
 
-**Initial-state antisymmetrization** of an arbitrary product state costs $O(\eta \log\eta \log N)$ using a comparison/sorting network approach (Berry et al. 2018).
+**Initial-state antisymmetrization** of an arbitrary product state costs $O(\eta \log\eta \log N)$ using a comparison/sorting network approach (Berry et al. 2018), assuming distinct occupied labels and a canonical initial ordering. The simulated Hamiltonian must commute with particle permutations so the antisymmetric subspace is preserved.
 
 No Jordan–Wigner strings, no [[Bravyi-Kitaev Transformation]], no fermion-to-qubit mapping overhead. The qubit count is just $\eta \lceil 3\log_2 N^{1/3} \rceil = O(\eta \log N)$.
 
@@ -28,13 +28,13 @@ The Hamiltonian in this representation splits as $H = T + U + V$ where:
 - $T = \sum_j \sum_p \|k_p\|^2/2\, |p\rangle\langle p|_j$ is diagonal in the computational basis
 - $U + V$ shifts individual particle momenta by $\pm\nu$, acting as one-body ($U$) and two-body ($V$) operators on pairs of registers
 
-This structure is critical: the **1-norm of the potential** $\lambda = O(\eta^{5/3} N^{1/3})$ is much smaller than the **kinetic norm** $\|T\| = O(N^{2/3}/\eta^{1/3})$ when $N \gg \eta$, enabling the [[Interaction Picture Simulation (Kinetic Frame)|interaction picture]] approach.
+This structure is critical under the paper's fixed-density plane-wave assumptions: the **1-norm of the potential** $\lambda = O(\eta^{5/3} N^{1/3})$ is much smaller than the **kinetic norm** $\|T\| = O(N^{2/3}/\eta^{1/3})$ when $N \gg \eta$, enabling the [[Interaction Picture Simulation (Kinetic Frame)|interaction picture]] approach.
 
 ## When to reach for it
 
-- Any simulation where $N \gg \eta$ (large basis, few electrons) — the advantage over second quantization grows as $(N/\eta)^{2/3}$ in qubit count
+- Any simulation where $N \gg \eta$ (large basis, few electrons). The storage comparison is roughly $N$ qubits in second quantization versus $\eta\log N$ qubits here, so the qubit-count ratio is about $N/(\eta\log N)$ up to constants.
 - When you want to exploit $\|T\| \gg \|U+V\|$ for interaction-picture simulation
-- Molecular simulation in the plane-wave basis (where $N \approx 100\eta$ is typical for chemical accuracy)
+- Molecular simulation in the plane-wave basis; rules of thumb such as $N \approx 100\eta$ are model-, pseudopotential-, boundary-condition-, and accuracy-dependent
 - Simulations without the Born-Oppenheimer approximation (nuclei can be included as additional particles)
 
 ## Complexity
@@ -42,6 +42,7 @@ This structure is critical: the **1-norm of the potential** $\lambda = O(\eta^{5
 - **Qubits:** $O(\eta \log N)$ (vs. $N$ for second quantization)
 - **Initial antisymmetrization:** $O(\eta \log\eta \log N)$ gates
 - **Per-oracle call cost** (SELECT for $U$/$V$): $O(\eta \log N)$ gates
+- **Sublinear-in-basis algorithmic advantage:** arises from interaction-picture/oracle scaling in particular plane-wave algorithms, not from the raw qubit-count ratio alone
 
 ## Caveat
 

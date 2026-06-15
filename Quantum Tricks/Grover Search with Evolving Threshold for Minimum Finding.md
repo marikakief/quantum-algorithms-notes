@@ -11,11 +11,7 @@ Naively applying Grover to find the minimum seems like it should cost more than 
 
 The trick: start with a random threshold $y$, then repeatedly Grover-search for any item $j$ with $T[j] < T[y]$. When found, update $y \leftarrow j$. Use **exponential search** (Boyer-Brassard-Høyer-Tapp) because you don't know how many items are below threshold.
 
-**Why it's still $O(\sqrt{N})$ total:** When $t$ items remain below threshold, the expected search cost is $O(\sqrt{N/t})$. Summing over all threshold updates gives a harmonic-like series:
-
-$$\sum_{t} \frac{\sqrt{N}}{\sqrt{t}} \approx \sqrt{N} \cdot \sum \frac{1}{\sqrt{t}} = O(\sqrt{N})$$
-
-because each rank is visited with probability $1/r$ (uniform output of exponential search), and the weighted sum telescopes.
+**Why it's still $O(\sqrt{N})$ total:** When $t$ items remain below threshold, the expected search cost is $O(\sqrt{N/t})$. The source proof is not a naive sum over all possible $t$; it uses a rank-visitation lemma saying the probability that rank $r$ is ever chosen as the threshold is at most $1/r$, then bounds the expected exponential-search cost under that distribution.
 
 Set a time-out at $O(\sqrt{N})$ and the minimum is found with probability $\geq 1/2$.
 
@@ -30,7 +26,9 @@ $O(\sqrt{N})$ queries, $O(c\sqrt{N})$ for success probability $\geq 1 - 2^{-c}$.
 ## Caveat
 Requires coherent oracle access. The evolving threshold means the marking oracle changes between rounds — this is fine because the threshold is classical (just a stored index). Not useful when you only have sample access to $T$.
 
+Non-distinct table values are allowed with essentially the same bound; the rank lemma becomes an inequality rather than an equality.
+
 ## Related notes
 - [[A Quantum Algorithm for Finding the Minimum (Dürr-Høyer 1996) — Paper Notes]]
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]]
-- [[Amplitude Amplification and Estimation]]
+- [[Standard Amplitude Amplification]]

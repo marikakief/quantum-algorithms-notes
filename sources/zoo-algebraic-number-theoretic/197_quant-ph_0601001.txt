@@ -1,0 +1,2231 @@
+arXiv:quant-ph/0601001v1  30 Dec 2005
+The Quantum Schur Transform:
+I. Eﬃcient Qudit Circuits
+D. Bacon
+Dept. of Computer Science and Engineering, Univ. of Washington, Seattle, WA, USA
+Santa Fe Institute, Santa Fe, NM 87501 USA
+Institute for Quantum Information, California Institute of Technology, Pasadena, CA, USA and
+Dept. of Physics, California Institute of Technology, Pasadena, CA, USA
+I. Chuang
+Center for Bits and Atoms, Massachusetts Institute of Technology, Cambridge, MA, USA
+Dept. of Electrical Engineering and Computer Science,
+Massachusetts Institute of Technology, Cambridge, MA, USA and
+Dept. of Physics, Massachusetts Institute of Technology, Cambridge, MA, USA
+A. Harrow
+Center for Bits and Atoms, Massachusetts Institute of Technology, Cambridge, MA, USA
+Dept. of Physics, Massachusetts Institute of Technology, Cambridge, MA, USA and
+Dept. of Computer Science, Univ. of Bristol, Bristol, U.K.
+(Dated: February 1, 2008)
+We present an eﬃcient family of quantum circuits for a fundamental primitive in quantum infor-
+mation theory, the Schur transform. The Schur transform on n d dimensional quantum systems is a
+transform between a standard computational basis to a labelling related to the representation theory
+of the symmetric and unitary groups. If we desire to implement the Schur transform to an accuracy
+of ǫ, then our circuit construction uses a number of gates which is polynomial in n, d and log(ǫ−1).
+The important insights we use to perform this construction are the selection of the appropriate
+subgroup adapted basis and the Wigner-Eckart theorem. Our eﬃcient circuit construction renders
+numerous protocols in quantum information theory computationally tractable and is an important
+new eﬃcient quantum circuit family which goes signiﬁcantly beyond the standard paradigm of the
+quantum Fourier transform.
+I.
+INTRODUCTION
+The last decade has seen the development and expansion of a robust theory of quantum information[1–6].
+The basic goal of this new work has been the identiﬁcation and quantiﬁcation of diﬀerent information re-
+sources in situations where the laws of quantum theory are applied to the physical carriers of information.
+Quantum information theory has made great progress in understanding the optimal rates of the manipula-
+tion and transmission of quantum information. Despite this success, however, much of the work in quantum
+information theory may not be of practical value. This is because most of the work in quantum information
+theory has focused on protocols which allow for unbounded quantum computational resources. Thus while
+the transforms in the quantum information protocols are well deﬁned, whether these transforms can be
+implemented with quantum circuits whose size scales eﬃciently with the size of the quantum information
+problem is often left unaddressed. An analogous situation arises classically, for example, in the theory of
+classical error correcting codes. On the one hand, we would like the classical error correcting code to attain
+some characteristic eﬃciency for communicating over a noisy channel. On the other hand, we would also
+like to design codes whose encoding and decoding does not signiﬁcantly lag our communication. In order
+to be of practical value a classical error correcting code must use computational resources which scale at a
+reasonable rate. While the goal of performing classical coding tasks in polynomial or even linear time has
+long been studied, quantum information theory results have typically ignored questions of eﬃciency. For
+example, random quantum coding results (such as [7–10]) require an exponential number of bits to describe,
+and like classical random coding techniques, do not yield eﬃcient algorithms. There are a few important
+exceptions. Some quantum coding tasks, such as Schumacher compression[3, 11], are essentially equivalent
+to classical circuits, and as such can be performed eﬃciently on a quantum computer by carefully modifying
+an eﬃcient classical algorithm to run reversibly and to deal properly with ancilla systems[12].
+Another
+example, which illustrates some of the challenges involved, is Ref. [13]’s eﬃcient implementation of entan-
+glement concentration[5]. Quantum key distribution[14] not only runs eﬃciently, but can be implemented
+with entirely, or almost entirely, single-qubit operations and classical computation. Fault tolerant quan-
+tum computing[15] usually seeks to perform error correction with as few gates as possible, although with
+
+2
+teleportation-based techniques[16, 17] computational eﬃciency may not be quite as critical to the threshold
+rate. Finally, some randomized quantum code constructions have been given eﬃcient constructions using
+classical derandomization techniques in [18]. In this paper we present an eﬃcient family of quantum circuits
+for a transform used ubiquitously[19–30] in quantum information protocols, the Schur transform. Our eﬃ-
+cient construction of the Schur transform adds to the above list a powerful new tool for ﬁnding algorithms
+that implement quantum communication tasks.
+The Schur transform is a unitary transform on n d-dimensional quantum systems (n qudits). The basis
+change corresponding to the Schur transform goes from a standard computational basis on the n qudits to
+a labelling related to the representation theory of the symmetric and unitary groups; much like the Fourier
+transform, it thus transforms from a local to a more global, collective basis, which captures symmetries of
+the system. In this article we show how to eﬃciently implement the Schur transform as a quantum circuit.
+The size of the circuit we construct is polynomial in the number of qudits, n, the dimension of the individual
+quantum systems, d, and the log of accuracy to which we implement the transform, log(ǫ−1). Our eﬃcient
+quantum circuit for the Schur transform makes possible eﬃcient quantum circuits for numerous quantum
+information tasks: optimal spectrum estimation[19, 20], universal entanglement concentration[22], universal
+compression with optimal overﬂow exponent[23, 24], encoding into decoherence-free subsystems[26–29], op-
+timal hypothesis testing[25], and quantum and classical communication without shared reference frames[30].
+The central role of the Schur transform in all of these protocols is due to the fact that the symmetries of
+independent and identically distributed quantum states are naturally treated by the representation theory
+of the symmetric and unitary groups. Thus in addition to making practical these quantum information
+protocols, the Schur transform is an interesting new unitary transformation with an interpretation relating
+to these symmetries.
+There are many diﬃculties in designing an eﬃcient quantum circuit for the Schur transform which we
+overcome in this paper. The ﬁrst diﬃculty is in eﬃciently representing the basis used in the Schur transform,
+the Schur basis. A second diﬃculty comes in the actual circuit construction. In particular we would like
+to construct the Schur transform from a series of Clebsch-Gordan transforms. However, it is not at all
+obvious how to eﬃciently implement these Clebsch-Gordan transforms, nor is obvious that such a cascade
+can perform the complete Schur transform.
+Our resolution to these problems begins by our selection of certain subgroup-adapted bases for the Schur
+basis. In particular we use the Gel’fand-Zetlin basis[31] and the Young-Yamanouchi basis (sometimes called
+Young’s orthogonal basis)[32]. We note that subgroup-adapted bases are also used in constructing eﬃcient
+quantum circuits for Fourier transforms over nonabelian ﬁnite groups[33]. However, we should emphasize
+that the Schur transform is not a Fourier transform over a ﬁnite group, although connections between
+such transforms and the Schur transform exist, and are discussed in part II of this paper. By choosing
+the Gel’fand-Zetlin basis and the Young-Yamanouchi basis, we are able to show that the Schur transform
+can be constructed from a cascade of Clebsch-Gordan transforms. Further, the use of the Gel’fand-Zetlin
+basis, combined with the Wigner-Eckart theorem, allows us to eﬃciently implement the Clebsch-Gordan
+transform.
+In particular the Wigner-Eckart theorem allows us to recursively express the d dimensional
+Clebsch-Gordan transform in terms of the d−1 dimensional Clebsch-Gordan transform and small, eﬃciently
+implementable, unitary transforms. This produces an eﬃcient recursive construction of the Clebsch-Gordan
+transform. Without the recursive structure we exploit, a naive circuit construction would seem to require
+nO(d2) gates. Our recursive exploitation of the Wigner-Eckart theorem allows us to implement the Clebsch-
+Gordan transform to accuracy ǫ using poly(d, log n, log 1/ǫ) gates. The total size of our circuit construction
+for the Schur transform is n poly(d, log n, log 1/ǫ).
+The outline of the paper is as follows. In Section II we introduce the Schur transform, along with basic
+concepts from representation theory, and review the numerous applications of the Schur transform in quantum
+information theory. In Section III we introduce the basis labelling scheme used in the Schur transformation
+using the concept of a subgroup-adapted basis. Once we have a concrete Schur basis deﬁned, we describe
+the Clebsch-Gordan transform and explain how to use it to give an eﬃcient circuit for the Schur transform
+in Sec. IV. Finally, we complete the algorithm in Sec. V by constructing an eﬃcient circuit for the Clebsch-
+Gordan transform.
+II.
+THE SCHUR TRANSFORM AND ITS APPLICATIONS
+Consider a system of n d-dimensional quantum systems: n qudits. Fix a standard computational basis
+|i⟩, i = 1 . . . d for the state space of each qudit: Cd. A basis for the system (Cd)⊗n is then |i1⟩⊗|i2⟩⊗· · · ⊗
+|in⟩= |i1, i2, . . . , in⟩where ik = 1 . . . d. The Schur transform is a unitary transform on the standard basis
+
+3
+|i1, i2, . . . , in⟩. After the Schur transform, the standard computational basis is relabeled as |λ⟩|p⟩|q⟩(symbols
+which we later deﬁne). In this section we review the basic representation theory necessary to understand
+the Schur basis and also review the applications of this transformation to diﬀerent protocols in quantum
+information theory.
+A.
+Representation theory background
+The Schur transform is related to the representations of two groups on (Cd)⊗n, a representation of the
+symmetric group and a representation of the unitary group. We ﬁrst recall the basics of representation
+theory before introducing these representations. For a more detailed description of representation theory,
+the reader should consult [34] for general facts about group theory and representation theory or [35] for
+representations of Lie groups. See also [36] for a more introductory and informal approach to Lie groups and
+their representations.
+Representations: For a complex vector space V , deﬁne End(V ) to be set of linear maps from V to itself
+(endomorphisms). A representation of a group G is a vector space V together with a homomorphism from G
+to End(V ), i.e. a function R : G →End(V ) such that R(g1)R(g2) = R(g1g2). If R(g) is a unitary operator
+for all g, then we say R is a unitary representation. Furthermore, we say a representation (R, V ) is ﬁnite
+dimensional if V is a ﬁnite dimensional vector space. In this paper, we will always consider complex ﬁnite
+dimensional, unitary representations and use the generic term ‘representation’ to refer to complex, ﬁnite
+dimensional, unitary representations. Also, when clear from the context, we will denote a representation
+(R, V ) simply by the representation space V .
+The reason we consider only complex, ﬁnite dimensional, unitary representations is so that we can use
+them in quantum computing. If d = dim V , then a d-dimensional quantum system can hold a unit vector in
+a representation V . A group element g ∈G corresponds to a unitary rotation R(g), which can in principle
+be performed by a quantum computer.
+Homomorphisms: For any two vector spaces V1 and V2, deﬁne Hom(V1, V2) to be the set of linear trans-
+formations from V1 to V2. If G acts on V1 and V2 with representation matrices R1 and R2 respectively,
+then the canonical action of G on Hom(V1, V2) is given by the map from M to R2(g)MR1(g)−1 for any
+M ∈Hom(V1, V2). For any representation (R, V ) deﬁne V G to be the space of G-invariant vectors of V : i.e.
+V G := {|v⟩∈V : R(g)|v⟩= |v⟩∀g ∈G}. Of particular interest is the space Hom(V1, V2)G, which can be
+thought of as the linear maps from V1 to V2 which commute with the action of G. If Hom(V1, V2)G contains
+any invertible maps (or equivalently, any unitary maps) then we say that (R1, V1) and (R2, V2) are equivalent
+representations and write
+V1
+G∼= V2.
+This means that there exists a unitary change of basis U : V1 →V2 such that for any g ∈G, UR1(g)U † =
+R2(g).
+Dual representations: Recall that the dual of a vector space V is the set of linear maps from V to C and
+is denoted V ∗. Usually if vectors in V are denoted by kets (e.g. |v⟩) then vectors in V ∗are denoted by
+bras (e.g. ⟨v|). If we ﬁx a basis {|v1⟩, |v2⟩, . . .} for V then the transpose is a linear map from V to V ∗
+given by |vi⟩→⟨vi|. Now, for a representation (R, V ) we can deﬁne the dual representation (R∗, V ∗) by
+R∗(g)⟨v∗| := ⟨v∗|R(g−1). If we think of R∗as a representation on V (using the transpose map to relate V
+and V ∗), then it is given by R∗(g) = (R(g−1))T . When R is a unitary representation, this is the same as the
+conjugate representation R(g)∗, where here ∗denotes the entrywise complex conjugate. One can readily verify
+that the dual and conjugate representations are indeed representations and that Hom(V1, V2)
+G∼= V ∗
+1 ⊗V2.
+Irreducible representations: Generically the unitary operators of a representation may be speciﬁed (and
+manipulated on a quantum computer) in an arbitrary orthonormal basis. The added structure of being a
+representation, however, implies that there are particular bases which are more fundamental to expressing the
+action of the group. We say a representation (R, V ) is irreducible (and call it an irreducible representaiton, or
+irrep) if the only subspaces of V which are invariant under R are the empty subspace {0} and the entire space
+V . For ﬁnite groups, any ﬁnite-dimensional complex representation is reducible; meaning it is decomposable
+into a direct sum of irreps. For Lie groups, we need additional conditions, such as demanding that the
+representation R(g) be rational; i.e. its matrix elements are polynomial functions of the matrix elements gij
+and (det g)−1. We say a representation of a Lie group is polynomial if its matrix elements are polynomial
+functions only of the gij.
+
+4
+Isotypic decomposition: Let ˆG be a complete set of inequivalent irreps of G.
+Then for any reducible
+representation (R, V ) there is a basis under which the action of R(g) can be expressed as
+R(g) ∼=
+M
+λ∈ˆG
+nλ
+M
+j=1
+rλ(g) =
+M
+λ∈ˆG
+rλ(g) ⊗Inλ
+(1)
+where λ ∈ˆG labels an irrep (rλ, Vλ) and nλ is the multiplicity of the irrep λ in the representation V . Here
+we use ∼= to indicate that there exists a unitary change of basis relating the left-hand size to the right-hand
+side.1 Under this change of basis we obtain a similar decomposition of the representation space V (known
+as the isotypic decomposition):
+V
+G∼=
+M
+λ∈ˆG
+Vλ ⊗Cnλ.
+(2)
+Thus while generically we may be given a representation in some arbitrary basis, the structure of being a
+representation picks out a particular basis under which the action of the representation is not just block
+diagonal but also maximally block diagonal: a direct sum of irreps.
+Moreover, the multiplicity space Cnλ in Eq. (2) has the structure of Hom(Vλ, V )G. This means that for
+any representation (R, V ), Eq. (2) can be restated as
+V
+G∼=
+M
+λ∈ˆG
+Vλ ⊗Hom(Vλ, V )G.
+(3)
+Since G acts trivially on Hom(Vλ, V )G, Eq. (1) remains the same. As with the other results in this chapter,
+a proof of Eq. (3) can be found in [35], or other standard texts on representation theory.
+The value of Eq. (3) is that the unitary mapping from the right-hand side (RHS) to the left-hand side
+(LHS) has a simple explicit expression: it corresponds to the canonical map ϕ : A ⊗Hom(A, B) →B given
+by ϕ(a ⊗f) = f(a). Of course, this doesn’t tell us how to describe Hom(Vλ, V )G, or how to specify an
+orthonormal basis for the space, but we will later ﬁnd this form of the decomposition useful.
+B.
+The Schur Transform
+We now turn to the two representations relevant to the Schur transform.
+Recall that the symmetric
+group Sn of degree n, is the group of all permutations of n objects. Then we have the following natural
+representation of the symmetric group on the space (Cd)⊗n:
+P(s)|i1⟩⊗|i2⟩⊗· · · ⊗|in⟩= |is−1(1)⟩⊗|is−1(2)⟩⊗· · · ⊗|is−1(n)⟩
+(4)
+where s ∈Sn is a permutation and s(i) is the label describing the action of s on label i. For example, if we are
+considering S3 and the permutation we are considering is the transposition s = (12), then P(s)|i1, i2, i3⟩=
+|i2, i1, i3⟩. (P, (Cd)⊗n) is the representation of the symmetric group which will be relevant to the Schur
+transform. Note that P obviously depends on n, but also has an implicit dependence on d.
+Now we turn to the representation of the unitary group. Let Ud denote the group of d×d unitary operators.
+Then there is a representation of Ud given by the n-fold product action as
+Q(U)|i1⟩⊗|i2⟩⊗· · · ⊗|in⟩= U|i1⟩⊗U|i2⟩⊗· · · ⊗U|in⟩
+(5)
+for any U ∈Ud. More compactly, we could write that Q(U) = U ⊗n. (Q, (Cd)⊗n) is the representation of
+the unitary group which will be relevant to the Schur transform.
+1 We only need to use
+G∼
+= when relating representation spaces. In Eq. (1) and other similar isomorphisms, we instead explicitly
+specify the dependence of both sides on g ∈G.
+
+5
+Since both P(s) and Q(U) meet our above criteria for reducibility, they can be decomposed into a direct
+sum of irreps as in Eq. (1),
+P(s)
+Sn
+∼=
+M
+α
+Inα ⊗pα(s)
+Q(U)
+Ud
+∼=
+M
+β
+Imβ ⊗qβ(U)
+(6)
+where nα (mβ) is the multiplicity of the αth (βth) irrep pα(s) (qβ(U)) in the representation P(s) (Q(U)).
+At this point there is not necessarily any relation between the two diﬀerent unitary transforms implementing
+the isomorphisms in Eq. (6). However, further structure in this decomposition follows from the fact that
+P(s) commutes with Q(U): P(s)Q(U) = Q(U)P(s). This implies, via Schur’s Lemma, that the action of the
+irreps of P(s) must act on the multiplicity labels of the irreps Q(U) and vice versa. Thus, the simultaneous
+action of P and Q on (Cd)⊗n decomposes as
+Q(U)P(s)
+Ud×Sn
+∼=
+M
+α
+M
+β
+Imα,β ⊗qβ(U) ⊗pα(s)
+(7)
+where mα,β can be thought of as the multiplicity of the irrep pα(s) ⊗qβ(U) of the group Ud × Sn.
+Not only do P and Q commute, but the algebras they generate (i.e. A := P(C[Sn]) = Span{P(s) : s ∈Sn}
+and B := Q(C[Ud]) = Span{Q(U) : U ∈Ud}) centralize each other[35], meaning that B is the set of operators
+in End((Cd)⊗n) commuting with A and vice versa, A is the set of operators in End((Cd)⊗n) commuting
+with B. This means that the multiplicities mα,β are either zero or one, and that each α and β appears at
+most once. Thus Eq. (7) can be further simpliﬁed to
+Q(U)P(s)
+Ud×Sn
+∼=
+M
+λ
+qλ(U) ⊗pλ(s)
+(8)
+where λ runs over some unspeciﬁed set.
+Finally, Schur duality (or Schur-Weyl duality)[35, 37] provides a simple characterization of the range of
+λ in Eq. (8) and shows how the decompositions are related for diﬀerent values of n and d. To deﬁne Schur
+duality, we will ﬁrst need to specify the irreps of Sn and Ud.
+Let Id,n = {λ = (λ1, λ2, . . . , λd)|λ1 ≥λ2 ≥· · · ≥λd ≥0 and Pd
+i=1 λi = n} denote partitions of n into
+≤d parts. We consider two partitions (λ1, . . . , λd) and (λ1, . . . , λd, 0, . . . , 0) equivalent if they diﬀer only by
+trailing zeroes; according to this principle, In := In,n contains all the partitions of n. Partitions label irreps
+of Sn and Ud as follows: if we let d vary, then Id,n labels irreps of Sn, and if we let n vary, then Id,n labels
+polynomial irreps of Ud. Call these (pλ, Pλ) and (qd
+λ, Qd
+λ) respectively, for λ ∈Id,n. We need the superscript
+d because the same partition λ can label diﬀerent irreps for diﬀerent Ud; on the other hand the Sn-irrep Pλ
+is uniquely labeled by λ since n = P
+i λi.
+For the case of n qudits, Schur duality states that there exists a basis (which we label |λ⟩|qλ⟩|pλ⟩Sch and
+call the Schur basis) which simultaneously decomposes the action of P(s) and Q(U) into irreps:
+Q(U)|λ⟩|qλ⟩|pλ⟩Sch = |λ⟩(qd
+λ(U)|qλ⟩)|pλ⟩Sch
+P(s)|λ⟩|qλ⟩|pλ⟩Sch = |λ⟩|qλ⟩(pλ(s)|pλ⟩)Sch
+(9)
+and that the common representation space (Cd)⊗n decomposes as
+(Cd)⊗n Ud×Sn
+∼=
+M
+λ∈Id,n
+Qd
+λ ⊗Pλ.
+(10)
+The Schur basis can be expressed as superpositions over the standard computational basis states
+|i1, i2, . . . , in⟩as
+|λ, qλ, pλ⟩Sch =
+X
+i1,i2,...,in
+[USch]λ,qλ,pλ
+i1,i2,...,in |i1i2 . . . in⟩,
+(11)
+where USch is the unitary transformation implementing the isomorphism in Eq. (10). Thus, for any U ∈Ud
+and any s ∈Sn,
+USchQ(U)P(s)U†
+Sch =
+X
+λ∈Id,n
+|λ⟩⟨λ| ⊗qd
+λ(U) ⊗pλ(s).
+(12)
+
+6
+If we now think of USch as a quantum circuit, it will map the Schur basis state |λ, qλ, pλ⟩Sch to the computa-
+tional basis state |λ, qλ, pλ⟩with λ, qλ, and pλ expressed as bit strings. The dimensions of the irreps pλ and
+qd
+λ vary with λ, so we will need to pad the |qλ, pλ⟩registers when they are expressed as bit strings. We will
+label the padded basis as |λ⟩|q⟩|p⟩, explicitly dropping the λ dependence. Later in the paper we will show
+how to do this padding eﬃciently with only a logarithmic spatial overhead. We will refer to the transform
+from the computational basis |i1, i2, . . . , in⟩to the basis of three strings |λ⟩|q⟩|p⟩as the Schur transform.
+The Schur transform is shown schematically in Fig. 1. Notice that just as the standard computational basis
+|i⟩is arbitrary up to a unitary transform, the bases for Qd
+λ and Pλ are also both arbitrary up to a unitary
+transform, though we will later choose particular bases for Qd
+λ and Pλ.
+Example of the Schur transform—Let d = 2. Then for n = 2 there are two valid partitions, λ1 = 2, λ2 = 0
+and λ1 = λ2 = 1. Here the Schur transform corresponds to the change of basis from the standard basis to
+the singlet and triplet basis: |λ = (1, 1), qλ = 0, pλ = 0⟩Sch =
+1
+√
+2(|01⟩−|10⟩), |λ = (2, 0), qλ = +1, pλ =
+0⟩Sch = |00⟩, |λ = (2, 0), qλ = 0, pλ = 0⟩Sch =
+1
+√
+2(|01⟩+ |10⟩), and |λ = (2, 0), qλ = −1, pλ = 0⟩Sch = |11⟩.
+Abstractly, then, the Schur transform then corresponds to a transformation
+USch =
+|λ = (1, 1), qλ = 0, pλ = 0⟩Sch
+|λ = (2, 0), qλ = +1, pλ = 0⟩Sch
+|λ = (2, 0), qλ = 0, pλ = 0⟩Sch
+|λ = (2, 0), qλ = −1, pλ = 0⟩Sch
+
+
+
+
+
+|00⟩|01⟩|10⟩|11⟩
+z
+}|
+{
+
+
+0
+1
+√
+2 −1
+√
+2 0
+1
+0
+0
+0
+0
+1
+√
+2
+1
+√
+2
+0
+0
+0
+0
+1
+
+
+(13)
+It is easy to verify that the λ = (1, 1) subspace transforms as a one dimensional irrep of U2 and as the
+alternating sign irrep of S2 and that the λ = (2, 0) subspace transforms as a three dimensional irrep of U2
+and as the trivial irrep of S2. Notice that the labeling scheme for the standard computational basis uses 2
+qubits while the labeling scheme for the Schur basis uses more qubits (one such labeling assigns one qubit
+to |λ⟩, none to |p⟩and two qubits to |q⟩). Thus we see how padding will be necessary to directly implement
+the Schur transform.
+To see a more complicated example of the Schur basis, let d = 2 and n = 3. There are again two valid
+partitions, λ = (3, 0) and λ = (2, 1). The ﬁrst of these partitions labels to the trivial irrep of S3 and a 4
+dimensional irrep of U3. The corresponding Schur basis vectors can be expressed as
+|λ = (3, 0), qλ = +3/2, pλ = 0⟩Sch = |000⟩
+|λ = (3, 0), qλ = +1/2, pλ = 0⟩Sch =
+1
+√
+3 (|001⟩+ |010⟩+ |100⟩)
+|λ = (3, 0), qλ = −1/2, pλ = 0⟩Sch =
+1
+√
+3 (|011⟩+ |101⟩+ |110⟩)
+|λ = (3, 0), qλ = −3/2, pλ = 0⟩Sch = |111⟩.
+(14)
+The second of these partitions labels a two dimensional irrep of S3 and a two dimensional irrep of U2. Its
+Schur basis states can be expressed as
+|λ = (2, 1), qλ = +1/2, pλ = 0⟩Sch =
+1
+√
+2 (|100⟩−|010⟩)
+|λ = (2, 1), qλ = −1/2, pλ = 0⟩Sch =
+1
+√
+2
+(|101⟩−|011⟩)
+|λ = (2, 1), qλ = +1/2, pλ = 1⟩Sch =
+r
+2
+3|001⟩−|010⟩+ |100⟩
+√
+6
+|λ = (2, 1), qλ = −1/2, pλ = 1⟩Sch =
+r
+2
+3|110⟩−|101⟩+ |011⟩
+√
+6
+.
+(15)
+We can easily verify that Eqns. (14) and (15) indeed transform under U2 and S3 the way we expect; not so
+easy however is generalizing this basis to any n and d, let alone coming up with a natural circuit relating
+this basis to the computational basis. However, note that pλ determines whether the ﬁrst two qubits are
+in a singlet or a triplet state. This gives a hint of a recursive structure that we will exploit in Sec. III to
+describe Schur bases for any choice of n and d, and in Sec. IV to construct an eﬃcient recursive algorithm
+for the Schur transform.
+
+7
+|i1⟩
+USch
+|i2⟩
+|λ⟩
+|i3⟩
+...
+|q⟩
+|in⟩
+|p⟩
+|0⟩
+FIG. 1: The Schur transform. Notice how the direct sum over λ in Eq. (10) becomes a tensor product between the
+|λ⟩register and the |q⟩and |p⟩registers. Since the number of qubits needed for |q⟩and |p⟩vary with λ, we need
+slightly more spatial resources, which are here denoted by the ancilla input |0⟩.
+C.
+Constructing Qd
+λ and Pλ using Schur duality
+So far we have said little about the form of Qd
+λ and Pλ, other than that they are indexed by partitions. It
+turns out that Schur duality gives a straightforward description of the irreps of Ud and Sn. We will not use
+this explicit description to construct the Schur transform, but it is still helpful for understanding the irreps
+Qd
+λ and Pλ. As with the rest of this section, proofs and further details can be found in [35].
+We begin by expressing λ ∈Id,n as a Young diagram in which there are up to d rows with λi boxes in row
+i. For example, to the partition (4, 3, 1, 1) we associate the diagram
+.
+(16)
+Now we deﬁne a Young tableau T of shape λ to be a way of ﬁlling the n boxes of λ with the integers 1, . . . , n,
+using each number once and so that integers increase from left to right and from top to bottom. For example,
+one valid Young tableau with shape (4, 3, 1, 1) is
+1 4 6 7
+2 5 8
+3
+9
+.
+For any Young tableau T , deﬁne Row(T ) to be set of permutations obtained by permuting the integers
+within each row of T ; similarly deﬁne Col(T ) to be the permutations that leave each integer in the same
+column of T . Now we deﬁne the Young symmetrizer Πλ:T to be an operator acting on (Cd)⊗n as follows:
+Πλ:T := dim Pλ
+n!
+
+
+X
+c∈Col(T )
+sgn(c)P(c)
+
+
+
+
+X
+r∈Row(T )
+P(r)
+
+.
+(17)
+It can be shown that the Young symmetrizer Πλ:T is a projection operator whose support is a subspace
+isomorphic to Qd
+λ. In particular USchΠλ:T U†
+Sch = |λ⟩⟨λ|⊗|y(T )⟩⟨y(T )|⊗IQd
+λ for some unit vector |y(T )⟩∈Pλ.
+Moreover, these vectors |y(T )⟩form a basis known as Young’s natural basis, though the |y(T )⟩are not
+orthogonal, so we will usually not work with them in quantum circuits.
+Using Young symmetrizers, we can now explore some more general examples of Qd
+λ and Pλ. If λ = (n),
+then the only valid tableau is
+1 2 · · · n .
+The corresponding Sn-irrep P(n) is trivial and the Ud-irrep is given by the action of Q on the totally symmetric
+subspace of (Cd)⊗n, i.e. {|v⟩: P(s)|v⟩= |v⟩∀s ∈Sn}. On the other hand, if λ = (1n), meaning (1, 1, . . ., 1)
+
+8
+(n times), then the only valid tableau is
+1
+2
+...
+n
+.
+The Sn-irrep P(1n) is still one-dimensional, but now corresponds to the sign irrep of Sn, mapping s to sgn(s).
+The Ud-irrep Qd
+(1n) is equivalent to the totally antisymmetric subspace of (Cd)⊗n, i.e. {|v⟩: P(s)|v⟩=
+sgn(s)|v⟩∀s ∈Sn}. Note that if d > n, then this subspace is zero-dimensional, corresponding to the restriction
+that irreps of Ud are indexed only by partitions with ≤d rows.
+Other explicit examples of Ud and Sn irreps are presented from a particle physics perspective in [38]. We
+also give more examples in Sec. III B, when we introduce explicit bases for Qd
+λ and Pλ.
+D.
+Applications of the Schur Transform
+The Schur transform is useful in a surprisingly large number of quantum information protocols. Here we,
+review these applications, with particular attention to the use of the Schur transform circuit in each protocol.
+We emphasize again that our construction of the Schur transform simultaneously makes all of these tasks
+computationally eﬃcient.
+1.
+Spectrum and state estimation
+Suppose we are given many copies of an unknown mixed quantum state, ρ⊗n. An important task is to
+obtain an estimate for the spectrum of ρ from these n copies. An asymptotically good estimate (in the sense
+of large deviation rate) for the spectrum of ρ can be obtained by applying the Schur transform, measuring
+λ and taking the spectrum estimate to be (λ1/n, . . . , λd/n)[19, 21]. Thus an eﬃcient implementation of the
+Schur transform will eﬃciently implement the spectrum estimating protocol (note that it is eﬃcient in d, not
+in log(d)). Estimating ρ reduces to measuring |λ⟩and |q⟩, but optimal estimators have only been explicitly
+constructed for the case of d = 2[20]. Further, optimal quantum hypothesis testing can be obtained by a
+similar protocol[25].
+2.
+Universal distortion-free entanglement concentration
+Let |ψ⟩AB be a bipartite partially entangled state shared between two parties, A and B. Suppose we are
+given many copies of |ψ⟩AB and we want to transform these states into copies of a maximally entangled
+state using only local operations and classical communication. Further, suppose that we wish this protocol
+to work when neither A nor B know the state |ψ⟩AB. Such a scheme is called a universal (meaning it works
+with unknown states |ψ⟩AB) entanglement concentration protocol, as opposed to the original entanglement
+concentration protocol described by Bennett et.al.[5]. Further we also would like the scheme to produce
+perfect maximally entangled states, i.e. to be distortion free. Universal distortion-free entanglement con-
+centration can be performed[22] by both parties performing Schur transforms on their n halves of |ψ⟩AB,
+measuring their |λ⟩, discarding |q⟩and retaining |p⟩. The two parties will now share a maximally entangled
+state of varying dimension depending on what λ was measured. This dimension asymptotes to 2nH, where
+H is the entropy of one of the parties’ reduced mixed states.
+3.
+Universal Compression with Optimal Overﬂow Exponent
+Measuring |λ⟩weakly so as to cause little disturbance, together with appropriate relabeling, comprises a
+universal compression algorithm with optimal overﬂow exponent (rate of decrease of the probability that the
+algorithm will output a state that is much too large)[23, 24].
+
+9
+4.
+Encoding and decoding into decoherence-free subsystems
+Further applications of the Schur transform include encoding into decoherence-free subsystems[26–29].
+Decoherence-free subsystems are subspaces of a system’s Hilbert space which are immune to decoherence
+due to a symmetry of the system-environment interaction. For the case where the environment couples
+identically to all systems, information can be protected from decoherence by encoding into the |pλ⟩basis.
+We can use the inverse Schur transform (which, as a circuit can be implemented by reversing the order
+of all gate elements and replacing them with their inverses) to perform this encoding: simply feed in the
+appropriate |λ⟩with the state to be encoded into the |p⟩register and any state into the |q⟩register into the
+inverse Schur transform. Decoding can similarly be performed using the Schur transform.
+5.
+Communication without a shared reference frame
+An application of the concepts of decoherence-free subsystems comes about when two parties wish to
+communicate (in either a classical or quantum manner) when the parties do not share a reference frame.
+The eﬀect of not sharing a reference frame is the same as the eﬀect of collective decoherence (the same
+random unitary rotation has been applied to each subsystem).
+Thus encoding information into the |p⟩
+register will allow this information to be communicated in spite of the fact that the two parties do not share
+a reference frame[30]. Just as with decoherence-free subsystems, this encoding and decoding can be done
+with the Schur transform.
+III.
+SUBGROUP ADAPTED BASES AND THE SCHUR BASIS
+In the last section, we deﬁned the Schur transform in a way that left the basis almost completely arbitrary.
+To construct a quantum circuit for the Schur transform, we will need to explicitly specify the Schur basis.
+Since we want the Schur basis to be of the form |λ, q, p⟩, our task reduces to specifying orthonormal bases
+for Qd
+λ and Pλ. We will call these bases Qd
+λ and Pλ, respectively.
+We will choose Qd
+λ and Pλ to both be a type of basis known as a subgroup-adapted basis. In Sec. III A
+we describe the general theory of subgroup-adapted bases, and in Sec. III B, we will describe subgroup-
+adapted bases for Qd
+λ and Pλ. As we will later see, the properties of these bases are intimately related to the
+structure of the algorithms that work with them. In this section, we will show how the bases can be stored
+on a quantum computer with a small amount of padding, and in the following sections we will show how
+the subgroup-adapted bases described here enable eﬃcient implementations of Clebsch-Gordan and Schur
+duality transforms.
+A.
+Subgroup Adapted Bases
+Here we review the basic idea of a subgroup adapted basis. We assume that all groups we talk about are
+ﬁnite or compact Lie groups. Suppose (r, V ) is an irrep of a group G and H is a proper subgroup of G. We
+will construct a basis for V via the representations of H.
+Begin by restricting the input of r to H to obtain a representation of H, which we call (r|H, V↓H). Note
+that unlike V , V↓H may be reducible. In fact, if we let (r′
+α, V ′
+α) denote the irreps of H, then V↓H will
+decompose under the action of H as
+V↓H
+H∼=
+M
+α∈ˆ
+H
+Cnα ⊗V ′
+α
+(18)
+or equivalently, r|H decomposes as
+r(h) = r↓H(h) ∼=
+M
+α∈ˆ
+H
+Inα ⊗r′
+α(h)
+(19)
+where ˆH runs over a complete set of inequivalent irreps of H and nα is the branching multiplicity of the
+irrep labeled by α. Note that since r is a unitary representation, the subspaces corresponding to diﬀerent
+
+10
+irreps of H are orthogonal. Thus, the problem of ﬁnding an orthonormal basis for V now reduces to the
+problem of (1) ﬁnding an orthonormal basis for each irrep of H, V ′
+α and (2) ﬁnding orthonormal bases for the
+multiplicity spaces Cnα. The case when all the nα are either 0 or 1 is known as multiplicity-free branching.
+When this occurs, we only need to determine which irreps occur in the decomposition of V , and ﬁnd bases
+for them.
+Now consider a group G along with a tower of subgroups G = G1 ⊃G2 ⊃· · · ⊃Gk−1 ⊃Gk = {e} where {e}
+is the trivial subgroup consisting of only the identity element. For each Gi, denote its irreps by V i
+α, for α ∈ˆGi.
+Any irrep V 1
+α1 of G = G1 decomposes under restriction to G2 into G2-irreps: say that V 2
+α2 appears nα1,α2 times.
+We can then look at these irreps of G2, consider their restriction to G3 and decompose them into diﬀerent
+irreps of G3. Carrying on in such a manner down this tower of subgroups will yield a labeling for subspaces
+corresponding to each of these restrictions. Moreover, if we choose orthonormal bases for the multiplicity
+spaces, this will induce an orthonormal basis for G. This basis is known as a subgroup-adapted basis and basis
+vectors have the form |α2, m2, α3, m3, . . . , αn, mn⟩, where |mi⟩is a basis vector for the (nαi−1,αi-dimensional)
+multiplicity space of V i
+αi in V i−1
+αi−1.
+If the branching for each Gi+1 ⊂Gi is multiplicity-free, then we say that the tower of subgroups is canonical.
+In this case, the subgroup adapted basis takes the particularly simple form of |α2, . . . , αn⟩, where each αi ∈ˆGi
+and αi+1 appears in the decomposition of Vαi↓Gi+1. Often we include the original irrep label α = α1 as well:
+|α1, α2, . . . , αk⟩. This means that there exists a basis whose vectors are completely determined (up to an
+arbitrary choice of phase) by which irreps of G1, . . . , Gk they transform according to. Notice that a basis for
+the irrep Vα does not consist of all possible irrep labels αi, but instead only those which can appear under
+the restriction which deﬁnes the basis.
+The simple recursive structure of subgroup adapted bases makes them well-suited to performing explicit
+computations. Thus, for example, subgroup adapted bases play a major role in eﬃcient quantum circuits
+for the Fourier transform over many nonabelian groups[33].
+B.
+Explicit orthonormal bases for Qd
+λ and Pλ
+In this section we describe canonical towers of subgroups for Ud and Sn, which give rise to subgroup-
+adapted bases for the irreps Qd
+λ and Pλ. These bases go by many names: for Ud (and other Lie groups) the
+basis is called the Gel’fand-Zetlin basis (following [31]) and we denote it by Qd
+λ, while for Sn it is called the
+Young-Yamanouchi basis, or sometimes Young’s orthogonal basis (see [32] for a good review of its properties)
+and is denoted Pλ. The constructions and corresponding branching rules are quite simple, but for proofs we
+again refer the reader to [35].
+The Gel’fand-Zetlin basis for Qd
+λ— For Ud, it turns out that the chain of subgroups {1} = U0 ⊂U1 ⊂
+. . . ⊂Ud−1 ⊂Ud is a canonical tower. For c < d, the subgroup Uc is embedded in Ud by Uc := {u ∈Ud :
+u|i⟩= |i⟩for i = c + 1, . . . , d}. In other words, it corresponds to matrices of the form
+U ⊕Id−c :=
+
+
+u
+0
+0 Id−c
+
+,
+(20)
+where u is a c × c unitary matrix.
+Since the branching from Ud to Ud−1 is multiplicity-free, we obtain a subgroup-adapted basis Qd
+λ, which
+is known as the Gel’fand-Zetlin (GZ) basis. Our only free choice in a GZ basis is the initial choice of basis
+|1⟩, . . . , |d⟩for Cd which determines the canonical tower of subgroups U1 ⊂. . . ⊂Ud. Once we have chosen
+this basis, specifying Qd
+λ reduces to knowing which irreps Qd−1
+µ
+appear in the decomposition of Qd
+λ↓Ud−1.
+Recall that the irreps of Ud are labeled by elements of Id,n with n arbitrary. This set can be denoted by
+Zd
+++ := ∪nId,n = {λ ∈Zd : λ1 ≥. . . ≥λd ≥0}. For µ ∈Zd−1
+++ , λ ∈Zd
+++, we say that µ interlaces λ and write
+µ≾λ whenever λ1 ≥µ1 ≥λ2 . . . ≥λd−1 ≥µd−1 ≥λd. In terms of Young diagrams, this means that µ is a
+valid partition (i.e. a nonnegative, nonincreasing sequence) obtained from removing zero or one boxes from
+each column of λ. For example, if λ = (4, 3, 1, 1) (as in Eq. (16)), then µ≾λ can be obtained by removing
+any subset of the marked boxes below, although if the box marked ∗on the second line is removed, then the
+other marked box on that line must also be removed.
+×
+∗×
+×
+(21)
+
+11
+Thus a basis vector in Qd
+λ corresponds to a sequence of partitions q = (qd = λ, . . . , q1) such that
+q1≾q2≾. . . ≾qd and qj ∈Zj
+++ for j = 1, . . . , d. Again using λ = (4, 3, 1, 1) as an example, and choosing
+d = 5 (any d ≥4 is possible), we might have the sequence
+≿
+≿
+≿
+≿
+q5
+q4
+q3
+q2
+q1
+(22)
+Observe that it is possible in some steps not to remove any boxes, as long as qj has no more than j rows.
+In order to work with the Gel’fand-Zetlin basis vectors on a quantum computer, we will need an eﬃcient
+method to write them down. Typically, we think of d as constant and express our resource use in terms of n.
+Then an element of Id,n can be expressed with d log(n + 1) bits, since it consists of d integers between 0 and
+n. (This is a crude upper bound on |Id,n| =
+ n+d−1
+d−1
+
+, but for constant d it is good enough for our purposes.)
+A Gel’fand-Zetlin basis vector then requires no more than d2 log(n + 1) bits, since it can be expressed as d
+partitions of integers no greater than n into ≤d parts. Here, we assume that all partitions have arisen from
+a decomposition of (Cd)⊗n, so that no Young diagram has more than n boxes. Unless otherwise speciﬁed,
+our algorithms will use this encoding of the GZ basis vectors.
+It is also possible to express GZ basis vectors in a more visually appealing way by writing numbers in the
+boxes of a Young diagram. If q1≾. . . ≾qd is a chain of partitions, then we write the number j in each box
+contained in qj but not qj−1 (with q0 = (0)). For example, the sequence in Eq. (22) would be denoted
+1 1 2 5
+2 3 3
+3
+5
+.
+(23)
+Equivalently, any method of ﬁlling a Young diagram with numbers from 1, . . . , d corresponds to a valid
+chain of irreps as long as the numbers are nondecreasing from left to right and are strictly increasing from
+top to bottom. The resulting diagram is known as a semi-standard Young tableau and gives another way
+of encoding a GZ basis vector; this time using n log d bits. (It turns out the actual dimension of Qd
+λ is
+hQ
+1≤i<j≤d(λi −λj + j −i)
+i
+/
+hQd
+m=1 m!
+i
+, and later in this section we will give an algorithm for eﬃciently
+encoding a GZ basis vector in the optimal ⌈log dim Qd
+λ⌉qubits. However, this is not necessary for most
+applications.)
+Example: irreps of U2— To ground the above discussion in an example more familiar to physicists, we
+show how the GZ basis for U2 irreps corresponds to states of deﬁnite angular momentum along one axis. An
+irrep of U2 is labeled by two integers (λ1, λ2) such that λ1 + λ2 = n and λ1 ≥λ2 ≥0. A GZ basis vector for
+Q2
+λ has λ2 +m 1’s in the ﬁrst row, followed by λ1 −(λ2 +m) 2’s in the ﬁrst row and λ2 2’s in the second row,
+where m ranges from 0 to λ1 −λ2. This arrangement is necessary to satisfy the constraint that numbers are
+strictly increasing from top to bottom and are nondecreasing from left to right. Since the GZ basis vectors
+are completely speciﬁed by m, we can label the vector |(λ1, λ2); (λ2 + m)⟩∈Q2
+λ simply by |m⟩. For example,
+λ = (9, 4) and m = 2 would look like
+1 1 1 1 1 1 2 2 2
+2 2 2 2
+.
+(24)
+Now observe that dim Q2
+λ = λ1 −λ2 + 1, a fact which is consistent with having angular momentum
+J = (λ1−λ2)/2. We claim that m corresponds to the Z component of angular momentum (speciﬁcally, the Z
+component of angular momentum is m−J = m−(λ1−λ2)/2). To see this, ﬁrst note that U1 acts on a GZ basis
+vector |m⟩according to the representation x →xλ2+m, for x ∈U1; equivalently q2
+λ (( x 0
+0 1 )) |m⟩= xλ2+m|m⟩.
+Since q2
+λ(yI2)|m⟩= yn|m⟩= yλ1+λ2|m⟩, we can ﬁnd the action of eiθσz =
+ e2iθ 0
+0
+1
+ 
+e−iθ
+0
+0
+e−iθ
+
+on |m⟩. We do
+this by combining the above arguments to ﬁnd that q2
+λ(eiθσz)|m⟩= e2iθ(λ2+m)e−iθ(λ1+λ2)|m⟩= e2iθ(m−J)|m⟩.
+Thus we obtain the desired action of a Z rotation on a particle with total angular momentum J and Z-
+component of angular momentum m.
+Example:
+The deﬁning irrep of Ud— The simplest nontrivial irrep of Ud is its action on Cd.
+This
+corresponds to the partition (1), so we say that (qd
+(1), Qd
+(1)) is the deﬁning irrep of Ud with Qd
+(1) = Cd
+
+12
+and qd
+(1)(U) = U. Let |1⟩, . . . , |d⟩be an orthonormal basis for Cd corresponding to the canonical tower
+of subgroups U1 ⊂· · · ⊂Ud.
+It turns out that this is already a GZ basis.
+To see this, note that
+Qd
+(1)↓Ud−1
+Ud−1
+∼= Qd−1
+(0) ⊕Qd−1
+(1) . This is because |d⟩generates Qd−1
+(0) , a trivial irrep of Ud−1; and |1⟩, . . . , |d −1⟩
+generate Qd−1
+(1) , a deﬁning irrep of Ud−1. Another way to say this is that |j⟩is acted on according to the
+trivial irrep of U1, . . . , Uj−1 and according to the deﬁning irrep of Uj, . . . , Ud. Thus |j⟩corresponds to the
+chain of partitions {(0)j−1, (1)d−j+1}. We will return to this example many times in the rest of the paper.
+The Young-Yamanouchi basis for Pλ— The situation for Sn is quite similar. Our chain of subgroups is
+{e} = S1 ⊂S2 ⊂. . . ⊂Sn, where for m < n we deﬁne Sm ⊂Sn to be the permutations in Sn which leave the
+last n −m elements ﬁxed. For example, if n = 3, then S3 = {e, (12), (23), (13), (123), (321)}, S2 = {e, (12)},
+and S1 = {e}. Recall that the irreps of Sn can be labeled by In = In,n: the partitions of n into ≤n parts.
+Again, the branching from Sn to Sn−1 is multiplicity-free, so to determine an orthonormal basis Pλ for
+the space Pλ we need only know which irreps occur in the decomposition of Pλ↓Sn−1. It turns out that the
+branching rule is given by ﬁnding all ways to remove one box from λ while leaving a valid partition. Denote
+the set of such partitions λ −□. Formally, λ −□:= In ∩{λ −ej : j = 1, . . . , n}, where ej is the unit vector
+in Zn with a one in the jth position and zeroes elsewhere. Thus, the general branching rule is
+Pλ↓Sn−1
+Sn−1
+∼=
+M
+µ∈λ−□
+Pµ.
+(25)
+For example, if λ = (3, 2, 1), we might have the chain of partitions:
+→
+→
+→
+→
+→
+n = 6
+n = 5
+n = 4
+n = 3
+n = 2
+n = 1
+(26)
+Again, we can concisely label this chain by writing the number j in the box that is removed when restricting
+from Sj to Sj−1. The above example would then be
+1 3 6
+2 4
+5
+.
+(27)
+Note that the valid methods of ﬁlling a Young diagram are slightly diﬀerent than for the Ud case. Now we
+use each integer in 1, . . . , n exactly once such that the numbers are increasing from left to right and from
+top to bottom. The resulting tableau is called a standard Young tableau. (The same ﬁlling scheme appeared
+in the description of Young’s natural representation in Sec. II C, but the resulting basis states are of course
+quite diﬀerent.)
+This gives rise to a straightforward, but ineﬃcient, method of writing an element of Pλ using log n! bits.
+However, for applications such as data compression[23, 24] we will need an encoding which gives us closer to
+the optimal log Pλ bits. First we note an exact (and eﬃciently computable) expression for |Pλ| = dim Pλ:
+dim Pλ =
+n!
+λ1 + d −1!λ2 + d −2! · · · λd!
+Y
+1≤i<j≤d
+(λi −λj + j −i).
+(28)
+Now we would like to eﬃciently and reversibly map an element of Pλ (thought of as a chain of partitions
+p = (pn = λ, . . . , p1 = (1)) ∈Pλ, with pj ∈pj+1−□) to an integer in [|Pλ|] := {1, . . ., |Pλ|}. We will construct
+this bijection fn : Pλ →[|Pλ|] by deﬁning an ordering on Pλ and setting fn(p) := |{p′ ∈Pλ : p′ ≤p}|.
+First ﬁx an arbitrary, but easily computable, (total) ordering on partitions in In for each n; for example,
+lexicographical order. This induces an ordering on Pλ if we rank a basis vector p ∈Pλ ﬁrst according to
+pn−1, using the order on partitions we have chosen, then according to pn−2 and so on. We skip pn, since it
+is always equal to λ. In other words, for p, p′ ∈Pλ, p > p′ if pn−1 > p′
+n−1 or pn−1 = p′
+n−1 and pn−2 > p′
+n−2
+or pn−1 = p′
+n−1, pn−2 = p′
+n−2 and pn−3 > p′
+n−3, and so on. Thus fn : Pλ →[|Pλ|] can be easily veriﬁed to
+be
+fn(p) = fn(p1, . . . , pn) := 1 +
+n
+X
+k=2
+X
+µ∈pk−□
+µ<pk−1
+dim Pµ.
+(29)
+Thus fn is an injective map from Pλ to [|Pλ|]. Moreover, since there are O(n2) terms in Eq. (29) and Eq. (28)
+gives an eﬃcient way to calculate each |Pλ|, this mapping can be performed in time polynomial in n.
+
+13
+IV.
+THE CLEBSCH-GORDAN TRANSFORM AND EFFICIENT CIRCUITS FOR THE SCHUR
+TRANSFORM
+In this section, we describe an eﬃcient circuit for the Schur transform USch. To do so, we ﬁrst describe
+the Clebsch-Gordan transform, which decomposes a Kronecker product of Ud-irreps Qd
+µ ⊗Qd
+ν into a direct
+sum of other Ud-irreps. We defer the algorithm for the Clebsch-Gordan transform to Sec. V, but give a
+description of its properties in Sec. IV A. Then in Sec. IV B, we show how to construct the Schur transform
+by cascading a series of Clebsch-Gordan transforms and performing reversible classical manipulations of Pλ
+and Qd
+λ.
+A.
+The Clebsch-Gordan Series and Transform
+Suppose we have two irreps of Ud given by the partitions µ and ν: Qd
+µ and Qd
+ν. The tensor product of
+these irreps Qd
+µ ⊗Qd
+ν (with representation matrices qd
+µ(U) ⊗qd
+ν(U) for U ∈Ud) is a new representation of
+Ud. This new representation will generally be reducible into irreps of Ud; following Eq. (3) we have
+Qd
+µ ⊗Qd
+ν ∼=
+M
+λ∈Zd
+++
+Qd
+λ ⊗Hom(Qd
+λ, Qd
+µ ⊗Qd
+ν)Ud
+(30)
+This decomposition is referred to as the Clebsch-Gordan series. Setting N λ
+µν = dim Hom(Qd
+λ, Qd
+µ ⊗Qd
+ν)Ud,
+we obtain the corresponding decomposition of the representation matrices as
+qd
+µ(U) ⊗qd
+ν(U) ∼=
+M
+λ∈Zd
+++
+qd
+λ(U) ⊗IN λ
+µν
+(31)
+The unitary matrix which maps the LHS of Eq. (31) to the RHS is known as the Clebsch-Gordan transform
+and we denote it Uµ,ν
+CG. It maps vectors of the form |qµ⟩|qν⟩∈Qd
+µ ⊗Qd
+ν to superpositions of vectors of the
+form |λ⟩|qλ⟩|α⟩, where λ ∈Zd
+++, |qλ⟩∈Qd
+λ and α ∈Hom(Qd
+λ, Qd
+µ ⊗Qd
+ν)Ud.
+The multiplicity space Hom(Qd
+λ, Qd
+µ ⊗Qd
+ν)Ud plays a crucial role in the CG transform. In particular, the
+inverse CG transform (Uµ,ν
+CG)† is given simply by
+(Uµ,ν
+CG)†|qλ⟩|α⟩= α|qλ⟩.
+(32)
+Note that on the LHS, we interpret |α⟩as a vector in the multiplicity space Hom(Qd
+λ, Qd
+µ ⊗Qd
+ν)Ud, and on
+the RHS we treat α as an operator. These are normalized such that |α⟩is a unit vector if and only if α is
+an isometry.
+We now specialize to the case of tensoring in the deﬁning irrep Qd
+(1), for which the CG transform is partic-
+ularly simple. Recall that for λ ∈Zd
+++ and 1 ≤j ≤d we have λ + ej = (λ1, . . . , λj−1, λj + 1, λj+1, . . . , λd).
+This is not always a valid partition, i.e. if λ′ = λ + ej, the condition λ′
+j−1 ≥λ′
+j might not hold. Recall
+that the valid partitions (of any integer) are given by the set Zd
+++. Then the Clebsch-Gordan series we are
+interested in is given by
+Qd
+λ ⊗Qd
+(1)
+Ud
+∼=
+M
+j=1,...d
+λ+ej∈Zd
+++
+Qd
+λ+ej
+(33)
+This is the “add a single box” prescription for tensoring in a deﬁning representation of Ud: we add a single
+box to a Young diagram and if the new Young diagram is a valid Young diagram (i.e. corresponds to a valid
+partition), then this irrep appears in the Clebsch-Gordan series. For example if λ = (3, 2, 1) then
+Q3
+(3,2,1) ⊗Q3
+(1)
+U3∼= Q3
+(4,2,1) ⊕Q3
+(3,3,1) ⊕Q3
+(3,2,2)
+(34)
+or in Young diagram form
+⊗
+U3∼=
+⊕
+⊕
+(35)
+
+14
+Note that if we had d > 3, then the partition (3, 2, 1, 1) would also appear.
+We now seek to deﬁne the CG transform as a quantum circuit. We specialize to the case where one of the
+input irreps is the deﬁning irrep, but allow the other irrep to be speciﬁed by a quantum input. The resulting
+CG transform is deﬁned as:
+UCG =
+X
+λ∈Zd
+++
+|λ⟩⟨λ| ⊗Uλ,(1)
+CG .
+(36)
+This takes as input a state of the form |λ⟩|q⟩|i⟩, for λ ∈Zd
+++, |q⟩∈Qd
+λ and i ∈[d].
+The output is a
+superposition over vectors |λ⟩|λ′⟩|q′⟩, where λ′ = λ + ej ∈Zd
+++, j ∈[d] and |q′⟩∈Qd
+λ′. Equivalently, we
+could output |λ⟩|j⟩|q′⟩or |j⟩|λ′⟩|q′⟩, since (λ, λ′), (λ, j) and (λ′, j) are all trivially related via reversible
+classical circuits.
+To better understand the input space of UCG, we introduce the model representation Qd
+∗:= L
+λ∈Zd
+++ Qd
+λ,
+with corresponding matrix qd
+∗(U) = P
+λ |λ⟩⟨λ| ⊗qd
+λ(U). The model representation (also sometimes called
+the Schwinger representation) is inﬁnite dimensional and contains each irrep once.2 Its basis vectors are of
+the form |λ, q⟩for λ ∈Zd
+++ and |q⟩∈Qd
+λ. Since Qd
+∗is inﬁnite-dimensional, we cannot store it on a quantum
+computer and in this paper work only with representations Qd
+λ with |λ| ≤n; nevertheless Qd
+∗is a useful
+abstraction.
+Thus UCG decomposes Qd
+∗⊗Qd
+(1) into irreps. There are two important things to notice about this version
+of the CG transform.
+First is that it operates simultaneously on diﬀerent input irreps.
+Second is that
+diﬀerent input irreps must remain orthogonal, so in order to to maintain unitarity UCG needs to keep the
+information of which irrep we started with. However, since λ′ = λ+ej, this information requires only storing
+some j ∈[d]. Thus, UCG is a map from Qd
+∗⊗Cd to Qd
+∗⊗Cd, where the Cd in the input is the deﬁning
+representation and the Cd in the output tracks which irrep we started with.
+|λ⟩
+UCG
+|λ⟩
+|q⟩
+|λ′⟩
+|i⟩
+|q⟩
+FIG. 2: Schematic of the Clebsch-Gordan transform. Equivalently, we could replace either the λ output or the λ′
+output with j.
+B.
+Constructing the Schur Transform from Clebsch-Gordan Transforms
+We now describe how to construct the Schur transform out of a series of Clebsch-Gordan transforms.
+Suppose we start with an input vector |i1, . . . , in⟩∈(Cd)⊗n, corresponding to the Ud-representation (Qd
+(1))⊗n.
+According to Schur duality (Eq. (10)), to perform the Schur transform it suﬃces to decompose (Qd
+(1))⊗n into
+Ud-irreps. This is because Schur duality means that the multiplicity space of Qd
+λ must be isomorphic to Pλ.
+In other words, if we show that
+(Qd
+(1))⊗n Ud
+∼=
+M
+λ∈Zd
+++
+Qd
+λ ⊗P′
+λ,
+(37)
+then we must have P′
+λ
+Sn
+∼= Pλ when λ ∈Id,n and P′
+λ = {0} otherwise.
+2 By contrast, L2(Ud), which will we not use, contains Qd
+λ with multiplicity dim Qd
+λ
+
+15
+To perform the Ud-irrep decomposition of Eq. (37), we simply combine each of |i1⟩, . . . , |in⟩using the
+CG transform, one at a time. We start by inputting
+λ(1)
+= |(1)⟩, |i1⟩and |i2⟩into UCG which outputs
+λ(1)
+and a superposition of diﬀerent values of
+λ(2)
+and |q2⟩. Here λ(2) can be either (2, 0) or (1, 1) and
+|q2⟩∈Qd
+λ(2). Continuing, we apply UCG to
+λ(2)
+|q2⟩|i3⟩, and output a superposition of vectors of the form
+λ(2)λ(3)
+|q3⟩, with λ(3) ∈Id,3 and |q3⟩∈Qd
+λ(3). Each time we are combining an arbitrary irrep λ(k) and an
+associated basis vector |qk⟩∈Qd
+λ(k), together with a vector from the deﬁning irrep |ik+1⟩. This is repeated
+for k = 1, . . . , n −1 and the resulting circuit is depicted in Fig. 3.
+U
+CG
+j(1)i
+ji
+1
+i
+ji
+2
+i
+U
+CG
+ji
+3
+i
+U
+CG
+ji
+4
+i
+U
+CG
+ji
+n
+i
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+jq
+n
+i
+j
+(n)
+i
+j
+(n 1)
+i
+j
+(1)
+i
+j
+(2)
+i
+j
+(3)
+i
+j
+(n 2)
+i
+.
+FIG. 3: Cascading Clebsch-Gordan transforms to produce the Schur transform. Not shown are any ancilla inputs to
+the Clebsch-Gordan transforms. The structure of inputs and outputs of the Clebsch-Gordan transforms are the same
+as in Fig. 2.
+Finally, we are left with a superposition of states of the form
+λ(1), . . . , λ(n)
+|qn⟩, where |qn⟩∈Qd
+λ(n),
+λ(k) ∈Id,k and each λ(k) is obtained by adding a single box to λ(k−1); i.e. λ(k) = λ(k−1) + ejk for some
+jk ∈[d].
+If we deﬁne λ = λ(n) and |q⟩= |qn⟩, then we have the decomposition of Eq. (37) with P′
+λ
+spanned by the vectors
+λ(1), . . . , λ(n−1)
+satisfying the constraints described above. But this is precisely
+the Young-Yamanouchi basis Pλ that we have deﬁned in Sec. III! Since the ﬁrst k qudits transform under
+Ud according to Qd
+λ(k), Schur duality implies that they also transform under Sk according to Pλ(k). Thus
+we set |p⟩=
+λ(1), . . . , λ(n−1)
+(optionally compressing to ⌈log |Pλ|⌉qubits using the techniques described in
+the last section) and obtain the desired |λ⟩|q⟩|p⟩. As a check on this result, note that each λ(k) is invariant
+under Q(Ud) since U ⊗n acts on the ﬁrst k qubits simply as U ⊗k.
+If we choose not to perform the poly(n) steps to optimally compress
+λ(1), . . . , λ(n−1)
+, we could instead
+have our circuit output the equivalent |j1, . . . , jn−1⟩, which requires only n log d qubits and asymptotically
+no extra running time.
+We can now appreciate the similarity between the Ud CG “add a box” prescription and the Sn−1 ⊂Sn
+branching rule of “remove a box.” Schur duality implies that the representations Qd
+λ′ that are obtained by
+decomposing Qd
+λ ⊗Qd
+(1) are the same as the Sn-irreps Pλ′ that include Pλ when restricted to Sn−1.
+Deﬁne TCG(n, d, ǫ) to be the time complexity (in terms of number of gates) of performing a single Ud
+CG transform to accuracy ǫ on Young diagrams with ≤n boxes. Then the total complexity for the Schur
+transform is n · (TCG(n, d, ǫ/n) + O(1)), possibly plus a poly(n) factor for compressing the Pλ register to
+⌈log dim Pλ⌉qubits (as is required for applications such as data compression and entanglement concentration,
+cf. Sec. II D). In the next section we will show that TCG(n, d, ǫ) is poly(log n, d, log 1/ǫ), but ﬁrst we give a
+step-by-step description of the algorithm for the Schur transform.
+Algorithm: Schur transform (plus optional compression)
+Inputs: (1) Classical registers d and n. (2) An n qudit quantum register |i1, . . . , in⟩.
+Outputs: Quantum registers |λ⟩|q⟩|p⟩, with λ ∈Id,n, q ∈Qd
+λ and p ∈Pλ.
+Runtime: n · (TCG(n, d, ǫ/n) + O(1)) to achieve accuracy ǫ.
+(Optionally plus poly(n) to compress the Pλ register to ⌈log dim Pλ⌉qubits.)
+
+16
+Procedure:
+1. Initialize
+λ(1)
+:= |(1)⟩and |q1⟩= |i1⟩.
+2. For k = 1, . . . , n −1:
+3.
+Apply UCG to
+λ(k)
+|qk⟩|ik+1⟩to obtain output |jk⟩
+λ(k+1)
+|qk+1⟩, where λ(k+1) = λ(k) + ejk.
+4. Output |λ⟩:=
+λ(n)
+, |q⟩:= |qn⟩and |p⟩:= |j1, . . . , jn−1⟩.
+5. (Optionally use Eq. (29) to reversibly map |j1, . . . , jn−1⟩to an integer p ∈[dim Pλ].)
+This algorithm will be made eﬃcient in the next section, where we eﬃciently construct the CG transform
+for Ud, proving that TCG(n, d, ǫ) = poly(log n, d, log 1/ǫ).
+V.
+EFFICIENT CIRCUITS FOR THE CLEBSCH-GORDAN TRANSFORM
+We now turn to the actual construction of the circuit for the Clebsch-Gordan transform described in
+Sec. IV A. To get a feel for the what will be necessary, we start by giving a circuit for the CG transform that
+is eﬃcient when d is constant; i.e. it has complexity nO(d2), which is poly(n) for any constant value of d.
+First recall that dim Qd
+λ ≤(n + 1)d2. Thus, controlled on λ, we want to construct a unitary transform
+on a D-dimensional system for D = maxλ∈Id,n dim Qd
+λ = poly(n). There are classical algorithms[39] to
+compute matrix elements of UCG to an accuracy ǫ1 in time poly(D) poly log(1/ǫ1). Once we have calcu-
+lated all the relevant matrix elements (of which there are only polynomially many), we can (again in time
+poly(D) poly log(1/ǫ)) decompose UCG into D2 poly log(D) elementary one and two-qubit operations[40–43].
+These can in turn be approximated to accuracy ǫ2 by products of unitary operators from a ﬁxed ﬁnite set
+(such as Cliﬀord operators and a π/8 rotation) with a further overhead of poly log(1/ǫ2)[44, 45]. We can
+either assume the relevant classical computations (such as decomposing the D × D matrix into elementary
+gates) are performed coherently on a quantum computer, or as part of a polynomial-time classical Turing
+machine which outputs the quantum circuit.
+In any case, the total complexity is poly(n, log 1/ǫ) if the
+desired ﬁnal accuracy is ǫ and d is held constant.
+The goal of this section is to reduce this running time to poly(n, d, log(1/ǫ)); in fact, we will achieve
+circuits of size poly(d, log n, log(1/ǫ)). To do so, we will reduce the Ud CG transform to two components;
+ﬁrst, a Ud−1 CG transform, and second, a d × d unitary matrix whose entries can be computed classically
+in poly(d, log n, 1/ǫ) steps. After computing all d2 entries, the second component can then be implemented
+with poly(d, log 1/ǫ) gates according to the above arguments.
+This reduction from the Ud CG transform to the Ud−1 CG transform is a special case of the Wigner-
+Eckart Theorem, which we review in Sec. V A. Then, following [39, 46], we use the Wigner-Eckart Theorem
+to give an eﬃcient recursive construction for UCG in Sec. V B. Putting everything together, we obtain a
+quantum circuit for the Schur transform that is accurate to within ǫ and runs in time n·poly(log n, d, log 1/ǫ),
+optionally plus an additional poly(n) time to compress the |p⟩register.
+A.
+The Wigner-Eckart Theorem and Clebsch-Gordan transform
+In this section, we introduce the concept of an irreducible tensor operator, which we use to state and prove
+the Wigner-Eckart Theorem. Here we will ﬁnd that the CG transform is a key part of the Wigner-Eckart
+Theorem, while in the next section we will turn this around and use the Wigner-Eckart Theorem to give a
+recursive decomposition of the CG transform.
+Suppose (r1, V1) and (r2, V2) are representations of Ud. Recall that Hom(V1, V2) is a representation of Ud
+under the map T →r2(U)T r1(U)−1 for T ∈Hom(V1, V2). If T = {T1, T2, . . .} ⊂Hom(V1, V2) is a basis for
+a Ud-invariant subspace of Hom(V1, V2), then we call T a tensor operator. Note that a tensor operator T is
+a collection of operators {Ti} indexed by i, just as a tensor (or vector) is a collection of scalars labeled by
+some index. For example, the Pauli matrices {σx, σy, σz} ⊂Hom(C2, C2) comprise a tensor operator, since
+conjugation by U2 preserves the subspace that they span.
+Since Hom(V1, V2) is a representation of Ud, it can be decomposed into irreps. If T is a basis for one of
+these irreps, then we call it an irreducible tensor operator. For example, the Pauli matrices mentioned above
+comprise an irreducible tensor operator, corresponding to the three-dimensional irrep Q2
+(2). Formally, we say
+that T ν = {T ν
+qν}qν∈Qdν ⊂Hom(V1, V2) is an irreducible tensor operator (corresponding to the irrep Qd
+ν) if for
+
+17
+all U ∈Ud we have
+r2(U)T ν
+qνr1(U)−1 =
+X
+q′ν∈Qdν
+⟨q′
+ν|qd
+ν(U)|qν⟩T ν
+q′
+ν.
+(38)
+Now assume that V1 and V2 are irreducible (say V1 = Qd
+µ and V2 = Qd
+λ), since if they are not, we could
+always decompose Hom(V1, V2) into a direct sum of homomorphisms from an irrep in V1 to an irrep in V2.
+We can decompose Hom(Qd
+µ, Qd
+λ) into irreps using Eq. (3) and the identity Hom(A, B) ∼= A∗⊗B as follows:
+Hom(Qd
+µ, Qd
+λ)
+Ud
+∼=
+M
+ν∈Zd
+++
+Qd
+ν ⊗Hom(Qd
+ν, Hom(Qd
+µ, Qd
+λ))Ud
+Ud
+∼=
+M
+ν∈Zd
+++
+Qd
+ν ⊗Hom(Qd
+ν, (Qd
+µ)∗⊗Qd
+λ)Ud
+Ud
+∼=
+M
+ν∈Zd
+++
+Qd
+ν ⊗
+ (Qd
+µ)∗⊗(Qd
+ν)∗⊗Qd
+λ
+Ud
+Ud
+∼=
+M
+ν∈Zd
+++
+Qd
+ν ⊗Hom(Qd
+µ ⊗Qd
+ν, Qd
+λ)Ud
+(39)
+Now consider a particular irreducible tensor operator Tν ⊂Hom(Qd
+µ, Qd
+λ) with components T ν
+qν where qν
+ranges over Qd
+ν. We can deﬁne a linear operator ˆT : Qd
+µ ⊗Qd
+ν →Qd
+λ by letting
+ˆT|qµ⟩|qν⟩:= T ν
+qν|qµ⟩
+(40)
+for all qµ ∈Qd
+µ, qν ∈Qd
+ν and extending it to the rest of Qd
+µ ⊗Qd
+ν by linearity.
+By construction, ˆT ∈
+Hom(Qd
+µ ⊗Qd
+ν, Qd
+λ), but we claim that in addition ˆT is invariant under the action of Ud; i.e. that it lies in
+Hom(Qd
+µ ⊗Qd
+ν, Qd
+λ)Ud. To see this, apply Eqns. (38) and (40) to show that for any U ∈Ud, qµ ∈Qd
+µ and
+qν ∈Qd
+ν, we have
+qd
+λ(U) ˆT
+
+qd
+µ(U)−1 ⊗qd
+ν(U)−1
+|qµ⟩|qν⟩=
+X
+q′ν∈Qdν
+⟨q′
+ν|qd
+ν(U)−1|qν⟩qd
+λ(U)T ν
+q′νqd
+µ(U)−1|qµ⟩
+=
+X
+q′ν,q′′
+ν ∈Qdν
+⟨q′′
+ν |qd
+ν(U)|q′
+ν⟩⟨q′
+ν|qd
+ν(U)−1|qν⟩T ν
+q′′
+ν |qµ⟩
+= T ν
+qν|qµ⟩= ˆT|qµ⟩|qν⟩.
+(41)
+Now, ﬁx an orthonormal basis for Hom(Qd
+µ ⊗Qd
+ν, Qd
+λ)Ud and call it M λ
+µ,ν. Then we can expand ˆT in this
+basis as
+ˆT =
+X
+α∈Mλ
+µ,ν
+ˆTα · α,
+(42)
+where the ˆTα are scalars. Thus
+⟨qλ|T ν
+qν|qµ⟩=
+X
+α∈Mλ
+µ,ν
+ˆTα⟨qλ|α|qµ, qν⟩.
+(43)
+This last expression ⟨qλ|α|qµ, qν⟩bears a striking resemblance to the CG transform. Indeed, note that the
+multiplicity space Hom(Qd
+λ, Qd
+µ⊗Qd
+ν)Ud from Eq. (30) is the dual of Hom(Qd
+µ⊗Qd
+ν, Qd
+λ)Ud (which contains α),
+meaning that we can map between the two by taking the transpose. In fact, taking the conjugate transpose
+of Eq. (32) gives ⟨qλ|α =
+
+qλ, α†Uµ,ν
+CG. Thus
+⟨qλ|α|qµ, qν⟩=
+
+qλ, α†Uµ,ν
+CG|qµ, qν⟩.
+(44)
+The arguments in the last few paragraphs constitute a proof of the Wigner-Eckart theorem[47], which is
+stated as follows:
+
+18
+Theorem 1 (Wigner-Eckart) For any irreducible tensor operator Tν = {T ν
+qν}qν∈Qdν ⊂Hom(Qd
+µ, Qd
+λ),
+there exist ˆTα ∈C for each α ∈M λ
+µ,ν such that for all |qµ⟩∈Qd
+µ, |qν⟩∈Qd
+ν and |qλ⟩∈Qd
+λ:
+⟨qλ|T ν
+qν|qµ⟩=
+X
+α∈Mλ
+µ,ν
+ˆTα
+
+qλ, α†Uµ,ν
+CG|qµ, qν⟩.
+(45)
+Thus, the action of tensor operators can be related to a component ˆTα that is invariant under Ud and a
+component that is equivalent to the CG transform. We will use this in the next section to derive an eﬃcient
+quantum circuit for the CG transform.
+B.
+A recursive construction of the Clebsch-Gordan transform
+In this section we show how the Ud CG transform (which here we call U[d]
+CG) can be eﬃciently reduced to
+the Ud−1 CG transform (which we call U[d−1]
+CG ). Our strategy, following [46], will be to express U[d]
+CG in terms
+of Ud−1 tensor operators and then use the Wigner-Eckart Theorem to express it in terms of U[d−1]
+CG . After we
+have explained this as a relation among operators, we describe a quantum circuit for U[d]
+CG that uses U[d−1]
+CG
+as a subroutine.
+First, we express U[d]
+CG as a Ud tensor operator. For µ ∈Zd
+++, |q⟩∈Qd
+µ and i ∈[d], we can expand
+U[d]
+CG|µ⟩|q⟩|i⟩as
+U[d]
+CG|µ⟩|q⟩|i⟩= |µ⟩
+X
+j∈[d] s.t.
+µ+ej∈Zd
+++
+X
+q′∈Qd
+µ+ej
+Cµ,j
+q,i,q′|µ + ej⟩|q′⟩.
+(46)
+for some coeﬃcients Cµ,j
+q,i,q′ ∈C. Now deﬁne operators T µ,j
+i
+: Qd
+µ →Qd
+µ+ej by
+T µ,j
+i
+=
+X
+q∈Qdµ
+X
+q′∈Qd
+µ+ej
+Cµ,j
+q,i,q′|q′⟩⟨q|,
+(47)
+so that U[d]
+CG decomposes as
+U[d]
+CG|µ⟩|q⟩|i⟩= |µ⟩
+X
+j∈[d] s.t.
+µ+ej∈Zd
+++
+|µ + ej⟩T µ,j
+i
+|q⟩.
+(48)
+Thus U[d]
+CG can be understood in terms of the maps T µ,j
+i
+, which are irreducible tensor operators in
+Hom(Qd
+µ, Qd
+µ+ej) corresponding to the irrep Qd
+(1). (This is unlike the notation of the last section in which
+the superscript denoted the irrep corresponding to the tensor operator.)
+The plan for the rest of the section is to decompose the T µ,j
+i
+operators under the action of Ud−1, so that
+we can apply the Wigner-Eckart theorem. This involves decomposing three diﬀerent Ud irreps into Ud−1
+irreps: the input space Qd
+µ, the output space Qd
+µ+ej and the space Qd
+(1) corresponding to the subscript i.
+Once we have done so, the Wigner-Eckart Theorem gives an expression for T µ,j
+i
+(and hence for U[d]
+CG) in
+terms of U[d−1]
+CG
+and a small number of coeﬃcients, known as reduced Wigner coeﬃcients. These coeﬃcients
+can be readily calculated, and in the next section we cite a formula from [46] for doing so.
+First, we examine the decomposition of Qd
+(1), the Ud-irrep according to which the T µ,j
+i
+transform. Recall
+that Qd
+(1)
+Ud−1
+∼=
+Qd−1
+(0) ⊕Qd−1
+(1) . In terms of the tensor operator we have deﬁned, this means that T µ,j
+d
+is an
+irreducible Ud−1 tensor operator corresponding to the trivial irrep Qd−1
+(0)
+and {T µ,j
+1
+, . . . , T µ,j
+d−1} comprise an
+irreducible Ud−1 tensor operator corresponding to the deﬁning irrep Qd−1
+(1) .
+Next, we would like to decompose Hom(Qd
+µ, Qd
+µ+ej) into maps between irreps of Ud−1. This is slightly more
+complicated, but can be derived from the Ud−1 ⊂Ud branching rule introduced in Sec. III B. Recall that
+Qd
+µ
+Ud−1
+∼=
+L
+µ′≾µ Qd−1
+µ′ , and similarly Qd
+µ+ej
+Ud−1
+∼=
+L
+µ′′≾µ+ej Qd−1
+µ′′ . This is the moment that we anticipated
+
+19
+in Sec. III B when we chose our set of basis vectors Qd
+µ to respect these decompositions. As a result, a
+vector |q⟩∈Qd
+µ can be expanded as q = (qd−1, qd−2, . . . , q1) = (µ′, q(d−2)) with qd−1 = µ′ ∈Zd−1
+++ , µ′≾µ
+and
+q(d−2)
+
+= |qd−2, . . . , q1⟩∈Qd−1
+µ′ . In other words, we will separate vectors in Qd
+µ into a Ud−1 irrep label
+µ′ ∈Zd−1
+++ and a basis vector from Qd−1
+µ′ .
+This describes how to decompose the spaces Qd
+µ and Qd
+µ+ej.
+To extend this to decomposition of
+Hom(Qd
+µ, Qd
+µ+ej), we use the canonical isomorphism Hom(L
+x Ax, L
+y By) ∼= L
+x,y Hom(Ax, By), which
+holds for any sets of vector spaces {Ax} and {By}. Thus
+Hom(Qd
+µ, Qd
+µ+ej)
+Ud−1
+∼=
+M
+µ′≾µ
+M
+µ′′≾µ+ej
+Hom(Qd−1
+µ′ , Qd−1
+µ′′ ).
+(49a)
+Sometimes we will ﬁnd it convenient to denote the Qd−1
+µ′
+subspace of Qd
+µ by Qd−1
+µ′
+⊂Qd
+µ, so that Eq. (49a)
+becomes
+Hom(Qd
+µ, Qd
+µ+ej)
+Ud−1
+∼=
+M
+µ′≾µ
+M
+µ′′≾µ+ej
+Hom(Qd−1
+µ′
+⊂Qd
+µ, Qd−1
+µ′′
+⊂Qd
+µ+ej).
+(49b)
+According to Eq. (49) (either version), we can decompose T µ,j
+i
+as
+T µ,j
+i
+=
+X
+µ′≾µ
+X
+µ′′≾µ+ej
+|µ′′⟩⟨µ′| ⊗T µ,j,µ′,µ′′
+i
+.
+(50)
+Here T µ,j,µ′,µ′′
+i
+∈Hom(Qd−1
+µ′
+⊂Qd
+µ, Qd−1
+µ′′
+⊂Qd
+µ+ej) and we have implicitly decomposed |q⟩∈Qd
+µ into
+|µ′⟩
+q(d−2)
+
+.
+The next step is to decompose the representions in Eq. (49) into irreducible components. In fact, we are
+not interested in the entire space Hom(Qd−1
+µ′ , Qd−1
+µ′′ ), but only the part that is equivalent to Qd−1
+(1)
+or Qd−1
+(0) ,
+depending on whether i ∈[d −1] or i = d (since T µ,j,µ′,µ′′
+i
+transforms according to Qd−1
+(1) if i ∈{1, . . . , d −1}
+and according to Qd−1
+(0)
+if i = d).
+This knowledge of how T µ,j,µ′,µ′′
+i
+transforms under Ud−1 will give us
+two crucial simpliﬁcations: ﬁrst, we can greatly reduce the range of µ′′ for which T µ,j,µ′,µ′′
+i
+is nonzero, and
+second, we can apply the Wigner-Eckart theorem to describe T µ,j,µ′,µ′′
+i
+in terms of U[d−1]
+CG .
+The simplest case is Qd−1
+(0) , when i = d:
+according to Schur’s Lemma the invariant component of
+Hom(Qd−1
+µ′ , Qd−1
+µ′′ ) is zero if µ′ ̸= µ′′ and consists of the matrices proportional to IQd−1
+µ′
+if µ′ = µ′′.
+In
+other words T µ,j,µ′,µ′′
+d
+= 0 unless µ′ = µ′′, in which case T µ,j,µ′,µ′
+d
+:= ˆT µ,j,µ′,0IQd−1
+µ′
+for some scalar ˆT µ,j,µ′,0.
+(The ﬁnal superscript 0 will later be convenient when we want a single notation to encompass both the i = d
+and the i ∈{1, . . . , d −1} cases.)
+The Qd−1
+(1)
+case, which occurs when i ∈{1, . . . , d −1}, is more interesting. We will simplify the T µ,j,µ′,µ′′
+i
+operators (for i = 1, . . . , d −1) in two stages: ﬁrst using the branching rules from Sec. III B to reduce
+the number of nonzero terms and then by applying the Wigner-Eckart theorem to ﬁnd an exact expression
+for them. Begin by recalling from Eq. (39) that the multiplicity of Qd−1
+(1)
+in the isotypic decomposition of
+Hom(Qd−1
+µ′ , Qd−1
+µ′′ ) is given by dim Hom(Qd−1
+µ′
+⊗Qd−1
+(1) , Qd−1
+µ′′ )Ud−1. According to the Ud−1 CG “add a box”
+prescription (Eq. (33)), this is one if µ′ ∈µ′′ −□and zero otherwise. Thus if i ∈[d −1], then T µ,j,µ′,µ′′
+i
+is
+zero unless µ′′ = µ′ + ej′ for some j′ ∈[d −1]. Since we need not consider all possible µ′′, we can deﬁne
+T µ,j,µ′,j′
+i
+:= T
+µ,j,µ′,µ′+ej′
+i
+. This notation can be readily extended to cover the case when i = d; deﬁne e0 = 0,
+so that the only nonzero operators for i = d are of the form T µ,j,µ′,0
+d
+:= T µ,j,µ′,µ′
+d
+= ˆT µ,j,µ′,0IQd−1
+µ′ . Thus, we
+can replace Eq. (50) with
+T µ,j
+i
+=
+X
+µ′≾µ
+d−1
+X
+j′=0
+|µ′ + ej′⟩⟨µ′| ⊗T
+µ,j,µ′,µ′+ej′
+i
+.
+(51)
+Now we show how to apply the Wigner-Eckart theorem to the i ∈[d −1] case. The operators T µ,j,µ′,j′
+i
+map Qd−1
+µ′
+to Qd−1
+µ′+ej′ and comprise an irreducible Ud−1 tensor operator corresponding to the irrep Qd−1
+(1) .
+
+20
+This means we can apply the Wigner-Eckart theorem and since the multiplicity of Qd−1
+µ′+ej′ in Qd−1
+µ′
+⊗Qd−1
+(1)
+is one, the sum over the multiplicity label α has only a single term. The theorem implies the existence of a
+set of scalars ˆT µ,j,µ′,j′ such that for any |q⟩∈Qd−1
+µ′
+and |q′⟩∈Qd−1
+µ′+ej′ ,
+⟨q′|T µ,j,µ′,j′
+i
+|q⟩= ˆT µ,j,µ′,j′⟨µ′, µ′ + ej′, q′|U[d−1]
+CG |µ′, q, i⟩.
+(52)
+Sometimes the matrix elements of UCG or T µ,j,µ′,j′
+i
+are called Wigner coeﬃcients and the ˆT µ,j,µ′,j′ are known
+as reduced Wigner coeﬃcients.
+Let us now try to interpret these equations operationally. Eq. (48) reduces the Ud CG transform to a Ud
+tensor operator, Eq. (51) decomposes this tensor operator into d2 diﬀerent Ud−1 tensor operators (weighted
+by the ˆT µ,j,µ′,j′ coeﬃcients) and Eq. (52) turns this into a Ud−1 CG transform followed by a d × d unitary
+matrix.
+The coeﬃcients for this matrix are the ˆT µ,j,µ′,j′, which we will see in the next section can be
+eﬃciently computed by conditioning on µ and µ′.
+Now we spell this recursion out in more detail.
+Suppose we wish to apply U[d]
+CG to |µ⟩|q⟩|i⟩=
+|µ⟩|µ′⟩
+q(d−2)
+
+|i⟩, for some i ∈{1, . . . , d −1}. Then Eq. (52) indicates that we should ﬁrst apply U[d−1]
+CG
+to
+|µ′⟩
+q(d−2)
+
+|i⟩to obtain output that is a superposition over states |µ′ + ej′⟩|j′⟩
+q′
+(d−2)
+E
+for j′ ∈{1, . . ., d−1}
+and
+q′
+(d−2)
+E
+∈Qd−1
+µ′+ej′ . Then, controlled by µ and µ′, we want to map the (d −1)-dimensional |j′⟩register
+into the d-dimensional |j⟩register, which will then tell us the output irrep Qd
+µ+ej. According to Eq. (52),
+the coeﬃcients of this d × (d −1) matrix are given by the reduced Wigner coeﬃcients ˆT µ,j,µ′,j′, so we will
+denote the overall matrix ˆT [d]
+µ,µ′ := P
+j,j′ ˆT µ,j,µ′+ej′ ,j′|j⟩⟨j′|.3 The resulting circuit is depicted in Fig. 4: a
+Ud−1 CG transform is followed by the ˆT [d] operator, which is deﬁned to be
+ˆT [d] =
+X
+µ′≾µ
+X
+j,j′
+ˆT µ,j,µ′,j′|µ⟩⟨µ| ⊗|µ + ej⟩⟨µ′| ⊗|µ′ + ej′⟩⟨µ′ + ej′|.
+(53)
+Then Fig. 5 shows how ˆT [d] can be expressed as a d × (d −1) matrix ˆT [d]
+µ,µ′ that is controlled by µ and µ′. In
+fact, once we consider the i = d case in the next paragraph, we will ﬁnd that ˆT [d]
+µ,µ′ is actually a d×d unitary
+matrix. In the next section, we will then show how the individual reduced Wigner coeﬃcients ˆT µ,j,µ′,j′ can
+be eﬃciently computed, so that ultimately ˆT [d]
+µ,µ′ can be implemented in time poly(d, log 1/ǫ).
+Now we turn to the case of i = d. The circuit is much simpler, but we also need to explain how it works
+in coherent superposition with the i ∈[d −1] case. Since i = d corresponds to the trivial representation of
+Ud−1, the U[d−1]
+CG
+operation is not performed. Instead, |µ′⟩and
+q(d−2)
+
+are left untouched and the |i⟩= |d⟩
+register is relabeled as a |j′⟩= |0⟩register. We can combine this relabeling operation with U[d−1]
+CG
+in the
+i ∈[d −1] case by deﬁning
+˜U [d−1]
+CG
+:=
+
+
+|0⟩⟨d| ⊗
+X
+µ′∈Zd−1
+++
+|µ′⟩⟨µ′|
+
+
+⊗IQd−1
+µ′
++ U[d−1]
+CG .
+(54)
+This ends up mapping i ∈{1, . . . , d} to j′ ∈{0, . . . , d −1} while mapping Qd−1
+µ′
+to Qd−1
+µ′+ej′ . Now we can
+interpret the sum on j′ in the above deﬁnitions of ˆT [d] and ˆT [d]
+µ,µ′ as ranging over {0, . . . , d −1}, so that ˆT [d]
+µ,µ′
+is a d × d unitary matrix. We thus obtain the circuit in Fig. 4 with the implementation of ˆT [d] depicted in
+Fig. 5.
+We have now reduced the problem of performing the CG transform U[d]
+CG to the problem of computing
+reduced Wigner coeﬃcients ˆT µ,j,µ′,j′.
+3 The reason why µ′ + ej′ appears in the superscript rather than µ′ is that after applying ˆT [d]
+µ,µ′ we want to keep a record of
+µ′ + ej′ rather than of µ′. This is further illustrated in Fig. 5.
+
+21
+˜U [d−1]
+CG
+ˆT [d]
+|µ′⟩
+|u′ + ej′⟩
+|q′
+(d−2)⟩
+|µ⟩
+|i⟩
+|q⟩
+|µ′ + ej′⟩
+|µ′⟩
+|µ + ej⟩
+)
+|q⟩
+|µ⟩
+FIG. 4: The Ud CG transform, U[d]
+CG, is decomposed into a Ud−1 CG transform ˜U [d−1]
+CG
+(see Eq. (54)) and a reduced
+Wigner operator ˆT [d]. In Fig. 5 we show how to reduce the reduced Wigner operator to a d × d matrix conditioned
+on µ and µ′ + ej′.
+|µ⟩
+ˆT [d]
+|µ⟩
+|µ′⟩
+|µ + ej⟩
+|µ′ + ej′⟩
+|µ′ + ej′⟩
+|µ⟩
+•
+•
+|µ⟩
+∼=
+|µ′⟩
+⊕|ej′⟩
+ˆT [d]
+µ,µ′
+|ej⟩⊕
+|µ + ej⟩
+|µ′ + ej′⟩
+•
+•
+|µ′ + ej′⟩
+FIG. 5: The reduced Wigner transform ˆT [d] can be expressed as a d × d rotation whose coeﬃcients are controlled by
+µ and µ′ + ej′.
+C.
+Eﬃcient Circuit for the Reduced Wigner Operator
+The method of Biedenharn and Louck[46] allows us to compute reduced Wigner coeﬃcients for the cases
+we are interested in. This will allow us to construct an eﬃcient circuit to implement the controlled- ˆT operator
+to accuracy ǫ using an overhead which scales like poly(log n, d, log(ǫ−1)).
+To compute ˆT µ,j,µ′,j′, we ﬁrst introduce the vectors ˜µ := µ+Pd
+j=1(d−j)ej and ˜µ′ := µ′+Pd−1
+j=1(d−1−j)ej.
+Also deﬁne S(j −j′) to be 1 if j ≥j′ and −1 if j < j′. Then according to Eq. (38) in Ref [46],
+ˆT µ,j,µ′,j′ =
+
+
+
+
+
+
+
+S(j −j′)
+ Q
+s∈[d−1]\j(˜µj−˜µ′
+s) Q
+t∈[d]\j′(˜µ′
+j′ −˜µt+1)
+Q
+s∈[d]\j(˜µ′
+j−˜µ′
+s) Q
+t∈[d−1]\j′(˜µ′
+j′ −˜µ′
+t+1)
+ 1
+2
+if j′ ∈{1, . . ., d −1}.
+S(j −d)
+h Q
+s∈[d−1]\j(˜µj−˜µ′
+s)
+Q
+s∈[d]\j(˜µ′
+j−˜µ′s)
+i 1
+2
+if j′ = 0.
+(55)
+The elements of the partitions here are of size O(n), so the total computation necessary is poly(d, log n).
+Now how do we implement the ˆT [d] transform given this expression?
+As in the introduction to this section, note that any unitary gate of dimension d can be implemented
+using a number of two qubit gates polynomial in d[41–43]. The method of this construction is to take a
+unitary gate of dimension d with known matrix elements and then convert this into a series of unitary gates
+which act non-trivially only on two states. These two state gates can then be constructed using the methods
+described in [42]. In order to modify this for our work, we calculate, to the speciﬁed accuracy ǫ, the elements
+of the ˆT [d] operator, conditional on the µ and µ′ +ej′ inputs, perform the decomposition into two qubit gates
+as described in [41, 42] online, and then, conditional on this calculation perform the appropriate controlled
+two-qubit gates onto the space where ˆT [d] will act. Finally this classical computation must be undone to
+reset any garbage bits created during the classical computation. To produce an accuracy ǫ we need a classical
+computation of size poly(log(1/ǫ)) since we can perform the appropriate controlled rotations with bitwise
+accuracy.
+Putting everything together as depicted in ﬁgures 4 and 5 gives a poly(d, log n, log 1/ǫ) algorithm to reduce
+U[d]
+CG to U[d−1]
+CG . Naturally this can be applied d times to yield a poly(d, log n, log 1/ǫ) algorithm for U[d]
+CG.
+(We can end the recursion either at d = 2, using the construction in [48], or at d = 1, where the CG transform
+simply consists of the map µ →µ + 1 for µ ∈Z, or even at d = 0, where the CG transform is completely
+trivial.) We summarize the CG algorithm as follows.
+Algorithm: Clebsch-Gordan transform
+
+22
+Inputs: (1) Classical registers d and n. (2) Quantum registers |λ⟩(in any superposition over
+diﬀerent λ ∈Id,n), |q⟩∈Qd
+λ (expressed as a superposition of GZ basis elements) and |i⟩∈Cd.
+Outputs: (1) Quantum registers |λ⟩(equal to the input), |j⟩∈Cd (satisfying λ+ej ∈Id,n+1)
+and |q′⟩∈Qd
+λ+ej.
+Runtime: d3 poly(log n, log 1/ǫ) to achieve accuracy ǫ.
+Procedure:
+1. If d = 1
+2. Then output |j⟩:= |i⟩= |1⟩and |q′⟩:= |q⟩= |1⟩(i.e. do nothing).
+3. Else
+4.
+Unpack |q⟩into |µ′⟩
+q(d−2)
+
+, such that µ′ ∈Id,m, m ≤n, µ′≾µ and
+q(d−2)
+
+∈Qd−1
+µ′ .
+5.
+If i < d
+6.
+Then perform the CG transform with inputs (d−1, m, |µ′⟩,
+q(d−2)
+
+, |i⟩) and outputs
+(|µ′⟩, |j′⟩,
+q′
+(d−2)
+E
+).
+7.
+Else (if i = d)
+8.
+Replace |i⟩= |d⟩with |j′⟩:= |0⟩and set
+q′
+(d−2)
+E
+:=
+q′
+(d−2)
+E
+.
+9.
+End. (Now i ∈{1, . . ., d} has been replaced by j ∈{0, . . . , d −1}.)
+10.
+Map |µ′⟩|j′⟩to |µ′ + ej′⟩|j′⟩.
+11.
+Conditioned on µ and µ′ + e′
+j, calculate the gate sequence necessary to implement ˆT [d],
+which inputs |j′⟩and outputs |j⟩.
+12.
+Execute this gate sequence, implementing ˆT [d].
+13.
+Undo the computation from 11.
+14.
+Combine |µ′ + ej′⟩and
+q′
+(d−2)
+E
+to form |q′⟩.
+15. End.
+Finally, in Sec. IV we described how n CG transforms can be used to perform the Schur transform, so
+that USch can be implemented in time n · poly(d, log n, log 1/ǫ), optionally plus an additional poly(n) time
+to compress the |p⟩register.
+VI.
+CONCLUSION
+We have taken on the challenge of implementing a circuit which performs the Schur transform. This
+transform, used ubiquitously[19–30] in quantum information theory, represents an important new transfor-
+mation for quantum information science. The key ingredients in the construction of this circuit were the
+relationship between Wigner operators and reduced Wigner operators and an eﬃcient classical algorithm
+for the calculation of the matrix elements of the reduced Wigner operators. This extends our construction
+from [48] where we constructed the Schur transform for n qubits (d = 2). Our construction has a running
+time which is polynomial in dimension, d, number of qudits, n, and accuracy, log(1/ǫ. We have thus made
+practical the large set of quantum information protocols whose computational eﬃciency has, prior to our
+work, been uncertain.
+For some applications, it is not necessary to perform the full Schur transform, but instead to only be able
+to perform a projective measurement onto the diﬀerent Schur subspaces. In part II, we consider a quantum
+circuit, based on Kitaev’s phase estimation algorithm[49], for this task. We further generalize this algorithm
+to a circuit which is applicable to any nonabelian ﬁnite group. Our algorithm is eﬃcient if there exists an
+eﬃcient quantum circuit for the Fourier transform over this group[33, 50] and represents an ideal way to
+eﬃciently deal with situations where quantum states possess symmetries corresponding to some ﬁnite group.
+Further in part II we discuss relationships between the Schur transform and the Fourier transform over the
+symmetric group.
+Finally, we will conclude with some open problems suggested by our construction of the Schur transform.
+The ﬁrst interesting question which arises from our work is whether Clebsch-Gordan transforms for other
+groups can be eﬃciently constructed.
+We suspect that for many ﬁnite groups, even when dealing with
+representations which are of dimension d, that their Clebsch-Gordan transforms can be constructed using
+circuits of size polynomial in log(d). Our intuition for this claim comes from the construction of quantum
+Fourier transforms over ﬁnite groups[33, 50]. A second question is that while the Schur transform is used
+frequently in quantum information theory, it has thus far not seen used in the ﬁeld of quantum algorithms.
+Kuperberg’s[51] subexponential algorithm for the dihedral hidden subgroup problem makes use of the eﬀect
+
+23
+of the Clebsch-Gordan series for the dihedral group. Does the Clebsch-Gordan series for Ud produce any
+similar speedup for the appropriately deﬁned hidden subgroup problem on Ud?
+Acknowledgments: This work was partially funded by the NSF Institute for Quantum Information under
+grant number EIA-0086048. AWH acknowledges partial support from the NSA and ARDA under ARO
+contract DAAD19-01-1-06.
+[1] C. H. Bennett and S. J. Wiesner. Communication via one- and two-particle opeartors on einstein-podolsky-rosen
+states. Phys. Rev. Lett., 69:2881–2884, 1992.
+[2] C. H. Bennett, G. Brassard, C. Cr´epeau, R. Jozsa, A. Peres, and W. K. Wootters. Teleporting an unknown
+quantum state via dual classical and einstein-podolsky-rosen channels. Phys. Rev. Lett., 70:1895–1899, 1993.
+[3] B. Schumacher. Quantum coding. Phys. Rev. A, 51:2738–2747, 1995.
+[4] C. H. Bennett, D. P. DiVincenzo, J. A. Smolin, and W. K. Wooters. Mixed state entanglement and quantum
+error correction. Phys. Rev. A, 52:3824–3851, 1996.
+[5] C. H. Bennett, H. J. Bernstein, S. Popescu, and B. Schumacher. Concentrating partial entanglement by local
+operations. Phys. Rev. A, 53:2046–2052, 1996.
+[6] I. Devetak and P. W. Shor. The capacity of a quantum channel for simultaneous transmission of classical and
+quantum information. quant-ph/0311131, 2003.
+[7] A. S. Holevo. The capacity of the quantum channel with general signal states. IEEE Trans. Inf. Theory, 44,
+1998. quant-ph/9611023.
+[8] B. Schumacher and M. D. Westmoreland. Sending classical information via noisy quantum channels. Phys. Rev.
+A, 56, 1997.
+[9] C. H. Bennett, P. Hayden, D. W. Leung, P. W. Shor, and A. J. Winter. Remote preparation of quantum states.
+IEEE Trans. Inf. Theory, 51(1):56–74, 2005. quant-ph/0307100.
+[10] I. Devetak and A.J. Winter. Relating quantum privacy and quantum coherence: an operational approach. Phys.
+Rev. Lett., 93, 2004. quant-ph/0307053.
+[11] R. Jozsa and B. Schumacher. A new proof of the quantum noiseless coding theorem. J. Mod. Opt., 41:2343,
+1994.
+[12] R. Cleve and D.P. DiVincenzo. Schumacher’s quantum data compression as a quantum computation. Phys. Rev.
+A, 54(4):2636–2650, 1996. quant-ph/9603009.
+[13] P. Kaye and M. Mosca. Quantum networks for concentrating entanglement. J. Phys. A, 34:6939–6948, 2001.
+quant-ph/0101009.
+[14] C. H. Bennett and G. Brassard. Quantum cryptography: Public key distribution and coin tossing. In Proceedings
+of IEEE International Conference on Computers, Systems, and Signal Processing, pages 175–179. IEEE, 1984.
+[15] P. W. Shor. Fault tolerant quantum computation. In Proceedings of the 37th Symposium on the Foundations of
+Computer Science, pages 56–65, Los Alamitos, CA, 1996. IEEE.
+[16] D. Gottesman and I. L. Chuang. Demonstrating the viability of universal quantum computation using telepor-
+tation and single-qubit operations. Nature, 402:390–393, 1999.
+[17] E. Knill. Fault-tolerant postselected quantum computation: Schemes. quant-ph/0402171, 2004.
+[18] A. Ambainis and A. Smith. Small pseudo-random families of matrices: Derandomizing approximate quantum
+encryption. In K. Jansen, S. Khanna, J.D.P. Rolim, and D. Ron, editors, APPROX-RANDOM, volume 3122 of
+Lecture Notes in Computer Science, pages 249–260. Springer, 2004. quant-ph/0404075.
+[19] M. Keyl and R. F. Werner. Estimating the spectrum of a density operator. Phys. Rev. A, 64:052311, 2001.
+quant-ph/0102027.
+[20] R. Gill and S. Massar. State estimation for large ensembles. Phys. Rev. A, 61:042312, 2002. quant-ph/9902063.
+[21] G. Vidal, J.I. Latorre, P. Pascual, and R. Tarrach. Optimal minimal measurements of mixed states. Phys. Rev.
+A, 60:126, 1999. quant-ph/9812068.
+[22] M. Hayashi and K. Matsumoto. Universal distortion-free entanglement concentration, 2002. quant-ph/0209030.
+[23] M. Hayashi and K. Matsumoto. Quantum universal variable-length source coding. Phys. Rev. A, 66(2):022311,
+2002. quant-ph/0202001.
+[24] M. Hayashi and K. Matsumoto. Simple construction of quantum universal variable-length source coding. Quan-
+tum Inform. Compu., 2:519–529, 2002. quant-ph/0209124.
+[25] M. Hayashi. Optimal sequence of quantum measurements in the sense of stein’s lemma in quantum hypothesis
+testing. J. Phys. A, 35:10759–10773, 2002. quant-ph/0208020.
+[26] P. Zanardi and M. Rasetti. Error avoiding quantum codes. Mod. Phys. Lett. B, 11(25):1085–1093, 1997.
+[27] E. Knill, R. Laﬂamme, and L. Viola. Theory of quantum error correction for general noise. Phys. Rev. Lett.,
+84:2525–2528, 2000.
+[28] J. Kempe, D. Bacon, D. A. Lidar, and K. B. Whaley.
+Theory of decoherence-free fault-tolerant quantum
+computation. Phys. Rev. A, 63:042307–1–042307–29, 2001. quant-ph/0004064.
+
+24
+[29] D. Bacon. Decoherence, Control, and Symmetry in Quantum Computers. PhD thesis, University of Calfornia at
+Berkeley, Berkeley, CA, 2001. quant-ph/0305025.
+[30] S.D. Bartlett, T. Rudolph, and R.W. Spekkens. Classical and quantum communication without a shared reference
+frame. Phys. Rev. Lett., 91:027901, 2003.
+[31] I.M. Gelfand and M.L. Zetlin. Matrix elements for the unitary groups. Dokl. Akad. Nauk., 71:825, 1950.
+[32] G. D. James and A. Kerber. The representation theory of the symmetric group. Addison-Wesley, Reading, Mass.,
+1981.
+[33] C. Moore, D. Rockmore, and A. Russell. Generic quantum fourier transforms. quant-ph/0304064, 2003.
+[34] M. Artin. Algebra. Prentice Hall, New Jersey, 1995.
+[35] R. Goodman and N.R. Wallach. Representations and Invariants of the Classical Groups. Cambridge University
+Press, 1998.
+[36] W. Fulton and J. Harris. Representation Theory – A First Course. Springer–Verlag, 1991.
+[37] J. Chen, J. Ping, and F. Want. Group Representation Theory for Physicists. World Scientiﬁc, New Jersey, 2002.
+[38] H. Georgi. Lie Algebras in Particle Physics. Perseus Books Group, 1999.
+[39] J. D. Louck. Recent progress toward a theory of tensor operators in unitary groups. Am. J. Phys., 38(1):3, 1970.
+[40] V.V. Shende, S.S. Bullock, and I.L. Markov. Synthesis of quantum logic circuits, 2004. quant-ph/0406176.
+[41] M. Reck, A. Zeilinger, H.J. Bernstein, and P. Bertani. Experimental realization of any discrete unitary operator.
+Phys. Rev. Lett., 73:58–61, 1994.
+[42] A. Barenco. A universal two-bit gate for quantum computation. Proc. Roy. Soc. London Ser. A, 449:679–683,
+1995.
+[43] M. A. Nielsen and I. L. Chuang. Quantum Computation and Quatum Information. Cambridge University Press,
+New York, 2000.
+[44] C.M. Dawson and M.A. Nielsen. The solovay-kitaev algorithm. quant-ph/0505030, 2005.
+[45] A. Yu Kitaev, A. H. Shen, and M. N. Vyalyi. Classical and Quantum Computation, volume 47 of Graduate
+Studies in Mathematics. AMS, 2002.
+[46] L. C. Biedenharn and J. D. Louck. A pattern calculus for tensor operators in the unitary groups. Commun.
+Math. Phys., 8:89–131, 1968.
+[47] A. Messiah. Quantum Mechanics, Vol. 2, chapter Representation of Irreducible Tensor Operators: Wigner-Eckart
+Theorem, pages 573–575. North-Holland, Amsterdam, Netherlands, 1962.
+[48] D. Bacon, I. Chuang, and A. Harrow.
+Eﬃcient quantum circuits for quantum information theory.
+quant-
+ph/0407082, 2004.
+[49] A. Kitaev. Quantum measurements and the abelian stabilizer problem. quant-ph/9511026.
+[50] R. Beals. Quantum computation of fourier transforms over symmetric groups. In Proceedings of the 29th Annual
+ACM Symposium on Theory of Computing, pages 48–53, New York, NY, May 1997. ACM Press.
+[51] G. Kuperberg. A subexponential-time quantum algorithm for the dihedral hidden subgroup. quant-ph/0302112,
+2003.

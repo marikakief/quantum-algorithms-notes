@@ -29,5 +29,8 @@ The coefficient norm and the cost of implementing the \(V_i\) and \(W_i\) famili
 ## Related notes
 
 - [[Quantum Linear Matrix Equations — Paper Notes]]
+- [[Efficient Quantum Algorithm for Linear Matrix Differential Equations and Applications to Open Quantum Systems (Simon-Berry-Somma 2026) — Paper Notes]]
+- [[Two-Sided History-State Overlap for Matrix ODE Entries]]
+- [[Clock-Diagonal Short-Integral Block Encoding]]
 - [[Block-Encoding Composition Algebra]]
 - [[Linear Combination of Unitaries (LCU)]]

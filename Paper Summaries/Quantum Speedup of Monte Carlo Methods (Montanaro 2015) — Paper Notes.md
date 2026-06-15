@@ -156,6 +156,7 @@ All bounds are optimal up to polylog factors.
 - [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes]] — related: gap amplification speeds up adiabatic state preparation for related problems
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]] — related walk-based algorithms
 - [[Quantum Computational Finance — Monte Carlo Pricing of Financial Derivatives (Rebentrost-Gupt-Bromley 2018) — Paper Notes]] — applies this paper's quantum mean estimation to derivative pricing
+- [[Quantum-Accelerated Multilevel Monte Carlo Methods for Stochastic Differential Equations in Mathematical Finance (An-Linden-Liu-Montanaro-Shao-Wang 2021) — Paper Notes]] — applies this paper's mean-estimation primitive to each level of an MLMC hierarchy for SDE payoffs
 - [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes]] — same author's companion paper; quadratic speedup for deterministic backtracking via quantum walk on trees
 - [[Applying Quantum Algorithms to Constraint Satisfaction Problems (Campbell-Khurana-Montanaro 2019) — Paper Notes]] — practical follow-up combining backtracking walk with Grover and Monte Carlo speedup
 - [[Quantum Speed-Up for Approximating Partition Functions (Wocjan-Chiang-Abeyesinghe-Nagaj 2009) — Paper Notes]] — predecessor: quantum FPRAS for partition functions via quantum walks + phase estimation; less general but contains the key ideas of coherent encoding + ratio estimation

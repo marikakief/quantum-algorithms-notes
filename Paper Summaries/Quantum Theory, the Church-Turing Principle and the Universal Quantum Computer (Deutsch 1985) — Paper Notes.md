@@ -10,7 +10,7 @@ Three things, each of which alone would be a landmark:
 
 1. **Defines the quantum Turing machine** — the first formal model of quantum computation, establishing that quantum mechanics provides a well-defined computational framework analogous to the classical Turing machine.
 
-2. **Proposes the quantum Church-Turing principle:** "Every finitely realisable physical system can be perfectly simulated by a universal model computing machine operating by finite means." Deutsch argues that classical Turing machines violate this principle (they can't efficiently simulate quantum systems), and that quantum Turing machines restore it.
+2. **Proposes the quantum Church-Turing principle:** "Every finitely realisable physical system can be perfectly simulated by a universal model computing machine operating by finite means." Deutsch argues that ordinary classical universal Turing machines do not satisfy this strong physical principle, and that quantum Turing machines restore compatibility with quantum theory.
 
 3. **Gives the first quantum algorithm** — Deutsch's algorithm, which determines a global property of a function with fewer queries than any classical deterministic algorithm.
 
@@ -23,7 +23,7 @@ This is the founding document of quantum computation as a field of computer scie
 Deutsch's argument:
 - Turing's thesis: any function computable by a physical device is computable by a Turing machine
 - The **physical** version (Church-Turing principle): any physical system can be *simulated* by a universal computing machine
-- Classical Turing machines can simulate quantum systems, but with exponential overhead (the state space grows exponentially with the number of particles)
+- A classical universal Turing machine is not, in Deutsch's sense, a universal simulator for all finitely realisable physical systems; the familiar exponential state-space overhead is the later complexity-theoretic way this obstruction appears for many-particle quantum systems
 - Therefore: either the Church-Turing principle is wrong, or we need a computing machine based on quantum mechanics
 - The quantum Turing machine (QTM) restores the principle
 
@@ -55,6 +55,8 @@ Deutsch shows this is well-defined and at least as powerful as a classical TM (c
 
 The first quantum algorithm. Simple, but the idea it demonstrates — querying a function in superposition and using interference to extract global information — is the seed of everything that followed.
 
+**Convention note:** the circuit below is the modern deterministic Deutsch circuit using a phase-kickback ancilla. Deutsch's 1985 algorithm used a different presentation and was probabilistic; the exact one-query presentation belongs to Deutsch-Jozsa (1992) and the Cleve-Ekert-Macchiavello-Mosca phase-kickback account.
+
 ### The problem
 
 Given a function $f: \{0, 1\} \to \{0, 1\}$, determine whether $f$ is **constant** ($f(0) = f(1)$) or **balanced** ($f(0) \neq f(1)$).
@@ -85,7 +87,7 @@ $$
 
 The function value $f(x)$ gets kicked into the **phase** of the first register (the "phase kickback" trick). The second register is unchanged. Then Hadamard + measurement on the first register distinguishes the two cases.
 
-**Note:** Deutsch's original 1985 version is slightly different and succeeds with probability 1/2 (requiring repetition). The clean deterministic version above (with the $|1\rangle$ ancilla trick) is from [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes|Deutsch and Jozsa (1992)]] and independently Cleve, Ekert, Macchiavello, and Mosca (1998). But the core idea — superposition query + phase extraction — is already in the 1985 paper.
+But the core idea — superposition query plus phase-sensitive interference — is already in the 1985 paper.
 
 ---
 
@@ -101,7 +103,7 @@ $$
 
 The function value moves from the target register into the phase of the control register. This converts a **bit oracle** ($|x\rangle|y\rangle \to |x\rangle|y \oplus f(x)\rangle$) into a **phase oracle** ($|x\rangle \to (-1)^{f(x)}|x\rangle$).
 
-This is the trick behind Deutsch-Jozsa, Bernstein-Vazirani, [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon]], [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor]], and [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Grover/amplitude amplification]].
+This is the trick behind Deutsch-Jozsa, Bernstein-Vazirani, [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon]], and [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Grover/amplitude amplification]]. Controlled-unitary and eigenphase variants of the same idea appear in phase estimation and period finding, including [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]], but Shor is better viewed as Fourier sampling/order finding with reversible modular exponentiation rather than a simple phase-oracle algorithm.
 
 ---
 
@@ -109,7 +111,7 @@ This is the trick behind Deutsch-Jozsa, Bernstein-Vazirani, [[On the Power of Qu
 
 - Doesn't show an exponential speedup (that's [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon 1994]])
 - Doesn't give a practical algorithm (that's [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor 1994]])
-- Doesn't formally prove the QTM can simulate all quantum systems efficiently (that remains open — it's the quantum Church-Turing thesis)
+- Doesn't formally prove efficient simulation of all quantum systems. Bernstein-Vazirani later constructed an efficient universal QTM in Deutsch's model; efficient simulation of physical quantum systems still depends on locality and access assumptions.
 - The original Deutsch algorithm succeeds probabilistically; the deterministic version came later
 
 But it asks the right questions and provides the framework in which all subsequent work takes place. Without this paper, there's no field.

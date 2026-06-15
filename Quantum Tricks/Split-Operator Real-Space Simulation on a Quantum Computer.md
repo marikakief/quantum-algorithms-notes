@@ -7,7 +7,7 @@ Simulates the time evolution of a wavefunction on a real-space grid by alternati
 
 ## The trick
 
-For $\hat{H} = \hat{T} + \hat{V}$ where $\hat{T}$ is diagonal in momentum and $\hat{V}$ is diagonal in position:
+For $\hat{H} = \hat{T} + \hat{V}$ where $\hat{T}$ is diagonal in momentum and $\hat{V}$ is diagonal in position, the default position-basis convention is: apply the potential phase, QFT to momentum, apply the kinetic phase, then inverse-QFT back. Equivalently, up to QFT sign/order conventions:
 
 $$|\psi(\delta t)\rangle \approx \text{QFT} \cdot e^{-iT(p)\delta t} \cdot \text{QFT}^\dagger \cdot e^{-iV(x)\delta t} |\psi(0)\rangle$$
 
@@ -18,7 +18,7 @@ $$|\psi(\delta t)\rangle \approx \text{QFT} \cdot e^{-iT(p)\delta t} \cdot \text
 5. Inverse QFT back to position basis
 6. Repeat
 
-The diagonal unitaries are applied via [[Fourier-Eigenstate Kickback for Arithmetic Oracles|Fourier-eigenstate kickback]]: compute the function value into an ancilla prepared as a Fourier eigenstate of addition, getting the phase for free. The ancilla decouples and doesn't need to be uncomputed.
+The diagonal unitaries are applied via [[Fourier-Eigenstate Kickback for Arithmetic Oracles|Fourier-eigenstate kickback]]: compute the function value by modular addition into an ancilla prepared as a Fourier eigenstate of addition, getting the phase by kickback. This avoids uncomputing the value register only for a pure addition oracle; any scratch used to compute $T$ or $V$ must still be cleaned up.
 
 ## When to reach for it
 - Simulating particles in real space (chemical dynamics, scattering, strong-field physics)
@@ -28,10 +28,10 @@ The diagonal unitaries are applied via [[Fourier-Eigenstate Kickback for Arithme
 ## Complexity
 - Qubits: $nd + O(m)$ for $d$ dimensions at $n$-bit spatial resolution and $m$-bit potential precision
 - Gates per timestep: dominated by potential evaluation (e.g. $O(B^2 m^3)$ for Coulomb) + $O(nd \log(nd))$ for QFTs
-- Error: $O(\delta t^2)$ per step (first-order Trotter); improvable with higher-order decompositions
+- Error: $O(\delta t^2)$ local error for first-order splitting; total error over many steps depends on commutators, total time, grid discretization, and arithmetic phase precision
 
 ## Caveat
-Only works cleanly when $\hat{H} = \hat{T}(p) + \hat{V}(x)$. Velocity-dependent potentials or magnetic fields require more care. The Trotter error means many short timesteps — for long-time dynamics the gate count can be large.
+Only works cleanly when $\hat{H} = \hat{T}(p) + \hat{V}(x)$. Velocity-dependent potentials or magnetic fields require more care. Singular Coulomb potentials and grid resolution/cutoff choices are major real-space complications. The Trotter error means many short timesteps — for long-time dynamics the gate count can be large.
 
 ## Related notes
 - [[Polynomial-Time Quantum Algorithm for the Simulation of Chemical Dynamics (Kassal-Jordan-Love-Mohseni-Aspuru-Guzik 2008) — Paper Notes]]

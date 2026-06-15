@@ -1,4 +1,4 @@
-> **🚧 STUB** — referenced in Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) notes.
+> **🚧 STUB** — corrective note for Høyer-Mosca-de Wolf's bounded-error-input search theorem, referenced by walk-search notes.
 
 ---
 
@@ -8,28 +8,31 @@
 |-------|-------|
 | **Authors** | Peter Høyer, Michele Mosca, Ronald de Wolf |
 | **Year** | 2003 |
-| **Venue** | *STOC 2003* |
-| **arXiv** | [arXiv:quant-ph/0209054](https://arxiv.org/abs/quant-ph/0209054) |
+| **Title** | *Quantum Search on Bounded-Error Inputs* |
+| **Venue** | *ICALP 2003*, LNCS 2719, pp. 291-299 |
+| **arXiv** | [arXiv:quant-ph/0304052](https://arxiv.org/abs/quant-ph/0304052) |
 | **Tags** | #amplitude-amplification #recursion #quantum-walk #search |
 
 ---
 
 ## Key result
 
-Removes the $O(\log(1/\varepsilon))$ overhead in amplitude amplification that arises when the reflection about the "good" subspace is only approximate. By applying amplitude amplification *recursively* — using a coarser amplification in the inner loop to produce a better reflection for the outer loop — the log factor is absorbed into the recursion depth with controlled error accumulation.
+Problem: there are $n$ base algorithms, each computing a bit with bounded error probability. We want to find an index whose bit is 1, if such an index exists.
 
-Achieves exact (up to $\varepsilon$) amplitude amplification in $O(1/a)$ queries (no log), where $a$ is the initial amplitude of the good state.
+Naively, one could first reduce each base algorithm's error to $O(1/\operatorname{poly}(n))$ and then run Grover search, costing an extra $O(\log n)$ factor. Høyer-Mosca-de Wolf avoid this: by recursively interleaving amplitude amplification with error reduction, they find a 1-index with high probability using only $O(\sqrt{n})$ repetitions of the base algorithms.
+
+This is not a generic "exact amplitude amplification in $O(1/a)$" theorem. Its point is that amplitude amplification can still work when the predicate/verifier has only bounded error, without first making every predicate evaluation highly reliable.
 
 ---
 
 ## Role in the walk-based search framework
 
-Used in [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|Magniez-Nayak-Roland-Santha 2007]] to achieve the $O(1/\sqrt{\delta})$ quantum walk search cost without a log factor, where $\delta$ is the spectral gap of the walk. The approximate reflection comes from phase estimation on the walk operator.
+This result is conceptually relevant to later walk-search frameworks because quantum walks often supply approximate or bounded-error reflections/verifiers. The Høyer-Mosca-de Wolf theorem shows how to avoid paying a blanket logarithmic reliability overhead before search. In [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|MNRS-style walk search]], this supports the idea that approximate checking/reflection procedures must be handled inside the amplification analysis, not simply union-bounded as independent high-confidence subroutines.
 
 ---
 
 ## TODO
 
 - [ ] Full recursion construction and error analysis
-- [ ] Relation to [[Amplitude Amplification and Estimation]]
+- [ ] Relation to [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]]
 - [ ] Comparison with oblivious amplitude amplification (Berry et al.)

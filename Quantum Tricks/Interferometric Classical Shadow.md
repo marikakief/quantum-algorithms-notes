@@ -40,17 +40,17 @@ Conceptually, it is a Hadamard test repackaged so that the expensive quantum par
 
 ## Complexity
 
-For $m$ target overlaps and additive error $\varepsilon$, the paper gets
+For $m$ target overlaps and additive error $\varepsilon$, the paper gets a shadow-norm-controlled bound of the form
 $$
 O\!\left(\frac{\log(m/\delta)}{\varepsilon^2}\right)
 $$
-queries to the controlled state-preparation unitary of $|w\rangle$, with polylogarithmic classical prediction time per query in favourable structured settings.
+queries to the controlled state-preparation unitary of $|w\rangle$ for the structured test families it analyzes. The logarithmic dependence on $m$ assumes the corresponding overlap observables have bounded shadow norm and that overlaps between test states and stabilizer shadow states can be computed efficiently. In favourable structured settings the classical prediction time per query is polylogarithmic.
 
 ## Caveat
 
 The method is only as good as the structure of the test family. If overlaps with stabilizer states are hard to evaluate, the classical post-processing can become the bottleneck.
 
-Also, it returns the real part of overlaps in the paper's setup. That is exactly what their real-valued learning tasks need, but not every application has that form.
+Also, it returns the real part of overlaps in the paper's setup. That is exactly what their real-valued learning tasks need. Complex overlaps would require a corresponding imaginary-part observable / phase-shifted variant, or a different readout construction.
 
 ## Related notes
 - [[Exponential Quantum Advantage in Processing Massive Classical Data (Zhao, Zlokapa, Neven et al 2026) — Paper Notes]]

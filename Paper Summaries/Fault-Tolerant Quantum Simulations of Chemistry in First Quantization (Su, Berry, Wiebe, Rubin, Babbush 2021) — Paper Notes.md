@@ -18,9 +18,9 @@ The goal: compile the two first-quantized algorithms from [[Quantum Simulation o
 
 ## What the paper does
 
-This is the first constant-factor resource estimate for *any* first-quantized chemistry algorithm, and the first concrete circuit compilation for any Dyson-series-based simulation. The paper introduces a suite of circuit-level optimisations that reduce the Toffoli complexity by roughly three orders of magnitude over naive implementations.
+This is the first constant-factor resource estimate for first-quantized chemistry simulation, and the first concrete circuit compilation for any Dyson-series-based simulation. The paper introduces a suite of circuit-level optimisations that reduce the Toffoli complexity by roughly three orders of magnitude over naive implementations.
 
-The bottom line: for realistic molecular and materials simulations, the first-quantized qubitization approach often requires **orders of magnitude less surface-code spacetime volume** than the best second-quantized Gaussian-orbital algorithms — even for small non-periodic molecules. And qubitization usually beats the interaction picture despite worse asymptotic scaling, because the constant factors are better for moderate $\eta$ and $N$.
+The bottom line in these resource estimates: for the molecular and materials examples studied, the first-quantized qubitization approach often requires **orders of magnitude less surface-code spacetime volume** than the compared second-quantized Gaussian-orbital algorithms — even for small non-periodic molecules. In the same estimates, qubitization usually beats the interaction picture despite worse asymptotic scaling, because the constant factors are better for moderate $\eta$ and $N$.
 
 This paper is where first-quantized quantum chemistry goes from "asymptotically nice" to "plausibly practical." It's the compiled, costed version of the theoretical framework in [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush et al. (2019)]].
 
@@ -46,11 +46,11 @@ Each term in the LCU requires only a **single Toffoli** (to compute the bit prod
 
 **Key innovation #2 — Failed PREP fallback ([[Failed PREP Fallback to Alternative Hamiltonian Term]]):**
 
-The state preparation for $U+V$ (specifically the $\sum_\nu 1/\|\nu\| \,|\nu\rangle$ superposition) succeeds with probability $\approx 1/4$. Normally you'd use amplitude amplification ($3\times$ cost). Instead, when the preparation *fails*, apply SEL for $T$ in the failure branch. Since failure has probability $\approx 3/4$, this gives the correct relative weighting $3T/(4\lambda_T) + (U+V)/(4(\lambda_U + \lambda_V))$ when $\lambda_T = 3(\lambda_U + \lambda_V)$. An ancilla qubit rotation handles the general case. The effective $\lambda$ remains $\lambda_T + \lambda_U + \lambda_V$ without tripling any costs.
+The state preparation for $U+V$ (specifically the $\sum_\nu 1/\|\nu\| \,|\nu\rangle$ superposition) has success probability near $1/4$ in the idealized nested-box picture. Normally one would use amplitude amplification ($3\times$ cost). Instead, the circuit applies SEL for $T$ in the failure branch, with extra rotations and equality-test corrections chosen so the block-encoding normalization matches the theorem's adjusted $\lambda$. The simple weighting $3T/(4\lambda_T) + (U+V)/(4(\lambda_U + \lambda_V))$ is the intuition for the special case $\lambda_T = 3(\lambda_U + \lambda_V)$; the full theorem includes $p_\nu^{\mathrm{amp}}$ and $P_{\mathrm{eq}}$ corrections.
 
 **PREPARE for $\nu$ weights:** Uses a hierarchy of nested boxes in momentum space, indexed by $\mu$, with an inequality test against $M(2^{\mu-2}/\|\nu\|)^2$ to approximate the $1/\|\nu\|$ weighting. Cost: $O(n_p^2 + n_M n_p)$ Toffolis.
 
-**SELECT implementation:** Controlled swaps bring the relevant momentum registers $p_i, p_j$ into ancillae ($12\eta n_p$ Toffolis for the swap network using [[Unary Iteration]]). Arithmetic for $p + \nu$ and $q - \nu$ uses signed-integer addition ($24n_p$ Toffolis). Nuclear phase $-e^{-ik_\nu \cdot R_\ell}$ is applied via multiplication into a phase gradient register ($6n_p n_R$ Toffolis). Nuclear positions $R_\ell$ are loaded via [[QROM (Quantum Read-Only Memory)|QROM]] with cost $\lambda_\zeta + \mathrm{Er}(\lambda_\zeta)$.
+**SELECT implementation:** Controlled swaps bring the relevant momentum registers $p_i, p_j$ into ancillae ($12\eta n_p$ Toffolis for the swap network using [[Unary Iteration]]). Arithmetic for $p + \nu$ and $q - \nu$ uses signed-integer addition ($24n_p$ Toffolis). Nuclear phase $-e^{-ik_\nu \cdot R_\ell}$ is applied via multiplication into a phase gradient register ($6n_p n_R$ Toffolis). Nuclear positions $R_\ell$ are loaded via [[QROM (Quantum Read-Only Memory)|QROM]]; the theorem accounts for this through QROM table-loading and finite-precision error terms rather than a standalone physical $\lambda_\zeta$ norm.
 
 **Total per-step Toffoli cost:** Dominated by the controlled swap network at $12\eta n_p$, plus arithmetic and state preparation terms (see Theorem 4, Eq. 125 in the paper). Phase estimation with $\pi\lambda/(2\varepsilon_{\mathrm{pha}})$ steps gives the overall complexity.
 
@@ -68,7 +68,7 @@ The dot product $p\cdot\nu$ costs $O(n_p^2)$ Toffolis (independent of $\eta$!), 
 
 **Key innovation #4 — Qubitized Dyson series ([[Qubitized Dyson Series for Phase Estimation]]):**
 
-Instead of amplitude-amplifying a single Dyson step to get deterministic time evolution ($3\times$ cost), qubitize $\sin(H\tau)$ directly. The eigenvalues $\arcsin[\sin(E_j\tau)/e]$ are approximately $E_j\tau/e$ near zero. Setting $\tau = 1/\lambda_B$ gives effective evolution time $\tau_{\mathrm{eff}} = 1/(e\lambda_B)$, requiring $N_{\mathrm{steps}} = \pi e \lambda_B/(2\varepsilon_{\mathrm{pha}})$ steps. This is only $2/3$ the cost of the amplitude-amplified approach and $45\%$ of the method from Low & Wiebe.
+Instead of amplitude-amplifying a single Dyson step to get deterministic time evolution ($3\times$ cost), qubitize $\sin(H\tau)$ directly for eigenvalue estimation. The eigenvalues $\arcsin[\sin((E_j-E_0)\tau)/e]$ are approximately $(E_j-E_0)\tau/e$ near zero, so an energy shift $E_0$ is used to keep the target eigenvalue in the linear regime. Setting $\tau = 1/\lambda_B$ gives effective evolution time $\tau_{\mathrm{eff}} = 1/(e\lambda_B)$, requiring $N_{\mathrm{steps}} = \pi e \lambda_B/(2\varepsilon_{\mathrm{pha}})$ steps. The reported savings relative to amplitude-amplified Dyson simulation depend on the paper's chosen sorting/inequality-test implementations and target energy-shift regime.
 
 **Dyson series state preparation:** The truncation order $K$ is typically 6–10. The $k$-superposition weights are $\sqrt{K!/k!}$ — square roots of integers — implemented exactly via inequality testing on an equal superposition of $\lceil K!e \rceil$ values. Time registers are prepared with controlled Hadamards and sorted with a quantum sorting network ($4n_t S_t(K)$ Toffolis).
 
@@ -127,7 +127,7 @@ For condensed-phase materials at $r_s \approx 1{-}10\, a_0$, the qubitization al
 | **This work (qubitization)** | **1st-quant, plane-wave** | **$O(\eta\log N)$** | **$\widetilde{O}(\eta^{4/3}N^{2/3} + \eta^{8/3}N^{1/3})/\varepsilon$** |
 | **This work (interaction picture)** | **1st-quant, plane-wave** | **$O(\eta\log N)$** | **$\widetilde{O}(\eta^{8/3}N^{1/3}/\varepsilon)$** |
 
-The key finding: **qubitization is usually more practical than the interaction picture** for chemistry. The interaction picture wins only at small $\eta$ and extremely high resolution ($\Delta < 10^{-3} a_0$), which corresponds to a billion grid points per Bohr radius cubed — far beyond what's needed for electronic structure.
+The key finding in these estimates: **qubitization is usually more practical than the interaction picture** for the studied first-quantized chemistry instances. The interaction picture wins only at small $\eta$ and extremely high resolution ($\Delta < 10^{-3} a_0$), which corresponds to a billion grid points per Bohr radius cubed — far beyond what's needed for the electronic-structure examples considered.
 
 The ratio of interaction picture to qubitization Toffoli counts crosses unity only when $\eta \lesssim 20$ and $\Delta \lesssim 10^{-3} a_0$. For $\eta \geq 50$ or $\Delta \geq 10^{-2} a_0$, qubitization dominates. This is because at moderate $\eta$, the cost is dominated by the controlled swap network ($12\eta n_p$ per step for both algorithms), and the interaction picture adds Dyson-series overhead on top.
 
@@ -135,13 +135,13 @@ The ratio of interaction picture to qubitization Toffoli counts crosses unity on
 
 ## Limits / caveats
 
-**No pseudopotentials.** All resource estimates use all-electron calculations. Including pseudopotentials would reduce $\eta$ (by removing core electrons) and accelerate plane-wave convergence (by smoothing nuclear cusps). The paper flags this as the most important next step. Without pseudopotentials, the plane-wave basis converges slowly for heavy atoms.
+**No pseudopotentials.** All resource estimates use all-electron calculations. Including pseudopotentials would reduce $\eta$ (by removing core electrons) and accelerate plane-wave convergence (by smoothing nuclear cusps). The paper flags this as the most important next step; [[Quantum Simulation of Realistic Materials in First Quantization Using Non-Local Pseudopotentials (Berry, Rubin, Babbush et al 2024) — Paper Notes|Berry, Rubin, Babbush et al. 2024]] later supplies the first-quantized pseudopotential block encoding. Without pseudopotentials, the plane-wave basis converges slowly for heavy atoms.
 
 **Cubic Bravais lattice only.** The reciprocal lattice is defined on a cubic grid (Eq. 6). Materials with non-cubic unit cells (hexagonal, monoclinic, etc.) would require non-orthogonal Bravais vectors, adding cost to the kinetic energy computation. This limits immediate applicability to a subset of crystal structures.
 
-**State preparation in first quantization is under-developed.** Preparing arbitrary Slater determinants in first quantization costs $\widetilde{O}(\eta^2 M)$ for $M$ plane waves involved in the initial state, compared to $\widetilde{O}(\eta M)$ in second quantization. The paper notes this overhead but doesn't resolve it.
+**State preparation in first quantization is under-developed.** Preparing arbitrary Slater determinants in this first-quantized plane-wave representation costs $\widetilde{O}(\eta^2 M)$ for $M$ plane waves involved in the initial state, compared to $\widetilde{O}(\eta M)$ for a corresponding second-quantized construction. This is a representation-dependent overhead, not a lower bound on all first-quantized state preparation.
 
-**Born-Oppenheimer only (in the numerics).** The algorithms trivially extend to non-Born-Oppenheimer dynamics (just add nuclear kinetic + interaction terms), but all concrete resource estimates are for the Born-Oppenheimer Hamiltonian.
+**Born-Oppenheimer resource estimates.** The concrete circuits and resource estimates are for the fixed-nuclei Born-Oppenheimer electronic Hamiltonian. The first-quantized framework can be extended to dynamical nuclei, but doing so changes masses, kinetic-energy terms, interaction terms, particle statistics, and state preparation; it is not a trivial add-on to the reported numbers.
 
 **Comparison to Gaussian methods is approximate.** The claim that $N = 10^5$ plane waves matches cc-pVTZ accuracy is plausible (based on the $\sim 1000\times$ ratio from Appendix E of Babbush et al. 2018) but system-dependent. Pseudopotentials would improve this ratio significantly.
 
@@ -155,7 +155,7 @@ The ratio of interaction picture to qubitization Toffoli counts crosses unity on
 
 3. [[Incremental Kinetic Energy Register]] — Maintain a running register for $\sum_j \|k_{p_j}\|^2$ and update it incrementally ($O(n_p^2)$ per potential application) rather than recomputing from scratch ($O(\eta n_p^2)$). The $\eta$ dependence drops to logarithmic. Applicable to any interaction-picture simulation where $A$ is a function of the same registers modified by $B$.
 
-4. [[Qubitized Dyson Series for Phase Estimation]] — Instead of amplitude-amplifying each Dyson-series step to get deterministic time evolution, qubitize $\sin(H\tau)$ directly and perform phase estimation on the resulting walk operator. Saves a factor of $3/2$ over amplitude amplification. Works for any Dyson-series-based simulation when the goal is eigenvalue estimation.
+4. [[Qubitized Dyson Series for Phase Estimation]] — Instead of amplitude-amplifying each Dyson-series step to get deterministic time evolution, qubitize $\sin(H\tau)$ directly and perform phase estimation on the resulting walk operator. Gives the paper's reported constant-factor savings for eigenvalue estimation under its sorting/inequality-test and energy-shift assumptions; it is not a replacement for time-evolution simulation.
 
 ---
 

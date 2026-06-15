@@ -153,6 +153,7 @@ The numerical simulations (Fig. 3) confirm the scaling exponent: classical error
 
 ### Paper notes
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]] — the general framework this paper instantiates
+- [[Quantum-Accelerated Multilevel Monte Carlo Methods for Stochastic Differential Equations in Mathematical Finance (An-Linden-Liu-Montanaro-Shao-Wang 2021) — Paper Notes]] — extends quantum finance beyond explicit Black--Scholes sampling by combining quantum mean estimation with MLMC for general SDE discretisations
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — amplitude estimation
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]] — the "fine print" caveats about quantum speedups apply here too
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — Grover search as the foundation

@@ -14,15 +14,15 @@ The paper treats this as a joint classical-quantum resource estimation problem: 
 
 ## What the paper does
 
-Constructs a hierarchy of active spaces (5 to 58 orbitals) for four CYP model compounds and benchmarks classical methods against quantum resource estimates to define a quantum advantage boundary for a *pharmaceutically relevant* system. The key finding: for active spaces large enough to balance static and dynamic correlation (≥43 orbitals), [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] phase estimation with [[THC Non-Orthogonal Diagonal Coulomb Representation|THC]] factorization already shows more favorable runtime scaling than DMRG at high bond dimension. The largest system (58-orbital Cpd I) can be simulated with ~4.6 million physical qubits in 73 hours at 0.1% physical error rate, or ~500K qubits in 25 hours at 0.001% error rate.
+Constructs a hierarchy of active spaces (5 to 58 orbitals) for four CYP model compounds and benchmarks classical methods against quantum resource estimates to define a quantum advantage boundary for a *pharmaceutically relevant* system. The key finding: for active spaces large enough to balance static and dynamic correlation (≥43 orbitals), [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] phase estimation with [[THC Non-Orthogonal Diagonal Coulomb Representation|THC]] factorization shows more favorable runtime scaling than the paper's DMRG baselines at high bond dimension, under specific surface-code and magic-factory assumptions. The largest system (58-orbital Cpd I) can be simulated with ~4.6 million physical qubits in 73 hours at 0.1% physical error rate, or ~500K qubits in 25 hours at 0.001% error rate.
 
-My assessment: this paper is a model for how quantum advantage claims *should* be made — grounded in real chemistry rather than exotic molecules, with careful classical benchmarking to establish that the problem is actually hard. The honest conclusion that even quantum computers may struggle with full-system simulation (1.5 trillion Toffolis for 500 orbitals) is refreshing. The choice of CYP over FeMoCo is smart: CYPs metabolize >70% of marketed drugs, so the pharmaceutical relevance is immediate and concrete.
+My assessment: this paper is a model for how quantum advantage claims *should* be made — grounded in real chemistry rather than exotic molecules, with careful classical benchmarking to establish that the problem is actually hard. The honest conclusion that even quantum computers may struggle with full-system simulation (1.5 trillion Toffolis for 500 orbitals) is refreshing. The choice of CYP over FeMoCo is smart: CYP enzymes are central to drug metabolism, so the pharmaceutical relevance is immediate and concrete.
 
 ---
 
 ## The system: Cytochrome P450
 
-CYP enzymes are membrane-bound heme-iron monooxygenases responsible for drug metabolism — CYP 3A4 and CYP 2D6 alone metabolize >70% of marketed drugs. The catalytic cycle passes through Compound I (Cpd I), a polyradical iron-oxo species whose spin-state ordering (doublet vs quartet) controls reactivity but remains unresolved.
+CYP enzymes are membrane-bound heme-iron monooxygenases responsible for drug metabolism; CYP 3A4 and CYP 2D6 are especially important in marketed-drug metabolism. That pharmacological fact motivates the model, but the paper simulates stripped-down active-site compounds rather than a full drug-metabolism workflow. The catalytic cycle passes through Compound I (Cpd I), a polyradical iron-oxo species whose spin-state ordering (doublet vs quartet) controls reactivity but remains unresolved.
 
 Four model compounds are studied, derived from CYP3A4 crystal structures with surrounding protein removed:
 1. **Resting state** — water bound to heme-iron (6-coordinate)
@@ -105,7 +105,7 @@ The paper compares [[Single Factorization for Qubitized Chemistry|single factori
 | DF | $\widetilde{O}(N\sqrt{\Xi})$ | $\widetilde{O}(N\sqrt{\Xi}\lambda/\varepsilon)$ | $O(N^{3.0})$ |
 | THC | $\widetilde{O}(N)$ | $\widetilde{O}(N\lambda/\varepsilon)$ | $O(N^{2.5})$ |
 
-THC wins decisively. The empirical $O(N^{2.5})$ Toffoli scaling for CYP models is consistent with the earlier FeMoCo results from [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee, Berry et al. (2021)]].
+THC wins in the paper's Toffoli/runtime resource estimates for these CYP active spaces. The empirical $O(N^{2.5})$ Toffoli scaling for CYP models is consistent with the earlier FeMoCo results from [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee, Berry et al. (2021)]].
 
 ### THC rank convergence (Cpd I, X active space)
 
@@ -122,7 +122,7 @@ AutoCCZ factories with level-1 code distance 19, level-2 code distance 31, data 
 
 ### The advantage boundary
 
-Plotting DMRG CPU time against QPU time as a function of active space size: for bond dimension M ≥ 1000 and active spaces ≥ 31 orbitals, quantum phase estimation has a runtime advantage. The crossover happens earlier than for FeMoCo because the CYP active spaces are specifically designed to test convergence across a range of sizes.
+Plotting DMRG CPU time against QPU time as a function of active space size: for bond dimension M ≥ 1000 and active spaces ≥ 31 orbitals, quantum phase estimation has a runtime advantage in the paper's surface-code/factory model. The crossover happens earlier than for FeMoCo because the CYP active spaces are specifically designed to test convergence across a range of sizes.
 
 Important caveat: QPE only gives energies. DMRG gives density matrices (and thus other observables). NEVPT2 corrections require 1-, 2-, 3-, and sometimes 4-particle RDMs, which QPE doesn't directly provide. The paper flags this as a gap requiring further quantum algorithm development.
 
@@ -134,7 +134,7 @@ Extrapolating to 500 orbitals (the full valence space used in classical coupled 
 
 ## Initial state overlap
 
-The largest computational basis state overlap with the DMRG M=1500 ground state decays from ~1.0 (5 qubits) to ~0.6 (84 qubits) across active spaces A through G. This is slow enough that simple Hartree-Fock initial states should suffice for QPE — no sophisticated state preparation is needed, at least for these active space sizes. This is consistent with the observation from [[Postponing the Orthogonality Catastrophe (Tubman, Mejuto-Zaera, Babbush et al 2018) — Paper Notes|Tubman et al. (2018)]] that the orthogonality catastrophe is less severe than sometimes feared for moderate active spaces.
+The largest computational-basis configuration overlap with the DMRG $M=1500$ ground state decays from ~1.0 (5 qubits) to ~0.6 (84 qubits) across active spaces A through G. This is evidence that a determinant-like initial component may have non-negligible QPE success probability in these active spaces. It does **not** by itself show that a naive Hartree-Fock determinant is the right state, or that no state-preparation work is needed: one still has to identify the relevant configuration or compact ansatz and prepare it coherently. This is consistent with the observation from [[Postponing the Orthogonality Catastrophe (Tubman, Mejuto-Zaera, Babbush et al 2018) — Paper Notes|Tubman et al. (2018)]] that the orthogonality catastrophe can be less severe than sometimes feared for moderate active spaces, while remaining distinct from the severe Fe-S overlap decay reported in later EQA studies.
 
 ---
 

@@ -1,3 +1,5 @@
+# A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes
+
 > **Source:** Greg Kuperberg, *A subexponential-time quantum algorithm for the dihedral hidden subgroup problem*, SIAM J. Comput. 35(1):170–188, 2005; arXiv:quant-ph/0302112
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0302112) · [SIAM](https://doi.org/10.1137/S0097539703436345)
 > **Tags:** #hidden-subgroup-problem #dihedral-group #quantum-sieve #subexponential #foundational
@@ -27,7 +29,10 @@ Kuperberg's insight: don't try to extract information from individual qubits. In
 ### Setup: coset states to labelled qubits
 
 1. Prepare the mixed state $\rho_{D_N/H}$ by querying the oracle with the uniform superposition over $D_N$ and discarding the output
-2. Apply the [[Quantum Fourier Transform Circuit|QFT]] on $\mathbb{Z}/N$ to the rotation register and measure, obtaining label $k \in \mathbb{Z}/N$ and qubit state $|\psi_k\rangle \propto |0\rangle + e^{2\pi i ks/N}|1\rangle$
+2. Apply the [[Quantum Fourier Transform Circuit|QFT]] on $\mathbb{Z}/N$ to the rotation register and measure, obtaining label $k \in \mathbb{Z}/N$ and normalized qubit state
+   $$
+   |\psi_k\rangle=\frac{|0\rangle+e^{2\pi i ks/N}|1\rangle}{\sqrt 2}
+   $$
 
 Each oracle call produces one labelled qubit $(k, |\psi_k\rangle)$ with $k$ uniformly random.
 
@@ -36,7 +41,7 @@ Each oracle call produces one labelled qubit $(k, |\psi_k\rangle)$ with $k$ unif
 Given $|\psi_k\rangle$ and $|\psi_\ell\rangle$:
 1. Tensor them: $|\psi_k\rangle \otimes |\psi_\ell\rangle \propto |00\rangle + e^{2\pi i ks/N}|10\rangle + e^{2\pi i \ell s/N}|01\rangle + e^{2\pi i(k+\ell)s/N}|11\rangle$
 2. Apply CNOT and measure the second qubit
-3. The residual state is $|\psi_{k \pm \ell}\rangle$ — the sign depends on the measurement outcome (each with probability $1/2$)
+3. The residual state is $|\psi_{k \pm \ell}\rangle$ up to a known bit flip/global phase; the sign depends on the measurement outcome, with each outcome occurring with probability $1/2$ for generic labels.
 
 This is **summand extraction**: two labelled qubits yield one qubit with label $k + \ell$ or $k - \ell$.
 
@@ -45,13 +50,17 @@ This is **summand extraction**: two labelled qubits yield one qubit with label $
 Let $m = \lceil\sqrt{n-1}\rceil$.
 
 1. Create a list $L_0$ of $O(8^m)$ labelled qubits from oracle calls
-2. For $j = 0, \ldots, m-1$: pair qubits in $L_j$ whose labels $k, \ell$ agree in $m$ low bits (beyond trailing zeros). Extract $|\psi_{k \pm \ell}\rangle$; keep those where subtraction occurred (gaining $\sim m$ trailing zeros). This gives $L_{j+1}$ with $|L_{j+1}| \approx |L_j|/4$.
+2. For $j = 0, \ldots, m-1$: pair qubits in $L_j$ whose labels $k, \ell$ agree in $m$ low bits (beyond trailing zeros). Extract $|\psi_{k \pm \ell}\rangle$; the stage invariant keeps the outcomes that gain the desired trailing zeros, and the discarded outcomes are charged in the sieve attrition analysis. This gives $L_{j+1}$ with $|L_{j+1}| \approx |L_j|/4$.
 3. The final list $L_m$ contains copies of $|\psi_0\rangle$ and $|\psi_{2^{n-1}}\rangle$. Measure $|\psi_{2^{n-1}}\rangle$ in the $|\pm\rangle$ basis to get $s \bmod 2$.
 4. Recurse: pass to the subgroup $F_{s \bmod 2} \cong D_{N/2}$ to find the next bit.
 
 ### Algorithm 3 (greedy sieve, for $N = r^n$)
 
-Uses an objective function $\alpha(k)$ counting factors of $r$ in $k$. Greedily pairs qubits that minimise $\alpha$ and maximise $\alpha(k \pm \ell)$ of the result. Achieves $e^{O(\sqrt[3]{2\log^3 N})}$ for smooth $N$.
+Uses an objective function $\alpha(k)$ counting factors of $r$ in $k$. Greedily pairs qubits that minimise $\alpha$ and maximise $\alpha(k \pm \ell)$ of the result. For $N=r^n$ with fixed small radix, the paper's sharper query bound is
+$$
+O\!\left(3^{\sqrt{2\log_3 N}}\right),
+$$
+with quasi-linear classical work in the number of queries; this is still on the $\exp(O(\sqrt{\log N}))$ subexponential scale.
 
 ### The general case (Theorem 7.1)
 
@@ -61,7 +70,11 @@ For arbitrary finitely generated abelian groups $A$, the hidden shift problem is
 
 **Theorem 1.1.** There is a quantum algorithm for DHSP with time and query complexity $2^{O(\sqrt{\log N})}$.
 
-**Theorem 5.1.** For $N = r^n$ (smooth), the complexity is $e^{O(\sqrt[3]{2\log^3 N})}$.
+**Theorem 5.4.** For $N = r^n$ with fixed small radix, the greedy sieve uses
+$$
+O\!\left(3^{\sqrt{2\log_3 N}}\right)
+$$
+queries and quasi-linear time in the number of queries.
 
 **Theorem 7.1.** The hidden shift problem for arbitrary finitely generated abelian groups has complexity $2^{O(\sqrt{n})}$ where $n$ is the output length.
 
@@ -73,6 +86,7 @@ For arbitrary finitely generated abelian groups $A$, the hidden shift problem is
 | Ettinger-Høyer (1999) | $2^{O(n)}$ | $\text{poly}(n)$ | $O(n)$ |
 | **Kuperberg (2005)** | $2^{O(\sqrt{n})}$ | $2^{O(\sqrt{n})}$ | $2^{O(\sqrt{n})}$ |
 | [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes\|Regev (2004)]] | $2^{O(\sqrt{n \log n})}$ | $\text{poly}(n)$ | $2^{O(\sqrt{n \log n})}$ |
+| [[Another Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2013) — Paper Notes\|Kuperberg (2013)]] | $\exp(O(\sqrt{n}))$ quantum time | $O(n)$ quantum space, $\exp(O(\sqrt n))$ classical space in the main model | $\exp(O(\sqrt n))$ |
 
 Where $n = \log N$.
 
@@ -84,12 +98,15 @@ Ettinger-Høyer showed that $O(\log N)$ queries suffice *information-theoretical
 - **Not polynomial time.** Still subexponential — so it doesn't fully solve the dihedral HSP or break lattice cryptography. The gap between $2^{O(\sqrt{n})}$ and $\text{poly}(n)$ remains a major open question.
 - **Suboptimal for non-smooth $N$:** When $N$ isn't a prime power, the algorithm needs additional techniques (spliced approximation) and the complexity worsens slightly.
 - The sieve is inherently probabilistic — it's analysed via Chernoff bounds on Bernoulli trials. The constant factors are good but not tight.
-- Kuperberg's later paper (2013, arXiv:1307.2122) gives an improved sieve with $2^{O(\sqrt[3]{\log N})}$ complexity, but still subexponential.
+- Kuperberg's later paper (2013, arXiv:1112.3333) gives a collimation/tradeoff approach at the same general $\exp(O(\sqrt{\log N}))$ time scale, while reducing quantum space to $O(\log N)$ and moving much of the storage into classical bookkeeping or QRACM-dependent tradeoffs.
+
+Resource summary: Kuperberg (2005) optimises time/query at the cost of $2^{O(\sqrt{\log N})}$ simultaneous quantum states; Regev (2004) keeps quantum space polynomial with a $2^{O(\sqrt{\log N\log\log N})}$ time/query penalty; Kuperberg (2013) gives a family of collimation tradeoffs that separates small quantum space from subexponential classical storage and possible QRACM speedups.
 
 ## Reusable ideas
 
 1. [[Quantum Sieve for Labelled Qubits]] — repeatedly pairing qubit states to drive their labels toward a target via summand extraction, analogous to classical sieve algorithms
 2. [[Coset State to Labelled Qubit Reduction]] — reducing hidden subgroup coset states to individual labelled qubits via [[Coset Sampling via Fourier Transform|Fourier sampling]], extracting the representation-theoretic content
+3. [[Kuperberg Sieve with Recycled Failures]] — Montanaro's average-case pattern-matching paper reuses the failed pair-combination outcomes when the stage invariant is preserved
 
 ## References within this paper
 

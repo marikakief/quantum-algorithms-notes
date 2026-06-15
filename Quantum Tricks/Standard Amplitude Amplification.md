@@ -29,15 +29,15 @@ After $m = \lfloor\pi/(4\theta_a)\rfloor \approx O(1/\sqrt{a})$ iterations, succ
 - Any quantum algorithm whose output needs checking: run $A$, check with $\chi$, amplify
 - Boosting postselection probability in [[Linear Combination of Unitaries (LCU)|LCU]] (though [[Oblivious Amplitude Amplification (Robust)|oblivious AA]] is usually better there)
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]]: boosts $1/\kappa^2$ success to $O(1)$ with $O(\kappa)$ rounds
-- Search with classical heuristics: any expected-time-$T$ classical search becomes $O(\sqrt{T})$
+- Search with classical heuristics: a coherently seeded, reversible, checkable fixed-runtime search heuristic, or a variable-time heuristic after suitable bucketing/amplification machinery, can obtain the usual square-root speedup
 
 ## Complexity
 
-$O(1/\sqrt{a})$ applications of $A$, $A^{-1}$, and $S_\chi$. Optimal — matches the $\Omega(\sqrt{N/t})$ lower bound for search.
+$O(1/\sqrt{a})$ applications of $A$, $A^{-1}$, and $S_\chi$. This is black-box/query-model optimal by reduction to unstructured search, where it matches the $\Omega(\sqrt{N/t})$ lower bound.
 
 ## Caveat
 
-Requires $A$ to be **measurement-free** (no intermediate measurements). Also requires $A^{-1}$ — if $A$ is irreversible or has garbage, this won't work (see [[Reversible Computation via Compute-Copy-Uncompute]]). If $a$ is unknown, use the exponential search strategy (Theorem 3) or [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]].
+Requires $A$ to be **measurement-free** (no intermediate measurements). Classical randomness in $A$ must be represented coherently as a seed register. Also requires $A^{-1}$ — if $A$ is irreversible or has garbage, this won't work (see [[Reversible Computation via Compute-Copy-Uncompute]]). If $a$ is unknown, use the exponential search strategy to find a good item, or [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]] to estimate $a$; these are different goals.
 
 ## Related notes
 

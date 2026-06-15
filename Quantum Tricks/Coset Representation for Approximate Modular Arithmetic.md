@@ -48,4 +48,5 @@ To add $k \bmod N$: just add $k$ (non-modularly) into the encoded register. No c
 - [[Oblivious Carry Runway]] — the complementary technique for depth reduction; typically used inside the coset encoding
 - [[Arithmetic in the Fourier Basis]] — a different approach to avoiding carry overhead: work in the QFT basis instead of using coset superpositions
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — the primary application
+- [[How to Factor 2048 Bit RSA Integers in 8 Hours Using 20 Million Noisy Qubits (Gidney-Ekera 2021) — Paper Notes]] — combines coset modular arithmetic with windowed lookups and carry runways for the RSA-2048 resource estimate
 - [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes]] — an exact modular multiplication approach that does not use the coset representation

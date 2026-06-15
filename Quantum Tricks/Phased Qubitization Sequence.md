@@ -17,12 +17,12 @@ Use this when you already have the right signal encoded and the remaining task i
 
 ## Caveat
 
-The classical phase-synthesis step can be numerically delicate at high degree, so the clean asymptotic story and the practical compilation story are not always equally easy.
+The requested transform must fit the QSP/QSVT admissibility conditions: the polynomial degree, parity, and boundedness constraints are part of the algorithm, not afterthoughts. The classical phase-synthesis step can also be numerically delicate at high degree, so the clean asymptotic story and the practical compilation story are not always equally easy.
 
 ## Related notes
 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]]
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]]
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]]
-- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — applies this sequence for phase estimation on an arbitrary-basis chemistry Hamiltonian; the phase estimation step uses the Jacobi-Anger truncation of the phased iterate
+- [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — applies qubitized walks for phase estimation on an arbitrary-basis chemistry Hamiltonian; do not conflate this phase-estimation workflow with Jacobi-Anger QSP real-time simulation
 - [[Quantum Simulation of the Sachdev-Ye-Kitaev Model by Asymmetric Qubitization (Babbush, Berry, Neven 2019) — Paper Notes]] — applies the phased sequence via QSP to the asymmetric qubitization walk; derives sharp truncation order using Airy-function asymptotics of Bessel functions

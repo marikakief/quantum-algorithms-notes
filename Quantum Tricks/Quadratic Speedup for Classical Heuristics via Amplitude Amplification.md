@@ -5,7 +5,7 @@
 
 ## What it does
 
-Turns any classical probabilistic algorithm with expected runtime $T$ into a quantum algorithm with expected runtime $O(\sqrt{T})$.
+Turns a coherently implementable classical randomized **search heuristic** with expected runtime $T$ and a checkable success predicate into a quantum search procedure with expected runtime $O(\sqrt{T})$, with reversible implementation costs included.
 
 ## The trick
 
@@ -23,8 +23,8 @@ by Cauchy-Schwarz.
 
 ## When to reach for it
 
-- Speeding up any classical randomised search algorithm (SAT solvers, local search, simulated annealing restarts, etc.).
-- Any setting where you have a classical algorithm with known expected runtime and want to know the quantum speedup.
+- Speeding up bounded-time, coherently seeded versions of classical randomized search algorithms such as SAT restarts, local search, or simulated annealing restarts.
+- Any setting where you have a checkable-output search heuristic and want the black-box amplitude-amplification speedup under an explicit reversible cost model.
 - As a theoretical tool for proving quantum speedup results for broad algorithm families.
 
 ## Complexity
@@ -33,7 +33,7 @@ $O(\sqrt{T})$ applications of the reversible version of the heuristic and its in
 
 ## Caveat
 
-The heuristic must be implementable as a reversible quantum circuit (no intermediate measurements, no adaptive branching that depends on random bits already consumed). Classical heuristics with complex control flow may need significant restructuring. The reversible implementation overhead can eat into the $\sqrt{T}$ improvement for practical instances.
+The heuristic must be implementable as a reversible quantum circuit with coherent random seeds and a clean success predicate. Classical heuristics with complex control flow may need significant restructuring. Las Vegas or variable-time algorithms generally need variable-time amplitude amplification or explicit runtime bucketing. The reversible implementation overhead can eat into the $\sqrt{T}$ improvement for practical instances.
 
 Also, the $\sqrt{T}$ bound is over the *average* over the problem distribution — worst-case speedup for a specific instance is $\sqrt{|R|/h_F}$, which may be better or worse.
 

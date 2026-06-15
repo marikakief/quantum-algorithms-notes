@@ -12,7 +12,7 @@ Write $A(t) = L(t) + iH(t)$ with $L \succeq 0$. Then for any kernel $f(z)$ that 
 
 $$\mathcal{T} e^{-\int_0^t A(s)\, ds} = \int_\mathbb{R} \frac{f(k)}{1-ik}\, \mathcal{T} e^{-i\int_0^t [kL(s) + H(s)]\, ds}\, dk.$$
 
-The original LCHS identity used $f(k) = 1/(\pi(1+ik))$, giving the Cauchy kernel $1/(\pi(1+k^2))$ with $O(1/k^2)$ polynomial decay. By choosing the [[Near-Optimal Hardy-Space Kernel for LCHS|Hardy-space kernel]] $f_\beta(k) = (1/C_\beta) e^{(1+ik)^\beta}$, the decay becomes $e^{-c|k|^\beta}$ — sub-exponential. This exponentially reduces the number of quadrature points needed to discretise the integral.
+The original LCHS identity used $f(k) = 1/(\pi(1+ik))$, giving the Cauchy kernel $1/(\pi(1+k^2))$ with $O(1/k^2)$ polynomial decay. By choosing the [[Near-Optimal Hardy-Space Kernel for LCHS|Hardy-space kernel]] $f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}$, the decay becomes $e^{-c|k|^\beta}$ — sub-exponential. This exponentially reduces the number of quadrature points needed to discretise the integral.
 
 The freedom to choose $f$ is what makes the improved LCHS possible. The only constraints on $f$ are analyticity, decay, and normalisation — a large function class.
 

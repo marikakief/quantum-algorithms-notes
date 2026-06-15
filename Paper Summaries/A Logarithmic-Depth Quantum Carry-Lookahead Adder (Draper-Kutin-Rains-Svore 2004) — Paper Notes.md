@@ -118,14 +118,14 @@ $$\text{Depth} = 2k + 5, \quad \text{Toffoli count} = 6n - 3k - 5, \quad \text{A
 |---|---|---|---|---|
 | Vedral-Barenco-Ekert (1996) | $3n - 1$ | $4n - 2$ | $n$ | First quantum adder |
 | [[A New Quantum Ripple-Carry Addition Circuit (Cuccaro-Draper-Kutin-Moulton 2004) — Paper Notes\|Cuccaro-Draper-Kutin-Moulton (2004)]] | $2n - 1$ | $2n - 1$ | 1 (in-place) | Best gate count, single ancilla |
-| [[Addition on a Quantum Computer (Draper 2000) — Paper Notes\|Draper (2000)]] QFT adder | $O(\log n)$ approx | $O(n \log n)$ rotations | 0 | Depth $O(\log n)$ but $O(n)$ T gates per rotation |
+| [[Addition on a Quantum Computer (Draper 2000) — Paper Notes\|Draper (2000)]] QFT adder | implementation dependent | $O(n \log n)$ rotations with AQFT truncation | 0 | The addition rotations can be parallelised, but full adder depth includes the QFTs and depends on connectivity, ancillae, and rotation synthesis |
 | **QCLA out-of-place** | $O(\log n)$ | $5n + O(\log n)$ | $n + O(\log n)$ | This paper |
 | **QCLA in-place** | $O(\log n)$ | $10n + O(\log n)$ | $2n + O(\log n)$ | This paper |
 | [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes\|Gidney (2018)]] | $2n - 2$ | $4n - 4$ T gates | $n - 1$ | Lowest T-count (linear depth) |
 
-The QCLA adder is the only carry-based quantum adder with $O(\log n)$ depth. The Draper QFT adder also achieves $O(\log n)$ depth (with approximate QFT), but its rotation gates are expensive on fault-tolerant hardware. On surface codes, each rotation costs $O(\log(1/\varepsilon))$ T gates, making the effective T-count $O(n \log n \cdot \log(1/\varepsilon))$ vs. the QCLA's $O(n)$ Toffolis (= $O(n)$ T gates with [[Temporary Logical-AND|temporary logical-ANDs]]).
+The QCLA adder is the carry-based logarithmic-depth approach in this comparison. Fourier-basis addition has a competing parallelisation story because the addition-phase rotations commute, but a full QFT adder also includes forward/inverse QFTs and fault-tolerant synthesis of non-Clifford rotations. On surface-code hardware, synthesized rotations add precision-dependent T cost. QCLA has a linear Toffoli count; translating that into a T count depends on the chosen Toffoli decomposition and on how many compute/uncompute pairs can be replaced by [[Temporary Logical-AND|temporary logical-ANDs]].
 
-**Assessment:** This paper fills a genuine gap — $O(\log n)$ depth addition using only Toffoli gates. The construction is straightforward once you see how to make the classical carry-lookahead tree reversible, but the overlapping-phase scheduling and the two's-complement trick for in-place erasure are non-obvious. The ancilla cost ($\sim 2n$ for in-place) is the main downside; Gidney (2018) notes that at large $n$, the [[Ancilla Opportunity Cost Analysis|opportunity cost]] of holding these ancillae can exceed the depth savings.
+**Assessment:** This paper fills a genuine gap — $O(\log n)$ depth addition using only Toffoli gates. The construction is straightforward once you see how to make the classical carry-lookahead tree reversible, but the overlapping-phase scheduling and the two's-complement trick for in-place erasure are non-obvious. The ancilla cost ($\sim 2n$ for in-place) is the main downside; Gidney (2018) notes that at large $n$, the [[Ancilla Opportunity Cost Analysis|opportunity cost]] of holding these ancillae can exceed the depth savings. In modern terms, QCLA optimises depth by spending workspace, while Gidney-style ripple/CQ adders optimise T count and workspace at linear depth.
 
 ## Limits / caveats
 

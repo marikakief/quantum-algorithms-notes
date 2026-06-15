@@ -1,3 +1,5 @@
+# Fast Inversion, Preconditioned QLSP, Green's Functions, and Matrix Functions (Tong-An-Wiebe-Lin 2021) — Paper Notes
+
 > **Source:** Yu Tong, Dong An, Nathan Wiebe, and Lin Lin, *Fast inversion, preconditioned quantum linear system solvers, fast Green's-function computation, and fast evaluation of matrix functions*, arXiv:2008.13295, Phys. Rev. A **104**, 032422 (2021)
 > **Links:** [arXiv](https://arxiv.org/abs/2008.13295) · [Phys. Rev. A](https://doi.org/10.1103/PhysRevA.104.032422)
 > **Tags:** #QLSA #preconditioning #block-encoding #QSVT #Greens-function #Gibbs-state #matrix-function #LCU
@@ -34,7 +36,7 @@ For a diagonal matrix $D$ with oracle access to its entries:
 4. Uncompute the arithmetic
 5. Postselect on $|0\rangle$
 
-This gives a $(\alpha'_A, m, 0)$-[[Block-Encoding Composition Algebra|block-encoding]] of $D^{-1}$ where $\alpha'_A = \|D^{-1}\|$. The circuit uses $O(1)$ oracle queries — independent of $\kappa(D)$.
+This gives a $(\alpha'_A, m, 0)$-[[Block-Encoding Composition Algebra|block-encoding]] of $D^{-1}$ where $\alpha'_A = \|D^{-1}\|$. The circuit uses $O(1)$ diagonal-entry oracle queries, independent of $\kappa(D)$, but the normalization $\alpha'_A$ still affects later success probabilities and amplification costs.
 
 For **normal matrices** $A = VDV^\dagger$ where $V$ is efficiently implementable (e.g., QFT, [[Basis Switching via QFT for Kinetic-Potential Splitting|FFFT]]) and eigenvalues are classically computable: apply $V^\dagger$, fast-invert $D$, apply $V$. One use each of $V$ and $V^\dagger$.
 
@@ -74,7 +76,7 @@ Discretise with $K$ quadrature points on a parabolic contour. Each resolvent $(z
 
 This is related to but distinct from the [[Contour Integral Matrix Exponentiation via QSVT]] trick: here the resolvents use preconditioned inversion rather than direct QSVT inversion, which is the advantage when $H = A + B$ with $A$ fast-invertible.
 
-**Route 2: Inverse transform + QSVT.** Write $f(x) = e^{-\beta x}$ and note that if $A$ is fast-invertible, then $f(A + B) = g(W)$ where $g$ is a function of the preconditioned variable. Approximate $g$ by a Chebyshev polynomial and implement via [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]]. The paper analyses the Gevrey-class smoothness of $g$ to bound the polynomial degree.
+**Route 2: Inverse-transform + QSVT under the paper's transform assumptions.** The preconditioned variable $W=I+A^{-1}B$ is useful for inversion and for some transformed matrix-function constructions, but one should not read this as the general identity $f(A+B)=g(W)$. In general $A+B=A(I+A^{-1}B)$, and a matrix function of a noncommuting product is not determined only by the second factor. The paper's matrix-function results rely on its specific inverse-transform setup and smoothness analysis, not on a blanket product-to-function substitution.
 
 **Gibbs state:** Prepare the purified Gibbs state $|\Phi_\beta\rangle \propto (e^{-\beta H/2} \otimes I)|\Omega\rangle$ where $|\Omega\rangle$ is maximally entangled.
 

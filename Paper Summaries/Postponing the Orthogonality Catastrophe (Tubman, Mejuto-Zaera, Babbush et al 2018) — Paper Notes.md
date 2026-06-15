@@ -20,9 +20,9 @@ The paper addresses two questions:
 
 Uses the classical ASCI (Adaptive Sampling Configuration Interaction) method to estimate ground-state overlaps with various reference states across a broad range of systems — G1 molecules, transition metal complexes (Fe-porphyrin, FeMoco), homogeneous electron gas, Hubbard models, and DMFT impurity models. The headline finding: for most chemically interesting systems, HF or natural-orbital single Slater determinants have squared overlap $\geq 0.75$, and even strongly-correlated systems can be handled with tens to hundreds of determinants.
 
-The paper also provides two explicit quantum circuits for preparing an $L$-term multi-determinant superposition $\sum_{\ell=1}^L \alpha_\ell |D_\ell\rangle$ with costs $O(L)$ and $O(nL)$ respectively, closing a gap in QPE resource accounting.
+The paper also provides two explicit quantum circuits for preparing an $L$-term multi-determinant superposition $\sum_{\ell=1}^L \alpha_\ell |D_\ell\rangle$ with gate-level costs $O(L)$ for the compressed-register preparation plus an implementation-dependent index-to-determinant isometry, and $O(nL)$ for the sequential construction. These are not full surface-code/T-count resource estimates.
 
-This is a practically important paper for anyone doing QPE resource estimates — it justifies assumptions about state preparation that earlier resource analyses (e.g. the FeMoco estimates in Reiher et al.) took on faith.
+This is a practically important paper for anyone doing QPE resource estimates. Historically, it provided evidence that the simplest orthogonality-catastrophe objection was too pessimistic for many studied systems and that earlier resource analyses had plausible state-preparation paths. It does not settle initial-state preparation for all FeMoCo active spaces, spin sectors, or later Fe-S candidate states.
 
 ## The algorithm / construction
 
@@ -46,7 +46,7 @@ The **key observation** (Fig. 1 in the paper): the coefficient of the single mos
    - The **select-unitary** method of Childs et al. [arXiv:1711.10980], or
    - [[QROM (Quantum Read-Only Memory)]] (Babbush et al. [arXiv:1805.03662]).
 
-Total cost: $O(L)$ gate depth from the compressed register preparation; the isometry adds terms polynomial in $n$ and $L$ (circuit-level costs depend on the specific implementation).
+Total cost: $O(L)$ gate depth from the compressed register preparation; the isometry adds terms polynomial in $n$ and $L$ and can dominate circuit-level constants depending on the QROM/select-unitary implementation.
 
 ### Multi-determinant state preparation: Method B (single auxiliary qubit, sequential)
 
@@ -106,6 +106,8 @@ i.e. $|\psi_\ell\rangle \mapsto |\psi_{\ell+1}\rangle$.
 $$\frac{\partial |\langle \Psi_0 | D_{\text{dominant}} \rangle|^2}{\partial (\text{# ASCI dets})} \;\gg\; \frac{\partial E_\text{corr}}{\partial (\text{# ASCI dets})}$$
 
 Overlap estimates become reliable at much smaller ASCI expansion sizes than energy convergence requires. This is the practical justification for using ASCI to validate QPE initial state quality classically.
+
+The FeMoCo line should be read historically and within this paper's model choices. Later Fe-S studies found much smaller best-determinant overlaps in other active-space/spin settings, while later MPS-based state-preparation work found high squared overlaps for specific candidate states. The broad lesson is that overlap must be certified for the actual representation and target state, not assumed from a single benchmark.
 
 ## Comparison with prior work
 

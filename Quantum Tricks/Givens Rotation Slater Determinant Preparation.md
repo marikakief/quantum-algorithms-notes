@@ -4,11 +4,11 @@
 
 ## What it does
 
-Prepares an arbitrary single Slater determinant (the many-body fermionic state corresponding to a single-particle unitary $u \in U(N)$) in circuit depth at most $N/2$ on a linearly connected qubit chain, using $N(N-1)/2$ nearest-neighbour two-qubit Givens rotations.
+Prepares an arbitrary number-conserving single Slater determinant in circuit depth at most $N/2$ on a linearly connected qubit chain under the spin/particle-number scheduling assumptions of Kivlichan et al., using nearest-neighbour two-qubit Givens rotations.
 
 ## The trick
 
-A Slater determinant for $\eta$ electrons in $N$ orbitals is specified by an $N \times N$ unitary $u$ (the transformation from the computational to the molecular orbital basis). The many-body state is $U(u)|\mathbf{f}_0\rangle$ where $|\mathbf{f}_0\rangle$ is a fixed $\eta$-electron Fock state.
+A Slater determinant for $\eta$ electrons in $N$ orbitals is specified by an $N\times\eta$ occupied-orbital isometry, or by an $N \times N$ unitary $u$ extending that isometry. The many-body state is $U(u)|\mathbf{f}_0\rangle$ where $|\mathbf{f}_0\rangle$ is a fixed $\eta$-electron Fock state, not the all-zero vacuum unless $\eta=0$.
 
 The single-particle unitary $u$ can be decomposed into **Givens rotations** — two-dimensional unitary rotations that zero out one matrix element at a time (like the classical QR / Householder decomposition). Each Givens rotation $G_{pq}(\theta, \phi)$ acting on orbitals $p$ and $q$ has the single-particle form:
 
@@ -31,7 +31,7 @@ and lifts to a 2-local qubit gate when $q = p+1$ in the Jordan–Wigner ordering
 
 - Preparing the Hartree-Fock initial state (or any other single-determinant reference) for VQE or phase estimation circuits.
 - As the first layer of a UCC ansatz circuit: start from the Slater determinant reference, then apply correlated excitations.
-- Whenever you need to prepare a fermionic Gaussian state on a linear qubit chain.
+- Whenever you need to prepare a number-conserving single Slater determinant on a linear qubit chain.
 - State preparation for adiabatic ramp algorithms that begin from a mean-field reference.
 
 ## Complexity
@@ -49,6 +49,7 @@ For comparison: Wecker et al. [41] require $N^2$ rotations at arbitrary connecti
 - **Depth bound requires both symmetries:** The $\leq N/2$ depth bound uses both spin and particle-number symmetry. Without these, the parallel schedule gives depth $2N - 3$.
 - **Multi-determinant states need more:** This technique prepares a single Slater determinant. Correlated states (FCI, CASSCF, UCC) require additional entangling gates on top of this state preparation layer.
 - **Compilation overheads:** The Givens decomposition is computed classically. For large $N$, the decomposition itself is $O(N^3)$ floating-point operations, which is fine classically but worth noting if automated recompilation is frequent (e.g., per VQE iteration with orbital optimisation).
+- **Not every Gaussian state:** general fermionic Gaussian/Bogoliubov states with pairing require more general circuits.
 
 ## Related notes
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]]

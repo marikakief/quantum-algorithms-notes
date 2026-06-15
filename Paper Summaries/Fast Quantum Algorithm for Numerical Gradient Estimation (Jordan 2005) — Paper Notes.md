@@ -1,3 +1,5 @@
+# Fast Quantum Algorithm for Numerical Gradient Estimation (Jordan 2005)
+
 > **Source:** Stephen P. Jordan, *Fast Quantum Algorithm for Numerical Gradient Estimation*, Phys. Rev. Lett. **95**, 050501 (2005); arXiv:quant-ph/0405146
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0405146) · [PRL](https://doi.org/10.1103/PhysRevLett.95.050501)
 > **Tags:** #oracle #gradient #phase-kickback #numerical-methods #Bernstein-Vazirani
@@ -109,7 +111,8 @@ The product-state structure after kickback — each dimension decouples — is a
 ## Cross-links
 
 ### Paper notes
-- [[Optimizing Quantum Optimization Algorithms via Faster Quantum Gradient Computation (Gilyén-Arunachalam-Wiebe 2019) — Paper Notes]] — direct improvement: quadratically better precision via higher-order stencils, plus oracle conversions
+- [[Optimizing Quantum Optimization Algorithms via Faster Quantum Gradient Computation (Gilyén-Arunachalam-Wiebe 2019) — Paper Notes]] — direct improvement: quadratically better precision via higher-order stencils, plus oracle conversions
+- [[Quantum Basin Hopping with Gradient-Based Local Optimisation (Bulger 2005) — Paper Notes]] — uses Jordan gradient estimation inside a Groverised local-search/basin-hopping routine
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes]] — the Hadamard-sandwich structure this generalises
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — same kickback mechanism (Fourier eigenstates of modular arithmetic)
 - [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — the discrete algorithm this generalises (hidden inner product → gradient)

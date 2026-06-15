@@ -37,4 +37,6 @@ Implementing the PGM requires diagonalising $\Sigma$, which has cost depending o
 
 ## Related notes
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]]
+- [[Quantum Algorithms for Search with Wildcards and Combinatorial Group Testing (Ambainis-Montanaro 2012) — Paper Notes]] — uses a PGM on wildcard subset states; Fourier-diagonal Gram matrix over $\mathbb{Z}_2^n$
+- [[Pretty-Good Measurement for Wildcard Subset States]]
 - [[Entangled Multi-Copy Measurements for Nonabelian HSP]]

@@ -1,3 +1,5 @@
+# From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes
+
 > **Source:** Dave Bacon, Andrew M. Childs, and Wim van Dam, *From optimal measurement to efficient quantum algorithms for the hidden subgroup problem over semidirect product groups*, Proc. 46th IEEE FOCS, pp. 469–478 (2005); arXiv:quant-ph/0504083
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0504083)
 > **Tags:** #hidden-subgroup-problem #nonabelian #pretty-good-measurement #entangled-measurement #foundational
@@ -32,11 +34,13 @@ The last family is significant: it's the **first efficient quantum algorithm to 
 
 ### Reduction to cyclic subgroups
 
-**Lemma 1:** For $G = A \rtimes \mathbb{Z}_p$ with $p$ prime, it suffices to distinguish between $H$ trivial and $H = \langle(d, 1)\rangle$ for unknown $d \in A$. This generalises Ettinger-Høyer's reduction for the dihedral case.
+**Lemma 1:** For $G = A \rtimes \mathbb{Z}_p$ with $p$ prime, after reducing to the relevant cyclic subgroups it suffices to distinguish between $H$ trivial and $H = \langle(d, 1)\rangle$ for unknown $d \in A$. This generalises Ettinger-Høyer's reduction for the dihedral case.
 
 ### Hidden subgroup states
 
 After the standard approach (create superposition, query oracle, discard function register), the state on $k$ copies is:
+
+The notation below packages the representation labels, character phases, and the classical counting data needed by the PGM. The important point is that the measurement implementation is no easier than coherently solving the associated matrix-sum instance.
 
 $$
 \tilde{\rho}_d^{\otimes k} = \frac{1}{|G|^k} \sum_{x \in A^k} \sum_{w,v \in A} \chi_w(d)\overline{\chi_v(d)} \sqrt{\eta_w^x \eta_v^x} |x, S_w^x\rangle\langle x, S_v^x|
@@ -67,7 +71,7 @@ The PGM for ensemble $\{\sigma_j\}$ with equal priors is $E_j = \Sigma^{-1/2} \s
 The paper shows:
 - The PGM is optimal for $k$ copies of hidden subgroup states over $A \rtimes \mathbb{Z}_p$.
 - Its success probability is $\frac{1}{|A|} \sum_{x \in A^k} \left(\sum_{w \in A} \eta_w^x / p^k\right)^2$.
-- It can be implemented as: Fourier transform on $A$, then *solve the matrix sum problem* coherently, then measure.
+- It can be implemented as: Fourier transform on $A$, then *solve and count the matrix sum problem coherently*, then measure. A merely classical decision procedure is not enough to implement the PGM as a unitary measurement.
 
 ---
 
@@ -87,8 +91,8 @@ The paper shows:
 
 | Paper | Groups solved |
 |---|---|
-| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor (1994)]] | Abelian HSP (factoring, discrete log) |
-| [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes\|Watrous (2001)]] | Normal subgroups with efficient QFT |
+| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] | Abelian HSP (factoring, discrete log) |
+| [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] | Normal subgroups with efficient QFT |
 | Ettinger-Høyer-Knill (1999–2004) | Dihedral HSP: polynomial query complexity, but no efficient algorithm |
 | Kuperberg (2005) | Dihedral HSP: subexponential time |
 | **This paper (2005)** | Metacyclic groups, $\mathbb{Z}_p^r \rtimes \mathbb{Z}_p$; first entangled multi-copy algorithm |
@@ -101,6 +105,7 @@ The paper shows:
 - The symmetric group HSP (for graph isomorphism) is not addressed. It requires fundamentally different techniques — single-register measurements don't suffice.
 - For $\mathbb{Z}_p^r \rtimes \mathbb{Z}_p$, the number of copies needed is $r$ (fixed). If $r$ grows with the problem size, the Gröbner basis computation becomes expensive.
 - The reduction to cyclic subgroups (Lemma 1) requires $p$ prime. Composite orders need separate treatment.
+- The PGM is optimal for the state-discrimination ensemble, but optimality is not efficiency. Kuperberg's dihedral algorithm is a different feasible sieve route for the same hard hidden-shift family where the PGM reduces to subset-sum-like work.
 
 ---
 
@@ -119,19 +124,27 @@ The paper shows:
 - Ettinger, Høyer & Knill (1999–2004) — dihedral HSP query complexity, information-theoretic analysis
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg (2005)]] — subexponential dihedral HSP via quantum sieve
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes|Regev (2004)]] — polynomial-space variant of Kuperberg's algorithm
-- Moore, Rockmore, Russell & Schulman (2004) — entanglement necessary for symmetric group HSP
+- [[The Power of Basis Selection in Fourier Sampling (Moore-Rockmore-Russell-Schulman 2003) — Paper Notes|Moore--Rockmore--Russell--Schulman (2003)]] — affine-group basis-selection result showing strong Fourier sampling can beat weak and abelian sampling
+- [[Polynomial-Time Solution to the Hidden Subgroup Problem for a Class of Non-Abelian Groups (Roetteler-Beth 1998) — Paper Notes|Roetteler--Beth (1998)]] — earlier efficient nonabelian HSP for wreath products
 
 ---
 
 ## Cross-links
 
 ### Paper notes
+- [[The Power of Basis Selection in Fourier Sampling (Moore-Rockmore-Russell-Schulman 2003) — Paper Notes]] — affine/$q$-hedral strong Fourier sampling; useful contrast with the PGM route
+- [[Polynomial-Time Solution to the Hidden Subgroup Problem for a Class of Non-Abelian Groups (Roetteler-Beth 1998) — Paper Notes]] — early nonabelian Fourier-sampling HSP algorithm
+- [[Quantum Algorithm for the Hidden Subgroup Problem on a Class of Semidirect Product Groups (Cosme-Portugal 2007) — Paper Notes]] — later $\mathbb{Z}_{p^r}\rtimes\mathbb{Z}_{p^2}$ semidirect-product extension by subgroup classification and slope tests
 - [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes]] — proves poly queries suffice; the computational barrier this paper addresses
 - [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — normal HSP algorithms
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — Simon's problem as abelian HSP
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — factoring as abelian HSP
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes]] — quantum sieve approach to dihedral HSP
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes]] — polynomial-space dihedral HSP
+- [[Quantum Solution to the HSP for Poly-Near-Hamiltonian Groups (Gavinsky 2004) — Paper Notes]] — normalizer-core route for near-Hamiltonian groups, contrasting with PGM/matrix-sum methods
+- [[Efficient Quantum Algorithms for Some Instances of the Non-Abelian HSP (Ivanyos-Magniez-Santha 2001) — Paper Notes]] — black-box normal-HSP and group-algorithm tools used by several adjacent HSP papers
+- [[Efficient Quantum Algorithms for the HSP over Semi-Direct Product Groups (Inui-Le Gall 2007) — Paper Notes]] — subgroup-classification algorithm for $\mathbb Z_{p^r}\rtimes\mathbb Z_p$; complementary to the PGM approach
+- [[Notes on the Hidden Subgroup Problem on Some Semi-Direct Product Groups (Chi-Kim-Lee 2006) — Paper Notes]] — later restricted semidirect-product splitting result built partly on the Inui--Le Gall family
 - [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes]] — period finding over real quadratic fields
 
 ### Trick cards

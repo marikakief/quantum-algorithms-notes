@@ -18,7 +18,7 @@ This is a subroutine problem: many quantum algorithms need to evaluate classical
 
 Provides concrete, gate-level reversible circuits for evaluating a library of common mathematical functions, along with a software-stack module that automatically generates circuits for arbitrary piecewise smooth functions. The two main techniques are:
 
-1. **Parallel piecewise polynomial evaluation** — partition the domain into subintervals, fit a low-degree minimax polynomial on each, and evaluate all polynomials simultaneously using a label register. This handles smooth functions ($\tanh$, Gaussian, $\sin$, $\cos$, $e^{-x}$).
+1. **Parallel piecewise polynomial evaluation** — partition the domain into subintervals, fit a low-degree minimax polynomial on each, and coherently evaluate the polynomial selected by a label register. The circuit uses controlled coefficient selection; it does not write all $M$ polynomial values into separate output registers. This handles smooth functions ($\tanh$, Gaussian, $\sin$, $\cos$, $e^{-x}$).
 
 2. **Reversible Newton-Raphson iteration for $1/\sqrt{x}$** — adapted from the "fast inverse square root" trick in Quake III Arena. A bit-level initial guess (from the position of the leading 1-bit) feeds into Newton iterations $x_{n+1} = x_n(1.5 - ax_n^2/2)$. This is then composed with polynomial evaluation to implement $\arcsin(x)$ via the Cephes double-angle identity.
 
@@ -32,7 +32,7 @@ All circuits are implemented at the Toffoli gate level in LIQUi$|\rangle$ and te
 
 **Naive approach:** Loop over subintervals and conditionally evaluate the matching polynomial. Cost grows as $O(M)$.
 
-**Their approach:** Evaluate all $M$ polynomials in parallel using a label register $|l\rangle$ of $\lceil \log_2 M \rceil$ qubits:
+**Their approach:** Use a label register $|l\rangle$ of $\lceil \log_2 M \rceil$ qubits to evaluate the selected polynomial coherently, with controlled coefficient loads providing the "parallel" dependence on the interval:
 
 1. **Label computation.** Compare $x$ against $M$ interval boundaries using the CARRY circuit from [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes|Häner-Roetteler-Svore (2017)]]. Each comparison costs $2n$ Toffolis. The label register is set to indicate which subinterval $\Omega_l$ the input belongs to. Total: $4Mn$ Toffolis.
 
@@ -44,7 +44,7 @@ All circuits are implemented at the Toffoli gate level in LIQUi$|\rangle$ and te
 
 $$T_{\text{pp}}(n, d, p, M) = \tfrac{3}{2}n^2 d + 3npd + \tfrac{7}{2}nd - 3p^2 d + 3pd - d + 2Md(4\lceil \log_2 M \rceil - 8) + 4Mn$$
 
-where $n$ is the bit width and $p$ is the fixed-point position.
+where $n$ is the bit width and $p$ is the fixed binary-point position under the paper's two's-complement fixed-point convention and sign assumptions.
 
 **Qubit count:** $(d+1)n + \lceil \log_2 M \rceil + 1$.
 
@@ -98,7 +98,7 @@ All circuits use $n$-bit fixed-point two's-complement with a fixed binary point 
 
 ## Key results
 
-**Piecewise polynomial evaluation (selected from Table II):**
+**Piecewise polynomial evaluation (selected from Table II):** these are compute-only counts. Full reversible use normally doubles them for uncomputation.
 
 | Function | $L_\infty$ error | Degree | Subintervals | Qubits | Toffolis (compute only) |
 |---|---|---|---|---|---|
@@ -143,7 +143,9 @@ The full arcsine (with square root subroutine) costs roughly twice the inverse s
 
 4. **Uncomputation doubles cost.** All Toffoli counts in Table II are compute-only; the full reversible circuit is $2\times$. The paper does not explore measurement-based uncomputation.
 
-5. **Superseded for specific use cases.** For state preparation (the main application of $\arcsin$), [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] showed how to avoid the arcsine entirely, reducing Toffoli counts by orders of magnitude. For coarse function evaluation in heuristic algorithms, [[Adaptive QROM for Function Evaluation|QROM-based interpolation]] is cheaper. These circuits remain relevant mainly when exact evaluation of a specific function at moderate-to-high precision is required inside a quantum oracle.
+5. **Arithmetic vs. QROM interpolation.** Arithmetic evaluation is natural when the function must be evaluated at high precision or on a large dynamic domain. QROM/table interpolation is often cheaper when the domain can be discretized classically and table lookup cost is acceptable, because it replaces repeated multiplications by data loading plus low-degree refinement.
+
+6. **Superseded for specific use cases.** For state preparation (the main application of $\arcsin$), [[Black-Box Quantum State Preparation Without Arithmetic (Sanders-Low-Scherer-Berry 2019) — Paper Notes|Sanders-Low-Scherer-Berry (2019)]] showed how to avoid the arcsine entirely, reducing Toffoli counts by orders of magnitude. For coarse function evaluation in heuristic algorithms, [[Adaptive QROM for Function Evaluation|QROM-based interpolation]] is cheaper. These circuits remain relevant mainly when exact evaluation of a specific function at moderate-to-high precision is required inside a quantum oracle.
 
 ## Reusable ideas
 

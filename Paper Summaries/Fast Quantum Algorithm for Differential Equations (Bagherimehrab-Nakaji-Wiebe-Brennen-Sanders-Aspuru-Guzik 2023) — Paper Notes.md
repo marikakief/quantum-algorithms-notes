@@ -1,3 +1,5 @@
+# Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes
+
 > **Source:** Mohsen Bagherimehrab, Kouhei Nakaji, Nathan Wiebe, Gavin K. Brennen, Barry C. Sanders, Alán Aspuru-Guzik, *Fast quantum algorithm for differential equations*, arXiv:2306.11802v3 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2306.11802) · [PDF](https://arxiv.org/pdf/2306.11802)
 > **Tags:** #PDE #QLSA #preconditioning #wavelets #differential-equations #linear-systems #quantum-algorithm
@@ -30,6 +32,8 @@ $$
 Au=b.
 $$
 
+The main theorem is stated for periodic boundary conditions so that the standard quantum wavelet transform applies cleanly. Boundary wavelets, incomplete transforms, or method-of-images reductions are separate extensions.
+
 **Input:** a $(1,a,0)$-[[Block-Encoding Composition Algebra|block-encoding]] $U_A$ of $A$, a state-preparation procedure $P_b$ for
 
 $$
@@ -60,7 +64,7 @@ $$
 Au=b,
 $$
 
-where $A\in\mathbb{R}^{N\times N}$, $u,b\in\mathbb{R}^N$, and $N=2^{nd}$. For second-order differential operators, the condition number of $A$ often grows polynomially with $N$; the paper notes the typical $\kappa(A)\sim N^2$ behaviour.
+where $A\in\mathbb{R}^{N\times N}$, $u,b\in\mathbb{R}^N$, and $N=2^{nd}$ is the total grid size. For second-order differential operators, the condition number grows like the square of the number of grid points per dimension, i.e. roughly $N^{2/d}$ when $N$ denotes total grid size. Some PDE literature instead writes this as $\kappa(A)\sim N_{\rm side}^2$ with $N_{\rm side}=2^n$.
 
 A direct application of [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|high-precision QLSA]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] would still pay at least linearly in this condition number for worst-case linear systems.
 
@@ -72,7 +76,7 @@ $$
 u_W=Wu,\qquad b_W=Wb,\qquad A_W=WAW^T.
 $$
 
-The wavelet transform is used as an auxiliary computational basis, not necessarily as the original discretisation. Existing quantum wavelet transforms implement $W$ on $n$ qubits with $O(n^2)$ gates; in $d$ dimensions, $W_{dD}=\bigotimes_{i=1}^d W$ gives cost $O(dn^2)$.
+The wavelet transform is used as an auxiliary computational basis, not necessarily as the original discretisation. Existing quantum wavelet transforms implement $W$ on $n$ qubits with $O(n^2)$ gates; in $d$ dimensions, $W_{dD}=\bigotimes_{i=1}^d W$ gives cost $O(dn^2)$. The input model still assumes an efficient block-encoding of the finite-difference matrix, and the basis-change gates are counted separately.
 
 ### 3. Apply the wavelet preconditioner
 
@@ -82,7 +86,7 @@ $$
 A_P=P A_W P,\qquad b_P=P b_W,\qquad u_P=P^{-1}u_W.
 $$
 
-Classical wavelet theory says that for the symmetric/bounded/coercive PDE class, this preconditioner is optimal: $\kappa(A_P)$ is bounded independently of $N$ and depends only on the wavelet family.
+Classical wavelet theory says that for the symmetric/bounded/coercive PDE class, this preconditioner is optimal: $\kappa(A_P)$ is bounded independently of $N$. The constant can depend on the wavelet family, ellipticity/coercivity constants, dimension assumptions, and boundary treatment.
 
 For the one-dimensional case, the preconditioner acts as
 
@@ -160,7 +164,7 @@ $$
 \langle \psi|M'|\psi\rangle=\frac{4}{\xi^2}\langle u|M|u\rangle.
 $$
 
-The paper shows that sparse-access oracles for $M'$ can be built with one query to the oracles for $M$, because $M'$ is a $4\times4$ block matrix with $M$ in every block.
+The paper shows that sparse-access oracles for $M'$ can be built with one query to the oracles for $M$, because $M'$ is a $4\times4$ block matrix with $M$ in every block. Estimating the normalization factor $\xi^2$ is a separate statistical task from estimating the extended observable.
 
 ### 6. Block-encode the inverse of the preconditioned matrix
 

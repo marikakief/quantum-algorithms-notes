@@ -15,13 +15,13 @@ Given an optimistic circuit $\widetilde{U}$ for $U$ with error $\varepsilon$:
 2. Compute $\hat{V}^\dagger = U V^\dagger U^\dagger$.
 3. Apply $\hat{V}^\dagger \widetilde{U} V$ to the input.
 
-**Why it works:** $V$ maps any input state to an effectively random state (a state 1-design), where the optimistic circuit has low expected error. The operator $\hat{V}^\dagger$ undoes the randomisation: $\hat{V}^\dagger U V = U$ exactly, so the only error comes from $\widetilde{U} \neq U$. By the 1-design property:
+**Why it works:** Averaging over $V$ from a unitary 1-design converts the per-input squared error into the Hilbert-space average controlled by the optimistic error. This does not require Haar randomness. The operator $\hat{V}^\dagger$ undoes the randomisation: $\hat{V}^\dagger U V = U$ exactly, so the only error comes from $\widetilde{U} \neq U$. By the 1-design property:
 
 $$\mathbb{E}_{V \sim d}\left[\|\hat{V}^\dagger \widetilde{U} V |\psi\rangle - U|\psi\rangle\|^2\right] \leq \varepsilon$$
 
 for any state $|\psi\rangle$.
 
-**Derandomisation via purification:** If the 1-design is a uniform distribution over $k$ unitaries $\{V_i\}$, define $V' = \sum_i |i\rangle\langle i| \otimes V_i$. Then $\hat{V}'^\dagger (\mathbb{I} \otimes \widetilde{U}) V'$ applied to $\frac{1}{\sqrt{k}} \sum_i |i\rangle \otimes |\psi\rangle$ achieves error $\leq \varepsilon$ deterministically. The control register has $\log_2 k$ qubits.
+**Derandomisation via purification:** If the 1-design is a uniform distribution over $k$ unitaries $\{V_i\}$, define $V' = \sum_i |i\rangle\langle i| \otimes V_i$. Then $\hat{V}'^\dagger (\mathbb{I} \otimes \widetilde{U}) V'$ applied to $\frac{1}{\sqrt{k}} \sum_i |i\rangle \otimes |\psi\rangle$ achieves error $\leq \varepsilon$ deterministically. This is a coherent circuit on an enlarged input space with a control register; it is not the same circuit acting only on the original data register. The control register has $\log_2 k$ qubits.
 
 **For the QFT:** The Weyl–Heisenberg group $V(r_1, r_2) = X_{2^n}^{r_1} Z_{2^n}^{r_2}$ forms a 1-design. The QFT swaps $X$ and $Z$, so the conjugated operator is simply $\hat{V}^\dagger(r_1, r_2) = V(r_2, -r_1)$ — same structure, arguments swapped. This makes both $V$ and $\hat{V}^\dagger$ cheap to implement: each is an integer addition plus a phase gradient.
 
@@ -41,7 +41,7 @@ The reduction adds the cost of implementing $V$ and $\hat{V}^\dagger$ (two 1-des
 
 The 1-design must satisfy two conditions: (1) both $V$ and $\hat{V}^\dagger$ must have efficient circuits, and (2) the 1-design must be large enough to achieve the desired error bound. For the QFT these are easily satisfied, but for arbitrary unitaries $U$ the conjugated operator $\hat{V}^\dagger = U V^\dagger U^\dagger$ may not have an efficient circuit even when $V$ does.
 
-The randomized version requires classical randomness and gives expected error bounds. The derandomized version is deterministic but costs $2n$ extra qubits (the control register for the purification of the Weyl–Heisenberg group).
+The randomized version requires classical randomness and gives an expected squared-error bound over the sampled 1-design element. The derandomized version is deterministic and coherent on the enlarged register, but costs $2n$ extra qubits for the Weyl-Heisenberg purification control register.
 
 ## Related notes
 - [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] — source paper

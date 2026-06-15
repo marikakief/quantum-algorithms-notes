@@ -147,8 +147,14 @@ The shadow [[Hamiltonian simulation]] paper explicitly cites this work (in its r
 - [[Shadow Hamiltonian Simulation — Paper Notes]]
 - [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]] — achieves triply efficient (sample + computation + few-copy) shadow tomography using two-copy measurements; closes the gap between sample-efficient and computationally efficient protocols left open here
 - [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes]] — uses the classical shadow formalism for projected quantum kernels; an application of shadow-type ideas to QML advantage
+- [[Exponential Quantum Advantage in Processing Massive Classical Data (Zhao, Zlokapa, Neven et al 2026) — Paper Notes]] — uses [[Interferometric Classical Shadow]] as the readout layer after [[Quantum Oracle Sketching]] prepares compact quantum access to massive classical data.
 
 ### Trick cards
 - [[Gentle Search via Quantum OR]]
 - [[Quantum OR Subroutine]]
 - [[Postselected Hypothesis Update (Multiplicative Weights)]]
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler use uploading to make shadow-style learning viable for noisy experimental states.
+

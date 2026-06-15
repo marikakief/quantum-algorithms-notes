@@ -1,4 +1,4 @@
-> **Source:** Mauro E. S. Morales, Pedro C. S. Costa, Giacomo Pantaleoni, Daniel K. Burgarth, Yuval R. Sanders, Dominic W. Berry, *Selection and improvement of [[Product Formulas]]e for best performance of quantum simulation*, arXiv:2210.15817, Quantum Information & Computation **25**(1), 1 (2025)
+> **Source:** Mauro E. S. Morales, Pedro C. S. Costa, Giacomo Pantaleoni, Daniel K. Burgarth, Yuval R. Sanders, Dominic W. Berry, *Selection and improvement of product formulae for best performance of quantum simulation*, arXiv:2210.15817, Quantum Information & Computation **25**(1), 1 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2210.15817) · [QIC](https://doi.org/10.26421/QIC25.1-2-1)
 > **Tags:** #hamiltonian-simulation #product-formulas #trotter #suzuki #symplectic-integrators #numerical-optimization #quantum-chemistry
 
@@ -14,9 +14,9 @@ The paper asks: among all [[Product Formulas]]s of a given order and length, whi
 
 ## What the paper does
 
-Finds new 8th-order [[Product Formulas]]s that are ~100× more accurate than any previously known (without processing) and ~300× more accurate (with [[Processed Product Formula Kernel-Processor Decomposition|processing]]). Establishes that 8th order is optimal over the parameter range $T/\varepsilon \sim 10^7$ to $10^{16}$ relevant to quantum chemistry, making 10th order unnecessary for any realistic quantum simulation. Also introduces a principled framework for comparing [[Product Formulas]]s of different orders and lengths using eigenvalue error rather than spectral-norm error.
+Finds new 8th-order [[Product Formulas]]s that are ~100× more accurate than any previously known (without processing) and ~300× more accurate (with [[Processed Product Formula Kernel-Processor Decomposition|processing]]) under the paper's tested two-term cost model. In the tested parameter range $T/\varepsilon \sim 10^7$ to $10^{16}$ motivated by quantum chemistry estimates, 8th order is favored over the available 6th- and 10th-order alternatives. The paper also introduces a principled framework for comparing [[Product Formulas]]s of different orders and lengths using eigenvalue error rather than spectral-norm error.
 
-This is a paper that changes the practical landscape of [[Hamiltonian simulation]] via product formulas. The improvement factors are large enough to matter for real resource estimates. Yuval and Dominic are coauthors — directly relevant to Marika's environment.
+This is a practically important paper for product-formula-based [[Hamiltonian simulation]]. The improvement factors are large enough to matter for resource estimates, subject to the same Hamiltonian structure, splitting, and cost model used in the comparisons.
 
 ---
 
@@ -84,11 +84,11 @@ $$
 | 6th → 8th order | ~68,000 | ~$3.2 \times 10^7$ |
 | 8th → 10th order | ~$9.3 \times 10^{15}$ | Similar |
 
-The 8th→10th threshold is absurdly large: at $10^4$ Toffolis per exponential, a simulation needing 10th order would take millions of years. So **10th order [[Product Formulas]]s are irrelevant for quantum computing**, despite the exceptional 10th-order solution SS10s35 from Sofroniou-Spaletta.
+The 8th→10th threshold is extremely large in the paper's tested cost model: at $10^4$ Toffolis per exponential, a simulation needing 10th order would take millions of years. Thus 10th-order [[Product Formulas]]s do not appear useful in the chemistry-relevant regimes analysed here, despite the exceptional 10th-order solution SS10s35 from Sofroniou-Spaletta.
 
 ### Eigenvalue error vs. spectral-norm error
 
-The paper argues (and demonstrates) that eigenvalue error is the correct metric for long-time simulation. Key argument: decompose $\tilde{U} = V D V^\dagger$ where $D$ captures eigenvalue error and $V$ captures basis error. Over $r$ steps:
+The paper argues (and demonstrates) that eigenvalue error is the sharper metric for repeated-step long-time simulation, including phase-estimation-style use of the same approximate step many times. Key argument: decompose $\tilde{U} = V D V^\dagger$ where $D$ captures eigenvalue error and $V$ captures basis error. Over $r$ repeated uses of the same approximate step:
 $$
 \|\tilde{U}^r - U^r\| \leq 2\|V - I\| + r\|D - U\|
 $$
@@ -102,7 +102,7 @@ $$
 \|S_k(t) - e^{-iHt}\|_{W_\eta} = O\!\left(\omega (\|\tau\|_1 + \|\nu\|_{1,[\eta]})^{k-1} \|\tau\|_1 \|\nu\|_{1,[\eta]} \eta \cdot t^{k+1}\right)
 $$
 
-The constant $\omega$ is independent of system size. The paper verifies this for $d=4$ and $d=6$ orbitals and finds the relative performance of formulas is unchanged from random matrices. For quantum chemistry parameters (e.g., $\eta \approx 100$, $N/\Omega \sim 10^3$–$10^9$), the relevant $T/\varepsilon$ always falls in the range where 8th order is optimal.
+The constant $\omega$ is independent of system size. The paper verifies this for $d=4$ and $d=6$ orbitals and finds the relative performance of formulas is unchanged from random matrices. For the quantum chemistry parameter estimates considered in the paper (e.g., $\eta \approx 100$, $N/\Omega \sim 10^3$–$10^9$), the relevant $T/\varepsilon$ falls in the range where the tested 8th-order formulas are favored.
 
 ### Transverse-field Ising model test
 
@@ -116,7 +116,7 @@ For an 8-qubit chain with time step $t=1$ (not small!), Y8m10b achieves eigenval
 |---|---|---|
 | 8th-order non-processed | SS8s19 (Sofroniou-Spaletta 2005): $\zeta = 5.3 \times 10^{-8}$ | Y8m10b: $\zeta = 5.4 \times 10^{-10}$ (~100× better) |
 | 8th-order processed | PP8s13 (Blanes-Casas-Murua 2006): $\zeta = 6.5 \times 10^{-7}$ | YP8m8: $\zeta = 8.1 \times 10^{-10}$ (~300× better, shorter kernel too) |
-| 10th-order | SS10s35 (2005): $\zeta = 3.1 \times 10^{-11}$ — exceptionally good | Y10m17: $\zeta = 6.1 \times 10^{-11}$ (2× worse, but irrelevant — 10th order not useful) |
+| 10th-order | SS10s35 (2005): $\zeta = 3.1 \times 10^{-11}$ — exceptionally good | Y10m17: $\zeta = 6.1 \times 10^{-11}$ (2× worse; 10th order was not useful in the tested regime) |
 | Error metric | Spectral-norm error | Eigenvalue error (more relevant for long-time simulation) |
 | Comparison method | Ad hoc | Principled $M\zeta^{1/k}$ metric with non-asymptotic threshold analysis |
 
@@ -132,9 +132,9 @@ The paper also tests the recently proposed formulas of [[Faster Quantum Simulati
 
 3. **Norm-based selection misleading.** The $\ell_1$ and $\ell_{k+1}$ norms of coefficients, used by prior work (Blanes-Casas-Murua 2006, Sofroniou-Spaletta 2005) to select formulas, do not predict actual performance. Solutions with lower error have larger norms. This means prior heuristics for identifying good formulas were systematically suboptimal.
 
-4. **Randomisation caveats.** The eigenvalue-vs-basis-error decomposition implies that [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomised product formula]] techniques may provide less improvement than anticipated: if successive steps aren't identical, the basis error cancellation breaks.
+4. **Randomisation caveats.** The eigenvalue-vs-basis-error decomposition suggests a limitation for [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomised product formula]] techniques in repeated-step settings: if successive steps are not identical, the basis-error term need not cancel in the same way. This is a diagnostic hypothesis rather than a complete no-go theorem for randomisation.
 
-5. **10th order search incomplete.** Almost every new 10th-order solution found was distinct from previous ones, suggesting the solution space is enormous and unexplored. Better 10th-order formulas likely exist, but won't matter for quantum computing due to the threshold.
+5. **10th order search incomplete.** Almost every new 10th-order solution found was distinct from previous ones, suggesting the solution space is enormous and unexplored. Better 10th-order formulas likely exist, but the paper's threshold analysis indicates that they are unlikely to matter for the tested quantum-computing regimes.
 
 ---
 

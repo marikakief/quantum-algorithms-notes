@@ -8,7 +8,7 @@
 
 Presents the proof of the **Solovay-Kitaev theorem** as a concrete algorithm. Given any finite universal gate set $G \subset SU(d)$, any target gate $U \in SU(d)$ can be approximated to accuracy $\epsilon$ using a sequence of $O(\log^{3.97}(1/\epsilon))$ gates from $G$. The algorithm that finds this sequence runs in $O(\log^{2.71}(1/\epsilon))$ time.
 
-This is the result that makes "universal gate set" a practical concept rather than just an existence statement. Without it, compiling a circuit that uses continuous rotations (like Shor's $\pi/2^k$ gates) into a discrete fault-tolerant gate set (like Clifford + T) could require a sequence length that grows polynomially in $1/\epsilon$ — a quadratic overhead that would kill the speedup. The SK theorem reduces this to polylogarithmic overhead.
+This is the result that makes "universal gate set" a practical concept rather than just an existence statement. Without it, compiling a circuit that uses continuous rotations (like Shor's $\pi/2^k$ gates) into a discrete fault-tolerant gate set (like Clifford + T) could require a sequence length that grows polynomially in $1/\epsilon$, which can destroy the intended speedup. The SK theorem reduces this to polylogarithmic overhead.
 
 ---
 
@@ -22,7 +22,7 @@ $$
 
 where $c \approx 3.97$ in this proof.
 
-**Lower bound (Harrow-Recht-Chuang 2002):** For suitable gate sets, $O(\log(1/\epsilon))$ gates suffice — the SK bound is not tight. But the SK algorithm is constructive and works for any universal gate set.
+**Lower-bound / optimal-scale context:** Volume-counting arguments give an information-theoretic lower bound $\Omega(\log(1/\epsilon))$ on sequence length for fixed finite gate sets. Harrow-Recht-Chuang show near-optimal $O(\log(1/\epsilon))$ sequence-length results for suitable gate sets, but the SK algorithm is constructive and works for any universal gate set.
 
 ---
 
@@ -75,7 +75,7 @@ For $U \in SU(2)$ near the identity, with $d(I, U) < \epsilon$:
 
 Key property: $d(I, V), d(I, W) \approx \sqrt{d(I, U)/2} < \sqrt{\epsilon/2}$. The distance to identity shrinks quadratically under the commutator decomposition — this is what drives the $\epsilon^{3/2}$ improvement.
 
-For $SU(d)$ (Section 5): use Lemma 2 (any traceless Hermitian $H$ can be written as $[F, G] = iH$ with $\|F\|, \|G\| \leq d^{1/4}\sqrt{(d-1)/2}\sqrt{\|H\|}$), then exponentiate.
+For $SU(d)$ (Section 5): use Lemma 2 (any traceless Hermitian $H$ can be written as $[F, G] = iH$ with $\|F\|, \|G\| \leq d^{1/4}\sqrt{(d-1)/2}\sqrt{\|H\|}$), then exponentiate. The explicit Bloch-sphere construction and constants above are the $SU(2)$ case; the general $SU(d)$ proof has dimension-dependent constants.
 
 ---
 
@@ -98,9 +98,9 @@ With $\Delta = \epsilon_{n-1}$ and $\delta = c_{gc}\sqrt{\epsilon_{n-1}}$: the l
 | Without SK | With SK |
 |---|---|
 | Compile $m$-gate circuit to accuracy $\epsilon$: each gate needs $O(m/\epsilon)$ instructions → total $O(m^2/\epsilon)$ | Each gate: $O(\log^{3.97}(m/\epsilon))$ → total $O(m \log^{3.97}(m/\epsilon))$ |
-| Quadratic overhead kills Grover's $\sqrt{N}$ speedup | Polylogarithmic overhead is negligible |
+| Polynomial-in-$1/\epsilon$ overhead can erase speedups | Polylogarithmic overhead is usually negligible |
 
-Concrete application: Shor's algorithm uses $\pi/2^k$ rotations. With Clifford + T as the fault-tolerant gate set, SK compiles each rotation into $O(\log^{3.97}(1/\epsilon))$ gates. Modern methods (Ross-Selinger 2014) achieve $O(\log(1/\epsilon))$, but SK was the first general-purpose compiler.
+Concrete application: Shor's algorithm uses $\pi/2^k$ rotations. With Clifford + T as the fault-tolerant gate set, SK compiles each rotation into $O(\log^{3.97}(1/\epsilon))$ gates. Modern number-theoretic Clifford+T synthesis methods such as Ross-Selinger achieve $O(\log(1/\epsilon))$ with much better constants for rotations, but SK remains the general universal-gate-set theorem.
 
 ---
 

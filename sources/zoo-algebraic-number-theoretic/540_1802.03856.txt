@@ -1,0 +1,1943 @@
+
+
+--- PAGE 1 ---
+arXiv:1802.03856v2  [cs.SC]  7 Oct 2018
+Quantum Algorithm for Optimization and Polynomial
+System Solving over Finite Field and Application to
+Cryptanalysis∗
+Yu-Ao Chen1,2, Xiao-Shan Gao1,2, Chun-Ming Yuan1,2
+1KLMM, Academy of Mathematics and Systems Science
+Chinese Academy of Sciences, Beijing 100190, China
+2University of Chinese Academy of Sciences, Beijing 100049, China
+Email: xgao@mmrc.iss.ac.cn
+Abstract
+In this paper, we give quantum algorithms for two fundamental computation problems: solv-
+ing polynomial systems over ﬁnite ﬁelds and optimization where the arguments of the objective
+function and constraints take values from a ﬁnite ﬁeld or a bounded interval of integers. The
+quantum algorithms can solve these problems with any given success probability and have poly-
+nomial runtime complexities in the size of the input, the degree of the inequality constraints, and
+the condition number of certain matrices derived from the problem. So, we achieved exponential
+speedup for these problems when their condition numbers are small. As applications, quantum
+algorithms are given to three basic computational problems in cryptography: the polynomial sys-
+tem with noise problem, the short integer solution problem, the shortest vector problem, as well
+as the cryptanalysis for the lattice based NTRU cryptosystem. It is shown that these problems
+and NTRU can against quantum computer attacks only if their condition numbers are large,
+so the condition number could be used as a new criterion for the lattice based post-quantum
+cryptosystems.
+Keywords. Quantum algorithm, polynomial system solving, integer programming, ﬁnite ﬁeld,
+polynomial system with noise, short integer solution problem, shortest vector problem, crypt-
+analysis of NTRU, (0,1)-programming, D-Wave.
+1
+Introduction
+Solving polynomial systems and optimization over ﬁnite ﬁelds are fundamental computation prob-
+lems in mathematics and computer science, which are also typical NP hard problems.
+In this
+paper, we give quantum algorithms to these problems, which could be exponential faster than the
+traditional methods under certain conditions.
+∗The work is supported by grants NKRDPC No. 2018YFA0306702 and NSFC No. 11688101.
+1
+
+
+--- PAGE 2 ---
+1.1
+Main results
+Let Fq be a ﬁnite ﬁeld, where q = pm for a prime number p and m ∈N≥1. Let F = {f1, . . . , fr} ⊂
+Fq[X] be a set of polynomials in variables X = {x1, . . . , xn} and with total sparseness TF = Pr
+i=1 #fi,
+where #f denotes the number of terms in f. For ǫ ∈(0, 1), we show that
+Theorem 1.1. There is a quantum algorithm which decides whether F = 0 has a solution in Fn
+q
+and computes one if F = 0 does have solutions in Fn
+q , with success probability at least 1 −ǫ and
+complexity eO(T 3.5
+F D3.5m5.5 log4.5 pκ2 log 1/ǫ), where D = n+ Pn
+i=1⌊log2 maxj degxifj⌋, TF is the
+total sparseness of F, and κ is the condition number of F (see Theorem 3.13 for deﬁnition).
+The complexity of a quantum algorithm is the number of quantum gates needed to solve the
+problem. Since TF, D, log pm are smaller than the input size, the complexity of the algorithm is
+polynomial in the input size and the condition number, which means that we can solve polyno-
+mial systems over ﬁnite ﬁelds using quantum computers with any given success probability and in
+polynomial-time if the condition number κ of F is small, say when κ is poly(n, D).
+We also give a quantum algorithm to solve the following optimization problem.
+min
+X∈Fnp ,Y∈Zm o(X, Y)
+subject to
+fj(X) = 0
+mod p, j = 1, . . . , r;
+(1)
+0 ≤gi(X, Y) ≤bi, i = 1, . . . , s; 0 ≤yk ≤uk, k = 1, . . . , m,
+where F = {f1, . . . , fr} ⊂Fp[X], Y = {y1, . . . , ym}, Go = {o, g1, . . . , gs} ⊂Z[X, Y], and b1, . . . , bs,
+u1, . . . , um ∈N. The complexity of the algorithm is polynomial in the size of the input, deg(gi),
+deg(o), and the condition number of the problem (see Theorem 5.4 for deﬁnition). Since Problem
+1 is NP-hard, the algorithm gives an exponential speedup over traditional methods if the condition
+number is small, say poly(n, m).
+Note that for q = p, Problem (1) includes polynomial system solving over Fq as a special case.
+Problem (1) is meaningless for Fq with q = pm and m > 1, since Fq cannot be embedded into Z.
+We apply our methods to three computational problems widely used in cryptography: the
+polynomial systems with noise problem (PSWN) [2, 17, 20], the short integer solution problem (SIS)
+[1], the shortest vector problem (SVP) [4, 23, 6]. We also show how to recover the private keys for
+the latticed based cryptosystem NTRU with our algorithm. The complexity for solving all of these
+problems is polynomial in the input size and their condition numbers.
+The latticed based computational problems SVP and LWE are the bases for 23 of the 69 sub-
+missions for the call by NIST to standardize the post-quantum public-key encryption systems [4].
+LWE is another important problem in cryptography and can be reduced to the SIS problem [25].
+In theory, our results imply that the 23 proposed cryptosystems can against the attack of quantum
+computers only if the related condition numbers are large. So, the condition number could be used
+as a new criterion for lattice based post-quantum cryptosystems.
+Let p be a prime and F = {f1, . . . , fr} ⊂Fp[X] with r ≫n. The PSWN is to ﬁnd an X ∈Fn
+p
+which satisﬁes the maximal number of equations in F. The problem is also called MAX-POSSO
+[2, 20].
+Our quantum algorithm for PSWN has complexity eO(n3.5T 3.5
+F log8 pκ2), where κ is the
+condition number of the problem. The PSWN is very hard in the sense that, even for the linear
+system with noise (LSWN) over Fp, to ﬁnd an X satisfying more than 1/p of the equations is NP
+hard [17, 30].
+2
+
+
+--- PAGE 3 ---
+Lattice-based cryptography began in 1996 with a seminal work by Ajtai [1], who presented a
+family of one-way functions based on the SIS. The SIS problem is to ﬁnd a solution of a homogenous
+linear system AX = 0 mod p for A ∈Fr×n
+p
+, such that ||bX||2 is smaller than a given bound. Our
+quantum algorithm for SIS has complexity eO((n log p + r)2.5(TA log p + n log2 p)κ2), where TA is the
+number of nonzero elements in A and κ is the condition number of the problem.
+The SVP and CVP are two basic NP-hard problems widely used in cryptography. The SVP
+is to ﬁnd a nonzero vector with the smallest Euclidean norm in a lattice in Rm.
+The CVP is
+to ﬁnd a vector in a lattice, which is closest to a given vector. The SIS [1] and LWE [25] are the
+randomized versions of SVP and CVP, respcetively. Our quantum algorithm for SVP has complexity
+eO(m(n7.5 +m2.5)(n3 +log h) log4.5 hκ2), where n is the rank of the lattice, h is the maximal value in
+the generators of the lattice, and κ is the condition number of the problem. Our quantum algorithm
+for CVP has a similar complexity.
+NTRU is a lattice-based public key cryptosystem proposed by Hoﬀstein, Pipher and Silverman
+[19], which is one of the most promising candidates for post-quantum cryptosystems. Our quantum
+algorithm can be used to recover the private key from the public key in time eO(N 4.5 log4.5 qκ2) for
+an NTRU with parameters (N, p, q) with q > p. In particular, we show that the three versions
+of NTRU recommended in [19] have the desired security against quantum computers only if their
+condition numbers are large.
+1.2
+Main idea of the algorithm
+Let F ⊂C[X] be a set of polynomials over C. A solution of F is called Boolean if its components
+are either 0 or 1. Similarly, a variable x is called a Boolean variable if it satisﬁes x2 −x = 0. In
+[12], we give a quantum algorithm1 to ﬁnd Boolean solutions of a polynomial system over C, which
+is called B-POSSO in the rest of this paper. The main idea of the quantum algorithms proposed in
+this paper is to reduce the problem to be solved to B-POSSO, under the condition that the number
+of variables and the total sparseness of the new polynomial system is polynomial in the size of the
+original polynomial system.
+Our algorithm for problem (1) consists of three main steps: (1) The equational constraints
+fj(X) = 0 mod p, j = 1, . . . , r are reduced into polynomial equations in Boolean variables over C.
+(2) The inequality constraints 0 ≤gi(X, Y) ≤bi, i = 1, . . . , s are reduced into polynomial equations
+in Boolean variables over C. (3) The problem of ﬁnding the minimal value of the objective function
+is reduced several B-POSSOs. We will give a brief introduction to each of these three steps below.
+A key method used in our algorithm is to use a polynomial in Boolean variables to represent
+the integers 0, 1 . . . , b for b ∈Z>1. Let θb(Gbit) = P⌊log2 b⌋−1
+k=0
+Gk2k + (b + 1−2⌊log2 b⌋)G⌊log2 b⌋, where
+Gbit = {G0, . . . , G⌊log2 b⌋} is a set of Boolean variables. Then, the values of θb(Gbit) are exactly
+0, 1 . . . , b.
+For F ⊂Fp[X] and Fp = {0, 1, . . . , p −1}, we use three steps to reduce the problem of ﬁnding a
+solution of F in Fp to a B-POSSO. (1) F is reduced to a quadratic polynomial system (MQ) F1 by
+introducing new variables. (2) Each variable in F1 is expanded as xi = θp−1(Xi) and F1 is reduced
+to another MQ F2 in Boolean variables Xi = {Xij, j = 0, . . . , ⌊log2(p −1)⌋}. Since F1 is quadratic,
+the total sparseness of F2 is well controlled. (3) We obtain a polynomial over C from F2 as follows
+1No knowledge of quantum algorithm is needed to read this paper. What we do is to use traditional methods to
+reduce the problems to be solved to this result.
+3
+
+
+--- PAGE 4 ---
+F3 = {g −θ#g(Ug)p | g ∈F2}, where Ug is a set of Boolean variables. It is shown that solutions
+of F in Fp can be recovered from Boolean solutions of F3, which can be found with the quantum
+algorithm from [12].
+We also reduce an inequality constraint 0 ≤g(X, Y) ≤b for g ∈Z[X, Y] and b ∈Z>0 into a
+B-POSSO. There exist X and Y such that 0 ≤g(X, Y) ≤b if and only if g(Y, Y) −θb(Gg) = 0
+has a solution for X, Y, and Gg, where Gg is a set of Boolean variables. We reduce g(Y, Y) into
+a polynomial in Boolean variables by ﬁrst reducing g(Y, Y) into an MQ and then expanding the
+variables into Boolean variables by using the θ function. Let d be the degree of gi. Then the values
+of gi is exponential in d and hence the number of Boolean variables needed is polynomial in d. This
+is why the complexity of the algorithm depends on d.
+Since all variables are bounded, the objective function o is also bounded, and we can assume
+o ∈[0, u) for some u ∈N. We design a novel search scheme to reduce the minimization of o(Y, Y) ∈
+[0, u) to several B-POSSOs. The minimal value of o is found by bisecting the feasible interval [0, u)
+recursively into subintervals of the form [α, 2β) and deciding whether o ∈[α, 2β) has a solution,
+which is equivalent to solving the equation o −(α + Pβ−1
+j=0 Hj2j) = 0 for Boolean variables Hj. As
+a consequence, we can ﬁnd the minimal value of o by solving several B-POSSOs.
+1.3
+Relation with existing work
+Problem (1) includes many important problems as special cases, such as the polynomial system solv-
+ing over ﬁnite ﬁelds [14], PSWN [2, 17, 20, 30], SIS [1], SVP/CVP [4, 23, 6], the (0, 1)-programming
+problem [16], the quadratic unconstrained binary optimization problem which is the mathemati-
+cal problem that can be solved by the D-Wave System [21], which are all important computation
+problems and were widely studied.
+Comparing to the existing work, our algorithm has two major advantages. First, we give a
+universal approach to a very general problem. Second, the complexity of our algorithm is polynomial
+in the inputs size, the degree of the inequalities, and the condition number of the problem. Since
+the problems under consideration are NP hard, existing algorithms are exponential in some of the
+parameters such as the number of variables. In this aspect, we give a new way of looking at these
+NP hard problems by reducing the computational diﬃculty to the size of the condition number.
+Our algorithm is based on the quantum algorithm to solve B-POSSOs proposed in [12], which
+in turn is based on the HHL quantum algorithm and its variants to solve linear systems [18, 5, 13].
+Comparing to the HHL algorithm, we can give the exact solution, while the HHL algorithm can
+only give the quantum state. The speedup of our algorithms comes from the HHL algorithm. The
+limitation on the condition number is inherited from the HHL algorithm, and it is proved in [18] that
+the dependence on condition number cannot be substantially improved. Also note that, the best
+classic numerical method for solving an order N linear equation Ax = b has complexity eO(N√κ),
+which also depends on the condition number κ of A [26].
+The method of treating the inequality constraints with the function θb(Gbit) simpliﬁes the com-
+putational signiﬁcantly. The binary representation ηb = P⌊log2(b)⌋
+i=0
+Bi2i for b is often used in the
+literature to represent the integers 0, 1, . . . , b. The values of ηb is 0, 1, . . . , 2⌊log2(b)⌋+1 −1, which may
+contain integers strictly larger than b and cannot be used to represent inequalities. In [7, 3], the
+inequality 0 ≤g ≤b is reduced to Qb
+i=0(g −i) = 0. Our reduction θb(Gbit) is better, which does
+not increase the degree of the equation and the size of the equation is increased in the logarithm
+scale, while the method used in [7, 3] increases the degree by a factor b and increases the size of the
+4
+
+
+--- PAGE 5 ---
+equation exponentially.
+The rest of this paper is organized as follows. In Section 2, we deﬁne the θb(Gbit) function and
+give an explicit formula to reduce a polynomial system into an MQ. In Section 3, we present the
+algorithm for solving polynomial systems over ﬁnite ﬁelds. In Section 4, we show how to reduce
+the inequality constraints in problem (1) to a B-POSSO. In Section 5, we present the algorithm for
+solving problem (1). In Section 6, we present a quantum algorithm for PSWN. In Section 7, we
+present a quantum algorithm for SIS. In Section 8, we present a quantum algorithm for SVP/CVP.
+In Section 9, we present a quantum algorithm to recover the private key for NTRU. In Section 10,
+conclusions are given.
+2
+Two basic reductions
+In this section, we give two basic reductions frequently used in the paper: to represent an integer
+interval with a Boolean polynomial and to reduce a polynomial system to an MQ.
+2.1
+Represent an integer interval with a Boolean polynomial
+A variable X is called a Boolean variable if it satisﬁes X2 −X = 0. In this paper, we use uppercase
+symbols to represent Bollean variables. A polynomial is called a Boolean polynomial if it is in a
+set of Boolean variables. In this section, we will construct a Boolean polynomial whose values are
+exactly the integers 0, 1, . . . , b for a given positive integer b > 0.
+Set s = ⌊log2(b)⌋and introduce s + 1 Boolean variables Bbit = {B0, . . . , Bs}.
+Inspired by
+b = (2s −1) + (b + 1 −2s), we introduce the function θb(Bbit): θ1(Bbit) = G0 and for b > 1
+θb(Bbit) =
+s−1
+X
+i=0
+2iBi + (b + 1 −2s)Bs.
+(2)
+Lemma 2.1. When evaluated in C or Fp = {0, 1, . . . , p−1} with p > b, θb(Bbit) is a surjective map
+from {0, 1}s+1 to {0, 1, . . . , b}. Furthermore, #Bbit = #θb(Bbit) = ⌊log2(b)⌋+ 1.
+Proof. We ﬁrst assume that θb(Bbit) is evaluated over C.
+It is easy to check this lemma when
+b = 1.
+When b > 1, from the deﬁnition of s, we have b/2 < 2s ≤b and hence 2s −1 < b.
+Since the values of Ps−1
+i=0 2iBi are 0, 1, . . . , 2s −1, for any integer n ∈[0, 2s −1], n has a preimage
+of map θb(Bbit), where Bs = 0.
+Now consider an integer n ∈[2s, b].
+Since n ≥2s, we have
+n−(b+1−2s) ≥2·2s−b−1 > 2·b/2+1−b−1 > −1 ≥0. Since n ≤b, we have n−(b+1−2s) ≤2s−1.
+Thus 0 ≤n −(b + 1 −2s) ≤2s −1, and then n has a preimage of map θb(Bbit), where Bs = 1. It is
+clear #Bbit = ⌊log2(b)⌋+ 1. Since b + 1 −2s > 0, we have #θb(Bbit) = ⌊log2(b)⌋+1. The lemma is
+also valid when θb(Bbit) is evaluated over Fp, since all values in the computation are ≤p −1.
+For instance, θ6(Bbit) = B0+2B1+3B2, θ7(Bbit) = B0+2B1+4B2, θ8(Bbit) = B0+2B1+4B2+B3.
+Remark 2.2. It is easy to check that θb is injective if and only if b = 2k −1 for some positive
+integer k. For instance, θ6 is not injective: 3 has two preimages B0 = 1, B1 = 1, B2 = 0 and
+B0 = 0, B1 = 0, B2 = 1.
+5
+
+
+--- PAGE 6 ---
+2.2
+Reduce polynomial system to MQ
+It is well known that a polynomial system can be reduced to an MQ by introducing some new
+indeterminates. In this section, we give an explicit reduction which is needed in the complexity
+analysis in this paper.
+For any ﬁeld F, let F[X] be the polynomial ring over F in the indeterminates X = {x1, . . . , xn}.
+Denote the sparseness (number of terms) of f ∈F[X] as #f. For F = {f1, . . . , fr} ⊂F[X], denote
+TF = Pr
+i=1 #fi to be the total sparseness of F, NF = #X = n to be the number of indeterminates
+in F, di = maxj degxi(fj) to be the degree of F in xi, M(F) to be the set of all monomials in F,
+and C(F) to be the size of the coeﬃcients of the polynomials in F, (F)F [X] to be the ideal generated
+by F in F[X].
+We want to introduce some new indeterminates to rewrite F as an MQ.
+Lemma 2.3. Let F = {f1, . . . , fr} ⊂F[X].
+We can introduce a set of new indeterminates V
+and an MQ Q(F) ⊂F[X, V] such that (F)F [X] = (Q(F))F [X,V] ∩F[X].
+Furthermore, we have
+#V = (TF + 1) Pn
+i=1⌊log2 di⌋+ nTF = O(TFD), NQ(F) = n + #V = O(TFD), #Q(F) = r + #V =
+O(TFD), TQ(F) = TF + 2#V = O(TFD), and C(Q(F)) = C(F), where D = n + Pn
+i=1⌊log2 di⌋and
+di = maxj degxi(fj).
+Proof. If F is already an MQ, set Q(F) = F and V = ∅. First, we introduce new indeterminates
+uij for j = 1, . . . , ⌊log2 di⌋and new polynomials ui1 −x2
+i and ui(j+1) −u2
+ij for j = 2, . . . , ⌊log2 di⌋−1.
+It is clear that x2j
+i
+= uij. Without loss of generality, we assume di ≥2 and if di ≤1, then we do
+not need these uij. Let Xα = Qn
+i=1 xαi
+i
+be a monomial of F, and αi = Pli
+k=1 2νik be the binary
+representation of αi ≤di, where li ≤⌊log2 αi⌋+ 1 ≤⌊log2 di⌋+ 1 and νi1 < · · · < νili. Thus
+Xα =
+n
+Y
+i=1
+x
+Pli
+k=1 2νik
+i
+=
+n
+Y
+i=1
+li
+Y
+k=1
+x2νik
+i
+≡
+n
+Y
+i=1
+li
+Y
+k=1
+uiνik.
+Rewrite these {uij} as {ui | i = 1, . . . , Lα} and we have Xα = QLα
+i=1 ui, where Lα = P
+k lk ≤
+Pn
+i=1(⌊log2 di⌋+ 1) ≤Pn
+i=1⌊log2 di⌋+ n. To rewrite this product as an MQ, we introduce new
+indeterminates {v1, . . . , vLα−2} and quadratic polynomials v1−u1u2, vi−vi−1ui+1 for i = 2, . . . , Lα−
+2 and Xα = vLα−2uLα. Denote Q(Xα) = {v1 −u1u2, vi −vi−1ui+1, i = 2, . . . , Lα −2}. Finally, we
+obtain an MQ
+Q(F)
+=
+{ui1 −x2
+i , ui(ki+1) −u2
+iki, i = 1, . . . , n, ki = 2, . . . , ⌊log2 di⌋−1;
+bfj, j = 1, . . . , r} ∪Xα∈M(F) Q(Xα) ⊂F[X, V],
+(3)
+where V = {ui, vk} and bfi is obtained by replacing Xα by vLα−2uLα in fi. For convenience, we
+denote
+bQ(fj)
+=
+bfj, j = 1, . . . , r.
+(4)
+Let V = {ui, vk} be the set of new indetermiantes. It is clear that the number of these uij is
+Pn
+i=1⌊log2 di⌋. To represent Xα, we need Pn
+i=1 li −2 ≤Pn
+i=1⌊log2 di⌋+n new indeterminates vi. In
+total, we have #V ≤Pn
+i=1⌊log2 di⌋+ TF(Pn
+i=1 li −2) ≤(TF + 1) Pn
+i=1⌊log2 di⌋+ nTF = O(TFD).
+Then, NQ(F) = #X+#V = O(TFD), since n ≤D. #Q(F) = r+#V = O(TFD), since r ≤D. Q(F)
+contains r polynomials bQ(fj), j = 1, . . . , r and #V binomials. Then TQ(F) = TF +2#V = O(TFD).
+Since we only introduce new coeﬃcients ±1, we have C(Q(F)) = C(F).
+6
+
+
+--- PAGE 7 ---
+Example 2.4. Let F = {f1 = x3
+1x5
+2 + 2x7
+1x5
+2 + 3}. We have d1 = 7, d2 = 5, and Q1 = {u11 −
+x2
+1, u12 −u2
+11, u21 −x2
+2, u22 −u2
+21}. Then x3
+1x5
+2 = x1u11x2u22 = v2u22, x7
+1x5
+2 = x1u11u12x2u22 = v5u22,
+where Q2 = {v1 −x1u11, v2 −x2v1, v3 −x1u11, v4 −v3u12, v5 −v4x2}. Finally, Q(F) = Q1 ∪Q2 ∪
+{v2u22 + 2v5u22 + 3}. Note that the above representation is not optimal and we can use less new
+variables to represent f1 = x1v2 + 2x1v2x4
+1 + 3 = x1v2 + 2x1v′
+3 + 3, where v′
+3 = v2u12.
+Remark 2.5. As mentioned in Example 2.4, the representation for Q(F) is not optimal.
+The
+binary decision diagram (BDD) [11] can be used to give a better representation for Q(F) by using
+less variables vi.
+3
+Polynomial system solving over ﬁnite ﬁelds
+Let F = {f1, . . . , fr} ⊂Fq[X] be a ﬁnite set of polynomials over the ﬁnite ﬁeld Fq, ti = #fi, and
+TF = Pr
+i=1 ti. In this section, we give a quantum algorithm to ﬁnd a solution of F in Fn
+q . Denote
+the solutions of F in Fn
+q by VFq(F). For a prime number p, we use the standard representation
+Fp = {0, . . . , p −1}.
+3.1
+Reduce MQ over Fp to MQ in Boolean variables over C
+Let F = {f1, . . . , fr} ⊂Fp[X] be an MQ, ti = #fi, and TF = Pr
+i=1 ti. In this section, we will
+construct a set of Boolean polynomials over C, from which we can obtain VFp(F). The reduction
+procedure consists of the following two steps.
+Step 1. We reduce F to a set of polynomials in Boolean variables over Fp. If p = 2, then the
+xi are already Boolean and we can skip this step. We thus assume p > 2 and set
+xi
+=
+θp−1(Xi) =
+⌊log2(p−1)⌋−1
+X
+j=0
+Xi,j2j + (p −2⌊log2(p−1)⌋)Xi,⌊log2(p−1)⌋,
+Xi
+=
+{Xij, j = 1, . . . , ⌊log2(p −1)⌋},
+(5)
+Xbit
+=
+∪n
+i=1Xi = {Xij | i = 1, . . . , n, j = 0, . . . , ⌊log2(p −1)⌋}.
+where θp−1 is deﬁned in (2) and Xij are Boolean variables. Let fi = Pti
+j=1 ci,jXαij, where αij =
+(αij(1), . . . , αij(n)) ∈Nn. Substituting (5) into F, we have
+fibit
+=
+ti
+X
+j=1
+ci,j
+n
+Y
+k=1
+(θp−1(Xi))αij(k) ∈Fp[Xi],
+(6)
+B(F)
+=
+{f1bit, . . . , frbit} ⊂Fp[Xbit].
+For any set S, set
+HS = {x2 −x | x ∈S}.
+We have
+Lemma 3.1. There is a surjective morphism Π1 : VFp(B(F), HXbit) ⇒VFp(F), where Π1(Xbit)
+= (θp−1(X1), . . . , θp−1(Xn)). Furthermore, #Xbit = O(n log p) and the total sparseness of B(F) is
+O(TF log2 p).
+7
+
+
+--- PAGE 8 ---
+Proof. By Lemma 2.1, it is easy to check that Π1 is surjective.
+By Lemma 2.1, #θp−1(Xi) =
+⌊log2(p −1)⌋+ 1 and hence #Xbit = O(n log p). Since F is an MQ, for any monomial Xαij of fi,
+we have |αij| ≤2 and Qn
+k=1(θp−1(Xi))αij(k) in (6) has at most O(log2 p) terms. Therefore, the total
+sparseness of fibit is O(#fi log2 p) and the total sparseness of B(F) is O(TF log2 p).
+Step 2. We introduce new Boolean indeterminates Ui,j and reduce each fibit into a Boolean
+polynomial over Z. Let t′
+i = #fibit and let
+Ui
+=
+{Ui,j, j = 0, . . . , ⌊log2 t′
+i⌋},
+Ubit
+=
+∪r
+i=1Ui = {Ui,j | i = 1, . . . , r, j = 0, . . . , ⌊log2 t′
+i⌋},
+(7)
+θt′
+i(Ui)
+=
+⌊log2 t′
+i⌋−1
+X
+j=0
+Ui,j2j + (t′
+i + 1 −2⌊log2 t′
+i⌋)Ui,⌊log2 t′
+i⌋∈Fp[Ui],
+(8)
+P(fibit)
+=
+fibit −pθt′
+i(Ui) ∈Z[Xbit, Ui],
+P(F)
+=
+{P(fibit) | i = 1, . . . , r} ⊂Z[Xbit, Ubit],
+(9)
+and we have
+Lemma 3.2. There is a surjective morphism Π2 : VC(P(F), HXbit, HUbit) ⇒VFp(F), where
+Π2(Xbit, Ubit) = Π1(Xbit) = (θp−1(X1), . . . , θp−1(Xn)).
+Proof. Let (ˇXbit, ˇUbit) ∈VC(P(F), HXbit, HUbit). Then (ˇXbit, ˇUbit) is a Boolean solution of P(F) ⊂
+Z[Xbit, Ubit] and
+0 = P(fi)(ˇXbit, ˇUbit) = fibit(ˇXbit) −pθ⌊Ci/p⌋(ˇUbit) ≡fibit(ˇXbit) ≡fi(Π1(ˇXbit))
+(mod p),
+where the last equivalence comes from (6), and Π1(ˇXbit) = (θp−1(ˇX1), . . . , θp−1(ˇXn)) is deﬁned in
+Lemma 3.1. As a conclusion, fi(Π(ˇXbit)) ≡0 (mod p), or (θp−1(ˇX1), . . . , θp−1(ˇXn)) ∈VFp(F).
+We now prove that Π2 is surjective. By Lemma 3.1, VFp(B(F), HXbit) ⇒VFp(F), so it is enough
+to prove VC(P(F), HXbit, HUbit) ⇒VFp(B(F), HXbit).
+Let ˇXbit ∈VFp(B(F), HXbit) and fibit =
+Pt′
+i
+j=1 c′
+i,jXβij
+bit ∈Fp[Xbit], where c′
+i,j ∈{0, . . . , p −1} ⊂Z. Denote Ci = Pt′
+i
+j=1 c′
+i,j ≤(p −1)t′
+i. Then,
+fibit(ˇXbit) ≡0 (mod p) if and only if fibit(ˇXbit) = 0, p, 2p, . . . , or t′
+ip, since ⌊Ci/p⌋p ≤t′
+i. By Lemma
+2.1, there exist Boolean variables ˇUi = { ˇUi,j, j = 0, . . . , ⌊log2 t′
+i⌋} such that fibit(ˇXbit) = pθt′
+i(ˇUi).
+Hence (ˇXbit, ˇUi) is a preimage of ˇXbit for the map VC(P(F), HXbit, HUbit) ⇒VFp(B(F), HXbit).
+Then, the map Π2 is surjective.
+Since the map in (5) is not injective, this map Π2 is also not injective.
+Lemma 3.3. The polynomial system P(F) deﬁned in (9) is of total sparseness TP (F) = eO(TF log2 p)
+and has NP (F) = O(n log p+Pr
+i=1 log ti +r log log p) indeterminates. Furthermore, we can compute
+P(F) from F in eO(TF log2 p) binary operations.
+Proof. By Lemma 3.1, B(F) is of total sparseness O(TF log2 p) and has O(n log p) indeterminates.
+Since F is an MQ, by the proof of Lemma 3.1, we have t′
+i = #fi,bit ≤ti log2 p. Then, the number of
+Ui,j introduces in (7) is #Ubit = Pr
+i=1⌊log2 t′
+i⌋= O(Pr
+i=1 log t′
+i) = O(Pr
+i=1(log ti + log(log p)2)) =
+O(Pr
+i=1 log ti + r log log p).
+Therefore, the total number of indeterminates is #Xbit + #Ubit =
+O(n log p + Pr
+i=1 log ti + r log log p).
+8
+
+
+--- PAGE 9 ---
+From (9), the total sparseness of P(F) is TP (F) = TB(F) + Pr
+i=1 #θt′
+i(Ui) = TB(F) + #Ubit =
+O(TF log2 p+Pr
+i=1 log ti +r log log p) = eO(TF log2 p), since r ≤TF and Pr
+i=1 log ti ≤Pr
+i=1 ti = TF.
+To compute each 2j mod p costs O(log p) binary operations. Using the fast polynomial arith-
+metics [28], to expand all the polynomials in B(F) costs eO(TF log2 p) binary operations. The cost
+of other steps to obtain P(F) is negligible.
+Corollary 3.4. If F is a linear system, then TP (F) = O(TF log p) and NP (F) = eO(n log p +
+Pr
+i=1 log ti + r log log p).
+Proof. Since each fi is linear, we have TB(F) = O(TF log p), and TP (F) = O(TF log p + #Ubit) =
+eO(TF log p).
+Remark 3.5. In (8), we can use θ⌊Ci/p⌋instead of θt′
+i to introduce less indeterminates. To compute
+each Ci = Pt′
+i
+j=1 c′
+ij costs t′
+i log p = O(ti log3 p), and to compute all Ci costs O(TF log3 p), which is
+more than TP (F) = O(TF log2 p). But, this is negligible comparing to the ﬁnal complexity of the
+algorithm in Corollary 3.9.
+3.2
+Solving polynomial systems over Fp
+Let F = {f1, . . . , fr} ⊂Fp[X]. By Lemma 2.3, we can convert F into an MQ Q(F) ⊂Fp[X, V]. By
+Lemma 3.2, we can convert Q(F) to an MQ in Boolean variables over C: P(Q(F)) ⊂C[Xbit, Vbit, Ubit].
+To solve P(Q(F)), we need the following result, where a quantum algorithm for B-POSSO is given.
+A solution a of B ⊂C[X] is called a Boolean solution if each coordinate of a is either 0 or 1.
+Theorem 3.6 ([12]). For a ﬁnite set B ⊂C[X] and ǫ ∈(0, 1), there exists a quantum algorithm
+QBoolSol which decides whether B = 0 has a Boolean solution and computes one if B = 0 does
+have Boolean solutions, with probability at least 1−ǫ and complexity eO(n2.5(n+TB)κ2 log 1/ǫ), where
+TB the total sparseness of B and κ is the condition number of B.
+Here is the main result of this section.
+Theorem 3.7. For F = {f1, . . . , fr} ⊂Fp[X] and ǫ ∈(0, 1), there exists a quantum algorithm
+to ﬁnd a solution of F in Fp with probability at least 1 −ǫ and the complexity of the algorithm
+is eO(T 3.5
+F D3.5 log4.5 pκ2 log 1/ǫ), where TF = Pr
+i=1 #fi is the total sparseness of F, D = n +
+Pn
+i=1 maxj⌊log2(degxi(fj))⌋, and κ is the condition number of P(Q(F)), also called the condition
+number of F.
+We ﬁrst estimate the total sparseness of P(Q(F)).
+Lemma 3.8. P(Q(F)) is of total sparseness O(TFD log2 p) = O(nTF log d log2 p) and has O(TF
+D log p) = O(nTF log d log p) indeterminates, where D = n + Pn
+i=1 maxj⌊log2(degxi(fj))⌋and d =
+max{2, log2(degxi(fj)), i = 1, . . . , n, j = 1, . . . , r}.
+Proof. By Lemma 2.3, NQ(F) = O(TFD), TQ(F) = O(TFD), and #Q(F) = O(TFD). By Lemma
+3.3, P(Q(F)) is of total sparseness O(TFD log2 p).
+By Lemma 3.3, P(Q(F)) has NP (Q(F)) =
+O(NQ(F) log p + P
+f∈Q(F) log(#f) + #Q(F) log log p) indeterminates. From the proof of Lemma
+2.3, Q(F) contains bfj, j = 1, . . . , r and #V binomials. Then, P
+f∈Q(F) log(#f) = Pr
+j=1 log(# bfj) +
+9
+
+
+--- PAGE 10 ---
+#V log 2 = O(Pr
+j=1 log tj+TFD) = eO(TFD). Then NP (Q(F)) = eO(TFD log p+TFD+TFD log log p) =
+eO(TFD log p). Since D = n + Pn
+i=1 maxj⌊log2(degxi(fj))⌋= O(n log d), we obtain the bounds in-
+volving n and d.
+Proof of Theorem 3.7. We can ﬁnd a solution of F as follows. Construct P(Q(F)) ⊂C[Xbit, Vbit,
+Ubit] according to Lemma 2.3 and Lemma 3.2. Let b = QBoolSol(P(Q(F)), ǫ). If b = ∅then the al-
+gorithm fails to ﬁnd a solutioon. Let b = (ˇXbit, ˇVbit, ˇUbit) and ˇXbit = ( ˇX1,0, . . . , ˇX1,⌊log2(p−1)⌋), ˇX2,0,
+. . . , ˇXn,⌊log2(p−1)⌋)). Let b
+X = (θp−1(ˇX1), . . . , θp−1(ˇXn)), where ˇXi = ( ˇXi,0, . . . , ˇXi,⌊log2(p−1)⌋). By
+Lemma 2.3, Lemma 3.2, and Theorem 3.6, b
+X is a solution of F in Fp with probability at least 1−ǫ.
+We now give the complexity.
+By Lemma 3.8, P(Q(F)) is of sparseness O(TFD log2 p) and
+has O(TFD log p) indeterminates. By Theorem 3.6, we can ﬁnd a Boolean solution of P(Q(F))
+in time eO((TFD log p)2.5(TFD log p + TFD log2 p)κ2 log 1/ǫ) = eO(T 3.5
+F D3.5 log4.5 pκ2 log 1/ǫ). The
+complexity for other steps can be neglected.
+Let d = max{2, maxn
+i=1 maxj degxi(fj)}. Then D = O(n log d). Since the solutions are in Fp, we
+can assume d < p. By Theorem 3.7, we have
+Corollary 3.9. The complexity to ﬁnd a solution for F = 0 mod p is eO(n3.5T 3.5
+F log3.5 d log4.5 p
+κ2 log 1/ǫ) = eO(n3.5T 3.5
+F log8 pκ2 log 1/ǫ).
+Corollary 3.10. If F is an MQ, then the complexity is eO((n log p + r)2.5TF log2 pκ2 log 1/ǫ).
+Proof. If F is an MQ, we have P(Q(F)) = P(F). By Lemma 3.3, NP (F) = O(n log p+Pr
+i=1 log ti +
+r log log p) and TP (F) = O(TF log2 p) > NP (F). Since Pr
+i=1 log ti = log(Qr
+i=1 ti) < (log Pr
+i=1 ti)r =
+(log TF)r, by Theorem 3.6, the complexity is eO(N 2.5
+P (F)TP (F)κ2 log 1/ǫ) = eO((n log p + Pr
+i=1 log ti +
+r log log p)2.5TF log2 pκ2 log 1/ǫ) = eO((n log p + r log(TF/r))2.5TF log2 pκ2 log 1/ǫ) = eO((n log p +
+r)2.5TF log2 pκ2 log 1/ǫ).
+In the last step, we here use the reduction (a + b log c)(c + d) ≤(a +
+b) log(c + d)(c + d) = eO((a + b)(c + d)).
+Corollary 3.11. If p = 2, then the complexity to ﬁnd a solution of F = 0 mod 2 is eO((n+r)2.5(n+
+TF)κ2 log 1/ǫ).
+Proof. If p = 2, then we do not need to convert G to MQ and TP (F) = O(TF + Pr
+i=1 log ti) =
+eO(TF), NP (F) = O(n + Pr
+i=1 log ti).
+Similar to the proof of Corollary 3.10, the complexity is
+eO((n + Pr
+i=1 log ti)2.5(n + TF)κ2 log 1/ǫ) = eO((n + r)2.5(n + TF)κ2 log 1/ǫ).
+3.3
+Polynomial equation solving over Fq
+In this section, we consider polynomial equation solving in a general ﬁnite ﬁeld Fq by reducing the
+problem to equation solving over Fp.
+If q = pm with p a prime number and m ∈Z>1, then Fq = Fp(θ), where ϕ(θ) = 0 for a
+monic irreducible polynomial ϕ with deg(ϕ) = m. Let g ∈Fq[X] = Fp[θ, X]. By setting xi =
+Pm−1
+j=0 xijθj and write each coeﬃcient c = Pm−1
+j=0 cjθj in g, g can be written as g = Pm−1
+j=0 gjθj,
+where gj ∈Fp[Xθ] and Xθ = {xij | i = 1, . . . , n, j = 0, . . . , m −1} are variables over Fp. We denote
+G(g) = {g0, g1, . . . , gm−1} ⊂Fp[Xθ]. For a polynomial set F ⊂Fq[X], we denote
+G(F) =
+[
+f∈F
+G(f) ⊂Fp[Xθ].
+(10)
+10
+
+
+--- PAGE 11 ---
+Lemma 3.12. There is an isomorphism Πq : VFp(G(F)) →VFq(F), where Πq(xij) = (Pm−1
+j=0 x1jθj,
+. . . , Pm−1
+j=0 xnjθj). Furthermore, for an MQ F = {f1, . . . , fr} ⊂Fq[X] with total sparseness TF,
+G(F) ⊂Fp[Xθ] is an MQ with total sparseness ≤m3TF, #G(F) = mr, and #Xθ = mn.
+Proof. It is easy to show that #G(F) = m#F, #Xθ = m#X and G(F) is also an MQ. Then the
+total sparseness of G(F) will be concerned. F has TF terms, where each term is of degree ≤2. For
+x = Pm−1
+i=0 xiθi and y = Pm−1
+i=0 yiθi, let cθk = Pm−1
+j=0 cjkθj mod ϕ(θ) for any k ∈N, then we have
+cxy = Pm−1
+i=0
+Pm−1
+j=0 xiyj
+Pm−1
+k=0 ck (i+j)θk = Pm−1
+i=0 giθi, where gi ∈Fp[x0, . . . , xm−1, y0, . . . , ym−1] is
+a quadratic polynomial with TG(cxy) ≤Pm−1
+i=0
+Pm−1
+j=0
+Pm−1
+k=0 1 = m3. Thus an MQ F over Fq can be
+represented as another MQ G(F) over Fp with TG(F) ≤m3TF.
+We have
+Theorem 3.13. There is a quantum algorithm to ﬁnd a solution of F ⊂Fq[X] with probability at
+least 1 −ǫ and in time eO(m5.5T 3.5
+F D3.5 log4.5 pκ2 log 1/ǫ), where TF is the total sparseness of F,
+D = n + Pn
+i=1⌊log2 maxj degxifj⌋, and κ is the condition number of P(G(Q(F))).
+Proof. Using Lemma 3.12, we can solve F over Fq similar to the method given in the proof of
+Theorem 3.7. In stead of solving F1 = P(Q(F)) ⊂C[Xbit, Vθbit, Uθbit] with algorithm QBoolSol,
+we now solve F1 = P(G(Q(F))) ⊂C[Xθbit, Vθbit, Uθbit] with algorithm QBoolSol, where Q(F) is
+deﬁned in (10) and Xθbit is the bit representation for Xθ.
+We now prove the complexity.
+By Lemma 2.3, Q(F) has O(TFD) indeterminates and to-
+tal sparseness O(TFD). G(Q(F)) has O(mTFD) indeterminates and total sparseness O(m3TFD).
+Since G(Q(F)) is an MQ, by Corollary 3.10, the complexity is eO(((mTFD log p+m(r+TFD))2.5(m3TFD)
+log2 pκ2 log 1/ǫ) = eO(m5.5T 3.5
+F D3.5 log4.5 pκ2 log 1/ǫ).
+Corollary 3.14. If F is an MQ, the complexity is eO(m5.5(n log p + r)2.5(n + TF) log2 pκ2 log 1/ǫ).
+Corollary 3.15. If q = 2m, then the complexity is eO(m5.5T 3.5
+F D3.5κ2 log 1/ǫ). Moreover, if F ⊂
+F2m[X] is an MQ, then the complexity is eO((n + r)2.5(n + TF)κ2 log 1/ǫ).
+4
+Reduce inequalities to MQ in Boolean variables
+In this section, we show how to reduce the inequality constraints I = {0 ≤gi(X, Y) ≤bi, i =
+1, . . . , s; 0 ≤yk ≤uk, k = 1, . . . , m; X ∈Fn
+p; Y ∈Zm} of problem (1) into a B-POSSO, where
+g1, . . . , gs ∈Z[X], b1, . . . , bs, u1, . . . , um ∈N. We emphasize that for g ∈C[X, Y], ˇX ∈Fn
+p, and
+ˇY ∈Zm, g(ˇX, ˇY) is evaluated in C.
+4.1
+Reduce polynomial system over C to MQ in Boolean variables over C
+Let G = {g1, . . . , gs} ⊂Z[X, Y]. We will reduce G into an equivalent MQ in Boolean variables over
+C under the condition xi ∈Fp = {0, 1, . . . , p −1} and 0 ≤yj ≤uj. Let dg = maxs
+l=1 deg(gl).
+Following Lemma 2.3, let Q(G) ⊂Z[X, Y, V] be the MQ deﬁned in (3), where V is the set of new
+indeterminates introduced in Lemma 2.3. We will reduce X, Y, and V = {v1, . . . , vl} to Boolean
+11
+
+
+--- PAGE 12 ---
+variables. For X, we use (5) to rewrite them as Boolean variables Xbit. For Y, using Lemma 2.1,
+the integers yi satisfying 0 ≤yi ≤ui can be represented exactly as follows
+yi
+=
+θui(Yi) =
+⌊log2 ui⌋−1
+X
+j=0
+Yi,j2j + (ui −2⌊log2 ui)⌋+ 1)Yi,⌊log2 ui⌋,
+Yi
+=
+{Yi,j | j = 0, . . . , ⌊log2 ui⌋},
+(11)
+Ybit
+=
+∪m
+i=1Yi
+where Yi,j are Boolean variables.
+From Lemma 2.3, each vi ∈Vk represents a monomial in X and Y of degree ≤dg. So, 0 ≤vi ≤
+hdg for h = max{p −1, u1, . . . , um}. By Lemma 2.1, we can write vi as
+vi = θhdg (Vi,bit) =
+⌊dg log2 h⌋−1
+X
+j=0
+Vi,j2j + (hdg −2⌊dg log2 h⌋+ 1)Vi,⌊dg log2 h⌋,
+(12)
+where Vi,bit = {Vi,j | j = 0, . . . , ⌊dg log2 ui⌋}, Vbit = ∪t
+i=1Vi,bit, and each Vi,j is a Boolean variable.
+Let ˆgk = bQ(gk) ∈Z[X, Y, V] be deﬁned in (4), Q(G) = Q(G) \ {ˆg1, . . . , ˆgs}. Substituting xi in
+(5), and yi in (11), and vi in (12) into Q(G), ˆgk, and eQ(G), we obtain
+B(G), gk, B(G) in Z[Xbit, Ybit, Vbit].
+(13)
+The following result shows that G and B(G) are equivalent.
+Lemma 4.1. For ˇX ∈Fn
+p and ˇY ∈Zn such that 0 ≤ˇyj ≤uj for each j, there exists a ˇVbit such
+that gk(ˇX, ˇY) = gk(ˇXbit, ˇYbit, ˇVbit) for k = 1, . . . , s and B(G)(ˇXbit, ˇYbit, ˇVbit) = 0.
+Proof. From (3), it is easy to see that starting from ˇX ∈Fn
+p and ˇY ∈Zm, one may obtain a
+unique ˇV such that eB(gk)(ˇX, ˇY, ˇV) = 0 and gk(ˇX, ˇY) = ˆgk(ˇX, ˇY, ˇV) for each k. It suﬃces to show
+that ˇX, ˇY, ˇV can be written as their Boolean forms, which is valid for ˇX, ˇY due to (5) and (11)
+and Lemma 2.1.
+From Lemma 2.3, each vi ∈V is a monomial in X and Y of degree ≤dg.
+So, 0 ≤vi ≤hdg for h = max{p −1, u1, . . . , um}. By Lemma 2.1, there exists a ˇVbit such that
+gk(ˇX, ˇY) = ˆgk(ˇX, ˇY, ˇV) = gk(ˇXbit, ˇYbit, ˇVbit) and B(g)(ˇXbit, ˇYbit, ˇVbit) = 0.
+Lemma 4.2. B(G) = {gk} ∪B(G) deﬁned in (13) has O((m + n)TGdg log dg log h) number of
+variables and total sparseness O((m + n)TGd2
+g log dg log2 h), and C(B(G)) is O(C(G) + dg log h),
+where h = max{p −1, u1, . . . , um} and dg = maxs
+l=1 deg(gl)..
+Proof. By Lemma 2.3, NQ(G) = O((m + n)TG log dg), TQ(G) = O((m + n)TG log dg), and C(Q(G)) =
+C(G).
+Note that |X| = n, |Y| = m, and |V| is bounded by NQ(G) = O((m + n)TG log dg).
+By
+(5), |Xbit| = O(n log p) = O(n log h).
+By (11), |Ybit| = O(m log h).
+By (12) and Lemma 2.1,
+|Vbit| = O((m + n)TG log dg log hdg)) = O((m + n)dgTG log dg log h)).
+By (14) and Lemma 2.1,
+we have #Gbit = O(s log b).
+Since s ≤TG, p −1, b ≤h, the number of Boolean variables are
+NB(G) = O((m + n)dgTG log dg log h).
+Note that monomials of Q(G) are of the form xixj, xiyj, xivj, yiyj, yivj, or vivj when we rewrite
+them as Boolean variables, the sparseness of the new expressions are bounded by log2 p, log p log h,
+12
+
+
+--- PAGE 13 ---
+dg log p log h, log2 h, dg log2 h and d2
+g log2 h, respectively. The total sparseness of B(G) is O((m +
+n)TGd2
+g log dg log2 h).
+From (12) and the fact that B(G) is MQ, the bit size of the coeﬃcients of B(G) is O(C(G) +
+dg log h).
+Remark 4.3. For inequalities involving variables over ﬁnite ﬁelds, the solution of the inequalities
+depends on the representation of Fp. For the general optimization problem 1, we just use standard
+representation for Fp. For speciﬁc problems, such as the SIS problem in Section 7, we use diﬀerent
+representations for Fp to ﬁnd the “correct” solution.
+4.2
+Reduce inequalities into MQ in Boolean variables
+We now consider the inequality constraints of problem (1): I = {0 ≤gi(X, Y) ≤bi, i = 1, . . . , s; 0 ≤
+yk ≤uk, k = 1, . . . , m; X ∈Fn
+p}, where g1, . . . , gs ∈Z[X, Y], b1, . . . , bs, u1, . . . , um ∈N. We will
+reduce I into an MQ in Boolean variables. Let
+Gi
+=
+{Gi,k | k = 0, . . . , ⌊log2 bi⌋}, Gbit = ∪s
+i=1Gi,
+δ(gi)
+=
+θbi(Gi) −gi =
+⌊log2 bi⌋−1
+X
+k=0
+Gi,k2k + (bi −2⌊log2 bi⌋+ 1)Gi,⌊log2 bi⌋−gi
+(14)
+I(I)
+=
+{δ(g1), . . . , δ(gs)} ∪B(G) ⊂Z[Xbit, Ybit, Vbit, Gbit]
+where Gi,k are Boolean variables, gi and B(G) are deﬁned in (13). We summarize the result of this
+section as the following result.
+Lemma 4.4. ˇX ∈Fn
+p and ˇY ∈Zm satisfy the constraint I if and only if there exist Boolean values
+ˇVbit, ˇGbit such that (ˇXbit, ˇYbit, ˇVbit, ˇGbit) is a solution of I(I).
+Proof. By Lemma 2.1, 0 ≤gi(Xbit, Ybit, Vbit) ≤bi if and only if ∃Gbit such that δ(gi)(Xbit, Ybit, Vbit,
+Gbit) = 0. Then, the lemma is a consequence of Lemma 4.1.
+We now estimate the parameters of I(I). Let b = maxs
+i=1 bi, dg = maxs
+i=1 deg(gi), h = max{p −
+1, b, u1, . . . , um}, G = {g1, . . . , gs} and TG ≥s the total sparseness of G. Then, we have
+Lemma 4.5. I(I) has O((m + n)TGdg log dg log h) variables and total sparseness O((m + n)TGd2
+g
+log dg log2 h). C(I(I)) is O(C(G) + dg log h) .
+Proof. Since B(G) = {gk}∪B(G), from (14), NI(G) = NB(G)+#Gbit, TI(G) = TB(G)+P
+i #θbi(Gi) =
+TB(G) + #Gbit, and C(I(G)) = C(B(G)). Note that #Gbit = O(s log b). Since TG ≥s, #Gbit is
+negligible comparing to the complexity of B(G) and the lemma follows directly from Lemma 4.2.
+From Lemma 4.5, the total sparseness and the coeﬃcients of I(G) are well controlled.
+Corollary 4.6. If gi are linear, then I(G) ⊂Z[Xbit, Ybit, Gbit], TB(G) = O(TG log h), and NB(G) =
+(n + m) log h. Furthermore, TI(I) = O(TG log h + s log b) and NI(I) = O((n + m) log h + s log b).
+Proof. Since each gi is linear, we have Q(fi) = fi. Then the variable Vk,i,j are not needed and B(G)
+has (n + m) log h indeterminates. Also, TB(G) = O(TG log h). The results for I(G) can be proved
+similarly.
+13
+
+
+--- PAGE 14 ---
+4.3
+Bounded integer solutions of polynomial inequalities and equations
+As a direct application of the reduction method given in this section, we can give a quantum
+algorithm to ﬁnd a feasible solution to the inequality constraint I = {0 ≤gi(X, Y) ≤bi, i =
+1, . . . , s; 0 ≤yk ≤uk, k = 1, . . . , m; X ∈Fn
+p}, where g1, . . . , gs ∈Z[X, Y], b1, . . . , bs, u1, . . . , um ∈N.
+Use the notations in Lemma 4.5, we have
+Proposition 4.7. For ǫ ∈(0, 1), there is a quantum algorithm to compute a feasible solution to I
+with probability > 1−ǫ and in time eO((m+n)3.5T 3.5
+G d4.5
+g
+log4.5 hκ2 log 1/ǫ), where κ is the condition
+number of I(I) deﬁned in (14).
+Proof. By Lemma 4.4, to ﬁnd a feasible solution to I, we need only to ﬁnd a Boolean solution of I(I).
+By Lemma 4.5, NI(I) = O((m + n)TGdg log dg log h), TI(I) = O((m + n)TGd2
+g log dg log2 h). Since
+NI(I) < TI(I), by Theorem 3.6, the complexity to ﬁnd a Boolean solution of I(I) is eO(N 2.5
+I(I)TI(I)κ2
+log 1/ǫ) = eO((m + n)3.5T 3.5
+I d4.5
+g
+log4.5 hκ2 log 1/ǫ).
+A closely related problem is to ﬁnd bounded integer solutions of a polynomial system over Z.
+Proposition 4.8. Let G = {g1, . . . , gs} ⊂Z[Y] and ǫ ∈(0, 1).
+There is a quantum algorithm
+to compute an integer solution b = (b1, . . . , bm) of G = 0 satisfying 0 ≤bi ≤ui for each i with
+probability > 1 −ǫ and in time eO(m3.5T 3.5
+G d4.5
+g
+log4.5 hκ2 log 1/ǫ), where κ is the condition number
+of eB(G) to be deﬁned in the proof and h = maxi ui.
+Proof. By Lemma 4.1, to ﬁnd an integer solution to G = 0, we need just to ﬁnd a Boolean solution
+of B(G) deﬁned in (13).
+By Lemma 4.2, we have NB(G) = O(mTGdg log dg log h) and TB(G) =
+O(mTGd2
+g log dg log2 h). Since NB(G) < TB(G), by Theorem 3.6, the complexity to ﬁnd a Boolean
+solution of B(G) is eO(N 2.5
+B(G)TB(G)κ2 log 1/ǫ) = eO(m3.5T 3.5
+G d4.5
+g
+log4.5 hκ2 log 1/ǫ).
+For a general polynomial system in C[X], the bound for coordinates of solutions could be double-
+exponential, as shown by the following example.
+Example 4.9. For F = {x1 −2, x2 −x2
+1, x3 −x2
+2, . . . , xn −x2
+n−1} ⊂C[X], VC(F) = {(2, 22, 24, . . . ,
+22n−1)}.
+On the other hand, the isolated solutions of a polynomial system is at most double-exponential
+[29, p. 341]. In a similar way, it is also possible to ﬁnd bounded rational solutions of a polynomial
+system.
+5
+Optimization over ﬁnite ﬁelds
+5.1
+A quantum algorithm for the optimization problem
+In this section, we give a quantum algorithm to solve the optimization problem (1). The idea is
+to search the minimal value of the objective function by solving several B-POSSOs, which will be
+done in four steps.
+14
+
+
+--- PAGE 15 ---
+Step 1. By Lemmas 2.3 and 3.2, we reduce the equational constraints fj(X) = 0 mod p, j =
+1, . . . , r to an MQ in Boolean variables over C: F1 = P(Q(F)) ⊂C[Xbit, V1bit, Ubit].
+Step 2.
+By Lemma 4.4, we reduce the inequality constraints I = {0 ≤gi(X, Y) ≤bi, i =
+1, . . . , s} to an MQ in Boolean variables over C: G1 = I(I) ⊂C[Xbit, Ybit, V2bit, Gbit].
+Step 3. Applying Lemma 4.1 to the objective function o(X, Y), we may reduce o into a quadratic
+polynomial in Boolean variables o ∈C[Xbit, Ybit, V3bit] and an MQ G2 = B({o}) ⊂Z[Xbit, Ybit, V3bit]
+deﬁned in (13). For the simplicity of presentation, we denote Vbit = V1bit ∪V2bit ∪V3bit. Let
+C
+=
+F1 ∪G1 ∪G2 ⊂C[Xbit, Ybit, Vbit, Ubit, Gbit].
+(15)
+A (0, 1)-programming is an optimization problem where all the arguments take values of 0 or 1.
+By Lemmas 2.3, 3.2, 4.1, and 4.4, we have
+Lemma 5.1. Problem (1) is equivalent to the following nonlinear (0, 1)-programming problem
+min
+Wbit
+o(Wbit)
+subject to C(Wbit) = 0
+(16)
+where Wbit = (Xbit, Ybit, Vbit, Ubit, Gbit) and C is deﬁned in (15).
+Step 4. The basic idea to search a minimal value of the objective function is as follows. Since all
+the variables are bounded, the objective function is also bounded, so we may assume α ≤o(ˇZbit) < µ
+for some α, µ ∈N. We divide [α, µ) into two roughly equal parts: [α, α + 2β) and [α + 2β, µ) and
+solve the following decision problem
+∃Wbit(o(Wbit) ∈[α, α + 2β) and (C(Wbit) = 0)).
+(17)
+Let
+δαβ(o)
+=
+α +
+β−1
+X
+j=0
+Fj2j −o(Wbit) ∈Z[Zbit],
+(18)
+Lαβ
+=
+C ∪{δαβ(o)} ⊂Z[Zbit],
+(19)
+where Zbit = Wbit ∪Fbit = {Xbit, Ybit, Vbit, Ubit, Gbit, Fbit} and Fbit = {F0, . . . , Fβ−1} are Boolean
+variables. By Lemma 2.1, we have
+Lemma 5.2. Problem (17) has a solution ˇWbit if and only if Lαβ = 0 has a solution ˇZbit =
+( ˇWbit, ˇFbit).
+If the answer to problem (17) is yes, we repeat the procedure for the new feasible interval
+[α, o(ˇZbit)). If the answer is no, we repeat the procedure for the new feasible interval [α + 2β, µ).
+The procedure ends when µ = α + 1.
+We now give the algorithm to solve problem (1). For convenience of later usage, we add a new
+constraint 0 ≤o < u for a given u ∈N> 0.
+Algorithm 5.3 (QFpOpt).
+Input: Problem (1), ǫ ∈(0, 1), and a u ∈Z>0 such that 0 ≤o < u.
+Output: bo, ˇX ∈Fn
+p, and ˇY ∈Zm such that bo = o(ˇX, ˇY) is the minimal value of o, or “fail”.
+15
+
+
+--- PAGE 16 ---
+Step 1: Set α = 0, µ = u.
+Step 2: Compute C in (15).
+Step 3: Let β = ⌊log2(µ −α)⌋−1 and compute Lαβ ⊂C[Zbit] deﬁned in (19).
+Step 4: Let ˇZbit = QBoolSol(Lαβ, ǫ/ log4/3 u), where QBoolSol is from Theorem 3.6.
+Step 5: If Algorithm QBoolSol returns a solution: ˇZbit = {ˇXbit, ˇYbit, ˇVbit, ˇUbit, ˇGbit, ˇFbit}, then
+Step 5.1: Compute ˇX and ˇY from ˇXbit and ˇYbit according to (5) and (11), respectively.
+Step 5.2: If ˇFbit = 0, return α, ˇX and ˇY.
+Step 5.3: If ˇFbit ̸= 0, let µ = o(ˇZbit) and goto Step 3.
+Step 6: If ˇZbit = ∅, then
+Step 6.1: If µ −α > 1, let α = α + 2β, and goto Step 3.
+Step 6.2: If µ −α = 1 and µ ̸= u, return µ, ˇX and ˇY.
+Step 6.3: If µ −α = 1 and µ = u, return “fail”.
+Let b = maxs
+i=1 bi, df = maxi,j{2, deg(fi, xj)}, dg = maxi,j{2, deg(gi, xj)}, h = max{p −
+1, u1, . . . , um}, and Go = {o, g1, . . . , gs}. Then, we have
+Theorem 5.4. Algorithm 5.3 gives a solution to problem (1) with constraint 0 ≤o < u with success
+probability ≥1 −ǫ and in complexity eO(N 2.5
+LαβTLαβκ2 log(1/ǫ) log u), where
+NLαβ
+=
+eO(nTF log df log p + (m + n)TGodg log h + log u),
+TLαβ
+=
+eO(nTF log df log2 p + (m + n)TGod2
+g log2 h + log u),
+and κ is the maximal condition number of all Lαβ in the algorithm, called the condition number of
+the problem.
+Proof. We ﬁrst prove the termination of the algorithm by showing that the feasible interval [α, µ)
+will decrease strictly after each loop starting from Step 3. In Step 3, we split [α, µ) = [α, α + 2β) ∪
+[α + 2β, µ) with (µ −α)/4 < 2β ≤(µ −α)/2. In Step 5.3, we start a new loop for [α, µ1), where
+µ1 = o(ˇZbit) < 2β. Then after this step, the feasible interval will decrease by at least 1
+2(µ −α) due
+to 2β ≤(µ −α)/2. In Step 6.1, we start a new loop for [α + 2β, µ). After this step, the feasible
+interval will decrease by more than 1
+4(µ −α) due to (µ −α)/4 < 2β. In summary, after each loop,
+the algorithm either terminates or has a smaller feasible interval which is of at most 3/4 of the size
+of the feasible interval of the previous loop. So, the algorithm will terminate after at most log4/3 u
+loops.
+We now prove the correctness of the algorithm, which follows from the following claim:
+The minimal value of o is in [α, µ] during the algorithm
+(20)
+if the minimal value exists and Algorithm QBoolSol in Step 4 always returns a solution of Lαβ if
+such a solution exists. The above claim is obviously true for the initial values given in Step 1.
+16
+
+
+--- PAGE 17 ---
+In Step 5, by Lemma 5.2, we ﬁnd a solution ˇZbit such that o(ˇZbit) ∈[α, α + 2β). In Step 5.2,
+the condition ˇFbit = 0 means that o(ˇZbit) = α and the minimal solution o is found by claim (20).
+In Step 5.3, the condition ˇFbit ̸= 0 means that o(ˇZbit) ̸= α and we have a new µ1 = o(ˇZbit). Since
+o ∈[α, µ1] has a solution ˇZbit, by claim (20), the minimal value of o is in [α, µ1], and the claim is
+proved in this case.
+In Step 6, QBoolSol returns ∅, meaning that o(ˇZbit) ∈[α, α + 2β) has no solution and the
+minimal value of o must be in [α + 2β, µ) if it exists. So, in Step 6.1, we will ﬁnd the minimal
+value of o in [α + 2β, µ) in the next loop, and claim (20) is proved in this case. In Step 6.2, we
+have µ −α = 1 and µ ̸= u. Since o ∈[α, α + 2β) has no solution, by claim (20), µ = α + 1 must
+be the minimal value of o. Note that in Step 6, we only update the lower bound α. In Step 5, we
+only update the upper bound µ, and when µ is updated we have µ = o(ˇZbit) = o(ˇX, ˇY). Therefore,
+µ = o(ˇX, ˇY) is always valid, once Step 5 is executed. The condition µ ̸= b implies that Step 5 has
+been executed at least one time and hence µ = o(ˇX, ˇY). In Step 6.3, the conditions µ −α = 1 and
+µ = u means that Step 5 is never executed and the problem has no solution.
+Finally, the solution obtained by Algorithm 5.3 is correct if and only if each Step 4 is correct,
+that is, if Lαβ does have solutions, then QBoolSol will return a solution. Since Step 4 will execute
+at most log4/3 u times, by Theorem 3.6, the probability for the algorithm to be correct is at least
+(1 −ǫ/ log4/3 u)log4/3 u > 1 −ǫ.
+We now analyse the complexity. Note that 2 is added to df to make sure log df ̸= 0. By Lemma
+3.8, F1 is of total sparseness O(nTF log df log2 p) and has O(nTF log df log p) indeterminates.
+By Lemma 4.5, G1 = I(I) is of total sparseness O((m + n)TGd2
+g log dg log2 h) and has O((m +
+n)dgTG log dg log h) indeterminates. Also, G2 = B(o) is of total sparseness O((m+n)Tod2
+g log dg log2 h)
+and has O((m + n)dgTo log dg log h) indeterminates.
+δαβ(o) is of total sparseness O(log u + To) = O(log u + Tod2
+g log2 h) and has O(log u + (m +
+n)dgTo log dg log h) indeterminates, since 2β −α < u.
+Then, Lαβ = C∪{δαβ(o)} = F1∪G1∪G2∪{δαβ(o)} is of total sparseness TLαβ = TF1 +TG1+TG2 +
+Tδαβ(o) = eO(nTF log df log2 p + (m + n)TGod2
+g log2 h + log u) and has NLαβ = eO(nTF log df log p +
+(m + n)dgTGo log h + log u) indeterminates.
+In Step 4, by Theorem 3.6, since NLαβ < TLαβ, we can ﬁnd a Boolean solution of Lαβ in time
+eO(N 2.5
+Lαβ(NLαβ + TLαβ)κ2 log(ǫ/ log u)) = eO(N 2.5
+LαβTLαβκ2 log(ǫ/ log u)). It is clear that in each loop,
+the complexity of the algorithm is dominated by Step 4. Since we have at most log4/3 u loops, the
+complexity for Algorithm 5.3 is eO(N 2.5
+LαβTLαβκ2 log((log4/3 u)/ǫ) log4/3 u) = eO(N 2.5
+LαβTLαβκ2 log(1/ǫ)
+log u).
+We now show how to solve the original problem (1).
+Corollary 5.5. Algorithm 5.3 gives a solution to problem (1) with the same probability and complex-
+ity for u = 2#(o)hohdo +1, where ho is the height of the coeﬃcients of o, h = max{p−1, u1, . . . , um},
+and do = deg(o).
+Proof. It is easy to see that |o| ≤#(o)hohdo, so 0 ≤eo < u for the new objective function eo =
+o + #(o)hohdo. Then Theorem 5.4 can be used to the new optimization problem.
+Remark 5.6. Note that the upper bound u = 2#(o)hohdo +1 for the objective function is quite large.
+An alternative way is to use Algorithm QBoolSol in Theorem 3.6 to ﬁnd a solution ˇXbit, ˇYbit for
+17
+
+
+--- PAGE 18 ---
+F1 ∪G1 ⊂C[Xbit, Ybit, V1bit, V2bit, Ubit, Gbit] and set u = 2o(ˇX, ˇY) + 1. Then for the new objective
+function eo = o + o(ˇX, ˇY), we can use the constraint 0 ≤eo < u to ﬁnd a solution to problem (1).
+This does not change the complexity of the algorithm.
+5.2
+Applications to linear (0, 1)-programming and QUBO
+In this section, we use two (0, 1)-programming problems to illustrate Algorithm 5.3. QUBO means
+quadratic unconstrained binary optimization, which is the mathematical problem that can be solved
+by the D-Wave
+The linear (0, 1)-programming is one of Karp’s 21 NP-complete problems [22] which covers lots
+of fundamental computational problems, such as the subset sum problem, the assignment problem,
+the traveling salesperson problem, the knapsack problem, etc. For more information about this
+problem, please refer to [16]. The linear (0, 1)-programming can be stated as follows [8]
+min
+Ybit∈{0,1}m o(Ybit) =
+m
+X
+j=1
+cjyj subject to
+m
+X
+j=1
+aijyj ≤hi, i = 1, . . . , s
+(21)
+where Ybit = (y1, . . . , ym) and aij, cj, hi ∈Z for any i, j. We reduce problem (21) to the standard
+form (1). Let ei = Pm
+j=1 |aij| ∈Z≥0, 1 ≤i ≤s and gi = Pm
+j=1 aijyj + ei and bi = hi + ei, 1 ≤i ≤s.
+Let u = 2 Pm
+i=1 |cj| + 1 ∈N. Then, problem (21) is equivalent to
+min
+Ybit∈{0,1}m
+2
+oB(Ybit) =
+m
+X
+j=1
+cjyj + (u −1)/2 subject to
+(22)
+0 ≤oB(Ybit) < u; 0 ≤gi ≤bi, i = 1, . . . , s.
+So we can use Algorithm 5.3 to solve problem (22). Let G = {g1, . . . , gs}. Since gi are linear,
+we do not need to compute Q(gi) and Vbit = ∅(see (12) for deﬁnition) and B(G) = ∅(see (13) for
+deﬁnition). Since yj are Boolean variables, we do not need to use (11) to expand them and hence
+gi = gi. So, (14) becomes
+δ(gi)
+=
+θbi(Gi) =
+⌊log2 bi⌋−1
+X
+k=0
+Gi,k2k + (bi −2⌊log2 bi⌋+ 1)Gi,⌊log2 bi⌋−gi
+I(I)
+=
+{δ(g1), . . . , δ(gs)} ⊂Z[Ybit, Gbit],
+where Gbit = {Gikl} are Boolean variables and θbi(Gi) is deﬁned in (2). Equation (18) becomes
+δαβ(o)
+=
+α +
+β−1
+X
+j=0
+Fj2j −oB ∈Z[Ybit, Fbit],
+(23)
+Lαβ
+=
+I(I) ∪{δαβ(o)} ⊂Z[Ybit, Gbit, Fbit],
+where Fbit = {F1, . . . , Fβ−1} are Boolean variables.
+Proposition 5.7. We can use Algorithm 5.3 to solve problem (22) with probability ≥1 −ǫ and in
+time eO(s(m2.5 + s2.5 log2.5 h)(m + log h)κ2 log(1/ǫ) log u) where u = 2 Pm
+i=1 |cj| + 1, b = maxs
+i=1 bi,
+h = max{u, b}, and κ is the maximal condition number of Lαβ.
+18
+
+
+--- PAGE 19 ---
+Proof. Since #Ybit = m, #Gbit = s log b, and #Fbit = log u, Lαβ has m + s log b + log u Boolean
+variables and total sparseness s(m + log b) + m + 1 + log u.
+Since u, b ≤h, Lαβ has NLαβ =
+O(m + s log h) Boolean variables and total sparseness TLαβ = O(s(m + log h)). By Theorem 3.6,
+the complexity is eO((m + s log h)2.5(s(m + log h))κ2 log(1/ǫ) log u = eO(s(m2.5 + s2.5 log2.5 h)(m +
+log h)κ2 log(1/ǫ) log u).
+In the rest of this section, we consider the QUBO problem. The QUBO problem is to ﬁnd an
+Ybit = (y1, . . . , ym)T ∈{0, 1}m that minimizes YT
+bitQYbit for an upper-triangular matrix Q = (Qi,j)
+with Qi,j ∈Z, which can be written as the following (0, 1)-programming problem:
+min
+Y∈{0,1}m oQ(Ybit) = YT
+bitQYbit
+(24)
+In order to solve this problem, we need to give the lower and upper bounds for the objective function.
+Let Qmax = max
+i,j |Qi,j|. Since yi ∈{0, 1}, 1 ≤i ≤m, we have |o(Y)| ≤m2Qmax.
+Problem (24) can be converted into the standard form with the new objective function eoQ =
+oQ + m2Qmax and u = 2m2Qmax + 1. Then, we can use Algorithm 5.3 to solve problem (24). Let
+δαβ(o) = α +
+β−1
+X
+j=0
+Fj2j −eoQ ∈C[Ybit, Fbit],
+where Fbit = (F0, . . . , Fβ−1) ∈Fβ
+2 and Lαβ = {δαβ(o)}. We have
+Proposition 5.8. We can use Algorithm 5.3 to solve problem (24) with probability ≥1 −ǫ and in
+time eO(m2.5 + log2.5 Qmax)(m2 + log Qmax) log Qmaxκ2 log(1/ǫ)) where κ is the maximal condition
+number of Lαβ and Qmax = max
+i,j |Qi,j|.
+Proof. Since oQ is quadratic and the variables are Boolean, we can solve Lαβ = {δαβ(o)} directly
+with Theorem 3.6. Using the notations in Theorem 5.4, we have NLαβ = m + log(m2Qmax) =
+eO(m + log Qmax), TLαβ = eO(m2 + log Qmax), u = 2m2Qmax + 1. By Theorem 5.4, the complexity
+is eO((m + log Qmax)2.5(m2 + log Qmax)κ2 log(1/ǫ)(log m + log Qmax)) = eO(m2.5 + log2.5 Qmax)(m2 +
+log Qmax) log Qmaxκ2 log(1/ǫ)).
+6
+Polynomial system with noise
+In this section, we consider the polynomial systems with noise problem (PSWN), which is an opti-
+mization problem over ﬁnite ﬁelds and has important applications in cryptography [2, 20].
+6.1
+Polynomial system with noise
+Deﬁnition 6.1. Let p be a prime.
+Given a polynomial system F = {f1, . . . , fr} ⊂Fp[X], the
+PSWN is to ﬁnd an X = (x1, . . . , xn)τ ∈Fn
+p such that F = e for the “smallest” error-vector
+e = (e1, . . . , er)τ ∈Fr
+p.
+19
+
+
+--- PAGE 20 ---
+In most cases, the Hamming weight ∥e∥H of e is used to measure the “smallness” and it is
+assumed that r ≫n, that is, we minimize the number of non-zero components of e or satisfy the
+maximal number of equations of F = 0. Therefore, PSWN is also called MAX-POSSO. We ﬁrst
+give the following representation for ∥e∥H.
+Lemma 6.2. Let e = (e1, . . . , er)τ ∈Fn
+p and Hj = ep−1
+j
+in Fp. Then Hj is Boolean and ∥e∥H =
+Pm
+j=1 Hj when the summation is over C.
+Proof. ej ∈Fp implies Hj = ep−1
+j
+is either 0 or 1 in Fp, and Hj = 1 if and only if ej ̸= 0. Then, Hj
+is a Boolean variable. Thus, we have Pm
+j=1 Hj = ∥e∥H when the summation is over C.
+Let
+E(F) = (F −e) ∪{Hj −ep−1
+j
+| j = 1, . . . , r} ⊂Fp[X, E, Hbit]
+(25)
+where Hbit = {H1, . . . , Hr} are Boolean variables and E = {e1, . . . , er} are variables over Fp. By
+Lemma 6.2, PSWN can be formulated as the following optimization problem over ﬁnite ﬁelds:
+min
+X∈Fnp
+o(X) =
+r
+X
+j=1
+Hj
+subject to 0 ≤o(X) ≤r; E(F) = 0
+mod p
+(26)
+which can be solved by Algorithm 5.3.
+Due to the special structure of E(F), we can achieve better complexities than that given in
+Theorem 5.4. Following (19), the equation set Lαβ for PSWN is
+δαβ(o)
+=
+α +
+β−1
+X
+j=0
+Fj2j −
+r
+X
+j=1
+Hj ∈C[Hbit, Fbit],
+Lαβ(F)
+=
+P(Q(E(F))) ∪{δαβ(o)} ⊂C[Xbit, Ebit, Hbit, Fbit, Vbit, Ubit],
+(27)
+where Fbit = {F1, . . . , Fβ−1} are Boolean variables. We have
+Proposition 6.3. There is a quantum algorithm to solve PSWN in time eO(n3.5T 3.5
+F log8 pκ2 log 1/ǫ)
+and with probability ≥1 −ǫ, where TF is the total sparseness of F, and κ is the extended condition
+number of F.
+Proof. We ﬁrst give the complexity of Step 4 of Algorithm 5.3, that is, the complexity to solve
+Lαβ(F).
+Let F1 = {f1 −e1, . . . , fr −er}, F2 = {H1 −ep−1
+1
+, . . . , Hr −ep−1
+r
+}, and F3 = F1 ∪
+F2. Then P(Q(F3)) = P(Q(F1)) ∪P(Q(F2)). By Lemma 3.8, TP (Q(F1)) = O(TFD log2 p) and
+NP (Q(F1)) = O(TFD log p). Since each monomial in F2 depends on one indeterminate, we have
+Q(F2) ⊂Fp[Hbit, e, V], where #V = O(r log p), #Q(F2) = O(r log p), and TQ(F2) = O(r log p) by
+the proof for Lemma 2.3. By Lemma 3.3, TP (Q(F2)) = O(r log3 p) and NP (Q(F2)) = O(r log2 p). Since
+x ∈Fp implies xp = x, we can assume degxifj < p. Thus D = n + Pr
+i=1⌊log2 maxj degxifj⌋≤n +
+n⌊log2(p−1)⌋= O(n log p), and we have TLαβ = O(TFD log2 p+r log3 p+r+log p) = O(TFn log3 p)
+and NLαβ = O(TFD log p + r log2 p + log r) = O(TFn log2 p).
+By Theorem 3.6, the complexity
+to solve Lαβ is eO((TFn log2 p)2.5(TFn log2 p + TFn log3 p)κ2 log 1/ǫ) = eO((n3.5T 3.5
+F log8 pκ2 log 1/ǫ).
+The number of loops is at most log r, which is negligible since r ≤TF, and the complexity of the
+algorithm is that of Step 4. The theorem is proved.
+Similar to Corollary 3.10, if F is an MQ then the complexity is lower.
+20
+
+
+--- PAGE 21 ---
+Corollary 6.4. There is a quantum algorithm to solve the MQ with noise in time eO((n+r log p)2.5
+(TF log p + r log2 p + n) log3.5 pκ2 log 1/ǫ) with probability 1 −ǫ.
+6.2
+Linear system with noise
+When F becomes a linear system, we obtain the linear system with noise (LSWN) [17]. Given a
+matrix A = (Aij) ∈Fr×n
+p
+and a vector b = (b1, . . . , br)τ ∈Fr
+p. The LSWN problem is to ﬁnd an X
+such that AX −b = e and the error-vector e ∈Fr
+p has minimal Hamming weight ∥e∥H.
+The algorithm given in Section 6.1 can be used to solve the LSWN and Proposition 6.3 becomes
+the following form.
+Proposition 6.5. There exists a quantum algorithm to solve LSWN with probability ≥1 −ǫ and
+in time eO((n + r log p)2.5(TA + r log2 p) log3.5 pκ2 log 1/ǫ), where TA ≥max{r, n} is the number of
+nonzero entries in A, and κ is the extended condition number of AX.
+Proof. Similar to the proof of Proposition 6.3, we need only consider the complexity of solv-
+ing Lαβ(AX −b).
+Let fi = Pn
+j=1 Aijxj −bi −ei ∈Fp[X, e], F1 = {f1, . . . , fr}, F2 = {H1 −
+ep−1
+1
+, . . . , Hr −ep−1
+r
+} , and we have E(AX −b) = F1 ∪F2. Since F1 is a linear system, we have
+P(Q(E(AX −b))) = P(F1) ∪P(Q(F2)). By Corollary 3.4, TP (F1) = O(TA log p) and NP (F1) =
+n log p + Pr
+i=1 log ti + r log log p, where ti is the sparseness for the i-th row of matrix A. By Lemma
+3.3, TP (Q(F2)) = O(r log3 p) and NP (Q(F2)) = O(r log2 p). Thus, TLαβ(AX−b) = O(TA log p + r log3 p)
+and NLαβ(AX−b) = O(n log p + Pr
+i=1 log ti + r log2 p). By Theorem 3.6, the complexity to solve
+Lαβ(AX −b) is
+eO((n log p +
+r
+X
+i=1
+log ti + r log2 p)2.5((n log p +
+r
+X
+i=1
+log ti + r log2 p) + (TA log p + r log3 p))κ2 log 1/ǫ)
+=
+eO((n log p + r log2 p)2.5(n log p + TA log p + r log3 p)κ2 log 1/ǫ).
+Since TA ≥r and we can assume TA ≥n without loss of generality, the complexity is eO((n log p +
+r log2 p)2.5(TA log p + r log3 p)κ2 log 1/ǫ) = eO((n + r log p)2.5(TA + r log2 p) log3.5 pκ2 log 1/ǫ).
+7
+Short integer solution problem
+In this section, we consider the short integer solution problem (SIS), which is a basic problem in
+the latticed based cryptosystems [1].
+7.1
+Short integer solution problem
+Consider the SIS problem introduced in [1]:
+Deﬁnition 7.1. Let A = (Aij) ∈Fr×n
+p
+. The SIS is to ﬁnd an X ∈Fn
+p such that AX = 0 (mod p)
+and the Euclidean norm of X satisﬁes 0 < ∥X∥2 ≤b, where b is a given integer.
+We ﬁrst consider the more general SIS for F = {f1, . . . , fr} ⊂Fp[X]: ﬁnd an X such that
+F(X) = 0 (mod p) and 0 < ∥X∥2 ≤b. Note that SIS is a special case of the optimization problem
+21
+
+
+--- PAGE 22 ---
+(1), where the objective function is a constant and the problem is to ﬁnd a feasible solution for the
+constraints. Precisely, the SIS can be formualted as the following standard form
+min
+X∈Fnp
+o = 1
+subject to
+F = 0
+mod p, 0 ≤∥X∥2
+2 −1 ≤b2 −1.
+(28)
+From Remark 4.3, the representation for Fp aﬀects inequality constraints. For the inequality
+0 < ∥X∥2
+2 ≤b2, a better representation for Fp is {−p−1
+2 , . . . , p−1
+2 }, instead of {0, 1, . . . , p −1}. In
+this section, we still use {0, 1, . . . , p −1} to represent elements in Fp, but use the following variable
+expansion instead of (5):
+xi = θp−1(Xi) −p −1
+2
+=
+⌊log2(p−1)−1⌋
+X
+j=0
+Xi,j2j + (p −2⌊log2(p−1)⌋)Xi,⌊log2(p−1)⌋−p −1
+2
+(29)
+where Xi are deﬁned in (5). Then, xi takes values −p−1
+2 , . . . , p−1
+2
+when evaluated over C. The
+following easy result shows that this representation gives the “global” solution to problems involving
+the Euclidean norm.
+Lemma 7.2. For ˇX ∈[−p−1
+2 , p−1
+2 ]n and any vector v ∈(pZ)n\0, ∥ˇX∥2 < ∥ˇX + v∥2.
+Due to (14) and by Lemma 7.2, the constraint 0 ≤∥X∥2
+2 −1 ≤b2 −1 can be written as the
+following MQ in Boolean variables
+δb
+=
+θb2−1(Gbit) −
+n
+X
+i=1
+(θp−1(Xi) −p −1
+2
+)2 + 1 ∈C[Gbit, Xbit]
+(30)
+where Gbit = {Gk | k = 0, . . . , ⌊log2(b2 −1)⌋}. From the above discussion, we have
+Lemma 7.3. To solve the SIS, we need only to ﬁnd a solution of P(Q(F))∪{δb} ⊂C[Xbit, Vbit, Ubit,
+Gbit], where P(Q(F)) is obtained similar to P(Q(F)), but using (29) to expand X, V, and U.
+Proposition 7.4. There is a quantum algorithm to solve the SIS problem (28) with probability
+at least 1 −ǫ and complexity eO(n3.5T 3.5
+F log3.5 d log4.5 pκ2 log 1/ǫ) where TF is the total sparseness
+of F, d = max{2, log2(degxi(fj)), i = 1, . . . , n, j = 1, . . . , r}, and κ is the condition number of
+P(Q(F)) ∪{δb}.
+Proof. Since ∥X∥2
+2 ≤np2, by Lemma 2.1, #Gbit = eO(log(b2−1)) ≤eO(log(np2)) = eO(log(n)+log p)
+and #δb = eO(log(b2 −1) + n log2 p) = eO(log(b) + n log2 p) = eO(n log2 p), since b ≤np2. By Lemma
+3.8, P(Q(F)) is of sparseness O(nTF log d log2 p) and with O(nTF log d log p) indeterminates. By
+Lemma 7.3, we need to solve P(Q(F)) ∪{δb} with Theorem 3.6. Comparing to the total sparseness
+and number of variables of P(Q(F)), #δb and #Gbit are negligible. Then, the complexity of solving
+the SIS is the same as that of solving P(Q(F)). Then, the theorem follows from Corollary 3.9.
+For the original SIS, we have
+Proposition 7.5. There is a quantum algorithm to ﬁnd an non-trivial X ∈Zn for AX = 0 (mod p)
+with ∥X∥2 ≤b with probability 1 −ǫ and in time eO((n log p + r)2.5(TA log p + n log2 p)κ2 log 1/ǫ),
+where TA is the number of nonzero elements of A, assuming TA ≥n.
+22
+
+
+--- PAGE 23 ---
+Proof. By Corollary 3.4, P(Q(AX)) = P(AX) is of total sparseness O(TA log p) and has O(n log p +
+Pr
+i=1 log ti + r log log p) indeterminates, where ti is the sparseness for the i-th line of matrix A..
+From the proof of Proposition 7.4, #Gbit = eO(log n + log p) and #δb = eO(n log2 p). Since TA ≥n,
+we have TLαβ = O(TA log p + n log2 p) and NLαβ = O(n log p + Pr
+i=1 log ti + r log log p). Comparing
+to the total sparseness and number of variables of P(Q(F)), #δb is negligible. By Theorem 3.6, the
+complexity to solve P(Q(F))∪{δb} is eO((n log p+Pr
+i=1 log ti +r log log p)2.5((n log p+Pr
+i=1 log ti +
+r log log p) + (TA log p + n log2 p))κ2 log 1/ǫ) = eO((n log p + r)2.5(TA log p + n log2 p)κ2 log 1/ǫ).
+7.2
+Smallest integer solution problem
+We consider the smallest integer solution problem, which is to ﬁnd a solution of F = 0 (mod p),
+which has the minimal Euclidean norm. The problem can be formulated as the following standard
+form
+min
+X∈Fnp
+o = ∥X∥2
+2 −1
+subject to
+F = 0
+mod p and 0 ≤o < u
+(31)
+where u = n(p−1)2. We can use Algorithm 5.3 to solve problem (31). The parameterized objective
+function and Lαβ(F) are
+δαβ(o)
+=
+α +
+β−1
+X
+j=0
+Fj2j −
+n
+X
+i=1
+(θ(Xi) −p −1
+2
+)2 + 1 ∈C[Fbit, Xbit].
+(32)
+Lαβ
+=
+P(Q(F)) ∪{δαβ} ⊂C[Xbit, Vbit, Ubit, Fbit]
+where P(Q(F)) is deﬁned in Lemma 7.3. We have
+Proposition 7.6. There is a quantum algorithm to solve problem (31) with probability ≥1 −ǫ and
+in time eO(n3.5T 3.5
+F log3.5 d log4.5 pκ2 log 1/ǫ).
+Proof. From the proof of Proposition 7.4, NLαβ = O(nTF log d log p) and TLαβ = O(nTF log d log2 p).
+Also, log u = O(np2) = O(log n + log p). By Theorem 5.4, the complexity is eO(N 2.5
+LαβTLαβκ2 log 1/ǫ
+log u) = eO(n3.5T 3.5
+F log3.5 d log4.5 pκ2 log 1/ǫ).
+If F is a linear system AX = 0 with TA ≥n, then we can prove the following result similar to
+Propositions 7.6 and 7.5.
+Proposition 7.7. There is a quantum algorithm to ﬁnd a non-trivial X ∈Zn for AX = 0 (mod p)
+with minimal ∥X∥2 with probability ≥1−ǫ and in time eO((n log p+r)2.5(TA log p+n log2 p)κ2 log 1/ǫ).
+8
+Quantum algorithm for SVP and CVP
+In this section, Algorithm 5.3 is used to solve the SVP and CVP problems [23, 6].
+A lattice generated by B = {b1, . . . , bn} ⊂Rm is the set of Z-linear combinations of bi. B is
+called a basis of the lattice, if b1, . . . , bn are linear independent over R. The SVP problem can be
+described as follows: given a lattice L generated by a basis b1, . . . , bn in Rm, ﬁnd a nonzero v ∈L
+such that v has the minimal Euclidean norm. The CVP problem can be described as follows: given
+23
+
+
+--- PAGE 24 ---
+a vector b0 ∈Zm and a lattice L generated by a basis b1, . . . , bn in Rm, ﬁnd a v ∈L such that
+v −b0 has the minimal Euclidean norm. In this paper, we assume that b1, . . . , bn are in Zm. The
+SVP problem can be written as the following optimization problem.
+min
+v∈Zm,a∈Zn, o = ∥v∥2
+2
+subject to
+v ̸= 0 and v =
+n
+X
+i=1
+aibi,
+(33)
+where v = (v1, . . . , vm) and a = (a1, . . . , an). Note that the SVP problem is similar to the SIS
+problem considered in Proposition 7.7, but the solutions are over the integers instead of ﬁnite ﬁelds.
+Let
+B = [b1, . . . , bn] ∈Zm×n
+be the matrix with columns b1, . . . , bn. In order to reduce problem (33) into the standard form (1),
+we need to ﬁnd upper bounds for ai, vi, and ∥v∥2. For a matrix or a vector A, let ∥A∥∞to be the
+maximum absolute value of the elements in A. It is easy to ﬁnd bounds for vi and ∥v∥2.
+Lemma 8.1. Let v = (v1, . . . , vm) be the shortest vector in L. Then we have ∥v∥2 ≤√m||B||∞
+and |vi| ≤√m||B||∞.
+Proof. It is clear that ∥v∥2 ≤√m||B||∞and |vi| ≤∥v∥∞≤∥v∥2 ≤√m||B||∞.
+In order to bound ai in (33), we need the concept of Hermite normal form (HNF). A matrix
+H = (hi,j) ∈Zm×n of rank n is called an (column) HNF if there exists a strictly increasing map f
+from [1, n] to [1, m] satisfying: for j ∈[1, n], hf(j),j ≥1, hi,j = 0 if i > f(j) and hf(j),j > hf(j),k ≥0
+if k > j. It is known that any lattice generated by a basis b1, . . . , bn is also generated by h1, . . . , hn
+if H = [h1, . . . , hn] is an HNF of B = [b1, . . . , bn]. We need the following obvious property of HNF.
+Lemma 8.2. Let H = [h1, . . . , hn] = [hij] be an HNF, v = (v1, . . . , vm)τ an element in the lattice
+generated by h1, . . . , hn, and v = c1h1 + · · · + cnhn for ci ∈Z. Then vf(n) = cnhf(n),n and hence
+|cn| ≤||v||∞.
+We also need the following result about HNF.
+Theorem 8.3 ([27]). Let B ∈Zm×n with rank n and H be the HNF of B. Then, there exists an
+E ∈Zm×m such that EB = H, ||H||∞≤(√n||B||∞)n and ||E||∞≤(√n||B||∞)n. Furthermore,
+the bit complexity to compute H from B is eO(mnθ||B||∞), where θ is the matrix multiplication
+constant.
+We now give a bound for ai in (33).
+Lemma 8.4. Let v be the shortest vector in L. Then there exist a1, . . . , an ∈Z such that v =
+Pn
+i=1 aibi and |ai| ≤bB, where bB = n√m||B||∞((√n||B||∞)n + 1)n+1.
+Proof. Let H = EB be the HNF of B and hi the i-th column of H, 1 ≤i ≤n. Then there exist
+ci, 1 ≤i ≤n, such that v = Pn
+i=1 cihi. Denote e1 = √m||B||∞and e2 = (√n||B||∞)n +1. We claim
+that |ci| ≤e1(e2 + 1)n. Let vi = c1h1 + · · · + cihi for i = 1, . . . , n. We prove the claim by proving
+||vi||∞≤e1(e2 + 1)n−i and |ci| ≤e1(e2 + 1)n−i by induction for i = n, n −1, . . . , i. By Lemma 8.2,
+the second inequality comes from the ﬁrst one: |ci| ≤||vi||∞≤e1(e2 + 1)n−i, since [h1, . . . , hi] is
+also an HNF. By Lemma 8.2, |cn| ≤e1 and the case of i = n is true. Suppose the claim is true
+24
+
+
+--- PAGE 25 ---
+for i = n, . . . , j + 1. By Lemma 8.1, we have ||hj+1||∞≤e2. Since vj = vj+1 −cj+1hj+1, we have
+∥vj∥∞≤||vj+1||∞+ |cj+1|||hj+1||∞≤e1(e2 + 1)n−j−1 + e1(e2 + 1)n−j−1e2 = e1(e2 + 1)n−j. The
+claim is proved.
+We have v = Pn
+i=1 cihi = (c1, . . . , cn)H = (c1, . . . , cn)EB = a1b1 + · · · + anbn.
+Then
+(a1, . . . , an) = (c1, . . . , cn)E, and hence |ai| ≤n maxi |ci| · ||E||∞≤ne1(e2 + 1)ne2 ≤ne1(e2 + 1)n+1
+by Theorem 8.3.
+By the above lemma, we can rewrite the SVP as the standard form (1):
+min
+v∈Zm,a∈Zn
+o = ∥v∥2
+2 −1
+subject to 0 ≤o < m||B||2
+∞
+v = a1b1 + · · · + anbn,
+0 ≤ai + bB ≤2bB,
+1 ≤i ≤n,
+0 ≤vi + √m||B||∞≤2√m||B||∞,
+1 ≤i ≤m
+where bB is given in Lemma 8.4, and the arguments are v = (v1, . . . , vm) and a = (a1, . . . , an).
+Note that, the above problem is already an MQ, so we just need to change the variables to
+Boolean variables as follows by using Lemma 2.1.
+ai = θ2bB(Ai,0, . . . , Ai,⌊log2(2bB)⌋) −bB,
+1 ≤i ≤n,
+vi = θ2√m||B||∞(Vi,0, . . . , Vi,⌊log2(2√m||B||∞)⌋) −√m||B||∞,
+1 ≤i ≤m
+(34)
+where and Ai,j, Vi,j are Boolean variables.
+Then we can use Algorithm 5.3 to solve the problem for u = m||B||2
+∞in the input. For the
+objective function o, we denote by o the Boolean function obtain from o by replacing the vi by the
+above equation (34). Let
+δαβ(o)
+=
+α +
+β−1
+X
+j=0
+Cj2j −o + 1,
+(35)
+Lαβ
+=
+C ∪{δαβ(o)},
+where C is obtained from v = Pn
+i=1 aibi by replacing the ai, vi by the equation (34).
+Proposition 8.5. There exists a quantum algorithm to solve the SVP with probability ≥1 −ǫ
+and in time eO(m(n7.5 + m2.5)(n3 + log h) log4.5 hκ2 log 1
+ǫ ), where h = ||B||∞and κ is the maximal
+condition number of Lαβ.
+Proof. The numbers of {Ai,j}, {Vi,j}, and {Cj} in (34) and (35) are n log2(2bB), m log2(√m||B||∞)
+and log2(m||B||2
+∞), respectively. So, NLαβ = n log2(2bB) + m log2(√m||B||∞) + log2(m||B||2
+∞) =
+eO(n3 log h + m log h). The total sparseness of C is O(m(log(√m∥B∥∞) + n log(2bB))) and the total
+sparseness of δαβ(o) is log2(m||B||2
+∞) + m log2(√m||B||∞). So the total sparseness of Lαβ is TLαβ =
+m(n log(2bB) + log(√m∥B∥∞)) + m log2(√m||B||∞) + log2(m||B||2
+∞) = eO(mn3 log h + m log2 h).
+By Theorem 3.6, the SVP can be solved in time eO(N 2.5
+LαβTLαβκ2 log 1
+ǫ log(m||B||2
+∞)) = eO(m(n7.5 +
+m2.5)(n3 + log h) log4.5 hκ2 log 1
+ǫ).
+The CVP can be solved similar to SVP, where the only diﬀerence is that the objective function
+is o = ∥v −b0∥2
+2 −1 < m(||B||∞+ ||b0||∞)2. Similar to Proposition 8.5, we have
+25
+
+
+--- PAGE 26 ---
+Proposition 8.6. There exists a quantum algorithm to solve the CVP with probability ≥1 −ǫ
+and in time eO(m(n3 log h + m log h + log h0)2.5(n3 log h + log2(h + h0))κ2 log 1
+ǫ ), where h = ||B||∞,
+h0 = ||b0||∞, and κ is the condition number of the problem.
+9
+Quantum algorithm to recover the private key for NTRU
+In this section, we will give a quantum algorithm to recover the private key of NTRU from its known
+public key.
+The NTRU cryptosystem depends on three integer parameters (N, p, q) and two sets Lf, Lg of
+polynomials in Z[X] with degree N −1. Note that p and q need not to be prime, but we will
+assume that gcd(p, q) = 1, and q is always considerably larger than p. Denote Zk to be the ring
+Z/(k) = {0, 1 . . . , k −1} for any k ∈Z>0. We work in the ring R = Z[X]/(XN −1). An element
+F ∈R will be written as a polynomial or a vector,
+F =
+N−1
+X
+i=0
+Fixi = (F0, F1, . . . , FN−1)τ.
+(36)
+Given two positive integers df and dg, we set
+Lf
+=
+{f ∈R | f has df coeﬃcients 1, df −1 coeﬃcients −1, and the rest 0},
+(37)
+Lg
+=
+{g ∈R | g has dg coeﬃcients 1, dg coeﬃcients −1, and the rest 0}.
+(38)
+Let f ∈Lf be invertible both (mod p) and (mod q). The private key for NTRU is f and the public
+key is h = gf −1 (mod q) for some g ∈Lg. A set of parameters could be (N, p, q) = (107, 3, 64),
+df = 15, and dg = 12 [19].
+We need to ﬁnd f from h. We will reduce this problem to an equation solving problem over
+the ﬁnite rings Zp and Zq. Set f = (f0, . . . , fN−1)τ, g = (g0, . . . , gN−1)τ, f −1 (mod p) = p =
+(p0, . . . , pN−1)τ, f −1 (mod q) = q = (q0, . . . , qN−1)τ, and h = (h0, . . . , hN−1)τ. Thus, we have the
+following equations:
+f ∈Lf
+⇐⇒
+2df =
+N−1
+X
+i=0
+f 2
+i + 1,
+N−1
+X
+i=0
+fi = 1 and each f 3
+i −fi = 0;
+(39)
+g ∈Lg
+⇐⇒
+2dg =
+N−1
+X
+i=0
+g2
+i ,
+N−1
+X
+i=0
+gi = 0 and each g3
+i −gi = 0;
+(40)
+h = gf −1
+(mod q)
+⇐⇒
+X
+j+k=i,i+N
+hjfk ≡gi
+(mod q) for i = 0, . . . , N −1;
+(41)
+f −1
+(mod q) exists
+⇐⇒
+X
+j+k=i,i+N
+qjfk ≡δ0i
+(mod q) for i = 0, . . . , N −1;
+(42)
+f −1
+(mod p) exists
+⇐⇒
+X
+j+k=i,i+N
+pjfk ≡δ0i
+(mod p) for i = 0, . . . , N −1,
+(43)
+where δ0i = 1 for i = 0 and δ0i = 0 for i ̸= 0. Let X = {fi, gi, hi, pi, qi | i = 0, . . . , N −1}, and
+F1
+=
+{2df =
+N−1
+X
+i=0
+f 2
+i + 1, 2dg =
+N−1
+X
+i=0
+g2
+i ,
+26
+
+
+--- PAGE 27 ---
+N−1
+X
+i=0
+fi −1,
+N−1
+X
+i=0
+gi, f 3
+i −fi, g3
+i −gi, i = 0, . . . , N −1} ⊂C[f, g],
+(44)
+F2
+=
+{
+X
+j+k=i,i+N
+hjfk −gi,
+X
+j+k=i,i+N
+qjfk −δ0i | i = 0, . . . , N −1} ⊂Zq[f, g, h, q],
+(45)
+F3
+=
+{
+X
+j+k=i,i+N
+pjfk −δ0i | i = 0, . . . , N −1} ⊂Zp[f, g, h, p].
+(46)
+Note that F1, F2, F3 are over C, Zq, Zp, respectively. We can modify the method given in Section
+3.1 to solve the equation system F1 = F2 = F3 = 0.
+We ﬁrst give a simpler treatment for F1. Let Zbit = {Fi1, Fi2, Gi1, Gi2, i = 0, . . . , N −1} be
+Boolean variables, fi = Fi1 + Fi2 −1 and gi = Gi1 + Gi2 −1. Then, the constraints f 3
+i = fi and
+g3
+i = gi are automatically satisﬁed. When Fi1 = 0, Fi2 = 1 and Fi1 = 1, Fi2 = 0, we both have fi = 0.
+To avoid this redundance, we add an extra equations Fi1Fi2 −Fi2. We have 2df = PN−1
+i=0 f 2
+i + 1 =
+PN−1
+i=0 (Fi1 + Fi2 −1)2 + 1 = PN−1
+i=0 (Fi1 −Fi2) + N + 1 (mod (F 2
+i1 −Fi1, F 2
+i2 −fi2, Fi1Fi2 −Fi2)).
+Similarly, dg = PN−1
+i=0 (Gi1 −Gi2) + N (mod (G2
+i1 −Gi1, G2
+i2 −Gi2, Gi1Gi2 −Gi2)). Then, F1 is
+equivalent to
+F11
+=
+{
+N−1
+X
+i=0
+(Fi1 −Fi2) + N + 1 −2df,
+N−1
+X
+i=0
+(Gi1 −Gi2) + N −2dg,
+N−1
+X
+i=0
+(Fi1 + Fi2 −1) −1,
+N−1
+X
+i=0
+(Gi1 + Gi2 −1),
+Fi1Fi2 −Fi2, Gi1Gi2 −Gi2, i = 0, . . . , N −1, ⊂C[Fbit]},
+(47)
+where Fbit = {Fij, Gij | i = 0, . . . , N −1; j = 1, 2}.
+We can compute B(F2) ⊂Zp[Xbit] and B(F3) ⊂Zp[Xbit] deﬁned in (6) by setting qi =
+θq−1(Qi0, . . . , Qi⌊log2(q−1)⌋) and pi = θp−1(Pi0, . . . , Pi⌊log2(p−1)⌋), where
+Xbit
+=
+{Fi1, Fi2, Gi1, Gi2 | i = 0, . . . , N −1}∪
+{Pij | i = 0, . . . , N −1, j = 0, . . . , ⌊log2(p −1)⌋}∪
+{Qij | i = 0, . . . , N −1, j = 0, . . . , ⌊log2(q −1)⌋}
+Note that F2 and F3 are already MQ, we can compute P(F2) and P(F3) as in (9). Therefore, we
+can use algorithm QBoolSol to ﬁnd a Boolean solution ˇX for
+FNTRU = F11 ∪P(F2) ∪P(F3) ⊂C[Xbit].
+Finally set ˇfi = ˇFi1 + ˇFi2 −1, and we have a possible private key ˇf = ( ˇf0, . . . , ˇfN−1).
+Proposition 9.1. There is a quantum algorithm to obtain a private key f from the public key h in
+time eO(N 4.5 log4.5 qκ2 log 1/ǫ) with probability ≥1 −ǫ, where κ is the condition number for FNTRU.
+Proof. Only the complexity need to be considered. TF2 = 2N 2+N +1, TF3 = N 2+1, TF11 = O(N).
+By Lemma 3.3 and Corollary 3.4, TP (F2) = O(N 2 log2 q), TP (F3) = O(N 2 log2 p), and then we have
+TFNTRU = O(N 2(log2 q+log2 p)) = O(N 2 log2 q) and NFNTRU = O(N log q+N log N +N log log q) =
+eO(N log q) by Lemma 3.3, where we can ignore p considering p ≪q. By Theorem 3.6, we can obtain
+a possible private key f in time eO(N 4.5 log4.5 qκ2 log 1/ǫ).
+27
+
+
+--- PAGE 28 ---
+In the design of NTRU, it is assumed that the size of f and g are small. We can use the methods
+given in Section 6.1 to ﬁnd f and g which have the smallest df + dg.
+Proposition 9.2. There is a quantum algorithm to obtain a private key f from the public key h
+such that df + dg is minimal in time eO(N 4.5 log4.5 qκ2 log 1/ǫ) with probability ≥1 −ǫ, where κ is
+the extended condition number for FNTRU.
+Proof. Remove PN−1
+i=0 (Fi1 −Fi2) + N + 1 −2df and PN−1
+i=0 (Gi1 −Gi2) + N −2dg from F1 and still
+denote FNTRU = F1 ∪F2 ∪F3. We can use the objective function o = (2df −1−N)+2dg −N −1 =
+PN−1
+i=0 (Fi1 −Fi2 + Gi1 −Fi2) −1 which satisﬁes 0 ≤o < 4N.
+Following (18), we have δαβ =
+α+Pβ−1
+j=0 Ej2j −o and Lαβ = FNTRU ∪{δαβ} ⊂C[Xbit, Ebit]. Then we can use Algorithm 5.3 to ﬁnd
+a private key f which minimizes o. By the proof of Proposition 9.1, we have TFNTRU = O(N 2 log2 q)
+and NFNTRU = O(N log q). Then, TLαβ = eO(N 2 log2 q) and NLαβ = O(N log q). By Theorem 5.4,
+the complexity is eO(N 4.5 log4.5 qκ2 log 1/ǫ log N) = eO(N 4.5 log4.5 qκ2 log 1/ǫ).
+For the parameters recommended in [19], (N, p, q) = (107, 3, 64), (N, p, q) = (167, 3, 128),
+(N, p, q) = (503, 3, 256), and ǫ = 1%, the complexities in Proposition 9.2 is given in the follow-
+ing table.
+N
+q
+p
+Complexity
+107
+64
+3
+245κ2
+167
+128
+3
+249κ2
+503
+256
+3
+257κ2
+Table 1: Complexities of the quantum algebraic attack on NTRU
+In Table 1, κ is the condition number of the corresponding equation systems. From the table,
+this main part of the complexity is relatively low comparing to its desired security 3N if κ is small,
+which implies that the NTRU is safe only if its condition number is large.
+10
+Conclusion
+In this paper, we give quantum algorithms for two basic computational problems: polynomial system
+solving over a ﬁnite ﬁeld and the optimization problem where the arguments either take values from
+a ﬁnite ﬁeld or are bounded integers. The complexities of these quantum algorithms are polynomial
+in the input size, the maximal degree of the inequality constraints, and κ which is the condition
+number of certain matrices derived from the problem. So, we achieve exponential speedup for these
+problems when the condition number is small.
+The optimization problem considered in this paper covers many NP-hard problems as special
+cases. In particular, the proposed algorithms are used to give quantum algorithms for several fun-
+damental computational problems in cryptography, including the polynomial system with noise, the
+short solution problem, the shortest vector problem, and the NTRU cryptosystem. The complexity
+for all of these problems is polynomial in the input size and their condition numbers, which means
+that these problems are diﬃcult to solve by a quantum computer if and only if their condition
+numbers are large. As a consequence, the NTRU cryptosystem as well as the candidates recently
+28
+
+
+--- PAGE 29 ---
+proposed for post-quantum standard of public key cryptosystems [4] are safe against quantum com-
+puter attacks only if the condition number of its equation system is large.
+The main idea of the algorithm is to convert the equality and inequality constraints of the
+optimization problem into polynomial equations in Boolean variables and then convert the ﬁnding
+of the minimal value of the objective function into several problems of ﬁnding the Boolean solutions
+for polynomial systems over C, that is B-POSSO. Then the quantum algorithm from [12] is used to
+ﬁnd Boolean solutions for these polynomial systems.
+As we just mentioned that the optimization problem is reduced into the B-POSSO problem. It is
+interesting to give a description for all the problems that can be eﬃciently reduced to B-POSSO. It
+is also interesting to see whether it is possible to combine the reduction methods introduced in this
+paper with traditional algorithms for polynomial system solving such as the Gr¨obenr basis method
+[3] and the characteristic set method [15] to obtain better traditional algorithms for polynomial
+system solving and optimization over ﬁnite ﬁelds. Finally, in order to know the exact complexity
+of the algorithm proposed in this paper, we need to know the condition number, which is a main
+future problem for study.
+References
+[1] Ajtai, M., Generating hard instances of lattice problems, STOC’96, 99-108, ACM Press, 1996.
+[2] Albrecht, M.R. and Cid, C., Cold boot key recovery by solving polynomial systems with noise,
+ACNS, 57-72, 2011.
+[3] Albrecht, M.R., Cid, C., Faug´ere, J.C., Fitzpatrick, R., Perret, L., Algebraic algorithms for
+LWE problems. Inria hal-01072721, 2014.
+[4] Albrecht M.R., Curtis B.R., Deo A., Davidson, A., Player R., Postlethwaite E.W., Virdia F.
+and Wunderer T., Estimate all the {LWE, NTRU} schemes!. In: Catalano D., De Prisco R.
+(eds) Security and Cryptography for Networks. SCN 2018. LNCS, vol 11035. Springer, Cham.
+[5] Ambainis, A., Variable time amplitude ampliﬁcation and a faster quantum algorithm for solving
+systems of linear equations, Proc. STACS, 636-647, 2012.
+[6] Aono Y., Nguyen P.Q., Shen Y., Quantum lattice enumeration and tweaking discrete pruning,
+https://eprint.iacr.org/2018/546, 2018.
+[7] Arora, S. and Ge, R., New algorithms for learning in presence of errors, ICALP, LNCS 6755,
+L. Aceto, M. Henzinger, and J. Sgall, editors, 403-415, Springer Verlag, 2011.
+[8] Balas E., An additive algorithm for solving linear programs with zero-one cariables. INFORMS,
+1965.
+[9] Berlekamp, E.R., McEliece, R.J., van Tilborg, H.C.A., On the inherent intractability of certain
+coding problems, IEEE Trans. on Information Theory, 24(3), 384-386, 1978.
+[10] Blum, A., Kalai, A., Wasserman, H., Noise-tolerant learning, the parity problem, and the
+statistical query model, Journal of the ACM, 50(4) 506-519, 2003.
+29
+
+
+--- PAGE 30 ---
+[11] Bryant, R. Graph-based algorithm for Boolean function manipulation, IEEE Transactions on
+Computing, C-35, 677-691, 1986.
+[12] Chen Y.A. and Gao, X.S., Quantum algorithms for Boolean equation solving and quantum
+algebraic attack on cryptosystems, ArXiv1712.06239, 2017.
+[13] Childs, A.M., Kothari, R., Somma, R.D., Quantum algorithm for systems of linear equations
+with exponentially improved dependence on precision, SIAM J. Comput., 46(6), 1920-1950,
+2017.
+[14] Ding, J., Gower, J.E., Schmidt, D.S., Multivariate Public Key Cryptosystems, Springer, 2006.
+[15] Gao, X.S. and Huang, Z., Characteristic set algorithms for equation solving in ﬁnite ﬁelds,
+Journal of Symbolic Computation, 47, 655-679, 2012.
+[16] Genova K. and Guliashki V., Linear integer programming methods and approaches - a survey,
+Cybernetics and Information Technologies, 11(1) , 2011
+[17] H˚astad, J., Some optimal inapproximability results, Journal of the ACM, 48, 798-859, 2009.
+[18] Harrow, A.W., Hassidim, A., Lloyd, S., Quantum algorithm for linear systems of equations.
+Physical Review Letters, 103(15), 150502, 2009.
+[19] Hoﬀstein, J., Pipher, J., Silverman, J.H., NTRU: A ring-based public key cryptosystem, Algo-
+rithmic Number Theory, ANTS’98, LNCS 1423, 267-288, Springer, Berlin, Heidelberg, 1998.
+[20] Huang, Z. and Lin, D., Solving polynomial systems with noise over F2: revisited, Theoretical
+Computer Science, 676, 52-68, 2017.
+[21] Kadowaki, T. and Nishimori, H., Quantum annealing in the transverse Ising model, Phys. Rev.
+E, 58, 5355-5363, 1998.
+[22] Karp, R.M., Reducibility among combinatorial problems. Complexity of Computer Computa-
+tions, 85-103, 1972.
+[23] Laarhoven, T., Sieving for shortest vectors in lattices using angular locality-sensitive hashing,
+Proc. CRYPTO 2015 -Part I, Vol. 9215, LNCS, Springer, 2015.
+[24] Peikert,
+C.,
+Public-key
+cryptosystems
+from
+the
+worst-case
+shortest
+vector
+problem,
+STOC2009), 333-342, 2009.
+[25] Regev, O., On lattices, learning with errors, random linear codes, and cryptography. In Harold
+N. Gabow and Ronald Fagin, editors, 37th ACM STOC, 84C93, 2005.
+[26] Shewchuk, J.R., An introduction to the conjugate gradient method without the agonizingpain,
+Tech. Rep. CMU-CS-94-125, Carnegie Mellon University, Pittsburgh, Pennsylvania, 1994.
+[27] Storjohann, A., Algorithms for matrix canonical forms, PhD Thesis, Swiss Federal Institute of
+Technology, 2000.
+[28] J. von zur Gathen and J. Gerhard, “Modern Computer Algebra,” Cambridge University Press,
+1999.
+30
+
+
+--- PAGE 31 ---
+[29] Yap, C.K., Fundamental Problems of Algorithmic Algebra, Oxford Press, 2000.
+[30] Zhao, S.W. and Gao, X.S., Minimal achievable approximation ratio for MAX-MQ in ﬁnite
+ﬁelds, Theoretical Computer Science, 410, 2285-2290, 2009.
+31

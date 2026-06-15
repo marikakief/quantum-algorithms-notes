@@ -1,6 +1,6 @@
 
-> **Paper:** Shadow Hamiltonian Simulation  
-> **DOI:** [Nature Comms 16, 3486 (2025)](https://www.nature.com/articles/s41467-025-57451-z)  
+> **Paper:** Rolando D. Somma, Robbie King, Robin Kothari, Thomas E. O'Brien, and Ryan Babbush, *Shadow hamiltonian simulation*, Nature Communications **16**, 2690 (2025)
+> **DOI:** [10.1038/s41467-025-57451-z](https://www.nature.com/articles/s41467-025-57451-z)
 > **Date read:** 2026-03-12  
 > **Tags:** #hamiltonian-simulation #shadow-states #lie-algebra #quantum-algorithms
 
@@ -20,11 +20,15 @@ $$
 $$
 This is an $M$-dimensional quantum state encoding all observable expectations, regardless of the (possibly infinite) dimension of the underlying system.
 
+If \(A=0\), all selected expectations vanish and the normalized shadow state is undefined. In that case the encoded observable vector is the zero vector, so the algorithmic task has to be reformulated as zero detection, a different normalization choice, or a different operator set \(S\).
+
 **Invariance Property (IP):** $H$ and $S$ satisfy the IP if
 $$
 [H, O_m] = -\sum_{m'} h_{mm'} O_{m'} \quad \forall m,
 $$
 i.e., commutators of $H$ with operators in $S$ close within $S$. This holds automatically when $S$ spans a Lie algebra containing $H$.
+
+With this sign convention, Heisenberg evolution gives \(\frac{d}{dt}\langle O_m\rangle=-i\sum_{m'}h_{mm'}\langle O_{m'}\rangle\), so \(H_S=(h_{mm'})\) is the shadow Hamiltonian when it is Hermitian.
 
 **Theorem 1:** If the IP holds and the $M \times M$ matrix $H_S$ with entries $h_{mm'}$ is Hermitian, then
 $$
@@ -46,7 +50,7 @@ Shadow [[Hamiltonian simulation]] then reduces to standard [[Hamiltonian simulat
 $n = 2^r$ fermionic modes, $S$ = degree-2 Majorana operators → $M = O(n^2)$ shadow state dimension.
 - Shadow state uses $O(\log n) = O(r)$ qubits.
 - Simulates dynamics of exponentially many modes.
-- BQP-complete — genuine quantum advantage.
+- Certain extensive energy/overlap-estimation tasks for exponentially many modes are BQP-complete under the paper's access and output promises. This is a quantum-advantage statement about those computational tasks, not a claim that every free-fermion shadow evolution is BQP-complete.
 
 ### Exponentially many coupled oscillators
 
@@ -80,6 +84,14 @@ For efficient simulation of $H_S$:
 3. **Efficient neighbour access:** Nonzero positions in each row of $H_S$ findable efficiently.
 
 Under these conditions: block-encode $H_S / (d\|H_S\|_{\max})$ and simulate via QSP with cost $O(d(t \cdot d\|H_S\|_{\max} + \log(1/\varepsilon)))$ queries.
+
+Efficiency checklist for using the framework:
+
+1. \(S\) closes under commutators with \(H\) (the IP).
+2. \(H_S\) is Hermitian, or a separate non-unitary simulation method is justified.
+3. \(H_S\) is sparse/evaluable enough to block-encode or simulate.
+4. The initial shadow state can be prepared efficiently and is not the zero vector.
+5. The desired output is recoverable from the shadow state with efficient overlap estimation, sampling, or other readout.
 
 ## Relation to other "shadow" frameworks
 

@@ -27,6 +27,8 @@ P-round $t+1$ overlaps with G-round $t$ (they touch disjoint registers). C-round
 
 Total cost: $4n - 3w(n) - 3\lfloor \log n \rfloor - 1$ Toffoli gates and $n - w(n) - \lfloor \log n \rfloor$ ancillae (for propagate scratch), where $w(n)$ is the Hamming weight of $n$.
 
+Conceptually, QCLA replaces the [[MAJ-UMA Decomposition for Reversible Adders|MAJ/UMA ripple chain]] with a reversible parallel-prefix computation. MAJ/UMA propagates one carry through a line and then uncomputes it; QCLA computes interval propagate/generate summaries in a tree, then pushes the relevant carries back down the tree.
+
 ## When to reach for it
 
 - When circuit **depth** is the binding constraint rather than gate count or ancilla count — e.g., when trying to minimise the wall-clock time of a fault-tolerant computation
@@ -54,4 +56,4 @@ Also, applying [[Temporary Logical-AND|temporary logical-ANDs]] to the tree Toff
 - [[In-Place Majority for Carry Propagation]] — the MAJ gate that this tree replaces
 - [[Temporary Logical-AND]] — applicable to paired Toffolis in the tree
 - [[Ancilla Opportunity Cost Analysis]]
-- [[Arithmetic in the Fourier Basis]] — competing $O(\log n)$-depth approach (QFT-based)
+- [[Arithmetic in the Fourier Basis]] — competing QFT-based approach; its addition rotations commute, but full adder depth depends on the QFT implementation, connectivity, ancillae, and rotation synthesis

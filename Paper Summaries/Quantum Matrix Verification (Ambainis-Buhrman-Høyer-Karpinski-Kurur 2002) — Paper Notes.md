@@ -1,5 +1,5 @@
-> **Source:** Andris Ambainis, Harry Buhrman, Peter Høyer, Marek Karpinski, Pierre Kurur, *Quantum matrix verification*, unpublished manuscript (2002). Algorithm described in Section 2.3 of Buhrman-Špalek, arXiv:quant-ph/0409035. See also Zoo entry #6.
-> **Links:** [Buhrman-Špalek (improves this result)](https://arxiv.org/abs/quant-ph/0409035)
+> **Source:** Andris Ambainis, Harry Buhrman, Peter Høyer, Marek Karpinski, Pierre Kurur, *Quantum matrix verification*, unpublished manuscript (2002). Algorithm described in Section 2.3 of [[Quantum Verification of Matrix Products (Buhrman-Špalek 2005) — Paper Notes|Buhrman-Špalek]], arXiv:quant-ph/0409035. See also Zoo entry #6.
+> **Links:** [[Quantum Verification of Matrix Products (Buhrman-Špalek 2005) — Paper Notes|Buhrman-Špalek (improves this result)]]
 > **Tags:** #matrix-multiplication #verification #Grover #quantum-speedup #linear-algebra
 
 ---
@@ -20,7 +20,7 @@
 
 ## What the paper does
 
-Gives the first quantum algorithm for matrix product verification that beats the classical $\Theta(n^2)$ bound of Freivalds. The algorithm runs in $O(n^{7/4})$ time by combining Freivalds' randomized technique with Grover search in a recursive structure. While never formally published, it established quantum verification of matrix products as a problem and the $O(n^{7/4})$ bound stood until Buhrman and Špalek improved it to $O(n^{5/3})$ using [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|quantum walks]].
+Gives the first quantum algorithm for matrix product verification that beats the classical $\Theta(n^2)$ bound of Freivalds. The algorithm runs in $O(n^{7/4})$ time by combining Freivalds' randomized technique with Grover search in a recursive structure. While never formally published, it established quantum verification of matrix products as a problem and the $O(n^{7/4})$ bound stood until [[Quantum Verification of Matrix Products (Buhrman-Špalek 2005) — Paper Notes|Buhrman-Špalek]] improved it to $O(n^{5/3})$ using [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|quantum walks]].
 
 This is a clean early example of quantum speedups applied to a basic linear algebra problem — not deep, but it shows how quantum search composes with classical randomized techniques.
 
@@ -66,7 +66,7 @@ This beats the classical $\Theta(n^2)$ of Freivalds' algorithm. The quantum lowe
 | Paper | Complexity | Technique |
 |---|---|---|
 | **ABH+02 (this paper)** | $O(n^{7/4})$ | Block Freivalds + Grover |
-| Buhrman-Špalek (2006) | $O(n^{5/3})$ worst case | Quantum walk on Johnson graph pairs; [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes\|Szegedy walk]] |
+| [[Quantum Verification of Matrix Products (Buhrman-Špalek 2005) — Paper Notes|Buhrman-Špalek (2005)]] | $O(n^{5/3})$ worst case | Quantum walk on Johnson graph pairs; [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy walk]] |
 | Le Gall (2012) | $O(n^{5/3})$ time, improved constants | Quantum walk + rectangular verification |
 
 The improvement from $n^{7/4}$ to $n^{5/3}$ comes from replacing the block-Freivalds + amplitude amplification approach with a quantum walk that jointly searches over row and column subsets — avoiding the $O(n^2)$ bottleneck of loading submatrices.

@@ -14,7 +14,7 @@ The cost should scale with $T := |\boldsymbol{\alpha}|_1 t = (\sum_\ell \alpha_\
 
 ## What the paper does
 
-Presents the simplest known algorithm achieving **near-optimal** [[Hamiltonian simulation]]: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms, with only $\log(1/\varepsilon)$ dependence on precision. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
+Presents the simplest known algorithm achieving **near-optimal** [[Hamiltonian simulation]]: $O(T \log(T/\varepsilon) / \log\log(T/\varepsilon))$ queries to the Hamiltonian terms. The precision dependence is polylogarithmic, with truncation order $O(\log(T/\varepsilon)/\log\log(T/\varepsilon))$. The method directly implements the truncated Taylor series of $e^{-iHt}$ via [[Linear Combination of Unitaries (LCU)|LCU]] and [[Oblivious Amplitude Amplification (Robust)|robust oblivious amplitude amplification]].
 
 This paper is the clean, self-contained version of the same authors' earlier STOC 2014 result (arXiv:1312.1414), which achieved the same complexity but used a more indirect approach through fractional queries. Here the algorithm fits in four pages and the reason for logarithmic $\varepsilon$-dependence is immediate: it comes from the super-exponential decay of the Taylor series tail ($(\ln 2)^K / K!$).
 
@@ -24,17 +24,22 @@ This paper is the clean, self-contained version of the same authors' earlier STO
 
 ### Step 1: Segment the evolution
 
-Divide $t$ into $r = \lceil T / \ln 2 \rceil$ segments. Within each segment, the "normalised time" is $\tau \leq \ln 2$. This choice is not accidental — it makes the coefficient sum equal to 2 (see [[Taylor Series Truncation with ln2 Segmentation]]).
+Divide $t$ into $r = \lceil T / \ln 2 \rceil$ segments. Within each segment, the "normalised time" is $\tau = T/r \leq \ln 2$. The $\ln 2$ target is not accidental: for the infinite Taylor series $e^\tau = 2$ when $\tau=\ln 2$, and the algorithm uses padding/amplitude dilution to make the truncated segment compatible with one round of OAA (see [[Taylor Series Truncation with ln2 Segmentation]]).
 
 ### Step 2: Truncate the Taylor series
 
 Approximate each segment's evolution:
 
-$$\tilde{U} = \sum_{k=0}^{K} \frac{(-i\tau)^k}{k!} H^k$$
+$$
+\tilde{U} = \sum_{k=0}^{K} \frac{(-i\tau)^k}{k!} \bar H^k,
+\qquad
+\bar H := \frac{H}{|\boldsymbol{\alpha}|_1}
+= \sum_\ell p_\ell H_\ell,\quad p_\ell=\frac{\alpha_\ell}{|\boldsymbol{\alpha}|_1}.
+$$
 
-Expanding $H^k$ using $H = \sum_\ell \alpha_\ell H_\ell$:
+Expanding $\bar H^k$:
 
-$$\tilde{U} = \sum_{k=0}^{K} \sum_{\ell_1,\ldots,\ell_k} \frac{(-i\tau)^k}{k!} \alpha_{\ell_1} \cdots \alpha_{\ell_k} H_{\ell_1} \cdots H_{\ell_k}$$
+$$\tilde{U} = \sum_{k=0}^{K} \sum_{\ell_1,\ldots,\ell_k} \frac{(-i\tau)^k}{k!} p_{\ell_1} \cdots p_{\ell_k} H_{\ell_1} \cdots H_{\ell_k}$$
 
 Each term $(-i)^k H_{\ell_1} \cdots H_{\ell_k}$ is unitary (product of unitaries times a phase). So $\tilde{U}$ is a [[Linear Combination of Unitaries (LCU)|linear combination of unitaries]] with positive coefficients.
 
@@ -44,9 +49,9 @@ Two oracles:
 
 **PREPARE** $B$: Maps $|0\rangle$ to
 
-$$B|0\rangle = \frac{1}{\sqrt{s}} \sum_{k=0}^{K} \sum_{\ell_1,\ldots,\ell_k} \sqrt{\frac{\tau^k}{k!} \alpha_{\ell_1} \cdots \alpha_{\ell_k}} \;|k\rangle|\ell_1\rangle \cdots |\ell_k\rangle$$
+$$B|0\rangle = \frac{1}{\sqrt{s}} \sum_{k=0}^{K} \sum_{\ell_1,\ldots,\ell_k} \sqrt{\frac{\tau^k}{k!} p_{\ell_1} \cdots p_{\ell_k}} \;|k\rangle|\ell_1\rangle \cdots |\ell_k\rangle$$
 
-where $s = \sum_{k=0}^{K} (\ln 2)^k / k! \approx 2$.
+where $s = \sum_{k=0}^{K} \tau^k / k! \lesssim 2$.
 
 **SELECT** $V$: Maps $|k\rangle|\ell_1\rangle \cdots |\ell_k\rangle|\psi\rangle \to |k\rangle|\ell_1\rangle \cdots |\ell_k\rangle \cdot (-i)^k H_{\ell_1} \cdots H_{\ell_k}|\psi\rangle$
 
@@ -54,7 +59,9 @@ Implemented as $K$ sequential controlled-SELECT(H) operations, with the $\kappa$
 
 Then $W = (B^\dagger \otimes \mathbb{1}) \cdot \text{SELECT}(V) \cdot (B \otimes \mathbb{1})$ gives:
 
-$$W|0\rangle|\psi\rangle = \frac{1}{s}|0\rangle\tilde{U}|\psi\rangle + \sqrt{1 - 1/s^2}\;|\Phi^\perp\rangle$$
+$$W|0\rangle|\psi\rangle = \frac{1}{s}|0\rangle\tilde{U}|\psi\rangle + |\Phi^\perp\rangle,$$
+
+where the bad component has ancilla support orthogonal to $|0\rangle$.
 
 ### Step 4: Robust oblivious amplitude amplification
 
@@ -86,7 +93,7 @@ Repeat for all $r$ segments. Each segment introduces $O(\varepsilon/r)$ error; t
 
 Where $T = |\boldsymbol{\alpha}|_1 t$, $L$ = number of terms, $n$ = number of qubits.
 
-**Precision dependence is exponentially better than all product-formula methods.** Trotter-Suzuki scales as $\text{poly}(1/\varepsilon)$; this scales as $\log(1/\varepsilon)$. Doubling the digits of accuracy only doubles the cost.
+**Precision dependence is exponentially better than fixed-order product-formula methods.** Trotter-Suzuki scales as $\text{poly}(1/\varepsilon)$ at fixed order; this scales through $K = O(\log(T/\varepsilon)/\log\log(T/\varepsilon))$. Heuristically, increasing the number of requested digits only grows the truncation order nearly linearly in the digit count, up to the $\log\log$ denominator.
 
 ---
 
@@ -99,9 +106,16 @@ Where $T = |\boldsymbol{\alpha}|_1 t$, $L$ = number of terms, $n$ = number of qu
 | [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs-Wiebe (2012)]] | Polynomial | LCU, no OAA |
 | BCCKS (2014, STOC) [1312.1414] | $\widetilde{O}(\log(1/\varepsilon))$ | Fractional queries |
 | **This paper** | $\widetilde{O}(\log(1/\varepsilon))$ | **Direct Taylor + robust OAA** |
-| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] | $O(\log(1/\varepsilon))$ | QSP (optimal) |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] | additive $O(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ | QSP/qubitization (optimal) |
 
-This paper matched the STOC 2014 result with a much simpler algorithm. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] later achieved strictly optimal query complexity by removing the $\log\log$ factor via [[QSVT Meta-Template|QSP/QSVT]], but the Taylor series approach remains the more accessible and practical method.
+This paper matched the STOC 2014 result with a much simpler algorithm. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] later achieved strictly optimal query complexity by changing the dependence from multiplicative to additive:
+
+$$
+\text{Taylor-LCU: } O\!\left(T\frac{\log(T/\varepsilon)}{\log\log(T/\varepsilon)}\right),\qquad
+\text{QSP/qubitization: } O\!\left(T+\frac{\log(1/\varepsilon)}{\log\log(1/\varepsilon)}\right).
+$$
+
+The Taylor series approach remains a more accessible entry point to LCU-based simulation, but it is not the asymptotically optimal endpoint.
 
 ---
 
@@ -167,7 +181,7 @@ All the reusable techniques from this paper already have trick cards in the vaul
 
 ## Limits / caveats
 
-- **Not quite optimal.** The $\log\log(T/\varepsilon)$ denominator means this is near-optimal but not tight. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] removed this factor via QSP.
+- **Not quite optimal.** The issue is not the $\log\log$ denominator itself; that term also appears in the precision lower bound. The gap is that the Taylor algorithm multiplies the time parameter $T$ by the precision truncation order, whereas QSP/qubitization achieve additive $T+\log(1/\varepsilon)/\log\log(1/\varepsilon)$ scaling.
 - **Ancilla overhead.** $O(K \log L)$ ancillas — modest, but grows with both precision and number of terms.
 - **PREPARE cost scales with $L$.** For Hamiltonians with many terms (e.g., molecular Hamiltonians after Jordan-Wigner), the cost of preparing the coefficient state dominates. Later work on [[Standard-Form Encoding (Prepare + Signal Oracle)|double factorization and tensor hypercontraction]] reduces this.
 - **No commutator structure.** Unlike Trotter methods, this approach treats all terms symmetrically. It doesn't benefit from near-commutativity of $H_\ell$'s — the cost is always $|\boldsymbol{\alpha}|_1 t$, even when the Hamiltonian is nearly diagonal.
@@ -179,7 +193,7 @@ All the reusable techniques from this paper already have trick cards in the vaul
 
 This is the paper that made [[Linear Combination of Unitaries (LCU)|LCU]]-based [[Hamiltonian simulation]] practical and comprehensible. The STOC 2014 predecessor achieved the same asymptotics but via a complicated fractional-query reduction. Here the algorithm is direct: write down the Taylor series, implement it as an LCU, amplify with OAA. The entire paper is four pages.
 
-The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially better than any [[Product Formulas]] — established LCU as the dominant paradigm for high-precision quantum simulation, later refined by [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] but never conceptually replaced. If you want to understand why modern quantum algorithms use block-encoding instead of Trotter, start here.
+The polylogarithmic precision scaling it demonstrated — exponentially better than fixed-order [[Product Formulas]] — established LCU as the dominant paradigm for high-precision quantum simulation. Later [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT Meta-Template|QSVT]] reorganized the framework around block-encodings and polynomial transformations, but the LCU/PREPARE/SELECT language remains the natural way to build many of the encodings. If you want to understand why modern quantum algorithms often use block-encoding instead of Trotter, start here.
 
 ---
 
@@ -205,7 +219,7 @@ The $\log(1/\varepsilon)$ precision scaling it demonstrated — exponentially be
 - [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — first polylog-precision simulation
 - [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — full STOC version with OAA and lower bounds; this paper simplifies it
 - [[Hamiltonian Simulation with Nearly Optimal Dependence on All Parameters (Berry-Childs-Kothari 2015) — Paper Notes]] — combines walk + LCU for optimal sparsity scaling
-- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieved strictly optimal scaling, removing the $\log\log$ factor
+- [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — achieved strictly optimal additive time/precision scaling
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — reformulated via block-encoding + QSP
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — chemistry case where Taylor-series simulation is replaced by direct qubitized phase estimation; useful contrast because both use LCU-style PREPARE/SELECT but optimize different end goals
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — generalised the polynomial framework

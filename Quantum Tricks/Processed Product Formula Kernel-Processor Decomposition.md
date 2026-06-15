@@ -30,7 +30,7 @@ Processor $P$ adds a one-time overhead of typically $M_P$ stages at the start an
 
 ## Caveat
 
-The processor $P$ is not unitary in general — it's a [[Product Formulas]] applied once, not guaranteed to be a good approximation by itself. Also, for controlled-time evolution (as in [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|phase estimation]]), the kernel-processor structure requires either modifying the control scheme or absorbing $P$ into the state preparation/measurement.
+The processor $P$ is unitary when it is itself implemented as a product of exponentials. The caveat is different: $P$ is not meant to approximate the target evolution by itself, and the identity $S_k^r=P\Sigma^rP^{-1}$ only gives the advertised saving when the whole repeated kernel is coherently wrapped by $P$ and $P^{-1}$. For controlled powers, intermediate measurements, or phase-estimation schedules, the kernel-processor structure requires modifying the control scheme or absorbing $P$ into state preparation/measurement.
 
 ## Related notes
 - [[Selection and Improvement of Product Formulae for Best Performance of Quantum Simulation (Morales-Costa-Pantaleoni-Burgarth-Sanders-Berry 2025) — Paper Notes]]

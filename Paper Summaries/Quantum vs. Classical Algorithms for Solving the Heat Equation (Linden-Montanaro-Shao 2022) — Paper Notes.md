@@ -1,3 +1,5 @@
+# Quantum vs. Classical Algorithms for Solving the Heat Equation (Linden-Montanaro-Shao 2022) — Paper Notes
+
 > **Source:** Noah Linden, Ashley Montanaro, Changpeng Shao, *Quantum vs. classical algorithms for solving the heat equation*, Communications in Mathematical Physics **395**, 601–641, 2022; arXiv:2004.06516
 > **Links:** [arXiv](https://arxiv.org/abs/2004.06516) · [CMP](https://doi.org/10.1007/s00220-022-04442-6)
 > **Tags:** #PDE #heat-equation #quantum-speedup #lower-bounds #linear-systems #QLSA #random-walk #amplitude-estimation #negative-result
@@ -14,9 +16,9 @@ The key design choice: the problem asks for a *classical scalar output*, not a q
 
 ## What the paper does
 
-Systematically compares ten algorithms (five classical, five quantum) for the heat equation, tracking all complexity parameters. The main finding: **quantum algorithms offer at most a quadratic speedup** for this problem, and **QLSA-based approaches (HHL and its descendants) are never the fastest quantum method**.
+Systematically compares ten algorithms (five classical, five quantum) for the heat equation, tracking all complexity parameters. The main finding: **quantum algorithms offer at most a quadratic speedup** for this scalar-output problem, and **QLSA-based approaches (HHL and its descendants) are never the fastest quantum method**.
 
-The best quantum algorithm for $d \geq 2$ applies [[Amplitude Amplification and Estimation|amplitude estimation]] to a "fast" classical random walk, achieving $\tilde{O}(\epsilon^{-1})$ vs. the classical $\tilde{O}(\epsilon^{-2})$ — exactly a quadratic speedup. For $d = 1$, classical FFT wins outright.
+The geometry regime matters. For rectangular regions with periodic boundary conditions, the best quantum algorithm applies [[Amplitude Amplification and Estimation|amplitude estimation]] to a fast classical random walk and reaches $\tilde{O}(\epsilon^{-1})$ for $d \geq 2$. For general regions, the best quantum scaling in the paper's table is $\tilde{O}(\epsilon^{-2})$ for $d \geq 2$, matching the best classical scaling in $d=2$ and improving higher-dimensional general-region random-walk methods by at most a quadratic factor. For $d = 1$, classical FFT wins outright in the rectangular setting.
 
 **My assessment:** This is exactly the kind of honest, detailed comparison the field needs. The negative result about QLSA is striking: the condition number of the discretised heat equation scales as $O(L^2/(\alpha \Delta x^2))$, and since $\Delta x$ is determined by the accuracy requirement, the condition number dependence of QLSA wipes out its polylogarithmic precision scaling. The random walk + amplitude estimation approach sidesteps this entirely by never forming a linear system. The broader lesson: for PDEs where the classical bottleneck is *not* linear algebra but rather *sampling* or *time-stepping*, QLSA-based quantum algorithms miss the point entirely. The quantum advantage, when it exists, comes from [[Amplitude Amplification and Estimation|amplitude estimation]] applied to the classical approach that's already winning.
 
@@ -76,9 +78,10 @@ The heat equation has a probabilistic interpretation: $u(x,t)$ is the expected d
 
 Key observations:
 - For $d = 1$: classical FFT ($\tilde{O}(\epsilon^{-0.5})$) beats all quantum methods
-- For $d \geq 2$: quantum advantage is at most quadratic ($\tilde{O}(\epsilon^{-1})$ vs $\tilde{O}(\epsilon^{-2})$)
+- For rectangular regions and $d \geq 2$: the cleanest quantum advantage is at most quadratic, $\tilde{O}(\epsilon^{-1})$ versus the fast classical random-walk $\tilde{O}(\epsilon^{-2})$
+- For general regions: the best quantum row is $\tilde{O}(\epsilon^{-2})$ for $d \geq 2$; in $d=2$ this matches the best classical row, and in higher dimensions the advantage depends on which classical baseline is being compared
 - QLSA is **never** the best quantum method — always outperformed by random walk + amplitude estimation
-- The quantum speedup for general regions is from $\tilde{O}(\epsilon^{-3})$ to $\tilde{O}(\epsilon^{-2})$ (dimension-independent)
+- The dimension-independent $\tilde{O}(\epsilon^{-2})$ quantum general-region method should not be conflated with the rectangular-region $\tilde{O}(\epsilon^{-1})$ result
 
 ---
 
@@ -132,6 +135,7 @@ Key observations:
 - [[Quantum Algorithms and the Finite Element Method (Montanaro-Pallister 2016) — Paper Notes]]
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]]
 - [[Quantum Speedup of Monte Carlo Methods (Montanaro 2015) — Paper Notes]]
+- [[Quantum-Accelerated Multilevel Monte Carlo Methods for Stochastic Differential Equations in Mathematical Finance (An-Linden-Liu-Montanaro-Shao-Wang 2021) — Paper Notes]] — related scalar-output SDE algorithm: quantum advantage comes from amplitude estimation applied to stochastic path sampling, not QLSA
 - [[Quantum Algorithm for Nonhomogeneous Linear PDEs (Arrazola-Kalajdzievski-Weedbrook-Lloyd 2019) — Paper Notes]]
 - [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes]]
 - [[Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes]]

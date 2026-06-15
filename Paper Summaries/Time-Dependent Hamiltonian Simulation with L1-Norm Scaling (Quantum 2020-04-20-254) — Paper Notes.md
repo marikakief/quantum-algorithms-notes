@@ -12,11 +12,11 @@ $$
 \mathcal{T}\exp\!\left(-i\int_0^t d\tau\, H(\tau)\right)
 $$
 
-within error $\varepsilon$ (spectral norm or diamond norm). Two input models:
+within error $\varepsilon$. For coherent Dyson-style algorithms this is an operator/spectral-norm approximation to the unitary evolution; for randomized qDRIFT-style algorithms the guarantee is a diamond-norm channel approximation. Two input models:
 - **Sparse matrix (SM):** $H(\tau)$ is $d$-sparse, accessed via location and value oracles $\mathcal{O}_{\mathrm{loc}}, \mathcal{O}_{\mathrm{val}}$. Cost measured in queries + gates.
 - **[[Linear Combination of Unitaries (LCU)|LCU]]:** $H(\tau) = \sum_{l=1}^L \alpha_l(\tau) H_l$ with $H_l$ unitary-Hermitian, coefficients classically computable. Cost measured in gates.
 
-The question: can the gate/query complexity scale with the **integrated** norm $\int_0^t \|H(\tau)\| \, d\tau$ rather than the product $t \cdot \max_\tau \|H(\tau)\|$?
+The question: can the gate/query complexity scale with the **integrated** norm $\int_0^t \|H(\tau)\| \, d\tau$ rather than the product $t \cdot \max_\tau \|H(\tau)\|$? In practice, an efficiently computable positive upper-bound function can replace the exact instantaneous norm, at the cost of using the integral of that upper bound.
 
 ## What the paper does
 
@@ -73,6 +73,8 @@ $$
 
 The inequality $\int_0^t \|H\| \le t \max \|H\|$ is now saturated (holds with equality). Any simulation algorithm applied to $\tilde{H}$ on $[0,S]$ automatically achieves $L^1$-norm scaling.
 
+If the exact norm is unavailable or crosses zero, use a positive efficiently computable envelope \(\Lambda(\tau)\ge \|H(\tau)\|_{\max}\) instead. The algorithm then scales with \(\int_0^t\Lambda(\tau)\,d\tau\).
+
 Apply the [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|truncated Dyson-series algorithm]] to $\tilde{H}$ to get:
 
 ## Key results
@@ -107,6 +109,8 @@ $$
 
 Near-linear in integrated norm. Requires additional oracles $O_{\rm var}$ (inverse cumulative norm) and $O_{\rm norm}$ (instantaneous norm).
 
+The apparent \(d^2\) versus \(d\) difference between Theorem 4 and Theorem 10 is an oracle/model distinction: Theorem 4 is a fractional-query sparse result, while Theorem 10 includes the rescaled sparse implementation with the stronger time-reparameterization oracles and gate-level machinery.
+
 **Theorem 11 (Rescaled Dyson, LCU).**
 
 $$
@@ -114,6 +118,8 @@ $$
 $$
 
 where $g_c$ is the cost of controlled-$H_l$.
+
+Notation warning: \(\|\alpha\|_{1,1}=\int_0^t\sum_l \alpha_l(\tau)\,d\tau\) is the integrated coefficient 1-norm used in the sampling discussion. The paper's LCU Dyson theorem uses its own mixed coefficient norm notation, written here as \(\|\alpha\|_{\infty,1}\); keep the definition attached when comparing these rows.
 
 ## Comparison with prior work
 
@@ -125,7 +131,7 @@ where $g_c$ is the cost of controlled-$H_l$.
 | **Continuous qDRIFT (this paper)** | $\widetilde{O}((d^2 \|H\|_{\max,1})^2 n/\varepsilon)$ | $O(\|\alpha\|_{1,1}^2 g_e/\varepsilon)$ | **$L^1$** |
 | **Rescaled Dyson (this paper)** | $\widetilde{O}(d\,\|H\|_{\max,1}\, n)$ | $\widetilde{O}(\|\alpha\|_{\infty,1} L^2 g_c)$ | **$L^1$** |
 
-The improvement is the replacement $\|H\|_{\max,\infty} \cdot t \to \|H\|_{\max,1}$ everywhere. Since $\|H\|_{\max,1} \le t \cdot \|H\|_{\max,\infty}$ always, and the gap can be enormous when $H$ varies over time, this is a strict improvement.
+The improvement is the replacement $\|H\|_{\max,\infty} \cdot t \to \|H\|_{\max,1}$ everywhere. Since $\|H\|_{\max,1} \le t \cdot \|H\|_{\max,\infty}$ always, the bound is never worse in this parameter and can be substantially better when $H$ varies over time. It is a strict improvement only for instances with nontrivial norm variation.
 
 ## Application: chemical scattering
 
@@ -139,7 +145,7 @@ The paper gives a schematic example of $H_2 + H$ scattering, where the Coulomb i
 - Continuous qDRIFT produces a **mixed-unitary channel**, not a deterministic unitary. Fine for simulation (diamond-norm error) but can't be used inside coherent algorithms.
 - The quadratic-vs-linear gap between qDRIFT and rescaled Dyson can be large when $\|H\|_{\max,1}/\varepsilon$ is big — which is the typical regime for precision simulation.
 - If $\|H(\tau)\|$ is approximately constant in time, the improvement over prior bounds is negligible (the $L^1$ and $L^\infty$ norms coincide up to a constant).
-- The rescaled Dyson approach inherits the limitations of the underlying [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Dyson-series algorithm]]: it requires continuously differentiable $H(\tau)$ with $H(\tau) \ne 0$ everywhere. Pathological cases (discontinuous norm, zero-crossings) need regularization.
+- The rescaled Dyson approach inherits the limitations of the underlying [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Dyson-series algorithm]]: smoothness and time-discretization assumptions still matter. Pathological cases (discontinuous norm, zero-crossings) should be handled by a positive envelope \(\Lambda(\tau)\) or other regularization.
 
 ## Reusable ideas
 

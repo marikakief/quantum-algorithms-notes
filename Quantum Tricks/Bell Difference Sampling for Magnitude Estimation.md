@@ -8,7 +8,7 @@ Estimates $|\mathrm{tr}(\rho P)|$ for all Pauli operators $P$ in a set $S$ simul
 
 ## The trick
 
-Measure copies of $\rho \otimes \rho$ in the Bell basis — the unique Clifford basis that simultaneously diagonalizes $P \otimes P$ for every $P \in \mathcal{P}(n)$. Since all these operators commute, a single Bell measurement yields information about all of them at once.
+Measure copies of $\rho \otimes \rho$ in a Bell basis, which simultaneously diagonalizes $P \otimes P$ for every $P \in \mathcal{P}(n)$. Since all these operators commute, a single Bell measurement yields information about all of them at once.
 
 The key identity: $\mathrm{tr}((P \otimes P)(\rho \otimes \rho)) = \mathrm{tr}(\rho P)^2$.
 
@@ -32,7 +32,7 @@ $O((\log|S|)/\epsilon^4)$ two-copy measurements for the magnitude estimation sta
 
 ## Caveat
 
-Only gives magnitudes, not signs. Sign recovery requires additional techniques: either a [[Mimicking State via Matrix Multiplicative Weights|mimicking state]] or [[Fractional Coloring of Commutation Graphs|fractional coloring]] of the residual commutation graph. The $\epsilon^4$ denominator (rather than $\epsilon^2$) comes from estimating squared expectation values — you lose a quadratic factor in precision compared to direct estimation.
+Only gives magnitudes, not signs, and magnitudes alone are not a signed classical shadow. Sign recovery requires additional techniques: either a [[Mimicking State via Matrix Multiplicative Weights|mimicking state]] or [[Fractional Coloring of Commutation Graphs|fractional coloring]] of the residual commutation graph. The $\epsilon^4$ denominator (rather than $\epsilon^2$) belongs to this magnitude stage and comes from estimating squared expectation values — you lose a quadratic factor in precision compared to direct estimation.
 
 ## Related notes
 - [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]]

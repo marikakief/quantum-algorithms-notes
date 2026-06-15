@@ -16,7 +16,7 @@ The question: can we remove these restrictions entirely?
 
 ## What the paper does
 
-Yes. GQSP replaces the single-axis rotations (X- or Z-rotations) used as signal processing operators in standard QSP with **general SU(2) rotations** on the ancilla qubit. This single change lifts both the realness and parity constraints. The only requirement left is $|P(e^{i\theta})|^2 \leq 1$ for all $\theta$ — which is forced by unitarity anyway. You can't do better than that.
+Yes, in the unitary/Laurent-polynomial setting. GQSP replaces the single-axis rotations (X- or Z-rotations) used as signal processing operators in standard QSP with **general SU(2) rotations** on the ancilla qubit. This single change lifts both the realness and parity constraints for polynomial transformations of a unitary. The remaining requirement is $|P(e^{i\theta})|^2 \leq 1$ for all $\theta$ — forced by unitarity anyway. This is not a general QSVT theorem for arbitrary nonunitary block-encodings, which still have singular-value-transformation structure.
 
 The paper also provides:
 1. A recursive algorithm for computing GQSP rotation angles when both $P$ and $Q$ are known — much simpler than existing QSP phase-finding
@@ -94,7 +94,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 
 **Corollary 8 (Qubitization simulation).** Block-encode $e^{-iHt}$ using $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ applications of the walk operator $W$, where $\alpha$ is the [[Linear Combination of Unitaries (LCU)|LCU]] 1-norm.
 
-**Theorem 10 (Fractional queries).** Implement $U^t = e^{itH}$ for $t \in (0,1)$ to accuracy $\epsilon$ using $O(1/\delta + \log(1/\epsilon))$ controlled-$U$ operations, where $\delta = \sigma_{\min}(H)$. The $O(1/\delta)$ term matches the proved lower bound from Sheridan et al. This improves on the previous best $O((1/\delta)\log(1/\epsilon))$ — the error and gap-inversion costs are now *additive*, not multiplicative.
+**Theorem 10 (Fractional queries).** Implement $U^t = e^{itH}$ for $t \in (0,1)$ to accuracy $\epsilon$ using $O(1/\delta + \log(1/\epsilon))$ controlled-$U$ operations, where $\delta$ is the promised spectral/eigenphase gap needed to choose a branch of the logarithm. The $O(1/\delta)$ term matches the proved lower bound from Sheridan et al. This improves on the previous best $O((1/\delta)\log(1/\epsilon))$ — the error and gap-inversion costs are now *additive*, not multiplicative.
 
 **Theorem 11 (Square-root phase function).** Implement $e^{it\sqrt{H}}$ using $O((1/\delta)\log(1/\epsilon) + |t|)$ controlled-$U$ operations. Relevant for bosonic operators $e^{i(a^\dagger + a)t}$.
 
@@ -115,6 +115,8 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 | Signal operator | $U$ and $U^\dagger$ | $U$ and $U^\dagger$ | $U$ only (or $U^\dagger$ for negative powers) |
 | Phase computation | Hard ([[Efficient Phase-Factor Evaluation in QSP (Dong-Meng-Whaley-Lin 2021) — Paper Notes|QSPPACK]] etc.) | Hard | Simple recursive formula (Alg 1) |
 | GPU-scale phase finding | ~$10^4$ degree | ~$10^4$ degree | ~$10^7$ degree |
+
+The phase-finding row is an implementation benchmark reported for available software and tested instances, not a theorem-level separation between QSP and GQSP.
 
 | Application | Previous best | GQSP result |
 |---|---|---|
@@ -172,7 +174,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 
 ### Paper notes
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes]] — the standard QSP this generalises
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — the QSVT framework; GQSP lifts its polynomial restrictions
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes]] — related polynomial-transformation framework; GQSP removes restrictions in the unitary/Laurent-polynomial setting, not in general singular-value transformation
 - [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes]] — qubitization walk operator used in Corollary 8
 - [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — first major application of GQSP; combines it with directional walk control for $2\times$ simulation speedup
 - [[Efficient Phase-Factor Evaluation in QSP (Dong-Meng-Whaley-Lin 2021) — Paper Notes]] — previous state-of-art for QSP phase-finding (~$10^4$ degree); GQSP's approach reaches ~$10^7$
@@ -192,3 +194,7 @@ Since $A' = (I \otimes U^\dagger) A$ and $(I \otimes U^\dagger)$ commutes with b
 - [[Directional Walk Control for Phase Doubling]] — used by Berry et al. with GQSP
 - [[Quantum Fourier Transform Circuit]] — change-of-basis for the convolution application
 - [[Normal Matrix Fourier Decomposition via Root-of-Unity Unitary]] — new trick card from this paper
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: the exoplanet-imaging application in Kannan--Putterman--Cotler uses QSP-style eigenvalue filtering after uploaded photon states are stored.

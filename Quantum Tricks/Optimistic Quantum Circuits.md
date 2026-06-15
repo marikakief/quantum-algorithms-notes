@@ -21,7 +21,7 @@ The definition is **basis-independent** because it uses the Frobenius norm (sum 
 
 **Key lemma (bad subspace bound):** If $\widetilde{U}$ is optimistic with parameter $\varepsilon$, then the subspace of states with per-state error $\geq \mu$ has dimension at most $(\varepsilon / \mu) \cdot \dim \mathcal{H}$. In particular, at most an $O(\varepsilon)$ fraction of basis states have $O(1)$ error.
 
-**When optimistic circuits suffice as drop-in replacements:** If the algorithm feeds effectively random (or random-looking) inputs to the subroutine, the optimistic circuit's average-case guarantee is directly applicable. This is shown explicitly for [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]]: the intermediate values in modular exponentiation are random elements of the multiplicative group mod $N$, so the optimistic QFT's error is small in expectation and factoring succeeds with probability $\geq O(1) \cdot (1 - O(n\sqrt{\varepsilon}))$.
+**When optimistic circuits suffice as drop-in replacements:** If an algorithm feeds the subroutine states distributed so that the bad subspace is rarely hit, the optimistic circuit's average guarantee may be directly applicable. This is shown explicitly for the Kahanamoku-Meyer-Yao-style use inside [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]]: under the paper's random-$r$ argument, the intermediate modular-exponentiation values are random elements of the multiplicative group mod $N$, so the optimistic QFT's error is small in expectation and factoring succeeds with probability $\geq O(1) \cdot (1 - O(n\sqrt{\varepsilon}))$. This is not a blanket guarantee for every possible Shor implementation.
 
 When drop-in replacement isn't sufficient, the [[Worst-to-Average-Case Reduction for Optimistic Circuits|worst-to-average-case reduction]] converts any optimistic circuit into a standard approximate circuit.
 
@@ -34,7 +34,7 @@ When drop-in replacement isn't sufficient, the [[Worst-to-Average-Case Reduction
 ## Complexity
 
 The optimistic circuit itself can be dramatically cheaper than a worst-case approximation. For the QFT:
-- Optimistic: depth $O(\log(n/\varepsilon))$, 0 ancillae, nearest-neighbour in 1D
+- Optimistic: depth $O(\log(n/\varepsilon))$, 0 ancillae, logarithmic gate range/locality in a 1D layout
 - Best prior worst-case: depth $O(\log n)$, $O(n)$ ancillae, long-range or measurement-based
 
 The reduction adds the cost of implementing two elements of a unitary 1-design (one before, one after the optimistic circuit). For the QFT, this means one integer addition ($O(n)$ gates) and one phase gradient ($O(n)$ single-qubit gates).
@@ -42,6 +42,8 @@ The reduction adds the cost of implementing two elements of a unitary 1-design (
 ## Caveat
 
 The $O(\varepsilon)$-fraction bad subspace is small but not empty. For algorithms where the input to the subroutine is adversarially chosen or correlated with the bad subspace, the optimistic circuit cannot be used directly. The reduction handles this case but adds ancillae and potentially long-range gates.
+
+The Frobenius guarantee is an average over Hilbert space, not a promise about a user-chosen input distribution. Application-specific claims need a separate argument that the states actually entering the subroutine rarely overlap the bad subspace.
 
 The Frobenius-norm error $\varepsilon$ implies diamond-distance error $O(\sqrt{\varepsilon})$ when viewed as a channel. For applications requiring diamond-distance guarantees, set the optimistic error parameter to $\varepsilon' = \varepsilon^2$.
 

@@ -4,11 +4,11 @@
 
 ## What it does
 
-Uses the classical Adaptive Sampling Configuration Interaction (ASCI) method to estimate whether a candidate initial state has adequate squared overlap $|\langle \psi_\text{in} | \Psi_0 \rangle|^2$ with the true ground state, without needing the ground state explicitly. ASCI converges the dominant determinant coefficients much faster than the total energy, making overlap estimates reliable at modest computational cost.
+Uses the classical Adaptive Sampling Configuration Interaction (ASCI) method to estimate whether a candidate initial state has adequate squared overlap $|\langle \psi_\text{in} | \Psi_0 \rangle|^2$ with the true ground state, without exact diagonalization of the full Hilbert space. ASCI constructs an approximate selected-CI target state; its dominant determinant coefficients often converge much faster than the total energy, making overlap estimates useful at more modest computational cost.
 
 ## The trick
 
-**Core insight:** The coefficient of the dominant Slater determinant in the ground-state CI expansion — equivalently, the squared overlap of the HF state or any single-determinant reference with the true ground state — converges with the number of ASCI determinants far more rapidly than the total correlation energy.
+**Core insight:** The coefficient of the dominant Slater determinant in the ground-state CI expansion — equivalently, the squared overlap of a specified determinant reference with the ASCI target — converges with the number of ASCI determinants far more rapidly than the total correlation energy. Hartree-Fock, natural-orbital determinants, CSFs, and selected-CI superpositions are different overlap witnesses and should not be conflated.
 
 Concretely: for CN radical, the dominant coefficient stabilises with $\sim 10^4$ ASCI determinants (overlap estimate $\sim$0.9 already reliable), while chemical accuracy in energy requires $> 10^6$ determinants. The convergence gap spans two to three orders of magnitude.
 
@@ -38,7 +38,7 @@ This is a first-order perturbation-theory estimate for the CI coefficient (relat
 ## Complexity
 
 **Classical:**
-- ASCI with $M$ determinants: roughly $O(M \cdot N^2)$ per iteration (matrix-vector product in the determinant basis, where the Hamiltonian is sparse). In practice, ASCI on systems with up to $10^7$ determinants has been run on supercomputing clusters.
+- ASCI with $M$ determinants: roughly $O(M \cdot N^2)$ as a schematic sparse-Hamiltonian ranking estimate, but determinant generation, ranking, Hamiltonian construction, and diagonalization can dominate depending on implementation and active space. In practice, ASCI on systems with up to $10^7$ determinants has been run on supercomputing clusters.
 - Overlap evaluation: $O(L \cdot M)$ once ASCI coefficients are available.
 
 **Quantum:** None — this is entirely a classical preprocessing step.
@@ -49,6 +49,7 @@ This is a first-order perturbation-theory estimate for the CI coefficient (relat
 - **Circular reasoning (addressed but not fully eliminated).** The overlap estimate uses ASCI to certify itself. The authors argue this is not circular because overlap converges much earlier than energy; but for systems where the top ASCI determinants are not yet converged, the overlap estimate is unreliable.
 - **PT2 extrapolation assumes linearity.** For strongly correlated systems ($r_s \geq 5$ for HEG), the overlap-vs-PT2-correction extrapolation is only approximately linear. Errors at the 0.01-level are possible.
 - **Basis choice must be right.** Natural orbitals improve the single-determinant overlap for molecules; using the wrong basis can make it look like more determinants are needed than actually are.
+- **High overlap is not the whole state-prep problem.** A large ASCI overlap with a selected-CI vector does not by itself imply low quantum preparation cost; the number of determinants, coefficient precision, orbital rotations, and synthesis method still have to be costed.
 
 ## Related notes
 - [[Postponing the Orthogonality Catastrophe (Tubman, Mejuto-Zaera, Babbush et al 2018) — Paper Notes]] — introduced here

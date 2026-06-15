@@ -32,5 +32,8 @@ Increases system size modestly; must rebalance condition number impact in ODE/li
 
 - [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes]]
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes]]
+- [[Efficient Quantum Algorithm for Linear Matrix Differential Equations and Applications to Open Quantum Systems (Simon-Berry-Somma 2026) — Paper Notes]]
+- [[Terminal Padding as an Initial-Condition Term]]
+- [[Two-Sided History-State Overlap for Matrix ODE Entries]]
 - [[Identity-Gate Padding for Output Amplification]]
 - [[History-State Encoding with Unary Clock]]

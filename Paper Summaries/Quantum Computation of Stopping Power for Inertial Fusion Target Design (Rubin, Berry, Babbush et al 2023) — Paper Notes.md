@@ -24,7 +24,7 @@ Output: stopping power to precision $\sim 0.1$ eV/Å ($\approx 0.002$ a.u.).
 
 ## What the paper does
 
-This is the first constant-factor resource estimate for a practically relevant **quantum dynamics** simulation — not eigenvalue estimation, but time evolution with observable readout. It adapts and extends the [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. (2021)]] first-quantized block encoding to handle a non-BO projectile, then costs the full protocol end-to-end: initial state preparation, time evolution (via both [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]+QSP and high-order [[Trotterized Time Evolution for Chemistry|product formulas]]), kinetic energy measurement, and classical postprocessing.
+This is a first constant-factor resource estimate for a practically relevant **stopping-power / real-time electronic-structure dynamics** simulation — not eigenvalue estimation, but time evolution with observable readout. It adapts and extends the [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. (2021)]] first-quantized block encoding to handle a non-BO projectile, then costs the full protocol end-to-end: initial state preparation, time evolution (via both [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]+QSP and high-order [[Trotterized Time Evolution for Chemistry|product formulas]]), kinetic energy measurement, and classical postprocessing.
 
 The headline numbers for the fully converged alpha-in-hydrogen system (218 electrons): $\sim 10^{15}$ Toffoli gates with 8th-order Trotter, $\sim 2 \times 10^{17}$ with QSP, and $\sim 10^3$ logical qubits. That's roughly 100× more Toffolis than FeMoCo-scale ground-state problems, but the same order of logical qubits. A benchmark-scale version (28 electrons) drops to $\sim 10^{13}$ Toffolis.
 
@@ -73,7 +73,7 @@ QSP synthesizes $e^{-iHt}$ with cost $O(\lambda t + \log(1/\varepsilon)/\log\log
 
 ### Product formula approach (8th-order Trotter)
 
-For the [[Product Formulas]], the paper works with a **real-space grid Hamiltonian** (dual to the plane-wave representation) and considers only electronic degrees of freedom (projectile costs are subdominant).
+For the [[Product Formulas]], the paper works with a **real-space grid Hamiltonian** (dual to the plane-wave representation). The projectile is still part of the model, but the leading arithmetic cost is the electronic pair-potential evaluation; the projectile-specific overhead is subdominant in the estimates.
 
 Each Trotter step involves:
 1. Computing potential energy in position basis and phasing
@@ -96,7 +96,7 @@ The generalized Newton-Raphson that computes $b/\sqrt{x}$ instead of $1/\sqrt{x}
 
 **Numerically optimized 8th-order product formula:** A bespoke symmetric formula (Appendix C) found by solving the Yoshida equations over $>$100,000 candidates. The formula has 21 stages ($S_2(w_i t)$ for $i = -10, \ldots, 10$) with 17 exponentials per step.
 
-**Prefactor determination:** The spectral norm $\|S_k(t) - e^{-iHt}\|$ is computed numerically via power iteration on 64-orbital (128-qubit) systems with 2–4 particles, using the Fermionic Quantum Emulator (FQE). The prefactor for the 8th-order formula: $\xi = 3.4 \times 10^{-8}$. This is the number that makes Trotter so competitive here.
+**Prefactor determination:** The spectral norm $\|S_k(t) - e^{-iHt}\|$ is computed numerically via power iteration on 64-orbital (128-qubit) systems with 2–4 particles, using the Fermionic Quantum Emulator (FQE), and then extrapolated to the larger stopping-power instances. The prefactor for the 8th-order formula: $\xi = 3.4 \times 10^{-8}$. This extrapolated empirical number is what makes Trotter so competitive here.
 
 Number of Trotter steps:
 
@@ -151,8 +151,8 @@ The block encoding cost is dominated by controlled swaps (C4) — the same bottl
 
 ### Key scaling
 
-- QSP: $\tilde{O}(\eta^2/\Delta^2 + \eta^3/\Delta)$ where $\Delta$ is grid spacing
-- Trotter: scales as approximately $O(\eta^2)$ at fixed Wigner-Seitz radius with increasing grid resolution
+- QSP: $\tilde{O}(\eta^2/\Delta^2 + \eta^3/\Delta)$ where $\Delta$ is grid spacing, under the paper's fixed-density/ICF-parameter assumptions
+- Trotter: scales as approximately $O(\eta^2)$ at fixed Wigner-Seitz radius with increasing grid resolution, with the empirical product-formula prefactor extrapolated from smaller simulations
 - QPE would cost ~$10\times$ more than time evolution + sampling for the same system, because the QPE precision requirement ($\sim 10^{-3}$) is much more expensive than the stopping power precision requirement
 
 ---
@@ -179,11 +179,11 @@ The $\sim 100\times$ Toffoli increase over FeMoCo-scale QPE comes from: (a) time
 
 2. **Thermal state preparation isn't costed.** The protocol assumes a Mermin Kohn-Sham Slater determinant from a classical DFT calculation. Preparing a more accurate thermal state would add cost.
 
-3. **Projectile remains essentially classical.** The Gaussian wave packet is designed to approximate a point charge throughout the dynamics. The non-BO treatment is a computational convenience (avoiding time-dependent [[Hamiltonian simulation]]), not a physically motivated choice.
+3. **Projectile model is a chosen quantum wavepacket approximation.** The Gaussian projectile wave packet is tuned to approximate a point charge closely enough for the stopping-power observable, while avoiding an explicitly time-dependent Hamiltonian. This is a computational modelling choice with small projected overhead in the paper, not a claim that the projectile is literally classical in the simulation.
 
 4. **No error budget for discretization.** The plane-wave cutoff and $\sigma_k$ choices are calibrated against TDDFT convergence, not against exact benchmarks.
 
-5. **The 50 samples estimate** for thermal averaging is a rough number. A full assessment would require running many quantum dynamics trajectories with thermally distributed initial conditions.
+5. **The 50 samples estimate** for thermal averaging is a rough number. A full stopping-power workflow needs kinetic-energy estimates at several times, regression of energy loss versus displacement, and averaging over thermally distributed target/projectile conditions; the quantum algorithm supplies the time-point kinetic-energy data used in that classical workflow.
 
 6. **Proton-in-deuterium is enormous.** At 1,729 electrons, 33,038 qubits, and $2 \times 10^{17}$ Toffolis, the fully converged system is well beyond near-term capabilities. The 28-electron benchmark system is the realistic first target.
 

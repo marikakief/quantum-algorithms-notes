@@ -18,7 +18,7 @@ Introduces **double factorization** of the two-electron integrals: first a Chole
 
 The key numerical finding: for molecules of increasing size, $L = O(N)$ Cholesky vectors suffice and the average eigenvalue rank $\langle \rho_\ell \rangle = O(\log N)$. This gives Hamiltonian Trotter-step gate complexity $O(N^2 \log N)$ asymptotically, and $O(N^3)$ for fixed molecule with increasing basis. The uCCSD Trotter step scales as $O(N^3)$ with increasing basis but $O(N^4)$ with increasing molecule size (less favorable due to amplitude antisymmetry).
 
-Concrete result: a chemically accurate Hamiltonian Trotter step for a 50-qubit molecular simulation requires ~4,000 layers of parallel two-qubit gates and fewer than $10^5$ non-Clifford rotations on a linear architecture. They also demonstrate the method on iron-sulfur clusters (up to the 146 spin-orbital nitrogenase P$_N$ cluster active space).
+Concrete result: after choosing factorization/truncation thresholds that preserve chemical accuracy in their classical benchmarks, one Hamiltonian Trotter step for a 50-qubit molecular simulation requires ~4,000 layers of parallel two-qubit gates and fewer than $10^5$ non-Clifford rotations on a linear architecture. This is a per-step compilation result; the number of Trotter steps is a separate simulation-error question. They also demonstrate the method on iron-sulfur clusters (up to the 146 spin-orbital nitrogenase P$_N$ cluster active space).
 
 My assessment: this is the paper that introduced the double factorization idea to quantum computing, and it remains influential. The construction is clean and directly implementable. The $O(N^2 \log N)$ scaling is empirical — it relies on the observed $L = O(N)$, $\langle \rho_\ell \rangle = O(\log N)$ behavior, which is well-established numerically but not rigorously proven for general molecular systems. The perturbative error correction trick (shifting to correlation energies and adding first-order corrections) is practical and underappreciated. The uCC decomposition is less elegant — the antisymmetry of amplitudes forces $L = O(N^2)$ with system size, limiting the advantage.
 
@@ -54,13 +54,13 @@ where $n^{(\ell)}_i = a^\dagger_{\psi^{(\ell)}_i} a_{\psi^{(\ell)}_i}$ are numbe
 
 ### Step 4: Circuit implementation
 
-The Trotter step becomes:
+The Trotter step becomes a sequence of diagonal density-density layers, each in its own rotated orbital basis:
 
 $$e^{i\Delta t H} \approx e^{i\Delta t(h+S)}\, U^{(1)\dagger}\, \prod_{\ell=1}^{L} e^{i\Delta t V^{(\ell)}}\, \tilde{U}^{(\ell)} + O(\Delta t^2)$$
 
 where $\tilde{U}^{(\ell)} = U^{(\ell-1)} U^{(\ell)\dagger}$ is the inter-basis rotation.
 
-Each layer consists of:
+Each factorized Coulomb layer is diagonal only after rotating into its corresponding basis. Consecutive layers are connected by the composed inter-basis rotations $\tilde{U}^{(\ell)} = U^{(\ell-1)}U^{(\ell)\dagger}$, so the circuit avoids separately returning to the original basis after every term. Each layer consists of:
 1. **Basis rotation** $\tilde{U}^{(\ell)}$: implemented via [[Givens Rotation Slater Determinant Preparation|Givens rotations]] from the QR decomposition. For an $N \times \rho_\ell$ partial rotation, this requires $N\rho_\ell/2 - \rho_\ell(\rho_\ell+1)/4$ Givens rotations (i.e. $\binom{N}{2} - \binom{N-\rho_\ell}{2}$), with depth $(N + \rho_\ell)/2$ on a linear chain.
 2. **Pairwise interaction** $e^{i\Delta t V^{(\ell)}}$: diagonal $n_i n_j$ evolution implemented via [[Fermionic Swap Network|fermionic swap network]] in $\binom{\rho_\ell}{2}$ gates, depth $\rho_\ell$.
 
@@ -119,11 +119,11 @@ $$N_{\text{gates}} = O(N^3)$$
 | Method | Trotter step gates | Trotter step depth | Connectivity | Basis |
 |---|---|---|---|---|
 | Naive JW | $O(N^4)$ | $O(N^4)$ | All-to-all | Arbitrary |
-| [[Fermionic Swap Network]] (Kivlichan et al. 2018) | $N(N-1)/2$ | $N$ | Linear | Arbitrary (dense $H$) |
+| [[Fermionic Swap Network]] (Kivlichan et al. 2018) | $O(N)$ depth for the $T+U+V$ density-density structure | $O(N)$ | Linear/planar variants | Plane-wave-dual / density-density Hamiltonians |
 | [[Plane-Wave Dual Basis]] Trotter (Babbush et al. 2018) | $O(N)$ per step | $O(N)$ | Planar | Plane-wave dual |
 | **This paper (double factorization)** | $O(N^2 \log N)$ asympt. / $O(N^3)$ finite | $O(N^2)$ | **Linear** | **Arbitrary MO basis** |
 
-The fermionic swap network gives $O(N^2)$ gates per Trotter step but treats all $O(N^2)$ pairwise terms. This paper reduces the number of terms that need simulation by exploiting the low-rank structure of the integrals. The plane-wave dual basis achieves even lower scaling but is limited to periodic systems; double factorization works in any Gaussian basis.
+The fermionic swap network is also a primitive inside this paper: it implements each diagonal $n_i n_j$ layer once the basis has been rotated. Kivlichan et al.'s linear-depth result applies to the $T+U+V$ density-density structure, not to an arbitrary dense molecular-orbital Hamiltonian in its raw form. This paper reduces the number and rank of dense molecular-orbital layers by exploiting low-rank integral structure. The plane-wave dual basis achieves lower per-step scaling when its basis assumptions apply; double factorization works in arbitrary Gaussian/molecular-orbital bases.
 
 ## Limits / caveats
 
@@ -139,7 +139,7 @@ The fermionic swap network gives $O(N^2)$ gates per Trotter step but treats all 
 
 ## Reusable ideas
 
-1. **[[Double Factorization of Two-Electron Integrals]]** — The core technique: Cholesky decomposition of the integral supermatrix followed by eigenvalue truncation of each factor, reducing $O(N^4)$ terms to a sum over $L = O(N)$ pairwise interaction terms in rotated bases. Each term has circuit implementation via Givens rotations + fermionic swap network.
+1. **[[Double Factorization of Two-Electron Integrals]]** — The core technique: Cholesky decomposition of the integral supermatrix followed by eigenvalue truncation of each factor, reducing $O(N^4)$ terms to a sum over empirically $L = O(N)$ pairwise interaction layers in rotated bases. Each term has circuit implementation via Givens rotations + fermionic swap network, and the same factorization later became a building block for double-factorized qubitization.
 
 2. **[[Partial Basis Rotation (Reduced Givens Count)]]** — When only $\rho_\ell < N$ eigenvalues are retained, the basis rotation $U^{(\ell)}$ is an $N \times \rho_\ell$ partial unitary. Its QR decomposition requires only $N\rho_\ell - \rho_\ell(\rho_\ell+1)/2$ Givens rotations instead of $\binom{N}{2}$. Inter-basis rotations $\tilde{U}^{(\ell)} = U^{(\ell-1)} U^{(\ell)\dagger}$ can be composed into a single unitary at cost determined by $\rho_{\ell+1}$.
 
@@ -163,7 +163,7 @@ The fermionic swap network gives $O(N^2)$ gates per Trotter step but treats all 
 ### Paper notes
 - [[Compressing Many-Body Fermion Operators under Unitary Constraints (Rubin, Lee, Babbush 2021) — Paper Notes]] — Directly builds on this paper's sum-of-squares decomposition; introduces greedy unitary compression as a better alternative to the SVD/Takagi decompositions used here for the uCC operator
 - [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]] — Takes the single (first) factorization from this paper and applies it in the LCU/qubitization setting instead of Trotter; achieves $\widetilde{O}(N^{3/2}\lambda)$ Toffoli complexity for arbitrary bases; same author (Motta) on both papers
-- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC qubitization achieves better scaling ($\widetilde{O}(N)$ Toffolis per walk step) by using tensor hypercontraction instead of double factorization; the $\lambda_\zeta$ norm is comparable to $\lambda_{\text{DF}}$
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC qubitization achieves better scaling ($\widetilde{O}(N)$ Toffolis per walk step) by using tensor hypercontraction instead of double factorization; benchmarked $\lambda_\zeta$ values are often comparable to or smaller than double-factorized norms, but the ordering is empirical and optimization-dependent
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — Provides the [[Fermionic Swap Network]] and [[Givens Rotation Slater Determinant Preparation]] primitives that this paper's circuits are built from
 - [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes]] — Qubitization approach to the same problem; better asymptotic T complexity but requires more complex controlled operations than Trotter
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — Plane-wave dual basis gives $O(N)$-depth Trotter but only for periodic systems; double factorization is the arbitrary-basis analogue

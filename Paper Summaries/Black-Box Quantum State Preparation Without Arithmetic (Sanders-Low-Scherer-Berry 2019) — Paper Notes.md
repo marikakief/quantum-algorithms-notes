@@ -12,13 +12,13 @@
 
 **Prior cost (Grover):** $n$ Toffoli gates per oracle call + cost of computing $\arcsin(\alpha_\ell^{(n)}/2^n)$ on a quantum computer, which is $O(n^2)$ Toffolis (or worse) per round of amplitude amplification.
 
-**New cost (this paper):** $n$ Toffoli gates per round of amplitude amplification. Period. No arithmetic.
+**New cost (this paper):** $n$ comparator Toffolis per round of amplitude amplification, excluding the cost of loading the coefficient oracle and excluding the number of amplification rounds. No arcsine arithmetic is needed for the comparator step.
 
 ---
 
 ## What the paper does
 
-Replaces the arcsine computation in Grover's black-box state preparation with an inequality test against a uniform superposition. The result: 286–375× fewer Toffoli gates at realistic precisions (17–30 bits), with the improvement factor growing with precision.
+Replaces the arcsine computation in Grover's black-box state preparation with an inequality test against a uniform superposition. Relative to the paper's Häner-Roetteler-Svore arithmetic baseline, the result is 286–375× fewer Toffoli gates at realistic precisions (17–30 bits), with the improvement factor growing with precision.
 
 This matters because black-box state preparation is a core subroutine in [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]], [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|LCU]], and quantum walk-based algorithms. Every time you need a PREPARE oracle — encoding coefficients $\alpha_\ell$ into amplitudes — you pay for state preparation. This paper makes that payment drastically cheaper.
 
@@ -50,7 +50,7 @@ $$|\psi_{\text{comp}}\rangle = \frac{1}{\sqrt{2^n d}} \sum_\ell |l\rangle_{\text
 
 3. **Unprepare** the `ref` register with $H^{\otimes n}$
 
-This collapses the `ref` register. The amplitude on the $|0\rangle^{\otimes n}_{\text{ref}} |0\rangle_{\text{flag}}$ subspace is proportional to $\alpha_\ell^{(n)}/2^n \approx \alpha_\ell$ — exactly what we wanted.
+This is an interference step, not a measurement: unpreparing the uniform superposition creates amplitude on the $|0\rangle^{\otimes n}_{\text{ref}} |0\rangle_{\text{flag}}$ subspace proportional to $\alpha_\ell^{(n)}/2^n \approx \alpha_\ell$.
 
 4. **Amplitude amplification** to boost the flagged component, as before.
 
@@ -79,7 +79,7 @@ For root coefficients: the number of terms in the $|0\rangle_{\text{flag}}$ supe
 | 23 | 23 | 7784 | 338× |
 | 30 | 30 | 11264 | 375× |
 
-The comparator costs exactly $n$ Toffoli gates. The arcsine costs $\Omega(n^2)$ with impractically large constants for advanced multiplication methods. The improvement grows with precision.
+In the comparator construction and cost model used by the paper, the comparison costs $n$ Toffoli gates per oracle call. The arcsine costs $\Omega(n^2)$ with impractically large constants for advanced multiplication methods. The improvement grows with precision, but oracle data-loading cost and the number of amplitude-amplification rounds must be added separately.
 
 ---
 
@@ -97,6 +97,7 @@ The paper cites Babbush et al. (2018, 1805.03662) as a key consumer: their fault
 ## Limits / caveats
 
 - **Oracle model.** The $n$-Toffoli count is per oracle call. If preparing the oracle output itself is expensive (e.g., QROM lookup), that cost adds on top.
+- **Amplification still matters.** The comparator removes arcsine arithmetic; it does not remove the dependence of total cost on the success amplitude/norm of the prepared state. Low-success preparations still require amplitude amplification.
 - **Root coefficients need `unif`$^{-1}$.** Inverting the uniform superposition conditioned on the coefficient value requires $O(n^2)$ Toffolis for the most straightforward implementation. This is paid once (not per amplification round), so it doesn't dominate, but it's not free.
 - **Cartesian root coefficients still need some arithmetic.** The $4x^2(x^2 \pm a)$ test requires a few multiplications — much cheaper than arcsine, but not arithmetic-free.
 - **Fixed-point truncation error.** The prepared state matches $\alpha_\ell^{(n)} = \lfloor 2^n \alpha_\ell \rfloor$, not $\alpha_\ell$ exactly. Error is $O(2^{-n})$ — choose $n$ to match overall algorithm precision.

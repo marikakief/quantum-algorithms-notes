@@ -1,3 +1,5 @@
+# Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes
+
 > **Source:** Dominic W. Berry and Pedro C. S. Costa, *Quantum algorithm for time-dependent differential equations using Dyson series*, arXiv:2212.03544, Quantum **8**, 1369 (2024)
 > **Links:** [arXiv](https://arxiv.org/abs/2212.03544) · [Quantum](https://doi.org/10.22331/q-2024-06-13-1369)
 > **Tags:** #quantum-algorithm #differential-equations #dyson-series #linear-systems #QLSA #block-encoding #time-dependent
@@ -10,9 +12,9 @@ Solve the initial-value problem for an inhomogeneous linear ODE:
 
 $$\dot{x}(t) = A(t)x(t) + b(t), \quad x(0) = x_0,$$
 
-where $A(t) \in \mathbb{C}^{N \times N}$ is a time-dependent coefficient matrix, $b(t) \in \mathbb{C}^N$ is a driving term, and $x(t) \in \mathbb{C}^N$ is the solution vector. The goal is to prepare a quantum state whose amplitudes encode $x(T)$, with error $\varepsilon$ in the Bures–Wasserstein metric.
+where $A(t) \in \mathbb{C}^{N \times N}$ is a time-dependent coefficient matrix, $b(t) \in \mathbb{C}^N$ is a driving term, and $x(t) \in \mathbb{C}^N$ is the solution vector. The goal is to prepare a normalized quantum state whose amplitudes encode $x(T)$, with error measured in the paper's vector/state-distance norm, not in a density-matrix transport metric.
 
-**Stability requirement:** The logarithmic norm $\mu(A(t)) = \lambda_{\max}([A(t) + A^\dagger(t)]/2)$ must be non-positive for all $t \in [0,T]$. This ensures dissipative dynamics and bounds the time-ordered exponential.
+**Stability promise for the main guarantee:** The logarithmic norm $\mu(A(t)) = \lambda_{\max}([A(t) + A^\dagger(t)]/2)$ is assumed non-positive for all $t \in [0,T]$. This is a sufficient promise that bounds the time-ordered exponential and the condition number of the constructed linear system; it is not a claim that all efficiently solvable linear ODEs must satisfy this condition.
 
 ## What the paper does
 
@@ -35,7 +37,7 @@ Both are truncated at order $K$ and computed on segments of length $\Delta t \ap
 
 ### Step 2: Encode in a block-bidiagonal linear system
 
-Divide $[0,T]$ into $r = \lceil \lambda_A T \rceil$ evolution segments, followed by $r$ padding segments (the [[History-State Padding for Final-Time Readout|padding trick]] to boost the measurement probability). The linear system is:
+Divide $[0,T]$ into $r = \lceil \lambda_A T \rceil$ evolution segments, followed by $r$ padding segments (the [[History-State Padding for Final-Time Readout|padding trick]] to boost the measurement probability). Let $R_{\text{steps}} = 2r$ denote the total number of time/padding rows. The linear system is:
 
 $$\mathcal{A}\vec{X} = \vec{B}$$
 
@@ -45,7 +47,7 @@ $$\mathcal{A} = \begin{pmatrix} I & & \\ -V_1 & I & \\ & -V_2 & I & \\ & & \ddot
 
 The first $r$ rows encode the Dyson series stepping $\tilde{x}(m\Delta t) = V_m \tilde{x}((m-1)\Delta t) + v_m$. The last $r$ rows freeze the solution at $x(T)$.
 
-**Condition number:** $\kappa_{\mathcal{A}} = O(R)$ where $R = 2r$ is the total number of rows. The logarithmic-norm stability condition keeps $\|V_m\| \le 1 + \varepsilon$, so $\|\mathcal{A}^{-1}\| = O(R)$ and $\|\mathcal{A}\| = O(1)$.
+**Condition number:** $\kappa_{\mathcal{A}} = O(R_{\text{steps}})$. The logarithmic-norm stability condition keeps $\|V_m\| \le 1 + \varepsilon$, so $\|\mathcal{A}^{-1}\| = O(R_{\text{steps}})$ and $\|\mathcal{A}\| = O(1)$.
 
 ### Step 3: Block-encode the linear system
 
@@ -75,33 +77,35 @@ Measure the time register to obtain $x(T)$. The padding ensures amplitude $\Omeg
 
 ### Time-dependent case (Theorem 4.1)
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon)\right) \text{ calls to } U_b, U_x$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon)\right) \text{ calls to } U_b, U_x$$
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon}\right) \text{ calls to } U_A$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon}\right) \text{ calls to } U_A$$
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon} \cdot \left[\log\!\frac{TD}{\lambda_A \varepsilon} + \log\!\frac{\lambda_A T}{\varepsilon}\right]\right) \text{ additional gates}$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon} \cdot \left[\log\!\frac{TD}{\lambda_A \varepsilon} + \log\!\frac{\lambda_A T}{\varepsilon}\right]\right) \text{ additional gates}$$
 
 where:
+- $\lambda_A$ is the block-encoding normalization/scale for $A(t)$
+- $x_{\max}$ bounds the largest solution norm reached along the trajectory and in the inhomogeneous contribution
 - $\lambda_{Ax} = \max(\lambda_A, b_{\max}/x_{\max})$
-- $R$ accounts for amplitude amplification (typically $O(1)$ unless the solution decays significantly or cancellations in $v_m$ occur)
-- $D$ depends on first derivatives of $A(t)$ and $b(t)$ only (and only in the gate count, not oracle calls)
+- $R_{\text{amp}}$ accounts for final normalization/amplitude-amplification overhead, typically $O(1)$ unless the solution decays significantly or cancellations in $v_m$ occur
+- $D$ is a discretization/gate-complexity parameter controlled by first derivatives of $A(t)$ and $b(t)$; it does not enter the oracle-call count
 
 ### Time-independent case (Theorem 4.2)
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon)\right) \text{ calls to } U_b, U_x$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon)\right) \text{ calls to } U_b, U_x$$
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon}\right) \text{ calls to } U_A$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon}\right) \text{ calls to } U_A$$
 
-$$O\!\left(R \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon} \cdot \log\!\frac{\lambda_A T}{\varepsilon}\right) \text{ additional gates}$$
+$$O\!\left(R_{\text{amp}} \lambda_A T \log(1/\varepsilon) \cdot \log\!\frac{\lambda_{Ax} T}{\varepsilon} \cdot \log\!\frac{\lambda_A T}{\varepsilon}\right) \text{ additional gates}$$
 
-with $R = O(x_{\max}/\|x(T)\|)$ — no amplitude amplification needed for state preparation, and no derivative dependence at all.
+with $R_{\text{amp}} = O(x_{\max}/\|x(T)\|)$. The point is not that all amplification disappears; rather, the algorithm avoids repeatedly preparing the initial state inside a long QLSA procedure, and the time-independent gate complexity has no derivative dependence.
 
 ## Comparison with prior work
 
 | Method | Oracle calls ($U_A$) | Calls to $U_b$, $U_x$ | Derivative dependence | Time-dependent? | Inhomogeneous? |
 |---|---|---|---|---|---|
 | [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes\|Berry (2014)]] | $\tilde{O}(\lambda_A^2 T^2/\varepsilon^2)$ | Same | None | Yes | Yes |
-| [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes\|Berry-Childs-Ostrander-Wang (2017)]] | $\tilde{O}(\lambda_A T \cdot \text{polylog}(1/\varepsilon))$ | Same | None | No (constant $A$) | Yes |
+| [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes\|Berry-Childs-Ostrander-Wang (2017)]] | $\tilde{O}(\lambda_A T \cdot \text{polylog}(1/\varepsilon))$ | Same | None | No (time-independent $A$) | Yes |
 | Childs-Liu (2020) spectral method | $\tilde{O}(\lambda_A T \cdot \log^4(T/\varepsilon) \log(1/\varepsilon))$ | Same scaling | Arbitrary-order derivatives ($g'$) | Yes | Yes |
 | [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes\|Fang-Lin-Tong (2023)]] | $\tilde{O}(\lambda_A^2 T^2)$ | $O(1)$ per step | Bounded variation | Yes | No (homogeneous only) |
 | **This paper** | $\tilde{O}(\lambda_A T \cdot \log(\lambda_{Ax} T/\varepsilon) \log(1/\varepsilon))$ | $\tilde{O}(\lambda_A T \log(1/\varepsilon))$ | 1st derivatives (gates only) | **Yes** | **Yes** |
@@ -115,11 +119,11 @@ The improvement over Fang-Lin-Tong is the $T$ scaling: $O(T)$ vs. $O(T^2)$, thou
 
 ## Limits / caveats
 
-1. **Dissipative dynamics only.** The logarithmic-norm condition ($\mu(A(t)) \le 0$) is necessary for the condition number to be well-bounded. If the dynamics is unstable ($\mu > 0$), the solution can grow exponentially and the algorithm cost grows with it.
+1. **Dissipative/log-norm-stable guarantee.** The logarithmic-norm condition ($\mu(A(t)) \le 0$) is the sufficient stability promise used to keep the constructed linear system well conditioned. If the dynamics is unstable ($\mu > 0$), the solution can grow exponentially and this particular efficiency guarantee no longer applies.
 
 2. **Output is a quantum state.** The usual caveat: you get $|x(T)\rangle$ encoded in amplitudes. Extracting full classical information requires $\Omega(N)$ measurements. The speedup is real when you want global properties (expectation values, sampling) or the ODE arose from a quantum problem to begin with.
 
-3. **The $R$ factor is messy.** In principle $R$ depends on the norms of the particular-solution vectors $v_m$ and the decay ratio $x_{\max}/\|x(T)\|$. For typical problems where the solution doesn't decay too much and $b(t)$ doesn't oscillate to produce cancellations, $R = O(1)$. But the full expression (Eq. 87 in the paper) is a reminder that pathological ODEs exist.
+3. **The $R_{\text{amp}}$ factor is messy.** In principle $R_{\text{amp}}$ depends on the norms of the particular-solution vectors $v_m$ and the decay ratio $x_{\max}/\|x(T)\|$. For typical problems where the solution doesn't decay too much and $b(t)$ doesn't oscillate to produce cancellations, $R_{\text{amp}} = O(1)$. But the full expression (Eq. 87 in the paper) is a reminder that pathological ODEs exist.
 
 4. **No treatment of nonlinear or non-autonomous higher-order structure.** The paper works strictly with first-order linear systems. Higher-order ODEs can be reduced to first-order form, but nonlinear dynamics is out of scope.
 

@@ -1,6 +1,6 @@
 
-> **Source:** Andrew M. Childs, Yuan Su, Minh C. Tran, Nathan Wiebe, and Shuchen Zhu, *A Theory of Trotter Error*, arXiv:1912.08854, Phys. Rev. X **11**, 011020 (2021)  
-> **Links:** [arXiv](https://arxiv.org/abs/1912.08854) · [PRX](https://doi.org/10.1103/PhysRevX.11.011020)  
+> **Source:** Andrew M. Childs, Yuan Su, Minh C. Tran, Nathan Wiebe, and Shuchen Zhu, *A Theory of Trotter Error*, arXiv:1912.08854, Phys. Rev. X **11**, 011020 (2021)
+> **Links:** [arXiv](https://arxiv.org/abs/1912.08854) · [PRX](https://doi.org/10.1103/PhysRevX.11.011020)
 > **Tags:** #hamiltonian-simulation #trotter #product-formulas #commutators #locality
 
 ---
@@ -17,13 +17,17 @@ Then for anti-Hermitian summands (real-time simulation),
 $$
 \|S(t) - e^{tH}\| = O\!\left(\tilde{\alpha}_{\mathrm{comm}} \cdot t^{p+1}\right).
 $$
-This is a finite representation — no infinite BCH tail, no uncontrolled conjugation remainder. The bound captures exactly how near-commutativity reduces error.
+This is the one-step bound. For an $r$-step simulation,
+$$
+\|S(t/r)^r - e^{tH}\| = O\!\left(\frac{\tilde{\alpha}_{\mathrm{comm}}\,t^{p+1}}{r^p}\right),
+$$
+up to constants and the detailed finite-expansion terms. This is a finite representation — no infinite BCH tail, no uncontrolled conjugation remainder. The bound captures exactly how near-commutativity reduces error.
 
 ## Why the old bounds were bad
 
 Previous approaches either used BCH truncation (leading to crude 1-norm estimates with uncontrolled tails) or required geometric locality to cancel remainder terms from conjugation expansions. This paper's representation is algebraic and general: it applies without any locality or Lie-algebraic structure assumption, yet recovers near-tight bounds in all the places prior work had to work harder.
 
-The practical gap is dramatic. For a locally interacting spin chain, $\tilde{\alpha}_{\mathrm{comm}}$ can scale with the system geometry rather than with the total operator norm, explaining why [[Product Formulas]]s are often much cheaper in practice than black-box bounds suggest.
+The practical gap is dramatic. For a nearest-neighbour spin chain, a nested commutator vanishes unless the involved local terms form a connected overlapping cluster. Thus only $O(n)$ local clusters contribute at each fixed commutator depth, not $O(n^{p+1})$ arbitrary tuples. This is why $\tilde{\alpha}_{\mathrm{comm}}$ can scale with the system geometry rather than with the total operator norm, explaining why [[Product Formulas]]s are often much cheaper in practice than black-box bounds suggest.
 
 ## Three equivalent error representations
 

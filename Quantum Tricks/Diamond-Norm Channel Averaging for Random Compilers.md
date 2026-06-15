@@ -4,31 +4,46 @@
 
 ## What it does
 
-Converts an average-channel approximation (easy to prove for [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomized compiler]]) into a rigorous worst-case diamond-norm guarantee (what you actually need for simulation error bounds).
+Converts an averaged-channel approximation (easy to prove for [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomized compiler]]) into a rigorous diamond-norm guarantee for the ensemble channel. This is the right guarantee for randomized simulation protocols, but it is not a statement that every sampled circuit is close to the target unitary.
 
-## The argument
+## qDRIFT averaged-channel telescoping
 
-For a [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|randomized compiler]] that at each step samples a channel $\mathcal{E}_j$ with probability $p_j$:
-1. Show the expected channel $\bar{\mathcal{E}} = \sum_j p_j \mathcal{E}_j$ is close to the ideal target channel per step in some norm.
-2. Compose $N$ steps: [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm|diamond norm]] satisfies $\|\mathcal{E}_1 \circ \cdots \circ \mathcal{E}_N - \mathcal{F}_1 \circ \cdots \circ \mathcal{F}_N\|_\diamond \leq \sum_k \|\mathcal{E}_k - \mathcal{F}_k\|_\diamond$ by subadditivity.
-3. Combine per-step average error with step count $N$ to get total diamond-norm error.
+For a [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|qDRIFT]] step, let $\mathcal{E}_j$ be the channel for the sampled term and $p_j$ its sampling probability. Define the one-step averaged channel
+$$
+\bar{\mathcal{E}}=\sum_j p_j \mathcal{E}_j
+$$
+and the ideal short-time channel $\mathcal{F}$ for $e^{-iH t/N}$.
 
-The key step is that the [[Mixing-Lemma Upgrade from Average-Channel Error to Diamond Norm|diamond norm]] of a mixture of channels satisfies $\|\sum_j p_j \mathcal{E}_j - \mathcal{I}\|_\diamond \leq \sum_j p_j \|\mathcal{E}_j - \mathcal{I}\|_\diamond$, so linearity of expectation transfers directly.
+The full randomized protocol is the mixture over all sampled sequences, i.e. the channel $\bar{\mathcal{E}}^N$. Once the one-step estimate $\|\bar{\mathcal{E}}-\mathcal{F}\|_\diamond$ is known, a telescoping bound gives
+$$
+\|\bar{\mathcal{E}}^N-\mathcal{F}^N\|_\diamond
+\leq
+N\|\bar{\mathcal{E}}-\mathcal{F}\|_\diamond.
+$$
+
+For qDRIFT, the Taylor expansion of $\bar{\mathcal{E}}$ matches the ideal first-order generator and leaves a second-order one-step error, giving the total $O((\lambda t)^2/N)$ bound.
 
 ## When to reach for it
 
-Any randomized simulation or compilation protocol needing a strong worst-case guarantee. The approach is standard but worth stating explicitly because it links the "average channel looks good" proof to the "the actual randomized scheme is guaranteed to work" conclusion.
+Any randomized simulation or compilation protocol needing a strong worst-case guarantee for the averaged channel. The approach is standard but worth stating explicitly because it links the "average channel looks good" proof to the diamond-norm error of the randomized ensemble.
 
 ## Caveat
 
-The bound can be conservative: the actual random circuit error may concentrate well below the diamond-norm bound, especially when individual sample errors partially cancel. Empirical error is often significantly better than the proven bound.
+The bound can be conservative: sampled circuit errors may concentrate well below the ensemble diamond-norm bound, especially when individual sample errors partially cancel. But the theorem itself is an ensemble-channel guarantee.
 
 ## Stronger version: quadratic error suppression
 
-The argument above gives a *linear* relationship between average-channel error and diamond-norm bound. There is a strictly stronger version — the Hastings-Campbell mixing lemma — that gives *quadratic* suppression:
+The qDRIFT telescoping argument is separate from a stronger lemma used in later randomized compilers. The Hastings-Campbell mixing lemma gives *quadratic* suppression when random unitaries individually approximate a target unitary and their average approximates it even better.
 
-If individual circuits satisfy $\|U_j - V\| \le a$ and the weighted average satisfies $\|\sum_j p_j U_j - V\| \le b$, then:
-$$\|\Lambda - \mathcal{V}\|_\diamond \le a^2 + 2b$$
+Let $U_j$ be unitaries sampled with probabilities $p_j$, let $V$ be the target unitary, define
+$$
+\Lambda(\rho)=\sum_j p_j U_j\rho U_j^\dagger,\qquad
+\mathcal{V}(\rho)=V\rho V^\dagger.
+$$
+If $\|U_j-V\|\le a$ for every $j$ and $\|\sum_j p_j U_j - V\|\le b$, then
+$$
+\|\Lambda - \mathcal{V}\|_\diamond \le a^2 + 2b.
+$$
 
 This means individual circuits only need error $O(\sqrt{\epsilon})$ to achieve channel error $O(\epsilon)$ — a quadratic improvement. This stronger form is what enables [[Stochastic QSP via Chebyshev Tail Truncation|Stochastic QSP]] to halve query complexity: the ensemble polynomials have pointwise error $O(\sqrt{\epsilon})$, but the channel error is $O(\epsilon)$.
 

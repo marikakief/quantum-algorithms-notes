@@ -1,3 +1,5 @@
+# Quantum Algorithm for Data Fitting (Wiebe-Braun-Lloyd 2012) — Paper Notes
+
 > **Source:** Nathan Wiebe, Daniel Braun, Seth Lloyd, *Quantum Algorithm for Data Fitting*, arXiv:1204.5242, Phys. Rev. Lett. **109**, 050505 (2012)
 > **Links:** [arXiv](https://arxiv.org/abs/1204.5242) · [PRL](https://doi.org/10.1103/PhysRevLett.109.050505)
 > **Tags:** #quantum-ML #linear-algebra #least-squares #HHL #data-fitting #condition-number #quantum-tomography
@@ -10,7 +12,7 @@
 
 $$E(\boldsymbol{\lambda}) = \|F\boldsymbol{\lambda} - \mathbf{y}\|^2.$$
 
-The minimiser is the Moore–Penrose pseudoinverse solution $\boldsymbol{\lambda}_{\mathrm{opt}} = F^+ \mathbf{y} = (F^\dagger F)^{-1} F^\dagger \mathbf{y}$ (assuming $F^\dagger F$ invertible).
+The minimiser is the Moore-Penrose pseudoinverse solution $\boldsymbol{\lambda}_{\mathrm{opt}} = F^+ \mathbf{y}$. When $F^\dagger F$ is invertible this is $(F^\dagger F)^{-1}F^\dagger\mathbf{y}$; otherwise the algorithm is controlled by a singular-value cutoff/condition-number promise for the supported part of the pseudoinverse.
 
 The paper addresses three sub-problems:
 1. **State preparation:** Prepare a quantum state $|\lambda\rangle \propto \boldsymbol{\lambda}_{\mathrm{opt}}$.
@@ -23,9 +25,9 @@ The paper addresses three sub-problems:
 
 ## What the paper does
 
-Extends HHL from square linear systems to least-squares fitting with a non-square, possibly rank-deficient design matrix. The key construction uses an isometry that embeds $F$ into a Hermitian operator, then applies HHL-style pseudoinverse inversion. Three algorithms are given: one to prepare $|\lambda\rangle$, one to estimate fit quality via a swap test, and one to learn a sparse classical description of $\boldsymbol{\lambda}$ via quantum-assisted compressed sensing.
+Extends HHL from square linear systems to least-squares fitting with a non-square design matrix. The key construction uses an isometry that embeds $F$ into a Hermitian operator, then applies HHL-style pseudoinverse inversion on singular values above the promised cutoff. Three algorithms are given: one to prepare $|\lambda\rangle$, one to estimate fit quality via a swap test, and one to learn a sparse classical description of $\boldsymbol{\lambda}$ via quantum-assisted compressed sensing.
 
-The result opened the quantum ML algorithms direction — every subsequent quantum ML paper that reduces learning to linear algebra (quantum SVMs, quantum Boltzmann machines, quantum nearest-neighbour) inherits the basic template here.
+The result was influential in early quantum machine-learning algorithms: many early linear-algebraic QML proposals inherited the same "prepare a solution state, estimate a global statistic, avoid full readout" template.
 
 ---
 
@@ -47,10 +49,10 @@ Note $I(F)^2 = A := \mathrm{diag}(F^\dagger F,\; F F^\dagger)$, so $A^{-1}$ is b
 
 **Steps:**
 
-1. **Multiply by $I(F^\dagger)$:** Implement $I(F^\dagger) |\mathbf{y}\rangle$ using [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|phase estimation]]-based eigenvalue multiplication (analogous to HHL but *multiplying* by eigenvalues rather than inverting). Prepare the clock register
+1. **Multiply by $I(F^\dagger)$:** Implement $I(F^\dagger) |\mathbf{y}\rangle$ using HHL-style phase estimation and sparse Hamiltonian simulation, but with eigenvalue multiplication rather than inversion. Prepare the clock register
 
    $$|\Psi_0\rangle = \sqrt{\frac{2}{T}}\sum_{\tau=0}^{T-1} \sin\!\left(\frac{\pi(\tau+\tfrac12)}{T}\right) |\tau\rangle \otimes |\mathbf{y}\rangle,$$
-   
+
    apply controlled evolutions $e^{-iI(F^\dagger)\tau t_0/T}$ via sparse [[Hamiltonian simulation]], then QFT and an ancilla-controlled eigenvalue rotation. Postselect on $|1\rangle$; success probability $O(1/\kappa^2)$, boost with $O(\kappa)$ amplitude amplification.
 
 2. **Invert via HHL:** Apply $A^{-1} = I(F)^{-2}$ to the result using HHL on the Hermitian operator $A$. Another round of phase estimation + eigenvalue inversion.
@@ -92,8 +94,8 @@ $$\tilde{O}\!\left(\log(N)\, s^3\!\left(\frac{\kappa^4}{\varepsilon\, \delta^2} 
 
 | Method | Classical | Quantum (this paper) |
 |---|---|---|
-| Solving $F\boldsymbol{\lambda} = \mathbf{y}$ | $O(N \cdot M^2)$ direct / $O(NM)$ iterative | $\tilde{O}(\log(N)\, s^3 \kappa^6/\varepsilon)$ |
-| Fit quality $E$ | $O(NM)$ residual | $\tilde{O}(\log(N)\, s^3 \kappa^4/(\varepsilon\delta^2))$ |
+| Solving $F\boldsymbol{\lambda} = \mathbf{y}$ | $O(N \cdot M^2)$ direct / $O(NM)$ iterative | prepares a parameter state in $\tilde{O}(\log(N)\, s^3 \kappa^6/\varepsilon)$ |
+| Fit quality $E$ | $O(NM)$ residual | estimates fit quality in $\tilde{O}(\log(N)\, s^3 \kappa^4/(\varepsilon\delta^2))$ |
 | Learn sparse $\boldsymbol{\lambda}$ | $O(NM')$ | $\tilde{O}(\log(N)\, s^3 M'^2 \kappa^6/\varepsilon^3)$ |
 
 The quantum speedup in $N$ is exponential — from $O(N)$ to $O(\log N)$ — but only realised under strict conditions (see Caveats).
@@ -123,7 +125,7 @@ The quantum speedup is exponential in $N$ but easily killed:
 
 4. **Reading out $\boldsymbol{\lambda}$.** Tomography on the full $M$-dimensional $|\lambda\rangle$ costs $O(M)$ copies, which is $O(N)$ if $M \sim N$ — wiping the advantage. The algorithm is useful only if: (a) one only needs fit quality (Algorithm 2), or (b) $\boldsymbol{\lambda}$ is sparse / low-dimensional ($M' \ll M$).
 
-5. **Invertibility.** Assumes $F^\dagger F$ invertible; ill-conditioning (zero or near-zero eigenvalues) is handled by the pseudoinverse but makes $\kappa$ large.
+5. **Singular-value cutoff.** The pseudoinverse is well behaved only on singular values above the promised cutoff. Exact rank deficiency is not fatal if the target lies in the retained subspace, but small singular values make $\kappa$ large and can dominate the cost.
 
 These caveats are real. The paper was careful to note them. A lot of follow-up quantum ML work was not.
 

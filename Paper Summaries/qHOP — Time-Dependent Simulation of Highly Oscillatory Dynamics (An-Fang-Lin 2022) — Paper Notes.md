@@ -23,9 +23,11 @@ $$U_1((j+1)h, jh) = \exp\!\left(-ih \cdot \frac{1}{M}\sum_{k=0}^{M-1} H\!\left(j
 
 This is the exponential of the **time-averaged Hamiltonian** on the interval — a first-order Magnus expansion with composite quadrature.
 
+This should not be read as merely running a classical first-order time-stepper. The quantum advantage comes from coherently block-encoding the time average, suppressing quadrature error at logarithmic query cost in the number of quadrature nodes, and exploiting commutator/superconvergence structure in the simulation error.
+
 The time-average is block-encoded via LCU: the PREPARE oracle is just Hadamard gates creating a uniform superposition over $M$ quadrature points, and the SELECT oracle calls $\text{HAM-T}_j$ (a time-indexed block-encoding of $H(t)$). The resulting block-encoding feeds into QSVT/OAA for the matrix exponential.
 
-**Why the cost is insensitive to $M$:** The LCU implementation costs $O(\log M)$ ancilla qubits. So you can crank $M$ up to suppress quadrature error without significant overhead — the dominant cost is the QSVT simulation, which scales with $\alpha h$ (block-encoding norm times time step).
+**Why the query cost is insensitive to $M$:** The LCU implementation costs $O(\log M)$ ancilla qubits, so increasing the quadrature grid mainly affects register size and arithmetic/state-preparation precision polylogarithmically. The dominant query cost is the QSVT simulation, which scales with $\alpha h$ (block-encoding norm times time step).
 
 ### Error structure (Lemma 3)
 
@@ -53,7 +55,7 @@ With $\|H(s)\| \leq \alpha$, $\max \|[H(u), H(s)]\| \leq \tilde{\alpha}^2$, $\ma
 
 $$\text{Queries to HAM-T}_j = O\!\left(\alpha T + \min\!\left\{\frac{\tilde{\alpha}^2 T^2}{\varepsilon}\log\frac{\tilde{\alpha}T}{\varepsilon},\; \frac{\tilde{\beta}^{1/2}T^{3/2}}{\varepsilon^{1/2}}\log\frac{\tilde{\beta}T}{\varepsilon}\right\}\right)$$
 
-The first branch matches first-order truncated Dyson ($\alpha^2 T^2/\varepsilon$); the second gives $\sqrt{\varepsilon}$ scaling when the commutator $\|[H', H]\|$ is bounded — a quadratic improvement in precision.
+The first branch matches first-order truncated Dyson ($\alpha^2 T^2/\varepsilon$); the second improves the favorable commutator-regime precision dependence from $\varepsilon^{-1}$ to $\varepsilon^{-1/2}$.
 
 ### Interaction picture (Theorem 3 / Corollary 2)
 
@@ -63,7 +65,7 @@ $$\text{Queries to } O_A, O_B = O\!\left(\min\!\left\{\frac{\alpha_B^2 T^2}{\var
 
 ### Superconvergence for Schrödinger equation (Section 4.3, Lemma 10)
 
-When $A = -\Delta$ and $B = V(x)$ with $V$ smooth and bounded with all derivatives:
+When $A = -\Delta$ and $B = V(x)$ with $V$ smooth and bounded with quantitative derivative bounds:
 
 $$\max_{s \in [-h,h]}\|[V(x), e^{is\Delta}V(x)e^{-is\Delta}]\|_{L(L^2)} \leq C_V h$$
 
@@ -100,8 +102,8 @@ The [[Dyson Series Simulation in the Interaction Picture (Low-Wiebe 2018) — Pa
 ## Limits / caveats
 
 - **Not near-optimal for general time-dependent simulation.** Higher-order Dyson gets $O(\alpha T \log(\alpha T/\varepsilon))$; qHOP is stuck at $O(\alpha^2 T^2/\varepsilon)$ in the worst case. The improvement only kicks in when commutator structure is favorable.
-- **Superconvergence requires smooth potentials.** The pseudo-differential calculus proof needs $V(x)$ smooth and bounded with all derivatives. For singular potentials (Coulomb, etc.), the analysis doesn't apply directly.
-- **Channel output vs unitary.** qHOP produces a unitary approximation (not a channel like qDRIFT), but the failure probability is $O(\varepsilon)$ — so the actual output is an approximate unitary with non-trivial rejection probability.
+- **Superconvergence requires smooth potentials.** The pseudo-differential calculus proof needs quantitative bounds on derivatives of $V(x)$, not just qualitative $C^\infty$ smoothness. For singular potentials (Coulomb, etc.), the analysis doesn't apply directly.
+- **Unitary approximation.** qHOP targets a unitary approximation, not a channel output like qDRIFT. Any LCU/OAA implementation details should be counted as approximation or postselection overhead of the block-encoding implementation, not as the simulated dynamics becoming a rejection channel.
 - **Higher-order Magnus** is mentioned as possible but reintroduces time-ordering, losing the simplicity advantage.
 
 ## Reusable ideas

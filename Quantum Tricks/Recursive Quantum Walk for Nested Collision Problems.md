@@ -5,7 +5,7 @@
 
 ## What it does
 
-Solves problems where detecting a "collision" in a subset requires solving a structured sub-problem, by nesting one quantum walk inside another. The outer walk explores subsets of the input; the inner walk performs the checking step.
+Solves problems where detecting a "collision" in a subset requires solving a structured sub-problem, by nesting one quantum walk inside another. The motivating triangle-finding application is in the adjacency-matrix query model: the outer walk explores vertex subsets, and the inner walk performs the checking step.
 
 ## The trick
 

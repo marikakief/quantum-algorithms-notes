@@ -53,3 +53,4 @@ The estimator $\hat\rho$ is not generally a physical density matrix and may have
 - [[Shadow Tomography of Quantum States (Aaronson 2018) — Paper Notes]]
 - [[Shadow Norm as Measurement-Observable Match]]
 - [[Median-of-Means Shadow Prediction]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — shows that the shadow channel inversion primitive needs uploading first when the randomizing circuit would otherwise be noisy physical processing.

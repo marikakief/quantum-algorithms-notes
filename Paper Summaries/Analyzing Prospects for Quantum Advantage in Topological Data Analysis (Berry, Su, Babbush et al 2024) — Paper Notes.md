@@ -6,17 +6,27 @@
 
 ## The computational problem
 
-Given an undirected graph $G = (V, E)$ with $n$ vertices, form its **clique complex** — the abstract simplicial complex where every $k$-clique of $G$ becomes a $(k-1)$-simplex. The $(k-1)$-th **Betti number** $\beta_{k-1}^G$ counts the number of independent $k$-dimensional "holes" in this complex and equals the dimension of the kernel of the **combinatorial Laplacian**:
+Given an undirected graph $G = (V, E)$ with $n$ vertices, form its **clique complex** — the abstract simplicial complex where every $k$-clique of $G$ becomes a $(k-1)$-simplex. The $(k-1)$-th **Betti number** $\beta_{k-1}^G$ counts independent homology classes in dimension $k-1$ and equals the dimension of the kernel of the **combinatorial Laplacian**:
 
 $$\Delta_{k-1}^G = \partial_{k-1}^{G\dagger} \partial_{k-1}^G + \partial_k^G \partial_k^{G\dagger}$$
 
-where $\partial_k^G : \mathcal{H}_k^G \to \mathcal{H}_{k-1}^G$ is the boundary map restricted to the clique subspace. The space $\mathcal{H}_k^G$ is spanned by basis states corresponding to $k$-cliques and has dimension $|\text{Cl}_k(G)|$.
+where $\partial_j^G : \mathcal{H}_j^G \to \mathcal{H}_{j-1}^G$ is the boundary map restricted to the clique subspace. The space $\mathcal{H}_{k-1}^G$ is spanned by basis states corresponding to $k$-cliques and has dimension $|\text{Cl}_k(G)|$.
+
+Index convention:
+
+| Object | Meaning |
+|---|---|
+| $k$-clique | $k$ vertices forming a complete subgraph |
+| $(k-1)$-simplex | simplex represented by a $k$-clique |
+| $\mathcal H_{k-1}^G$ | Hilbert space spanned by $k$-cliques |
+| $\beta_{k-1}^G$ | dimension-$(k-1)$ Betti number |
+| Dirac gap vs Laplacian gap | if $\lambda_{\min}$ is a Laplacian eigenvalue gap, the corresponding Dirac singular-value gap is $\sqrt{\lambda_{\min}}$ |
 
 **Input:** A classical database of edges (or missing edges) of $G$.
 
 **Output:** An estimate of $\beta_{k-1}^G$ to relative error $r$ with failure probability $\delta$.
 
-Classical algorithms scale at best as $\Omega(|\text{Cl}_k(G)|)$, which can be as large as $\binom{n}{k}$ — exponential in $k$. The question is whether quantum algorithms can do substantially better.
+Straight enumerative classical algorithms scale as $\Omega(|\text{Cl}_k(G)|)$, which can be as large as $\binom{n}{k}$ — exponential in $k$. The paper is careful that this is not the right lower bound for every normalized or approximate regime, because later PIMC-style algorithms exploit spectral-density structure rather than enumerating all cliques.
 
 ## What the paper does
 
@@ -36,7 +46,7 @@ The algorithm estimates $\beta_{k-1}^G$ by measuring the dimension of the kernel
 
 $$B_G = \begin{pmatrix} 0 & \partial_{k-1}^G & 0 \\ \partial_{k-1}^{G\dagger} & 0 & \partial_k^G \\ 0 & \partial_k^{G\dagger} & 0 \end{pmatrix}$$
 
-The zero eigenspace of $B_G$ on $\mathcal{H}_k^G$ has dimension $\beta_{k-1}^G$. The algorithm pipeline:
+The zero eigenspace of $B_G$ on $\mathcal{H}_{k-1}^G$ has dimension $\beta_{k-1}^G$. The algorithm pipeline:
 
 ### Step 1: Prepare a uniform mixture over $k$-cliques
 
@@ -67,6 +77,8 @@ Use a **Chebyshev polynomial filter** on the walk operator to suppress all non-z
 $$\ell = \frac{\cosh^{-1}(1/\epsilon)}{\cosh^{-1}(1/\sqrt{1 - (\lambda_{\min}/\lambda)^2})} \leq \frac{n}{\lambda_{\min}} \ln(2/\epsilon)$$
 
 where $\lambda_{\min}$ is the spectral gap of $\Delta_{k-1}^G$. This is asymptotically similar to phase estimation but avoids the overhead of producing a full eigenvalue estimate when you only need a binary decision (zero vs. non-zero).
+
+The gap notation is easy to misread. The displayed bound is written in the paper's walk/Dirac normalization. If one starts instead from the smallest nonzero Laplacian eigenvalue of $\Delta_{k-1}^G$, the relevant singular-value gap of the Dirac operator is its square root, and the filter cost should be converted accordingly.
 
 ### Step 4: Amplitude estimation on the filtered state
 
@@ -122,7 +134,7 @@ $k$ clusters of $m$ vertices, all inter-cluster edges present:
 
 ### Erdős–Rényi $G(n,p)$
 
-At $p = n^{-1/(k+1/2)}$, the quantum algorithm achieves roughly a **quartic speedup** for constant $k$. This applies to generic random graphs — not specially constructed.
+At $p = n^{-1/(k+1/2)}$, the quantum algorithm achieves roughly a **quartic speedup** for constant $k$. This statement is for the analyzed Erdős--Rényi density window, not for all generic random graphs.
 
 ### Rips complexes from $\mathbb{R}^d$ data
 
@@ -130,7 +142,7 @@ For data drawn from a probability measure on $\mathbb{R}^d$: Betti numbers grow 
 
 ## Limits / caveats
 
-1. **Additive vs. multiplicative error matters enormously.** For additive error in $\beta_{k-1}$, quantum algorithms always have exponential runtime (the normalization factor $|\text{Cl}_k(G)|$ blows up). The super-quadratic advantage only exists for *relative* error estimation when the Betti number is large.
+1. **Additive vs. multiplicative error matters enormously.** For additive error in $\beta_{k-1}$, the normalization factor $|\text{Cl}_k(G)|$ can force exponential runtime in the high-dimensional regimes that motivate the algorithm. The super-quadratic advantage only exists for *relative* error estimation when the Betti number is large.
 
 2. **The dequantization.** A randomized classical algorithm using path-integral Monte Carlo on the squared Dirac operator can estimate normalized Betti numbers in $\tilde{O}(\sigma^2/\epsilon^2 \cdot \text{poly}(\kappa, 1/\gamma_M, |E|))$ arithmetic operations — polynomial in $n$ when $\sigma$, $\kappa$, $\gamma_M^{-1}$ are at most $\text{poly}(n)$. This directly challenges the assumption that clique-dense cases guarantee quantum advantage. The catch: the Markov chain gap $\gamma_M$ is unknown in general, making it hard to evaluate.
 

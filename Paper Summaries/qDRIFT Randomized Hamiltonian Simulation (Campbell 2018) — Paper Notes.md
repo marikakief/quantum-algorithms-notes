@@ -1,6 +1,7 @@
+# qDRIFT Randomized Hamiltonian Simulation (Campbell 2018)
 
-> **Source:** Earl T. Campbell, *A random compiler for fast [[Hamiltonian simulation]]*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)  
-> **Links:** [arXiv](https://arxiv.org/abs/1811.08017) · [PRL](https://doi.org/10.1103/PhysRevLett.123.070503)  
+> **Source:** Earl T. Campbell, *A random compiler for fast [[Hamiltonian simulation]]*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)
+> **Links:** [arXiv](https://arxiv.org/abs/1811.08017) · [PRL](https://doi.org/10.1103/PhysRevLett.123.070503)
 > **Tags:** #hamiltonian-simulation #qdrift #randomization #product-formulas
 
 ---
@@ -11,7 +12,7 @@ Replaces deterministic Trotter ordering with a randomized compiler: at each step
 $$
 \lambda = \sum_j |h_j|
 $$
-rather than explicitly by the term count $L$ or the largest coefficient $\Lambda$. For dense chemistry Hamiltonians where $\lambda \ll \Lambda L$, this is a meaningful saving.
+rather than explicitly by the term count $L$ or the largest coefficient $\Lambda$. For dense chemistry Hamiltonian instances where $\lambda \ll \Lambda L$, this can be a meaningful saving.
 
 ## The protocol
 
@@ -21,12 +22,14 @@ p_j = \frac{|h_j|}{\lambda}, \qquad \tau = \frac{t\lambda}{N}.
 $$
 Repeat $N$ times: sample $j \sim p_j$, apply $e^{-i\tau\,\mathrm{sgn}(h_j) H_j}$.
 
-The average channel over many such samples converges to the target evolution; diamond-norm error $\epsilon$ is achieved with
+The guarantee is for the averaged channel over the random choices, not for every individual sampled circuit. Diamond-norm error $\epsilon$ is achieved with
 $$
 N = O\!\left(\frac{(\lambda t)^2}{\epsilon}\right).
 $$
 
-The key point is that this $N$ is independent of $L$ and $\Lambda$ separately.
+The paper's bound can be read as \(N\) proportional to \(2(\lambda t)^2/\epsilon\) under the usual normalization; the important point is that this \(N\) is independent of \(L\) and \(\Lambda\) separately, except through their contribution to \(\lambda\).
+
+Proof idea: one sampled micro-step has the same first-order generator as \(e^{-iH t/N}\) after averaging over \(j\). The per-step channel error is \(O((\lambda t/N)^2)\), and telescoping/subadditivity of the diamond norm over \(N\) independent averaged steps gives \(O((\lambda t)^2/N)\).
 
 ## How it relates to prior randomized compiling
 
@@ -40,7 +43,7 @@ The idea of using randomized circuits to reduce effective Hamiltonian cost was e
 | qDRIFT | $\lambda$ | Good when dense sums make deterministic formulas awkward |
 | Qubitization / QSP | Near-optimal asymptotics | Best asymptotically, heavier machinery |
 
-The gain over deterministic Trotter is real when $\lambda$ is meaningfully smaller than $\Lambda L$ — common in second-quantized chemistry Hamiltonians but not guaranteed. For adversarial or sparse Hamiltonians, the advantage can disappear.
+The gain over deterministic Trotter is real when $\lambda$ is meaningfully smaller than $\Lambda L$ and when deterministic formulas cannot exploit strong commutator/locality structure. This can occur in second-quantized chemistry Hamiltonians but is not guaranteed. For adversarial, sparse, or highly local Hamiltonians, the advantage can disappear.
 
 ## Limits
 

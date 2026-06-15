@@ -1,3 +1,4 @@
+# Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferova-Scherer-Berry 2018) — Paper Notes
 
 > **Source:** Mária Kieferová, Daniel Scherer, and Dominic W. Berry, *Simulating the dynamics of time-dependent Hamiltonians with a truncated Dyson series*, arXiv:1805.00582, Phys. Rev. A **99**, 042314 (2019)  
 > **Links:** [arXiv](https://arxiv.org/abs/1805.00582) · [PRA](https://doi.org/10.1103/PhysRevA.99.042314)  
@@ -62,7 +63,7 @@ The segment circuit has the usual truncated-Taylor shape:
    H_{\ell_k}(t_k)\cdots H_{\ell_1}(t_1)
    $$
    controlled on the ancilla registers.
-5. **Oblivious amplitude amplification.** Choose the segment size so the LCU 1-norm stays below 2, which lets one round of [[Oblivious Amplitude Amplification (Robust)]] make the procedure deterministic up to the target error.
+5. **Oblivious amplitude amplification.** Choose the segment size so the LCU 1-norm stays below 2, which lets one round of [[Oblivious Amplitude Amplification (Robust)]] implement the segment coherently up to the truncation and discretization error budget.
 6. **Repeat over $r$ segments.** Compose the short-time simulations to cover total time $t$.
 
 ## Two approaches to time ordering
@@ -87,9 +88,9 @@ Divide $[0,t]$ into $r = \Theta(\lambda t)$ segments. On each segment:
 
 1. **PREPARE**: Load an ancilla state encoding time-tuple weights (plus LCU coefficients and ordering data via one of the two methods above).
 2. **SELECT**: Apply the ordered product of 1-sparse Hamiltonian terms at the sampled times.
-3. **Amplification**: Single-step oblivious amplitude amplification brings the success probability to 1 (possible because the LCU 1-norm is $\le 2$).
+3. **Amplification**: Single-step oblivious amplitude amplification coherently boosts the segment implementation up to the target approximation error (possible because the LCU 1-norm is $\le 2$).
 
-The Hamiltonian is decomposed into $L = \Theta(d^2 H_{\max}/\gamma)$ 1-sparse unitaries via the graph-coloring decomposition, with $\gamma = \Theta(\varepsilon/(d^3 t))$.
+The Hamiltonian is decomposed into $L = \Theta(d^2 H_{\max}/\gamma)$ 1-sparse unitaries via the graph-coloring decomposition, where \(\gamma\) is a decomposition/discretization precision parameter chosen in the theorem's gate-level error budget. It should not be read as the main simulation scale; the headline query parameter is the effective sparse norm \(\lambda t = \Theta(d^2 H_{\max}t)\).
 
 ## Key results
 
@@ -103,7 +104,7 @@ $$
 =
 O\!\left(
  d^2 H_{\max} t
- \frac{\log(d H_{\max} t/\varepsilon)}{\log\log(d H_{\max} t/\varepsilon)}
+ \frac{\log(d^2 H_{\max} t/\varepsilon)}{\log\log(d^2 H_{\max} t/\varepsilon)}
 \right)
 $$
 up to the paper's suppressed polylog factors and oracle-cost conventions.
@@ -152,7 +153,7 @@ The pattern generalizes: any algorithm needing coherent superposition over **ord
 | Series | Taylor | Dyson |
 | Ordering needed? | No | Yes |
 | Clock register | None | Yes (size $O(K \log M)$) |
-| Precision scaling | $O(\log 1/\varepsilon)$ | $O(\log 1/\varepsilon)$ |
+| Precision scaling | polylogarithmic, with truncation order $O(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ | polylogarithmic, with the same truncation-order mechanism plus time-discretization overhead |
 
 ## Limits / caveats
 

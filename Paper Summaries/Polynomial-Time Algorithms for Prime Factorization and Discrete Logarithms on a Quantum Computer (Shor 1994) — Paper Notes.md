@@ -6,6 +6,8 @@
 
 ## The computational problems
 
+**Notation used in this note:** $N$ is the integer to be factored, $m=\lceil \log_2 N\rceil$ is the input bit length, $q=2^\ell$ is the Fourier modulus with $N^2 \le q < 2N^2$ and $\ell=O(m)$, and $r$ is the multiplicative order. Shor's paper often writes the integer itself as $n$; asymptotics below are translated to the bit length $m$ unless explicitly stated otherwise.
+
 **Factoring:** Given an integer $N$, find its prime factorisation. Best classical: number field sieve, time $\exp(O((\log N)^{1/3}(\log\log N)^{2/3}))$ — sub-exponential but super-polynomial.
 
 **Discrete logarithm:** Given a prime $p$, a generator $g$ of $(\mathbb{Z}/p\mathbb{Z})^*$, and $x$, find $r$ such that $g^r \equiv x \pmod{p}$. Best classical: Gordon's number field sieve adaptation, same asymptotic cost.
@@ -14,7 +16,7 @@
 
 ## What the paper does
 
-Gives polynomial-time quantum algorithms for both problems. Factoring an $n$-bit integer takes $O(n^2 \log n \log\log n)$ gates. This is **exponentially faster** than any known classical algorithm, and breaks RSA, Diffie-Hellman, and most deployed public-key cryptography.
+Gives polynomial-time quantum algorithms for both problems. In bit-length notation, Shor's stated asymptotic for the quantum part of factoring is $O(m^2 \log m \log\log m)$ steps using fast multiplication, plus polynomial-time classical post-processing. This is **exponentially faster** than any known classical algorithm, and would break RSA and discrete-log-based public-key cryptosystems at cryptographic sizes if implemented fault-tolerantly at scale.
 
 This is the paper that launched quantum computing as a serious field. Before Shor, quantum speedups were either polynomial (Deutsch-Jozsa, Bernstein-Vazirani) or exponential but for oracle problems ([[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon]]). Shor showed an exponential speedup for a concrete, important, classical problem.
 
@@ -40,7 +42,7 @@ The hard step is finding $r$. Classically, this requires computing $x, x^2, x^3,
 
 ### Setup
 
-Choose $q = 2^l$ with $N^2 \leq q < 2N^2$. Use two quantum registers.
+Choose $q = 2^\ell$ with $N^2 \leq q < 2N^2$. Use two quantum registers.
 
 ### The circuit
 
@@ -56,7 +58,7 @@ $$
 \frac{1}{\sqrt{q}} \sum_{a=0}^{q-1} |a\rangle|x^a \bmod N\rangle
 $$
 
-This is the expensive step: reversible modular exponentiation using $O(n^3)$ gates (repeated squaring with Toffoli/Fredkin gates and Bennett's garbage cleanup).
+This is the expensive step: reversible modular exponentiation using $O(m^3)$ gates with schoolbook multiplication, or $O(m^2 \log m \log\log m)$ with fast multiplication in Shor's asymptotic accounting.
 
 **Step 3:** Apply the quantum Fourier transform $A_q$ to register 1:
 
@@ -82,15 +84,15 @@ Since $q > N^2 > r^2$, there's **at most one** fraction $d/r$ with $r < N$ satis
 
 If $\gcd(d, r) = 1$, we recover $r$ directly. The probability that a random $d \in \{0, \ldots, r-1\}$ is coprime to $r$ is $\phi(r)/r > \delta/\log\log r$.
 
-**Success probability per trial:** $\geq \phi(r)/(3r) = \Omega(1/\log\log N)$.
+**Success probability per order-finding experiment:** $\geq \phi(r)/(3r) = \Omega(1/\log\log r)=\Omega(1/\log m)$.
 
-After $O(\log\log N)$ repetitions, $r$ is found with high probability. (In practice, also try nearby values $c \pm 1, c \pm 2, \ldots$ to improve the constant.)
+The direct proof gives high success probability after $O(\log\log r)=O(\log m)$ repetitions. Shor also describes classical post-processing tricks — trying nearby $c$ values, testing small multiples of the reduced denominator, and combining candidate orders by lcm — that can reduce the expected number of quantum experiments to a constant in the intended accounting.
 
 ---
 
 ## The quantum Fourier transform
 
-The QFT over $\mathbb{Z}_q$ with $q = 2^l$:
+The QFT over $\mathbb{Z}_q$ with $q = 2^\ell$:
 
 $$
 |a\rangle \mapsto \frac{1}{\sqrt{q}} \sum_{c=0}^{q-1} e^{2\pi i ac/q}|c\rangle
@@ -105,7 +107,7 @@ Applied in order: $R_{l-1}, S_{l-2,l-1}, R_{l-2}, S_{l-3,l-1}, S_{l-3,l-2}, R_{l
 
 Output is bit-reversed (reverse qubit order or read backwards).
 
-**Gate count:** $O(n^2)$ for exact QFT. Coppersmith's approximate QFT drops the small phases $S_{j,k}$ for large $k - j$, reducing to $O(n \log n)$ gates with negligible error.
+**Gate count:** $O(m^2)$ for exact QFT on $\ell=O(m)$ qubits. Coppersmith's approximate QFT drops the small phases $S_{j,k}$ for large $k - j$, reducing to $O(m \log m)$ gates with negligible error.
 
 ---
 
@@ -132,24 +134,26 @@ The most space/time-consuming subroutine. Shor's implementation:
 2. Controlled multiplication: if $a_i = 1$, multiply running product by $x^{2^i} \bmod N$
 3. Clean up garbage via Bennett's compute-copy-uncompute: compute $(b, bc \bmod N)$, then use $c^{-1} \bmod N$ to erase $b$
 
-**Gate count:** $O(n^3)$ using schoolbook multiplication (each of $O(n)$ multiplications costs $O(n^2)$ gates). With Schönhage-Strassen: $O(n^2 \log n \log\log n)$.
+**Gate count:** $O(m^3)$ using schoolbook multiplication (each of $O(m)$ multiplications costs $O(m^2)$ gates). With Schönhage-Strassen-style fast multiplication in Shor's asymptotic estimate: $O(m^2 \log m \log\log m)$.
 
-**Shor's error-detection trick:** After garbage cleanup, $b$ should be 0. Measuring $b$ and checking it's 0 implements a **quantum watchdog** — projecting out any amplitude that's drifted into error states. This is an early instance of using mid-circuit measurement for error detection.
+**Optional watchdog measurement:** After garbage cleanup, $b$ should be 0. Shor observes that one could measure $b$ and restart if it is nonzero; conditioned on observing 0, amplitude on nonzero-$b$ error states is projected away. He explicitly presents this as a possible stabilizing idea whose benefit depends on the error model and measurement cost, not as a full fault-tolerant error-correction scheme.
 
 ---
 
 ## Complexity summary
 
-| Component | Gate count |
+| Component | Gate count / overhead in bit length $m=\lceil\log_2 N\rceil$ |
 |---|---|
-| QFT (exact) | $O(n^2)$ |
-| QFT (approximate, Coppersmith) | $O(n \log n)$ |
-| Modular exponentiation (schoolbook) | $O(n^3)$ |
-| Modular exponentiation (Schönhage-Strassen) | $O(n^2 \log n \log\log n)$ |
-| **Total factoring** | $O(n^2 \log n \log\log n)$ gates, $O(\log\log n)$ repetitions |
-| Classical post-processing (continued fractions, GCD) | $O(n^2)$ |
+| QFT (exact) | $O(m^2)$ |
+| QFT (approximate, Coppersmith) | $O(m \log m)$ |
+| One modular exponentiation (schoolbook) | $O(m^3)$ |
+| One modular exponentiation (fast multiplication) | $O(m^2 \log m \log\log m)$ |
+| One order-finding experiment | dominated by modular exponentiation; QFT is lower order |
+| Direct high-probability repetition overhead | $O(\log\log r)=O(\log m)$ experiments |
+| Shor's stated factoring asymptotic | $O(m^2 \log m \log\log m)$ quantum steps with the post-processing improvements discussed in the paper |
+| Classical post-processing (continued fractions, GCD, candidate checks) | polynomial in $m$ |
 
-**Space:** $O(n)$ qubits for the two registers + workspace.
+**Space:** $O(m)$ qubits for the two registers plus workspace in the schoolbook modular-exponentiation construction; the fast-multiplication asymptotic uses larger $O(m \log m \log\log m)$ workspace in Shor's estimate.
 
 ---
 
@@ -162,17 +166,17 @@ This paper is where quantum computing became real — not as hardware, but as a 
 
 After Shor: billions of dollars in quantum computing investment, post-quantum cryptography standardisation (NIST), and a generation of researchers entering the field.
 
-**The Simon → Shor pipeline:** Shor explicitly acknowledges Simon's influence. The structure is identical — prepare superposition, evaluate periodic function, Fourier transform, extract period from samples — but Simon's group is $\mathbb{Z}_2^n$ (Hadamard = QFT) while Shor's is $\mathbb{Z}_N$ (requires the full QFT). The continued fraction step replaces Simon's linear algebra over $\mathbb{F}_2$.
+**The Simon → Shor pipeline:** Shor explicitly acknowledges Simon's influence. The structure is similar — prepare superposition, evaluate a periodic function, Fourier transform, extract period information from samples — but not literally identical. Simon has exact coset sampling over $\mathbb{Z}_2^n$; Shor uses a power-of-two Fourier modulus $q$ with $N^2 \le q < 2N^2$, so the period $r$ need not divide the register size and the continued-fraction step handles approximate samples near multiples of $q/r$.
 
 ---
 
 ## Reusable ideas
 
-1. **[[Quantum Fourier Transform Circuit]]:** The $O(n^2)$-gate circuit for QFT over $\mathbb{Z}_{2^n}$ using Hadamards and controlled phase gates. Foundation for [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]], period finding, and virtually every "precision" quantum algorithm.
+1. **[[Quantum Fourier Transform Circuit]]:** The $O(\ell^2)=O(m^2)$-gate circuit for QFT over $\mathbb{Z}_{2^\ell}$ using Hadamards and controlled phase gates. Foundation for [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]], period finding, and virtually every "precision" quantum algorithm.
 
-2. **[[Order-Finding via QFT and Continued Fractions]]:** Reduce factoring to order-finding. Use QFT to sample near multiples of $q/r$, then extract $r$ via continued fraction expansion of $c/q$. The template for Fourier-sampling on cyclic groups.
+2. **[[Order-Finding via QFT and Continued Fractions]]:** Reduce factoring to order-finding. Use a power-of-two QFT to sample near multiples of $q/r$, then extract $r$ via continued fraction expansion of $c/q$. The template for approximate Fourier-sampling on cyclic groups.
 
-3. **[[Reversible Modular Exponentiation with Garbage Cleanup]]:** Compute $x^a \bmod N$ reversibly using repeated squaring + [[Reversible Computation via Compute-Copy-Uncompute|Bennett's method]]. Clean up garbage using modular inverses. The mid-circuit measurement of garbage bits as an error-detection mechanism (quantum watchdog).
+3. **[[Reversible Modular Exponentiation with Garbage Cleanup]]:** Compute $x^a \bmod N$ reversibly using repeated squaring + [[Reversible Computation via Compute-Copy-Uncompute|Bennett's method]]. Clean up garbage using modular inverses. Shor also notes an optional watchdog-style measurement of garbage bits, but this is not a substitute for fault-tolerant error correction.
 
 ---
 
@@ -181,10 +185,10 @@ After Shor: billions of dollars in quantum computing investment, post-quantum cr
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] — direct inspiration; exponential oracle separation via hidden subgroup of $\mathbb{Z}_2^n$
 - Bennett (1973) — reversible computation (compute-copy-uncompute for garbage cleanup)
 - Bennett et al. (1994) — precision requirements for quantum gates; $O(1/t)$ precision suffices for $t$ steps
-- Coppersmith (1994) — approximate QFT dropping small phases; reduces gate count to $O(n \log n)$
+- Coppersmith (1994) — approximate QFT dropping small phases; reduces gate count to $O(m \log m)$ in this note's bit-length notation
 - Boneh & Lipton (1995) — generalised discrete log to non-cyclic abelian groups
 - Deutsch (1985, 1989) — quantum Turing machines and circuits
-- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — polynomial quantum-classical separation
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — superpolynomial recursive Fourier-sampling oracle separation and the hidden-linear-string algorithm
 - Feynman (1982) — first suggestion that quantum mechanics might confer computational advantage
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985, 1989)]] — defined quantum Turing machines and quantum circuits; first quantum algorithm
 
@@ -196,7 +200,9 @@ After Shor: billions of dollars in quantum computing investment, post-quantum cr
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — the direct precursor
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — reformulates the approach as [[Gapped Phase Estimation|phase estimation]], generalises to any Abelian group
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes]] — compiles the continuous rotations in the QFT into a discrete fault-tolerant gate set
+- [[Optimal Ancilla-Free Clifford+T Approximation of Z-Rotations (Ross-Selinger 2014) — Paper Notes]] — uses Shor factoring as an oracle for exact optimality in Clifford+T $R_z$ synthesis
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — complementary speedup paradigm (quadratic via search, vs exponential via Fourier sampling)
+- [[Shor's Discrete Logarithm Quantum Algorithm for Elliptic Curves (Proos-Zalka 2003) — Paper Notes]] — concrete small-space implementation of Shor's discrete-log algorithm for prime-field elliptic curves
 
 ### Trick cards
 - [[Quantum Fourier Transform Circuit]]

@@ -4,7 +4,7 @@
 
 ## What it does
 
-Computes $|a\rangle|1\rangle \mapsto |a\rangle|x^a \bmod N\rangle$ reversibly, cleaning up all garbage bits. This is the bottleneck subroutine in [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's factoring algorithm]].
+Computes $|a\rangle|1\rangle \mapsto |a\rangle|x^a \bmod N\rangle$ reversibly, cleaning up all garbage bits. This is the bottleneck subroutine in [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's factoring algorithm]]. The order-finding branch assumes $\gcd(x,N)=1$; if not, the classical gcd has already found a nontrivial factor.
 
 ## The construction
 
@@ -21,16 +21,21 @@ The values $x^{2^i} \bmod N$ are computed classically and hardwired into the cir
 
 **Garbage cleanup via modular inverse:**
 
-The forward computation produces $(a, b, x^a \bmod N)$ where $b$ is garbage. To erase $b$:
+For a known invertible constant $c$, reversible modular multiplication can be made in-place by the swap-and-inverse trick:
 
-1. Copy $\mathrm{result} = x^a \bmod N$ to a fresh register
-2. Compute $c^{-1} \bmod N$ (classically, since $\gcd(x^{2^i}, N) = 1$)
-3. Run the inverse circuit: multiply by $c^{-1}$ controlled on result bits, undoing the forward computation
-4. Garbage register returns to 0
+$$
+|x\rangle|0\rangle
+\xrightarrow{\times c}
+|x\rangle|cx\bmod N\rangle
+\xrightarrow{\mathrm{swap}}
+|cx\bmod N\rangle|x\rangle
+\xrightarrow{\times c^{-1}}
+|cx\bmod N\rangle|0\rangle.
+$$
 
-This works because multiplication by $c$ is a bijection $\bmod N$ (since $\gcd(c, N) = 1$), so its inverse is well-defined.
+This is the Beauregard/HRS-style cleanup for modular multiplication by known constants. It differs from generic Bennett cleanup, where one copies the output and runs the entire computation backward. The inverse exists because multiplication by $c$ is a permutation of $(\mathbb Z/N\mathbb Z)^*$.
 
-**Shor's quantum watchdog:** After cleanup, measure the garbage register. If it's not $|0\rangle$, an error occurred — restart. If it is $|0\rangle$, the measurement projects out error components, improving reliability. This is an early form of mid-circuit error detection.
+Measuring a register that should have uncomputed to $|0\rangle$ can detect some faults in an idealized reversible basis-state test, but this is not Shor's algorithmic "watchdog" and not a fault-tolerant syndrome-extraction mechanism.
 
 ## When to reach for it
 
@@ -40,7 +45,7 @@ This works because multiplication by $c$ is a bijection $\bmod N$ (since $\gcd(c
 
 ## Complexity
 
-$O(n)$ multiplications of $n$-bit numbers $\bmod N$, each costing $O(n^2)$ gates (schoolbook) or $O(n \log n \log\log n)$ gates (Schönhage-Strassen). Total: $O(n^3)$ or $O(n^2 \log n \log\log n)$.
+For $n=\lceil\log_2 N\rceil$, schoolbook modular exponentiation uses $O(n)$ controlled modular multiplications by classically precomputed constants, with each multiplication built from $O(n)$ controlled additions. With schoolbook adders this gives the familiar $O(n^3)$-gate scale. Faster arithmetic can change asymptotics, but reversible overhead, workspace, and cleanup must be costed explicitly.
 
 Space: $O(n)$ qubits.
 

@@ -154,3 +154,8 @@ The exponential separation between single-copy and two-copy protocols for fermio
 - [[Pfaffian Shadow Estimation for Fermionic Observables]] — efficient post-processing for matchgate shadows
 - [[Basis Rotation Grouping for VQE Measurement]] — deterministic Pauli grouping; can be viewed as a special case of the coloring framework
 - [[Bravyi-Kitaev Transformation]] — one of the fermion-to-qubit mappings discussed
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler show that shadow-style advantages can be exponentially fragile under raw physical preprocessing noise unless the state is uploaded first.
+

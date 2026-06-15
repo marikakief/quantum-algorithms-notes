@@ -4,24 +4,27 @@
 > **Full notes:** [[SOSSA — Sum-of-Squares Spectral Amplification]]
 
 ## What it does
-Reduces query complexity for low-energy simulation from $\lambda/\varepsilon$ to $\sqrt{\Delta\lambda}/\varepsilon$, where $\Delta$ is the gap from the ground state energy to the SOS lower bound.
+Reduces query complexity for low-energy simulation from $\lambda/\varepsilon$ to $\sqrt{\Delta\lambda}/\varepsilon$, where $\Delta$ is the shifted energy above the SOS lower bound, not necessarily the physical excitation gap.
 
 ## The trick
-1. Solve an SDP to find $H + \beta\mathbb{1} = \sum_j B_j^\dagger B_j$ with $-\beta$ a tight lower bound on $E_0$
-2. Build the rectangular operator $H_{\text{SA}} = \sum_j |j\rangle \otimes B_j$ (a "square root" of $H + \beta\mathbb{1}$)
-3. Small eigenvalues $E$ of $H + \beta\mathbb{1}$ become $\sqrt{E}$ in $H_{\text{SA}}$ — amplified near zero
-4. Phase estimation on $H_{\text{SA}}$ resolves low-energy eigenvalues with fewer queries
+1. Solve an SDP to find a shifted SOS form:
+   $$H + \beta\mathbb{1} = \sum_j B_j^\dagger B_j,$$
+   with $-\beta$ a lower bound on $E_0$.
+2. Build the rectangular square-root map:
+   $$A = \sum_j |j\rangle \otimes B_j,\qquad A^\dagger A = H + \beta\mathbb{1}.$$
+3. Block-encode $A$ and form the rectangular-walk product whose phases depend on the squared singular values.
+4. Run phase estimation on that walk, not directly on a Hermitian operator $A$, to resolve low shifted energies with fewer queries.
 
 ## When to reach for it
 - Low-energy physics (ground state, low-lying excitations)
 - Hamiltonians where the SOS relaxation gives a tight bound (frustrated spin systems, SYK)
-- Any setting where $\lambda_{\text{[[Linear Combination of Unitaries (LCU)|LCU]]}}$ is large but the relevant energy scale is small
+- Any setting where the ordinary LCU normalization $\lambda_{\rm LCU}$ is large but the relevant shifted energy scale is small
 
 ## Complexity
-$O(\sqrt{\Delta_{\text{SOS}} \cdot \lambda_{\text{SOS}}}/\varepsilon)$ queries. Classical SDP preprocessing: poly($L$) where $L$ = operator algebra dimension.
+$O(\sqrt{\Delta_{\text{SOS}} \cdot \lambda_{\text{SOS}}}/\varepsilon)$ queries for a favourable SOS lower-bound gap and block-encoding normalization. Classical SDP preprocessing: polynomial in the chosen operator-algebra dimension, with numerical conditioning and certification costs.
 
 ## Caveat
-Higher-degree SOS tightens $\Delta$ but grows $\lambda$ (more terms in the SOS decomposition). The *product* $\Delta \cdot \lambda$ determines the win — degree must be optimised per system. For SYK specifically, degree-2 Majorana SOS achieves $\sqrt{\Delta_\text{SOS}\lambda_\text{SOS}} \sim N^{3/2}$ vs $\lambda_\text{[[Linear Combination of Unitaries (LCU)|LCU]]} \sim N^2$ — a $\sqrt{N}$ speedup. Whether higher degree helps depends on whether the tighter $\Delta$ compensates for the larger $\lambda$; the paper finds degree-2 sufficient for the SYK demonstration.
+Higher-degree SOS tightens $\Delta$ but grows $\lambda$ (more terms in the SOS decomposition). The *product* $\Delta \cdot \lambda$ determines the win — degree must be optimised per system. For SYK specifically, degree-2 Majorana SOS achieves $\sqrt{\Delta_{\rm SOS}\lambda_{\rm SOS}} \sim N^{3/2}$ vs ordinary $\lambda_{\rm LCU} \sim N^2$ — a $\sqrt{N}$ speedup. Whether higher degree helps depends on whether the tighter $\Delta$ compensates for the larger $\lambda$; the paper finds degree-2 sufficient for the SYK demonstration.
 
 ## Related Paper Notes
 

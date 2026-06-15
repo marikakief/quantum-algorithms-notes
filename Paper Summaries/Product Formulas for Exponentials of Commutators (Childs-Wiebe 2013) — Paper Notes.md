@@ -6,7 +6,7 @@
 
 ## The computational problem
 
-Given anti-Hermitian operators $A$ and $B$ (and generalizations to nested commutators), and a target total evolution time $T$, implement $e^{[A,B]T}$ to error $\varepsilon$ using only exponentials of $A$ and $B$. Count the number of such elementary exponentials as the cost.
+Given anti-Hermitian operators $A$ and $B$ (and generalizations to nested commutators), and a target total evolution time $T$, implement $e^{[A,B]T}$ to error $\varepsilon$ using only exponentials of $A$ and $B$. Count the number of such elementary exponentials as the cost. In Hermitian Hamiltonian notation, factors of \(i\) move between the Hamiltonians and the exponent; the anti-Hermitian convention keeps all displayed exponentials unitary.
 
 The problem generalizes to: given a sequence $A_0, \ldots, A_k$, implement $e^{Z_k T^{k+1}}$ where $Z_k = [A_k, [A_{k-1}, \cdots [A_1, A_0]\cdots]]$ is a nested commutator.
 
@@ -110,7 +110,7 @@ The [[Balanced Group Commutator Decomposition]] trick from Solovay–Kitaev uses
 
 The complexity $O(6^{pk})$ grows exponentially in both the recursion depth $p$ and the nesting depth $k$. For $k \geq 2$ the practical constant factors are large. The near-linearity in $T^{k+1}$ only emerges after optimizing $p$ in the large-$T$ regime.
 
-The lower bound (Theorem 12) shows the $(\Lambda T)^{k+1}$ factor is genuine. The $o(1)$ precision exponent is nearly but not fully optimal — there is a polylog$(1/\varepsilon)$ gap versus the $O(1)$ precision dependence achieved by LCU/[[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] methods for direct [[Hamiltonian simulation]].
+The lower bound (Theorem 12) shows the $(\Lambda T)^{k+1}$ factor is genuine in this commutator-simulation access model. The $o(1)$ precision exponent is nearly but not fully optimal for these product-formula constructions. This should not be compared directly to LCU/[[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] precision scaling for ordinary \(e^{-iHt}\) simulation from a block-encoding; that is a different input model and task.
 
 This is a 2013 paper predating the [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP/qubitization]] era; the methods here are product-formula-only. For simulating $e^{HT}$ directly, [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Taylor series / LCU]] achieves polylog$(1/\varepsilon)$. The commutator-simulation setting is distinct: when you only have access to $e^{At}$ and $e^{Bt}$ but want $e^{[A,B]T}$, this paper gives the right tool.
 

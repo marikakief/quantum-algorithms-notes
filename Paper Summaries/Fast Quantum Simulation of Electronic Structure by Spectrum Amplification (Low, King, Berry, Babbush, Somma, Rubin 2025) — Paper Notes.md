@@ -16,12 +16,12 @@ This paper asks: can we break through the $O(\Lambda)$ barrier? Yes.
 ---
 ## What the paper does
 
-By expressing $H$ as a sum of squares (SOS), the Hamiltonian becomes positive semidefinite (up to a shift $E_{\text{SOS}}$). Spectrum amplification then exploits the nonlinearity of $\sqrt{x}$ near zero: small eigenvalues $E_{\text{gap}} = E_{\text{gs}} - E_{\text{SOS}}$ of $H - E_{\text{SOS}}$ map to $\sqrt{E_{\text{gap}}}$ in the "square root" Hamiltonian $H_{\text{sqrt}}$. Phase estimation on $H_{\text{sqrt}}$ resolves $E_{\text{gs}}$ with effective normalization $\lambda_{\text{eff}} = \sqrt{2\Lambda E_{\text{gap}}}$ instead of $\Lambda$. Since $E_{\text{gap}} \ll \Lambda$ for real molecules, this is a major win.
+By expressing a shifted Hamiltonian as a sum of squares (SOS), $H - E_{\text{SOS}}$ becomes positive semidefinite. Spectrum amplification then exploits the nonlinearity of $\sqrt{x}$ near zero: the lowest shifted energy $E_{\text{gap}} = E_{\text{gs}} - E_{\text{SOS}}$ maps to $\sqrt{E_{\text{gap}}}$ in the rectangular "square-root" operator. Here $E_{\text{gap}}$ is the energy above the SOS lower bound, not the physical excitation gap. Phase estimation is run on the amplified walk built from this rectangular block encoding, giving effective normalization $\lambda_{\text{eff}} = \sqrt{2\Lambda E_{\text{gap}}}$ instead of $\Lambda$. Since $E_{\text{gap}} \ll \Lambda$ for the benchmark molecules, this is a major win.
 
 To make this practical, they:
 
 1. Introduce efficient quantum circuits for [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|spectrum amplification]] via rectangular [[Block-Encoding Composition Algebra|block-encodings]]
-2. Show that SOS representations of chemistry Hamiltonians can be computed classically via semidefinite programming
+2. Show that useful chemistry-structured SOS representations can be computed classically via semidefinite programming
 3. Develop **DFTHC** (Double-Factorized Tensor Hypercontraction) — a new integral factorization that interpolates between [[Double Factorisation for Block-Encoding|double factorization]] and [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|tensor hypercontraction]]
 
 Combined result: **4× to 195× speedup** over prior art for ground-state energy estimation of Fe-S clusters, FeMoCo, CO₂ catalysts, and cytochrome P450. For FeMoCo-76: $9.99 \times 10^8$ Toffolis, down from $4.3 \times 10^9$ (prior best, THC+BLISS).
@@ -32,7 +32,7 @@ Combined result: **4× to 195× speedup** over prior art for ground-state energy
 
 ### Step 1: SOS representation
 
-Any Hamiltonian can be written as
+In finite dimension, any lower-bounded Hamiltonian can be shifted to a positive semidefinite operator and factored abstractly. The substantive chemistry contribution is finding an SOS form with structured fermionic generators that can be block-encoded efficiently:
 
 $$H = \sum_\alpha O_\alpha^\dagger O_\alpha + E_{\text{SOS}} = H_{\text{sqrt}}^\dagger H_{\text{sqrt}} + E_{\text{SOS}}$$
 
@@ -40,7 +40,7 @@ where $H_{\text{sqrt}} = \sum_\alpha |\chi_\alpha\rangle \otimes O_\alpha$ is a 
 
 $$\Delta_{\text{gap}} = \frac{E_{\text{gs}} - E_{\text{SOS}}}{\lambda_{\text{sqrt}}^2}$$
 
-where $\lambda_{\text{sqrt}} = \sqrt{\sum_\alpha \lambda_\alpha^2}$ is the [[Block-Encoding Composition Algebra|block-encoding]] normalization. If $\Delta_{\text{gap}} \ll 1$, spectrum amplification gives a large advantage.
+where $\lambda_{\text{sqrt}} = \sqrt{\sum_\alpha \lambda_\alpha^2}$ is the [[Block-Encoding Composition Algebra|block-encoding]] normalization. If $\Delta_{\text{gap}} \ll 1$ and the SOS block encoding is not too expensive, spectrum amplification gives a large advantage.
 
 ### Step 2: Finding the SOS decomposition classically
 
@@ -64,7 +64,7 @@ $$U = \text{Sel} \cdot \text{Prep}^\dagger = \text{Be}\!\left[\frac{H_{\text{sqr
 
 with PREPARE loading $|\chi_\alpha\rangle$ states via [[Coherent Alias Sampling for PREPARE|coherent alias sampling]] and SELECT applying controlled block-encodings of each $O_\alpha$.
 
-A quantum walk $W_1 = \text{Ref}_B U$, $W_2 = \text{Ref}_{aB} U^\dagger$ on this rectangular [[Block-Encoding Composition Algebra|block-encoding]] has eigenphases $\arccos(\sqrt{E_j}/\lambda_{\text{sqrt}})$. The trick: two walk steps give $W_2 W_1$ with eigenphases $\arccos(2E_j/\lambda_{\text{sqrt}}^2 - 1)$, equivalent to a [[Block-Encoding Composition Algebra|block-encoding]] of $2H_{\text{SA}}/\lambda_{\text{sqrt}}^2 - I$. This restores compatibility with standard [[Phase Estimation as Eigenvalue Filter for Walk-Based Search|phase estimation]] while maintaining the spectrum amplification advantage.
+A quantum walk $W_1 = \text{Ref}_B U$, $W_2 = \text{Ref}_{aB} U^\dagger$ on this rectangular [[Block-Encoding Composition Algebra|block-encoding]] has eigenphases $\arccos(\sqrt{E_j}/\lambda_{\text{sqrt}})$. The trick: two walk steps give $W_2 W_1$ with eigenphases $\arccos(2E_j/\lambda_{\text{sqrt}}^2 - 1)$, equivalent to a [[Block-Encoding Composition Algebra|block-encoding]] of the shifted Hamiltonian through the squared singular values. This restores compatibility with standard [[Phase Estimation as Eigenvalue Filter for Walk-Based Search|phase estimation]] while maintaining the spectrum amplification advantage; it is not ordinary phase estimation directly on a Hermitian $H_{\text{sqrt}}$.
 
 ### Step 4: DFTHC factorization
 
@@ -96,7 +96,7 @@ The block-encoding cost per walk step is dominated by:
 - **Qroam** (coefficient table lookup): $\sim RBC/(\lambda+1) + \lambda b_Q$ Toffolis
 - **Sel** (Majorana operator application): $\sim 4(N-1)b_{\text{rot}}$ Toffolis
 
-DFTHC balances Rot and Qroam costs, with Sel typically dominating at ~60% of total.
+DFTHC balances Rot and Qroam costs in the empirical benchmark optimizations, with Sel typically dominating at ~60% of total.
 
 ### Step 6: Optimization
 
@@ -123,7 +123,7 @@ This jointly minimizes the Frobenius error, block-encoding normalization, and SO
 | CO₂ [100e, 100o] | 1,960 | $1.06 \times 10^9$ | 112.7× | — |
 | CO₂ [150e, 150o] | 2,870 | $2.81 \times 10^9$ | 195.2× | — |
 
-**Scaling (empirical fits across all benchmarks):**
+**Scaling (empirical fits across all benchmarks, not asymptotic theorems):**
 - Toffolis per walk step: $\sim 0.079 \times N^{2.09}$ million
 - $\Lambda \sim 0.23 \times N^{1.46}\;\text{Ha}$
 - $\lambda_{\text{eff}} \sim 0.24 \times N^{1.14}\;\text{Ha}$
@@ -195,7 +195,7 @@ Key citations (vault notes linked where they exist):
 - **[22]** Low & Chuang (2017) — uniform spectral amplification
 - **[23]** Zlokapa & Somma (2024) — [[Hamiltonian simulation]] for low-energy states
 - **[25]** Gilyen, Su, Low, Wiebe (2019) — QSVT / quantum singular value transformation
-- **[37]** [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher et al. (2017)]] — original FeMoCo resource estimate (~$10^{14}$ T gates); this paper achieves ~$300{,}000\times$ improvement
+- **[37]** [[Elucidating Reaction Mechanisms on Quantum Computers (Reiher, Wiebe, Svore, Wecker, Troyer 2017) — Paper Notes|Reiher et al. (2017)]] — original FeMoCo resource estimate. A direct comparison of $5.0 \times 10^{13}$ to roughly $10^9$ Toffolis is about a $5 \times 10^4$ improvement; larger headline ratios require specifying a different baseline or gate metric.
 - **[38]** Li et al. (2019) — FeMoCo-76 active space definition
 - **[39]** Oumarou et al. (2024) — symmetry compression of double factorization
 - **[53]** [[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes|Motta, Babbush, Chan et al. (2021)]] — low rank representations / original double factorization
@@ -204,7 +204,7 @@ Key citations (vault notes linked where they exist):
 
 ## My assessment (as an AI)
 
-This is a genuinely significant paper. The key insight is that the $O(\Lambda/\varepsilon)$ scaling of qubitization-based phase estimation is not a hard wall: if the Hamiltonian has SOS structure (and all fermionic Hamiltonians do), the effective normalization can be brought down to $O(\sqrt{\Lambda E_{\text{gap}}}/\varepsilon)$.
+This is a genuinely significant paper. The key insight is that the $O(\Lambda/\varepsilon)$ scaling of qubitization-based phase estimation is not a hard wall: if one has an efficient SOS decomposition with a favourable lower-bound gap, the effective normalization can be brought down to $O(\sqrt{\Lambda E_{\text{gap}}}/\varepsilon)$. The abstract existence of a PSD factorization is not enough; the structured chemistry SOS block encoding is the hard part.
 
 The $4\times$ improvement on FeMoCo-76 is impressive but understates the method's potential. The CO₂ series shows $100\times$+ improvements, and the scaling fits suggest the advantage grows with system size. The DFTHC factorization is also a solid contribution independent of spectrum amplification — the idea that you can smoothly interpolate between DF and THC to hit the Amdahl's-law sweet spot on the circuit cost is elegant.
 

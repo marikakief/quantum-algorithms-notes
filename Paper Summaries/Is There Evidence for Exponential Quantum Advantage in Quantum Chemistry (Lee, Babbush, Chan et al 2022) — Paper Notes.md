@@ -13,7 +13,7 @@ Compute the ground-state energy $E$ of the electronic Schrödinger Hamiltonian f
 
 ## What the paper does
 
-Gathers numerical and theoretical evidence bearing on the EQA hypothesis for ground-state quantum chemistry. The answer is negative: they find no evidence for generic exponential quantum speedup. Quantum state preparation faces the same obstacles that make problems hard classically, and classical heuristics empirically scale polynomially for the problems tested. The paper doesn't prove EQA is impossible — it can't, because "generic chemistry" is not a precise complexity class — but it makes a well-supported case that EQA should not be the default assumption.
+Gathers numerical and theoretical evidence bearing on the EQA hypothesis for ground-state quantum chemistry. The answer is skeptical rather than a no-go theorem: they find no current evidence for generic exponential quantum speedup in the regimes studied. Quantum state preparation faces the same obstacles that make problems hard classically, and classical heuristics empirically scale polynomially for the problems tested. The paper doesn't prove EQA is impossible — it can't, because "generic chemistry" is not a precise complexity class — but it makes a well-supported case that EQA should not be the default assumption.
 
 This is one of the most important papers in the quantum algorithms for chemistry space, because it directly challenges the narrative that chemistry is quantum computing's "killer app" in the exponential-speedup sense. The authorship — spanning Caltech, Google Quantum AI, AWS, Columbia, Berkeley, Riverlane — gives it unusual weight. My assessment: the argument is convincing for ground-state energy estimation. The open question is whether other tasks (dynamics, excited states, Green's functions) tell a different story.
 
@@ -29,13 +29,13 @@ The cost of [[Qubitization (Quantum Walk for Spectral Encoding)|QPE]]-based grou
 
 $$\mathrm{poly}(1/S) \cdot [\mathrm{poly}(L) \cdot \mathrm{poly}(1/\varepsilon) + C]$$
 
-where $S = |\langle \Phi | \Psi_0 \rangle|$ is the overlap between the prepared initial state $|\Phi\rangle$ and the true ground state $|\Psi_0\rangle$, and $C$ is the state-preparation cost. The $\mathrm{poly}(L) \cdot \mathrm{poly}(1/\varepsilon)$ piece is the phase estimation circuit (well-understood, polyomial in $L$). The $\mathrm{poly}(1/S)$ piece — specifically $1/S^2$ for standard QPE — is the repetition overhead.
+where $S = |\langle \Phi | \Psi_0 \rangle|$ is the amplitude overlap between the prepared initial state $|\Phi\rangle$ and the true ground state $|\Psi_0\rangle$, and $C$ is the state-preparation cost. The $\mathrm{poly}(L) \cdot \mathrm{poly}(1/\varepsilon)$ piece is the phase estimation circuit (well-understood, polynomial in $L$). The $\mathrm{poly}(1/S)$ piece is the state-preparation success overhead: standard repeated QPE costs $1/S^2$, while amplitude amplification or more elaborate preparation/filtering can change this dependence.
 
 Two state preparation strategies are examined:
 
-**Ansatz state preparation:** Prepare a classically specified state (e.g., Hartree-Fock). For Fe-S clusters ranging from 2 to 8 metal centres, the weight $S^2$ of the best single Slater determinant decays exponentially with system size — reaching $\sim 10^{-7}$ for FeMo-co. Configuration state functions (spin eigenstates) improve things but still show exponential decay. This is the [[ASCI Overlap Estimation for QPE Initial State|orthogonality catastrophe]] in action. Improving the ansatz to get $1/\mathrm{poly}(L)$ overlap requires a classical ansatz powerful enough that it can also solve for the energy to the target precision — undermining the claimed quantum advantage.
+**Ansatz state preparation:** Prepare a classically specified state (e.g., Hartree-Fock or a selected determinant/CSF). For Fe-S clusters ranging from 2 to 8 metal centres, the weight $S^2$ of the best single Slater determinant decays exponentially with system size — reaching $\sim 10^{-7}$ for FeMo-co. Configuration state functions (spin eigenstates) improve things but still show exponential decay. This is the [[ASCI Overlap Estimation for QPE Initial State|orthogonality catastrophe]] in action. The paper's argument is a heuristic tension, not a theorem: if improving the ansatz to get $1/\mathrm{poly}(L)$ overlap requires a classical ansatz powerful enough to solve the energy problem, then the claimed exponential quantum advantage is undermined.
 
-**[[Stroboscopic Adiabatic Walk|Adiabatic state preparation]] (ASP):** Slowly evolve from the ground state of a solvable Hamiltonian $H(0)$ to the target Hamiltonian $H(1)$. For a 24-qubit [2Fe-2S] model, $T_{\mathrm{ASP}}$ varies over 8 orders of magnitude depending on the choice of $H(0)$, and correlates as $T_{\mathrm{ASP}} \sim \mathrm{poly}(1/|\langle \Upsilon_0 | \Psi_0 \rangle|)$ — reminiscent of unstructured search. The lowest-energy mean-field Hamiltonian gives $T_{\mathrm{ASP}} > T_{\mathrm{QPE}}$. Getting $T_{\mathrm{ASP}} < T_{\mathrm{QPE}}$ requires starting from an interacting Hamiltonian that already includes most of the interactions (20 out of 24 qubits). Finding a good $H(0)$ is itself a heuristic problem — and if classical heuristics solve it efficiently, why can't they also solve the original problem?
+**[[Stroboscopic Adiabatic Walk|Adiabatic state preparation]] (ASP):** Slowly evolve from the ground state of a solvable Hamiltonian $H(0)$ to the target Hamiltonian $H(1)$. For a 24-qubit [2Fe-2S] model, $T_{\mathrm{ASP}}$ varies over 8 orders of magnitude depending on the choice of $H(0)$, and empirically correlates as $T_{\mathrm{ASP}} \sim \mathrm{poly}(1/|\langle \Upsilon_0 | \Psi_0 \rangle|)$ — reminiscent of unstructured search. The lowest-energy mean-field Hamiltonian gives $T_{\mathrm{ASP}} > T_{\mathrm{QPE}}$. Getting $T_{\mathrm{ASP}} < T_{\mathrm{QPE}}$ requires starting from an interacting Hamiltonian that already includes most of the interactions (20 out of 24 qubits). Finding a good $H(0)$ is itself a heuristic problem — and if classical heuristics solve it efficiently, why can't they also solve the original problem?
 
 ### Prong 2: Classical heuristics don't appear to be exponentially hard
 
@@ -70,7 +70,7 @@ No formal theorems are proved. The main results are empirical observations suppo
 | Claim | Prior conventional wisdom | This paper's finding |
 |---|---|---|
 | QPE gives exponential speedup for chemistry | Often stated or implied (e.g., Reiher et al. 2017) | QPE circuit is $\mathrm{poly}(L)$, but state preparation cost must be accounted for; may eliminate exponential gap |
-| FeMoCo is a poster-child for quantum advantage | Widely assumed since Reiher et al. 2017 | HF overlap $\sim 10^{-7}$ for FeMoCo; state preparation overhead is massive; DMRG can approach the answer classically |
+| FeMoCo is a poster-child for quantum advantage | Widely assumed since Reiher et al. 2017 | Best single-determinant overlap can be $\sim 10^{-7}$ in the studied Fe-S active-space sequence; state preparation overhead can be massive; DMRG can approach the answer classically |
 | Classical methods fail for strongly correlated systems | Common assumption | Tensor networks, QMC, embedding methods all show poly-cost scaling in tested domains |
 | Adiabatic state preparation solves the overlap problem | Hoped for in several proposals | ASP cost correlates with overlap; finding a good starting Hamiltonian is itself hard |
 
@@ -89,6 +89,7 @@ Key prior work this paper builds on or challenges:
 - The argument assumes the current landscape of classical heuristics is representative. A future discovery of exponential classical hardness in a specific chemical problem would change the picture.
 - The paper's Fe-S numerical experiments use active space models. Full ab initio calculations at the same system sizes would be harder for both classical and quantum methods, but the relative comparison likely still holds.
 - The paper acknowledges that one can construct artificial Hamiltonians where EQA holds (via circuit-to-Hamiltonian constructions), but argues these don't represent generic chemistry.
+- Later MPS-based initial-state work gives a more optimistic practical path for some Fe-S instances, but it relies on substantial classical preprocessing and candidate-state assumptions. It updates the resource-estimation context without turning this paper's ground-state EQA skepticism into a formal impossibility claim.
 
 ---
 

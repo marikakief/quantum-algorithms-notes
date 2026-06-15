@@ -12,7 +12,7 @@ $$H = \sum_{pq} h_{pq}\, a_p^\dagger a_q + \frac{1}{2}\sum_{pqrs} h_{pqrs}\, a_p
 
 where $h_{pq}$ and $h_{pqrs}$ are the standard one- and two-electron integrals over a chosen single-particle basis.
 
-After [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner]] (or [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Bravyi-Kitaev]]) mapping, this becomes a sum of $\Gamma = O(N^4)$ Pauli-product terms — a [[Linear Combination of Unitaries (LCU)|linear combination of unitaries]].
+After [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner]] mapping, this becomes a sum of $\Gamma = O(N^4)$ Pauli-product terms — a [[Linear Combination of Unitaries (LCU)|linear combination of unitaries]]. Bravyi-Kitaev is an alternative fermion-to-qubit encoding with different Pauli-word structure; the concrete SELECT discussion here is Jordan-Wigner structured.
 
 ---
 
@@ -23,7 +23,7 @@ First application of the [[Simulating Hamiltonian Dynamics with a Truncated Tayl
 1. **Database algorithm:** $\widetilde{O}(N^8 t)$ gates. Classical precomputation stores all $O(N^4)$ molecular integrals; the PREPARE oracle loads them from a lookup table.
 2. **On-the-fly algorithm:** $\widetilde{O}(N^5 t)$ gates. Computes molecular integrals coherently on the quantum computer using [[On-the-Fly Coherent Molecular Integral Computation|Gaussian integral arithmetic]], avoiding the classical database entirely.
 
-Both achieve $\log(1/\varepsilon)$ precision dependence — exponentially better than Trotter-based chemistry simulation. The on-the-fly algorithm was, at the time, the lowest gate count for second-quantized quantum chemistry simulation in the literature.
+Both achieve logarithmic precision dependence — exponentially better in precision than fixed-order Trotter-based chemistry simulation. This is an improvement in precision scaling, not an exponential speedup in every parameter. The on-the-fly algorithm was, at the time, the lowest gate count for second-quantized quantum chemistry simulation in the literature.
 
 ---
 
@@ -42,8 +42,8 @@ with $\Lambda = \sum_\gamma |W_\gamma|$ serving as the $\ell_1$ norm. In the wor
 This directly instantiates the [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2015)]] truncated Taylor series framework:
 
 1. **Segment:** Divide $t$ into $r = \lceil \Lambda t / \ln 2 \rceil$ segments (the [[Taylor Series Truncation with ln2 Segmentation|$\ln 2$ segmentation trick]]).
-2. **Taylor expand** each segment to order $K = O(\log(r/\varepsilon)\log\log(r/\varepsilon))$.
-3. **PREPARE:** Prepare the ancilla superposition $\frac{1}{\sqrt{s}} \sum_{k,\gamma_1,\ldots,\gamma_k} \sqrt{\beta_{k,\gamma_1,\ldots,\gamma_k}}\, |k\rangle|\gamma_1\rangle\cdots|\gamma_k\rangle$ using:
+2. **Taylor expand** each segment to order $K = \Theta(\log(r/\varepsilon)/\log\log(r/\varepsilon))$.
+3. **PREPARE:** Prepare the ancilla superposition $\frac{1}{\sqrt{s}} \sum_{k,\gamma_1,\ldots,\gamma_k} \sqrt{\beta_{k,\gamma_1,\ldots,\gamma_k}}\, |k\rangle|\gamma_1\rangle\cdots|\gamma_k\rangle$, where $s=\sum \beta$ is the segment LCU normalization and is chosen near 2 by taking $r=\lceil \Lambda t/\ln 2\rceil$, using:
    - A cascade of controlled $R_y(\theta_k)$ rotations on a unary-encoded $|k\rangle$ register, with angles $\theta_k = 2\arcsin\!\left(\sqrt{1 - \frac{(\Lambda t/r)^{k-1}/(k-1)!}{\sum_{q=k}^{K}(\Lambda t/r)^q/q!}}\right)$. This distributes probability across Taylor orders proportional to $(\Lambda t/r)^k / k!$.
    - $K$ copies of prepare$(W)$, each preparing the coefficient state for the $\gamma$-register from the classical database. Cost: $O(\Gamma)$ gates per copy.
 4. **SELECT:** $K$ sequential controlled applications of select$(H)$, which applies $H_\gamma$ conditioned on $|\gamma\rangle$. Each select$(H)$ costs $O(N)$ gates via [[Dynamic SELECT for Second-Quantized Hamiltonians|dynamic Pauli-string construction]] from the orbital indices.
@@ -64,7 +64,7 @@ where $W(z)$ encodes the molecular integrals as a function of the auxiliary vari
 2. **Discretise** the integral on $M$ quadrature points, giving $H \approx \sum_{m=1}^{M} W(z_m) H(z_m) \Delta z$.
 
 3. **PREPARE now has two parts:**
-   - Prepare the quadrature-point register: a superposition over $m$ with amplitudes proportional to $\sqrt{|W(z_m)|}$. This is the [[On-the-Fly Coherent Molecular Integral Computation|on-the-fly integral computation]] — evaluating the Gaussian basis functions at each quadrature point using $O(\log N)$ ancilla arithmetic.
+   - Prepare the quadrature-point register: a superposition over $m$ with amplitudes proportional to $\sqrt{|W(z_m)|}$. This is the [[On-the-Fly Coherent Molecular Integral Computation|on-the-fly integral computation]] — evaluating Gaussian/Boys-function quantities and quadrature weights with reversible arithmetic whose precision-dependent costs are hidden in the $\widetilde{O}$ notation.
    - Prepare the orbital-index register conditioned on $z_m$: because the integrand factorises (each two-electron integral decomposes into products of one-electron integrals when expressed via the auxiliary variable), this costs only $O(N)$ instead of $O(N^2)$.
 
 4. **SELECT** is the same as Algorithm 1: $O(NK)$ gates.
@@ -78,13 +78,13 @@ where $W(z)$ encodes the molecular integrals as a function of the auxiliary vari
 | Quantity | Database algorithm | On-the-fly algorithm |
 |---|---|---|
 | Gate count | $\widetilde{O}(N^8 t)$ | $\widetilde{O}(N^5 t)$ |
-| Precision dependence | $O(\log(1/\varepsilon) \log\log(1/\varepsilon))$ | Same |
+| Precision dependence | $O(\log(1/\varepsilon)/\log\log(1/\varepsilon))$ | Same |
 | Qubits (system) | $\Theta(N)$ | $\Theta(N)$ |
 | Ancilla qubits | $\Theta(K \log \Gamma)$ | $\Theta(K \log(M\mu))$ |
 | PREPARE cost per call | $O(\Gamma) = O(N^4)$ | $O(N)$ |
 | SELECT cost per call | $O(NK)$ | $O(NK)$ |
 
-The $\widetilde{O}$ suppresses $\text{polylog}(N, 1/\varepsilon)$ factors from the Taylor truncation order $K$.
+The $\widetilde{O}$ suppresses $\text{polylog}(N, 1/\varepsilon)$ factors from the Taylor truncation order $K$, coefficient arithmetic, and quadrature precision.
 
 ---
 
@@ -92,12 +92,12 @@ The $\widetilde{O}$ suppresses $\text{polylog}(N, 1/\varepsilon)$ factors from t
 
 | Method | Gate count | Precision scaling | Year |
 |---|---|---|---|
-| Trotter-Suzuki (2nd order) | $O(N^{10} t^2 / \varepsilon)$ | $O(1/\varepsilon)$ | Pre-2015 |
+| Fixed-order Trotter-Suzuki (2nd order) | $O(N^{10} t^2 / \varepsilon)$ | $O(1/\varepsilon)$ | Pre-2015 |
 | [[Chemical Basis of Trotter-Suzuki Errors in Quantum Chemistry Simulation (Babbush-McClean-Wecker-Aspuru-Guzik-Wiebe 2015) — Paper Notes\|Babbush et al. (2015) Trotter analysis]] | Tighter empirically but still $\text{poly}(1/\varepsilon)$ | $\text{poly}(1/\varepsilon)$ | 2015 |
 | This paper (database) | $\widetilde{O}(N^8 t)$ | $\log(1/\varepsilon)$ | 2015 |
 | This paper (on-the-fly) | $\widetilde{O}(N^5 t)$ | $\log(1/\varepsilon)$ | 2015 |
 
-The jump from $\text{poly}(1/\varepsilon)$ to $\log(1/\varepsilon)$ is the paper's main contribution to chemistry simulation. The $N$-dependence is less competitive — later work ([[Sublinear-T Block-Encodings for Second-Quantized Hamiltonians (arXiv 2510.08644) — Paper Notes|sublinear block-encoding methods]], double factorisation, tensor hypercontraction) substantially reduces the $N$-scaling.
+The jump from fixed-order product-formula $\text{poly}(1/\varepsilon)$ precision scaling to logarithmic precision scaling is the paper's main contribution to chemistry simulation. The $N$-dependence is less competitive — later work using sparse qubitization, low-rank/double factorization, tensor hypercontraction, and first-quantized plane-wave methods substantially reduces the $N$-scaling under different input models.
 
 ---
 

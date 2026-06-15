@@ -39,6 +39,7 @@ The separation is for *partial* (promise) Boolean functions. For total functions
 ## Related notes
 - [[BQP and the Polynomial Hierarchy (Aaronson 2010) — Paper Notes]] — introduced Forrelation
 - [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes]] — proved the $\tilde{\Omega}(\sqrt{N})$ lower bound and optimality
+- [[Exponential Quantum Advantage in Processing Massive Classical Data (Zhao, Zlokapa, Neven et al 2026) — Paper Notes]] — reuses a Forrelation-style oracle separation to motivate the bounded-space lower bound behind [[Quantum Oracle Sketching]].
 - [[Gaussian Lifting for Query Lower Bounds]]
 - [[Near-Orthogonality of Standard-Fourier Basis Pairs]]
 - [[Block-Multilinear Polynomial Simulation of Quantum Queries]]

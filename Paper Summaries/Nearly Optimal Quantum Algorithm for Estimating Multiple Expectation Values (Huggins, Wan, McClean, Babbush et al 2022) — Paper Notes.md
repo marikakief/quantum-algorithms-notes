@@ -8,6 +8,8 @@
 
 Given a state $|\psi\rangle$ prepared by a unitary oracle $U_\psi$, and $M$ Hermitian operators $\{O_j\}$ with $\|O_j\| \leq 1$, estimate each $\langle \psi | O_j | \psi \rangle$ to within additive error $\varepsilon$ with probability $\geq 2/3$. The cost measure is the number of queries to $U_\psi$ and $U_\psi^\dagger$.
 
+The headline advantage is therefore a **state-preparation query** advantage. The algorithm also needs controlled implementations of $e^{-ixO_j}$, additional index qubits, and classical post-processing; those resources must be counted separately in applications.
+
 This is the multi-observable generalisation of the standard expectation value estimation problem. It arises naturally in quantum chemistry (measuring RDMs, dipole moments, forces), condensed matter (correlation functions), and anywhere a quantum simulation needs to extract multiple properties from a single prepared state.
 
 ## What the paper does
@@ -44,7 +46,7 @@ Applied to $|0\rangle \otimes |0\rangle$, this gives:
 
 $$F(x)|0\rangle|0\rangle = \sqrt{f(x)}\,|1\rangle|\phi_1(x)\rangle + \sqrt{1-f(x)}\,|0\rangle|\phi_0(x)\rangle$$
 
-This is a probability oracle for $f$ in the sense of Gilyen et al. Each call uses exactly one query to $U_\psi$.
+This is a probability oracle for $f$ in the sense of Gilyen et al. At this level, a call uses the state-preparation oracle to create $|\psi\rangle$ and the full gradient algorithm uses the probability oracle and its inverse, so the query accounting is in calls to $U_\psi$ and $U_\psi^\dagger$ rather than in a single forward state preparation only.
 
 ### Step 3: Add quantum controls for the gradient algorithm
 
@@ -89,12 +91,21 @@ This generalisation replaces $B_{\max}\sqrt{M}$ with $\|\vec{B}\|_2$, which can 
 
 | Method | Query complexity | Regime | Notes |
 |---|---|---|---|
-| Sampling (commuting groups) | $O(G \log M / \varepsilon^2)$ | All $\varepsilon$ | $G$ = number of commuting groups; works with copies of $\|\psi\rangle$, no oracle needed |
+| Sampling (commuting groups) | $O(G \log M / \varepsilon^2)$ | All $\varepsilon$ | $G$ = number of commuting groups; works with copies of $|\psi\rangle$, no oracle needed |
 | [[Pauli Expectation Value Estimation\|Amplitude estimation]] | $\tilde{O}(M/\varepsilon)$ | All $\varepsilon$ | Each observable estimated separately |
 | Shadow tomography | $O(\log M / \varepsilon^4)$ | All $\varepsilon$ | Works with copies; bad $\varepsilon$ scaling |
 | **This paper (gradient)** | $\tilde{O}(\sqrt{M}/\varepsilon)$ | $\varepsilon < 1/(3\sqrt{M})$ | Requires oracle access + controlled time evolution |
 
 The gradient approach is optimal in the high-precision regime. For commuting observables with $G \ll M$, sampling can beat it when $\varepsilon > 1/\sqrt{M}$ (since $G\log M / \varepsilon^2 < \sqrt{M}/\varepsilon$ there). The paper discusses hybrid strategies (Appendix G) that interpolate between the two.
+
+Resource split for the gradient method:
+
+| Resource | Scaling message |
+|---|---|
+| State-preparation queries | $\widetilde O(\sqrt M/\varepsilon)$ and worst-case optimal in the high-precision regime |
+| Controlled $e^{-ixO_j}$ gates | required coherently inside the probability oracle; can dominate depth depending on implementation |
+| Extra qubits | $O(M\log(1/\varepsilon)+N)$ before space-query tradeoffs |
+| Classical work | median/repetition and post-processing overheads are not the bottleneck in the query theorem |
 
 ### Application: $k$-body RDMs
 
@@ -106,7 +117,7 @@ For $M$ two-point dynamic correlation functions $C_{A,B}(t) = \langle \psi | U(0
 - State preparation queries: $\tilde{O}(\sqrt{M}/\varepsilon)$ (vs $\tilde{O}(M/\varepsilon)$ for amplitude estimation)
 - Time evolution: $\tilde{O}(\sqrt{M}\, t_M / \varepsilon)$ (vs $\tilde{O}(\sum_j t_j \log M / \varepsilon)$)
 
-The advantage in total time evolution depends on the time-point distribution. For evenly spaced points at interval $\Delta$: $\tilde{O}(M^{3/2}\Delta/\varepsilon)$ vs $\tilde{O}(M^2 \Delta^2 / \varepsilon)$.
+The advantage in total time evolution depends on the time-point distribution. For evenly spaced points at interval $\Delta$, use the source formulas for the exact $\Delta$ dependence; the qualitative point is that the state-preparation query saving and the controlled-time-evolution cost are separate resources.
 
 ## Limits / caveats
 

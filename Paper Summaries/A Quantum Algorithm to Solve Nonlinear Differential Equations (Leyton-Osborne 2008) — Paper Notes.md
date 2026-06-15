@@ -1,3 +1,5 @@
+# A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes
+
 > **Source:** Sarah K. Leyton, Tobias J. Osborne, *A quantum algorithm to solve nonlinear differential equations*, arXiv:0812.4423, 2008
 > **Links:** [arXiv](https://arxiv.org/abs/0812.4423)
 > **Tags:** #nonlinear-ODE #quantum-algorithm #differential-equations #Euler-method #polynomial-map #nondeterministic
@@ -20,9 +22,9 @@ using $O(\log n)$ qubits.
 
 This is the first attempt at a quantum algorithm for nonlinear ODEs. The approach is conceptually simple: implement Euler's method on the probability amplitudes of a quantum state, where each Euler step is a nonlinear polynomial map $z \mapsto z + h\cdot f(z)$. Since quantum mechanics is linear, implementing a nonlinear transformation requires consuming multiple copies of the input state and postselecting — making the algorithm nondeterministic.
 
-The resources scale as $\text{poly}(\log n)$ in the number of variables (exponential improvement over classical $O(n)$), but exponentially in the integration time $t$ and inverse step size $1/h$. This exponential-in-$t$ scaling was the central limitation that later work by [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu-Kolden-Krovi et al. (2021)]] addressed via [[Carleman Linearisation for Quantum Nonlinear ODE Solvers|Carleman linearisation]].
+The resources scale as $\text{poly}(\log n)$ in the number of variables (exponential improvement over classical $O(n)$ for state-output tasks), but exponentially in the number of Euler steps $m=t/h$. This copy-count bottleneck was the central limitation that later work by [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu-Kolden-Krovi et al. (2021)]] addressed under strong dissipativity assumptions via [[Carleman Linearisation for Quantum Nonlinear ODE Solvers|Carleman linearisation]].
 
-**My assessment:** This is a historically important proof-of-concept, not a practical algorithm. The exponential scaling in $t$ and $1/h$ is devastating — you're paying exponentially to run a first-order method that has poor convergence even classically. The paper is upfront about this limitation. The real contribution is the conceptual insight that nonlinear amplitude transformations can be implemented nondeterministically by consuming tensor products of the state and postselecting. This idea influenced all subsequent work in the area, even though the specific implementation (Euler's method) was superseded. The paper also raised the prescient question of whether a polynomial-in-$\log t$ algorithm exists — a question partially answered (positively, under conditions) by the Carleman linearisation papers.
+**My assessment:** This is a historically important proof-of-concept, not a practical algorithm. The exponential scaling in $m=t/h$ is devastating — you're paying exponentially to run a first-order method that has poor convergence even classically. The paper is upfront about this limitation. The real contribution is the conceptual insight that nonlinear amplitude transformations can be implemented nondeterministically by consuming tensor products of the state and postselecting. This idea influenced subsequent nonlinear-ODE quantum algorithms, even though the specific implementation (Euler's method) was superseded. The paper also raised the prescient question of whether dramatically better time dependence is possible; later Carleman-linearisation papers obtain polynomial or near-linear dependence on evolution time only in stable/dissipative regimes, not a general polynomial-in-$\log t$ algorithm.
 
 ---
 
@@ -36,29 +38,31 @@ Construct the operator $A = \sum_{\alpha,k,l} a_{kl}^{(\alpha)} |\alpha 0\rangle
 
 $$H = -iA \otimes |1\rangle_P\langle 0| + iA^\dagger \otimes |0\rangle_P\langle 1|$$
 
-using an ancilla pointer qubit $P$. Evolve the initial state $|\phi\rangle|\phi\rangle|0\rangle_P$ under $H$ for time $\varepsilon$:
+using an ancilla pointer qubit $P$. Evolve the initial state $|\phi\rangle|\phi\rangle|0\rangle_P$ under $H$ for a short simulation time $\varepsilon_{\rm sim}$:
 
-$$e^{i\varepsilon H}|\phi\rangle|\phi\rangle|0\rangle = |\phi\rangle|\phi\rangle|0\rangle + \varepsilon A|\phi\rangle|\phi\rangle|1\rangle + O(\varepsilon^2).$$
+$$e^{i\varepsilon_{\rm sim} H}|\phi\rangle|\phi\rangle|0\rangle = |\phi\rangle|\phi\rangle|0\rangle + \varepsilon_{\rm sim} A|\phi\rangle|\phi\rangle|1\rangle + O(\varepsilon_{\rm sim}^2).$$
 
-Since $A|\phi\rangle|\phi\rangle = \frac{1}{\sqrt{2}}|\phi'\rangle|0\rangle$ where $|\phi'\rangle$ encodes $f_\alpha(z)$, measuring the pointer qubit and postselecting on $|1\rangle$ yields $|\phi'\rangle$ with probability $\approx \varepsilon^2/2$.
+Since $A|\phi\rangle|\phi\rangle = \frac{1}{\sqrt{2}}|\phi'\rangle|0\rangle$ where $|\phi'\rangle$ encodes $f_\alpha(z)$, measuring the pointer qubit and postselecting on $|1\rangle$ yields $|\phi'\rangle$ with probability $\approx \varepsilon_{\rm sim}^2/2$. This short-time parameter is distinct from the final ODE accuracy parameter used in later algorithm comparisons.
 
-**Sparsity assumptions:** The algorithm requires that each polynomial $f_\alpha$ involves at most $s = O(1)$ monomials, and each variable appears in at most $O(1)$ polynomials. This ensures efficient Hamiltonian simulation of $H$ in $\text{poly}(\log n)$ time.
+**Sparsity assumptions:** The algorithm requires that each polynomial $f_\alpha$ involves at most $s = O(1)$ monomials, and each variable appears in at most $O(1)$ polynomials. These are promises on the polynomial description and variable-incidence graph, not merely on the encoded solution vector. They ensure efficient Hamiltonian simulation of $H$ in $\text{poly}(\log n)$ time.
+
+This is still ordinary linear quantum mechanics. The nonlinearity is not a physical nonlinear quantum operation; it is induced by preparing tensor-product copies, applying a linear operator that selects monomials, and postselecting.
 
 ### Euler integration
 
 To advance from $|\phi(t)\rangle$ to $|\phi(t+h)\rangle$:
 1. Apply the nonlinear transformation to implement $z \mapsto z + hf(z)$
-2. Each step consumes 2 copies and succeeds with probability $\approx \varepsilon^2/2$
-3. For $m = t/h$ steps, start with $(16/\varepsilon^2)^m$ copies of $|\phi(0)\rangle$
+2. Each step consumes 2 copies and succeeds with probability $\approx \varepsilon_{\rm sim}^2/2$
+3. For $m = t/h$ steps, start with $(16/\varepsilon_{\rm sim}^2)^m$ copies of $|\phi(0)\rangle$
 4. Apply the transformation in parallel, discarding failures at each round
 
 ### Resource analysis
 
-The total number of initial copies needed is $N = (p/16)^{-m}$ where $p = \varepsilon^2/2$, i.e., **exponential in $m = t/h$**.
+The total number of initial copies needed is $N = (p/16)^{-m}$ where $p = \varepsilon_{\rm sim}^2/2$, i.e., **exponential in $m = t/h$**.
 
-**Spatial resources:** $O((16/\varepsilon^2)^m \log n)$ — polynomial in $\log n$, exponential in $m$.
+**Spatial resources:** $O((16/\varepsilon_{\rm sim}^2)^m \log n)$ — polynomial in $\log n$, exponential in $m$.
 
-**Running time:** $T \sim m\, \text{poly}(\log n \cdot \log^* n)\, s^2\, 9^{\kappa\sqrt{m}}$ — subexponential in $m$, polynomial in $\log n$.
+**Running time:** $T \sim m\, \text{poly}(\log n \cdot \log^* n)\, s^2\, 9^{\kappa\sqrt{m}}$ — subexponential in $m$, polynomial in $\log n$. Here $\kappa$ is the parameter entering the cited sparse-Hamiltonian simulation bound, while $\gamma$ below is a sparsity/error-growth constant and $\eta$ is per-step simulation error.
 
 **Error accumulation:** After $m$ steps, the error satisfies $\delta_m \leq \eta \frac{(3\gamma)^{m+1} - 1}{3\gamma - 1}$ where $\eta$ is the per-step simulation error and $\gamma = O(s)$ depends on sparsity. This requires the simulation error to satisfy $\eta < (3\gamma)^{-m}$.
 
@@ -66,7 +70,7 @@ The total number of initial copies needed is $N = (p/16)^{-m}$ where $p = \varep
 
 ## Key results
 
-**Theorem (Proposition 1):** Starting with $N = (p/16)^{-m}$ copies (where $p = \varepsilon^2/2$), Algorithm 1 produces at least one copy of $|\phi^{(m)}\rangle$ (encoding the $m$-th Euler iterate) with probability $\geq 1/3$ for $m \geq 6$.
+**Theorem (Proposition 1):** Starting with $N = (p/16)^{-m}$ copies (where $p = \varepsilon_{\rm sim}^2/2$), Algorithm 1 produces at least one copy of $|\phi^{(m)}\rangle$ (encoding the $m$-th Euler iterate) with probability $\geq 1/3$ for $m \geq 6$.
 
 **Theorem (Proposition 2):** The accumulated error after $m$ iterations is bounded by $\delta_m \leq \eta \frac{(3\gamma)^{m+1}-1}{3\gamma-1}$ where $\eta$ is the per-step Hamiltonian simulation error and $\gamma = O(s)$.
 
@@ -75,7 +79,7 @@ The total number of initial copies needed is $N = (p/16)^{-m}$ where $p = \varep
 | Resource | Scaling |
 |---|---|
 | Qubits per copy | $O(\log n)$ |
-| Total copies needed | $(16/\varepsilon^2)^m$ |
+| Total copies needed | $(16/\varepsilon_{\rm sim}^2)^m$ |
 | Per-step simulation | $\text{poly}(\log n)$ |
 | Integration steps | $m = t/h$ |
 | Total time | $\text{poly}(\log n) \cdot \exp(O(m))$ |
@@ -105,7 +109,7 @@ The key advance from Leyton-Osborne to the Carleman papers: instead of directly 
 
 4. **Sparsity restrictions:** Each polynomial and each variable must appear in $O(1)$ terms. This excludes fully coupled systems like dense Navier-Stokes discretisations.
 
-5. **Only published as preprint:** Never appeared in a journal. The analysis is correct but limited — the error bounds are loose and the algorithm was never optimised.
+5. **Only published as preprint:** Never appeared in a journal. The analysis is internally consistent for the stated model but loose and limited, and the algorithm was never optimised.
 
 ---
 
@@ -117,7 +121,7 @@ The key advance from Leyton-Osborne to the Carleman papers: instead of directly 
 
 ## References within this paper
 
-- [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — cited as the inspiration; the operator $A$ and simulation approach are directly adapted from HHL
+- [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|Harrow-Hassidim-Lloyd (2009)]] — cited as inspiration; HHL circulated as an arXiv preprint in 2008, but should not be read here as a mature prior literature line
 - Berry-Ahokas-Cleve-Sanders (2007) — [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|sparse Hamiltonian simulation]], provides the simulation subroutine
 - Grover-Rudolph (2002) — [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|state preparation for initial conditions]]
 

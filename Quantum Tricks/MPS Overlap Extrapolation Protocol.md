@@ -5,7 +5,7 @@
 
 ## What it does
 
-Estimates the overlap of a finite-bond-dimension MPS with an effectively exact state using only overlaps among lower-bond-dimension MPS approximations.
+Estimates the squared overlap of a finite-bond-dimension MPS with an effectively exact state using only overlaps among lower-bond-dimension MPS approximations.
 
 ## The trick
 
@@ -25,7 +25,7 @@ $$
 
 Use lower-bond-dimension states $M'$ and somewhat larger reference states $M''$ to infer the unknown infinite-bond-dimension overlap, then extrapolate to the target $M$.
 
-The point is not rigor. The point is to get a workable overlap estimate for QPE resource counting in systems where DMRG can still generate useful candidate states but not a certifiably exact ground state.
+The point is not rigor. The point is to get a workable squared-overlap estimate for QPE resource counting in systems where DMRG can still generate useful candidate states but not a certifiably exact ground state.
 
 ## When to reach for it
 
@@ -35,11 +35,11 @@ The point is not rigor. The point is to get a workable overlap estimate for QPE 
 
 ## Complexity
 
-Classical post-processing only. The benefit is indirect: it lets you replace a vague overlap assumption with a fitted value, which then determines the QPE repetition cost.
+Classical post-processing only. The benefit is indirect: it lets you replace a vague overlap assumption with a fitted value. Standard repeated QPE depends on the squared overlap $p$ as $1/p$, while amplitude-amplified or binary-search variants can depend on the amplitude overlap $\sqrt{p}$ differently.
 
 ## Caveat
 
-This is empirical. It is not a theorem, and if the linear trends in $(\log M)^2$ break down, the estimate can drift badly. It is best used with validation on smaller instances from the same family.
+This is empirical. It is not a theorem or a rigorous lower bound on QPE success probability, and if the linear trends in $(\log M)^2$ break down, the estimate can drift badly. It is best used with validation on smaller instances from the same family and uncertainty bars propagated into the QPE resource estimate.
 
 ## Related notes
 - [[Rapid Initial State Preparation for the Quantum Simulation of Strongly Correlated Molecules (Berry, Tong, Babbush, Rubin et al 2024) — Paper Notes]]

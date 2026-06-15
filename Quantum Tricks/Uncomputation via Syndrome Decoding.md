@@ -34,6 +34,8 @@ The decoder must be implemented as a reversible circuit, which can substantially
 
 ## Related notes
 - [[Optimization by Decoded Quantum Interferometry (Jordan, Shutty, Wootters, Babbush et al 2024) — Paper Notes]]
+- [[Verifiable Quantum Advantage via Optimized DQI Circuits (Khattar, Shutty, Gidney et al 2025) — Paper Notes]]
+- [[Sequential Syndrome Accumulation with Measurement-Based Error Uncomputation]]
 - [[DQI Semicircle Law for Optimization-Decoding Duality]]
 - [[QFT-Based Amplitude Shaping via Polynomial Evaluation]]
 - [[Optimization-to-Decoding Reduction via Code Duality]]

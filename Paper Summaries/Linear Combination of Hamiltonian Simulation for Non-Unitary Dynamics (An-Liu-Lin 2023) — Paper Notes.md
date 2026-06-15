@@ -1,3 +1,5 @@
+# Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes
+
 > **Source:** Dong An, Jin-Peng Liu, and Lin Lin, *Linear combination of Hamiltonian simulation for nonunitary dynamics with optimal state preparation cost*, Phys. Rev. Lett. **131**, 150603 (2023), arXiv:2303.01029
 > **Links:** [arXiv](https://arxiv.org/abs/2303.01029) · [PRL](https://doi.org/10.1103/PhysRevLett.131.150603)
 > **Tags:** #quantum-algorithm #non-unitary #LCHS #differential-equations #hamiltonian-simulation #LCU #open-quantum-systems #Cauchy-kernel
@@ -28,7 +30,7 @@ $$\mathcal{T} e^{-\int_0^t A(s)\,ds} = \int_{\mathbb{R}} \frac{1}{\pi(1+k^2)} \m
 
 This is a continuous [[Linear Combination of Unitaries (LCU)|LCU]] where the "unitaries" are time-dependent Hamiltonian simulations parametrised by a frequency $k$, and the weight function is the Cauchy-Lorentz distribution $1/(\pi(1+k^2))$.
 
-The result achieves **optimal state-preparation cost** $O(q)$ where $q = (\|u_0\| + \|b\|_{L^1})/\|u(T)\|$, matching the lower bound from [An-Liu-Wang-Zhao 2022]. Prior QLSP-based methods required $O(q \cdot \|A\|T \cdot \log(1/\varepsilon))$ state-preparation queries.
+The result achieves **optimal state-preparation cost** $O(q)$ where $q = (\|u_0\| + \|b\|_{L^1})/\|u(T)\|$, matching the $\Omega(q)$ state-preparation lower bound cited as Corollary 16 of An-Liu-Wang-Zhao (2022) in the paper. Prior QLSP-based methods required $O(q \cdot \|A\|T \cdot \log(1/\varepsilon))$ state-preparation queries.
 
 **My assessment:** This is a genuinely new idea, not an incremental improvement on existing machinery. The mathematical core — a matrix Cauchy integral identity that avoids the spectral mapping theorem entirely — is elegant. The practical limitation is clear: the Cauchy kernel $1/(1+k^2)$ decays only quadratically, so the frequency cutoff $K = O(1/\varepsilon)$ makes the matrix-query cost scale as $1/\varepsilon$ rather than $\mathrm{polylog}(1/\varepsilon)$. This is the paper's main weakness, and it was the motivation for the follow-up [[Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes|An-Childs-Lin (2023)]], which replaces the Cauchy kernel with a [[Near-Optimal Hardy-Space Kernel for LCHS|near-optimal Hardy-space kernel]] to get polylog precision.
 
@@ -46,7 +48,7 @@ Write $A(t) = L(t) + iH(t)$, where $L(t) = (A + A^\dagger)/2$ (Hermitian, $\succ
 
 The identity generalises the scalar Fourier representation $e^{-|x|} = \int_{\mathbb{R}} \frac{1}{\pi(1+k^2)} e^{-ikx}\,dk$. For the scalar case with $H = 0$ and constant $L$, this follows from the spectral mapping theorem. The general proof — time-dependent, non-commuting $H$ and $L$ — uses a **matrix Cauchy integral theorem** without spectral mapping.
 
-**Proof sketch (Lemma 4 in supplement):** Consider $\omega = ik$ as a complex variable. The integrand $\frac{1}{1+ik} e^{-i(H+kL)}$ is analytic in $\omega$ in the right half-plane (since $\mathrm{Re}(\omega) > 0$ gives exponential decay $e^{-\mathrm{Re}(\omega) L}$ when $L \succ 0$). Close the contour with a semicircle $\gamma_C$ in the right half-plane. On $\gamma_C$ with $R \to \infty$:
+**Proof sketch (Lemma 4 in supplement):** The proof treats the integration parameter as a complex variable and uses a matrix Cauchy integral theorem in the half-plane where the $L\succeq0$ term gives decay. In the time-independent scalarized picture, this can be viewed as analyticity of the transformed integrand together with exponential damping from the Hermitian part. On the closing contour with radius $R \to \infty$:
 - For most angles $\theta$: the $e^{-R\cos\theta \cdot L}$ factor kills the integrand (since $L \succ 0$).
 - Near $\theta = \pm \pi/2$: the arc length $\sim 1/\sqrt{R} \to 0$.
 
@@ -62,7 +64,7 @@ $$u(T) \approx \sum_{j=0}^{M} c_j U_j(T) u_0, \quad c_j = \frac{w_j}{\pi(1+k_j^2
 
 Each $U_j$ is a time-dependent [[Hamiltonian simulation]] problem, implementable via [[Product Formulas]] or the truncated Dyson series. All $U_j$ share the same Trotterisation structure — they differ only in the parameter $k_j$ multiplying $L$.
 
-The SELECT oracle $\mathrm{SEL}_L(s, \tau) = \sum_j |j\rangle\langle j| \otimes e^{-iL(\tau)k_j s}$ is built with $O(\log M)$ queries to $O_L$ using binary decomposition of $k_j$ (Lemma 10). The PREPARE oracle creates $|0\rangle \to \frac{1}{\sqrt{\|c\|_1}} \sum_j \sqrt{c_j}|j\rangle$.
+The SELECT oracle $\mathrm{SEL}_L(s, \tau) = \sum_j |j\rangle\langle j| \otimes e^{-iL(\tau)k_j s}$ is built with $O(\log M)$ queries to $O_L$ using binary decomposition of $k_j$ (Lemma 10). The PREPARE oracle creates $|0\rangle \to \frac{1}{\sqrt{\|c\|_1}} \sum_j \sqrt{c_j}|j\rangle$ in the positive Cauchy-kernel case. More general signed or complex kernels require phases in PREPARE.
 
 ### Step 4: Inhomogeneous term via Duhamel's principle
 
@@ -78,11 +80,11 @@ The LCU succeeds with probability $\sim (\|u(T)\|/(\|c\|_1 \|u_0\|))^2$. Since $
 
 ### Hybrid implementation
 
-For computing observables $u(T)^* O u(T)$ without state preparation, use classical Monte Carlo sampling over the Cauchy distribution plus the non-unitary Hadamard test (Lemma 7) for each pair $(k, k')$. The sampling complexity is $O(\|O\|^2/\varepsilon^2)$ and each quantum circuit uses $O(\alpha_O/\varepsilon)$ queries.
+For computing observables $u(T)^* O u(T)$ without state preparation, use classical Monte Carlo sampling over the Cauchy distribution plus the non-unitary Hadamard test (Lemma 7) for each pair $(k, k')$. This is a hybrid estimator: the classical sampling overhead and the quantum observable-estimation/query cost are separate resources.
 
 ### Interaction picture for fast-forwardable $L$
 
-When $L$ is fast-forwardable (e.g., diagonal), switch to the interaction picture: $H_I(s; k) = e^{ikLs} H(s) e^{-ikLs}$. The LCHS becomes:
+As a special case, when $L$ is fast-forwardable (e.g., diagonal), switch to the interaction picture: $H_I(s; k) = e^{ikLs} H(s) e^{-ikLs}$. The LCHS becomes:
 
 $$\mathcal{T}e^{-\int_0^t A(s)\,ds} \approx \sum_j c_j e^{-ik_jLt} \left(\mathcal{T}e^{-i\int_0^t H_I(s;k_j)ds}\right) e^{ik_jLt}.$$
 
@@ -96,7 +98,7 @@ Now $K$ only enters through the *derivative* of $H_I$, and the truncated Dyson s
 
 $$\tilde{O}\left(\left(\frac{\|u_0\| + \|b\|_{L^1}}{\|u(T)\|}\right)^{2+2/p} \frac{\Gamma_p^{1+1/p} T^{1+1/p}}{\varepsilon^{1+2/p}}\right),$$
 
-where $\Gamma_p = \max_{0 \leq q \leq p, \tau} (\|H^{(q)}(\tau)\| + \|L^{(q)}(\tau)\|)^{1/(q+1)}$.
+where $\Gamma_p = \max_{0 \leq q \leq p, \tau} (\|H^{(q)}(\tau)\| + \|L^{(q)}(\tau)\|)^{1/(q+1)}$ is the smoothness/derivative parameter controlling the order-$p$ product-formula simulation cost.
 
 **Theorem 3 (Open quantum dynamics with complex absorbing potential):** For the Schrödinger equation with imaginary potential $i\partial_t u = (-\frac{1}{2}\Delta + V_R(t) - iV_I)u$, with $V_I$ diagonal and fast-forwardable:
 
@@ -145,7 +147,7 @@ The key trade-off: LCHS achieves optimal state-preparation cost but pays $O(1/\v
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2015)]] — truncated Taylor series for near-optimal Hamiltonian simulation [8]
 - [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs-Kothari-Somma (2015)]] — Fourier/Chebyshev LCU for QLSP [10]
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] — QSP for Hamiltonian simulation [11]
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — QSVT [12], which LCHS explicitly avoids
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén-Su-Low-Wiebe (2019)]] — QSVT [12]; LCHS avoids a QLSA-style solve in its main construction, although Hamiltonian-simulation subroutines can still be implemented with QSP/QSVT machinery
 - [[QET-U — Ground-State Preparation and Energy Estimation on Early Fault-Tolerant QC (Dong-Lin-Tong 2022) — Paper Notes|Dong-Lin-Tong (2022)]] — QETU [13]
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes|Wiebe-Berry-Høyer-Sanders (2010)]] — product formula for time-dependent Hamiltonians [22]
 - **Low-Wiebe (2019)** — interaction picture Hamiltonian simulation [23]. Not in the vault as a standalone note.

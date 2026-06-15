@@ -9,9 +9,9 @@ Detects or finds a marked vertex in a tree that is defined implicitly (not known
 
 ## The trick
 
-Build a coinless quantum walk on the tree using local diffusion operators $D_x$ that reflect about the uniform superposition of a vertex and its children. Partition vertices into even-depth ($A$) and odd-depth ($B$) sets; one walk step is $R_B R_A$ where $R_A = \bigoplus_{x \in A} D_x$ and $R_B = |r\rangle\langle r| + \bigoplus_{x \in B} D_x$. Marked vertices have $D_x = I$ (identity — the walk "sticks" there).
+Build a coinless quantum walk on the tree using local diffusion operators $D_x$ that reflect about the normalized superposition of a vertex and its children. Implementing these local reflections requires reversible computation of the children using the predicate $P$ and heuristic $h$. Partition vertices into even-depth ($A$) and odd-depth ($B$) sets; one walk step is $R_B R_A$ where $R_A = \bigoplus_{x \in A} D_x$ and $R_B = |r\rangle\langle r| + \bigoplus_{x \in B} D_x$. Marked vertices have $D_x = I$ (identity — the walk "sticks" there).
 
-The root diffusion gets extra weight $\sqrt{n}$ on its children to ensure the eigenvalue-1 eigenvector has $\Omega(1)$ overlap with $|r\rangle$. When a marked vertex exists, this eigenvector is:
+The root diffusion gets extra weight $\sqrt{n}$ on its children, where $n$ is the maximum depth, to ensure the eigenvalue-1 eigenvector has $\Omega(1)$ overlap with $|r\rangle$. When a marked vertex exists, this eigenvector is:
 
 $$|\phi\rangle = \sqrt{n}|r\rangle + \sum_{x \neq r,\, x \rightsquigarrow x_0} (-1)^{\ell(x)} |x\rangle$$
 
@@ -19,7 +19,7 @@ with $|\langle r | \phi' \rangle| \geq 1/\sqrt{2}$. Detection reduces to disting
 
 The no-marked-vertex case uses the effective spectral gap lemma to bound the weight of $|r\rangle$ on near-1 eigenvalues.
 
-This is Belovs' quantum-walk–effective-resistance connection specialised to trees: the detection complexity scales with $\sqrt{R_{\text{eff}} \cdot T}$ where $R_{\text{eff}}$ is the effective resistance from root to marked set. For trees of depth $n$, this gives $O(\sqrt{Tn})$.
+This is Belovs' quantum-walk–effective-resistance connection specialised to trees: the detection complexity scales with $\sqrt{R_{\text{eff}} \cdot T}$ where $T$ is an upper bound on the number of vertices and $R_{\text{eff}}$ is the effective resistance from root to marked set. For trees of depth at most $n$, $R_{\text{eff}} \leq n$, giving $O(\sqrt{Tn})$.
 
 ## When to reach for it
 
@@ -32,11 +32,11 @@ The key departure from [[Quantum Speed-Up of Markov Chain Based Algorithms (Szeg
 
 ## Complexity
 
-$O(\sqrt{Tn} \log(1/\delta))$ evaluations of $P$ and $h$ for detection. $O(\sqrt{T} n^{3/2} \log n)$ for finding a solution.
+$O(\sqrt{Tn} \log(1/\delta))$ evaluations of $P$ and $h$ for detection, given an upper bound $T$ on tree size and failure probability $\delta$. $O(\sqrt{T} n^{3/2} \log n)$ for finding a solution under constant branching degree; nonconstant degree adds the cost of checking child subtrees and implementing higher-degree local reflections.
 
 ## Caveat
 
-The $\sqrt{n}$ depth overhead is necessary in the worst case ($\Omega(\sqrt{Tn})$ lower bound, Aaronson-Ambainis). Finding one of $k > 1$ marked vertices doesn't give a $1/\sqrt{k}$ improvement. If the classical algorithm is "lucky" and finds a solution early, the quantum algorithm may not beat it — it always explores the whole tree.
+The $\sqrt{n}$ depth overhead is necessary in the worst case ($\Omega(\sqrt{Tn})$ lower bound, Aaronson-Ambainis). Finding one of $k > 1$ marked vertices doesn't give a $1/\sqrt{k}$ improvement. If the classical algorithm is "lucky" and finds a solution early, the quantum algorithm may not beat it; the analysis is against an upper bound on the whole backtracking tree.
 
 ## Related notes
 - [[Quantum Walk Speedup of Backtracking Algorithms (Montanaro 2015) — Paper Notes]]

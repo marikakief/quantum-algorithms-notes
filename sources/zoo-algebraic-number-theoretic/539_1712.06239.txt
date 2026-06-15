@@ -1,0 +1,2565 @@
+
+---PAGE 1---
+arXiv:1712.06239v3  [quant-ph]  6 Aug 2018
+Quantum Algorithms for Boolean Equation Solving
+and Quantum Algebraic Attack on Cryptosystems∗
+Yu-Ao Chen1,2 and Xiao-Shan Gao1,2
+1KLMM, Academy of Mathematics and Systems Science
+Chinese Academy of Sciences, Beijing 100190, China
+2University of Chinese Academy of Sciences, Beijing 100049, China
+Email: xgao@mmrc.iss.ac.cn
+August 7, 2018
+Abstract
+Decision of whether a Boolean equation system has a solution is an NPC problem and ﬁnding
+a solution is NP hard. In this paper, we present a quantum algorithm to decide whether
+a Boolean equation system F has a solution and to compute one if F does have solutions
+with any given success probability. The runtime complexity of the algorithm is polynomial
+in the size of F and the condition number of F. As a consequence, we give a polynomial-
+time quantum algorithm for solving Boolean equation systems if their condition numbers are
+small, say polynomial in the size of F. We apply our quantum algorithm for solving Boolean
+equations to the cryptanalysis of several important cryptosystems: the stream cipher Trivum,
+the block cipher AES, the hash function SHA-3/Keccak, and the multivariate public key
+cryptosystems, and show that they are secure under quantum algebraic attack only if the
+condition numbers of the corresponding equation systems are large. This leads to a new
+criterion for designing cryptosystems that can against the attack of quantum computers:
+their corresponding equation systems must have large condition numbers.
+Keywords.
+Quantum algorithm, Boolean equation solving, polynomial system solving,
+HHL algorithm, condition number, stream cipher Trivum, block cipher AES, hash function
+SHA-3/Keccak, MPKC.
+AMS subject classiﬁcations. 68Q12, 68W30, 94A60.
+1
+Introduction
+As a major advance in quantum algorithm, Harrow, Hassidim, and Lloyd (HHL) proposed a
+quantum algorithm to solve a linear system Ax = |b⟩with complexity polynomial in log N, s,
+κ, and 1/ǫ, where N, s, κ are respectively the dimension, the sparseness, the condition number
+of A, and ǫ is the precision of the output. The HHL algorithm can be exponentially faster than
+classic algorithms if s and κ are small. Ambainis gave a new version of the HHL algorithm whose
+complexity is optimal in κ [2]. Childs, Kothari, and Somma gave a new quantum algorithm for
+linear equation solving, which exponentially improves the dependence on the precision [13].
+In this paper, based on the HHL algorithm, a quantum algorithm for Boolean equation
+solving will be given with complexity polynomial in the size of the input equation system and
+∗
+Partially supported by NSFC grants no. 11688101, no. 11101411.
+1
+
+
+---PAGE 2---
+the condition number of certain matrix derived from the equation system.
+Solving Boolean
+equations is a fundamental problem in theoretical computer science.
+Decision of whether a
+Boolean equation system has a solution is an NPC problem and ﬁnding a solution is NP hard.
+Our algorithm can be as much as exponentially faster than traditional algorithms for these NP
+hard problems under certain conditions.
+1.1
+Main results
+Let F = {f1, . . . , fr} be a set of Boolean polynomials in variables X = {x1, . . . , xn} and with
+total sparseness TF = Pr
+i=1 #fi, where #fi is the number of terms in fi. Then, we have
+Theorem 1.1. For ǫ ∈(0, 1), there is a quantum algorithm which decides whether F = 0 has
+a solution and computes one if F = 0 does have solutions, with probability at least 1 −ǫ and
+runtime (gate) complexity eO((n3.5 + T 3.5
+F )κ2 log 1/ǫ), where eO suppresses more slowly-growing
+logarithm terms and κ is the condition number of the Boolean polynomial system F (refer to
+Theorem 5.8 for deﬁnition).
+As a consequence, we can solve Boolean equation systems using quantum computers with
+any given success probability and in polynomial-time if the condition number κ of F and the
+sparseness TF of F are small, say when κ and TF are poly(n). Since TF is the size of the input to
+the algorithm, it should be small for practical problems. For instance, all the equation systems
+from cryptanalysis in Section 6 are very sparse. Therefore, the key factor is the condition number.
+As a consequence, we give a polynomial-time quantum algorithm for solving Boolean equation
+systems if their condition numbers are small, say the condition numbers are poly(n, TF).
+Let F = {f1, . . . , fr} ⊂C[X] be a set of polynomials with complex numbers as coeﬃcients
+and with total sparseness TF = Pr
+i=1 #fi. A solution a for F = 0 is called Boolean, if each
+coordinate of a is 0 or 1. Clearly, deciding whether F has a Boolean solution is NPC. We also
+give a quantum algorithm to compute Boolean solutions of F.
+Theorem 1.2. For ǫ ∈(0, 1), there is a quantum algorithm which decides whether F = 0 has
+a Boolean solution and computes one if F = 0 does have Boolean solutions, with probability at
+least 1 −ǫ and runtime complexity eO(n2.5(n + TF)κ2 log 1/ǫ), where κ is the condition number
+of the polynomial system F (refer to Theorem 4.3 for deﬁnition).
+Theorem 1.2 is a more basic result. Theorem 1.1 follows from Theorem 1.1 using a novel
+reduction, and much more problems such as optimization over ﬁnite ﬁelds [10] can also be
+eﬃciently reduced to Theorem 1.2.
+We apply Theorem 1.1 to cryptanalysis of several important cryptosystems. As early as
+in 1946, Shannon [32] pointed out insightfully that “Construct our cipher in such a way that
+breaking it is equivalent to solving a certain system of simultaneous equations in a large number
+of unknowns.” We know that the analysis of many cryptosystems, such as the stream cipher
+Trivum, the block cipher AES, the hash function SHA-3/Keccak, and the multivariate public
+key cryptosystems (MPKC), can be reduced to solving Boolean equations. Note that all these
+cryptosystems are important. AES is an NIST standard since 2001 [16], Trivium is an inter-
+national standard under ISO/IEC 29192-3, and Keccak [6] is the latest member of the Secure
+Hash Algorithm family of standards, released by NIST in 2015.
+In Table 1, we give the complexities of using Theorem 1.1 to perform quantum algebraic
+attack to these cryptosystems, where κ is the condition number of the corresponding Boolean
+equation systems, T is the total sparseness of the Boolean equations, and c is the complexity
+constant of the Harrow-Hassidim-Lloyd (HHL) algorithm (see Remark 2.4 for deﬁnition). For
+2
+
+
+---PAGE 3---
+Cryptosystems
+Nk
+Nr
+#Vars
+#Eqs
+T
+Complexity
+AES-128
+4
+10
+4288
+10616
+252288
+273.30cκ2
+AES-192
+6
+12
+7488
+18096
+421248
+276.59cκ2
+AES-256
+8
+14
+11904
+29520
+696384
+278.53cκ2
+Trivium
+1152
+3543
+4407
+24339
+261.71cκ2
+Trivium
+2304
+6999
+9015
+49683
+265.38cκ2
+Nh
+Nr
+#Vars
+#Eqs
+T
+Complexity
+Keccak
+384
+24
+76800
+77160
+611023
+278.25cκ2
+Keccak
+512
+24
+76800
+77288
+611540
+278.25cκ2
+Table 1: Complexities of the quantum algebraic attack
+AES-m, m = 32Nk is the key bit-length and Nr is the number of rounds. For Trivium, Nr is the
+number of rounds. For Keccak, Nh is the output size, Nr is the number of rounds, and the state
+bit-size b is 1600. From Table 1, we can see that these cryptosystems are secure under quantum
+algebraic attack only if the condition numbers of their corresponding equation systems are large.
+This leads to a new criterion for designing cryptosystems that can against the attack of quantum
+computers: their corresponding equation systems must have large condition numbers. Condition
+numbers for equation systems are generally diﬃcult to estimate, and estimating the condition
+numbers for these cryptosystems is an interesting future work.
+Many problems from computational theory and cryptography can be reduced to ﬁnding a
+Boolean solution for certain polynomial systems. In this paper, we use Theorem 1.2 to three such
+problems: the 3-SAT problem, the subset sum problem, and the graph isomorphism problem.
+1.2
+Technical contribution
+The main idea of the quantum algorithm proposed in this paper is that the solutions of a
+Boolean equation system can be obtained by solving a linear system with the HHL quantum
+algorithm [23]. For a linear system Ax = |b⟩, the HHL algorithm can obtain an approximation
+to the solution state |x⟩exponentially faster than classic algorithms under certain conditions.
+Precisely, our algorithm has three main steps:
+Step 1 Let F ⊂C[X] have a ﬁnite number of solutions: a1, . . . , aw. A pseudo solution of F
+is deﬁned to be a linear combination of monomial solutions of F, that is, Pw
+i=1 ci em(ai),
+where em is a vector of monomials in X up to certain degree and ci are complex numbers.
+We show that a pseudo solution of F can be computed by solving a linear system with the
+HHL algorithm (see section 3).
+Step 2 For F ⊂C[X], we show that Boolean solutions for F can be computed from the pseudo
+solutions of F obtained in Step 1 with high probability (see section 4).
+Step 3 The problem of solving a Boolean equation system is reduced to the computation of the
+Boolean solutions for a 6-sparse polynomial system over C (see section 5). A polynomial
+system H is called k-sparse if each polynomial in H contains at most k terms.
+We will explain each of these steps brieﬂy.
+First, we show how to compute the pseudo solutions for a polynomial system. Let F =
+{f1, . . . , fr} ⊂C[X] with di = deg(fi), TF = Pr
+i=1 #fi, and D a positive integer greater than
+maxi di. Consider all the polynomials mjfi, where mj are monomials with deg(mj) ≤D −di.
+These equations mjfi = 0 can be written as a linear system MF,DmD = bF,D, where mD is the
+3
+
+
+---PAGE 4---
+set of all the monomials m with deg(m) ≤D and bF,D is the set of the constant terms in mjfi.
+The linear system MF,DmD = bF,D is called the Macaulay linear system1 and MF,D is called
+the Macaulay matrix of F. Our contributions here are in three aspects. We propose the concept
+of complete solving degree and show that for such a degree D, the monomial solutions for F
+can be obtained from MF,DmD = bF,D. We also give a nice upper bound for complete solving
+degree of the polynomial system occurred in computing the Boolean solutions. It is shown that
+by using the HHL algorithm to MF,DmD = bF,D, we obtain a pseudo solution for F. We gave
+a modiﬁed HHL algorithm to solve the Macaulay linear system, which has better complexities
+than using the original HHL algorithm.
+Second, we show how to compute Boolean solutions for a polynomial system F over C, which
+are the solutions of F1 = F ∪{x2
+1 −x1, . . . , x2
+n −xn} over the ﬁeld of complex numbers. Our
+contribution here is to show that the solutions of F1 = 0 can be obtained from the pseudo
+solutions of F1 = 0 with high probability by combining the property of quantum states and that
+of Boolean solutions. The novelty of the approach is that the error bound for the solutions in
+the HHL algorithm is used to give the probability for ﬁnding Boolean solutions of F.
+Thirdly, let F be a Boolean polynomial system in variables X. Since the HHL algorithm works
+over C and does not work for ﬁnite ﬁelds, we cannot use the HHL algorithm to the Macaulay
+linear system of F. We prove that the solutions to F are the same as the Boolean solutions of
+a 6-sparse polynomial system F2 ⊂C[X, U] for some extra indeterminates U. Furthermore, the
+numbers of variables in U and the numbers of equations in F2 are linear in the size of F. By
+computing the Boolean solutions of F2, we ﬁnd the solutions of F = 0.
+1.3
+Comparing with existing work
+The idea of reducing nonlinear polynomial systems to linear systems of monomials can be traced
+back to the classical work on resultants [27], which give conditions for the existence of common
+solutions for over-determined polynomial systems. Here, a key concept is the solving degree.
+Precisely, D is a solving degree of polynomial system F, if the Gr¨obner basis of (F) can be
+obtained by using Gaussian elimination to the Macaulay linear system MF,DmD = bF,D. Lazard
+[26] and more recently Caminata-Gorla [7] gave nice upper bounds for the solving degree for
+projective zero dimensional polynomial ideals. The F4 algorithm [18] and the XL [14] algorithm
+were proposed to compute the Gr¨obner basis based on this idea. Since the Macaulay linear
+system for a polynomial system with multiple roots are under-determined, it is not possible to
+solve the polynomial system by computing values of the monomials directly, unless the equation
+system has a unique solution. In the general case, extra work need to be done, such as to reduce
+polynomial system solving to the computation of eigenvalues or solving of univariate equations
+[15, p51].
+In this paper, we show that the solving degree is not big enough for monomial solving from
+the Macualay linear system. Instead, we propose the concept of complete solving degree which
+is enough to for monomial solving from the Macaulay linear system. Furthermore, we show that
+the Boolean solutions of a polynomial system can be found directly from the solutions of the
+Macaulay linear system in the quantum case.
+Our algorithm is based on the HHL algorithm for solving the linear system Ax = |b⟩, where
+A ∈CN×N, x, b ∈CN. The speedup achieved in our algorithm is based on the exponential
+speed up of the HHL algorithm for solving sparse linear systems. On the other hand, the HHL
+algorithm has the following subtle properties.
+1The Macaulay linear system in Section 3.1 is more complicated than the one given here, although they are
+essentially the same. Here, we use this simple version to explain the ideas.
+4
+
+
+---PAGE 5---
+1. The algorithm does not give a solution to Ax = |b⟩, but a state |x⟩= (x1, . . . , xN).
+Measuring of |x⟩gives |x1| : |x2| : · · · : |xN| and the complexity will increase to O(N).
+2. The algorithm gives an answer |x⟩even if A|x⟩= |b⟩has no solutions.
+3. The algorithm works over C, but not over ﬁnite ﬁelds.
+Our algorithm does not have these limitations and gives an exact solution to the Boolean system.
+For instance, ﬁnding the Boolean solutions to a linear equation with integer coeﬃcients is an NP
+hard problem (Section 4.3), which can be solved by our algorithm but not the HHL algorithm.
+So our algorithm can be considered a signiﬁcant extension of the HHL algorithm.
+It is interesting to see that the second “drawbacks” of the HHL algorithm mentioned above
+is used to generate the quantum state |b⟩eﬃciently (see Lemma 2.8) for the Macaulay linear
+system. The HHL algorithm assumes that |b⟩is given. In the general case, there exist no eﬃcient
+algorithms to generate |b⟩from b [1] and eﬃcient generation for |b⟩can be achieved only in some
+special cases [9]. Fortunately, in our case, b = bF,D is very sparse: at most r entries of b are
+nonzero, which leads to an eﬃcient generation for |b⟩and the complexity is negligible comparing
+to that of the HHL algorithm.
+The complexity of our algorithm contains the condition number of the Boolean polynomial
+system, which is the condition numbers of the Macaulay matrixes of the polynomial systems and
+is inherited from the HHL algorithm. It was proved in [23] that the dependence on condition
+number cannot be substantially improved.
+More precisely, it was shown that if a quantum
+algorithm exists for matrix inversion running in time O(κ1−δpoly(log(N)) for some δ > 0, then
+BQP =PSPACE [23].
+Although the condition numbers of generic polynomial systems are
+usually exponential, the polynomial systems to be solved in our problems (refer to sections
+4.3, 5.3, 6) are highly structural, which are super sparse in most cases and always include the
+“Boolean equations” x2
+1−x1, . . . , x2
+n−xn. It is expected that new methods are needed to estimate
+the condition numbers for these polynomial systems.
+Previous work on quantum polynomial system solving and algebraic cryptanalysis were
+mainly based on Grover’s algorithm [22] which can achieve quadratic speed-up for exhaust
+search. The idea of these work are similar: reduce the problem to be solved to a search problem
+by designing a proper oracle and then use Grover’s algorithm. Schwabe-Westerbaan [29] and
+more recently Faug`ere et al [19] proposed quantum algorithms for solving Boolean multivariate
+quadratic polynomial systems (MQ). In particular, a Las-Vegas quantum algorithm for solving
+Boolean MQ with complexities O(20.462n) was given under certain conditions. On the other
+hand, the complexity of our algorithm is polynomial in n, the total sparseness, and the condi-
+tion number. One nice feature of our algorithm is that the complexity depends on the structure
+of polynomial system and provides faster algorithms for sparse systems with small condition
+numbers.
+In [21], Grassl et al presented quantum circuits to search the key for AES based on Grover’s
+algorithm. This is possible because, once the keys are given, the polynomial system for AES
+can be solved easily. For AES-128, 192, and 256, the gates (complexity) used in the circuits
+are about 286, 2118, 2151 [29], respectively. Comparing to our result in Table 1, we have the
+following observations. The ratio of the complexities of AES-256 to that of AES-128 in Table
+1 is 25, while the same ratio for the complexities in [21] is 265. This shows the advantage of
+the polynomial-time nature of our algorithm: when the key is doubled, the complexity increases
+little, while for the exponential algorithm in [21], when the key doubles, the complexity increases
+exponentially. On the other hand, using Grover’s algorithm, the explicit complexities were given
+in [29], while our algorithm is much complicated and the complexities in Table 1 contain the
+parameters c and k.
+5
+
+
+---PAGE 6---
+2
+A modiﬁed HHL algorithm
+In this section, we give a modiﬁed HHL algorithm for solving the linear system Ax = b, where
+special assumptions about A and b are made. The modiﬁed HHL algorithm will be used in our
+algorithm for solving Boolean equations.
+For a matrix A ∈CM×N, the arithmetic square root of each nonzero eigenvalue of the matrix
+A†A is called a singular value of A, and the quotient of the maximal and minimal singular values
+is called the condition number of A, where A† denotes the complex conjugate transpose of A. A
+matrix A ∈CM×N is called s-sparse if each row and column of A has at most s nonzero entries.
+We say that the complexity of a query for A is O(γ), if there is an algorithm to ﬁnd all the
+nonzero entries in each row or column of A in time O(γ).
+The following HHL quantum algorithm [23] was given to solve a linear equation system
+A|x⟩= |b⟩over C.
+Theorem 2.1. Suppose that A ∈CM×N is an s-sparse matrix and the complexity of a query
+for A is O(s). Let |b⟩∈CM be a unitary quantum state. Then, there is a quantum algorithm
+which can give an ǫ-approximation to a solution state of the linear system A|x⟩= |b⟩in runtime
+complexity eO(log(M + N)s2κ2/ǫ), where κ is the condition number of A.
+As usual, the notation eO suppresses more slowly-growing logarithm terms. With the best
+known algorithm for Hamiltonian simulation [5], the complexity of the HHL algorithm can be
+reduced to eO(log(M + N)sκ2/ǫ). Ambainis gave a new version of the HHL algorithm which has
+complexity eO(log(M + N)s2κ/ǫ3) [2]. Childs-Kothari-Somma gave a new quantum algorithm
+for linear equation solving, which has complexity eO(sκ2 log(1/ǫ)(log(M +N)+log2.5(1/ǫ))) [13].
+In the rest of this section, we will present a modiﬁed version of the HHL algorithm under
+the following assumptions.
+Assumption 1. A ∈CM×N is s-sparse and has a decomposition A = Ps
+j=1 Aj, where each
+Aj is a 1-sparse matrix with the complexity of a query to be O(γ).
+Assumption 2. Let b ∈{0, 1}M and M = r2v for positive integers v, r. Furthermore,
+b[i] = 1 if and only if i = k2v for k = 0, . . . , ρ −1, where ρ is a positive integer ≤r.
+We have the following modiﬁed HHL algorithm which follows from Lemma 2.9.
+Theorem 2.2. Under Assumptions 1 and 2, the HHL algorithm can give an ǫ-approximation
+to a solution state of the linear equation system Ax = b in runtime complexity eO((log(M +N)+
+γ)sκ2/ǫ), where κ is the condition number of A.
+Remark 2.3. Theorem 2.2 diﬀers from Theorem 2.1 in the following aspects. (1) b is given
+as a vector instead of a state |b⟩. (2) A satisﬁes diﬀerent conditions: A is s-sparse, but its
+complexity of a query is O(sγ), while the complexity of a query for A is O(s) in Theorem 2.1.
+(3) γ is added to the complexity. (4) In the complexity, s2 is reduced to s, which can also be
+done with best known algorithm for Hamiltonian simulation [5], but under the condition that the
+complexity of a query for A is O(s).
+Remark 2.4. In the cryptanalysis to be given later in this paper, we make the following ap-
+proximation to the complexities of the HHL algorithm eO((log(M + N) + γ)sκ2/ǫ) ≃c(log(M +
+N) + γ)sκ2/ǫ), where c is called the complexity constant of the HHL algorithm.
+For a matrix A ∈CM×N, denote I(A) =
+ 0
+A
+A†
+0
+
+∈C(N+M)×(N+M), which is a Hermitian
+matrix. In fact, the HHL algorithm will solve the linear system
+ 0
+A
+A†
+0
+  0
+x
+
+=
+ b
+0
+
+6
+
+
+---PAGE 7---
+instead of Ax = b [23].
+We will prove Theorem 2.2 in two steps: ﬁrst consider the Hamiltonian simulation for eiI(A)t
+and second consider the preparation for the state |b⟩, where i = √−1. We need the following
+result about the quantum complexity for the Hamiltonian simulation.
+Lemma 2.5 ([4]). For a 1-sparseness decomposition A = Pu
+j=1 Aj of a matrix A ∈CM×N and
+a given time t, we can quantumly simulate eiI(A)t ≃(Qu
+j=1 eiI(Aj)t0)t/t0 for any small number
+t0 by O(log(M + N)(log∗(M + N))2ut) = ˜O(log(M + N)ut) auxiliary operations and totally
+O(log∗(M + N)ut) queries for the Ajs, where log∗(n) = min{r | log(r)
+2
+n < 2} (the (r) indicating
+the iterated logarithm).
+In the following lemma, we modify the HHL algorithm to take into the fact that A already
+has a 1-sparseness decomposition.
+Lemma 2.6. Under Assumption 1, the HHL algorithm gives an ǫ-approximation to a solution
+state of the linear system Ax = |b⟩in time eO((log(M + N) + γ)sκ2/ǫ), where κ is the condition
+number of A.
+Proof. The complexity for the HHL algorithm comes from the Hamiltonian simulation eiI(A)t
+for time t = κ2/ǫ [23]. It is proved that I(A) can be decomposed as the summation of (log∗(M +
+N)s2) 1-sparse matrices. By Lemma 2.5, the complexity for the HHL algorithm is eO(log(M +
+N)s2κ2/ǫ), where the complexity for the query is negligible [23].
+Under Assumption 1, since I(A) can be decomposed as the summation of s matrices of
+1-sparseness, by Lemma 2.5, the complexity for the modiﬁed HHL algorithm will decrease to
+eO(log(M + N)st + log∗(M + N)stγ)|t=κ2/ǫ = eO((log(M + N) + γ)sκ2/ǫ), since log∗(M + N) is
+approximately a constant [4].
+We need the following detailed information about the HHL algorithm.
+Lemma 2.7. [23] Let λ1, . . . , λn be the singular values of A ∈CM×N, |vj⟩(|uj⟩) the eigenvectors
+of A†A (AA†) with respect to the nonzero eigenvalues λ2
+j of A†A, and thus A =
+nP
+j=1
+λj|uj⟩⟨vj| is
+the singular value decomposition of A. Then, the HHL algorithm returns an ǫ-approximation to
+the solution state | ˜x
+∥˜x∥⟩, where
+ex =
+n
+X
+j=1
+λ−1
+j |vj⟩⟨vj|b⟩.
+(1)
+Furthermore, ˜x has the minimal norm ∥˜x∥=
+p
+⟨ex, ex⟩among all solutions for Ax = b.
+In Lemma 2.6, |b⟩∈CM is given as a quantum state and there exist no eﬃcient algorithms to
+generate |b⟩in the general case [1]. In the rest of this section, we will modify the HHL algorithm
+such that the input to the HHL algorithm is b instead of |b⟩under Assumption 2. We ﬁrst
+prove a lemma.
+Lemma 2.8. Let Bx = c be obtained by adding more “equations” 0x = 1 to A|x⟩= |b⟩. Then
+using HHL to B|x⟩= |c⟩, we obtain the same solution state as that of A|x⟩= |b⟩.
+Proof. Let B =
+ A
+0
+
+and c =
+ b
+1
+
+, where we use 0 (1) to represent certain maxtix of zeros
+(ones) with the proper dimension. We have B†B = A†A. Then, adding some 0 rows to A will
+not change the nonzero eigenvalues of A†A and the eigenvectors of B†B are the same as that of
+A†A. Now, the lemma follows from Lemma 2.7.
+7
+
+
+---PAGE 8---
+In the following lemma, we modify the HHL algorithm to take into the fact that b contains
+ρ nonzero entries.
+Lemma 2.9. Under Assumptions 1 and 2, the HHL algorithm can give an ǫ-approximation
+to a solution state of the linear system Ax = b in time eO((log(M + N) + γ)sκ2/ǫ).
+Proof. Let σ = ⌈log2 ρ⌉≤log2 r + 1. Let w ∈{0, 1}2v such that w[0] = 1 and w[i] = 0 for
+i = 1, . . . , 2v −1. Adding 2σ −ρ blocks w before the ρ2v-th row of b, we have a vector c such
+that c[i] = 1 if and only if i = k2v for k = 0, 1, . . . , 2σ −1. Correspondingly, by adding (2σ −ρ)2v
+zero rows to A before the ρ2v-th row of A, we obtain a matrix B ∈C((r+2σ−ρ)2v)×N. Note
+that adding some zero rows will not increase the sparseness and the complexity of a query for a
+matrix. Then the equation system Ax = b becomes
+Bx = c
+(2)
+We may add more zero rows at the ends of B and c such that B ∈C2η×N and c ∈C2η, where
+η = ⌈log2(r + 2σ −ρ)⌉+ v. With these assumptions, we can easily generate the state |c⟩:
+|c⟩= ⊗η−σ−v
+i=1
+|0⟩⊗σ
+i=1 (H|0⟩) ⊗v
+i=1 |0⟩,
+where H =
+1
+√
+2
+ 1
+1
+1
+−1
+
+is the Hadamard operator. The complexity of generating |c⟩is O(η)
+= O(v + log r) = O(log(M)), since σ = ⌈log2 ρ⌉≤log2 r + 1 and M = r2v. The equation system
+(2) becomes
+C|x⟩= |c⟩
+(3)
+where C =
+B
+2σ/2. We show that C satisﬁes Assumption 1. It is clear that C can be written as
+the summation of s 1-sparse matrices Cj. The complexity of a query for Cj is the same as that
+of Aj, because the (u, v)-th element of C is the (u, v)-th element of B divided by 2σ/2, in other
+words, we do not need to actually generate the matrix C.
+By Lemma 2.8, equation system (3) has the same solution state as that of A|x⟩= |b⟩, when
+using the HHL algorithm to them. As mentioned before, the HHL algorithm actually solves
+I(C)(0, x)T = (c, 0)T . Similar to the above procedure, we can add more zeros to the end of
+(c, 0)T to obtain a state, which costs at most O(log(2η + N)) = O(log(M + N)).
+By Lemma 2.6, the total complexity is the complexity of using the HHL algorithm to (3)
+plus that of generating |c⟩, that is, eO((log(M + N) + γ)sκ2/ǫ + log(M + N)) = eO((log(M +
+N) + γ)sκ2/ǫ).
+Remark 2.10. If γ is small, say γ = O(log(M + N)), then the complexity of the modiﬁed HHL
+algorithm is eO((log(M + N) + γ)sκ2/ǫ) = eO(log(M + N)sκ2/ǫ). Fortunately, the linear system
+to be solved in Section 3 has this property.
+3
+Quantum monomial-solving of polynomial systems over C
+In this section, we give a quantum algorithm to ﬁnd the a solution for the monomials of a
+polynomial system F, which satisfy a linear system.
+3.1
+The Macaulay linear system
+In this section, we will construct a Macaulay linear system for a ﬁnite set of polynomials and
+show that the linear system satisﬁes Assumptions 1 and 2 given in Section 2.
+8
+
+
+---PAGE 9---
+Let C be the ﬁeld of complex numbers and C[X] the polynomial ring in the indeterminates
+X = {x1, . . . , xn}. For a polynomial f ∈C[X], denote deg(f), #f, and m(f) to be the total
+degree of f, the sparseness (the number of terms) of f, and the set of monomials of f. For
+S ⊂C[X], we use VC(S) ⊂Cn to denote the common zeros of the polynomials in S.
+Let m denote the set of all the monomials in variables X.
+In this section, we will use
+the lexicographic monomial ordering for x1 > · · · > xn.
+For convenience, we denote 0 =
+(0, 0, . . . , 0), 1 = (1, 1, . . . , 1) ∈Cn, and Xα = Qn
+i=1 xαi
+i
+for α = (α1, . . . , αn) ∈Zn. For a given
+positive integer d, let m≤d be the set of all monomials which are factors of Xd·1 = xd
+1xd
+2 · · · xd
+n.
+We sort
+m≤d = {md,0, md,1, · · · , md,(d+1)n−1}
+in ascending lexicographic monomial ordering. Then md,0 = 1, md,1 = xn, md,2 = x2
+n, md,d =
+xd
+n, md,d+1 = xn−1 and md,(d+1)n−1 = Xd·1. Also note that #m≤d = (d + 1)n.
+In the rest of Section 3, let F = {f1, . . . , fr} ⊂C[X] with di = deg(fi) and ti = #fi for
+i = 1, . . . , r. We ﬁrst deﬁne several parameters.
+Deﬁnition 3.1. Without loss of generality, we may assume fi(0) = −1 for i = 1, . . . ρ and
+fi(0) = 0 for i = ρ + 1, . . . , r. Let D ∈N such that D ≥maxr
+i=1 di. Let ¯d be the minimal integer
+satisfying ¯d ≥D −mini di and ¯d + 1 = 2δ for certain δ ∈N. Set ¯D to be the minimal integer
+satisfying ¯D ≥D and ¯D + 1 = 2∆for certain ∆∈N.
+Remark 3.2. In this paper, the subscripts for a matrix or a vector always start from 0, be-
+cause, the complexity analysis of the algorithm in this paper depends on the representation of
+the subscripts.
+For i = 1, . . . , r and each m ¯d,j ∈m≤¯d with deg(m ¯d,j) ≤D −di, m ¯d,jfi could be considered
+as a linear function in the monomials in m≤¯D. For deg(m ¯d,j) > D −di, we replace m ¯d,jfi by 0.
+In order to write these functions precisely, introduce the following new notation:
+m ¯d,j,i =
+(
+m ¯d,j,
+if deg(m ¯d,j) ≤D −di;
+0,
+if deg(m ¯d,j) > D −di
+(4)
+for i = 1, . . . , r and j = 0, . . . , ( ¯d + 1)n −1.
+We rewrite m ¯d,j,ifi for i = 1, . . . , r and j =
+1, . . . , ( ¯d + 1)n −1 in matrix form:
+m ¯D,1 < m ¯D,2 < · · · < m ¯D,( ¯D+1)n−1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+m ¯d,0,1f1
+· · ·
+...
+· · ·
+m ¯d,( ¯d+1)n−1,1f1
+· · ·
+m ¯d,0,2f2
+· · ·
+...
+· · ·
+m ¯d,( ¯d+1)n−1,rfr
+· · ·
+
+
+
+
+
+
+
+
+m ¯D,1
+m ¯D,2
+...
+m ¯D,( ¯D+1)n−1
+=
+m ¯D,0 = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+−f1(0)
+...
+0
+−f2(0)
+...
+0
+,
+(5)
+denoted as
+MF,DmD = bF,D,
+(6)
+where
+mD = (m ¯D,1, m ¯D,2, . . . , m ¯D,( ¯D+1)n−1)T .
+Then the (i −1)( ¯d + 1)n-th to the (i( ¯d + 1)n −1)-th rows of MF,D are generated by m≤¯dfi. The
+i-th column of MF,D consists of the coeﬃcients of m ¯D,i+1 in m ¯d,0f1, . . . , m ¯d,( ¯d+1)n−1fr. MF,D is
+9
+
+
+---PAGE 10---
+called the modiﬁed Macaulay matrix of the polynomial system F and (6) is called the Macaulay
+linear system of F. MF,D is a matrix over C of dimension (r( ¯d + 1)n) × (( ¯D + 1)n −1) =
+(r2nδ) × (2n∆−1).
+Remark 3.3. The columns corresponding to monomial m ¯D,j with deg(m ¯D,j) > D are all 0
+columns.
+Remark 3.4. The zero rows are added so that the modiﬁed Macaulay matrix can be eﬃciently
+queried. Refer to Lemma 3.10 for details.
+Example 3.5. Let f1 = x2
+1 −x2, f2 = x2 −1, f3 = x1x2 −1, D = 2. Then ¯d = 1, ¯D = 3 and
+the Macaulay linear system is
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f1
+−1
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0(x2f1)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x1f1)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x1x2f1)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+f2
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+x2f2
+−1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+x1f2
+0
+0
+0
+−1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x1x2f2)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+f3
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x2f3)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x1f3)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0(x1x2f3)
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x2
+x2
+2
+x3
+2
+x1
+x1x2
+x1x2
+2
+x1x3
+2
+x2
+1
+x2
+1x2
+x2
+1x2
+2
+x2
+1x3
+2
+x3
+1
+x3
+1x2
+x3
+1x2
+2
+x3
+1x3
+2
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+0
+1
+0
+0
+0
+1
+0
+0
+0
+.
+In the rest of this section, we will prove the following main result of this section, which
+follows from Lemmas 3.7, 3.8, and 3.10.
+Lemma 3.6. The Macaulay linear system MF,DmD = bF,D satisﬁed Assumptions 1 and 2,
+where the parameters are: M = r2δn, N = 2∆n −1, s = TF, γ = O(n log(D) + log r), ρ ≤r −1.
+The parameters δ, ∆, ρ, D are deﬁned in Deﬁnition 3.1.
+For nonnegative integers B > 1 and k < Bn, we denote k(B) = (kn−1, . . . , k0), where
+k = Pn−1
+i=0 kiBi is the B-base representation of k and thus 0 ≤ki < B. On the other hand, for
+k = (kn−1, . . . , k0) such that 0 ≤ki < B, let k(B) = Pn−1
+i=0 kiBi. The following simple fact is
+crucial in the complexity analysis of our algorithm: the k-th element in m≤d is
+md,k = Xk(d+1) =
+n−1
+Y
+i=0
+xki
+i+1 with deg(md,k) =
+n−1
+X
+i=0
+ki
+(7)
+where k(d+1) = (kn−1, . . . , k0). Equation (7) is true under the assumption made in Remark 3.2.
+Lemma 3.7. We have ¯d+1 ≤2D and ¯D+1 ≤2D+1. As a consequence, MF,D is of dimension
+(r( ¯d + 1)n) × (( ¯D + 1)n −1) = (r2nδ) × (2n∆−1) = O(r(2D)n) × O((2D + 1)n).
+Proof. From Deﬁnition 3.1 of ¯d and ¯D, we have ¯d + 1 ≤2D −2 mini di + 1 ≤2D and ¯D + 1 ≤
+2D + 1.
+10
+
+
+---PAGE 11---
+Lemma 3.8. Let fi = Pti
+j=1 cijXαij for i = 1, . . . , r, where ti = #fi. Then MF,D has a natural
+1-sparseness decomposition:
+MF,D =
+r
+X
+i=1
+ti
+X
+j=1
+cijMij,
+(8)
+where each Mij is a 1-sparse {0, 1}-matrix. In fact, only the ((i−1)( ¯d+1)n+k, (k( ¯d+1)+αij)( ¯D+1))
+entries in Mij equal to 1 for 0 ≤k < ( ¯d + 1)n with Pn
+t=1 k( ¯d+1)[t] ≤D −di.
+Proof. We can treat the coeﬃcients cij of fi as new indeterminates and then write MF,D as a
+function in cij. The coeﬃcient of cij is Mij. Since cijXαij is a term of fi, only m ¯d,kfi contains
+terms whose coeﬃcient are cij, which corresponds to the ((i −1)( ¯d + 1)n + k)-th row generated
+by m ¯d,kfi for 0 ≤k < ( ¯d + 1)n with deg(m ¯d,kfi) ≤D, or Pn
+t=1 k( ¯d+1)[t] ≤D −di equally. Since
+m ¯d,k · Xαij = Xk( ¯d+1) · Xαij = Xk( ¯
+d+1)+αij = m ¯D,(k( ¯
+d+1)+αij)( ¯
+D+1), only the (k( ¯d+1) + αij)( ¯
+D+1)-th
+entry in the ((i −1)( ¯d + 1)n + k)-th row of Mij is nonzero. The 1-sparseness of Mij comes from
+the fact that the rows and columns of the nonzero entries are distinct.
+As a direct consequence, we have
+Corollary 3.9. MF,D is TF-sparse, where TF = Pr
+i=1 ti is called the total sparseness of F.
+Lemma 3.10. The complexity of a query for Mij is O(n log(D)+log r), where Mij is introduced
+in Lemma 3.8.
+Proof. Given a row index i0, we want to know the nonzero entry in the i0-th row. By Lemma
+3.8, the i0-th row has a nonzero entry if and only if (i −1)( ¯d + 1)n ≤i0 < i( ¯d + 1)n and
+Pn
+t=1(i0 −(i −1)( ¯d + 1))( ¯d+1)[t] ≤D −di. Compute the quotient l and remainder k such that
+i0 = ( ¯d + 1)nl + k. By Lemma 3.8, the i0-th row has a nonzero entry if and only if l = i −1 and
+Pn
+t=1 k( ¯d+1)[t] ≤D −di, meanwhile the nonzero entry is at the (k( ¯d+1) + αij)( ¯D+1)-th column.
+We now analyse the complexity of the above step. Without loss of generality, we assume
+that all the numbers are represented in binary form, which is crucial to the complexity. Since
+¯d + 1 = 2δ is a power of 2, we can compute ( ¯d + 1)n = 2δn easily in time O(log(n) log(log( ¯d))).
+We can check Pn
+t=1 k( ¯d+1)[t] ≤D−di in time log(n log D). Since all numbers are binary, the last
+δn bits of i0 are exactly the remainder k, and other bits are the quotient l. As a result, we can
+compute both l and k in time O(log(n) log(log( ¯d))). Since the number of bits for i0 is O(log i0) =
+O(log(r( ¯d+1)n) = O(log r+n log ¯d), the complexity is bounded by O(log r+n log ¯d). Since both
+¯d+1 = 2δ and ¯D+1 = 2∆are powers of 2 and k is in binary form, we can insert (∆−δ) zeros before
+each δ bits of k starting from lower digits to obtain (k( ¯d+1))( ¯D+1) in time O(n log( ¯D)). Totally,
+we can compute (k( ¯d+1) + αij)( ¯D+1) in time O(log(n) log(log( ¯D))+n log( ¯D)) = O(n log( ¯D)). So
+the total complexity is O(n log( ¯D) + (log r + n log ¯d)) = O(n log(D) + log r) by Lemma 3.7.
+On the other hand, given a column index j0, we want to know the nonzero entries in the
+j0-th column. Compute k = (j0)( ¯D+1) −αij ﬁrst. If k is a nonnegative vector, we can compute
+k( ¯d+1). By Lemma 3.8, only if Pn
+t=1 k[t] ≤D −di, the (k( ¯d+1) + (j −1)( ¯d + 1)n)-th entry is the
+unique nonzero entry in the j0-th column. Else the j0-th column is a 0 column. Similarly, the
+complexity is O(n log(D) + log r).
+3.2
+Complete solving degree for a polynomial system
+In this section, we show how to determine a D such that the monomials of a polynomial system
+F can be solved from the Macaulay linear system MF,DmD = bF,D by introducing the concept
+11
+
+
+---PAGE 12---
+of complete solving degree. We ﬁrst deﬁne the concept of solving degree [26, 7], which is an
+important concept for polynomial system solving.
+Deﬁnition 3.11. Let F = {f1, . . . , fr} ⊂C[X] and (F) the ideal generated by F. Let G be the
+reduced Gr¨obner basis of the ideal (F) under the degree reverse lexicographic (DRL) monomial
+ordering. D is called the solving degree of F, if D is the minimal integer such that for any
+g ∈G, g = Pr
+i=1 hifi for some h1, . . . , hr ∈C[X] satisfying deg(hifi) ≤D. Denote the solving
+degree of F by Sdeg(F).
+In terms of the F4 algorithm [18] or the XL algorithm [14], D is the solving degree of F, if
+the Gr¨obner basis of the ideal (F) can be obtained from MF,DmD = bF,D by using Gaussian
+elimination over C.
+For a polynomial f ∈C[X], denote f h to be the homogenization of f in C[x0, X]. We have
+the following upper bound for the solving degree.
+Theorem 3.12 ([7] Corollary 3.26). Let I = (f1, . . . , fr) ⊂C[X] be an ideal generated by
+f1, . . . , fr of degrees d1, . . . , dr, such that d1 ≥d2 ≥· · · ≥dr.
+Choose the DRL monomial
+ordering. If Ih = (f h
+1 , . . . , f h
+r ) is zero-dimensional, then Sdeg(F) ≤d1 + · · · + dn+1 −n + 1 with
+dn+1 = 1 if r = n.
+The following example shows that the solving degree is not large enough for monomial solving
+with the Macaulay linear system.
+Example 3.13. Let F = {x1x2−1, x2
+1−x1, x2
+2−x2, x2
+3−x3} ⊂C[x1, x2, x3]. The reduced Gr¨obner
+basis for (F) is G = {x1 −1, x2 −1, x2
+3 −x3}. Since x1 −1 = x2(x2
+1 −x1)+(1−x1)(x1x2 −1) and
+x2 −1 = x1(x2
+2 −x2) + (1 −x2)(x1x2 −1), we have Sdeg(F) = 3. The residue monomials of (F)
+with respect to G is {1, x3}. Let D = 3, we want to solve the monomials of degrees ≤D from the
+Macaulay linear system MF,DmD = bF,D, or more precisely, we want to written all monomials
+of degrees ≤3 as expressions of x3. After doing Gaussian elimination to the Macaulay system,
+the nontrivial polynomials are: G3 = {x1 −1, x2 −1, x2
+1 −1, x1x2 −1, x2
+2 −1, x2
+3 −x3, x3
+1 −1, x2
+1x2−
+1, x2
+1x3 −x1x3, x1x2
+2 −1, x1x2x3 −x3, x1x2
+3 −x1x3, x3
+2 −1, x2
+2x3 −x2x3, x2x2
+3 −x2x3, x3
+3 −x3}. We
+can see that each monomial of degree ≤3 is solved in terms of x3, x1x3, and x2x3, which means
+that the Macaulay linear system does not give the “correct” solution to the monomials and the
+monomials x1x3 and x2x3 are not solved in terms of x3.
+Motivated by the above example, we introduce the concept of complete solving degree.
+Deﬁnition 3.14. Let F = {f1, . . . , fr} ⊂C[X] and (F) the ideal generated by F. Let G be
+the reduced Gr¨obner basis of the ideal (F) under the DRL monomial ordering. D is called the
+complete solving degree of F, if D is the minimal integer such that for any polynomial g ∈G and
+any monomial m ∈C[X] satisfying deg(mg) ≤D, mg = Pr
+i=1 hifi for some h1, . . . , hr ∈C[X]
+with each deg(hifi) ≤D. Denote the complete solving degree of F by CSdeg(F).
+Example 3.15. For the F given in Example 3.13, we have CSdeg(F) = 4.
+For D = 4,
+after doing Gaussian elimination to the Macaulay linear system, we obtain G4 = G3 ∪{x1x3 −
+x3, x2x3 −x3, x4
+1 −1, x3
+1x2 −1, x3
+1x3 −x3, x2
+1x2
+2 −1, x2
+1x2x3 −x3, x2
+1x2
+3 −x3, x1x3
+2 −1, x1x2
+2x3 −
+x3, x1x2x2
+3−x3, x1x3
+3−x3, x4
+2−1, x3
+2x3−x3, x2
+2x2
+3−x3, x2x3
+3−x3, x4
+3−x3}. Note that all monomials
+with degree ≤4 are written as expressions of the residue monomials 1, x3. In other words, the
+monomials are solved with the Macaulay system for D = 4.
+In this paper, we will consider polynomial systems of the following form
+F
+=
+F1 ∪F2 ⊂C[X], where F1 = {g1, . . . , gr} ̸= ∅, F2 = {f1, . . . , fn}
+(9)
+such that ∀i, j (lm(fi) = xdi
+i , di ≥1, and degxi(gj) < di)
+12
+
+
+---PAGE 13---
+where lm(fi) is the largest monomial of fi under the DRL monomial ordering, also called the
+leading monomial of fi. We will give upper bounds for the solving degree and complete solving
+degree for a polynomial system of form (9) in the following lemmas. Note that the proofs of
+these results do not depend on the results in [26, 7].
+Lemma 3.16. For F given in (9), we have (F) is zero-dimensional and Sdeg(F) ≤d −n +
+Pn
+i=1 di, where d = maxi deg(gi).
+Proof. By the Hilbert function, it is easy to see that (F2) is zero-dimensional and hence (F)
+is zero-dimensional. Let I = (F) and G the reduced Gr¨obner basis for (F) under the DRL
+monomial ordering. Denote lm(I) to be the set of the leading monomials of the polynomials
+in I.
+Since xdi
+i
+∈lm(I), there exists a unique polynomial f ′
+i in G such that lm(f ′
+i) = xd′
+i
+i
+with d′
+i ≤di.
+For any h ∈G, let h = Pn
+k=1 akfk + Pr
+l=1 blgl.
+We claim that deg(h) ≤
+max{d1, . . . , dn, Pn
+i=1 di−n}. If h is reduced by each f ′
+k, we have degxk(h) < degxk(f ′
+k) = d′
+k ≤dk
+and deg(h) ≤Pn
+i=1 di −n. Otherwise, h is exactly f ′
+k for some k, and then deg(h) = d′
+k ≤dk.
+Thus we have deg(h) ≤max{dk, Pn
+i=1 di −n} and the claim is proved.
+If bj is not reduced by some fi, we have bj = pfi + q where q is reduced by fi and h =
+(Pn
+k=1,k̸=i akfk + (pgj + ai)fi) + (Pr−n
+l=1,l̸=j blgl + qgj). Still write the new expression as h =
+Pn
+k=1 akfk + Pr
+l=1 blgl. As a consequence, we can assume that each bj is reduced by F2 and
+hence deg(bl) ≤Pn
+i=1 di −n.
+Let ˜h = h −Pr
+l=1 blgl = Pn
+k=1 akfk ∈(F2). From (9), it is easy to see that F2 is a Gr¨obner
+basis for (F2).
+Then, there exist ˜a1, . . . , ˜an such that ˜h = Pn
+k=1 ˜akfk with deg(˜akfk) ≤
+deg(˜h) ≤max{h, blgl}.
+Thus we have h = Pn
+k=1 ˜akfk + Pr−n
+l=1 blgl.
+By the deﬁnition of
+solving degree, we have Sdeg(F) ≤max{deg(˜akfk), deg(blgl)} ≤max{deg(˜h), deg(blgl)} ≤
+max{deg(h), deg(blgl)} ≤max{d1, . . . , dn, Pn
+i=1 di −n, Pn
+i=1 di −n + d} = Pn
+i=1 di −n + d,
+where the last equation comes from the assumption di ≥1.
+Lemma 3.17. For F given in (9), we have CSdeg(F) ≤d −2n + 2 Pn
+i=1 di, where d =
+maxi deg(gi).
+Proof. Let I = (F) and D = d −2n + 2 Pn
+i=1 di. Fix a monomial m ∈lm(I) with deg(m) ≤D.
+We ﬁrst claim that there exists an h = P
+i pifi + P
+j qjgj for some pi, qj ∈C[X] such that
+lm(h) = m, deg(pifi) ≤D, and deg(qjgj) ≤D. If m is a multiple of some lm(fi), we have m =
+lm(
+m
+lm(fi)fi) with deg(
+m
+lm(fi)fi) ≤D and the claim is proved. Otherwise, we have degxi(m) < di
+for each i and thus deg(m) ≤Pn
+i=1 di −n. There exists a g in the reduced Gr¨obner basis G of
+(F), such that lm(g)|m. Let g = P
+k akfk +P
+l blgl with deg(akfk), deg(blgl) ≤Sdeg(F), and we
+have m = lm(
+m
+lm(g)g) = lm(P
+k
+m
+lm(g)akfk + P
+l
+m
+lm(g)blgl) with deg(
+m
+lm(g)akfk), deg(
+m
+lm(g)blgl) ≤
+deg(m) + Sdeg(F) ≤Pn
+i=1 di −n + Sdeg(F) ≤D, where the last inequality comes from Lemma
+3.16 and the assumption deg(m) ≤Pn
+i=1 di −n. The claim is proved.
+We now prove the lemma. Fix a polynomial g ∈G and a monomial m ∈C[X] satisfying
+deg(mg) ≤D. Since lm(mg) ∈lm(I) and deg(mg) ≤D, by the claim just proved, there exists
+an h = P
+i pifi + P
+j qjgj for some pi, qj ∈C[X] such that lm(mg) = lm(h), deg(pifi) ≤D,
+and deg(qjgj) ≤D. Let eg = mg −lc(mg)
+lc(h) h, where lc(p) is the coeﬃcient of lm(p) in p for any
+p ∈C[X]. Then eg ∈I and deg(lm(eg)) < D. We thus can repeat the above procedure for eg
+(instead of mg). The process will end and we obtain bg = mg −Pn
+i=1 bpifi −Pr
+j=1 bqjgj, where
+lm(bg) ̸∈lm(I), deg(bpifi) ≤D, and deg(bqjgj) ≤D. Since lm(bg) ̸∈lm(I) and bg ∈I, we have
+bg = 0 and hence mg = Pn
+i=1 bpifi + Pr
+j=1 bqjgj. The lemma is proved.
+13
+
+
+---PAGE 14---
+3.3
+Solution of the Macaulay linear system
+The following lemma gives the solutions to the Macaulay linear system (5) by using the complete
+solving degree.
+Lemma 3.18. Let I = (F) be a radical zero-dimensional ideal in C[X] generated by F and
+VC(I) = {a1, . . . , aw}. For D ≥CSdeg(F), any solution mD of the Macaulay linear system
+MF,DmD = bF,D is of the form
+bmD =
+w
+X
+i=1
+ηimD(ai) +
+X
+P
+i k( ¯
+D+1)[i]>D
+µkek−1,
+where ηi are complex numbers such that Pw
+i=1 ηi = 1, µk are arbitrary complex numbers, and ek
+is the k-th unit vector in C( ¯D+1)n−1.
+Proof. From (7), we have deg(m ¯D,k) = P
+i k( ¯D+1)[i]. By Remark 3.3, if deg(m ¯D,k) = P
+i k( ¯D+1)[i]
+> D, then the (k −1)-th row in MF,D corresponded to m ¯D,k is a zero column, so m ¯D,k can take
+arbitrary value in the solution of the Macaulay linear system and hence µkek−1 is a solution of
+the Macaulay linear system. Delete the (k −1)-th column in MF,D and the (k −1)-th row in
+mD and bF,D to obtain a new system
+f
+MF,D emF,D = ebF,D.
+When we do Gaussian elimination on the linear system
+f
+MF,D emF,D = ebF,D, we get a new
+linear system M F,D emF,D = bF,D . Since D ≥CSdeg(F), the largest monomial in each row
+of M F,D is in lm(I) and each monomial in lm(I) occurs as one of the leading monomials
+for some row. Thus, the dimension of the solution space of M F,D emF,D = bF,D is at most
+#(m≤D\lm(I))−1 ≤#(m\lm(I))−1 = #V (I)−1 = w−1, where the ﬁrst equality is true because
+I is radical. Since each emD(ai) is a solution of M F,D emD = bF,D, {P ηi emD(ai)| P ηi = 1} is a
+subspace of the solution space of M F,D emD = bF,D, that is, the solution space is of dimension at
+least w −1. Then, {P ηi emD(ai)| P ηi = 1} is exactly the solution space of M F,D emD = bF,D,
+also that of
+f
+MF,D emD = ebF,D. The lemma is proved.
+Corollary 3.19. In Lemma 3.18, if F has a unique solution a, then we have
+bmD = mD(a) +
+X
+P
+i k( ¯
+D+1)[i]>D
+µkek−1.
+Example 3.20. The equation system in Example 3.5 has a unique solution a = (1, 1), with
+mD(a1) = (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1).
+By Lemma 3.18, the solution of the Macaulay
+linear system is (1, 1, 1 + µ3, 1, 1, 1 + µ6, 1 + µ7, 1, 1 + µ9, 1 + µ10, 1 + µ11, 1 + µ12, 1 + µ13, 1 +
+µ14, 1 + µ15), where each µi is an arbitrary complex number. The solutions of the form 1 + µk
+correspond to the zero columns of MF,D.
+3.4
+A quantum algorithm for monomial-solving of polynomial systems
+In this section, we show that applying the HHL algorithm to the Macaulay linear system of F,
+we obtain a pseudo solution of F.
+Let F ⊂C[X] with VC(F) = {a1, . . . , aw} and m a vector of monomials in X. A normalized
+linear combination of P
+i cim(ai) such that P
+i ci = 1 is also a solution to the Macualay linear
+system, which is called a pseudo solution of F.
+Note that a pseudo solution of F is a solution of the Macualay linear system. From Lemma
+3.18, the converse is not rue: a solution of the Macaulay linear system contains some arbitrary
+14
+
+
+---PAGE 15---
+constants µk and is not a pseudo solution of F. Fortunately, applying the HHL algorithm to the
+Macaulay linear system, the solution of the Macualay linear system is a pseudo solution of F.
+We introduce the notation em ∈m( ¯D+1)n−1: for k = 1, . . . , ( ¯D + 1)n −1,
+emD[k] =
+(
+m ¯D,k,
+if deg(m ¯D,k) = P
+i k( ¯D+1)[i] ≤D;
+0,
+if deg(m ¯D,k) = P
+i k( ¯D+1)[i] > D.
+(10)
+Using the modiﬁed HHL algorithm (Theorem 2.2) to the Macaulay linear system, we have
+Theorem 3.21. Let I = (F) be a radical zero-dimensional ideal in C[X] generated by F,
+VC(I) = {a1, . . . , aw}, ǫ ∈(0, 1), and D ≥CSdeg(F). Using the modiﬁed HHL algorithm to the
+Macaulay linear system MF,DmD = bF,D deﬁned in (6), the answer is an ǫ-approximation to
+the following pseudo solution of F
+bmD =
+w
+X
+i=1
+ηi emD(ai),
+where the monomial vector emD is deﬁned in (10), ηi are complex numbers satisfying Pw
+i=1 ηi =
+1, and ∥Pw
+i=1 ηi emD(ai)∥is minimal.
+The runtime complexity is eO(log(D)nTFκ2/ǫ), where
+TF = Pr
+i=1 #fi and κ is the condition number of MF,D.
+Proof. By Lemma 3.18,
+bmD =
+X
+P ηi=1
+ηimD(ai) +
+X
+P
+i k( ¯
+D+1)[i]>D
+µkek−1 =
+X
+P ηi=1
+ηi emD(ai) +
+X
+P
+i k( ¯
+D+1)[i]>D
+eµkek−1.
+By Lemma 2.7, ∥bmD∥is minimal. Since ⟨ek−1| emD(ai)⟩= 0, in order for ∥bmD∥to be minimized,
+each eµk = 0. We proved that the solution is indeed a pseudo solution.
+We now analyse the complexity.
+We may change the order of fi such that, the ﬁrst ρ
+polynomials fi have nonzero constant terms. This step costs O(r). By Lemma 3.6, MF,DmD =
+bF,D satisﬁes Assumptions 1 and 2 for s = TF = Pr
+i=1 ti, γ = n log D + log r, and v = nδ.
+By Lemma 3.6, MF,D is of dimension O(r(2D)n) × O((2D + 1)n). By Theorem 2.2 and Lemma
+3.10, the complexity of the HHL algorithm is eO((log(M + N) + γ)sκ2/ǫ) = eO((log(r(2D)n +
+(2D + 1)n) + (n log(D) + log r))TFκ2/ǫ) = eO((log(r) + n log(D))TFκ2/ǫ) = eO(log(r)TFκ2/ǫ +
+n log(D)TFκ2/ǫ) = eO(TFκ2/ǫ + n log(D)TFκ2 /ǫ) = eO(log(D)nTFκ2/ǫ), since r ≤TF. We
+prove the theorem.
+By Remark 2.4, the exact complexity for Theorem 3.21 is
+Corollary 3.22. The exact complexity to compute | bmD⟩is c log(M + N)TFκ2/ǫ, where N =
+r( ¯d + 1)n, M = ( ¯D + 1)n −1, and c is the complexity constant of the HHL algorithm.
+Corollary 3.23. If F satisﬁes the conditions in Theorem 3.21 and has a unique solution a,
+then the solution state is |m⟩= | em(a)⟩. The complexity is eO(log(D)nTFκ2/ǫ).
+Example 3.24. If using the modiﬁed HHL algorithm to solve the linear system in Example 3.5,
+by Theorem 3.21, the solution is (1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0). In order to ﬁnd the unique
+solution x1 = 1, x2 = 1, we need to know how to project (x2, x2
+2, x3
+2, x1, x1x2, x1x2
+2, x1x3
+2, x2
+1, x2
+1x2,
+x2
+1x2
+2, x2
+1x3
+2, x3
+1, x3
+1x2, x3
+1x2
+2, x3
+1x3
+2) to (x1, x2) eﬃciently.
+Motivated by the above example, we propose the following problem.
+Problem 3.25. Let |u⟩be an N-dimensional quantum state and n ≪N. How can we measure
+n selected coordinates of |u⟩eﬃciently.
+15
+
+
+---PAGE 16---
+4
+Find Boolean solutions for polynomial systems in C[X]
+In this section, we will give a quantum algorithm to compute the Boolean solutions of a poly-
+nomial system F over C. The key idea is that by measuring the pseudo solutions of F, we may
+obtain a Boolean solution of F with high probability.
+4.1
+A quantum algorithm to ﬁnd Boolean solutions
+A solution a for F ⊂C[X] is called Boolean, if each coordinate of a is 0 or 1. For F ⊂C[X], the
+set of Boolean solutions of F are denoted as VB(F). We ﬁrst prove a lemma.
+Lemma 4.1. For F ⊂C[X], we have VB(F) = VC(F, HX) = VC(FB, HX) and I = (FB, HX) is
+radical, where HX = {x2
+1 −x1, . . . , x2
+n −xn} and FB is obtained from F by replacing xm
+i
+in F
+with xi for all i and m ∈N. Furthermore, the complete solving degree CSdeg(FB ∪HX) ≤3n.
+Proof. The ﬁrst assertion is easy. Since (FB) + (x1 −a1, . . . , xn −an) is a maximal ideal in the
+ring C[X],
+(FB, HX) =
+\
+a1,...,an∈{0,1}
+((FB) + (x1 −a1, . . . , xn −an)),
+is an intersection of maximal ideals and I is a radical ideal. FB ∪HX is clearly of form (9). By
+Lemma 3.17, CSdeg(FB ∪HX) ≤d −2n + 2 Pn
+i=1 di ≤3n since d ≤n and di = 2 for all i.
+By Lemma 4.1, we can use Theorem 3.21 to compute | bmD⟩where a bound D = 3n for the
+complete solving degree is given. Denote 0 = (0, . . . , 0)T and 1 = (1, . . . , 1)T . Our quantum
+algorithm to compute Boolean solutions is given below.
+Algorithm 4.2.
+Input: F = {f1, . . . , fr} ⊂C[X] with TF = Pr
+i=1 #fi and di = deg(fi). Also ǫ ∈(0, 1).
+Output: A Boolean solution a ∈VC(F, HX) or ∅meaning that VC(F, HX) = ∅, with success
+probability at least 1 −ǫ.
+Step 1: If F(0) = 0, return 0. If F(1) = 0, return 1. Set l = 1.
+Step 2: Let F1 = FB and Y = X.
+Step 3: Let F2 = F1 ∪HY and D = 3#Y (From Lemma 4.1, D ≥CSdeg(F2)).
+Step 4: Use the modiﬁed HHL algorithm (Theorem 2.2) to the Macaulay linear system MF2,D
+mD = bF2,D to obtain a state | bmD⟩with the error bound
+p
+ǫ1/n, where ǫ1 can be chosen
+arbitrarily in (0, 1) such as ǫ1 = 1/2.
+Step 5: Measuring | bmD⟩, we obtain a state |ek−1⟩which corresponds m ¯D,k in mD.
+Step 6: Let m ¯D,k = Quk
+i=1 xni. Set xni = 1 in F1 ⊂C[Y] for i = 1, . . . , uk.
+Step 7: Remove 0 from F1. Set Y = Y \ {xni | i = 1, . . . , uk}.
+Step 8: If 1 ∈F1 or Y = ∅then goto Step 11
+Step 9: If F1 ̸= ∅and F1(0) ̸= 0, then goto Step 3.
+Step 10: Return (a1, . . . , an) where ai = 0 if xi ∈Y else ai = 1.
+16
+
+
+---PAGE 17---
+Step 11: If l > ⌈logǫ1 ǫ⌉then return ∅, else l = l + 1 and goto Step 2.
+We have the following theorem, which will be proved in the rest of this section.
+Theorem 4.3. Algorithm 4.2 has the following properties.
+1. If the algorithm returns a solution, then it is a Boolean solution of F = 0. Equivalently,
+if F has no Boolean solutions, the algorithm returns ∅.
+2. If F has Boolean solutions, the algorithm computes one with probability at least 1 −ǫ.
+3. The runtime complexity of the algorithm is eO(n2.5(n + TF)κ2 log 1/ǫ), where κ is the max-
+imal condition number for all matrixes MF2,D in Step 4 of the algorithm, called the con-
+dition number for the polynomial system F.
+First, we brieﬂy explain Algorithm 4.2. The algorithm has two loops: the inner loop from
+Step 3 to Step 9 and the outer loop from Step 2 to Step 11.
+In the inner loop, we try to ﬁnd a solution a = (a1, . . . , an) of F1 and in each run of the loop
+at least one coordinate of a whose value is 1, say ak = 1, is found. Then, we set xk = 1 and try
+to ﬁnd the rest coordinates of a in the rest of the loop. If the inner loop fails, then we restart
+from Step 2 and try to ﬁnd another solution.
+The purpose of the outer loop is two folds. First, by using precision
+p ǫ1
+n instead of p ǫ
+n in
+Step 4, the algorithm uses less qubits. We can use a large value for ǫ1 ∈(0, 1), say ǫ1 = 1/2.
+Then the precision needed in Step 4 is
+p
+ǫ1/n =
+1
+√
+2n which is generally larger than p ǫ
+n. Second,
+the complexity of the algorithm related with the precision decreases from O(1/√ǫ) to O(log 1/ǫ).
+The reason is the algorithm runs ⌈logǫ1 ǫ⌉more times of the inner loop but with less precision
+pǫ1
+n . Please refer to Lemma 4.7 for the detailed analysis.
+We will explain each step of the algorithm below. In Step 1, we ﬁrst check two easy solutions.
+In Step 2, since x2
+i −xi = 0, we replace xm
+i
+by xi in time eO(nTF) to obtain FB.
+In the inner loop from step 3 to step 9, we will try to ﬁnd a solution a = (a1, . . . , an) of F1.
+In Step 3, the bound D = 3#Y for the completely solving degree can be used due to Lemma
+4.1. In Step 4, we use the modiﬁed HHL to solve the Macaulay linear system.
+In Step 5, we measure the quantum state | bmD⟩. Let | bmD⟩= ( bm ¯D,1, . . . , bm ¯D,( ¯D+1)n−1)T .
+Then by the property of quantum measurement, with probability | bm ¯D,k|2, the measurement
+returns |ek−1⟩(By Remark 3.2, the subscript starts at 0).
+In Step 6, we will show later that with high provability m ¯D,k = Quk
+i=1 xni ̸= 0 at the solution
+a = (a1, . . . , an) to be found. Since ai is either 0 or 1, Quk
+i=1 ani ̸= 0 implies ani = 1 for all ni.
+We thus set xni = 1 in Step 7 and try to ﬁnd the other coordinates of a in the loop from Step
+3 to Step 9.
+In Step 8, either 1 ∈F1 or Y = ∅implies VC(F1, HY) = ∅, because we have both F(0) ̸= 0
+and F(1) ̸= 0 from step 1. This means that we did not ﬁnd a solution in the loop from Step 3
+to Step 9 and need to ﬁnd another solution by starting from Step 2 again.
+In Step 9, if F1 = ∅or F1(0) = 0, then we ﬁnd a solution of F: xi = 0 for any xi ∈Y and
+xj = 1 for any xj ̸∈Y, which will be returned in Step 10.
+Secondly, we prove the correctness of Theorem 4.3. Part 1 of Theorem 4.3 is obviously true,
+since we have checked this fact in the algorithm. Part 2 of Theorem 4.3 follows from Lemma
+4.6, and part 3 of Theorem 4.3 follows from Lemma 4.7.
+The following key lemma gives the successful probability for Steps 5 and 6.
+17
+
+
+---PAGE 18---
+Lemma 4.4. In Steps 5 and 6, with a probability > 1 −ǫ1/n, VC(F2) ̸= ∅implies that there
+exists an a = (a1, . . . , an) ∈VC(F2) with ani = 1 for i = 1, . . . , uk.
+Proof. Let |mD⟩= P( ¯D+1)n−1
+j=1
+αj|ej−1⟩be the solution state and | bmD⟩= P( ¯D+1)n−1
+j=1
+βj|ej−1⟩
+be the approximate state obtained with the HHL algorithm. If we can measure the true solution
+|mD⟩and obtain |ek−1⟩, then αk ̸= 0.
+But the HHL algorithm actually returns | bmD⟩.
+By
+the deﬁnition of quantum measurement, measuring | bmD⟩will return |ek−1⟩with probability βk.
+Measuring | bmD⟩may lead a wrong |ek−1⟩, that is, αk = 0 but βk ̸= 0. By the deﬁnition of
+quantum measurement, the probability for this wrong case to happen is ∥P
+j,αj=0 βj|ej−1⟩∥2 =
+∥P
+j,αj=0(βj −αj)|ej−1⟩∥2 < ∥P( ¯D+1)n−1
+j=1
+(βj −αj)|ej−1⟩∥2 = ∥| bmD⟩−|mD⟩∥2 < ǫ1/n. In other
+words, if the HHL algorithm returns |ek−1⟩, then with probability > 1 −ǫ1/n, the measurement
+returns a correct |ek−1⟩meaning αk ̸= 0.
+By Theorem 3.21, the HHL algorithm returns bmD =
+P
+a∈VC(F2)
+ηa em(a). Then, we have αk =
+P
+a∈VC(F2)
+ηam ¯D,k(a). The condition αk ̸= 0 implies that there exists a solution a ∈VC(F2) such
+that m ¯D,k(a) ̸= 0. Since a is a Boolean solution, we have m ¯D,k(a) = 1. The lemma is proved.
+We now compute the successful probability for the inner loop.
+Lemma 4.5. The loop from Step 3 to Step 9 will run at most n times, and returns ∅with
+probability < ǫ1 when F = 0 has Boolean solutions.
+Proof. Since at each loop, the values of at least one xi will be determined in Step 6, we will
+repeat this loop for at most n times. By Lemma 4.4, when F = 0 has Boolean solutions, the
+algorithm returns ∅with probability < 1 −(1 −ǫ1/n)n < ǫ1.
+We now compute the successful probability for the algorithm.
+Lemma 4.6. The loop from Step 2 to Step 11 will run at most ⌈logǫ1 ǫ⌉times and with probability
+≥1 −ǫ, returns a Boolean solution of F = 0 when F = 0 has Boolean solutions.
+Proof. By Lemma 4.5, if F has Boolean solutions, then the probability that we reach step 11 is
+< ǫ1. The number of loops from Step 2 to Step 11 is at most ⌈logǫ1 ǫ⌉. Then, if F has Boolean
+solutions, then the probability that the algorithm returns ∅is ǫ
+⌈logǫ1 ǫ⌉
+1
+< ǫ.
+Finally, we estimate the runtime complexity of Algorithm 4.2.
+Lemma 4.7. The complexity for Algorithm 4.2 is
+√
+2c(n log2(6n + 1) + log2(r + 1))n1.5(n + 1 +
+TF)κ2⌈log2 1/ǫ⌉. Moreover, it equals to eO(n2.5(n + TF)κ2 log 1/ǫ).
+Proof. Step 4 is the dominate step in terms of complexities. The complexities for other steps
+are very low comparing to that of Step 4. So, we just omit them from the complexity analysis.
+We have D ≤2n + d from Lemma 3.18. Due to Step 2, we have d ≤n, so D ≤3n. MF2,D
+is of dimension (r( ¯d + 1)n) × (( ¯D + 1)n −1) and (2n + TF)-sparseness. By Corollary 3.22, the
+complexity of Step 4 is approximately c log(r( ¯d + 1)n + ( ¯D + 1)n −1)(2n + TF)κ2p
+n/ǫ1.
+By Lemma 4.5, the loop from Step 3 to Step 9 will run at most n times. Then the complexity
+for the loop from Step 3 to Step 9 is Pn−1
+j=0 (c log(r( ¯d+1)n+( ¯D+1)n−1)(2(n−j)+TF )κ2p
+n/ǫ1) ≤
+c log(r( ¯d + 1)n + ( ¯D + 1)n −1)(n(n + 1) + nTF)κ2p
+n/ǫ1.
+18
+
+
+---PAGE 19---
+By Lemma 4.6, the loop from Step 2 to Step 11 will run at most ⌈logǫ1 ǫ⌉times. Then the total
+complexity of the algorithm is c log(r( ¯d+1)n +( ¯D+1)n −1)(n(n+1)+nTF)κ2p
+n/ǫ1⌈logǫ1 ǫ⌉=
+c log(r( ¯d + 1)n + ( ¯D + 1)n −1)n1.5(n + 1 + TF)κ2√
+2⌈log2 1/ǫ⌉, by choosing ǫ1 to be 1/2.
+Since r( ¯d + 1)n + ( ¯D + 1)n −1 ≤(r + 1)( ¯D + 1)n, we have log(r( ¯d + 1)n + ( ¯D + 1)n −1) ≤
+log(r + 1) + n log( ¯D + 1) ≤log(r + 1) + n log(2D + 1) ≤log(r + 1) + n log(6n + 1) by Lemma
+3.7 ( ¯D + 1 ≤2D + 1) and 4.1 (D ≤3n).
+The totally complexity for Algorithm 4.2 is at most
+√
+2c(n log2(6n+1)+log2(r +1))n1.5(n+
+1+TF)κ2⌈log2 1/ǫ⌉= eO((n+log(r))n1.5(n+TF)κ2 log 1/ǫ) = eO(n2.5(n+TF)κ2 log 1/ǫ), because
+r ≤TF.
+We have completed the proof of Theorem 4.3.
+We can easily improve our algorithm as
+follows.
+Remark 4.8. Given (a1, . . . , an) ∈Cn, F ⊂C[X], we can obtain an element in VC(F, x2
+1 −
+a1x1, . . . , x2
+n−anxn) by Algorithm 4.2, where we need to replace HX with (x2
+1−a1x1, . . . , x2
+n−anxn)
+and xni = 1 with xni = ani in Step 6.
+Remark 4.9. Algorithm 4.2 has complexity eO(n3.5(n + TF)κ log 1/ǫ) if using Ambainis’ algo-
+rithm [2] to solve the Macaulay linear system.
+4.2
+Obtain all the Boolean solutions
+We will show how to ﬁnd all Booelan solutions of F. For a Boolean solution a of F, the following
+lemma shows how to construct a polynomial system F1 satisfying VC(F1, HX) = VC(F, HX)\{a}.
+Lemma 4.10. For a = (a1, . . . , an) ∈VC(F, HX), we have
+ProjXVC(F, HX, S, fa) = VC(F, HX) \ {a}
+where S = {¯xi + xi −1 | i = 1, . . . , n}, fa = Q
+ai=0 ¯xi
+Q
+ai=1 xi, and ¯xi are new variables.
+Then we can use the Algorithm 4.2 to ﬁnd all Boolean Solutions for F = 0.
+Algorithm 4.11.
+Input: F = {f1, . . . , fr} ⊂C[X] with TF = Pr
+i=1 #fi and di = deg(fi). Also ǫ ∈(0, 1).
+Output: VC(F, HX).
+Step 1: Set S = ∅. F1 = F ∪{x1 + ¯x1 −1, . . . , xn + ¯xn −1} ⊂C[X, X] with X = {¯x1, . . . , ¯xn}.
+Step 2: Use Algorithm 4.2 to compute Boolean solutions of F1 = 0. If we obtain ∅, return S.
+Else we obtain a Boolean solution a = (a1, . . . , an).
+Step 3: S = S ∪{a}, F1 = F1 ∪{Q
+ai=0 ¯xi
+Q
+ai=1 xi}. Goto Step 2.
+Theorem 4.12. Let w = #VC(F, HX).
+Then Algorithm 4.11 ﬁnds w Boolean solutions of
+F = 0 with complexity eO(n2.5(n + TF + w)wκ2 log 1/ǫ), and probability at least (1 −ǫ)w.
+Proof. By Theorem 4.3, the complexity of the algorithm is Pw−1
+i=0 eO((2n)2.5(2n + 3n + TF +
+i)κ2 log 1/ǫ) = eO(n2.5(n + TF + w)wκ2 log 1/ǫ).
+19
+
+
+---PAGE 20---
+4.3
+Computing Boolean solutions to linear systems and applications
+Many well-known problems in computation theory and cryptography can be described as ﬁnding
+the Boolean solutions for linear systems over C. In this section, we consider two such problems
+and their computational complexities using our quantum algorithm.
+The subset sum problem is an important problem in complexity theory and cryptography.
+The problem is: given a set of integers, is there a non-empty subset whose sum is a given
+number? The problem can be described as ﬁnding the Boolean solutions for a linear system.
+We have the following result.
+Proposition 4.13. Let A ∈Zr×n for r < n and b ∈Zr. There is a quantum algorithm to
+ﬁnd a Boolean solution to the linear system Ax = b with probability ≥1 −ǫ and complexity
+eO(n3.5rκ2 log 1/ǫ)
+Proof. We have r linear equation of sparseness (n + 1) and n quadratic binomials. Thus T =
+2n+nr+r, and by Theorem 4.3, we can use Algorithm 4.2 to ﬁnd a Boolean solution for Ax = b
+in time eO(n2.5(n + 2n + nr + r)κ2 log 1/ǫ) = eO(n3.5rκ2 log 1/ǫ).
+The graph isomorphism problem is another well-known problem in computational theory,
+which is to determine whether two ﬁnite graphs are isomorphic. We do not know whether it is
+NPC or P. The problem can be described as solving the Boolean solutions for a linear system.
+Let A and B in Fn×n
+2
+be the adjacent matrices for two graphs, the graph isomorphism problem
+is to decide whether there exists a permutation matrix P such that AP = PB.
+Proposition 4.14. There is a quantum algorithm to decide whether two graphs with n vertices
+are isomorphic with probability ≥1 −ǫ and complexity eO(n6.5κ2 log 1/ǫ).
+Proof. Let A = (aij), B = (bij), P = (xij) with P
+i xij = 1 for each j, P
+j xij = 1 for each i, and
+x2
+ij −xij = 0 for each i, j. Thus in the equation system, the number of 2n-sparse linear equations
+is n2, the number of (n+1)-sparse linear equations is 2n, and the number of quadratic binomials
+is n2. Thus T = 2n3 + 4n2 + 2n, by Theorem 4.3, we can use Algorithm 4.2 to ﬁnd a Boolean
+solution for AP = PB in time eO((n2)2.5(n2 + 2n3 + 4n2 + 2n)κ2 log 1/ǫ) = eO(n8κ2 log 1/ǫ).
+Due to the special property of the problem, the complexity could be reduced as follows.
+Considering the loop from Step 3 to Step 9 in Algorithm 4.2, since exactly n of xij equal to 1 in
+the permutation matrix P, the number of loops will be n instead of n2. Thus the error bound
+in step 4 will be
+p
+ǫ1/n instead of
+p
+ǫ1/n2. Finally, we can use Algorithm 4.2 to ﬁnd a Boolean
+solution for AP = PB in time eO(n8−1.5κ2 log 1/ǫ) = eO(n6.5κ2 log 1/ǫ).
+By Propositions 4.13 and 4.14, in order to determine the quantum complexity of these two
+problems, we need only to study the condition numbers of the corresponding equation systems.
+5
+Solving Boolean equation systems
+In this section, we will give a quantum algorithm to solve Boolean equations by converting the
+problem into that of computing the Boolean solutions for a 6-sparse polynomial system over C.
+5.1
+Reduce Boolean systems to polynomial systems over C
+Let F2 be the ﬁeld consisting of 0 and 1. We will consider the problem of equation solving over
+F2, or equivalently, solving Boolean equations. Let X = {x1, . . . , xn} be a set of indeterminants
+20
+
+
+---PAGE 21---
+and
+R2[X] = F2[X]/(HX),
+where HX = {x2
+1 −x1, . . . , x2
+n −xn}. Then R2[X] is a Boolean ring and every ideal in R2 is
+radical. Elements in R2 are called Boolean polynomials, which have the form P
+i mi and mi are
+Boolean monomials with degree at most one for each xi. Similar to Section 3, we use VF2(F) to
+denote the zeros of F ⊂R2[X] in F2.
+The following example shows that we cannot use a method of equation solving over C to
+solve Boolean equations directly.
+Example 5.1. Let f = x1+x2+1. Then VF2(f) = {(0, 1), (1, 0)}. But VC(f, x2
+1−x1, x2
+2 −x2) =
+∅.
+The following lemma shows how to reduce Boolean equation solving to equation solving over
+C.
+Lemma 5.2. Let F = {f1, . . . , fr} be a set of Boolean polynomials with ti = #fi. In C[X], let
+C(fi) = Q⌊ti/2⌋
+k=fi(0)(fi −2k) and let
+C(F) = {C(f1), . . . , C(fr)} ⊂C[X].
+(11)
+Then VF2(F) = VB(C(F)) which is the Boolean solutions of C(F). Furthermore, #C(fi) ≤
+ti(ti + 1)⌊ti/2⌋.
+Proof. Let fi = Pti
+k=1 mik and a = (a1, . . . , an) ∈VF2(F). When we regard fi as a polynomial in
+C[X], fi(a) = Pti
+k=1 mik(a) is an even integer between fi(0) and ti, because fi(a) ≡0
+mod 2.
+Thus a is a zero of C(fi) = Q⌊ti/2⌋
+k=fi(0)(fi −2k). The other direction is easy: a Boolean solution a
+of C(fi) = Q⌊ti/2⌋
+k=fi(0)(fi −2k) satisﬁes fi(a) = 2k for some k, and hence a is a Boolean solution
+for F. Finally, in the worst case, fi(0) = 0 and #C(fi) ≤ti(ti + 1)⌊ti/2⌋.
+Note that #C(fi) increases exponentially in terms of ti. In order to obtain sparse poly-
+nomials, we split each fi into several s-sparse Boolean polynomials for a given s ∈N≥3. Let
+f = Pt
+i=1 mi be a Boolean polynomial. Set St = ⌈t−s
+s−2⌉and Uf = {u1, . . . , uSt} be a set of new
+variables depending on f. We deﬁne a Boolean polynomial set S(f, s) as follows. If t ≤s, then
+S(f, s) = {f} and Uf = ∅. Otherwise, let
+S(f, s) = { ˇf1, . . . , ˇfSt+1} ⊂R2[X, Uf]
+(12)
+where ˇf1 = Ps−1
+k=1 mk + u1, ˇfj = Pj(s−2)+1
+k=(j−1)(s−2)+2 mk + uj−1 + uj for j = 2, . . . , St, and ˇfSt+1 =
+Pt
+k=St(s−2)+2 mk + uSt. S(f, s) is called the splitting set for f.
+For convenience of presentation, in this paper, we give new meaning to the notation: ⌈e⌉= 0
+if e ≤0. With this assumption, #Uf = ⌈t−s
+s−2⌉and #S(f, s) = ⌈t−s
+s−2⌉+ 1.
+For a set F of Boolean polynomials, denote U(F, s) = S
+f∈F U(f, s), and
+S(F, s) =
+[
+f∈F
+S(f, s) ⊂R2[X, U(F, s)].
+(13)
+The following results are easy to check.
+Lemma 5.3. Let F = {f1, . . . , fr} ⊂R2[X] and ti = #fi. Then S(F, s) is s-sparse, #S(F, s) =
+r + P
+i⌈ti−s
+s−2 ⌉, #(X ∪U(F, s)) = n + P
+i⌈ti−s
+s−2 ⌉.
+21
+
+
+---PAGE 22---
+Lemma 5.4. Let F = {f1, . . . , fr} ⊂R2[X]. For a given s ∈N≥3, we have
+(S(F, s))
+\
+R2[X] = (F), ProjXVF2(S(F, s)) = VF2(F),
+where (S(F, s)) is the ideal generated by S(F, s) in R2[X, U(F, s)].
+We summarize the results of this subsection as the following theorem which follows from
+Lemmas 5.3 and 5.2.
+Theorem 5.5. Let F = {f1, . . . , fr} ⊂R2[X] with ti = #fi and di = deg(fi). For a given
+s ∈N≥3, let Y = X ∪U(F, s). Then we have a polynomial set
+P(F, s) = C(S(F, s)) ⊂C[Y]
+such that VF2(F) = ProjXVB(P(F, s)). Furthermore, P(F, s) is s(s+1)⌊s/2⌋-sparse, #P(F, s) =
+r + P
+i⌈ti−s
+s−2 ⌉, #Y = n + P
+i⌈ti−s
+s−2 ⌉.
+In our algorithm, we use s = 3. For a Boolean polynomial f with #f ≤3, we give the
+following improved version of C(f).
+bC(f) =
+
+
+
+
+
+
+
+
+
+
+
+f,
+if #f = 1;
+n1 −n2,
+if #f = 2 and f = n1 + n2;
+f −2,
+if #f = 3 and f(0) = 1;
+2m1m2 + 2m1m3 + 2m2m3 −f
+if #f = 3 and f(0) = 0,
+(14)
+where f = m1 + m2 + m3 in the case #f = 3. For this new bC(f), we have
+Corollary 5.6. For s = 3, VF2(F) = ProjXVB(P(F, s)). Furthermore, P(F, 3) is 6-sparse,
+#P(F, 3) ≤TF, #Y ≤TF + n.
+Proof. We need only to show the last case in (14) and other results are easy to verify. Since we
+consider Boolean solutions, we may set m2 = m for any monomial m. Then, C(fi) = fi(fi−2) =
+m2
+i1 −2mi1 + m2
+i2 −2mi2 + m2
+i3 −2mi3 + 2mi1mi2 + 2mi1mi3 + 2mi2mi3 = 2mi1mi2 + 2mi1mi3 +
+2mi2m3 −mi1 −mi2 −mi3 (mod HY) = bC(fi)(mod HY), and bC(fi) is 6-sparse.
+If ti ≥3 for all i, by Lemma 5.3, we have #S(F, 3) = TF−2r and #(X∪U(F, 3)) = n+TF−3r,
+where TF = P
+i ti. Then, #P(F, 3) = TF −2r ≤TF, #Y = TF + n −3r ≤TF + n. If ti < 3,
+then S(fi, 3) = fi and U(fi, 3) = ∅. Hence the bounds are still true.
+5.2
+Quantum algorithm for Boolean equation solving
+In this subsection, we will give a quantum algorithm to solve Boolean equations.
+Algorithm 5.7.
+Input: F = {f1, . . . , fr} ⊂R2[X] and ǫ ∈(0, 1).
+Output: A zero of F or ∅meaning that VF2(F) = ∅with probability > 1 −ǫ.
+Step 1: Compute F1 = S(F, 3) ⊂R2[Y] as deﬁned in (13), where Y = X ∪U(F, 3).
+Step 2: Compute F2 = bC(F1) ⊂C[Y] as deﬁned in (14).
+22
+
+
+---PAGE 23---
+Step 3: Use Algorithm 4.2 to ﬁnd a Boolean solution of F2 = 0 over C[Y], with the probability
+bound ǫ. Return ∅if Algorithm 4.2 returns ∅, else we have a Boolean solution a for F2.
+Step 4: Return ProjXa.
+Theorem 5.8. Algorithm 5.7 has the following properties.
+• If the algorithm returns a solution, then it is a solution of F = 0. Equivalently, if VF2(F) =
+∅, the algorithm returns ∅.
+• If VF2(F) ̸= ∅, the algorithm computes a solution of F = 0 with probability > 1 −ǫ.
+• The runtime complexity is eO((n3.5 + T 3.5
+F )κ2 log 1/ǫ), where TF = P
+i #fi and κ is the
+condition number of the polynomial system F2, called the condition number of the Booolean
+system F.
+Proof. In Step 2, we split F to 3-sparse polynomials and then turn them into a polynomial
+system over C in time O(TF). By Corollary 5.6, VF2(F) = VB(F2). Thus, we need only to ﬁnd
+Boolean solutions for F2 in Step 3.
+If we use F1 = S(F, s) instead of F1 = S(F, 3) in Step 1, by Theorems 4.3 and 5.5, the com-
+plexity of Step 3 is eO((n+P
+i⌈ti−s
+s−2 ⌉)2.5((n+P
+i⌈ti−s
+s−2 ⌉)+(r+P
+i⌈ti−s
+s−2 ⌉))s(s+1)⌊s/2⌋)κ2 log 1/ǫ) =
+(n + TF/s)2.5(n + TFss/2)κ2 log 1/ǫ). To minimize this complexity, we choose s = 3, meanwhile
+the complexity is eO((n + TF)2.5(n + TF)κ2 log 1/ǫ) = eO((n3.5 + T 3.5
+F )κ2 log 1/ǫ).
+Remark 5.9. Algorithm 5.7 has complexity eO((n4.5 + T 4.5
+F )κ log 1/ǫ) if using Ambainis’ algo-
+rithm [2] to solve the Macualay linear systems.
+The following theorem gives the exact complexity for solving Boolean equations, which will
+be used in Section 6.
+Theorem 5.10. Let F = St
+s=1{fs1, . . . , fsrs} ⊂R2[X] be a Boolean equation system such that
+s = #fsj, TF = Pt
+s=1 srs, r = Pt
+s=1 rs. Then we can ﬁnd a solution of F = 0 with runtime
+√
+2c((n + TF −3r + 2r1 + r2) log2(6(n + TF −3r + 2r1 + r2) + 1) + log2(TF −2r + 2r1 + r2 +
+1))(n+TF −3r+2r1 +r2)1.5((n+TF −3r+2r1 +r2)+1+(6TF −12r+7r1 +2r2))κ2⌈log2 1/ǫ⌉≤
+√
+2c(log2(n + TF) + 3)(n + TF)2.5(n + 7TF)κ2⌈log2 1/ǫ⌉, where c is the complexity constant of
+the HHL algorithm deﬁned in Remark 2.4.
+Proof. We use bC(f) deﬁned in (14). By Corollary 5.6, C(S(F, 3)) consists of r1 monomials, r2
+binomials, and Pt
+s=3((s −2)rs) = TF −2r + r1 polynomials of sparseness 6, and the number of
+indeterminates is n + Pt
+s=3((s −3)rs) = n + TF −3r + 2r1 + r2. Thus the total sparseness for
+P = C(S(F, 3)) is TP = r1 + 2r2 + 6(TF −2r + r1) = 6TF −12r + 7r1 + 2r2. By Lemma 4.7, the
+exact complexity for Algorithm 5.7 to ﬁnd a solution is
+√
+2c((n + TF −3r + 2r1 + r2) log2(6(n +
+TF −3r+2r1+r2)+1)+log2(TF −2r+2r1+r2+1))(n+TF −3r+2r1+r2)1.5((n+TF −3r+2r1+
+r2)+1+(6TF −12r+7r1 +2r2))κ2⌈log2 1/ǫ⌉≤
+√
+2c((n+TF) log2(6(n+TF)+1)+log2(TF))(n+
+TF)1.5((n+TF)+6TF)κ2⌈log2 1/ǫ⌉≤
+√
+2c(log2(n+TF)+3)(n+TF)2.5(n+7TF)κ2⌈log2 1/ǫ⌉.
+5.3
+Application to 3-satisﬁability problem
+Let X = {x1, . . . , xn} be Boolean indeterminates. A 3-SAT problem is to check the satisﬁability
+of the propositional logic formula yi1 ∨yi2 ∨yi3 = 1 for i = 1, . . . , r, where yij = xk or ¬xk
+23
+
+
+---PAGE 24---
+for some k. Decision of 3-SAT is NPC. The 3-SAT problem is equivalent to solve the Boolean
+equation system
+F = {¯yi1¯yi2¯yi3 : i = 1, . . . , r} ∪{xk + ¯xk + 1 : k = 1, . . . , n}}
+in R2[X, X], where X = {¯x1, . . . , ¯xn}.
+Proposition 5.11. For a 3-SAT with r clauses, there is a quantum algorithm to decide its
+satisﬁability with probability ≥1 −ǫ and with complexity eO((n2.5(n + r)κ2 log 1/ǫ).
+Proof. It is easy to see that solving the Boolean system F is equivalent to ﬁnd the Boolean
+solutions for the following polynomial system in C[X, X],
+F1 = {¯yi1¯yi2¯yi3 : i = 1, . . . , r} ∪{xk + ¯xk −1 : k = 1, . . . , n} ∪{x2
+k −xk : k = 1, . . . , n},
+that is, the 3-SAT problem is satisﬁable if and only if VC(F) ̸= ∅. Also note that x + ¯x −1 = 0
+and x2 −x = 0 imply ¯x2 −¯x = 0. F1 consists of n binomials, n trinomials and r monomials.
+Thus TF1 = 5n + r, by Lemma 4.7, we can use Algorithm 4.2 to ﬁnd a Boolean solution in time
+eO(n2.5(n + 5n + r)κ2 log 1/ǫ) = eO(n2.5(n + r)κ2 log 1/ǫ).
+The best classic probabilistic algorithm for 3-SAT was 1.334n given in [30]. In order for our
+quantum algorithm to perform better n should be ≥64, if κ is not too big.
+6
+Solving Boolean quadratic equations and cryptanalysis
+Cryptanalysis of stream ciphers, block ciphers, certain hash functions, and MPKC can be re-
+duced to the solving of Boolean multivariate quadratic equations (BMQ). In this section, we
+will apply our quantum algorithm to the analysis of these cryptosystems.
+6.1
+Quantum algebraic attack against AES
+The Advanced Encryption Standard (AES), also known by its original name Rijndael, is a
+speciﬁcation for the encryption of electronic data established by the U.S. National Institute of
+Standards and Technology in 2001 [16].
+Murphy and Robshaw [28] proposed a method to construct a Boolean equation system,
+solving of which consists of an algebraic attack against AES. We will use this approach to
+establish a BMQ.
+Denote the 32-bit key length of AES as Nk and the number of rounds as Nr.
+Denote
+p, c ∈F4Nk×8
+2
+as the plaintext and the ciphertext of AES, w0 ∈F4Nk×8
+2
+as the key of AES,
+wi ∈F4Nk×8
+2
+as the expanded key of AES, ¯wi ∈F4Nk×8
+2
+as the image of wi under the S-box map
+in the key expansion step, xi ∈F4Nk×8
+2
+as the state after the AddRoundKey step of AES, and
+yi ∈F4Nk×8
+2
+as the state after the InvSubBytes step of AES, where xi(j, m) means the m-th bit
+at the j-th word of state x for round i. In the key expansion step, several states ¯wi are obtained
+as the image of wi under the S-box. Then, an algebraic attack on the Nr-rounds AES with key
+24
+
+
+---PAGE 25---
+length Nk is to solve the following BMQ, denoted as AES-(Nk, Nr):
+0 = x0(j, m) + p(j, m) + w0(j, m);
+0 = xi(j, m) + wi(j, m) +
+X
+j′,m′
+α(j, m, j′, m′)yi−1(j′, m′)
+for i = 1, · · · , Nr −1;
+0 = c(j, m) + wNr(j, m) + yNr−1(5j mod 16, m);
+0 = S(xi(j, 0), . . . , xi(j, 7), yi(j, 0), . . . , yi(j, 7))
+for i = 0, · · · , Nr −1;
+0 = S(wi(¯j, 0), . . . , wi(¯j, 7), ¯wi(¯j, 0), . . . , ¯wi(¯j, 7))
+for ¯j = 4Nk −4, . . . , 4Nk −1;
+0 = wi(¯j, m) + wi−1(¯j, m) + ¯wi−1(¯j + 13, m) + χ(m, i)
+for ¯j = 0, 1, 2;
+0 = wi(3, m) + wi−1(3, m) + ¯wi−1(12, m) + χ(m, i).
+For Nk ≤6 :
+0 = wi(¯j, m) + wi−1(¯j, m) + wi(¯j −4, m)
+for ¯j = 4, . . . , 4Nk −1.
+For Nk > 6 :
+0 = S(wi(¯j, 0), . . . , wi(¯j, 7), ¯wi(¯j, 0), . . . , ¯wi(¯j, 7))
+for ¯j = 12, . . . , 15;
+0 = wi(¯j, m) + wi−1(¯j, m) + ¯wi(¯j −4, m)
+for ¯j = 16, . . . , 19;
+0 = wi(¯j, m) + wi−1(¯j, m) + wi(¯j −4, m)
+for ¯j = 4, . . . , 15, 20, . . . , 4Nk −1,
+where j runs from 0 to (4Nk −1), and m runs from 0 to 7.
+¯wi(j, m), xi(j, m), and yi(j, m)
+are state variables, wi(j, m) are key variables, S is a set of 39 BMQ in F2[x0, . . . , x7, y0, . . . , y7]
+representing the Rijndael S-box, which can be found in the Appendix of this paper. χ is the
+round constant. Thus x, y, w and ¯w are Boolean indeterminates and other alphabets are known
+constants. In the second group of equations, exactly 640 of α(j, m, j′, m′) are 1 for a given i.
+The equation set S of the S-box is given in the Appendix (Section 8), which can be simpliﬁed
+as follows. The original S is a BMQ with total sparseness 1688. By doing Gaussian elimination,
+we obtain a BMQ S with with total sparseness 1192. We can introduce 1075 new indetermi-
+nates uij to split S into 3-sparse BMQ. Thus P(S, 3) consists of 1331 quadratic binomials, 115
+quadratic polynomials, 989 cubic polynomials, and 10 quartic polynomials over C.
+Totally, the AES-(Nk, Nr) can be represented by a BMQ with number of indeterminates n =
+96NkNr+32Nk+32Nr (if Nk ≤6) or n = 96NkNr+32Nk+64Nr (if Nk > 6), number of equations
+r = 220NrNk +64Nk +156Nr (if Nk ≤6) or r = 220NrNk +64Nk +312Nr (if Nk > 6), and total
+sparseness T = 4928NrNk + 192Nk + 5440Nr (if Nk ≤6) or T = 4928NrNk + 192Nk + 10208Nr
+(if Nk > 6). By Theorem 5.10, we have
+Proposition 6.1. There is a quantum algorithm to obtain a solution of AES-(Nk, Nr) with com-
+plexity
+√
+2(log2(5024NkNr+224Nk+5472Nr)+3)(5024NkNr+224Nk+5472Nr)2.5(34592NkNr+
+1376Nk + 38112Nr)cκ2 log2 1/ǫ (if Nk ≤6), or
+√
+2(log2(5024NkNr + 224Nk + 10272Nr) +
+3)(5024NkNr + 224Nk + 10272Nr)2.5(34592NkNr + 1376Nk + 71520Nr)cκ2 log2 1/ǫ (if Nk > 6)
+with probability > 1 −ǫ, where κ is the condition number of F and c is the complexity constant
+of the HHL algorithm.
+Set Nk = 4, 6, 8, Nr = 4, 6, 8, 10, 12, 14, and ǫ = 1%. We have the following complexities on
+quantum algebraic attack on various AESes. From Table 2, we can see that AES is secure under
+quantum algebraic attack only if the condition number κ is large.
+6.2
+Quantum algebraic attack against Trivium
+Trivium is a synchronous stream cipher designed by Canni´ere and Preneel [8] in 2005 to provide
+a ﬂexible trade-oﬀbetween speed and gate count in hardware, and reasonably eﬃcient software
+25
+
+
+---PAGE 26---
+AES
+Nk
+Nr
+#Vars
+#Eqs
+T-Sparseness
+Complexity
+AES-128
+4
+4
+1792
+4400
+101376
+268.61cκ2
+AES-128
+4
+6
+2624
+6472
+151680
+270.68cκ2
+AES-128
+4
+8
+3456
+8544
+201984
+272.16cκ2
+AES-128
+4
+10
+4288
+10616
+252288
+273.30cκ2
+AES-192
+6
+12
+7488
+18096
+421248
+276.59cκ2
+AES-256
+8
+14
+11904
+29520
+696384
+278.53cκ2
+Table 2: Complexities of the quantum algebraic attack on AES
+implementation, which has been speciﬁed as an International Standard under ISO/IEC 29192-3.
+Trivium can be represented by the following nonlinear feedback shift registers (NFSR) which
+can also be considered as BMQ [35] F:
+A(t + 93) = A(t + 24) + C(t + 45) + C(t) + C(t + 1)C(t + 2),
+0 ≤t ≤Nr −67;
+B(t + 84) = B(t + 6) + A(t + 27) + A(t) + A(t + 1)A2(t + 2),
+0 ≤t ≤Nr −70;
+(15)
+C(t + 111) = C(t + 24) + B(t + 15) + B(t) + B(t + 1)B(t + 2),
+0 ≤t ≤Nr −67;
+z(t) = A(t + 27) + A(t) + B(t + 15) + B(t) + C(t + 45) + C(t),
+0 ≤t ≤Nr −1,
+where A, B, C are state variables and z is the output. For an initial state Z0 = (A(0), . . . , A(92),
+B(0), . . . , B(83), C(0), . . . , C(110)) ∈F288
+2
+, we can generate the key sequence z(0), z(1), . . . , z(Nr
+−1) with the above NFSR. Thus, for the Nr-round Trivium, F consists of (3Nr −201) quadratic
+polynomials of sparseness 5, and Nr linear polynomials of sparseness 7, and with (3Nr + 87)
+indeterminates. Thus, T = 5(3Nr −201) + 7Nr = 22Nr −1005.
+The algebraic attach on the Nr-round Trivium is to solve the BMQ (15), where z(0), z(1), . . .,
+z(Nr −1) are constants. It is generally believed that for Nr > 288, (15) has a unique solution.
+Proposition 6.2. There is a quantum algorithm to ﬁnd a solution for the Nr-round Trivium
+equation system in time 220.46 log2(Nr)N 3.5
+r cκ2 log 1/ǫ with probability > 1 −ǫ, where κ is the
+condition number of F and c is the complexity constant of the HHL algorithm.
+Proof. By Theorem 5.10, the complexity is
+√
+2c(log2((3Nr+87)+(22Nr−1005))+3)((3Nr +87)+
+(22Nr −1005))2.5((3Nr + 87) + 7(22Nr −1005))κ2⌈log2 1/ǫ⌉=
+√
+2c log2(200Nr −7344)(25Nr −
+918)2.5(157Nr −6948)κ2⌈log2 1/ǫ⌉≤220.46 log2(Nr)N 3.5
+r
+cκ2⌈log2 1/ǫ⌉.
+In Table 3, we give the complexities for several Nr assuming ǫ = 1%. From Table 3, we can
+see that Trivium is secure under quantum algebraic attack only if the condition number κ is
+large.
+Round
+#Vars
+#Eqs
+T-Sparseness
+Complexity
+288
+951
+951
+5331
+253.96cκ2
+576
+1815
+2103
+11667
+257.94cκ2
+1152
+3543
+4407
+24339
+261.71cκ2
+2304
+6999
+9015
+49683
+265.38cκ2
+Table 3: Complexities of the quantum algebraic attack on Trivium
+6.3
+Quantum algebraic attack against Keccak
+Keccak [6], the winner of SHA-3 contest, is the latest member of the Secure Hash Algorithm
+family of standards, released by NIST on August 5, 2015. For Keccak-[Nh, b, Nr], we denote
+26
+
+
+---PAGE 27---
+Nh, b, and Nr as the output bit size, the state bit size, and the number of rounds. Let A0(x, y, z)
+be the message, Ai(x, y, z) be the state variable after applying the τ function for i-times, and
+Bi(x, y, z) be the state variable after applying the π function for i-times, where x, y ∈Z/5Z,
+z ∈Z/wZ, and w = b/25 = 1, 2, 4, . . . , 64 is the bit length of each word. Then for Keccak-
+[Nh, b, Nr], we have the following BMQ F [36]:
+Bi(3y + x, x, z −r(3y + x, x)) = Ai−1(x, y, z) +
+4
+X
+j=0
+Ai−1(x −1, j, z) +
+4
+X
+j=0
+Ai−1(x + 1, j, z −1);
+Ai(x, y, z) = Bi(x, y, z) + (1 −Bi(x + 1, y, z))Bi(x + 2, y, z), for x ̸= 0 or y ̸= 0;
+Ai(0, 0, z) = Bi(0, 0, z) + (1 −Bi(1, 0, z))Bi(2, 0, z) + RC(z)
+for i = 1, . . . , Nr, x, y = 0, . . . , 4, z = 0, . . . , w. In the preimage attack on Keccak, r(3y + x, x)
+and RC(z) are known constants, the ﬁrst Nb of ANr(x, y, z) are the known Hash output, and
+Ai(x, y, z) (i < Nr) and Bi(x, y, z) are indeterminates. Thus we have n = 2bNr indeterminates
+and r = (2b −1)Nr + Nh Boolean quadratic equations with total sparseness T = 401Nrw +
+101Nh/25 −101w.
+Proposition 6.3. For the BMQ Keccak-[Nh, b, Nr], there is a quantum algorithm to ﬁnd a
+preimage in time 2
+√
+2c log2(401Nrw+26Nh/25)(401Nrw+26Nh/25)2.5(3609Nrw+384Nh/25)κ2
+⌈log2 1/ǫ⌉≤218.83 log2(Nrb)N 3.5
+r
+b3.5cκ2 ⌈log2 1/ǫ⌉with probability > 1 −ǫ, where κ is the condi-
+tion number of F and c is the complexity constant of the HHL algorithm.
+Proof. We have n = 2bNr, r = (2b−1)Nr +Nh, and T = 401Nrw+101Nh/25−101w. By Theo-
+rem 5.10, the complexity is
+√
+2c(log2(2bNr+(401Nrw+101Nh/25−101w))+3)(2bNr+(401Nrw+
+101Nh/25−101w))2.5(2bNr+7(401Nrw+101Nh/25−101w))κ2⌈log2 1/ǫ⌉≤
+√
+2c log2(3608Nrw+
+808Nh/25)(451Nrw+101Nh/25)2.5(2857Nrw+707Nh/25)κ2⌈log2 1/ǫ⌉≤218.83 log2(Nrb)N 3.5
+r
+b3.5
+cκ2⌈log2 1/ǫ⌉.
+Setting Nh = 224, 256, 384, 512, Nr = 24, b = 1600 and ǫ = 1%, the complexities for various
+(Nh, b, Nr) are given in Table 4. From Table 4, we can see that Keccak is secure under quantum
+algebraic attack only if the condition number κ is large.
+Nh
+b
+Nr
+#Vars
+#Eqs
+T-Sparseness
+Complexity
+224
+1600
+24
+76800
+77000
+610377
+278.25cκ2
+256
+1600
+24
+76800
+77032
+610506
+278.25cκ2
+384
+1600
+24
+76800
+77160
+611023
+278.25cκ2
+512
+1600
+24
+76800
+77288
+611540
+278.25cκ2
+Table 4: Complexities of the quantum preimage attack on Keccak
+The best known traditional attacks on Keccak were given in [34] and [24]. In [34], practical
+collision attacks against the 5-round Keccak-224 and an instance of the 6-round Keccak collision
+challenge were given. In [24], key recovery attacks were given for 4- to 8-round Keccak.
+6.4
+Quantum algebraic attack against MPKC
+Multivariate Public Key Cryptosystem (MPKC) is one of the candidates for post-quantum
+cryptography [17]. An MPKC is generally constructed as follows
+H = L ◦G ◦R = (h1(X), . . . , hr(X))
+(16)
+27
+
+
+---PAGE 28---
+where L ∈GL(m, F2), R ∈GL(n, F2), and G : Fn
+2 →Fm
+2 is a quadratic map whose inversion
+can be eﬃciently computed. L and R are the secret keys and H is the public map. The direct
+algebraic attack against the MPKC is to solve the BMQ:
+y1 = h1(X), . . . , yr = hr(X)
+(17)
+where X = (x1, . . . , xn) is the plaintext and Y = (y1, . . . , yr) is the known ciphertext. Note that
+the BMQ in (17) are dense. We have
+Proposition 6.4. For dense BMQ F = {f1, . . . , fr} ⊂R2[X], there is a quantum algorithm to
+obtain a solution in time
+√
+2c(log2(n+(n2 +3n−4)r/2)+3)(n+(n2 +3n−4)r/2)2.5(n+7(n2 +
+3n −4)r/2)κ2⌈log2 1/ǫ⌉= eO(n7r3.5κ2 log 1/ǫ) with probability > 1 −ǫ, where κ is the condition
+number of F and c is the complexity constant of the HHL algorithm.
+Proof. If F is a dense BMQ, T = (n + 1)(n + 2)r/2. By Theorem 5.10, we can ﬁnd a solution
+of F = 0 in time
+√
+2c(log2(n + (n2 + 3n −4)r/2) + 3)(n + (n2 + 3n −4)r/2)2.5(n + 7(n2 + 3n −
+4)r/2)κ2⌈log2 1/ǫ⌉= eO(n7r3.5κ2 log 1/ǫ).
+Corollary 6.5. Suppose r = γn. Then there is a quantum algebraic attack against MPKC in
+time eO(γn10.5κ2 log 1/ǫ) with probability > 1 −ǫ, where κ is the condition number of (17).
+Related to this problem, the BMQ Challenge is to solve a given random BMQ with m = 2n or
+n = 1.5m over the ﬁnite ﬁelds F2, F28 [37]. Considering the ﬁeld F28 = F2[α]/(α8+α4+α3+α+1),
+each variable x over F28 is a sum of eight Boolean variables, that is x = P7
+i=0 xiαi.
+Then
+F = {f1, . . . , fr} ⊂F28[x1, . . . , xn] can be rewritten as F1 = {f11, . . . , f18, f21, . . . , fm8} ⊂
+R2[x11, . . . , x18, x21, . . . , xn8], where xij and fij denote the j-th bit of xi and fi. As a conse-
+quence, equation solving over F28 has the same complexity as Boolean equation solving. For
+the BMQ challenge [37], m = 2n or n = 1.5m implies the complexity is eO(T 3.5κ2 log 1/ǫ) <
+eO(n10.5κ2 log 1/ǫ).
+The best known deterministic algebraic algorithms to solve the BMQ are the Gr¨obner basis
+method [3] which has complexity O(20.841n) under certain regularity condition for the equation
+system, and the multiplication free characteristic set method [20] which has bit complexity O(2n)
+for general BMQ. Although exponential in n, these methods had been used to solve BMQ from
+cryptanalysis with n = 128.
+Remark 6.6. From the above discussion, we can see that AES, Trivium, Keccak, and MPKC
+are secure under quantum algebraic attack only if the condition numbers of the related Boolean
+equation systems are large. This suggests that a possible new quantum criterion for cryptosystem
+design: the Boolean equation system of the cryptosystem has a large condition number.
+7
+Conclusion
+We give two quantum algorithms to ﬁnd the Boolean solutions of a polynomial system in C[X]
+and to solve Boolean equations in R2[X] in any given probability, whose complexities are poly-
+nomial in the number of variables, the total sparseness of the equation system, and the condition
+number of the equation system. As a consequence, we achieved exponential speedup for sparse
+Boolean equation solving if the condition number of the equation system is small.
+The main idea of the algorithm is ﬁrst reducing the problem of Boolean equation solving to
+the problem of ﬁnding the Boolean solutions of a polynomial system over C and then solving
+the Macaulay linear system of the polynomial system over C with the modiﬁed HHL algorithm
+to obtain the Boolean solutions based on the properties of quantum states.
+28
+
+
+---PAGE 29---
+The new quantum algorithm is used to give quantum algebraic attack against major cryp-
+tosystems AES, Trivium, and SHA-3/Keccak and show that these ciphers are secure under
+quantum algebraic attack only if the condition numbers of their equation systems are large.
+Similar results hold for MPKC, which is a candidate for post-quantum cryptosystems.
+We also use the quantum algorithms to three famous problems from computational theory:
+the 3-SAT problem, the graph isomorphism problem, and the subset sum problem and show
+that the complexities to solve these problems are polynomial in the input size and the condition
+number of their corresponding equation system.
+One of the major problems for future study is on the condition number: either to estimate
+the condition number of the cryptosystems and the 3-SAT problem, or to ﬁnd new quantum
+method to solve Boolean systems, which has less relation with the condition number. It is also
+interesting to extend the method proposed in this paper to more general equation systems, such
+as equation solving over the ﬁnite ﬁelds [10] or the ﬁeld of complex numbers.
+References
+[1] Aharonov, D. and Ta-Shma, A., Adiabatic quantum state generation and statistical zero
+knowledge, Proc. STOC’03, 20-29, ACM Press, New York, 2003.
+[2] Ambainis, A., Variable time amplitude ampliﬁcation and a faster quantum algorithm for
+solving systems of linear equations, Proc. STACS, 636-647, 2012.
+[3] Bardet, M., Faug`ere, J.C., Salvy, B., Spaenlehauer, P.J., On the complexity of solving
+quadratic Boolean systems, Journal of Complexity, 29(1), 53-75, 2013.
+[4] Berry, D.W., Ahokas, G., Cleve, R., Sanders, B.C., Eﬃcient quantum algorithms for sim-
+ulating sparse Hamiltonians. Communications in Mathematical Physics, 270(2): 359-371,
+2007.
+[5] Berry, D.W., Childs, A.M., Kothari, R., Hamiltonian simulation with nearly optimal de-
+pendence on all parameters, Proc. 56th FOCS, 792-809, 2015.
+[6] Bertoni, G., Daemen, J., Peeters, M., Van Assche, G., Keccak sponge function family main
+document. Submission to NIST (Round 2) 3 (2009): 30.
+[7] Caminata, A. and Gorla, E., Solving multivariate polynomial systems and an invariant from
+commutative algebra, arXiv1706.06319, 2017.
+[8] Canni´ere, C.D., Preneel, B., Trivium, in New Stream Cipher Designs: The eSTREAM
+Finalists, LNCS, vol. 4986, 244-266, Springer, 2008.
+[9] Cao, Y., Daskin, A., Frankel, S., Kais S., Quantum circuit design for solving linear systems
+of equations, Journal of Molecular Physics, 1675-1680, 2012.
+[10] Chen, Y.A., Gao, X.S., Yuan, C.M., Quantum Algorithms for Optimization and Polynomial
+Systems Solving over Finite Fields, arxiv 1802.03856, 2018.
+[11] Childs, A.M., Quantum algorithms: equation solving by simulation, Nature Physics, 5(12),
+861-861, 2009.
+[12] Childs, A.M., Cleve, R., Deotto, E., Farhi, E., Gutmann, S., Spielman, D.A., Exponential
+algorithmic speedup by a quantum walk, Proc. STOC’03, 59-68, ACM Press, New York,
+2003.
+29
+
+
+---PAGE 30---
+[13] Childs, A.M., Kothari, R., Somma, R.D., Quantum Algorithm for Systems of Linear Equa-
+tions with Exponentially Improved Dependence on Precision, SIAM J. Comput., 46(6),
+1920-1950, 2017.
+[14] Courtois, N., Klimov, A., Patarin, J., Shamir, A., Eﬃcient algorithms for solving overde-
+ﬁned systems of multivariate polynomial equations, Eurocrypt’00, LNCS, vol. 1807, 392-407,
+Springer, 2000.
+[15] Cox, D., Little, J., O’Shea, D., Using Algebraic Geometry, Springer, 1998.
+[16] Daemen, J. and Rijmen, V., AES Proposal: Rijndael, NIST, 1999.
+[17] Ding, J., Gower, J.E., Schmidt, D.S., Multivariate Public Key Cryptosystems, Springer,
+2006.
+[18] Faugere, J.C., A new eﬃcient algorithm for computing Gr¨obner bases (F4), J. Pure Appl.
+Algebra, 139, 61-88, 1999.
+[19] Faug`ere, J.C., Horan, K., Kahrobaei, D., Kaplan, M., Kasheﬁ, E. L Perret, L., Fast quantum
+algorithm for solving multivariate quadratic equations, arXiv:1712.07211, 2017.
+[20] Gao, X.S. and Huang, Z., Characteristic set algorithms for equation solving in ﬁnite ﬁelds,
+Journal of Symbolic Computation, 47, 655-679, 2012.
+[21] Grassl, M., Langenberg, B., Roetteler, M., Steinwandt, R., Applying Grovers algorithm to
+AES: quantum resource estimates International Workshop on Post-Quantum Cryptography
+Post-Quantum Cryptography, 29-43, Springer, 2016.
+[22] Grover, L.K., A fast quantum mechanical algorithm for database search, Proc. STOC’96,
+212-219, ACM Press, 1996.
+[23] Harrow, A.W., Hassidim, A., Lloyd, S., Quantum algorithm for linear systems of equations.
+Physical Review Letters, 103(15): 150502, 2009.
+[24] Huang, S., Wang, X., Xu, G., Wang, M., Zhao, J., Conditional cube attack on reduced-
+round Keccak sponge function, EUROCRYPT 2017, 259-288, Springer, 2017.
+[25] Huang, Z., Sun Y., Lin D., On the eﬃciency of solving boolean polynomial systems with
+the characteristic set method, arXiv:1405.4596, 2016.
+[26] Lazard, D., Gr¨obner bases, Gaussian elimination and resolution of systems of algebraic
+equations, Proc. Eurocal 83, LNCS, vol. 162, 146-156, Springer, Berlin, 1983.
+[27] Macaulay, F.S., Some formulas in elimination, Proc. of the London Mathematical Society,
+35(1), 3-38, 1902.
+[28] Murphy, S. and Robshaw, M., Essential algebraic structure within the AES. CRYPTO’02,
+1-16, 2002.
+[29] Schwabe, P. and Westerbaan, B., Solving binary MQ with Grovers algorithm, SPACE’16,
+LNCS 10076, 303-322, 2016.
+[30] Sch¨oning, U., A probabilistic algorithm for k-SAT and constraint satisfaction problems,
+Proc. FOCS’99, 410-414, 1999.
+30
+
+
+---PAGE 31---
+[31] Shewchuk, J.R., An introduction to the conjugate gradient method without the agonizing-
+pain, Tech. Rep. CMU-CS-94-125, Carnegie Mellon University, Pittsburgh, Pennsylvania,
+1994.
+[32] Shannon, C.E., A mathematical theory of communication, Bell Syst. Tech. J., 27(3), 379-
+423 and 623-656, 1948.
+[33] Shor, P.W., Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms
+on a Quantum Computer, SIAM J. Comput., 26(5), 1484-1509, 1997.
+[34] Song, L., Liao, G., Guo, J., Non-full Sbox linearization: applications to collision attacks on
+round-reduced Keccak. CRYPTO’17, 428-451, Springer, 2017.
+[35] Teo, S.G., Wong, K.K.H., Bartlett, H., Simpson L, Dawson, E., Algebraic analysis
+of Trivium-like ciphers. Proceedings of the Twelfth Australasian Information Security
+Conference-Volume 149. Australian Computer Society, Inc., 77-81, 2014.
+[36] Wu, C.K. and Feng, D., Boolean Functions and their Applications in Cryptography,
+Springer, 2016.
+[37] Yasuda, T., Dahan, X., Huang, Y.J., Takagi, T., Sakurai, K., MQ Challenge: hardness eval-
+uation of solving multivariate quadratic problems, The NIST Workshop on Cybersecurity
+in a Post-Quantum World, 2015, https://www.mqchallenge.org/.
+31
+
+
+---PAGE 32---
+8
+Appendix. Equations for the AES S-Box
+We list the 39 Boolean quadratic polynomials for the AES S-Box used in this paper.
+x5x7 + x5x6 + x3x7 + x3x6 + x2x4 + x1x7 + x1x6 + x1x5 + x1x3 + x1x2 + x0x7 + x0x3 + x0x2 +
+x6y7 + x7y6 + x6y6 + x7y5 + x5y5 + x7y4 + x1y4 + x2y3 + x0y3 + x6y2 + x4y2 + x3y2 + x0y2 +
+x4y0 + x2y0 + x7 + x5 + x3 + y7 + y2 + y0 + 1,
+x6x7 + x5x7 + x4x7 + x4x6 + x4x5 + x3x4 + x2x5 + x1x7 + x1x6 + x1x5 + x1x4 + x1x3 + x1x2 +
+x0x5 +x0x1 +x6y6 +y5y7 +x3y4 +y4y7 +y4y5 +x5y3 +x0y3 +y3y6 +y3y4 +x3y2 +x0y2 +y2y4 +
+y2y3 + x5y0 + x3y0 + x1y0 + y0y7 + y0y3 + y0y1 + x5 + x3 + x0 + y2 + 1,
+x1y7+x0y7+y6y7+x7y5+x6y5+y5y7+x7y4+x5y3+x2y3+y3y6+x2y2+x0y2+y2y5+x6y1+
+x4y1+x1y1+y1y2+x6y0+x5y0+x4y0+y0y7+y0y6+y0y5+y0y4+y0y3+x3+x1+y3+y2+y1+1,
+x6x7 + x4x6 + x3x7 + x2x7 + x1x4 + x0x6 + x0x3 + x6y7 + x4y7 + x3y7 + x7y6 + x3y6 + x7y5 +
+x7y4 + x1y4 + x5y3 + x4y3 + x1y3 + x6y2 + x2y2 + x6y1 + x5y1 + x3y1 + x1y1 + x0y1 + x7y0 +
+x6y0 + x5y0 + x3y0 + x2y0 + x1y0 + x6 + x1,
+x6y7 + x5y7 + x1y7 + x0y7 + x5y6 + x4y6 + x3y6 + x4y4 + x3y4 + x2y4 + x4y3 + x3y3 + y3y5 +
+x2y2 + y2y7 + y2y4 + y2y3 + x7y1 + x4y1 + x3y1 + x1y1 + y1y7 + y1y6 + y1y5 + y1y2 + x7y0 + x5y0 +
+x4y0 + x3y0 + y0y4 + y0y3 + y0y2 + x6 + x4 + x3 + y2,
+x2y7 + y5y6 + x1y4 + x7y3 + x2y3 + x1y3 + x0y3 + y3y6 + y3y4 + x4y2 + x2y2 + x0y2 + y2y6 +
+y2y5 + y2y3 + x5y1 + x3y1 + y1y7 + y1y5 + y1y4 + y1y3 + y1y2 + x5y0 + x4y0 + x3y0 + x0y0 + y0y6 +
+y0y1 + x7 + x6 + x3 + x2 + x1 + y4 + y2 + y1 + y0,
+x5y7 + x3y6 + x2y6 + x0y6 + x6y5 + x5y5 + x0y5 + x6y4 + x5y4 + x3y4 + x2y4 + x0y4 + y4y7 +
+y3y6 + y3y5 + x3y2 + x2y2 + x0y2 + y2y7 + y2y6 + y2y5 + x3y1 + x2y1 + y1y7 + y1y6 + y1y3 + x5y0 +
+x4y0 + x1y0 + y0y7 + y0y2 + x6 + x1 + y4 + y3 + y1,
+x6y7 + x3y7 + x0y7 + x2y6 + x4y4 + x2y4 + x0y4 + x7y3 + x6y3 + x3y3 + x2y3 + x1y3 + x0y3 +
+x5y2 + x2y2 + x1y2 + x3y1 + x2y1 + x1y1 + x3y0 + x6 + x2 + x1 + x0 + y2,
+x7y7 + x4y7 + x1y7 + x7y6 + x6y6 + x1y6 + y6y7 + x7y5 + x6y5 + x2y5 + x0y5 + x6y4 + x4y4 +
+x2y4 +y4y5 +x4y3 +x3y3 +x2y3 +x1y3 +x0y3 +y3y6 +y3y5 +x3y2 +y2y4 +x6y1 +x5y1 +x4y1 +
+y1y5 + y1y2 + x6y0 + x2y0 + x1y0 + y0y6 + y4 + y3,
+x4y7 + x3y7 + x4y6 + x2y6 + x1y6 + x0y4 + x3y3 + x1y3 + x0y3 + x7y2 + x3y2 + x2y2 + x1y2 +
+x0y2 + x7y1 + x6y1 + x5y1 + x4y1 + x3y1 + x0y1 + x4 + x2 + x1 + y2,
+x3x6 + x2x5 + x1x4 + x1x2 + x0x4 + x0x1 + x4y6 + x2y6 + x1y6 + x7y5 + x7y4 + x2y4 + x6y3 +
+x4y3 + x3y3 + x2y3 + x7y2 + x0y2 + x4y1 + x3y1 + x5y0 + x2y0 + x1y0 + x4 + x1 + y4 + y3 + y0 + 1,
+x4x7 + x2x3 + x1x5 + x1x4 + x0x7 + x0x6 + x0x5 + x0x4 + x0x1 + x7y7 + x4y7 + x1y6 + x2y4 +
+x1y4 + x0y4 + x7y3 + x4y3 + x3y3 + x4y2 + x3y2 + x0y2 + x7y1 + x5y1 + x2y1 + x1y1 + x0y1 +
+x1y0 + x0y0 + x7 + x1 + x0 + y2,
+x6x7 + x4x5 + x3x7 + x3x5 + x2x5 + x2x4 + x2x3 + x1x7 + x0x6 + x0x4 + x2y7 + x0y7 + x1y6 +
+x6y5 + x2y4 + x6y3 + x5y3 + x2y3 + x6y2 + x4y2 + x3y2 + x2y2 + x1y2 + x7y1 + x5y1 + x6y0 +
+x5y0 + x4y0 + x3y0 + x0y0,
+x5x7 + x3x6 + x1x7 + x1x2 + x0x4 + x0x3 + x1y7 + x2y6 + x1y6 + x6y5 + x4y5 + x2y5 + x0y4 +
+x5y3 + x2y3 + x6y2 + x5y2 + x1y2 + x0y2 + x7y1 + x6y0 + x5y0 + x0y0 + x6 + x1 + y6 + y2 + y1,
+x1y7 + x0y7 + x2y6 + x6y5 + x2y5 + x4y4 + x3y4 + x2y4 + x1y4 + x0y4 + x5y3 + x2y3 + x1y3 +
+x7y2 + x4y2 + x3y2 + x1y2 + x6y1 + x3y1 + x2y1 + x1y1 + x0y1 + x5y0 + x0y0 + x3 + y2,
+x5x7 + x3x6 + x1x7 + x1x2 + x0x4 + x0x3 + x6y7 + x3y7 + x0y7 + x4y6 + x5y5 + x2y5 + x4y4 +
+x3y3 +x1y2 +x0y2 +x7y1 +x5y1 +x4y1 +x2y1 +x7y0 +x6y0 +x1y0 +x6 +x5 +x4 +x2 +x0 +y7,
+x7y7 + x7y6 + x6y6 + x4y6 + x2y6 + x1y6 + x7y5 + x2y5 + x7y4 + x1y4 + x0y4 + y4y6 + x7y3 +
+32
+
+
+---PAGE 33---
+x3y3 + y3y5 + y3y4 + x7y2 + x4y2 + x3y2 + y2y4 + y2y3 + y1y6 + x3y0 + x2y0 + x1y0 + y0y6 + y0y4 +
+y0y2 + y0y1 + x5 + x4 + x3 + x1 + y4 + y2 + y1,
+x7y6 + y6y7 + x7y5 + x3y5 + y5y7 + x7y4 + x0y4 + y4y7 + y4y5 + x6y3 + x4y3 + x3y3 + x1y3 +
+y3y7 + y3y6 + y3y5 + y3y4 + x6y2 + x5y2 + x4y2 + x1y2 + x0y2 + y2y5 + x6y1 + x5y1 + x4y1 + x0y1 +
+y1y7 + y1y4 + y1y2 + x5y0 + x4y0 + y0y7 + y0y5 + y0y4 + x0 + y0,
+x6y6 + x1y6 + x5y5 + x3y4 + x0y4 + x7y3 + x6y3 + x5y3 + x1y3 + x0y3 + x7y2 + x7y1 + x6y1 +
+x4y1 + x3y1 + x0y1 + x4y0 + x2y0 + x7 + x6 + x4 + x3 + x0 + y2,
+x6x7+x5x7+x4x6+x3x7+x2x7+x2x5+x1x7+x0x6+x0x1+x7y7+x3y7+x1y7+x5y6+x0y4+
+x6y3+x1y3+x7y2+x6y2+x5y2+x4y2+x3y2+x4y1+x2y1+x5y0+x3y0+x5+x2+x1+x0+y3+y2,
+x0y7 + x2y6 + x0y6 + x5y5 + x0y5 + x6y4 + x3y4 + x2y4 + x0y4 + x7y3 + x6y3 + x4y3 + x3y3 +
+x2y3 + x4y2 + x3y2 + x4y1 + x2y1 + x7y0 + x2y0 + x0y0 + x7 + x4 + x2 + x1 + y4 + y1 + y0,
+x5x7+x5x6+x4x6+x3x5+x2x6+x2x5+x1x7+x1x6+x0x7+x0x6+x0x3+x0x1+x6y7+x3y6+
+x3y4+x0y4+x7y3+x4y3+x3y3+x5y2+x4y2+x6y1+x4y1+x2y1+x1y1+x1y0+x5+x0+y4+y2,
+x5x7 + x5x6 + x3x7 + x3x4 + x2x6 + x2x4 + x1x4 + x1x3 + x1x2 + x0x6 + x7y7 + x6y7 + x4y7 +
+x3y7 + x1y6 + x1y4 + x7y3 + x3y3 + x2y3 + x6y2 + x2y2 + x0y2 + x7y1 + x5y1 + x4y1 + x3y1 +
+x6y0 + x3y0 + x1y0 + x6 + x3 + x2 + y4,
+x5x7 + x4x6 + x4x5 + x3x5 + x2x7 + x2x4 + x2x3 + x0x4 + x0x1 + x4y6 + x2y6 + x7y5 + x7y4 +
+x6y4 + x1y4 + x6y3 + x5y3 + x2y3 + x1y3 + x7y2 + x5y2 + x7y1 + x6y1 + x0y1 + x4y0 + x3y0 +
+x1y0 + x3 + x1 + y4 + y3,
+x5x7 + x4x6 + x3x7 + x3x5 + x3x4 + x2x4 + x1x6 + x1x3 + x1x2 + x0x7 + x4y7 + x3y7 + x0y7 +
+x4y6 + x2y6 + x0y6 + x5y5 + x0y5 + x6y4 + x6y3 + x6y2 + x4y2 + x3y2 + x1y2 + x5y1 + x4y1 +
+x5y0 + x1y0 + x0y0 + x7 + x5 + y1 + y0,
+x6x7+x4x6+x4x5+x2x6+x2x5+x2x3+x1x7+x1x5+x1x4+x1x3+x0x2+x1y7+x2y6+x1y6+
+x6y5+x2y5+x2y4+x3y3+x7y2+x3y2+x2y2+x7y1+x5y1+x1y1+x7+x3+x0+y6+y4+y2+y1,
+x7y5 + x7y4 + x2y4 + x7y3 + x6y3 + x0y3 + x5y2 + x4y2 + x0y2 + x7y1 + x3y1 + x2y1 + x0y1 +
+x7y0 + x5y0 + x4y0 + x2y0 + x1y0 + x2 + x1 + x0 + y4 + y2 + y1 + 1,
+x5x6 + x3x7 + x3x6 + x2x5 + x2x4 + x1x6 + x1x5 + x1x4 + x1x3 + x1x2 + x0x7 + x0x2 + x0x1 +
+x5y7 + x1y6 + x4y4 + x2y4 + x0y4 + x5y3 + x4y3 + x1y3 + x0y2 + x5y1 + x2y1 + x1y1 + x3y0 +
+x0y0 + x6 + x5 + x1 + y3 + y2,
+x6y7 + x3y7 + x1y7 + x6y6 + x5y6 + x1y6 + x5y5 + x1y5 + x6y4 + x6y3 + x5y3 + x4y3 + x3y2 +
+x7y1 + x6y1 + x1y1 + x6y0 + x3y0 + x2y0 + x5 + y7 + y3 + y2 + y1 + y0,
+x5x6 + x4x6 + x3x6 + x3x5 + x3x4 + x1x7 + x1x5 + x0x3 + x0x2 + x5y7 + x1y6 + x6y5 + x2y5 +
+x2y4 + x0y4 + x6y2 + x4y2 + x2y2 + x1y2 + x6y1 + x5y1 + x4y1 + x2y1 + x5y0 + x3y0 + x7 + x6 +
+x4 + x0 + y6 + y4 + y2 + 1,
+x5y7 + x4y7 + x3y7 + x1y7 + x0y7 + x7y6 + x4y6 + x7y5 + x3y5 + x7y4 + x4y4 + x3y4 + x7y3 +
+x6y3 + x4y3 + x3y3 + x1y3 + x6y2 + x5y2 + x2y2 + x2y1 + x7y0 + x3y0 + x2y0 + x1y0 + y6 + y2 + y0,
+x7y7 + x4y7 + x1y7 + x6y6 + x5y6 + x5y5 + x2y3 + x1y3 + x0y3 + x5y2 + x4y2 + x2y2 + x1y2 +
+x7y1 + x0y1 + x6y0 + x5y0 + x4y0 + x0y0 + x6 + x2 + x1 + x0 + y7,
+x7y7 + x4y7 + x2y7 + x4y6 + x6y5 + x5y5 + x1y5 + x6y4 + x4y4 + x7y3 + x6y3 + x6y2 + x5y2 +
+x0y2 + x6y1 + x2y1 + x6y0 + x4y0 + x5 + x4 + x3 + x1 + x0 + y7 + y4 + y2,
+x4x6 + x4x5 + x3x5 + x3x4 + x2x7 + x2x6 + x2x4 + x2x3 + x1x6 + x1x5 + x1x4 + x1x2 + x0x7 +
+x0x6 + x0x2 + x0x1 + x0y5 + x6y4 + x3y4 + x0y4 + x6y3 + x3y3 + x2y3 + x6y2 + x5y2 + x4y2 +
+x0y2 + x7y1 + x5y1 + x0y0 + x7 + y1 + 1,
+x6y7 + y6y7 + x7y5 + y5y7 + x7y4 + y4y7 + x7y3 + x6y3 + x2y3 + x1y3 + y3y5 + y3y4 + x7y2 +
+x6y2 + x0y2 + y2y3 + x4y1 + x3y1 + x2y1 + x1y1 + x0y1 + y1y5 + y1y2 + x7y0 + x1y0 + y0y7 + y0y6 +
+33
+
+
+---PAGE 34---
+y0y3 + y0y1 + x2 + y5 + y4,
+x4y7 + x3y7 + x1y7 + x5y6 + x4y6 + x1y6 + x4y5 + x0y5 + x7y4 + x6y4 + x4y4 + x2y4 + x1y4 +
+x5y3 + x4y3 + x3y3 + x0y3 + x3y2 + x0y1 + x6y0 + x1y0 + x6 + x4 + x2 + y6 + y2 + y1,
+x5x7+x4x7+x2x5+x2x3+x1x7+x1x5+x0x7+x0x6+x0x5+x0x4+x0x3+x4y5+x6y4+x5y3+
+x4y3+x0y3+x7y2+x3y2+x2y2+x5y1+x3y1+x0y1+x5y0+x3y0+x0y0+x7+x5+x1+x0+y4+y0+1,
+x7y7 + x4y7 + x0y7 + x6y6 + x5y6 + x0y6 + x0y5 + x6y4 + x5y4 + x3y4 + x7y3 + x6y3 + x0y3 +
+x7y2 + x3y2 + x2y2 + x6y1 + x3y1 + x1y1 + x5y0 + x4y0 + x3y0 + x1y0 + x3 + y3,
+x4x5+x3x7+x3x6+x3x4+x2x7+x2x5+x2x3+x1x6+x1x4+x1x3+x0x7+x1y7+x2y6+x1y6+
+x6y5+x2y5+x4y4+x3y4+x7y3+x3y2+x5y1+x2y1+x0y1+x4y0+x3y0+x0y0+x3+y3+y2+y1+y0.
+34

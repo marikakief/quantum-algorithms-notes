@@ -26,12 +26,12 @@ $$
 N_{\mathrm{exp}} \leq 4m^2 \|H\|t \cdot \exp\!\bigl(2\sqrt{\ln 5 \cdot \ln(m\|H\|t/\epsilon)}\bigr).
 $$
 
-The time dependence is essentially linear with a subexponential correction — much better than any fixed-order formula, but not truly optimal ([[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] later achieves $O(\|H\|t + \log(1/\epsilon))$).
+Within this Suzuki-recursion analysis, the time dependence is essentially linear with a subexponential correction — much better than any fixed-order formula, but not truly optimal ([[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] later achieves normalized additive scaling $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ from a block-encoding or sparse-access signal oracle).
 
 ## When to use this reasoning
 
 - Analyzing [[Order-Condition Cancellation in Product Formulas|product-formula]] costs: don't commit to a fixed Suzuki order. Treat $k$ as a variable.
-- Comparing product-formula approaches against [[Linear Combination of Unitaries (LCU)|LCU]]/[[QSVT Meta-Template|QSP]]: this gives the best [[Product Formulas]]s can do asymptotically.
+- Comparing Suzuki-recursion product-formula approaches against [[Linear Combination of Unitaries (LCU)|LCU]]/[[QSVT Meta-Template|QSP]]: this gives the standard optimized-Suzuki benchmark, but specialized product formulas can exploit commutator/locality structure beyond this crude norm bound.
 - The same "order as knob" idea appears whenever a family of approximants is parameterized by degree/order (Taylor series truncation, polynomial approximation degree in [[QSVT Meta-Template|QSP]], etc.).
 
 ## Caveat

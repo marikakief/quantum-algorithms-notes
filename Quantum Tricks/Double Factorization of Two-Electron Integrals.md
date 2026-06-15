@@ -4,7 +4,7 @@
 
 ## What it does
 
-Reduces the $O(N^4)$ two-electron integral tensor $h_{pqrs}$ to a sum of $L = O(N)$ pairwise number–number interaction terms in rotated orbital bases, enabling Trotter steps with $O(N^2 \log N)$ gate complexity instead of $O(N^4)$.
+Reduces the $O(N^4)$ two-electron integral tensor $h_{pqrs}$ to a sum of empirically $L = O(N)$ pairwise number–number interaction layers in rotated orbital bases, enabling Trotter steps with empirical/asymptotic $O(N^2 \log N)$ gate complexity instead of $O(N^4)$ in the studied molecular families.
 
 ## The trick
 
@@ -30,7 +30,7 @@ where $n^{(\ell)}_i$ are number operators in the rotated basis $U^{(\ell)}$.
 1. [[Givens Rotation Slater Determinant Preparation|Givens rotation]] network for inter-basis rotation $\tilde{U}^{(\ell)}$: $O(N\rho_\ell)$ gates
 2. [[Fermionic Swap Network]] for pairwise $n_i n_j$ evolution: $\binom{\rho_\ell}{2}$ gates, depth $\rho_\ell$
 
-All on a linear nearest-neighbor architecture.
+All on a linear nearest-neighbor architecture. The factorization/truncation error is controlled separately from Trotter error; choosing a cheaper truncated Hamiltonian does not determine how many product-formula steps are needed.
 
 ## When to reach for it
 
@@ -38,12 +38,13 @@ All on a linear nearest-neighbor architecture.
 - When you want to stay in the molecular orbital basis (not switch to plane waves) but need better than $O(N^4)$ gate scaling
 - Near-term Trotter-based simulation where circuit depth on a linear chain is the bottleneck
 - As the Hamiltonian decomposition step in [[Compressing Many-Body Fermion Operators under Unitary Constraints (Rubin, Lee, Babbush 2021) — Paper Notes|unitary compression]] or ADAPT-VQE circuit compilation
+- As structural input to later fault-tolerant and qubitized chemistry pipelines, including double-factorized block encodings
 
 ## Complexity
 
 - **Gate count per Trotter step:** $O(N^2 \log N)$ (increasing molecule size) or $O(N^3)$ (fixed molecule, increasing basis)
 - **Circuit depth:** $O(N^2)$ on a linear chain
-- **Classical preprocessing:** $O(N^4)$ for the Cholesky decomposition; $O(N^3 L)$ for eigenvalue decompositions
+- **Classical preprocessing:** $O(N^4)$ for the Cholesky decomposition; $O(N^3 L)$ for eigenvalue decompositions, which can be a practical bottleneck at large $N$
 
 ## Caveat
 

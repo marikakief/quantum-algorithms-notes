@@ -189,3 +189,8 @@ The cost is exponential in the subsystem size $|A|$, not in the full system size
 - [[Shadow Norm as Measurement-Observable Match]]
 - [[Shadow Tomography for QMC Overlap Estimation]]
 - [[Matchgate 3-Design for Classical Shadows]]
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler study what happens when the randomized preprocessing in classical shadows is applied to physical experimental states rather than already-protected states.
+

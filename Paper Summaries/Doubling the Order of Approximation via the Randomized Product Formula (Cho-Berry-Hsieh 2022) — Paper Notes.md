@@ -10,7 +10,7 @@ Given $H = \sum_{j=1}^L H_j$ with $\Lambda := \max_j \|H_j\|$, simulate $V = e^{
 
 ## What the paper does
 
-Takes a standard $(2k)$-th order [[Order-Condition Cancellation in Product Formulas|Suzuki product formula]] $S_{2k}$ and constructs a randomized channel that achieves $(4k+1)$-th order approximation — more than doubling the order of the error from $2k+1$ to $4k+2$. The construction inserts a random correction unitary $U_h^{(l)} = e^{\alpha_{h,l} H_h^{(l)}}$ between two half-steps of $S_{2k}$:
+Takes a standard $(2k)$-th order [[Order-Condition Cancellation in Product Formulas|Suzuki product formula]] $S_{2k}$ and constructs a randomized channel that achieves $(4k+1)$-th order approximation. Equivalently, the leading local-error power improves from \(2k+1\) to \(4k+2\); the paper's "order" language refers to the approximation order of the channel. The construction inserts a random correction unitary $U_h^{(l)} = e^{\alpha_{h,l} H_h^{(l)}}$ between two half-steps of $S_{2k}$:
 
 $$\mathcal{E}(\rho) = \sum_{l,h} p_{h,l} \bigl[S_{2k}(\lambda/2)\, U_h^{(l)}\, S_{2k}(\lambda/2)\bigr] \rho \bigl[\cdots\bigr]^\dagger$$
 
@@ -44,7 +44,7 @@ For each correction term $H_h^{(l)}$, define:
 
 where $\varepsilon_{h,l} = (\lambda/2)^l \beta_h^{(l)} \|H_h^{(l)}\|$ and $A = \sum_{l,h} |\varepsilon_{h,l}|$.
 
-This ensures $\sum p_{h,l} \alpha_{h,l} H_h^{(l)} = -\sum (\lambda/2)^l \beta_h^{(l)} H_h^{(l)}$, so the average evolution cancels the error up to order $4k+2$.
+This ensures $\sum p_{h,l} \alpha_{h,l} H_h^{(l)} = -\sum (\lambda/2)^l \beta_h^{(l)} H_h^{(l)}$, so the randomized correction has the desired leading generator only after averaging over the sampled correction unitaries. That averaged channel cancels the error up to order $4k+2$.
 
 ### Step 4: Apply mixing lemma
 
@@ -80,7 +80,7 @@ $$g_{4k+1}^m = O\!\left(tL^2 \left(\frac{tL}{\varepsilon}\right)^{\!1/(4k+1)}\ri
 
 The advantage over [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su]] is the elimination of the second term in the max. When $L = o\bigl((t/\varepsilon)^{1+1/(2k)}\bigr)$, that second term dominates and Cho-Berry-Hsieh does strictly better. For the other regime where $L$ is large relative to $t/\varepsilon$, both methods match.
 
-The improvement over deterministic Suzuki is in all parameters simultaneously.
+The improvement over deterministic Suzuki is an asymptotic channel-simulation improvement under the paper's implementability assumptions; it is not a coherent-unitary drop-in replacement and it requires correction terms that are efficiently exponentiable.
 
 ## Limits / caveats
 
@@ -127,7 +127,7 @@ The Pauli-string requirement is the biggest practical limitation. Quantum chemis
 - [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes]] — direct predecessor; this paper improves the scaling in one regime
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — the [[Trotter Commutator-Scaling Bound|commutator scaling]] framework; deterministic bounds that this method beats
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrections achieving similar goals without randomization
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — parallel work using randomization for multi-[[Product Formulas]]s; shared mixing-lemma machinery
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — parallel work using randomization for multi-product formulas; shared mixing-lemma machinery
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — the Suzuki recursion framework this paper builds on
 - [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]] — later work using randomization (Stochastic QSP) for more general order-halving; same mixing-lemma philosophy
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes]] — alternative randomized simulation; different regime (short time / many terms)

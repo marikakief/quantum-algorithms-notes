@@ -4,7 +4,7 @@
 
 ## What it does
 
-Reduces the number of distinct second-quantized Hamiltonian terms for a periodic electronic system from $O(N^4)$ (Gaussian basis) or $O(N^3)$ (plane-wave basis) to $\Theta(N^2)$ by choosing a basis where kinetic and potential energies are diagonal in complementary representations.
+Reduces the number of distinct second-quantized Hamiltonian terms for a periodic electronic system from $O(N^4)$ (generic Gaussian basis) or $O(N^3)$ (bare plane-wave basis) to $\Theta(N^2)$ by choosing a basis where kinetic and potential energies are diagonal in complementary representations. Here $N$ denotes the plane-wave/grid orbital count; spin labels may add constant factors.
 
 ## The trick
 
@@ -14,16 +14,16 @@ $$\chi_j(r) = \frac{1}{\sqrt{N}} \sum_{k \in G} e^{ik \cdot r_j} \phi_k(r), \qua
 
 where $\{r_j\}$ is a dual real-space grid (the collocation points). This is the discrete-variable representation (DVR) / sinc-DVR adapted to periodic boundary conditions.
 
-**Key property:** Under the collocation approximation (treating the sampled basis as exact),
+**Key property:** In the finite dual-basis/discrete-variable representation,
 
-- The **potential energy** $V(\hat{r})$ is diagonal in the dual basis: $\langle \chi_j | V | \chi_{j'} \rangle \approx V(r_j) \delta_{jj'}$
+- The **potential energy** $V(\hat{r})$ is diagonal in the dual basis: $\langle \chi_j | V | \chi_{j'} \rangle$ is represented by sampled/collocation values on the grid, with basis-discretization error relative to the continuum problem
 - The **kinetic energy** $T = -\nabla^2/2$ is diagonal in the plane-wave basis
 
 So the second-quantized Hamiltonian splits as:
 
 $$H = \underbrace{\sum_{p,\sigma} \frac{k_p^2}{2} a^\dagger_{p\sigma} a_{p\sigma}}_{T: N \text{ terms, plane-wave basis}} + \underbrace{\sum_{j,\sigma} U_j n_{j\sigma} + \sum_{j < j', \sigma,\sigma'} V_{jj'} n_{j\sigma} n_{j'\sigma'}}_{U + V: \Theta(N^2) \text{ terms, dual basis}}$$
 
-where $V_{jj'} = \frac{1}{N\Omega} \sum_{\nu \neq 0} \tilde{V}_\nu e^{i\nu \cdot (r_j - r_{j'})}$ are precomputed from the Fourier-space Coulomb coefficients $\tilde{V}_\nu = 4\pi/|\nu|^2$ (for the bare Coulomb potential).
+where $V_{jj'} = \frac{1}{N\Omega} \sum_{\nu \neq 0} \tilde{V}_\nu e^{i\nu \cdot (r_j - r_{j'})}$ are precomputed from the Fourier-space Coulomb coefficients $\tilde{V}_\nu = 4\pi/|\nu|^2$ (for the bare Coulomb potential). The $\nu=0$ mode is excluded/handled by the usual neutralizing-background or charged-cell convention in periodic Coulomb systems.
 
 The Jordan–Wigner encoding maps this Hamiltonian to $\Theta(N^2)$ Pauli terms, most of which are diagonal $Z$/$ZZ$-type (one-local and two-local). This structure enables:
 
@@ -40,7 +40,7 @@ The Jordan–Wigner encoding maps this Hamiltonian to $\Theta(N^2)$ Pauli terms,
 
 ## Complexity
 
-Hamiltonian term count: $\Theta(N^2)$ vs. $O(N^4)$ (Gaussian) or $O(N^3)$ (bare plane-wave). The 1-norm $\lambda \in O(N^{5/3})$ at fixed charge density $\rho = \eta/\Omega$, compared to $O(N^{4/3} \log N)$ for Gaussian basis at fixed density (Babbush 2016 NJP).
+Hamiltonian term count: $\Theta(N^2)$ vs. $O(N^4)$ (generic Gaussian) or $O(N^3)$ (bare plane-wave). The 1-norm and depth comparisons require fixed-density and normalization conventions; e.g., the paper reports specific scalings for charge density $\rho=\eta/\Omega$ and chosen plane-wave geometry. Do not mix term count, Hamiltonian 1-norm, and Trotter depth as if they were the same resource.
 
 Trotter step depth: $O(N)$ on a planar lattice. Total Trotter depth: $O(N^{7/2}/\sqrt{\varepsilon})$ at fixed density.
 

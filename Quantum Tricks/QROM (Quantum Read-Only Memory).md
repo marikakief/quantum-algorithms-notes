@@ -3,7 +3,7 @@
 
 ## What it does
 
-Coherently loads classical lookup-table data into a quantum register: given an index superposition $\sum_\ell c_\ell |\ell\rangle|0\rangle$, produces $\sum_\ell c_\ell |\ell\rangle|d_\ell\rangle$ where $d_\ell$ is the precomputed classical data at address $\ell$. T-cost: $4L - 4$ for $L$ entries. Ancilla: $O(\log L)$ qubits.
+Coherently loads classical lookup-table data into a quantum register: given an index superposition $\sum_\ell c_\ell |\ell\rangle|0\rangle$, produces $\sum_\ell c_\ell |\ell\rangle|d_\ell\rangle$ where $d_\ell$ is the precomputed classical data at address $\ell$. In the 2018 unary-iteration temporary-AND accounting, the data-loading T-cost is $4L - 4$ for $L$ entries. Ancilla: $O(\log L)$ qubits.
 
 ## The trick
 
@@ -17,11 +17,11 @@ Coherently loads classical lookup-table data into a quantum register: given an i
 
 Since the data encoding is via CNOTs (Clifford gates), the *only* T-gate cost is from the unary iteration itself: $4L - 4$.
 
-**Uncomputation:** After the data is consumed by subsequent operations, the output register can be uncomputed (measure and classically correct), recovering the ancilla. Uncomputation costs 0 additional T gates.
+**Uncomputation:** If the lookup must be coherently reversed, generic uncomputation costs another QROM. Later chemistry work introduced [[Measurement-Based QROM Uncomputation]], where the output register is measured in the X basis and address-dependent phases are fixed with a smaller lookup under specific preconditions.
 
 **Key insight:** The classical data $\{d_\ell\}$ is baked into the circuit structure as presence/absence of CNOT gates, not dynamically looked up. This is why QROM is not the same as QRAM (no hardware bucket-brigade required).
 
-**Precision and data size:** If each data word $d_\ell$ has $b$ bits, the output register is $b$ qubits, but the T-gate count remains $4L - 4$ regardless of $b$. Only the number of CNOTs grows linearly in $b$.
+**Precision and data size:** If each data word $d_\ell$ has $b$ bits, the output register is $b$ qubits, but the non-Clifford cost of the 2018 data-loading sweep remains $4L - 4$ regardless of $b$. CNOT count, routing, output storage, and any later fixup can scale with $b$.
 
 ## When to reach for it
 
@@ -32,15 +32,15 @@ Since the data encoding is via CNOTs (Clifford gates), the *only* T-gate cost is
 
 ## Complexity
 
-- T gates: $4L - 4$ (independent of word size $b$)
+- T gates: $4L - 4$ for the 2018 unary-iteration data-loading sweep (independent of word size $b$)
 - Additional Clifford (CNOT) gates: $O(Lb)$
 - Ancilla qubits: $O(\log L + b)$
-- Uncomputing the output register: 0 additional T gates
+- Uncomputing the output register: another QROM if reversed coherently, or the cheaper measurement-based cleanup when its preconditions apply
 
 ## Caveat
 
 - Classical circuit: the circuit must be recompiled if the classical data changes. QROM is for *read-only* data. Unlike QRAM, you cannot update entries at runtime.
-- $O(L)$ T-gate cost: for $L = O(N^2)$ oracle entries, this gives $O(N^2)$ T gates just for data loading — acceptable here because SELECT also costs $O(N)$, but it's not free.
+- $O(L)$ T-gate cost: for $L = O(N^2)$ raw table entries this would be expensive. In the 2018 chemistry construction, translational symmetry and unary-iteration structure arrange the dominant SELECT/PREPARE costs into the theorem's $O(N+\log(1/\varepsilon))$ per-oracle scaling; QROM is not automatically cheap for arbitrary $O(N^2)$ tables.
 - No quantum addressing: QROM does not implement a general "quantum addressable" memory. It is a compiled, fixed-table lookup. Hardware QRAM (bucket brigade) is a different device with different trade-offs.
 - Depth is $O(L)$: the sequential sweep is not depth-efficient. When circuit depth is the bottleneck, consider parallelized QROM variants (at the cost of more ancilla).
 
@@ -51,5 +51,5 @@ Since the data encoding is via CNOTs (Clifford gates), the *only* T-gate cost is
 - [[Unary Iteration]] — QROM is built on top of unary iteration
 - [[Coherent Alias Sampling for PREPARE]] — uses QROM to load alias tables
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — QROM is used inside the PREPARE oracle for qubitization
-- [[SelectSwap Network for Data Lookup]] — generalises QROM to use dirty qubits, reducing T-count from $O(N)$ to $O(\sqrt{N})$; QROM is the $\lambda=1$ special case
-- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes]] — introduces SelectSwap
+- [[SelectSwap Network for Data Lookup]] — generalises QROM to use dirty qubits, reducing Toffoli count from linear table size to a square-root space-time tradeoff in the Low-Kliuchnikov-Schaeffer model
+- [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low-Kliuchnikov-Schaeffer, arXiv:1812.00954]] — introduces SelectSwap/QROAM-style tradeoffs

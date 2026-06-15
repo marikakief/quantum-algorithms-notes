@@ -1,4 +1,4 @@
-> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe, [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes|Childs-Ostrander-Su (2019)]], arXiv:1805.00675
+> **Source:** Babbush, Berry, McClean, Neven, arXiv:1807.09802 (2019); technique from Low & Wiebe's interaction-picture Hamiltonian simulation, arXiv:1805.00675
 > **Tags:** #trick #interaction-picture #LCU #Hamiltonian-simulation #first-quantized #sublinear #Dyson-series
 
 ## What it does
@@ -7,7 +7,7 @@ Simulates $e^{-i(A+B)t}$ with cost scaling in $\lambda_B$ (the LCU 1-norm of the
 
 ## The trick
 
-For Hamiltonians $H = A + B$ where the two pieces have very different norms ($\|A\| \gg \|B\|$, or more precisely $\|A\| \gg \lambda_B$), standard LCU simulation pays a cost proportional to $\lambda_B + \|A\|$ per time step. The interaction picture avoids the large $\|A\|$ contribution entirely.
+For Hamiltonians $H = A + B$ where $A$ is efficiently simulable and $B$ has a manageable LCU 1-norm $\lambda_B$, standard LCU simulation can pay for both pieces. The interaction picture avoids polynomial dependence on the large/easy $A$ contribution; $\|A\|$ enters only through logarithmic factors in the Low-Wiebe gate complexity.
 
 **The Dyson expansion in the interaction picture:**
 
@@ -48,7 +48,7 @@ In momentum space, $T$ is diagonal: $T|p\rangle_j = \|k_p\|^2/2 \cdot |p\rangle_
 
 $$e^{-iT\tau} = \sum_{p_\ell \in G} \exp\!\left[-\frac{i\tau}{2}\sum_{j=1}^\eta \|k_{p_j}\|^2\right] |p_1\rangle\langle p_1| \otimes \cdots \otimes |p_\eta\rangle\langle p_\eta|$$
 
-Compute $\sum_j \|k_{p_j}\|^2$ into an ancilla (cost $O(\eta \log^2 N)$ with elementary multiplication), apply a phase rotation, uncompute. This is one of the cheapest possible $A$-evolution implementations.
+The 2019 asymptotic implementation computes $\sum_j \|k_{p_j}\|^2$ into an ancilla (cost $O(\eta \log^2 N)$ with elementary multiplication), applies a phase rotation, and uncomputes. The 2021 fault-tolerant compilation later improves this compiled cost with [[Incremental Kinetic Energy Register]] updates.
 
 ## When to reach for it
 
@@ -78,7 +78,7 @@ $$\text{Total gate complexity} = \widetilde{O}\!\left(\eta^{8/3} N^{1/3} t\right
 - Requires that $e^{-iA\tau}$ can be implemented efficiently. If $A$ is not diagonal (or otherwise easy to evolve exactly), the method loses most of its advantage.
 - The extra $\log(t\|A\|/\varepsilon\lambda_B)$ factor in gate complexity is benign when $\|A\|/\lambda_B$ is polynomial, but can grow if $\|A\|$ is exponentially large relative to $\lambda_B$.
 - The Dyson expansion requires time discretization; errors from the discretization and from truncating the expansion at order $K$ must both be bounded. The Low & Wiebe analysis handles this, but it requires careful implementation of the LCU control register for time variables.
-- Does not directly reduce *query* complexity for phase estimation (which is Heisenberg-limited at $O(\lambda/\varepsilon)$ for [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]); the benefit is in reducing $\lambda$ by choosing the right splitting.
+- For phase estimation, the final eigenvalue precision still has Heisenberg scaling in the relevant normalization/precision. The interaction-picture benefit is that the simulated Dyson/LCU part pays $\lambda_B$ for the perturbation while $A$ is handled through efficient controlled time evolution.
 
 ## Related notes
 - [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]]

@@ -1,0 +1,672 @@
+arXiv:1711.02616v1  [quant-ph]  7 Nov 2017
+A quantum primality test with order ﬁnding
+Alvaro Donis-Vela1 and Juan Carlos Garcia-Escartin1,2, ∗
+1Universidad de Valladolid, G-FOR: Research Group on Photonics,
+Quantum Information and Radiation and Scattering of Electromagnetic Waves.
+2Universidad de Valladolid, Dpto. Teor´ıa de la Se˜nal e Ing. Telem´atica, Paseo Bel´en no 15, 47011 Valladolid, Spain
+(Dated: November 8, 2017)
+Determining whether a given integer is prime or composite is a basic task in number theory. We
+present a primality test based on quantum order ﬁnding and the converse of Fermat’s theorem.
+For an integer N, the test tries to ﬁnd an element of the multiplicative group of integers modulo
+N with order N −1.
+If one is found, the number is known to be prime.
+During the test, we
+can also show most of the times N is composite with certainty (and a witness) or, after log log N
+unsuccessful attempts to ﬁnd an element of order N −1, declare it composite with high probability.
+The algorithm requires O((log n)2n3) operations for a number N with n bits, which can be reduced
+to O(log log n(log n)3n2) operations in the asymptotic limit if we use fast multiplication.
+Prime numbers are the fundamental entity in number
+theory and play a key role in many of its applications
+such as cryptography. Primality tests are algorithms that
+determine whether a given integer N is prime or not. A
+na¨ıve but ineﬃcient solution is trying all the numbers
+up to
+√
+N looking for a factor, which would prove N is
+prime if no factor is found and show it is composite if
+we have one. There are more eﬃcient ways to test for
+primality based on diﬀerent results from number theory.
+We are going to use basic theorems which can be found,
+together with their proofs, in elementary number theory
+books [1–3].
+Some deﬁnitions are useful before we proceed.
+Let
+ZN be the ring of integers modulo N and (a, N) the
+greatest common divisor of a and N.
+We call Z∗
+N to
+the multiplicative group of integers modulo N deﬁned as
+Z∗
+N = {a ∈ZN : (a, N) = 1}. The elements of Z∗
+N are
+the integers from 1 to N −1 which are coprime to N.
+These integers form a group under multiplication.
+The order of a ﬁnite group G, |G|, is the number of
+elements of that group (its cardinality). The order of Z∗
+N
+is given by Euler’s totient function ϕ(N) which gives how
+many integers 1 ≤a < N are coprime to N.
+The multiplicative order of an element a ∈Z∗
+N, ord(a),
+is the smallest positive integer r such that ar ≡1
+mod N.
+With these concepts and known theorems from number
+theory, we can give diﬀerent tests to check if an integer is
+prime or not. A simple test is given by Fermat’s theorem:
+Theorem 1 (Fermat) If a positive integer N is prime,
+then aN−1 ≡1 mod N for any positive integer a such
+that (a, N) = 1.
+This is a special case of Euler’s theorem:
+Theorem 2 (Euler) Let N be a positive integer, then
+aϕ(N) ≡1 mod N for any positive integer a such that
+(a, N) = 1.
+∗juagar@tel.uva.es
+For a prime N, ϕ(N) = N −1 and we recover Fermat’s
+theorem.
+If we can ﬁnd an integer a for which aN−1 ̸≡1 mod N,
+we have proof N is composite and we call a a Fermat
+witness for compositeness. Given a, anyone can quickly
+check N is not prime. This gives a simple test for primal-
+ity. We pick a random a from 1 to N, verify (a, N) = 1
+(otherwise we know N is composite) and then check for
+Fermat’s condition.
+After testing a few diﬀerent ele-
+ments, we can declare it prime with high probability.
+While this test is simple, there are certain numbers,
+called Carmichael numbers [4, 5], which obey Fermat’s
+condition for every possible a. Any other integer will fail
+Fermat’s test at least half of the times. To see this, we
+can use Lagrange’s theorem:
+Theorem 3 (Lagrange) Let |G| be the number of ele-
+ments of a ﬁnite group G, then any subgroup S of G must
+have a number of elements |S| which is a divisor of the
+size of the group.
+There is a direct application of Lagrange’s theorem to
+Fermat’s test. Fermat liars are the integers a such that
+aN−1 ≡1 mod N for a composite N. The liars form a
+subgroup of Z∗
+N. If aN−1
+1
+≡1 mod N and aN−1
+2
+≡1
+mod N then a3 = a1a2 is also a liar, but multiplica-
+tion outside the subgroup breaks closure. The remaining
+subgroup properties, like the existence of an inverse, an
+identity, associativity and commutativity, come immedi-
+ately from the properties of Z∗
+N and the multiplication
+property we just described.
+From Lagrange’s theorem, we see the subgroup L of
+Fermat liars must have a size which is a divisor of the size
+of Z∗
+N. The number of possible liars divides ϕ(N) and,
+if there is at least one Fermat witness which shows N is
+composite, there must be at least ϕ(N)/2 witnesses. |L|
+must have a number of elements ϕ(N)/d, where d|ϕ(N)
+(d is divisor of ϕ(N)). For |L| ̸= ϕ(N), d > 1 and |L| is
+always equal to or smaller than ϕ(N)/2.
+There are also more reﬁned probabilistic tests simi-
+lar to Fermat’s which are based on more sophisticated
+properties. Most take advantage of Lagrange’s theorem
+to show there is at least one witness and, therefore, the
+
+
+2
+subgroup of liars has a cardinality of, at most, |Z∗
+N|/2.
+By choosing a random a for the test, after a few attempts
+with diﬀerent elements, we either ﬁnd a witness of com-
+positeness or we can be satisﬁed that there is an expo-
+nentially small probability the number is not a prime.
+The two most important such methods are the Solovay-
+Strassen test [6] and the Miller-Rabin test [7, 8] with liar
+subgroups at most a half and a quarter of the total size
+respectively. A good description of these and other prob-
+abilistic primality tests can be found in Dixon’s review
+[9].
+Notably, there is also a deterministic algorithm for pri-
+mality testing. The AKS (Agrawal-Kayal-Saxena) pri-
+mality test [10] is based on a generalization of Fermat’s
+theorem which states that:
+Theorem 4 A positive integer N is prime if and only if
+(x + a)N ≡xN + a
+mod N
+(1)
+for one a such that (a, N) = 1.
+The AKS test is deterministic and requires a number of
+operations essentially of the order of the sixth power of
+the number of bits of N [11].
+In this paper, we provide a diﬀerent quantum primality
+test based on the converse of Fermat’s theorem [12]
+Theorem 5 (Lucas) If
+aN−1 ≡1
+mod N
+(2)
+and
+ax ̸≡1
+mod N
+(3)
+for any x < N −1, then N is prime.
+Apart from Lucas theorem, we make use of a couple of
+additional results (see chapter 8 of Burton’s book [2]):
+Theorem 6 The elements a
+∈
+Z∗
+N
+have an order
+ord(a)|ϕ(N) (the order is always a divisor of |Z∗
+N|).
+Theorem 7 For a prime p and an integer d|p −1, Z∗
+p
+has exactly ϕ(d) elements a of order ord(a) = d.
+We can now restate Lucas theorem as
+Theorem 8 (Lucas) If a ∈Z∗
+N has order ord(a) = N −
+1, then N is prime.
+This formulation is contained in Theorem 6. The order
+of any element must divide ϕ(N) which is only equal to
+N −1 for prime numbers. The only way we can have
+order N −1 is if N is prime. Additionally, from Theorem
+7, we see there must be exactly ϕ(N −1) integers with
+this property. If we can ﬁnd such an integer, we have a
+way to prove primality.
+There is no known classical algorithm that can deter-
+mine the order of an integer eﬃciently. In order to apply
+Lucas theorem to primality certiﬁcation on a classical
+computer, we need alternative methods.
+A solution is
+the Lucas-Lehmer test [13] based on:
+Theorem 9 (Lucas-Lehmer) If
+aN−1 ≡1
+mod N
+(4)
+and
+a
+N−1
+p
+̸≡1
+mod N
+(5)
+for any prime p|N −1, then N is prime.
+With this and other reﬁnements, there have been multi-
+ple proposals for the eﬃcient implementation of modiﬁed
+Lucas tests on classical computers. In most of them, we
+require a complete factorization of N −1, or, in some,
+a partial factorization with large factors, both of which
+might be easier than factoring N (if possible). For in-
+stance, these tests are particularly easy to perform on
+numbers of the form 2m −1 [14] which, if prime, are
+called Mersenne primes and include many of the largest
+known prime numbers [15]. The reader can ﬁnd many of
+these methods in chapter 4 of Crandall and Pomerance’s
+book [3].
+The tests based on Lucas theorem have the advantage
+that they allow us to prove primality. With the Solovay-
+Strassen or the Rabin-Miller test we could only give a
+witness of compositeness, but there was no eﬃcient way
+to show N was prime with certainty.
+A certiﬁcate of primality for N is a collection of data
+which allows anyone to prove N is prime, ideally with few
+operations on short certiﬁcates with a number of bits of
+the order of log(N). For instance, if we have a complete
+factorization of N −1, a list of the factors and an element
+a ∈Z∗
+N with ord(a) = N −1 give a fast way to show N
+is prime using the Lucas-Lehmer Theorem. In principle,
+we can always use the AKS test to check if a number
+is prime and, from a certain point of view, N is itself a
+valid certiﬁcate of primality. However, for large integers,
+there exist more eﬃcient ways to prove primality if we
+can factor N−1. Pratt certiﬁcates were the ﬁrst examples
+[16] and there are primality proofs requiring only O(log p)
+multiplications modulo p for any prime p [17].
+At this point, it is interesting to turn to quantum
+computers.
+Shor’s algorithm gives an eﬃcient way to
+factor composite integers of n bits with a number of
+expected operations O((log n)n3) operations [18] which
+can become O(log log n(log n)2n2) with fast multiplica-
+tion circuits. The quantum primality test of Chau and Lo
+[19] combines Shor’s quantum factoring algorithm with
+the Lucas-Lehmer test to prove primality in an expected
+number of operations O(n3 log n log log n), essentially cu-
+bic with the number of bits of N. Using quantum factor-
+ing has the nice side eﬀect of producing a succint certiﬁ-
+cate of primality with the results.
+Here, we propose a new quantum primality testing al-
+gorithm inspired by Shor’s algorithm. By using directly
+the quantum order ﬁnding algorithm behind Shor’s fac-
+toring and discrete logarithm algorithms, we can reduce
+the number of quantum operations. Instead of factoring
+N −1, we check the order of diﬀerent elements in Z∗
+N
+
+
+3
+until we ﬁnd one with order N −1 or a witness that N
+is composite.
+This also contrasts with the quantum primality test of
+Carlini and Hosoya [20], which applies the concepts of
+quantum counting and quantum period ﬁnding to give
+an improved version of the Miller-Rabin test.
+While we reduce the number of quantum operations,
+we loose the classical certiﬁcate of primality of the Chau-
+Lo test. Instead, we can give a quantum certiﬁcate of
+primality. Any of the ϕ(N −1) elements a ∈Z∗
+N with
+ord(a) = N −1 serves to prove N is prime to anyone
+with a quantum computer, which can ﬁnd the order of a
+eﬃciently.
+We deal with numbers 2n−1 < N ≤2n represented
+with n bits.
+We consider quantum order ﬁnding as a
+black box which requires O((log n)n3) operations and see
+that, on average, with log n uses of the black box we can
+ﬁnd an element of order N −1 and prove N is prime when
+it is or show it must be composite with high probability,
+with a proof of compositeness in most cases.
+Algorithm 1 Quantum primality test
+1: Choose at random an integer 1 < a < N.
+2: Compute (a, N):
+3: if (a, N) ̸= 1 then
+4:
+Declare N composite; return factor (a, N) as a proof.
+5: else if (a, N) = 1 then
+6:
+Compute a
+N−1
+2
+:
+7:
+if a
+N−1
+2
+̸≡±1 mod N then
+8:
+Declare N composite; return a as a witness.
+9:
+else if a
+N−1
+2
+≡1 mod N then
+10:
+Go back to Step 1.
+11:
+else if a
+N−1
+2
+≡−1 mod N then
+12:
+QUANTUM ORDER FINDING. Compute ord(a):
+13:
+if ord(a) = N −1 then
+14:
+Declare N prime; return a as a quantum cer-
+tiﬁcate of primality.
+15:
+else
+16:
+Go back to Step 1.
+17:
+end if
+18:
+end if
+19: end if
+The proposed algorithm (Algorithm 1) checks the or-
+der of random integers in the group until it can prove
+either primality or compositeness. First we choose an in-
+teger at random from Z∗
+N, excluding a = 1 which has a
+trivial order 1. We do that by taking an integer smaller
+than N and checking (a, N) = 1. If it is not, we have a
+factor of N and we can declare N composite and give the
+factor as proof. Before going into the quantum part, we
+perform a basic screening to reduce the number of quan-
+tum operations, which are the most challenging in terms
+of technology, and replace them by classical steps.
+We need to check aN−1 ≡1 mod N. Instead of per-
+forming this Fermat test directly, we check a
+N−1
+2 , which
+should be ±1 if a passes Fermat’s test. Otherwise, N
+cannot be prime and we return a as a primality witness
+for the Fermat test. If a
+N−1
+2
+≡1 mod N, the order of a
+is, at most, N−1
+2 , which gives no information on whether
+N is prime or not. Then we start again and choose a new
+random integer. We only proceed if a
+N−1
+2
+≡−1 mod N.
+At this point, we need to resort to the quantum order
+ﬁnding algorithm. If ord(a) = N −1 the number is prime
+with certainty and we can stop the procedure and return
+a as a quantum certiﬁcate of primality.
+The classical screening guarantees ord(a)|N −1. This
+follows from the condition a
+N−1
+2
+≡−1 mod N, which
+means aN−1 ≡1 mod N, and from [2]:
+Theorem 10 Let a ∈Z∗
+N have order ord(a). Then ah ≡
+1 mod N if and only if ord(a)|h.
+If ord(a) ̸= N −1, we cannot tell anything about N. We
+need to start again the search with a new element.
+The average number of iterations before ﬁnding an el-
+ement of order N −1 when N is prime is of the order of
+log log N. From Theorem 7, we know there are ϕ(N −1)
+elements of order N −1 among the N −1 elements of Z∗
+N.
+The probability of ﬁnding an element which conﬁrms pri-
+mality at each iteration is
+ϕ(N −1)
+N −1
+>
+1
+3 log log(N −1)
+(6)
+for a large enough N. In order to prove this bound we
+can turn to known estimations, starting from the lower
+bound [21]:
+ϕ(M)
+M
+>
+1
+eγ log log M +
+2.50637
+log log M
+(7)
+where γ ≈0.57721 is the Euler-Mascheroni constant and
+eγ ≈1.781. For M > ee
+√2.50637
+3−1.781 ≈49.2 there is a lower
+bound
+ϕ(M)
+M
+>
+1
+3 log log M ,
+(8)
+which tells us that for a prime N of n ≥6 bits Equation
+(6) will be valid. With 3 log log(N −1) attempts we have
+a high probability of ﬁnding an element of order N −1.
+While there is some room to improve the estimate, in the
+general case we cannot give a much tighter bound as it
+is known that for inﬁnitely many integers
+ϕ(M)
+M
+<
+1
+eγ log log M <
+0.562
+log log M
+(9)
+will hold [22]. We need a number of repetitions logarith-
+mic with the number of bits of the integer under test.
+The complexity of each iteration is determined by the
+order ﬁnding subroutine.
+Quantum order ﬁnding requires O((log n)n3) quantum
+operations, with O(log n) uses of modular exponentia-
+tion. The quantum order ﬁnding subroutine of Shor has
+two main steps: modular exponentiation and a Quantum
+
+
+4
+Fourier Transform.
+The Quantum Fourier Transform
+circuit is quadratic in n [18].
+Modular exponentiation
+with the binary method needs O(n) multiplications [23].
+There are many quadratic quantum multiplication cir-
+cuits, for instance [24, 25], which gives a total complexity
+of O(n3) for exponentiation. In principle, with fast mul-
+tiplication using the Sch¨onhage-Strassen algorithm [26],
+for which there is a quantum circuit [27], the total com-
+plexity for order ﬁnding would be O(log log n(log n)2n2).
+However, the constant factors involved make it only
+worthwhile in the asymptotic limit for very large N [28].
+The number of operations in the classical part is also
+dominated by modular exponentiation. Computing the
+greatest common divisor of two integers up to n bits using
+Euclid’s algorithm has a complexity O(n2) and there are
+faster modern methods (see chapter 4 of [29]). The total
+expected complexity of our algorithm is O((log n)2n3) for
+the log n repetitions needed to ﬁnd an element of order
+N −1 with high probability. For very large N we can
+use fast multiplication to have an expected number of
+operations O(log log n(log n)3n2).
+The screening in line 7 of the algorithm identiﬁes N
+is not prime when ord(a) ̸ | N −1, but it is possible
+for N to be composite and still give inconclusive results
+when tested. For instance, Carmichael numbers satisfy
+aN−1 ≡1 mod N for all a such that (a, N) = 1 and,
+from Theorem 10, ord(a)|N −1 for all a ∈Z∗
+N. In any
+case, the order will be smaller than N −1 and, after
+3 log n tested elements, we can say that N is composite
+with high probability and stop there to avoid entering an
+inﬁnite loop.
+In order to reduce the number of quantum operations,
+we can introduce a previous classical selection phase that
+uses the Miller-Rabin test.
+The elements a ∈Z∗
+N for
+which a
+N−1
+2
+≡±1 mod N for a composite N are some-
+times called Euler liars [30]. Euler liars are a subgroup
+of Fermat liars, the a for which a composite N passes
+the Fermat test. We can impose harder constraints on
+the integers that survive to the quantum part of the algo-
+rithm. For a composite number N with N−1 = 2sd, with
+odd d, the bases for which ad ≡1 mod N or ad2r ≡−1
+mod N for some 0 ≤r < s are called strong liars. For
+a prime N the condition always holds, but, if N is com-
+posite, at most one fourth of the a ∈Z∗
+N are strong liars
+[8]. If we perform a classical Rabin-Miller test on k ran-
+dom bases and do not ﬁnd a witness for compositeness,
+the probability of N not being prime is bounded by 4−k
+and we are left with a collection of k elements of order
+ord(a)|N −1.
+We can discard the bases with ad ≡1
+mod N, which have order d < N −1, and use the rest of
+the elements in the quantum order ﬁnding subroutine.
+Finally, we can further reduce the number of steps with
+some insights from the analysis of quantum order ﬁnd-
+ing. The factor log n which appears in the complexity of
+quantum order ﬁnding is due to the average number of
+times we have to measure in order to ﬁnd two divisors
+of the order from which we can deduce its exact value,
+ord(a). However, with some classical processing testing
+small multiples of the values extracted from each mea-
+surement, it is possible to reduce the log n repetitions to
+a constant number [18].
+The algorithm we have proposed oﬀers an alternative
+quantum primality test which harnesses quantum order
+ﬁnding to give a direct proof an integer is prime by pro-
+ducing an element a ∈Z∗
+N with order N −1. The quan-
+tum part uses the same circuits as Shor’s factoring algo-
+rithm and it could serve as a previous stage when fac-
+toring on a quantum machine. Shor’s algorithm requires
+its input integer N not to be of the form pk or 2pk for
+a prime p and an integer k ≥1.
+For odd inputs, we
+only need to worry about detecting primes. There are
+classical eﬃcient methods to detect prime powers pk for
+k ≥2 [31], but we can also use a modiﬁed version of
+our quantum primality test. Theorems 6 and 7 can be
+generalized to show that an integer N > 1 has an ele-
+ment of order ϕ(N), called a primitive root, only when
+N = 2, 4, pk or p2k, in which case there are ϕ(ϕ(N)) of
+them (chapter 4 of [2]). The analysis then is essentially
+the same we have used in our primality test. For N = pk,
+ϕ(N) = pk−1(p −1). If we ﬁnd a primitive root, its or-
+der ord(a) gives (ord(a), N) = pk−1 ̸= 1, which factors
+N. We can check by repeated division by p =
+N
+(ord(a),N)
+that N is a prime power.
+The number of divisions is
+polynomial in the number of bits of N and the bound of
+log n order ﬁnding steps is still valid. The probability of
+ﬁnding a primitive root is ϕ(ϕ(N))
+ϕ(N)
+and 3 log log ϕ(N) rep-
+etitions give a high probability of getting a valid basis.
+ϕ(N) ≤N −1, so our bound for the primes also holds in
+this situation.
+Our
+algorithm
+reduces
+the
+asymptotic
+complex-
+ity
+of
+the
+Chau-Lo
+quantum
+primality
+test
+from
+O((log n)(log log n)n3) to O((log log n)(log n)3n2) at the
+cost of replacing the classical primality certiﬁcate which
+includes the factors of N −1 by a quantum certiﬁcate
+of primality consisting in an element a of order N −1,
+which can be checked on a quantum computer. The test
+can prove with certainty that a given integer is prime
+and it can be complemented with the Miller-Rabin test
+in the initial screening stage to also identify composite
+numbers with high probability. Our test has a complex-
+ity comparable to classical tests for compositeness which
+can convince us a number is prime with an exponentially
+small probability of error. Its complexity is essentially
+quadratic in the asymptotic limit, which is more eﬃcient
+than classical tests that prove primality with certainty,
+which are usually restricted to integers of a particular
+form, or require a number of operations of the order of
+the sixth power of the number of bits (AKS test).
+ACKNOWLEDGEMENTS
+This work has been funded by Spanish Ministerio de
+Econom´ıa y Competitividad, Project TEC2015-69665-R,
+MINECO/FEDER, UE and Junta de Castilla y Le´on
+VA089U16.
+
+
+5
+[1] A. J. Menezes, S. A. Vanstone, and P. C. van Oorschot,
+Handbook of Applied Cryptography, 1st ed. (CRC Press,
+Inc., Boca Raton, FL, USA, 1996).
+[2] D. M. Burton, Elementary Number Theory, 6th ed.
+(McGraw-Hill Higher Education, 2005).
+[3] R. Crandall and C. Pomerance, Prime Numbers: A Com-
+putational Perspective (Springer New York, New York,
+NY, 2005).
+[4] R. D. Carmichael, “On composite numbers P which sat-
+isfy the Fermat congruence aP −1 ≡1 mod P,” The
+American Mathematical Monthly 19, 22–27 (1912).
+[5] W. R. Alford, A. Granville, and C. Pomerance, “There
+are inﬁnitely many Carmichael numbers,” Annals of
+Mathematics 139, 703–722 (1994).
+[6] R. Solovay and V. Strassen, “A fast Monte-Carlo test for
+primality,” SIAM Journal on Computing 6, 84–85 (1977).
+[7] G. L. Miller, “Riemann’s hypothesis and tests for primal-
+ity,” in Proceedings of the Seventh Annual ACM Sympo-
+sium on Theory of Computing, STOC ’75 (ACM, New
+York, NY, USA, 1975) pp. 234–239.
+[8] M. O. Rabin, “Probabilistic algorithm for testing primal-
+ity,” Journal of Number Theory 12, 128 – 138 (1980).
+[9] J. D. Dixon, “Factorization and primality tests,” The
+American Mathematical Monthly 91, 333–352 (1984).
+[10] M. Agrawal, N. Kayal, and N. Saxena, “PRIMES is in
+P,” Annals of Mathematics 160, 781–793 (2004).
+[11] H.
+W.
+Lenstra
+and
+C.
+Pomerance,
+“Primal-
+ity
+testing
+with
+Gaussian
+periods,”
+preprint:
+https://www.math.dartmouth.edu/ carlp/aks240817.pdf
+(2003).
+[12] E. Lucas, “Th´eorie des fonctions num´eriques simple-
+ment p´eriodiques,” American Journal of Mathematics 1,
+289–321 (1878).
+[13] D. H. Lehmer, “Tests for primality by the converse of Fer-
+mat’s theorem,” Bulletin of the American Mathematical
+Society 33, 327–340 (1927).
+[14] John Brillhart, D. H. Lehmer, and J. L. Selfridge, “New
+primality criteria and factorizations of 2m ± 1,” Mathe-
+matics of Computation 29, 620–647 (1975).
+[15] Collective work, “The Great Internet Mersenne Prime
+Search (GIMPS),” online:
+https://www.mersenne.org/
+(Ongoing from 1996).
+[16] V. R. Pratt, “Every prime has a succinct certiﬁcate,”
+SIAM Journal on Computing 4, 214–220 (1975).
+[17] C. Pomerance, “Very short primality proofs,” Mathemat-
+ics of Computation 48, 315–322 (1987).
+[18] P. W. Shor, “Polynomial-time algorithms for prime fac-
+torization and discrete logarithms on a quantum com-
+puter,” SIAM Journal on Computing 26, 1484 (1997).
+[19] H. F. Chau and H.-K. Lo, “Primality test via quantum
+factorization,” International Journal of Modern Physics
+C 08, 131–138 (1997).
+[20] A. Carlini and A. Hosoya, “Quantum probabilistic sub-
+routines and problems in number theory,” Physical Re-
+view A 62, 032312 (2000).
+[21] J. B. Rosser and L. Schoenfeld, “Approximate formulas
+for some functions of prime numbers,” Illinois Journal of
+Mathematics 6, 64–94 (1962).
+[22] J.-L. Nicolas, “Petites valeurs de la fonction d’Euler,”
+Journal of Number Theory 17, 375 – 388 (1983).
+[23] D. E. Knuth, The Art of Computer Programming, Vol-
+ume 2 (3rd Ed.): Seminumerical Algorithms (Addison-
+Wesley Longman Publishing Co., Inc., Boston, MA,
+USA, 1997).
+[24] V. Vedral, A. Barenco,
+and A. Ekert, “Quantum net-
+works for elementary arithmetic operations,” Physical
+Review A 54, 147–153 (1996).
+[25] D. Beckman, A. N. Chari, S. Devabhaktuni,
+and J.
+Preskill, “Eﬃcient networks for quantum factoring,”
+Phys. Rev. A 54, 1034–1063 (1996).
+[26] A. Sch¨onhage and V. Strassen, “Schnelle Multiplikation
+großer Zahlen,” Computing 7, 281–292 (1971).
+[27] C. Zalka, “Fast versions of Shor’s quantum factoring al-
+gorithm,” preprint quant-ph/9806084 (1998).
+[28] R. Van Meter and K. M. Itoh, “Fast quantum modular
+exponentiation,” Physical Review A 71, 052320 (2005).
+[29] E. Bach and J. Shallit, Algorithmic Number Theory; Vol-
+ume I: Eﬃcient Algorithms (The MIT Press, 1996).
+[30] The most usual deﬁnition of Euler liars is the a which
+satisfy a
+N−1
+2
+≡
+  a
+N
+
+mod N for a composite N, where
+  a
+N
+
+is the Jacobi symbol.
+[31] D. J. Bernstein, “Detecting perfect powers in essen-
+tially linear time,” Mathematics of Computation 67,
+1253–1283 (1998).

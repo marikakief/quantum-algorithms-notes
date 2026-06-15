@@ -5,7 +5,7 @@
 
 ## What it does
 
-Computes the logical-AND of two qubits into an ancilla for 4 T gates, then erases the ancilla for 0 T gates. Replaces any compute/uncompute Toffoli pair (normally 8 T gates) with a 4 T gate operation.
+Computes the logical-AND of two qubits into an ancilla for 4 T gates, then erases the ancilla for 0 T gates. It can replace suitable compute/uncompute Toffoli pairs satisfying the phase-insensitivity condition; it is not a safe drop-in replacement for arbitrary Toffoli gates.
 
 ## The trick
 
@@ -17,13 +17,13 @@ Consume a $|T\rangle$ state as the ancilla input. Apply $T^\dagger$ to both cont
 
 Apply $H$ to the ancilla and measure in the computational basis. If the outcome is 1, apply $Z$ to one of the controls. This uses only Clifford gates and measurement.
 
-The asymmetry between compute and erase comes from measurement being irreversible. The erasure exploits the fact that we don't need to preserve the ancilla — we just need to disentangle it from the controls without introducing phase errors.
-
 **Condition for correctness:** Between compute and erase, intermediate operations must not be sensitive to a phase error $(-1)^{xy}$ on the $|x\rangle|y\rangle$ state. This is automatically satisfied when the AND appears in a compute/uncompute pair where intermediate operations act only on the ancilla (the standard use case), but must be checked in more complex circuits.
+
+The asymmetry between compute and erase comes from measurement being irreversible. The erasure exploits the fact that we don't need to preserve the ancilla — we just need to disentangle it from the controls without introducing phase errors.
 
 ## When to reach for it
 
-- Any circuit where Toffoli gates come in compute/uncompute pairs: quantum adders, [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover]] oracles from classical reversible circuits, multi-controlled gates, arithmetic subroutines.
+- Circuits exposing suitable compute/uncompute Toffoli pairs: quantum adders, clean [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover]] predicates from classical reversible circuits, multi-controlled gates, and arithmetic subroutines.
 - Multi-controlled NOT gates: iteratively AND pairs of controls to reduce $n$ controls to one representative ancilla, costing $4(n-1)$ T gates total.
 - Any surface code computation where T gates are the runtime bottleneck — the temporary logical-AND halves the T-count of every paired Toffoli.
 
@@ -41,6 +41,8 @@ The asymmetry between compute and erase comes from measurement being irreversibl
 The ancilla is held between compute and erase. In the surface code, this qubit occupies physical space that could host T factories. For circuits with many temporary logical-ANDs held simultaneously over long measurement depths (e.g., ripple-carry adders with $n \gg 1000$), the [[Ancilla Opportunity Cost Analysis|opportunity cost]] of the ancillae can exceed the T-gate savings. See the analysis in [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|the source paper]].
 
 The construction is equivalent to the ancilla-and-fixup method of Jones (2013). Gidney's contribution is the reframing as a general-purpose primitive rather than a single-gate optimisation.
+
+A Toffoli gate, a temporary AND value, and a persistent cleanly uncomputed AND value have different obligations: the temporary AND may carry a transient phase condition, whereas a persistent computed value must be correct as an ordinary reversible output until it is uncomputed.
 
 ## Related notes
 - [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — source paper

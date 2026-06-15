@@ -45,6 +45,7 @@ The method assumes faults are sparse and persistent (the same fault appears on r
 Also, the fault model is limited to "missing-gate" and bit-flip faults. Coherent errors (small rotations) may not produce detectable basis-state deviations on all test vectors.
 
 ## Related notes
-- [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes]] — source paper
+- [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes]] — source paper
+- [[Quantum Resource Estimates for Computing Elliptic Curve Discrete Logarithms (Roetteler-Naehrig-Svore-Lauter 2017) — Paper Notes]] — uses the same Toffoli-network testability argument for simulated elliptic-curve point addition
 - [[Dirty Ancilla Constant Addition]] — the Toffoli-only adder that motivates the testability argument
 - [[Reversible Modular Exponentiation with Garbage Cleanup]] — the modular exponentiation circuit being tested

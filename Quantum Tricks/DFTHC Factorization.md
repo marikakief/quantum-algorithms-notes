@@ -18,12 +18,14 @@ The squared terms are already SOS — each is $O^\dagger O$ for appropriate $O$.
 - $B$ = number of basis vectors per rank. Both DF and DFTHC use $B = \Theta(N)$
 - $C$ = number of copies per rank. DF has $C = 1$; THC effectively has $C = \Theta(N)$; DFTHC uses $C = \Theta(N)$
 
+These are empirical/scaling-model choices from the benchmark optimization, not proven universal ranks for all chemistry instances.
+
 **Why it works:** The block-encoding cost has three main components:
 1. **Rot** (Givens rotation oracle): $\sim N + RB$ Toffolis — dominates in DF
 2. **Qroam** (coefficient lookup): $\sim RBC/(\lambda+1) + \lambda b_Q$ Toffolis — dominates in THC
 3. **Sel** (Majorana operators): $\sim 4(N-1)b_{\text{rot}}$ Toffolis
 
-DFTHC balances Rot and Qroam costs (Amdahl's law), achieving near-linear total Toffoli scaling $\sim N^{2.09}$ per walk step.
+DFTHC balances Rot and Qroam costs (Amdahl's law), achieving near-quadratic empirical Toffoli scaling $\sim N^{2.09}$ per walk step in the benchmark fit.
 
 **Optimization:** Parameters $(u, w)$ are found via Adam gradient descent (JAX, auto-differentiated) on a loss that jointly minimizes Frobenius error $\|h^{(2)} - h^{(2)'}\|_{\text{fro}}$, block-encoding normalization $\Lambda$, and SOS gap $E_{\text{gap}}$. Random unit-vector initialization suffices (no chemistry-motivated warm start needed).
 
@@ -33,10 +35,10 @@ DFTHC balances Rot and Qroam costs (Amdahl's law), achieving near-linear total T
 - When neither pure DF nor pure THC is optimal for your system size (which is most of the time)
 
 ## Complexity
-Block-encoding Toffoli cost: $\sim 0.079 \times N^{2.09}$ million (empirical). $\lambda_{\text{sqrt}}^2 \sim N^{1.46}$. DFTHC optimization: one gradient step costs $O(RCN^4)$ multiplications; ~$10^{5-6}$ steps needed.
+Block-encoding Toffoli cost: $\sim 0.079 \times N^{2.09}$ million (empirical fit). $\lambda_{\text{sqrt}}^2 \sim N^{1.46}$ in the same benchmark suite. DFTHC optimization: one gradient step costs $O(RCN^4)$ multiplications; ~$10^{5-6}$ steps were needed in reported runs.
 
 ## Caveat
-The nonlinear optimization has many local minima. $\varepsilon_{\text{corr}}$ (correlation energy error from DFTHC approximation) fluctuates with rank and initial conditions — doesn't decrease monotonically. Multiple restarts and statistical selection are needed for reliable results. The exhaustive $(R, B, C)$ search space is large; heuristic choices (Section IV of the paper) work well but leave room for further optimization.
+The nonlinear optimization has many local minima. $\varepsilon_{\text{corr}}$ (correlation energy error from DFTHC approximation) fluctuates with rank and initial conditions — doesn't decrease monotonically. Multiple restarts and statistical selection are needed for reliable results, and optimizer/preprocessing cost should be kept near practical quality claims. The exhaustive $(R, B, C)$ search space is large; heuristic choices (Section IV of the paper) work well but leave room for further optimization. Comparisons to DF, THC, BLISS-THC, or RC-DF must specify whether the metric is $\lambda$, Toffolis, preprocessing cost, or memory.
 
 ## Related notes
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]]

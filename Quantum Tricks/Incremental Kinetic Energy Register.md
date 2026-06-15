@@ -10,7 +10,7 @@ Reduces the cost of exponentiating the kinetic operator $e^{-iT\tau}$ in the int
 
 In the [[Interaction Picture Simulation (Kinetic Frame)|interaction picture]] simulation of first-quantized chemistry, the Dyson series interleaves applications of $e^{-iT\tau}$ with block encodings of $U + V$. Each $e^{-iT\tau}$ requires the total kinetic energy $E_T = \sum_{j=1}^\eta \|k_{p_j}\|^2/2$ to compute the phase.
 
-Naively, this means squaring $3\eta$ momentum components ($3\eta n_p^2$ Toffolis) at each of $K+1$ kinetic-energy phasing steps. With $\eta = 100$ and $n_p \approx 7$, that's $\sim 15{,}000$ Toffolis per step.
+Naively, this means squaring $3\eta$ momentum components ($3\eta n_p^2$ Toffolis, plus constants from the chosen arithmetic) at each of $K+1$ kinetic-energy phasing steps. With $\eta = 100$ and $n_p \approx 7$, this is order $10^4$ Toffolis per step under the source's arithmetic assumptions.
 
 Instead: compute $E_T$ once at the start of the algorithm and store it in an ancilla register. When the potential block encoding shifts momentum $p_i \to p_i + \nu$ and $p_j \to p_j - \nu$, update the register:
 
@@ -21,15 +21,16 @@ The value $\|\nu\|^2$ is already computed during the PREPARE for the $1/\|\nu\|$
 
 $$12n_p^2 + 2n_p + 8n_\eta$$
 
-— **independent of $\eta$** up to the $n_\eta = \lceil\log\eta\rceil$ term. For $\eta = 100$, $n_p = 7$: the update costs $\sim 650$ Toffolis vs. $\sim 15{,}000$ for recomputation. A $23\times$ savings.
+— **independent of $\eta$** up to the $n_\eta = \lceil\log\eta\rceil$ term. For $\eta = 100$, $n_p = 7$: the update is hundreds of Toffolis rather than order $10^4$ for recomputation, with the exact ratio depending on the arithmetic constants.
 
-The energy offset $E_0$ (for placing the estimated eigenvalue near zero) is subtracted from the register at the start, giving the phase shift $e^{-i(E_T - E_0)\tau}$ at every step for free.
+The energy offset $E_0$ (for placing the estimated eigenvalue near zero) is subtracted from the register at the start, so the phase shift $e^{-i(E_T - E_0)\tau}$ does not require repeated per-step recomputation. This is a setup/scheduling saving, not literally zero gates.
 
 ## When to reach for it
 
 - Interaction picture simulation where $A$ is a function of registers that $B$ modifies
 - Any simulation framework where the same global quantity (e.g., total energy, total momentum) must be evaluated repeatedly, and each step modifies only $O(1)$ registers
 - Most valuable when $\eta$ is large (many particles), so recomputation from scratch is expensive
+- Distinct from [[Kinetic Energy as Bit-Product LCU]]: this is for interaction-picture phasing, while the bit-product trick is for qubitized LCU block encoding of $T$
 
 ## Complexity
 

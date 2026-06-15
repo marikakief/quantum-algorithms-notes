@@ -6,25 +6,25 @@
 
 ## The computational problem
 
-Given the second-quantized electronic structure Hamiltonian
+Given the structured second-quantized electronic-structure Hamiltonian
 
 $$H = \sum_{p,q} T_{pq}\, a^\dagger_p a_q + \sum_p U_p\, n_p + \sum_{p \neq q} V_{pq}\, n_p n_q$$
 
-(where $a^\dagger_p, a_p$ are fermionic creation/annihilation operators and $n_p = a^\dagger_p a_p$), implement a first-order Trotter step $e^{-iHt}$ on $N$ spin-orbitals, using a minimal linearly-connected qubit architecture, minimising both circuit depth and two-qubit gate count. Separately: prepare an arbitrary single Slater determinant (specified by a single-particle unitary $u \in U(N)$) on the same linear architecture, also minimising depth.
+(where $a^\dagger_p, a_p$ are fermionic creation/annihilation operators and $n_p = a^\dagger_p a_p$), implement a first-order Trotter step $e^{-iHt}$ on $N$ spin-orbitals, using a minimal linearly-connected qubit architecture, minimising both circuit depth and two-qubit gate count. This is the one-body plus density-density two-body form used by the construction, not the fully generic four-index Gaussian-basis Hamiltonian. Separately: prepare an arbitrary single Slater determinant on the same linear architecture, also minimising depth.
 
 The Jordan–Wigner mapping is used throughout: qubit $p$ represents whether spin-orbital $p$ is occupied.
 
 ## What the paper does
 
-The paper introduces the **fermionic swap network**, a circuit structure that implements a complete first-order Trotter step of $H$ in depth exactly $N$ using $N(N-1)/2$ two-qubit entangling gates — all on a linearly connected qubit chain. It also shows that arbitrary Slater determinants can be prepared in at most $N/2$ depth via parallel nearest-neighbour Givens rotations. Both results achieve or beat the resource costs of all prior approaches, with *less* connectivity than most of them require.
+The paper introduces the **fermionic swap network**, a circuit structure that implements a complete first-order Trotter step of this $T+U+V$ Hamiltonian in depth exactly $N$ using $N(N-1)/2$ logical two-qubit fermionic simulation gates — all on a linearly connected qubit chain. Each such gate can compile into a small constant number of native entangling gates. It also shows that arbitrary Slater determinants can be prepared in at most $N/2$ depth via parallel nearest-neighbour Givens rotations under the symmetry assumptions described below. Both results achieve or beat the resource costs of prior approaches for this setting, with *less* connectivity than most of them require.
 
-This paper is significantly more practical than the LCU-based approaches in [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|Babbush et al. (2018)]] and [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes|Kivlichan et al. (2017)]]: Trotter + fermionic swap network is competitive for near-term hardware. The swap network result is likely optimal (they conjecture, but haven't proved, a matching lower bound).
+In near-term/Trotter regimes, this circuit can be more practical than LCU-based approaches that target different precision and input-model regimes. The swap network result is likely optimal for explicit pair-simulation circuits (they conjecture, but have not proved, a matching lower bound).
 
 ## The algorithm / construction
 
 ### Jordan–Wigner setup
 
-Under the Jordan–Wigner encoding, qubit $p$ stores the parity of orbital $p$. The canonical ordering $\sigma$ records which orbital is mapped to which qubit position — this ordering changes dynamically during the circuit.
+Under the Jordan-Wigner encoding, qubit $p$ stores the occupation of orbital $p$ in the current canonical ordering. The ordering $\sigma$ records which orbital is mapped to which qubit position — this ordering changes dynamically during the circuit.
 
 ### The fermionic simulation gate
 
@@ -67,11 +67,11 @@ Layer 2A:   F(0,2)  ...          ← etc., permuted ordering
 
 ### Second-order (symmetric) Trotter step
 
-For a symmetric Trotter step of total time $2t$: run the first-order sequence for time $t$, but on the **final gate** double the interaction time to $2t$ and omit the fermionic swap. Then mirror the remaining gates in reverse order. This gives the standard $e^{-iHt/2} e^{-iHt/2}$ symmetrisation without additional gate overhead (the last gate bridges both halves).
+For a symmetric Trotter step of total time $2t$: run the first-order sequence for time $t$, but on the **final gate** double the interaction time to $2t$ and omit the fermionic swap. Then mirror the remaining gates in reverse order. This avoids the naive extra swap-network overhead in the mirrored construction; it does not make second-order Trotter error free.
 
 ### Slater determinant preparation via Givens rotations
 
-To prepare a Slater determinant $U(u)|0\rangle^{\otimes N}$ (where $u \in U(N)$ is the single-particle unitary and $|0\rangle^{\otimes N}$ represents the occupied reference), decompose $u$ into nearest-neighbour Givens rotations via a parallel column-zeroing schedule.
+To prepare a Slater determinant $U(u)|\mathbf{f}_0\rangle$ (where $u \in U(N)$ is a single-particle unitary extending the occupied-orbital isometry and $|\mathbf{f}_0\rangle$ is a fixed $\eta$-electron occupation string), decompose $u$ into nearest-neighbour Givens rotations via a parallel column-zeroing schedule.
 
 A **Givens rotation** $G_{pq}(\theta, \phi)$ acts on orbitals $p, q$ as:
 
@@ -93,13 +93,13 @@ For the 2D Hubbard model on a $\sqrt{N} \times \sqrt{N}$ lattice, a modified swa
 
 ## Key results
 
-**Theorem 1 (Trotter step cost):** A first-order Trotter step of the Hamiltonian $H$ (Eq. (1)) for $N$ spin-orbitals on a linearly connected qubit chain requires:
+**Theorem 1 (Trotter step cost):** A first-order Trotter step of the structured Hamiltonian $H$ (Eq. (1)) for $N$ spin-orbitals on a linearly connected qubit chain requires:
 - Circuit depth: exactly $N$
-- Two-qubit entangling gates: exactly $N(N-1)/2$
+- Logical two-qubit fermionic simulation gates: exactly $N(N-1)/2$
 
 **Theorem 2 (Slater determinant preparation):** Arbitrary Slater determinants for $N$ spin-orbitals can be prepared with depth $\leq N/2$ on a linearly connected qubit chain, using $N(N-1)/2$ nearest-neighbour Givens rotations.
 
-**Conjecture (optimality):** No explicit Trotter step of the general $H$ (Eq. (1)) can be implemented with fewer two-qubit entangling gates, even on an architecture with arbitrary connectivity. (Not proved; formal lower bound is an open problem.)
+**Conjecture (optimality):** No explicit Trotter step of the structured $H$ (Eq. (1)) can be implemented with fewer pair-interaction gates, even on an architecture with arbitrary connectivity. (Not proved; formal lower bound is an open problem.)
 
 **Hubbard result:** For the 2D Hubbard model on a $\sqrt{N} \times \sqrt{N}$ lattice, depth $O(\sqrt{N})$ on a linear chain. Prior planar methods: $O(1)$ depth but require doubling qubit count.
 
@@ -107,9 +107,9 @@ For the 2D Hubbard model on a $\sqrt{N} \times \sqrt{N}$ lattice, a modified swa
 
 | Method | Trotter-step depth | Two-qubit gates | Connectivity required |
 |---|---|---|---|
-| Naive JW (standard decomposition) | $O(N^2)$ | $O(N^4)$ | Linear (but many layers) |
+| Naive JW for this $T+U+V$ form | $O(N^2)$ | $O(N^3)$-scale work if long strings are implemented directly | Linear (but many layers) |
 | Prior swap-network approach ([40]) | $2N$ | $O(N^2)$ | Planar |
-| **This work (fermionic swap network)** | **$N$** | **$N(N-1)/2$** | **Linear** |
+| **This work (fermionic swap network)** | **$N$** | **$N(N-1)/2$ logical $F_t$ gates** | **Linear** |
 | FFFT-based (plane wave basis) | $O(N \log N)$ | $O(N \log N)$ | Planar |
 
 | Method | Slater-det. depth | Givens rotations | Connectivity |
@@ -122,7 +122,7 @@ The improvement is not just asymptotic — the constants are better too. Previou
 
 ## Limits / caveats
 
-- **Optimality conjecture unproved:** The gate-count optimality claim (no fewer than $N(N-1)/2$ gates for a general Trotter step) is stated as a conjecture. A formal lower bound is an open problem.
+- **Optimality conjecture unproved:** The gate-count optimality claim (no fewer than $N(N-1)/2$ pair-interaction gates for the structured Trotter step) is stated as a conjecture. A formal lower bound is an open problem.
 - **No Trotter error analysis:** The paper does not analyse Trotter error for this specific gate ordering. Whether this ordering is favourable or unfavourable for commutator-based error depends on the system. The authors recommend numerical study as future work.
 - **Jordan–Wigner only:** The technique relies heavily on the JW canonical ordering changing via fermionic swaps. It doesn't obviously extend to Bravyi-Kitaev or other encodings.
 - **Hubbard periodic boundary conditions:** The $O(\sqrt{N})$ Hubbard result doesn't handle periodic boundary conditions.

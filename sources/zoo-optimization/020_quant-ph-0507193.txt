@@ -1,0 +1,759 @@
+
+
+=== PAGE 1 ===
+arXiv:quant-ph/0507193v1  20 Jul 2005
+Quantum basin hopping with gradient-based local
+optimisation
+David Bulger∗
+November 8, 2018
+Abstract
+The quantum basin hopping algorithm for continuous global optimisation combines
+a local search with Grover’s algorithm, and can locate the global optimum using eﬀort
+proportional to the square root of the number of basins. This article establishes that
+Jordan’s quantum gradient estimation method can be incorporated into the quantum
+basin hopper, providing an extra acceleration proportional to the domain dimension.
+MSC2000 Subject Classiﬁcation: 90C30, 68Q99, 68Q25
+Key words and phrases: global optimisation, conjugate gradient, quantum computation,
+Grover’s algorithm, quantum basin hopper.
+1
+Introduction
+Recent articles [1, 4, 7, 8, 11] have studied the application of Grover’s quantum algorithm [2, 9]
+to the general unconstrained global optimisation problem. Given a domain point and corre-
+sponding objective function value, we can dynamically construct a quantum oracle classifying
+any other domain point as either better or not. Using this oracle in Grover’s algorithm pro-
+duces an implementation of pure adaptive search [13], that is, an improving sequence of
+domain points, each uniformly distributed among all points better than the previous. De-
+tails in [1] show that the eﬀort required by this approach is on the order of the square root
+of the eﬀort required by pure random search [3].
+Of course, for many problems, more sophisticated methods than pure random search can
+be used on a Turing computer. Typically in these methods the idea is to be “guided” toward
+optimal domain points by the objective function’s “terrain”, that is, the shape of its graph.
+For instance, the multistart method is a simple hybrid of pure random search and a local
+descent search, in which independent exhaustive local searches are conducted from many
+randomly chosen initial points. The quantum basin hopper [5], a quantum analogue of the
+multistart method, combines the quadratic acceleration due to Grover’s algorithm with the
+potentially huge acceleration over pure random search to be gained by using a local search.
+In practice, objective functions in continuous domains are usually diﬀerentiable, at least
+piecewise. Being guided by the terrain, in this case, will largely mean responding to the
+gradient, an analytic expression for which may or may not be available. Local optimisation
+techniques for such problems generally fall into two categories.
+Gradient methods, such
+as gradient descent and conjugate gradient, require explicit computation of the gradient at
+each sample point. On the other hand, gradient-free methods, such as the Nelder-Meade
+simplex method and simulated annealing, attempt to respond to the gradient in an indirect
+way, without requiring its explicit computation.
+(The methods named are all described
+in [12].) Much of the reason for gradient-free methods is that, when an analytic expression
+is available for the objective function but not for its derivative, the number of function
+evaluations required near a point to estimate the gradient increases linearly with the domain
+dimension. In many problems of practical interest, the domain dimension is large enough to
+make this unpractical.
+∗Lecturer, Department of Statistics, Macquarie University, NSW 2109, Australia, dbulger@efs.mq.edu.au.
+
+
+
+=== PAGE 2 ===
+The quantum complexity of estimating an objective function’s gradient, based solely on
+function evaluations, is constant, rather than linear, in dimension. Speciﬁcally, [10] shows
+that the gradient can be estimated at a point using just one (superposed) evaluation of the
+objective function. In [6] it is established, under mild regularity conditions, that the error
+in the gradient estimate can be reduced to any required level, by appropriately selecting the
+numerical encoding and calculation precision and other parameters of the gradient estimation
+algorithm.
+Therefore it seems that gradient information is cheap in quantum computation, and ought
+to be incorporated into local optimisation methods, and into the quantum basin hopper. This
+paper discusses that possibility. The diﬃculty is that, while [5] assumes the local search to
+act deterministically, quantum gradient estimation produces in general a nontrivial super-
+position of computational basis states. This is not simply a matter of numerical error; the
+indeterminacy, together with the marking oracle used in the Grover search, causes unwanted
+entanglement between the search register and the gradient estimation register. We will argue
+that the error bound established in [6] implies that the algorithm’s performance is substan-
+tially unaﬀected by this entanglement.
+This paper’s structure is as follows. Section 2 presents the required details of the quantum
+basin hopper. In Section 3, we consider the error introduced by the indeterminacy of quantum
+gradient estimation, and conceptually divide it into two diﬀerent kinds of error, “large” and
+“small”. Section 4 shows that the amplitude of the “large” errors can be made too small to
+disrupt the quantum basin hopper. Section 5 shows that the numerical scale of the “small”
+errors adequately restricts the eﬀect of the entanglement. Section 6 concludes the paper and
+speculates on related future research.
+2
+The quantum basin hopper
+The quantum basin hopper algorithm is described in [5]. The speciﬁcally quantum part of
+the algorithm, denoted GBS(Y, r, L) below, is nested within two loops which can be executed
+classically.
+Quantum basin hopper with parameters (λ, M, L)
+randomly choose x ∈S
+descend from x to a local minimum xcand
+ycand ←f(x)
+repeat
+x ←xcand
+y ←ycand
+m ←1
+repeat
+choose an integer r uniformly at random from {0, . . . , ⌈m −1⌉}
+set xcand and ycand by measuring the output of GBS(Y, r, L)
+m ←λm
+until ycand < Y or m > M
+until ycand ≥Y
+The quantum part GBS(Y, r, L) simply uses Grover’s algorithm with r rotations to seek a
+domain point whose containing basin extends below Y . (Basins are exlored using L iterations
+of the local search.) GBS(Y, r, L) operates on a Hilbert space D⊗(L+1) ⊗R, encoding the
+state of a system containing L+1 registers storing points in the domain of f, and one register
+storing a value of f. It proceeds as follows. The state is initialised to |s⟩⊗|0D⟩⊗L ⊗|0R⟩,
+where |s⟩is the equal-amplitude state in D. Then, the operator
+UfUd,L · · · Ud,1(UsU −1
+d,1 · · · U −1
+d,LU<UfUd,L · · · Ud,1)r
+(1)
+is applied. Finally, the last two registers are measured, and their values are returned as xcand
+and ycand. The factors process data as follows:
+Uf|x0⟩⊗· · · ⊗|xL⟩⊗|y⟩
+=
+|x0⟩⊗· · · ⊗|xL⟩⊗|y + f(xL)⟩,
+2
+
+
+
+=== PAGE 3 ===
+Us|x0⟩⊗· · · ⊗|xL⟩⊗|y⟩
+=
+((2|s⟩⟨s| −I)|x0⟩) ⊗· · · ⊗|xL⟩⊗|y⟩,
+U<|x0⟩⊗· · · ⊗|xL⟩⊗|y⟩
+=
+
+|x0⟩⊗· · · ⊗|xL⟩⊗|y⟩,
+y ≥Y,
+−|x0⟩⊗· · · ⊗|xL⟩⊗|y⟩,
+y < Y,
+(where, for unitarity, the addition y + f(xL) is modulo the ordinate register’s storage capac-
+ity). The operator Ud,k updates the (k + 1)th register on the basis of the kth, representing
+a single iteration of the local minimisation. In [5], it is assumed to act deterministically, so
+that Ud,L · · · Ud,1 maps the computational basis state
+|x0⟩⊗|0⟩⊗· · · ⊗|0⟩⊗|0⟩
+to the computational basis state
+|x0⟩⊗|x1⟩⊗· · · ⊗|xL⟩⊗|0⟩,
+where x1, . . . , xL is the local search’s sample path when started at x0.
+3
+Errors due to quantum indeterminacy in gradient es-
+timates
+In this article though, we assume instead that each operation Ud,k involves a single quantum
+gradient estimation, so that the operation (1) involves (2r + 1)L of them. The eﬀect of the
+indeterminacy inherent in the gradient estimation method on Grover’s algorithm requires
+contemplation.
+The terminus of the local minimisation sample path resulting from each
+domain point will be a quantum superposition, peaked around a point near the bottom of
+the point’s containing basin, but having a nonzero amplitude at every domain point in general.
+Accordingly, the marking oracle involved in Grover’s algorithm, which is here intended to
+identify points in basins extending below Y , will always slightly entangle the register storing
+the sample path’s origin with the circuitry estimating the gradient.
+The aim of this article is to demostrate that Grover’s algorithm, and therefore the quan-
+tum basin hopper, can still function despite this entangling. This will be done by considering
+separately the eﬀects of “large” errors and “small” errors in the gradient estimates. The error
+in a gradient estimate is simply the magnitude of the diﬀerence between the estimate and
+the true gradient, and it is considered “large” if it exceeds δ, and “small” otherwise, where
+δ is a positive constant of our choosing.
+4
+Large errors
+If |gn⟩is the nth gradient estimate, let |g′
+n⟩denote the normalised projection of |gn⟩onto the
+span of estimates with error no larger than δ. Theorem 1 of [6] implies that, for any positive
+ǫ and δ, suﬃciently careful quantum gradient estimation will ensure that ∥|g′
+n⟩−|gn⟩∥< ǫ.
+Let |φ⟩represent the computer’s state just before measurement at the end of GBS(Y, r, L),
+and let |φ′⟩represent the corresponding state if the gradient estimates |gn⟩are replaced with
+|g′
+n⟩. Clearly ∥|φ′⟩−|φ⟩∥< (2r + 1)Lǫ, which can be made as small as required. Therefore
+we can safely ignore large errors.
+5
+Small errors
+It remains only to show that the quantum basin hopper can tolerate small errors, that is, that
+if gradient estimate errors were uniformly bounded by a suﬃciently small δ, the quantum
+calculation GBS(Y, r, L) would locate a basin extending lower than Y with a high probability
+(for suitable rotation count r, and assuming such basins exist).
+Let f : D →R be the objective function before discretisation. Suppose D ⊂Rp, and let
+(D, F, µ) be a measure space with µ(D) ﬁnite and f measurable.
+3
+
+
+
+=== PAGE 4 ===
+Let dL(x0, u1, . . . , uL) denote the Lth iterate of the local search, starting from x0, and
+assuming that the kth gradient estimate includes an error of uk. Let
+W+
+=
+{x : dL(x, 0, . . . , 0) > Y },
+WY
+=
+{x : dL(x, 0, . . . , 0) = Y }, and
+W−
+=
+{x : dL(x, 0, . . . , 0) < Y }.
+For almost all Y , WY will have measure zero. Ordinarily, for a wide class of local optimisation
+methods, dL is continuous in all its arguments, almost everywhere. Thus, letting Bδ represent
+the closed ball around 0 ∈Rp with radius δ, the set
+WY,δ = {x : dL(x, Bδ, . . . , Bδ) contains elements less than and greater than Y }
+decreases, as δ →0, to WY . This means that we can make WY,δ as small as we like by choosing
+δ small enough, that is, by computing the gradient estimates with suﬃcient precision.
+Now suppose S discretises D, so that D is spanned by {|x⟩: x ∈S}. Partition S into
+Sα, Sβ and Sγ, where
+Sβ
+=
+S ∩WY,δ,
+Sα
+=
+(S\Sβ) ∩W+,
+Sγ
+=
+(S\Sβ) ∩W−.
+Section 2 indicates that the quantum search involves L + 1 domain-point registers and
+one range value register; in practice, there will be extra storage for “scratch space”, including
+the register for the gradient estimation sampling grid. Taking all of this circuitry in account,
+deﬁne the Hilbert space O such that D ⊗O represents the state all registers involved in the
+quantum search, with D representing the register storing x0, and O representing all other
+registers. Let |0O⟩represent the initialised state of O.
+Let
+Nα = |Sα|,
+|α⟩=
+X
+{|x⟩⊗|0O⟩: x ∈Sα}/
+p
+Nα,
+Nβ = |Sβ|,
+|β⟩=
+X
+{|x⟩⊗|0O⟩: x ∈Sβ}/
+p
+Nβ,
+Nγ = |Sγ|,
+|γ⟩=
+X
+{|x⟩⊗|0O⟩: x ∈Sγ}/
+p
+Nγ.
+Let
+G = UsU −1
+d,1 · · · U −1
+d,LU<UfUd,L · · · Ud,1,
+so that GBS(Y, r, L) simply applies UfUd,L · · · Ud,1Gr to |s⟩⊗|0O⟩.
+Then
+G|α⟩
+=
+Nα −Nβ −Nγ
+N
+|α⟩+ 2pNαNβ
+N
+|β⟩+ 2pNαNγ
+N
+|γ⟩and
+G|γ⟩
+=
+−2
+p
+NαNγ
+N
+|α⟩−2
+p
+NβNγ
+N
+|β⟩+ Nα + Nβ −Nγ
+N
+|γ⟩;
+however, G|β⟩is not a tensor multiple of |0O⟩, and represents an entangled state. Let |βk⟩
+denote Gk|β⟩.
+Deﬁne θ, η, ζ ∈[0, π/2] by
+cos2 θ =
+N 2
+β
+4NαNγ
+cos2 η =
+(Nα −Nγ)2
+(Nα + Nγ)2 −N 2
+β
+cos2 ζ = (Nα + Nβ/2)2
+NNα
+.
+Deﬁne
+|χ+⟩=
+1
+√
+2
+ eiθ|α⟩−|γ⟩
+
+|χ−⟩=
+1
+√
+2
+ e−iθ|α⟩−|γ⟩
+
+.
+4
+
+
+
+=== PAGE 5 ===
+The Grover operation (not exactly a rotation in this context) acts on |χ±⟩as follows:
+G|χ+⟩
+=
+1
+√
+2UsU −1
+d,1 · · · U −1
+d,LU<UfUd,L · · · Ud,1
+ eiθ|α⟩−|γ⟩
+
+=
+1
+√
+2Us
+ eiθ|α⟩+ |γ⟩
+
+=
+|α⟩
+√
+2
+ 
+2eiθNα
+N
++ 2
+p
+NαNγ
+N
+−eiθ
+!
++ |γ⟩
+√
+2
+ 
+2eiθp
+NαNγ
+N
++ 2Nγ
+N
+−1
+!
++
+p
+2Nβ
+N
+
+eiθp
+Nα +
+p
+Nγ
+
+|β⟩
+=
+ 
+1 −2pNγ
+N
+p
+Nγ + eiθp
+Nα
+!
+|χ+⟩+
+p2Nβ
+N
+
+eiθp
+Nα +
+p
+Nγ
+
+|β⟩
+=
+re−iη|χ+⟩+
+p
+2Nβ
+N
+
+eiθp
+Nα +
+p
+Nγ
+
+|β⟩, where
+r
+=
+r
+Nα −Nβ + Nγ
+N
+, and similarly
+G|χ−⟩
+=
+reiη|χ−⟩+
+p
+2Nβ
+N
+
+e−iθp
+Nα +
+p
+Nγ
+
+|β⟩.
+Therefore
+Gk|χ+⟩
+=
+rke−ikη|χ+⟩+
+p
+2Nβ
+N
+
+eiθp
+Nα +
+p
+Nγ
+ k−1
+X
+j=0
+rje−ijη|βk−1−j⟩and
+Gk|χ−⟩
+=
+rkeikη|χ−⟩+
+p
+2Nβ
+N
+
+e−iθp
+Nα +
+p
+Nγ
+ k−1
+X
+j=0
+rjeijη|βk−1−j⟩.
+Noting that the initial state |s⟩⊗|0O⟩equals
+−
+i
+√
+2N sin θ
+(
+p
+Nα + e−iθp
+Nγ)|χ+⟩+
+i
+√
+2N sin θ
+(
+p
+Nα + eiθp
+Nγ)|χ−⟩+
+r
+Nβ
+N |β⟩,
+we have
+Gk|s⟩⊗|0O⟩
+=
+irk
+√
+2N sin θ
+
+−e−ikη(
+p
+Nα + e−iθp
+Nγ)|χ+⟩+ eikη(
+p
+Nα + eiθp
+Nγ)|χ−⟩
+
++
+r
+Nβ
+N |βk⟩
++
+i
+p
+Nβ
+N
+√
+N sin θ
+k−1
+X
+j=0
+rj 
+(
+p
+Nα + eiθp
+Nγ)2ei(jη−θ) −(
+p
+Nα + e−iθp
+Nγ)2ei(θ−jη)
+|βk−1−j⟩
+=
+rk
+√
+N sin θ
+
+(
+p
+Nα sin(kη) +
+p
+Nγ sin(kη + θ))|γ⟩−(
+p
+Nα sin(kη −θ) +
+p
+Nγ sin(kη))|α⟩
+
++
+r
+Nβ
+N |βk⟩
++
+i
+p
+Nβ
+N
+√
+N sin θ
+k−1
+X
+j=0
+rj 
+(
+p
+Nα + eiθp
+Nγ)2ei(jη−θ) −(
+p
+Nα + e−iθp
+Nγ)2ei(θ−jη)
+|βk−1−j⟩
+=
+rk
+sin θ (sin(kη + ζ)|γ⟩−sin(kη + ζ −θ)|α⟩)
++
+r
+Nβ
+N
+
+|βk⟩+
+2
+sin θ
+k−1
+X
+j=0
+rj sin(θ −2ζ −jη)|βk−1−j⟩
+
+.
+In particular, noting that |γ⟩is orthogonal to |α⟩and |β⟩but not necessarily to |βk⟩for
+5
+
+
+
+=== PAGE 6 ===
+k > 0, we have
+
+γ
+ Gk s
+
+≥
+rk sin(kη + ζ)
+sin θ
+−
+2
+sin θ
+r
+Nβ
+N
+k−1
+X
+j=0
+rj| sin(θ −2ζ −jη)|
+(2)
+=
+rk sin(kη + ζ)
+sin θ
+−
+2
+sin θ
+r
+Nβ
+N
+k−1
+X
+j=0
+rj sin(θ −2ζ −jη) for small k
+=
+rk sin(kη + ζ)
+sin θ
+−
+i
+sin θ
+r
+Nβ
+N
+
+ei(2ζ−θ) 1 −rkeikη
+1 −reiη
+−e−i(2ζ−θ) 1 −rke−ikη
+1 −re−iη
+
+.
+This bound is maximised when
+2pNβ
+√
+N
+ℜ
+
+ei(2ζ−θ+kη) η −i ln r
+1 −reiη
+
+= ln r sin(kη + ζ) + η cos(kη + ζ),
+that is, when
+k = 1
+η atn 2
+p
+Nβ/Nρ cos(2ζ −θ + φ) −ln r sin ζ −η cos ζ
+2
+p
+Nβ/Nρ sin(2ζ −θ + φ) + ln r cos ζ −η sin ζ
+,
+where
+ρeiφ = η −i ln r
+1 −reiη .
+This reduces to the familiar situation when Nβ = 0; note that then we have
+θ = π
+2 ,
+cos η = 1 −2Nγ
+N ,
+ζ = η/2,
+r = 1,
+and the optimal k is π/2η −1/2.
+More tractibly, from (2) we have
+
+γ
+ Gk s
+
+≥
+1
+sin θ
+
+rk sin(kη + ζ) −2k
+q
+Nβ/N
+
+.
+If Nβ ≪Nγ ≪Nα, then the usual estimate k = (π/4)
+p
+N/Nγ gives
+1
+sin θ
+
+rk sin(kη + ζ) −2k
+q
+Nβ/N
+
+≈1 −π
+4
+s
+Nβ
+Nγ
+ 
+1 +
+r
+Nβ
+N
+!
+;
+thus if the number of iterations is chosen optimally, the error rate is on the order of
+p
+Nβ/Nγ.
+This will usually be overshadowed by errors due to unknown target size, which are already
+known to be manageable [2].
+To summarise, “small” errors complicate the required implementations of Grover’s algo-
+rithm by introducing an entangling subset of the search space. In the usual search algorithm,
+the search space is partitioned into marked and unmarked regions; here we have instead a
+partition into marked, unmarked and entangling regions1. It is established here that if the
+entangling region is much smaller than the marked region, then the search algorithm will still
+succeed with a high probability.
+6
+Conclusion and further work
+Taking, as a performance baseline, the pure random search algorithm [3] (simply, randomly
+sampling the domain repeatedly), the multistart method provides a large improvement, for a
+wide class of optimisation problems. Separately, implementing pure adaptive search [13, 14]
+via Grover’s algorithm [1, 4, 7, 9] provides an acceleration on the order of the square root of
+1The good, the bad and the ugly.
+6
+
+
+
+=== PAGE 7 ===
+the domain size; this is impressive for a method not relying on any problem structure, but
+quickly lags behind multistart for moderately structured problems. In [5] it was shown how
+the quadratic acceleration due to Grover’s algorithm, and the acceleration (in proportion
+to the number of domain points in the deepest basin) due to multistart, could be achieved
+simultaneously.
+It is now known that the quantum complexity of gradient estimation is smaller than its
+classical complexity by a factor which is linear in domain dimension [6, 10]. The question
+naturally arises whether we can simultaneously claim the beneﬁt of this linear acceleration,
+alongside the accelerations due to Grover’s algorithm and to multistart. This paper provides
+the answer. Section 2 describes the quantum basin hopper algorithm. Sections 3 to 5 study
+the error introduced into the algorithm by the indeterminacy inherent in quantum gradient
+estimation, using a “divide-and-conquer” approach. Section 3 splits the error in gradient
+estimation into “large” and “small” errors. Section 4 shows that “large” errors are unprob-
+lematic due to their low amplitude. Section 5 shows that “small” errors only corrupt Grover’s
+algorithm on a small subset of the search space, with only slight overall eﬀect.
+To pursue this work further, a natural ﬁrst step would seem to be to tighten the bounds
+established, in order to predict, for a given optimisation problem, what algorithm param-
+eters and computational precision should be used. A careful analysis of the performance
+of a quantum-gradient-estimate implementation of, say, a conjugate gradient method on a
+quadratic form might yield insights.
+References
+[1] BARITOMPA, W. P., BULGER, D. W., and WOOD, G. R., Grover’s quantum algo-
+rithm applied to global optimisation, SIAM Journal of Optimization, to appear.
+[2] BOYER, M., BRASSARD, G., HØYER, P., and TAPP, A., Tight bounds on quantum
+searching, Fortschritte der Physik, Vol. 46, pp. 493–506, 1998.
+[3] BROOKS, S. H., A discussion of random methods for seeking maxima, Operations Re-
+search, Vol. 6, pp. 244–251, 1958.
+[4] BULGER, D. W., BARITOMPA, W. P., and WOOD, G. R., Implementing pure adaptive
+search with Grover’s quantum algorithm, Journal of Optimization Theory and Applica-
+tions, Vol. 116, pp. 517–529, 2003.
+[5] BULGER,
+D.
+W.,
+Combining
+a
+local
+search
+and
+Grover’s
+algorithm
+in
+black-box
+global
+optimisation,
+preprint,
+http://www.stat.mq.edu.au/research/papers/LocalGrover.pdf, 2004.
+[6] BULGER,
+D.,
+Quantum
+computational
+gradient
+estimation,
+http://lanl.arxiv.org/abs/quant-ph/0507109, 13 Jul 2005.
+[7] D¨URR, C.,
+and HØYER, P.,
+A quantum algorithm for ﬁnding the minimum,
+http://lanl.arxiv.org/abs/quant-ph/9607014, version 2, 7 Jan 1999.
+[8] GO´CWIN, M., Complexity of searching maximum of a function on quantum computer,
+http://lanl.arxiv.org/abs/quant-ph/0507060, 6 Jul 2005.
+[9] GROVER, L. K., A fast quantum mechanical algorithm for database search, Proceedings
+of the 28th Annual ACM Symposium on Theory of Computing, 1996.
+[10] JORDAN, S. P., Fast quantum algorithm for numerical gradient estimation, Physical
+Review Letters, to appear (also http://lanl.arxiv.org/abs/quant-ph/0405146, ver-
+sion 2, 2 Jan 2005)
+[11] NAYAK, A., and WU, F., The quantum query complexity of approximating the median
+and related statistics, Proceedings of the 31st Annual ACM Symposium on Theory of
+Computing, 1999.
+7
+
+
+
+=== PAGE 8 ===
+[12] PRESS, W. H., TEUKOLSKY, S. A., VETTERLING, W. T., and FLANNERY, B. P.,
+Numerical Recipes in C, second edition, Cambridge University Press, 1995.
+[13] ZABINSKY, Z. B., and SMITH, R. L., Pure adaptive search in global optimization,
+Mathematical Programming, Vol. 53, pp. 323–338, 1992.
+[14] ZABINSKY, Z. B., WOOD, G. R., STEEL, M. A., and BARITOMPA, W. P., Pure adap-
+tive search for ﬁnite global optimization, Mathematical Programming, Vol. 69, pp. 443–
+448, 1995.
+8

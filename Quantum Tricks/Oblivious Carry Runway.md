@@ -52,3 +52,4 @@ For $r$ runways of length $m$ with spacing $s$ on an $n$-bit register, performin
 - [[Carry-Lookahead Tree for Logarithmic-Depth Addition]] — the exact alternative; wins on depth alone but loses on spacetime volume at practical sizes
 - [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes]] — the T-count-optimised ripple-carry adder used within each piece
 - [[Temporary Logical-AND]] — used inside the per-piece ripple-carry adders
+- [[How to Factor 2048 Bit RSA Integers in 8 Hours Using 20 Million Noisy Qubits (Gidney-Ekera 2021) — Paper Notes]] — uses carry runways to parallelise lookup additions and reduce RSA-2048 spacetime volume

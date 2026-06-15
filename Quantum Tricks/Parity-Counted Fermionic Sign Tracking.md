@@ -7,7 +7,7 @@ Determines the correct fermionic sign for hopping between two sites in a second-
 
 ## The trick
 
-In second quantization, the creation and annihilation operators $c_i^\dagger, c_j$ anticommute. When a fermion hops from site $j$ to site $i$, the operator $c_i^\dagger c_j$ picks up a sign $(-1)^{p}$ where $p$ is the number of occupied modes between $i$ and $j$ in the ordering.
+In second quantization, the creation and annihilation operators $c_i^\dagger, c_j$ anticommute. When a fermion hops from site $j$ to site $i$, the operator $c_i^\dagger c_j$ picks up a sign $(-1)^p$ where $p$ is the number of occupied modes between $i$ and $j$ in the chosen orbital ordering.
 
 To implement this on a quantum computer:
 1. Loop over all qubits between positions $i$ and $j$
@@ -16,7 +16,15 @@ To implement this on a quantum computer:
 4. Perform the hopping operation (a $2 \times 2$ rotation in the subspace of sites $i, j$) with the sign conditioned on the flag
 5. Uncompute the flag
 
-This is the operational content of the [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner transformation]] — the string of $Z$ operators between sites $i$ and $j$ is exactly this parity count.
+This is the operational content of the [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner transformation]] — the string of $Z$ operators between sites $i$ and $j$ is exactly this parity count. Equivalently, one can implement the parity by a CNOT ladder / Pauli string rather than explicitly computing it into a flag.
+
+For example, hopping terms map to endpoint $X/Y$ operators times the intervening parity string:
+$$
+a_i^\dagger a_j + a_j^\dagger a_i
+\mapsto
+\frac{1}{2}(X_i Z_{i+1}\cdots Z_{j-1}X_j + Y_i Z_{i+1}\cdots Z_{j-1}Y_j)
+$$
+for $i<j$, up to the chosen ordering/sign convention.
 
 ## When to reach for it
 - Any second-quantized fermionic simulation using the Jordan-Wigner mapping
@@ -24,10 +32,10 @@ This is the operational content of the [[Jordan-Wigner Transformation for Chemis
 - Understanding why Jordan-Wigner strings have $O(m)$ cost per term
 
 ## Complexity
-$O(m)$ gates per hopping term (one CNOT per intervening qubit for the parity count). This gives $O(m^2)$ total for a Hamiltonian with $O(m)$ hopping terms — the bottleneck in second-quantized simulation.
+$O(m)$ gates per hopping term (one CNOT per intervening qubit for the parity count). This gives $O(m^2)$ total for a Hamiltonian with $O(m)$ hopping terms, such as a 1D nearest-neighbor lattice. All-to-all hopping or generic chemistry one-body terms can have $O(m^2)$ hopping pairs, giving larger naive totals.
 
 ## Caveat
-The $O(m)$ cost per term is the main disadvantage of Jordan-Wigner versus other fermion-to-qubit mappings (Bravyi-Kitaev reduces this to $O(\log m)$). For large systems, the parity strings dominate the gate count.
+The $O(m)$ cost per term is the main disadvantage of Jordan-Wigner versus other fermion-to-qubit mappings (Bravyi-Kitaev reduces this to $O(\log m)$). Fermionic swap networks are another way to manage parity by changing adjacency/order during the circuit. For large systems, parity strings or routing can dominate the gate count.
 
 ## Related notes
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]]

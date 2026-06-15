@@ -18,13 +18,13 @@ The non-cubic unit cell is handled through general Bravais vectors with a recipr
 
 ## What the paper does
 
-This is the first complete block encoding of a realistic pseudopotential Hamiltonian in first quantization. Prior work by [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry et al. (2021)]] compiled first-quantized plane-wave chemistry to explicit fault-tolerant circuits, but used a bare Coulomb nuclear potential $U = -4\pi Z_\ell / (\Omega \|k_\nu\|^2)$. That's fine for hydrogen — but real materials have heavy atoms whose core electrons demand enormous plane-wave cutoffs. Pseudopotentials fix this by replacing the core potential with a smooth effective potential, but the GTH pseudopotential has a complicated functional form involving exponentials, polynomials, angular momentum projectors, and Legendre polynomials. The question was whether this complexity would destroy the $\tilde{O}(\eta)$ scaling advantage of first quantization.
+This is the first complete block encoding of a realistic pseudopotential Hamiltonian in the first-quantized plane-wave/GTH setting. Prior work by [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry et al. (2021)]] compiled first-quantized plane-wave chemistry to explicit fault-tolerant circuits, but used a bare Coulomb nuclear potential $U = -4\pi Z_\ell / (\Omega \|k_\nu\|^2)$. That's fine for hydrogen — but real materials have heavy atoms whose core electrons demand enormous plane-wave cutoffs. Pseudopotentials fix this by replacing the core potential with a smooth effective potential, but the GTH pseudopotential has a complicated functional form involving exponentials, polynomials, angular momentum projectors, and Legendre polynomials. The question was whether this complexity would destroy the $\tilde{O}(\eta)$ block-encoding scaling advantage of first quantization.
 
-The answer: no. The block encoding cost remains $O(10^4)$ Toffolis for systems with 100–500 electrons, roughly the same order as without pseudopotentials. The key insight is to use [[Shared Exponential Evaluation Across Pseudopotential Terms|coherent arithmetic]] rather than [[QROM (Quantum Read-Only Memory)|QROM]] for the functional evaluation. Where Shokrian Zini et al. (2023) loaded the pseudopotential's functional variation via QROM (scaling with total basis size $N$), this paper computes it on the fly using arithmetic (scaling as $O(\log^2 N)$). That's an exponential improvement in the pseudopotential evaluation cost.
+The answer: no. The block encoding cost remains $O(10^4)$ Toffolis for systems with 100–500 electrons, roughly the same order as without pseudopotentials. The key insight is to use [[Shared Exponential Evaluation Across Pseudopotential Terms|coherent arithmetic]] rather than [[QROM (Quantum Read-Only Memory)|QROM]] for the functional evaluation. Where Shokrian Zini et al. (2023) loaded the pseudopotential's functional variation via QROM (scaling with total basis size $N$), this paper computes it on the fly using arithmetic (scaling as $O(\log^2 N)$). That is an exponential improvement in the address-register size $\log N$ for this table-lookup subroutine, not a complexity-theoretic exponential speedup in the physical problem size.
 
-The paper also handles non-cubic unit cells properly — allowing different grid resolutions in each Miller direction — and demonstrates the approach on heterogeneous catalysis (CO adsorption on Pt, Pd, Rh) and battery cathode materials (LiNiO₂). The resource estimates are sobering: $O(10^{14})$ Toffolis for phase estimation, dominated by the large $\lambda_{\text{nonloc}}$ values ($O(10^7)$).
+The paper also handles non-cubic unit cells properly — allowing different grid resolutions in each Miller direction — and demonstrates the approach on heterogeneous catalysis (CO adsorption on Pt, Pd, Rh) and battery cathode materials (LiNiO₂). The resource estimates are sobering: roughly $10^{14}$–$10^{15}$ Toffolis for phase estimation depending on the material, dominated by the large $\lambda_{\text{nonloc}}$ values ($O(10^6\text{--}10^7)$).
 
-My assessment: this is an important engineering paper that makes first-quantized plane-wave simulation applicable to real materials for the first time. The algorithmic innovation (arithmetic over QROM, shared exponential) is elegant and the motivation is spot-on. The comparison with second-quantized methods ([[Fault-Tolerant Quantum Simulation of Materials Using Bloch Orbitals (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin et al. 2023]]) is honest: first quantization costs more Toffolis than second quantization for LNO, but requires ~50× fewer qubits (1,400 vs 75,000). The spacetime volume comparison favours first quantization. The $\lambda$ problem — $\lambda_{\text{nonloc}}$ dominating and being $O(10^7)$ — is the elephant in the room, and the authors are upfront about it.
+My assessment: this is an important engineering paper that makes first-quantized plane-wave simulation applicable to real materials for the first time. The algorithmic innovation (arithmetic over QROM, shared exponential) is elegant and the motivation is spot-on. The comparison with second-quantized methods ([[Fault-Tolerant Quantum Simulation of Materials Using Bloch Orbitals (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin et al. 2023]]) is honest: first quantization costs more raw Toffolis than second quantization for the LNO benchmark, but requires ~50× fewer logical qubits (1,400 vs 75,000). Under the paper's physical-resource assumptions, the LNO spacetime-volume comparison favors first quantization. The $\lambda$ problem — $\lambda_{\text{nonloc}}$ dominating and being $O(10^7)$ — is the elephant in the room, and the authors are upfront about it.
 
 ---
 
@@ -52,6 +52,8 @@ where $F^i_{l\alpha}(\|k\|) = \|k\|^l C^{\alpha}_{li} \left(\sum_x c_{x,li} (r^\
 1. **Break up the sum over $l, i, j$** in PREPARE rather than computing the full sum in SELECT. This increases $\lambda$ (because you're summing absolute values of individual terms rather than taking the absolute value of the sum), but dramatically reduces the arithmetic cost.
 
 2. **Use box-level upper bounds** $\Psi_{\varsigma,\alpha,\mu,l,i,j}$ for the amplitude in each nested box, rather than computing the exact $\nu$-dependent amplitude. This further simplifies PREPARE at the cost of inflating $\lambda$.
+
+These two choices are the central block-encoding tradeoff: they make SELECT/PREPARE cheap enough to implement, but they are also why $\lambda_{\text{nonloc}}$ becomes so large.
 
 3. **[[Shared Exponential Evaluation Across Pseudopotential Terms|Share the exponential evaluation]]** between local and nonlocal pseudopotentials. The argument $(r^\alpha_l \|k_q\|)^2 + (r^\alpha_l \|k_p\|)^2$ is computed once via [[QROM Interpolation for Negative Exponential|QROM interpolation]], then the same value is used for all $l, i, j$ terms. For the local pseudopotential, setting $q = 0$ gives the correct argument $(r^\alpha_{\text{loc}} \|k_\nu\|)^2$.
 
@@ -124,7 +126,7 @@ For the LiNiO₂ cathode (the benchmark from [[Fault-Tolerant Quantum Simulation
 | 2nd quant. DF (Rubin et al. 2023) | $\sim 5 \times 10^{12}$ | ~75,000 |
 | 1st quant. PW + GTH (this paper) | $\sim 6 \times 10^{13}$ | ~1,400 |
 
-First quantization costs ~12× more Toffolis but uses ~50× fewer qubits. The spacetime volume comparison favours first quantization.
+First quantization costs ~12× more raw Toffolis but uses ~50× fewer logical qubits. Under the LNO comparison and physical-resource assumptions used in the paper, the spacetime-volume comparison favors first quantization.
 
 ### Error from omitting pseudopotential projectors
 
@@ -147,7 +149,7 @@ These errors are *extensive* — they grow with system size. For AlN, the approx
 | Pseudopotential | None (bare Coulomb) | GTH (diagonal only) | GTH (full, with nonlocal) |
 | Non-cubic cells | No | Yes (uniform grid) | Yes (variable grid per direction) |
 | Pseudopotential cost | N/A | $O(N)$ via QROM | $O(\log^2 N)$ via arithmetic |
-| Angular momentum error | N/A | ~100s mHartree/atom | None (complete Hamiltonian) |
+| Angular momentum error | N/A | ~100s mHartree/atom from omitted nonlocal projectors | No omission of the nonlocal angular-momentum projector terms considered in this comparison |
 | Block encoding (LNO) | Not applicable | ~2.1M Toffolis | ~18.5K Toffolis |
 | $\lambda$ for nonlocal PP | N/A | Not reported | $O(10^6\text{–}10^7)$ |
 
@@ -171,7 +173,7 @@ These errors are *extensive* — they grow with system size. For AlN, the approx
 
 ## Reusable ideas
 
-1. [[QROM Interpolation for Negative Exponential]] — Convert $e^{-z}$ to $2^{-z/\ln 2}$, interpolate the fractional part via QROM polynomial, and bit-shift by the integer part. Achieves arbitrary precision with QROM cost scaling as $(1/\delta_f)^{1/3}$ for quadratic interpolation.
+1. [[QROM Interpolation for Negative Exponential]] — Convert $e^{-z}$ to $2^{-z/\ln 2}$, interpolate the fractional part via QROM polynomial, and bit-shift by the integer part. The QROM interpolation table size scales as $(1/\delta_f)^{1/3}$ for quadratic interpolation; total function-evaluation cost also includes arithmetic precision and interval-dependent constants.
 
 2. [[Shared Exponential Evaluation Across Pseudopotential Terms]] — Restructure the local and nonlocal pseudopotential so they share a single exponential evaluation. Setting $q = 0$ for the local part gives the correct argument, combining implementation of both terms through the same arithmetic pipeline.
 

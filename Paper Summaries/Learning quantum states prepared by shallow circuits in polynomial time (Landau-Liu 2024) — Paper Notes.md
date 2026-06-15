@@ -14,7 +14,7 @@ $$
 
 where $U$ is an unknown shallow circuit on a $k$-dimensional lattice, output a classical description of a shallow circuit that prepares a state close to $|\psi\rangle$.
 
-This is the state-learning version of the shallow-circuit programme, but it is not a trivial corollary of [[Learning shallow quantum circuits (Huang-Liu-Broughton-Kim-Anshu-Landau-McClean 2024) — Paper Notes|the 2024 circuit-learning paper]]. There the challenge was reconstructing a unitary from local Heisenberg data. Here the challenge is to reconstruct a **state preparation history** from local marginals alone.
+The learner is a classical algorithm with measurement access to copies of $|\psi\rangle$; it is not given an explicit description of $U$. This is the state-learning version of the shallow-circuit programme, but it is not a trivial corollary of [[Learning shallow quantum circuits (Huang-Liu-Broughton-Kim-Anshu-Landau-McClean 2024) — Paper Notes|the 2024 circuit-learning paper]]. There the challenge was reconstructing a unitary from local Heisenberg data. Here the challenge is to reconstruct a **state preparation history** from local marginals alone.
 
 ## What the paper does
 
@@ -38,7 +38,7 @@ This covering scheme is the geometric skeleton that lets local reconstruction be
 
 ### 2. Learn local reduced density matrices
 
-From copies of $|\psi\rangle$, estimate the reduced density matrix of every local region $B(S_j^i,d)$. This uses standard local-tomography / shadow-style ingredients; the important point is that all relevant regions have constant size for constant depth and lattice dimension.
+From measured copies of $|\psi\rangle$, estimate the reduced density matrix of every local region $B(S_j^i,d)$. This uses standard local-tomography / shadow-style ingredients; the important point is that all relevant regions have constant size for constant depth and lattice dimension.
 
 ### 3. Find local inversions
 
@@ -82,7 +82,7 @@ That means one obtains an explicit shallow circuit $W$ on system plus ancillas t
 
 For constant depth $d$ and lattice dimension $k$, there is a polynomial-time algorithm that learns a shallow circuit preparing $|\psi\rangle$ up to trace distance $\varepsilon$ with high probability.
 
-In the more explicit form quoted in the paper, the algorithm outputs a depth-$(2k+1)d$ circuit with ancillas and has sample complexity
+In the more explicit form quoted in the paper, let $c$ denote the size bound on the local regions coming from the covering scheme. The algorithm outputs a depth-$(2k+1)d$ circuit with ancillas and has sample complexity
 
 $$
 M = \frac{n^4 2^{O(c)}}{\varepsilon^4}\log(n/\delta)
@@ -94,9 +94,7 @@ $$
 T = \frac{n^4 2^{O(c)}}{\varepsilon^4}\log(n/\delta) + \left(\frac{n k d c}{\varepsilon}\right)^{O(dc)},
 $$
 
-where $c$ is the size bound on the local regions coming from the covering scheme.
-
-So the theorem is polynomial in $n$ for fixed $k,d$, and quasipolynomial when $d=\operatorname{polylog}(n)$.
+So the theorem is polynomial in $n$ for fixed lattice dimension $k$ and fixed depth $d$, and quasipolynomial when $d=\operatorname{polylog}(n)$ under the same finite-dimensional geometric assumptions.
 
 ### Complexity-testing application
 
@@ -111,6 +109,8 @@ That is a nice bonus: the result is not just constructive tomography but also a 
 | [[Efficient Quantum State Tomography (Cramer-Plenio-Flammia-Somma-Gross-Bartlett-Landon-Cardinal-Poulin-Liu 2010) — Paper Notes|Cramer et al. (2010)]] | 1D low-entanglement states | sequential disentangling / MPS structure | not general shallow lattice states |
 | [[Learning shallow quantum circuits (Huang-Liu-Broughton-Kim-Anshu-Landau-McClean 2024) — Paper Notes|Huang et al. (2024)]] | shallow circuits and some 2D state learning | ancilla sewing + band slicing | geometric consistency problem remains awkward |
 | This paper | shallow lattice-prepared states | replacement process + covering scheme | brute-force local inversion search; ancillas |
+
+Compared with the 2024 band-slicing state-learning result, the replacement-process method avoids the 2D consistency issue by reconstructing from local reset-and-undo operations whose backward lightcones terminate on known qubits.
 
 ## Limits / caveats
 

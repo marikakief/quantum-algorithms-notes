@@ -8,7 +8,7 @@ Optimises the kernel parameter $\beta$ in the [[Near-Optimal Hardy-Space Kernel 
 
 ## The trick
 
-The LCHS kernel $f_\beta(k) = (1/C_\beta) e^{(1+ik)^\beta}$ has two competing effects as $\beta$ increases toward 1:
+The LCHS kernel $f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}$ has two competing effects as $\beta$ increases toward 1:
 - **Better truncation:** The $k$-integral truncation point scales as $K = O((\log 1/\varepsilon)^{1/\beta})$, so larger $\beta$ means smaller $K$.
 - **Worse constants:** The $L^1$ norm $\|f_\beta/(1-i\cdot)\|_{L^1}$ grows as $\beta \to 1$, increasing the [[Linear Combination of Unitaries (LCU)|LCU]] normalisation and hence the state-preparation cost.
 

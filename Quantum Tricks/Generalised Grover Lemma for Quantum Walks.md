@@ -19,7 +19,7 @@ Then $\exists\, t = O(1/\alpha)$ such that $|\langle\psi_{\text{good}}|(U_2 U_1)
 
 In standard Grover, $U_2 = 2|\psi_{\text{start}}\rangle\langle\psi_{\text{start}}| - I$ — the exact reflection. Its eigenvalues are $+1$ (for $|\psi_{\text{start}}\rangle$) and $-1$ (for everything else), so $\theta = \pi$. The gap is maximal.
 
-In the quantum walk setting, $U_2 = U^{t_2}$ (multiple walk steps). The eigenvalue $1$ is preserved for $|\psi_{\text{start}}\rangle$ (the uniform superposition is a fixed point of the walk), but the other eigenvalues are $e^{\pm i\theta_j}$ with $\theta_j = \Theta(\sqrt{j/r})$ — not $\pi$. Lemma 3 shows the iteration still works as long as there's a gap.
+In the quantum walk setting, $U_2 = U^{t_2}$ (multiple walk steps). The eigenvalue $1$ is preserved for $|\psi_{\text{start}}\rangle$ (the uniform superposition is a fixed point of the walk), but the other eigenvalues are $e^{\pm i\theta_j}$ with $\theta_j = \Theta(\sqrt{j/r})$ — not $\pi$. Ambainis first takes $t_2=\Theta(\sqrt r)$ walk steps so those nontrivial phases are pushed a constant distance away from 1, then applies the generalized Grover iteration.
 
 ## The proof idea
 
@@ -34,7 +34,7 @@ Construct explicit eigenvectors $|v_\beta\rangle$, $|v_{-\beta}\rangle$ of $U_2 
 
 ## Complexity
 
-$O(1/\alpha)$ iterations, same as standard Grover. The constant depends on the spectral gap $\epsilon$ but not on $N$.
+$O(1/\alpha)$ generalized-Grover iterations once $U_2$ has a constant phase gap around eigenvalue 1. If the gap parameter shrinks with the input size, the cost of creating or using $U_2$ must be included explicitly.
 
 ## Caveat
 

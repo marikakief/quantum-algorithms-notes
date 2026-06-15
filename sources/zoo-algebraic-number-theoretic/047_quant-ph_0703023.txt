@@ -1,0 +1,1631 @@
+
+
+=== PAGE 1 ===
+arXiv:quant-ph/0703023v1  3 Mar 2007
+On the Exact Evaluation of Certain Instances of the Potts Partition Function by
+Quantum Computers
+Joseph Geraci
+Department of Mathematics, University of Toronto, Toronto, ON M5S 2E4, Canada and
+Chemistry Department, University of Southern California, CA 90089, USA
+Daniel A. Lidar
+Departments of Chemistry, Electrical Engineering, and Physics,
+University of Southern California, CA 90089, USA
+We present an eﬃcient quantum algorithm for the exact evaluation of either the fully ferromagnetic
+or anti-ferromagnetic q-state Potts partition function Z for a family of graphs related to irreducible
+cyclic codes. This problem is related to the evaluation of the Jones and Tutte polynomials. We
+consider the connection between the weight enumerator polynomial from coding theory and Z and
+exploit the fact that there exists a quantum algorithm for eﬃciently estimating Gauss sums in order
+to obtain the weight enumerator for a certain class of linear codes. In this way we demonstrate
+that for a certain class of sparse graphs, which we call Irreducible Cyclic Cocycle Code (ICCCǫ)
+graphs, quantum computers provide a polynomial speed up in the diﬀerence between the number of
+edges and vertices of the graph, and an exponential speed up in q, over the best classical algorithms
+known to date.
+I.
+INTRODUCTION
+A wealth of results has been obtained since the dramatic early results [1, 2] on quantum speedups relative to classical
+algorithms. A relatively unexplored ﬁeld is quantum algorithms for problems in classical statistical mechanics. The
+earliest contribution to this subject [3] obtained a modest speedup in that it avoided critical slowing down [4] in
+the problem of sampling from the Gibbs distribution for Ising spin glass models. Subsequently Ref. [5] raised the
+question of providing a classiﬁcation of classical statistical physics problems in terms of their quantum computational
+complexity. In this work we shed light on this classiﬁcation by considering the problem of evaluating the Potts model
+partition function Z for classical spin systems on graphs. It is known that under particular conditions even certain
+approximations for Z are unlikely to be eﬃcient, barring an NP = RP surprise [6]. Here we present a class of sparse
+graphs (which we call ICCCǫ) for which exact quantum evaluation of Z is possible with a polynomial speedup over
+the best classical algorithms available to date.
+A.
+The Potts Model
+Let Γ = (E, V ) be a weighted graph with edge set E and vertex set V . The q-state Potts model is a generalization
+of the Ising model where a q-state spin resides on each vertex. In the Ising model q = 2, whereas in the Potts
+model q ≥2. The edge connecting vertices i and j has weight Jij, which is also the interaction strength between the
+corresponding spins. The Potts model Hamiltonian for a particular spin conﬁguation σ = (σ1, ..., σ|V |) is
+H(σ) = −
+X
+<ij>
+Jijδσiσj
+(1)
+where summation is over nearest neighbors, and where δσiσj = 1 (0) if σi = σj (σi ̸= σj).
+Thus only nearest
+neighbor parallel spins contribute to the energy. The probability P(σ), of ﬁnding the spin in the Potts model in some
+conﬁguration σ at a given temperature T , is given by the Gibbs distribution
+P(σ) = e−βH(σ)
+Z(β) ,
+(2)
+where β = 1/(kBT ) is the inverse temperature in energy units, and kB is the Boltzmann constant. The normalization
+factor is the partition function
+Z(β) =
+X
+{σ}
+e−βH(σ),
+(3)
+
+
+=== PAGE 2 ===
+2
+which plays a central role in statistical physics, since many thermodynamic quantities can be derived from it [7].
+When for all conﬁgurations β ≪|H(σ)|, the probability distribution becomes ﬂat: P(σ) ≈1/Z(β), so that at high
+temperatures randomness dominates.
+The partition function can be rewritten as a polynomial:
+Z(β) =
+X
+{σ}
+eβ P
+<ij> Jijδσiσj =
+X
+{σ}
+Y
+<ij>
+eβJijδσiσj
+=
+X
+{σ}
+Y
+<ij>
+(1 + vij(β)δσiσj),
+(4)
+where
+vij(β) = eβJij −1.
+(5)
+Now let us consider the case when the interactions Jij are a constant J. Then the Hamiltonian (1) of this system
+can be written as
+H(σ) = −J|U(σ)|
+(6)
+where U(σ) is the subset of edges whose vertices have the same spin for a particular spin conﬁguration σ, and |U(σ)|
+is the number of such subsets. If we let
+y = e−J
+kT
+(7)
+we can write the Potts partition function as
+Z(y) =
+X
+σ
+y−|U(σ)|.
+(8)
+B.
+Relation between the Potts partition function, knot invariants, and graph theory
+There is a rich inter-relation between classical statistical mechanics and topology, in particular, the theory of
+the classiﬁcation of knots. The ﬁrst such connection was established by Jones [8], who discovered the second knot
+invariant (the Jones polynomial (a Laurent polynomial), after the Alexander polynomial) during his investigation of
+the topological properties of braids [9]. It is known that the classical evaluation of the Jones polynomial is ♯P-hard
+[10].
+The connection between knots and models of classical statistical mechanics was embellished by Kauﬀman [11].
+Knot invariants are, in turn, also tightly related to graph theory; e.g., the graph coloring problem can be considered
+an instance of evaluation of the Kauﬀman bracket polynomial, via the Tutte polynomial [11, 12]. The q-state Potts
+partition function on a graph Γ is connected to the Tutte polynomial TΓ for the same graph via
+ZΓ(v) = qnTΓ(q + v
+v
+, v + 1)
+(9)
+where as in Eq. (5), v + 1 = e−β. This means that the Potts partition function is equivalent to some easily computed
+function times the Tutte polynomial along the hyperbola Hq = (x −1)(y −1) = q. But for planar graphs, when q > 2
+the Tutte polynomial is ♯P-hard to evaluate at points along Hq [6]. For a review of the connection between the Potts
+partition function and the various polynomials mentioned above, see [11] and also [5, 13]. It immediately follows from
+Eq. (9) and complexity results concerning the Tutte polynomial, that the evaluation of the Potts partition function
+is also ♯P-hard. It is not known whether there is an fpras (fully polynomial randomized approximation scheme) [6]
+for the q-state fully ferromagnetic Potts partition function, but it is known that if there is an fpras for the fully
+anti-ferromagnetic Potts partition function then NP = RP [6] and therefore it seems unlikely that an fpras will be
+found for this case.
+
+
+=== PAGE 3 ===
+3
+C.
+Previous quantum complexity results
+The ﬁrst connection between knots and quantum mechanics was established by Witten, who showed that the
+Jones polynomial can be expressed in terms of a topological quantum ﬁeld theory [14]. Recently this connection was
+extended to the possibility of eﬃcient evaluation of the Jones polynomial by Freedman and co-workers, after showing
+that quantum computers can eﬃciently simulate topological quantum ﬁeld theory [15]. More speciﬁcally, there are
+recent results demonstrating the eﬃcacy of quantum computers in approximating the Jones polynomial at primitive
+roots of unity [16, 17, 18]. In Ref. [16] tools from topological quantum ﬁeld theory [14] were utilized and it was shown
+that approximating the Jones polynomial at primitive roots of unity is BQP-complete, but no explicit algorithm was
+provided. More recently in [17], a combinatorial approach was taken which yielded an explicit quantum algorithm
+and which extended the results in [16] to all primitive roots of unity. This leads one to hypothesize that quantum
+computers will also be eﬃcient at estimating partition functions. Indeed, an immediate corollary of the results in
+[16, 17, 18], is that the Potts partition function over any planar graph can be approximated eﬃciently on a quantum
+computer at certain imaginary temperatures (see also [5]). This follows by noting that in order to obtain an equality
+between the Potts partition function and the Jones polynomial (up to multiplication by an easily computed function),
+the Jones variable t and the temperature T must be related by t = −e±J±/kBT [11]. With t a root of unity (t = e
+2πi
+r )
+we then ﬁnd:
+T = i
+J±r
+kBπ(2 + r),
+r ∈N.
+This result is of interest mainly in light of quantum Monte Carlo simulations [19], where one retrieves real time
+dynamics from a simulation in terms of imaginary time, via analytic continuation. Perhaps a similar extrapolation
+can be achieved here between imaginary and real temperature dynamics.
+While this is interesting, here we are
+concerned with thermodynamics, and hence evaluations of the Potts partition function at physically relevant, real
+temperatures.
+Most closely related to our work is the very recent result due to Aharonov et al. [20] who – generalizing Temperley-
+Lieb algebra representations used in [17] – provided a quantum algorithm for the additive approximation of the Potts
+partition function (and other points of the Tutte plane) for any planar graph with any set of weights on the edges.
+These results are the most impressive to date in the context of approximate evaluations of the Potts partition function,
+but are also subject to certain caveats. To quote from the abstract of Ref. [20]: “Additive approximations are tricky;
+the range of the possible outcomes, might be smaller than the size of the approximation window, in which case the
+outcome is meaningless. Unfortunately, ruling out this possibility is diﬃcult: If we want to argue that our algorithms
+are meaningful, we have to provide an estimate of the scale of the problem, which is diﬃcult here exactly because no
+eﬃcient algorithm for the problem exists!”. And: “The case of the Potts model parameters deserves special attention.
+Unfortunately, despite being able to handle non-unitary representations, our methods of proving universality seem to
+be non- applicable for the physical Potts model parameters. We can provide only weak evidence that our algorithms
+are non-trivial in this case, by analyzing their performance for instances for which classical eﬃcient algorithms exist.
+The characterization of the quality of the algorithm for the Potts parameters is thus left as an important open
+problem.” Finally, quoting from Section 1.5 of Ref. [20]: “Proving anything about the complexity of our algorithm for
+the Potts model, remains a very important open problem. It is still possible that this case of the Tutte polynomial,
+with our additive approximation window, can be solved by an eﬃcient classical algorithm.” To summarize, Ref. [20]
+leaves as an open problem the complexity of physical instances (real temperature, positive partition function) under
+the restriction of an additive approximation. Nor is it clear whether the algorithm found in Ref. [20] provides a
+quantum speedup. The authors state: “We believe that the main achievement here is that we demonstrate how to
+handle non-unitary representations, and in particular, we are able to prove universality using non-unitary matrices.”
+Recently Ref. [21] gave a scheme for studying the partition function of classical spin systems including the Potts
+and Ising model. Their approach involves transforming the problem of evaluating the partition function into the
+evaluation of a probability amplitude of a quantum mechanical system and then using classical techniques to extract
+the pertinent information. In essence their method involves moving into a quantum mechanical formalism to obtain
+a classical result. The scheme is therefore classical and not a quantum algorithm.
+In addition, two purely classical results should be mentioned here. One is a state of the art result by Hartmann
+[22], who provides an algorithm which is well suited to large ferromagnetic systems for either the Potts or Ising model.
+We do not know the exact complexity of this algorithm, however. The approach taken in our work is to utilize
+the connection between classical coding theory and the partition function. For this reason we mention the classical
+algorithm given in [23] for calculating the Zeta function of certain curves. This is also a state of the art algorithm
+and it can be used to ﬁnd the Potts partition function via the scheme we present in this paper, though it is slower
+than using quantum resources.
+
+
+=== PAGE 4 ===
+4
+A quantum algorithm for ﬁnding the Zeta function of a curve is given in [24]. One could replace the role that the
+Gauss sum estimation [25] plays in our scheme with this quantum algorithm for the Zeta function. It seems that
+using Gauss sums is more eﬃcient but further work is required to make this conclusive.
+II.
+A THEOREM ABOUT QUANTUM COMPUTATION AND CERTAIN INSTANCES OF THE POTTS
+MODEL
+A.
+Main Theorem
+We present here a polynomial time quantum algorithm for the exact evluation of the q-state (fully ferromagnetic
+or anti-ferromagnetic) Potts partition function Z for a certain class of graphs. This class of graphs, which we call
+“Irreducible Cyclic Cocycle Code” ICCCǫ graphs, comprises graphs whose incidence matrices generate certain cyclic
+codes. This and other concepts used below are given precise deﬁnitions in Section II B. The key ingredients used are
+the connection of Z to the weight enumerators of codes [26] and a quantum algorithm for the approximation of Gauss
+sums [25].
+The overall structure of the algorithm is the following:
+1. Given a graph Γ = (E, V ), ﬁrst determine if Γ belongs to the ICCCǫ class. This decision problem can be solved
+eﬃciently using the quantum discrete log algorithm [1]. If Γ ∈ICCCǫ proceed to step 2, else the algorithm may
+not evaluate ZΓ eﬃciently.
+2. Identify the linear code C(Γ) for which we shall determine the weight spectrum.
+3. Using the quantum Gauss sum estimation algorithm ﬁnd the weight spectrum of the words in C. This step is
+believed to be classically hard but the exact complexity is unknown. It is known, however, that this step is
+at least as hard as determining discrete log [25]. This is the most expensive step of the algorithm due to the
+large number of words one has to deal with. This is because the number of possible spin conﬁgurations grows
+exponentially in the number of vertices.
+4. Take a tally of the weight spectrum obtained in the previous step.
+Grover’s search algorithm can be used
+to give an additional quadratic speed up but this does not help in reducing the overall complexity since the
+computational cost of step 3 is greater than that of the current step.
+5. Using the relation given by equation (15) between the weight spectrum of a code and Z, use the tally from the
+previous step to obtain Z (for graphs in ICCCǫ).
+We now give the main theorem, after the deﬁnition of the family of graphs for which the scheme applies.
+Deﬁnition 1 (ICCCǫ) Given a constant ǫ < 1, ICCCǫ is the family of graphs whose cycle matroid matrix (CMM)
+representation generates a cyclic code whose dual is irreducible cyclic of dimension k and length n, such that
+n = qk −1
+αks(k)
+(10)
+(where α ∈R is chosen so that n ∈N and where s(k) is an arbitrary function whose role will be clariﬁed below) and
+θn,k =
+1
+q −1
+min
+0<j≤αks(k) S′(jn)
+(11)
+(where S′(x) is the sum of the digits of x in base q) so that
+ǫ ≤qθn,k−1
+4
+p
+qk .
+(12)
+Below we deﬁne the concepts entering this deﬁnition and clarify the role of θn,k and of the bound on ǫ.
+We work in units such that the Boltzmann constant kB = 1.
+Theorem 2 (Main Theorem) Let Γ = (E, V ) be a graph, n = |E| and k = |E| −|V | + c(Γ) where c(Γ) is the
+number of connected components of Γ. A quantum computer can return the exact q-state fully anti-ferromagnetic or
+ferromagnetic Potts partition function ZΓ for graphs in ICCCǫ. For each family (ǫ ﬁxed), the overall running time is
+O( 1
+ǫk2 max[1,s(k)](log q)2) and the success probability is at least 1 −δ, where δ = [2((qk −1)2ǫ −2]−1.
+
+
+=== PAGE 5 ===
+5
+2
+4
+6
+8
+10 s
+5
+10
+15
+20
+25
+30
+35
+a
+2
+4
+6
+8
+10 s
+0.6
+0.8
+1.2
+1.4
+1.6
+b
+q=2
+q=9
+q=9
+q=2
+FIG. 1: Coeﬃcients a and b as a function of s, for diﬀerent values of q. Here c(Γ) = 1. See text for details.
+Some remarks:
+1. The function s(k) determines the complexity of the schemes.
+If s(k) = c ∈R (constant) then we have a
+polynomial time algorithm for the exact evaluation of Z for each family ICCCǫ. This restriction is reﬂected in
+the graphs by enforcing that n = O(qk/ks), i.e., that the number of edges (n) and vertices (n −k) is close. We
+have numerically solved for the number of edges |E| as a function of the number of vertices |V |, given by the
+corresponding transcendental equation |E| = |V |−c(Γ)+logq(|E|(|E|−|V |+c(Γ))s +1) [Eq. (10)]. A numerical
+ﬁt reveals that to an excellent approximation
+|E| = |V | + a + b log |V |,
+(13)
+where the constants a and b depend on q and s, and both increase slowly with s, and decrease with q, as shown
+in Fig. 1. By direct substitution of Eq. (13) into the above transcendental equation it can be seen that the
+analytical solution will have a a correction of order log log(|V |) to the right-hand side of Eq. (13). The fact that
+there are logarithmically more edges that vertices in the graphs that are members of ICCCǫ is the reason we
+call these graphs sparse. The important point is that there are families of graphs for which there exist exact
+polynomial-time evaluation schemes via the methods presented in this paper. As we show below, in these cases
+we also obtain polynomial speed ups over the best classical algorithms available.
+2. Note that if we have an eﬃcient evaluation for ICCCǫ then we also have an eﬃcient evaluation for ICCCǫ,
+provided ǫ > ǫ′.
+3. We provide a discussion of the computational complexity, both classical and quantum, in subsection III. As
+argued there, we obtain a polynomial speed up in the diﬀerence between the number of edges and vertices and
+an exponential speed up in q over the best current classical algorithm for the ICCCǫ class of graphs.
+Corollary 1 For a given graph Γ, whose CMM is the direct sum of the CMMs of two graphs Γ1 and Γ2 in ICCCǫ,
+a quantum computer will be able to return ZΓ with a running time equal to the sum of the running times required to
+obtain ZΓ1 and ZΓ2.
+Proofs of the main theorem and the corollary are provided in Sections II D and II E.
+
+
+=== PAGE 6 ===
+6
+B.
+Background
+Theorem 2 connects the problem of estimating the Potts partition function to a quantum algorithm for Gauss sums,
+via weight enumerators for irreducible cyclic codes. In somewhat more detail, the connections we need are as follows.
+In [26], it was shown that the Potts partition function can be written as the weight enumerator of the cocycle code
+of the graph Γ, over which the Potts model is deﬁned. Weight enumerators of irreducible cyclic codes are related to
+Gauss sums via the McEliece Theorem [27].
+1.
+Cycle Matroid Matrix Representation of a Graph
+A connected component of a graph is any subset of vertices which are all connected to each other via a path along
+the graph’s edges. We denote the number of connected components by c(Γ). The incidence matrix of a ﬁnite graph
+Γ(E, V ) is a |V | × |E| binary matrix where column c represents edge c with non-zero entries in row i and j if and
+only if vertices i and j are the boundaries of edge c. Every ﬁnite graph Γ also gives rise to a cycle matroid matrix
+(CMM) [28], which essentially captures the presence and locations of cycles in the graph.
+Deﬁnition 3 The cycle matroid matrix of a graph Γ = (E, V ), CMM(Γ), is formed as follows: write down the
+incidence matrix of Γ using 1 for the ith and −1 for the jth rows, where i < j. Then apply elementary row operations
+and Gaussian reduction to obtain a (|V | −c(Γ)) × |E| matrix of the form [I|V |−c(Γ)|X], where Ia is the a × a identity
+matrix and X is a (|V | −c(Γ)) × (|E| −|V | + c(Γ)) matrix. This is CMM(Γ) (See Prop. 4.7.14 of [29]).
+We give more details on cycle matroids in Appendix A. As an example consider the square [|V | = |E| = 4, c(Γ) = 1]
+and its incidence matrix
+
+
+
+1
+0
+0
+−1
+−1
+1
+0
+0
+0
+−1
+1
+0
+0
+0
+−1
+1
+
+
+.
+Applying elementary row operations and Gaussian reduction one obtains the CMM
+
+
+1 0 0 −1
+0 1 0 −1
+0 0 1 −1
+
+,
+which is indeed of the form [I|V |−c(Γ)|X] with dimensions as in the deﬁnition, i.e., X is (4 −1) × (4 −4 + 1). Over
+Z2 one would replace all the −1’s with +1’s. The column space of this matrix represents the cycle structure of the
+graph where a cycle (or circuit) is a path in the graph for which the ﬁrst vertex of the path is the same as the last.
+Any set of columns that are linearly dependent indicate a cycle. The ﬁrst three columns in the CMM of the square
+are linearly independent, but together with the fourth column they become linearly dependent, since there is a cycle
+in the graph involving the corresponding four edges.
+What is the equivalence class of graphs with the same CMM? This is answered by the following:
+Deﬁnition 4 Two graphs G and G′ are called 2-isomorphic if there exists a 1 −1 correspondence between the edges
+of G and G′ such that the cycle (or circuit) relationships are preserved.
+Thus all 2-isomorphic graphs have the same CMM (up to elementary row and column operations).
+2.
+Irreducible Cyclic Codes
+We provide some background material in coding theory which allows us to exhibit the connection between Eq. (8)
+and the so-called cocycle code of the graph Γ. (A good reference is [30].)
+Deﬁnition 5 Let Fq be a ﬁnite ﬁeld with q prime. A linear code C is a k dimensional subspace of the vector space
+Fn
+q and is referred to as an [n, k] code. The code is said to be of length n and of dimension k.
+
+
+=== PAGE 7 ===
+7
+In our case q is the the number of possible states per spin.
+Deﬁnition 6 A k × n matrix whose rows are a basis for C is called a generator matrix for C.
+Recall from Deﬁnition 3 that CMM(Γ) is a (|V | −c(Γ)) × |E| matrix. The |E| columns of CMM(Γ) reﬂect the
+cycle structure of the given graph via linear independence in the vector space Fn
+q (see Appendix A). We now view
+the |V | −c(Γ) rows of the CMM as generating an [n = |V |, k = |E| −c(Γ)] “cocycle code” C:
+Deﬁnition 7 The cocycle code C(Γ) of a graph Γ is the row space of CMM(Γ). [26]
+We focus our attention on a subclass known as cyclic codes and a smaller subclass known as irreducible cyclic codes.
+Deﬁnition 8 A linear code C is a cyclic code if for any word (c0, c1, . . . , cn−1) ∈C, also (cn−1, c0, c1, . . . , cn−2) ∈C.
+If C contains no subspace (other than 0) which is closed under cyclic shifts then it is irreducible cyclic.
+Cyclic codes have an interesting underlying algebraic structure which we review in Appendix B. In general the
+generator matrix of an [n, k] cyclic code can be written as
+
+
+
+g0 g1 · · ·
+gn−k
+0
+0
+· · ·
+0
+0
+g0 · · · gn−k−1 gn−k
+0
+· · ·
+0
+0
+0
+· · ·
+· · ·
+0
+0
+0
+· · ·
+g0
+g1 · · · gn−k
+
+
+.
+(14)
+The non-zero matrix elements can be used to construct the “generator polynomial” g(x) = g0 + g1x + · · · gn−kxn−k.
+Both can be used to generate a cyclic code; the manner in which this is done via the generator polynomial is reviewed
+in Appendix B. For an [n, k] non-degenerate irreducible cyclic code (no words are repeated) the relation between n
+and k is k = ordqn, i.e., k is the smallest integer such that qk = 1 mod n. Equivalently, qk −1 = nN, where N counts
+the number of equivalence classes under cyclic permutations of words, which is an upper bound on the number of
+diﬀerent weights. Non-degenerate irreducible cyclic codes have generator polynomials of the form
+gi(x) = xn −1
+wi(x)
+where xn −1 = w1(x)w2(x) · · · wt(x) is the decomposition of xn −1 into irreducible factors. In this work we consider
+only non-degenerate irreducible cyclic codes. Here t is the number of q-cyclotomic cosets modn (see subsection II F).
+Next we explain the connection to weight enumerators.
+Deﬁnition 9 Let C be a linear code of length n and let Ai be the number of vectors in C having i non-zero entries
+(Hamming weight of i) . Then the weight enumerator of C is the bi-variate polynomial
+A(x, y) =
+n
+X
+i=0
+Aixn−iyi.
+The set {Ai} is called the weight spectrum of the code.
+In this paper our only concern for the weight spectrum is its connection to the Potts partition function, but in
+coding theory it can be used to reveal information about the eﬃency of a code [30]. The connection between equation
+(8) and the cocycle code of the graph Γ for the Potts model is given in the following theorem proved in [26].
+Theorem 10 Let A(x, y) be the weight enumerator of the [n = |E|, k = |V | −c(Γ)] cocycle code C(Γ) of the graph
+Γ = (E, V ), and let the number of states per spin (vertex) in the corresponding Potts model be a prime q. Then
+ZΓ(y) = y−nqc(Γ)A(1, y).
+(15)
+We take q to be prime and not a power of a prime to simplify matters. In this manner the cocycle code has words
+whose entries are in Fq, as will the corresponding irreducible cyclic code in the trace representation over Fqr – see
+Appendix B for details.
+The connection between the Potts partition function and weight enumerators can also be understood via a previous
+result which shows that Z is equivalent to the Tutte polynomial (under certain restrictions) and that the weight
+polynomial of a linear code is also equivalent to the Tutte polynomial [31]. We also note that a relation similar to
+Eq. (15) was established in [5] for the Ising spin glass partition function and so-called quadratically signed weight
+enumerators, along with a discussion of computational complexity.
+
+
+=== PAGE 8 ===
+8
+C.
+Testing the graph for membership in the ICCCǫ class
+We now have the tools to address the issue of whether a graph should be accepted as input into the main algorithm,
+i.e., whether a graph belongs to the ICCCǫ class. This is handled as follows.
+- Input: A graph Γ with |E| edges and |V | vertices, the given Galois ﬁeld of qk elements and ǫ.
+- Output: Accept or Reject. Let n = |E| and k = |E| −|V | + c(Γ) as in the main theorem.
+- Overall Complexity: O(|E| · k2 log k log log k) due the ability to take the discrete log |E| times eﬃciently with a
+quantum computer [1].
+1. Compute θn,k as given in Deﬁnition 1.
+2. Find CMM(Γ). It is a (n −k) × n matrix of the form [In−k|X], where X is a (n −k) × k matrix. Form the
+k × n (transpose parity check) matrix HT = [−XT|Ik]. HT generates an [n, k] code C⊥(Γ) that is dual to the
+cocycle code C(Γ).
+3. Determine if ǫ ≤qθn,k−1
+4√
+qk
+and if k is the multiplicative order of q mod n (i.e., k is the smallest integer such that
+qk = 1 mod n). If both are true then go to the next step. Else skip the next step and continue.
+4. Main Loop:
+(a) Fix a basis of GF(qk) over GF(q) and consider the columns of HT as coordinate vectors of some elements
+gi of GF(qk).
+(b) Calculate the discrete logarithms log(gi) of each gi with respect to a ﬁxed primitive element g (every
+element in the ﬁeld can be written as gl for some l) of GF(qk) using Shor’s algorithm [1] on a quantum
+computer.1
+(c) Accept or Reject Γ based on the fact that C⊥is (equivalent to) an irreducible cyclic code if and only if
+the numbers log(gi) are are some permuted list of consecutive integer multiples of N := (qk −1)/n in
+some order. This is due to the fact that by deﬁnition the generator matrix of an irreducible cyclic code is
+equivalent to (1 gNj g2Nj ... g(n−1)Nj) where gcd(n, j) = 1 [30].
+5. Step c failed. Using elementary row operations transform HT to a block diagonal matrix if possible. If not
+possible then Reject. If possible then go to step c and input each sub-matrix and continue.
+D.
+Proof of the Main Theorem
+1.
+Preliminaries
+We introduce Gauss sums as this is the vital link between the Potts partition function and quantum computation.
+Appendix C contains a more detailed exposition as well as an outline of a proof that there exists a polylog quantum
+algorithm for estimating Gauss sums. Here however it is essential only to understand the following. Given a ﬁeld
+Fqk, there is a multiplicative and additive group associated with it. Namely, the multiplicative group is F∗
+qk = Fqk \ 0
+and the additive group is Fqk itself. Associated with each group are canonical homomorphisms from the group to the
+complex numbers, named the additive and multiplicative characters. The multiplicative character χ is a function of
+the elements of F∗
+qk and the additive character is a function of Fqk and is parameterized by β ∈Fqk. A Gauss sum
+is then a function of the ﬁeld Fqk, the multiplicative character χ and the parameter β, and can always be written as
+GFqk (χ, β) =
+p
+qkeiγ,
+(16)
+where γ is a function of χ and β. It is in general quite diﬃcult to ﬁnd the angle γ. The complexity of estimating this
+quantity via classical computation is not known but there is evidence that it is hard [25].
+We now introduce the trace function over ﬁnite ﬁelds.
+1 For every non-zero x ∈Fqr /{0} the discrete logarithm with respect to a primitive element (i.e., generator) g of Fqr is given by
+logg(x) = logg(gj) = j mod (qr −1).
+
+
+=== PAGE 9 ===
+9
+Deﬁnition 11 Let q be prime, k a positive integer, and let Fqk be the ﬁnite ﬁeld with qk −1 non-zero elements. The
+trace is a mapping Tr : Fqk 7→Fq and is deﬁned as follows. Let ξ ∈Fqk. Then
+Tr(ξ) =
+k−1
+X
+j=0
+ξqj.
+(17)
+Now let qk = 1 + nN where n and N are both positive integers, and let γ generate the multiplicative (cyclic) group
+F∗
+qk = Fqk\{0}. Each of the qk words of an [n, k] irreducible cyclic code may then be uniquely associated with an
+element x ∈Fqk and may be written as
+(Tr(x), Tr(xγN), Tr(xγ2N), . . . , Tr(xγ(n−1)N)),
+(18)
+where k is the smallest integer such that qk = 1 mod n. For a proof of this statement see [32] or [33].
+As stated in Theorem 2, we are essentially interested in obtaining the weight spectrum of [n, k] irreducible cyclic
+codes. The number of words with diﬀerent non-zero weight is at most N where N = (qk −1)/n (for a proof see
+Proposition 1 in Appendix B). Now let w(x) be the Hamming weight of the code word associated with x ∈F∗
+qk. The
+McEliece Theorem connects the weights of words of irreducible cyclic codes to Gauss sums.
+Theorem 12 (McEliece Formula) Let w(y) for y ∈F∗
+qk be the weight of the code word given by Eq. (18), let
+qk = 1 + nN where q is prime and k, n and N are positive integers, let d = gcd(N, (qk −1)/(q −1)), and let the
+multiplicative character ¯χ be given by ¯χ(γ) = exp(2πi/d), where γ generates F∗
+qk. (¯χ is called the character of order
+d.) Then the weight of each word in an irreducible cyclic code is given by
+w(y) = qk(q −1)
+qN
+−q −1
+qN
+d−1
+X
+a=1
+¯χ(y)−aGFqk (¯χa, 1).
+(19)
+For a proof of this see [32].
+The important feature here is that if we had the ability to eﬃciently estimate GFqk (χ, β), then we would be able
+to ﬁnd the weights of the words in an irreducible cyclic code eﬃciently under the restrictions mentioned in Theorem
+2 . This would in turn allow us to ﬁnd the weight spectrum {Ai} of the code. The following theorem reveals that a
+quantum computer can eﬃciently approximate Gauss sums.
+Theorem 13 (van Dam & Seroussi [25]) For any ǫ > 0, there is a quantum algorithm that estimates the phase
+γ in GFqk (χ, β) =
+p
+qkeiγ, with expected error E(|γ −˜γ|) < ǫ. The time complexity of this algorithm is bounded by
+O( 1
+ǫ · (log(qk))2). [25]
+(For details see Appendix C.)
+The Gauss sum algorithm allows one to estimate γ in Eq. (16) to within any accuracy ǫ, i.e., the algorithm returns
+γ′ such that |γ′ −γ| < ǫ. The hope is that if one can approximate γ precisely enough then one would get an exact
+evaluation of the weight. In fact an essential step here is to use a quantum computer to obtain a list of approximate
+angles {γ′
+t} for t = 1, . . . , d −1 for d given above.
+The next theorem gives some minimum distance between weights so that we can choose an appropriate error that
+will allow one to be able to distinguish between weights, which allows us to obtain accurate coeﬃcients for A(1, y)
+and hence exact values for the exponents.
+Theorem 14 (McEliece [34]) All the weights of an [n, k] irreducible cyclic code are divisible by qθn,k−1, where θn,k
+is given in Deﬁnition 1.
+2.
+The Proof
+We are now ready to prove Theorem 2.
+Proof. Assume that a given graph Γ = (E, V ) is a member of ICCCǫ, where n = |E| and k = |E|−|V |+ c(Γ). Hence
+it is given that ǫ ≤qθn,k−1
+4√
+qk
+≡ǫ0. We want to obtain ZΓ for either the fully ferromagnetic or anti-ferromagnetic Potts
+model. It follows from Deﬁnition 1 that the dual of the cocycle code of Γ is an irreducible [n, k] cyclic code. We must
+
+
+=== PAGE 10 ===
+10
+demonstrate that we can obtain the weight enumerator A(1, y) of this dual code within the claimed number of steps.
+As mentioned above, since nN = qk −1 there are then at most N diﬀerent weights, with at least n words of each
+weight (see the appendix). In order to ﬁnd the spectrum {Ai}, we are faced with the computational task of ﬁnding
+the range of
+S(i) = qk(q −1)
+qN
+−q −1
+qN
+d−1
+X
+a=1
+¯χ(αi)−ap
+qkeif
+γa
+(20)
+(where again d = gcd(N, qk −1/q −1) and i ∈{0, . . . , N −1}) and then performing a tally.
+The proof consists of ﬁve main parts:
+1. Proof that with ǫ bounded by ǫ0 as given, it is possible to distinguish between weights of the words of the code
+that corresponds to the given graph. This ability allows for an exact evaluation of ZΓ.
+2. We need to justify our asymptotic approach and show that for a ﬁxed error ǫ there are a countable number of
+graphs in ICCCǫ.
+3. Proof that the success probability δ is as stated in the Theorem.
+4. Proof that the running time is as stated in the Theorem.
+5. A transformation from the dual (irreducible cyclic) code to the cocycle code of the graph whose Potts partition
+function we are evaluating.
+Let us now prove each of these ﬁve parts.
+1. The ﬁrst question we must address is the following: how small do we need to make the error ǫ in the phases
+returned in the Gauss sum approximation algorithm so that we will be able to distinguish between weights? We now
+show that ǫ ≤ǫ0 is suﬃcient, and hence that for every member of the class ICCCǫ it is possible to distinguish between
+weights.
+Let ]
+w(y) be the approximated weight returned by the quantum Gauss sum algorithm. It follows from Theorem 14
+that two consecutive weights are separated by a distance that is an integer multiple of qθn,k−1. Hence, a suﬃcient
+condition for being able to associate ]
+w(y) with the correct weight w(y) (and not another neighboring weight) is:
+|w(y) −]
+w(y)| < qθn,k−1
+2
+.
+(21)
+Let the error between the actual phase γi and the approximated phase eγi be ǫ, i.e.,
+|γi −eγi| < ǫ.
+Let us derive a bound on ǫ. Taking w(y) given in Theorem 12 and the necessary bound given in equation (21) we
+ﬁnd that we need the inequality
+
+X
+a
+¯χ(y)−aeiγa −
+X
+a
+¯χ(y)−aeif
+γa
+ <
+qN
+(q −1)
+qθn,k−1
+2
+1
+p
+qk
+(22)
+to be satisﬁed. Now, we have
+
+X
+a
+¯χ(y)−aeiγa −
+X
+a
+¯χ(y)−aeif
+γa
+ ≤
+X
+a
+eiγa −eif
+γa
+
+≤
+X
+a
+(|cos(γa) −cos(f
+γa))| + |(sin(γa) −sin(f
+γa))|)
+≤2(d −1) |γa −f
+γa| < 2(d −1)ǫ
+where the last inequality follows from the Mean Value Theorem of elementary calculus. Therefore, if we impose
+ǫ <
+qN
+(q −1)(d −1)
+qθn,k−1
+4
+1
+p
+qk
+(23)
+
+
+=== PAGE 11 ===
+11
+then inequality (22) is satisﬁed. Consider the factor
+qN
+(q−1)(d−1). Noting from N ≤αks that d = gcd(N, (qk −1)/(q −
+1)) ≤αks = N, it follows that 1 <
+qN
+(q−1)(d−1) ≤
+q
+q−1N = O(ks(k)). Thus we can replace the bound (23) by the tighter
+bound
+ǫ < qθn,k−1−k/2
+4
+= ǫ0,
+(24)
+and this ǫ is deﬁnitely small enough to satisfy the required bound given in Eq. (21).2 Hence, if ǫ < ǫ0 it is possible
+to resolve the weights ]
+w(y) for diﬀerent words y. This, in turn, gives us the ability to exactly reconstruct the weight
+enumerator A, and from there the partition function ZΓ.
+2. We prove the following lemma.
+Lemma 15 Given a ﬁxed ǫ < 1 there are countably many graphs in ICCCǫ, i.e., there are inﬁnitely many correspond-
+ing irreducible cyclic codes [ni, ki] such that {θni,ki} satisﬁes
+1
+4qθni,ki −1−ki
+2 > ǫ.
+(25)
+What this means is that there is at least one family of graphs for a given ﬁxed ǫ for which one will be able to obtain
+the exact Potts partition function. This also justiﬁes the complexity arguments used herein.
+Proof. We shall construct one such family and show that it satisﬁes the required relations. For simplicity take ǫ = 4ǫ.
+We must construct one family of graphs for which the corresponding irreducible cyclic codes, [ni, ki], satisfy
+θni,ki + logq(ǫ−1) > 1 + ki
+2 .
+(26)
+Take q ﬁxed and consider the following countable set of irreducible cyclic codes: {[qm −1, km]}m=1,2,3,.... First we
+must note that
+θqm−1,km = m.
+(27)
+This follows from the properties of addition in base q: the k digits of qk −1 in base q are all (q −1), and adding integer
+multiples of qk −1 will not decrease the digit sum. I.e.,
+S′(η(qm −1)) ≥m(q −1)
+∀η ∈N.
+This is important to keep in mind when we consider extending this family later in this proof. Now we must demonstrate
+that there is at least one km that satisﬁes Eq. (26). Because we are dealing with irreducible cyclic codes we must
+have
+qkm = 1modn = 1mod(qm −1).
+This is trivially satisﬁed by km = m and indeed Eq. (26) becomes m −m
+2 > 1 + logq ǫ, which is clearly true for any
+ǫ < 1. This family is computationally trivial, however, being that N = 1.
+Let us now extend this family to include many interesting instances. Let us ﬁrst consider a ﬁxed code [qm −1, km]
+(i.e., N = 1, m ﬁxed). Let us next generate a family of codes {[ηj(qm −1), kmj]}j=1,2,...,M by taking integer multiples
+ηj of qm −1, and picking kmj ≥km such that ηj(qm −1)N = qkmj −1 (this is just the irreducible cyclic code condition
+nN = qk −1). We obtain a ﬁnite set of codes (M < ∞) because it follows from Eq. (25) that eventually the {kmj}j
+will become too large for the ﬁxed error ǫ, for each m. We then do this for every m ∈N paying special attention to the
+integer multiples ηj. The ηj are selected in this construction so that two conditions are satisﬁed: (i) the corresponding
+{kmj}j are suﬃciently small to ensure that Eq. (25) is satisﬁed, (ii) that N is bounded by {O(ks
+mj)}m,j.
+Regarding (i), the steps above are conveniently summarized as the following loop:
+Given ǫ:
+2 Note, however, that when d = 2, we have in fact ǫ < ks(k)ǫ0 where ǫ0 =
+qθn,k−1
+4√
+qk , and in this case the computational cost of the
+algorithm (see Theorem 2) is scaled down from O( 1
+ǫ0 k2s(k)(log q)2) to O( 1
+ǫ0 ks(k)(log q)2), where the upper bound (24) still applies.
+This means that within the family ICCCǫ0 some instances can be solved faster than others by a factor of ks(k), at ﬁxed ǫ0.
+
+
+=== PAGE 12 ===
+12
+1. For m = 1, 2, ...
+2. Repeat j = 1, 2, ...
+n := j(qm −1)
+calculate kmj =ordq(n)
+if qθn,kmj −1−kmj/2 < ǫ then reject kmj, else accept kmj and let ηj ≡j.
+Until j = M
+Until enough instances were found.
+Note that we are guaranteed to ﬁnd such a non-empty ﬁnite set {kmj}j due to the fact that if gcd(q, ηj(qm−1)) = 1,
+then ∃kmj ∈N such that qkmj = 1 mod j(qm −1) (see, e.g., Th. 7-1 of [35]).
+Regarding (ii), we still need to show that there exist solutions Nmj to qkmj −1 = nNmj that scale as O(ks
+mj). To
+see why such solutions exist consider solving qk −1 = nN with N = αks and n = η(qm −1), where α ∈R (we have
+dropped the subscripts for simplicity). The solution is
+m = logq[(qk −1)/(αηks) + 1].
+(28)
+In the loop above, only those m’s satisfying Eq. (28) are acceptable in terms of the scaling of our algorithm. However,
+note that asymptotically Eq. (28) yields m = k −s logq k −logq αη. This means that for every value of k and s it is
+possible to adjust α such that m is an integer by letting s logq k = logq αη.
+At this point we have constructed an inﬁnite family of pairs [n, kmj] [where n = j(qm −1) and where m satisﬁes
+Eq. (28)], each of which deﬁnes a graph which is a member of the set ICCCǫ.
+Finally, we should mention without proof, that one can “ﬁll” this family of graphs by considering the multitude
+of cases which do not conform to the restrictions in this construction, but which do obey relation (26) and obey the
+asymptotic conditions given in deﬁnition (1). Moreover, the graphs we have constructed are quite sparse but they are
+only a subset of ICCCǫ. There are many more interesting graphs that can be handled by this ﬁxed error bound. For
+example, graphs which are the direct sum of many copies of a smaller graph are excluded from this family. Further
+one may accept an error ǫ that decreases polynomially in k for example and deﬁne a family of graphs in that way.
+We do not pursue this here.
+3.
+In the van Dam-Seroussi algorithm (Theorem 1 in [25]), a prepared state must must go through a phase
+estimation. In [36] it is demonstrated that if the number of qubits used in phase estimation is t = log 1/ǫ + log(2 +
+1/(2δ)) then the probability of success is at least 1 −δ.
+Ref.
+[37][p.7] states that for the Gauss sum algorithm
+t = 2 log(qk −1). After some elementary algebra we obtain δ = [2((qk −1)2ǫ −2]−1. By the Chernoﬀbound, for ﬁxed
+problem size k, we only need to pick ǫ such that the probability of failure δ is less than 1/2.
+4. (a) We have that if α is a generator for F∗
+qk and if i = j mod n, then the code words associated with αi and αj
+are cyclic permutations of each other, and therefore are of the same weight. Let us denote by [αi] the (equivalence)
+class of all words {αj}j with i = j mod n. In this step we wish to ﬁnd the weight of [αi]. This weight is given by
+S(i) = qk(q −1)
+qN
+−q −1
+qN
+d−1
+X
+a=1
+¯χ(αi)−ap
+qkeif
+γa.
+(29)
+Hence (up to irrelevant classical computations) the computational cost of computing S(i) is d −1 times the cost of
+computing f
+γa. For any graph in ICCCǫ, obtaining these d −1 phases has a (quantum) cost of O(dk2(log q)2), where
+d is bounded above by N. This comes from the complexity of computing the Gauss sum d times. (Recall that one
+has to repeat this algorithm 1/ǫ times in order to ensure that we obtain a suﬃciently close approximation.)
+(b) How many times must we compute S(i)? The number of times is the number of diﬀerent equivalence classes
+{[αi]}. Each equivalence class [αi] is clearly of size n, and there are qk −1 words. Recall that nN = qk −1 for
+non-degenerate irreducible cyclic codes, and hence N is the number of diﬀerent equivalence classes. (Actually the
+answer to “How many times must we compute S(i)?” is that one must only do this for the number of cyclotomic
+cosets of N – see subsection II F).
+(c) For given S(i) we must compute a sum over d terms. The cost of computing each such term is constant once
+we have obtained the phases f
+γa [which we have, in step (a)]. Combining this with step (b), we see that the total cost
+of computing all S(i)’s is (d −1)N.
+At this point the total computational cost is therefore max[O(dk2(log q)2), O(dN)]. We choose N = O(ks(k)) so
+if one takes s(k) to be a constant, then the algorithm is polynomial in k.
+Thus, the overall time complexity is
+O(d · kmax[2,s(k)](log q)2). Being that d ≤N = O(ks(k)), the complexity is ultimately O(k2 max[1,s(k)](log q)2).
+
+
+=== PAGE 13 ===
+13
+(d) We now have the list {S(i)}. Next, a tally of all the weights has to be done which has complexity O(ks(k)/2)
+using quantum counting [38]. The tally will return all the weights and counts of each weight (see Section IV) which
+are the exponents and coeﬃcients respectively, of the polynomial A(1, y) which is the weight enumerator of the dual
+of the cocycle code. Note that this step does not eﬀect the overall complexity of the algorithm as it has a smaller
+running time then the previous steps.
+5. Note that so far we have dealt with the [n, k] irreducible cyclic code that is the dual of the cocycle code of Γ,
+i.e., we have used n = |E| and k = |E| −|V | + c(Γ). However, recall that Γ = Γ(E, V ) and hence corresponds to the
+[n, n −k] = [|E|, |V | −c(Γ)] code, i.e., the cocycle code of the graph Γ as desired. (This correspondence means that
+we can obtain information about interesting graphs by considering codes of smaller dimension.) Thus, in order to
+complete the proof we need the weight enumerator of the [n, n −k] cocycle code itself, so that we can apply Theorem
+10. The relation between the weight enumerator A of a code C over the ﬁeld Fqk, and the weight enumerator A⊥of
+the dual code C⊥is given by the MacWilliams Theorem [30]:
+A⊥(1, x) = qk(k−n)  1 + (qk −1)x
+n A(1, y),
+(30)
+where
+x ≡
+
+1 −y
+1 + (qk −1)y
+
+.
+(31)
+Applying the MacWilliams theorem and Barg’s theorem [speciﬁcally Eq. (15) to A⊥(1, x)], we arrive at the partition
+function
+Z (x) = x−nqc(Γ)A⊥(1, x) .
+(32)
+Recall that y = e−βJ (where β =
+1
+kBT ); thus we have the following ﬁnal expression for the partition function as a
+function of β:
+Z (x(β)) = qc(Γ)+k(k−n) 
+(qk −1) + x(β)−1n A(1, y(β)).
+(33)
+It is simple to verify that given any temperature T ≥0, and for both positive and negative J, Z (x(β)) is always
+positive, as it should be.
+E.
+Proof of the Corrolary
+We now give the proof of Corrolary 1.
+Proof. Assume that we are given a graph Γ(E, V ) whose CMM is the direct sum of the CMMs of two graphs Γ1
+and Γ2 in ICCCǫ (we call such a graph Γ a “composite graph”). Let C be the code that corresponds to the graph Γ,
+i.e., C is the cocycle code of Γ. Let C1 and C2 be the corresponding cocycle codes of Γ1 and Γ2. This means that
+we may apply our algorithm to each of these sub-graphs and obtain their weight enumerators. To do this we need to
+obtain the weight enumerators of C1 and C2 which we can do eﬃciently. By deﬁnition C = C1 ⊕C2. If the respective
+lengths and dimensions of C1 and C2 are [m, l] and [m′, l′], then C is an [m + m′, l + l′] linear code and its weight
+enumerator will be W = W1W2 [30]. Thus, once one obtains the weight enumerators of the sub-graphs, one has the
+weight enumerator of Γ and by using the arguments already outlined one can see that we can eﬃciently compute ZΓ.
+The above corollary allows the scheme outlined in this paper to be eﬃciently applied to many graphs because if
+one knows the generator matrices for C1 and C2 then one can eﬃciently construct the generator matrix for C by
+just taking the direct sum of the matrices. This gives a way of constructing examples of graphs for which the Potts
+partition function can be eﬃciently approximated. On the other hand (recall subsection II C), we can eﬃciently check
+if a generator matrix decomposes into a direct sum of smaller matrices and we can eﬃciently check if these matrices
+generate codes whose duals are irreducible cyclic.
+F.
+Reducing the Computational Cost of the Algorithm via Permutation Symmetry
+We now brieﬂy review the concept of p-cyclotomic cosets. As an introduction see [30]. Consider the set of integers
+{0, 1, 2, . . ., N −1} and take p a prime number such that p does not divide N. The p-cyclotomic cosets of this set are
+given by the collection of subsets
+{0}, {1, p, p2, . . . , pr(1)}, . . . , {j, jp, jp2, . . . , jpr(j)}, ...
+
+
+=== PAGE 14 ===
+14
+where j is an integer and r(j) is the smallest integer such that j(pr(j) −1) = 0 mod N, i.e., r(j) is the smallest integer
+before one begins to get repeats in the coset indexed by j. The number of cosets is ﬁnite so j is ﬁnite. As an example
+consider N = 16 and p = 3. One obtains
+{0}, {1, 3, 9, 11}, {2, 6}, {4, 12}, {5, 15, 13, 7}, {8}, {10, 14}.
+With regards to the scheme presented in this paper, we take q-cyclotomic cosets. We are guaranteed that gcd(N, q) =
+1, which ensures that in our case the cyclotomic cosets are disjoint. That gcd(N, q) = 1 is due to the fact that there
+are solutions x, y ∈Z to Nx + qy = 1 (Thm. 2-4 of [35]). For example, since N = qk−1
+n , one can take x = n(q −1)
+and y = 1 + qk−1 −qk, which are both integers. The relevance of the q-cyclotomic cosets of {0, . . ., N −1} is that
+each element in a given coset has the same value of S(i). This is because of the fact that the mapping x 7→xq is
+a permutation of Fqk and that the additive characters obey the identity exp(2πiTr(bq)/q) = exp(2πiTr(b)/q) for all
+b ∈Fqk. Hence S(i) is invariant under the mapping x 7→xq. (See Appendix C 1 for details on additive characters
+and the trace function Tr.) Therefore we only have to evaluate S(i) for one i in each coset. The computational
+cost of computing the coset representatives and the number of elements in each coset is linear in N [39]. This has
+the potential of signiﬁcantly speeding up the algorithm but how much will clearly depend on the number of cosets
+generated by each instance. The number of cosets is given by [40]
+NC =
+X
+f|N
+φ(f)
+ordqf
+(34)
+where φ(f) is the Euler totient (the number of positive integers which are relatively prime to f and s = ordqf means
+that s is the smallest positive integer such that qs = 1modf). Note that NC replaces N in the overall computational
+cost of our algorithm and NC ≤N. While this can lead to a signiﬁcant speedup in some cases, for the sake of
+simplicity and of having uniform bounds we will not pursue this further here.
+As an illustration of the power of using cyclotomic cosets, consider the following numerical example. Let q = 2,
+1/ǫ ≥8192, and consider a binary [113, 85] code which is the dual to a binary [113, 28] irreducible cyclic code (i.e.,
+28 is the smallest integer such that 228 = 1mod113). This corresponds to either the fully ferromagnetic or fully
+anti-ferromagnetic Ising model on a graph with 113 edges and 86 vertices. Now note, that nN = 228 −1 which implies
+that N = 2375535. Without the use of cyclotomic cosets this value of N would set our computational cost in that
+it is the number of times that S(i) must be queried. However, it turns out that there are NC = 85439 cyclotomic
+cosets, and this is the actual number of queries to S(i).
+Note that there are instances where N ≪n and cyclotomic cosets are not required. For example consider the
+binary [13981, 20] irreducible cyclic code. Here n = 13981 and N = 75. Physically this corresponds to either the
+fully anti-ferromagnetic or ferromagnetic Ising model over a connected graph with 13981 edges and 13962 vertices
+(considering the dual code).
+III.
+CLASSICAL AND QUANTUM COMPLEXITY OF THE SCHEME
+Assuming one knew that a given graph was a member of ICCCǫ, then classically one could proceed as follows using
+a state of the art algorithm ZETA for the computation of zeta functions of the family of curves Cα : yq −y = αxN
+[23]. Here N is as given in the relation nN = qk −1 and the index α is in one-one correspondence with the code
+words in the given cocycle code (speciﬁcally α ∈Fqk). The connection between the weights of words of an irreducible
+cyclic code and the number of rational points on the curves Cα is well known, as is the connection between the zeta
+functions of such curves and Gauss sums [41]. The complexity of using ZETA to compute the N = αks(k) diﬀerent
+weights is O(k6s(k)+3+ǫ′   q
+2
+5+ǫ′
+) [23] and a tally of these weights will take O(ks(k)) operations (ǫ′ is a small real
+number – unrelated to ǫ which parameterizes the class of graphs in question). The overall complexity of ﬁnding the
+range of S(i) will therefore be
+classical cost = O(k6s(k)+3+ǫ′ q
+2
+5+ǫ′
+),
+(35)
+assuming that we know that a given graph is a member of ICCCǫ. As far as we know this is the fastest classical
+algorithm for the problem we have considered here.
+For a quantum computer we do not need to assume that testing for membership is eﬃcient: we know that this can
+be done eﬃciently using the discrete log algorithm [1]. Above we showed that the overall complexity of ﬁnding Z
+is bounded by O(k2 max[1,s(k)](log q)2). This should be contrasted with the best classical result available, (35). For
+
+
+=== PAGE 15 ===
+15
+Graphs
+(E,V) =
+(n, n-k +c(E))
+Z
+Partition
+Function
+n-k*n
+Cycle
+Matroid
+Matrix
+Instances of 
+Potts Model
+Gauss
+Sums
+Van Dam &
+Seroussi
+Alg.
+|E|*|V|
+Incidence
+Matrix
+Gaussian
+Elimination
+[n,n-k]
+cocycle code
+Duality:
+(Mac Williams 
+Theorem)
+[n,k] code
+Irreducible
+Cyclic Codes
+Weight Spectrum
+Of Irr. Cyclic
+Codes
+Barg’s
+Theorem
+Discrete Log
+(Shor)
+qk=1mod n
+FIG. 2: A diagrammatic overview of the algorithm. (Box shapes do not have a meaning.)
+example if we take s = 2, (both classical and quantum methods are polynomial when we take s(k) to be a constant) we
+obtain an O(k11) improvement and an exponential speedup in q. One could imagine ﬁxing a graph and calculating the
+partition function for increasing values of q. In this situation we have an exponential speedup over the best classical
+algorithm available.
+Note that there is a quantum algorithm for ﬁnding zeta functions of curves which is exponentially faster in q than
+the classical algorithm in [23] (as is ours). This is given in [24]. The use of this algorithm instead of the Gauss sum
+approximation algorithm is left for a future publication.
+On a ﬁnal note, the classiﬁcation ICCCǫ we have chosen is meant to highlight the boundary between BQP and P
+by ﬁxing the acceptable error in the Gauss sum phases. One could opt for a perhaps more natural class of graphs
+by bounding the way that 1/ǫ grows instead. For example, one could restrict the class of graphs in such a way that
+1/ǫ ∼q
+k
+2 −θn,k+1 grows polynomially in k, in particular such that
+1
+ǫ < k5s(k)+1.
+For this class of graphs one would also have a speedup in the quantum case.
+IV.
+DETAILED SUMMARY
+For convenience we recollect our deﬁnitions and provide a diagram of our scheme. We are considering the q-state
+Potts model (fully ferromagnetic or fully anti-ferromagnetic) over a graph Γ = (E, V ), with q prime. This includes
+the Ising model (q = 2 ). Every graph Γ has a cycle matroid M(Γ) associated with it and every cycle matroid has
+a (|V | −c(Γ)) × |E| matrix representation G (the CMM), where c(Γ) is the number of connected components of Γ.
+The columns of G encode the dependence structure of the graph and the row space of G generates the cocycle code
+of length |E| and dimension |V | −c(Γ). The length and dimension of the dual code are respectively n = |E| and
+k = |E| −|V | + c(Γ).
+Following is a detailed synopsis of the algorithm for computing the partition function.
+
+
+=== PAGE 16 ===
+16
+1. Given a graph, eﬃciently determine if it belongs to ICCCǫ (Deﬁnition 1). This step appears to be hard on a
+classical computer in general, since it is equivalent to computing a discrete log.
+2. If the CMM G = [I|V |−c(Γ)|X] is the matrix representation over Fqk of the cycle matroid of Γ, M(Γ), then the
+row space of H = [−XT|I|E|−|V |+c(Γ)] will be the code C(Γ).
+3. Let N = O(ks) where s is a constant integer that determines the complexity of the algorithm. Take C(Γ) as an
+irreducible cyclic code of length n = qk−1
+N
+and dimension k, i.e., we only consider graphs Γ where C(Γ) is an
+irreducible [n, k] cyclic code.
+4. If we can evaluate the weight enumerator of C(Γ) we will have successfully approximated the Potts partition
+function over the corresponding graph Γ. To do so:
+(a) Find the q-cyclotomic cosets of {0, 1, . . ., N −1}. This step requires at most linear time in N.
+(b) Using the quantum algorithm for Gauss sums [25] we are be able to estimate the weights of the words. The
+error in the Gauss sum algorithm can be high in this setting, and therefore we have to restrict the class
+of graphs further in order to obtain exact evaluations. Use the Gauss sum algorithm to return the phases
+γ1, . . . , γd−1 [Eq. (16)] and then input these values into the function S(i) [Eq. (20)]. According to the
+McEliece Theorem (Th. 12) we have to make d −1 (where d = gcd(N, qk−1
+q−1 )) calls to the quantum oracle
+and we can use these evaluations for each representative i of the q-cyclotomic cosets of {0, 1, . . ., N −1}.
+This step has time complexity O(dk2(log q)2).
+(c) Let b1, b2, . . . , bNC be the coset representatives from the NC cosets. Now each coset has cardinality vi, i.e.,
+bi belongs to coset i which has vi elements. We evaluate ωi = S(bi) for each bi, remembering that each ωi
+occurs vi times. We end up with a list (ω1, ω2, . . . , ωNC) as well as a list (v1, v2, . . . , vNC) of multiplicities.
+(d) Now perform a tally of repeats of the ωi for each i ∈{1, ..., NC}. This returns a set of indices Λi ≡{ji} ⊆
+{1, ..., NC}. We add the corresponding vji which yields ai = P
+j∈Λi vj, the number of words of weight ωi
+up to cyclic permutations. To account for cyclic permutations due to the fact that we are working over
+cyclic codes, we have Ai = nai, which is the desired weight spectrum.
+5. Now that we have determined the weight spectrum Ai in time O(k2s(log q)2) we have the coeﬃcients for A(1, y)
+and so via the MacWilliams identity (30) we ﬁnally obtain the partition function (33).
+V.
+CONCLUSIONS AND FUTURE DIRECTIONS
+In this work we have given a quantum algorithm for the exact evaluation of the fully ferromagnetic or anti-
+ferromagnetic Potts partition function Z under the restriction to certain sparse graphs (with logarithmically more
+edges than vertices). The methods we used exploit the connection between coding theory and statistical physics. The
+motivation for this work is an ongoing eﬀort to identify instances of classical statistical mechanics for which quantum
+computers will have an advantage over classical machines.
+The approach we described involves using the link between classical coding theory and the Potts model via the
+weight enumerator polynomial A. One should note that A is another instance of the Tutte polynomial and so this
+connection is not surprising. The weight enumerator encodes information about all the diﬀerent Hamming weights of
+the code words in a linear code and the weight of a code word can be given by a formula involving a sum of Gauss
+sums when dealing with a speciﬁc type of linear code. Since there exists an eﬃcient algorithm to approximate Gauss
+sums via quantum computation [25] we were able to eﬃciently calculate the weights of code words for certain codes.
+Much of this paper dealt with the necessary restrictions that one must impose in order to achieve this last step. For
+example, once an error ǫ in the Gauss sum algorithm is accepted, we demonstrated that there is a family of graphs
+for which one can ﬁnd the exact partition function, and therefore the error does not scale within this family. Given a
+graph Γ, one can map the graph to a corresponding linear code via the incidence structure of Γ. The Potts partition
+function of Γ (with either fully ferromagnetic or anti-ferromagnetic interactions) is given by some easily computed
+function times the weight enumerator of the corresponding code. Due to the symmetries inherent in the mathematical
+structure of linear codes we were able to provide an eﬃcient method to exactly determine Z for a class of graphs
+(ICCCǫ) which has a well deﬁned correspondence to a subset of linear codes.
+In [42] it was shown that the exact evaluation of weight enumerators for binary linear codes is hard for the polynomial
+hierarchy. As our approach involved the exact evaluation of weight enumerators, it is not surprising that we had to
+make restrictions on the class of graphs so as to make our scheme eﬃcient. The vantage that coding theory gives to
+
+
+=== PAGE 17 ===
+17
+this particular problem, however, allows one to utilize the fact that certain graphs have properties that a quantum
+computer can take advantage of to provide a speed up.
+Notice that the related results in [17, 20] concern additive approximations; the methods used in this paper can be
+extended to a wider class of graphs if one relaxes the requirement of exact evaluation and instead similarly considers
+additive approximations of Z. An open question is what instances of the Potts partition function are amenable to
+an fpras (fully polynomial random approximation scheme). The methods used in [17, 20] have proven to be quite
+powerful. There is hope to extend some of these methods to non-planar graphs. One idea is to extend the algorithm
+in [17] to the Jones polynomial for virtual knots and then use some correspondence between the virtual knots and
+non-planar graphs. Another approach may involve seeing things in a new light. Note that the Jones polynomial is
+the Euler characteristic of a certain chain complex [43]. One can explore how eﬀective quantum computers will be at
+approximating Euler characteristics in general. Perhaps there is a way of exploiting this in order to obtain knowledge
+about the Potts partition function.
+One may also consider strengthening the results given here by exploiting theorems about the minimal distance of
+cyclic codes. For example, there are theorems that guarantee a lower bound for the weight between any two words. By
+enforcing that the generator polynomial of the code be of a certain form, one would be guaranteed a certain distance
+between words and therefore the error in the Gauss sum approximation will be of little consequence for certain graphs
+[30]. As already mentioned in the Introduction, another potentially promising approach is to consider the scheme we
+have presented here but to replace the Gauss sum algorithm with the quantum algorithm for obtaining Zeta functions
+[24]. Work has to be done on understanding the exact cost of this algorithm when one is restricted to curves that are
+pertinent for the evaluation of the Potts model.
+Corollary 1 deals with the combination of graphs via a direct sum of codes gives one a way of “tiling” graphs for
+which one knows the partition function. This gives a quick way of obtaining the partition function of certain graphs
+that are made of many repeats of a simpler graph. There are other ways of combining codes that may allow one to
+study the partition function of new graphs, for example the concatenation or direct product of two codes [30].
+The coding theoretic approach does give us a way of evaluating the partition function of instances of the Potts
+model at arbitrary temperatures but precisely the kinds of graphs which are involved is a question for future research.
+Indeed, the identiﬁcation of the physical instances represented by the graphs for which our algorithm is eﬃcient
+will shed light on the question that motivated this work in the ﬁrst place [5]: what is the quantum computational
+complexity of classical statistical mechanics?
+Acknowledgments
+J.G. would like to thank Marko Moisio, Ravi Minhas, and Frank van Bussel for helpful discussions. D.A.L. gratefully
+acknowledges support under ARO grant W911NF-05-1-0440.
+[1] P.W. Shor. Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer. SIAM J.
+on Comp., 26:1484, 1997.
+[2] L.K. Grover. A fast quantum mechanical algorithm for database search. In Proceedings of the 28th Annual ACM Symposium
+on the Theory of Computing, page 212. ACM, New York, NY, 1996.
+[3] D.A. Lidar and O. Biham. Simulating Ising spin glasses on a quantum computer. Phys. Rev. E, 56:3661, 1997.
+[4] R.H Swendsen and J.-S. Wang. Phys. Rev. Lett., 58:86, 1987.
+[5] D.A. Lidar. On the Quantum Computational Complexity of the Ising Spin Glass Partition Function and of Knot Invariants.
+New J. Phys., 6:167, 2004.
+[6] D.J.A Welsh. Complexity: Knots, Colourings and Counting, volume 1 of London Mathematical Society Lecture Note Series
+186. Cambridge University Press, London, 1993.
+[7] L.E. Reichl. A Modern Course in Statistical Physics. John Wiley & Sons, New York, 1998.
+[8] V.F.R. Jones. On Knot Invariants Related to Some Statistical Mechanical Models. Paciﬁc J. Math., 137:311, 1989.
+[9] V.F.R. Jones. A Polynomial Invariant for Knots via von Neumann Algebras. Bull. Amer. Math. Soc., 12:103, 1985.
+[10] F. Jaeger, D. Vertigen, D. Welsh. On the Computational Complexity of the Jones’ and Tutte polynomials. Math. Proc.
+Cambridge Philos. Soc., 108:35, 1990.
+[11] L.H. Kauﬀman. Knots and Physics, volume 1 of Knots and Everything. World Scientiﬁc, Singapore, 2001.
+[12] N.
+Alon,
+A.M.
+Frieze,
+D.
+Welsh.
+Polynomial
+Time
+Randomised
+Approximation
+Schemes
+for
+Tutte-
+Gr¨othendieck Invariants:
+The Dense Case.
+Electronic Colloquium on Computational Complexity,
+1(5),
+1994.
+ftp://ftp.eccc.uni-trier.de/pub/eccc/reports/1994/TR94-005/index.html.
+[13] S. Nechaev. Statistics of knots and entangled random walks. Eprint cond-mat/9812205.
+[14] E. Witten. Topological quantum ﬁeld theory. Comm. Math. Phys., 117:353, 1988.
+
+
+=== PAGE 18 ===
+18
+[15] M.H. Freedman, A. Kitaev and Z. Wang. Simulation of topological ﬁeld theories by quantum computers. Commun. Math.
+Phys., 227:587, 2002.
+[16] M.H. Freedman, A. Kitaev, M.J. Larsen, and Z. Wang. Topological Quantum Computation. Eprint quant-ph/0101025.
+[17] D. Aharonov, V. Jones and Z. Landau. A Polynomial Quantum Algorithm for Approximating the Jones Polynomial.
+Eprint quant-ph/0511096.
+[18] P. Wocjan and J. Yard. The Jones polynomial: quantum algorithms and applications in quantum complexity theory.
+Eprint quant-ph/0603069.
+[19] J. Bonca and J.E. Gubernatis. Real-Time Dynamics from Imaginary-Time Quantum Monte Carlo Simulations: Test on
+Oscillator Chains. Eprint cond-mat/9510098.
+[20] D. Aharonov, I. Arad, E. Eban, Z. Landau. Polynomial Quantum Algorithms for Additive approximations of the Potts
+model and other Points of the Tutte Plane. Eprint quant-ph/0702008.
+[21] M. Van den Nest, W. Dur, and H.J. Briegel.
+Classical spin models and the quantum stabilizer formalism.
+Eprint
+quant-ph/0610157.
+[22] A.K. Hartmann. Calculation of partition functions by measuring component distributions. Phys. Rev. Lett., 94:050601,
+2005.
+[23] J.
+Denef
+and
+F.
+Vercauteren.
+Counting
+Points
+on
+Cab
+Curves
+using
+Monsky-Washnitzer
+Cohomology.
+http://citeseer.ist.psu.edu/denef04counting.html.
+[24] K. Kedlaya. Quantum Computation of zeta functions of curves. Eprint math.NT/0411623.
+[25] W. van Dam and G. Seroussi. Eﬃcient Quantum Algorithms for Estimating Gauss Sums. Eprint quant-ph/0207131.
+[26] A. Barg. On some polynomials related to Weight Enumerators of Linear Codes. SIAM J. Discrete Math., 15:155, 2002.
+[27] L. Baumert and R. McEliece. Weights of Irreducible Cyclic Codes. Inform. and Control, 20:158, 1972.
+[28] D.J.A Welsh. Matroid Theory. Academic Press Inc, London, 1976.
+[29] J. Gross and J. Yellen. Graph theory and its applications. Discrete mathematics and its applications. CRC Press, Florida,
+1999.
+[30] J.H. van Lint. Introduction to Coding Theory. Springer-Verlag, 1982.
+[31] F. Jaeger. The Tutte Polynomial and Link Polynomials. Proc. Amer. Math. Soc., 103:647, 1998.
+[32] J. Evans B.C. Berndt and K.S. Williams. Gauss and Jacobi Sums. Wiley-Interscience, New York, 1998.
+[33] M. Moiso. Exponential Sums, Gauss Sums and Cyclic Codes. 1997. Available at www.uwasa.ﬁ/ mamo/vaitos.pdf.
+[34] Y.
+Aubry
+and
+P.
+Langevin.
+On
+the
+weights
+of
+irreducible
+cyclic
+codes.
+2005.
+Available
+at
+http://iml.univ-mrs.fr/~aubry/LNCS.pdf.
+[35] G.E. Andrews. Number Theory. Dover Publications Inc., New York, 1994.
+[36] M.A. Nielsen and I.L. Chuang. Quantum Computation and Quantum Information. Cambridge University Press, Cambridge,
+UK, 2000.
+[37] W. van Dam and G. Seroussi. Quantum algorithms for estimating Gauss sums and calculating discrete logarithms. Available
+at http://www.cs.ucsb.edu/~vandam/gausssumdlog.pdf.
+[38] G. Brassard, P.Hoyer and A. Tapp. Quantum Counting. Eprint quant-ph/9805082.
+[39] F. van Bussel and J. Geraci. A Note on Cyclotomic Cosets and an Algorithm for ﬁnding Coset Representatives and Size.
+2007. In preparation.
+[40] R. Lidl and H. Niederreiter.
+Finite Fields, volume 20 of Encyclopedia of Mathematics.
+Cambridge University Press,
+Cambridge, 1997.
+[41] Marcel Van Der Glugt. Hasse-Davenport Curves, Gauss Sums and Weight Distributions of Irreducible Cyclic Codes. J.
+Number Theory, 55:145, 1995.
+[42] M.N. Vyalyi. Hardness of approximating the weight enumerator of a binary linear code. Eprint cs.CC/0304044.
+[43] M. Khovanov. A categoriﬁcation of the Jones polynomial. Duke Math. J., 101:359, 2000.
+APPENDIX A: MATROIDS
+Deﬁnition 1 A matroid M on a set E is the pair (E, I) where I is a collection of subsets of E with the following
+properties:
+1. The empty set is in I.
+2. Hereditary Property: If A ∈I and B ⊂A, then B ∈I.
+3. Exchange Property: If A and B are in I and A has more elements than B, then ∃a ∈A such that a /∈B but
+B ∪{a} ∈I.
+The collection of sets in I are called the independent sets and E is referred to as the ground set.
+Deﬁnition 2 A cycle matroid of a graph Γ is the set of all edges of Γ as the ground set E together with I as the
+subsets of E which do not contain a cycle. So the independent sets are collections of edges which do not have cycles.
+
+
+=== PAGE 19 ===
+19
+Recall that in graph theory one refers to such an edge set (the above independent set) as a forest.
+In matroid theory a matrix representation is a matrix whose column vectors have the same dependence relations as
+the matroid it is representing. More clearly, the column vectors represent the matroid elements and the usual notion
+of linear dependency determines the dependent sets and therefore the independent sets as well. Thus, the matrix can
+be said to generate the matroid.
+As an example, imagine the triangle graph of three nodes with three edges A,B, and C. The cycle matroid consists
+of each of the edges individually and any collection of two edges. All three edges form a cycle so it cannot be included.
+We require our matrix representation to encode this independence structure of the edges. One may work over any
+ﬁeld here because we are only concerned with graphic matroids, i.e., matroids which can be represented as a cycle
+matroid of some graph. (Graphic matroids are representable over any ﬁeld [28].) Now, if we think of column 1,2 and
+3 as edges A,B and C respectively we can take the following matrix as a representation in F2:
+
+1 0 1
+0 1 1
+
+Since addition is mod 2 here, a cycle is any collection of columns that sum to the 0-vector.
+We can take all
+collections where this does not happen and these collections will form I. In this way, this matrix is a representation
+of the cycle matroid for the triangle graph. In matroid theory one has the familiar notion of a base.
+Deﬁnition 3 A base of a matroid M = (E, I) is a maximal independent subset of E.
+It is not a coincidence that the left part of the matrix is the 2 × 2 identity matrix. In general one can form a
+representation (known as the standard matrix representation) where one begins with an identity matrix which is r ×r
+where r is the size of the base of M and append to it columns that capture the dependence structure of the matroid
+in question. In this way, the columns of the identity matrix represent the chosen basis of M. So M is isomorphic to
+the matroid induced on the columns of the matrix by linear dependence. A more precise explanation can be found in
+[28]. What is important for us is that such a matrix representation is possible.
+APPENDIX B: ALGEBRAIC APPROACH TO (IRREDUCIBLE) CYCLIC CODES
+1.
+Irreducible cyclic codes as minimal ideals
+Let us recall some deﬁnitions from algebra. Take q to be prime or a power of a prime.
+Deﬁnition 4 A ring is a set R which is an abelian group (R, +) with 0 as the identity, together with (R, ×), which
+has an identity element with respect to × where × is associative.
+Deﬁnition 5 An ideal I is a subset of a ring R which is itself an additive subgroup of (R, +) and has the property
+that when x ∈R and a ∈I then xa and ax are also in I.
+Deﬁnition 6 A principle ideal is an ideal where every element is of the form ar where r ∈R.
+Thus, a principle ideal is generated by the one element a and a principal ideal ring is a ring in which every ideal is
+principle.
+There is an important isomorphism between powers of ﬁnite ﬁelds Fn
+q and a certain ring of polynomials. Recall
+that the multiples of xn −1 form a principal ideal in the polynomial ring Fq[x].
+Therefore the residue class ring Fq[x]/(xn −1) is isomorphic to Fn
+q since it consists of the polynomials
+{a0 + a1x + · · · + an−1xn−1|ai ∈Fq, 0 ≤i < n}.
+Therefore, taking multiplication modulo xn −1 we can make the following identiﬁcation:
+(a0, a1, . . . , an−1) ∈Fn
+q ←→a0 + a1x + · · · + an−1xn−1 ∈Fq[x]/(xn −1).
+(B1)
+This implies the following theorem.
+Theorem 1 A linear code C in Fn
+q is cylic ⇐⇒C is an ideal in Fq[x]/(xn −1).[30]
+
+
+=== PAGE 20 ===
+20
+Proof. In one direction this is easy since if C is an ideal in Fq[x]/(xn −1) and c(x) = a0 + a1x + · · · + an−1xn−1 is
+a codeword, then by deﬁnition xc(x) ∈C as well and so (an−1, a0, a1, . . . , an−2) ∈C. In the other direction, one just
+has to note that since C is cyclic, xc(x) is in C for every c(x) ∈C which means that xkc(x) is in C for every k. But
+C is linear by assumption so if h(x) is any polynomial then h(x)c(x) is in C and thus C is an ideal.
+Note that Fq[x]/(xn −1) is a principal ideal ring and therefore the elements of every cyclic code C are just multiples
+of g(x), the monic polynomial of lowest degree in C; g(x) is called the generator polynomial of C. Because of the
+correspondence (B1) above we know that given g(x) = g0 + g1x + · · · gn−kxn−k [g(x) divides xn −1 since otherwise
+g(x) could not be the monic polynomial of lowest degree in C], we have the vector (g0, g1, . . . , gn−k). We then can
+write the k × n generator matrix of the code as
+
+
+
+g0 g1 · · ·
+gn−k
+0
+0
+· · ·
+0
+0
+g0 · · · gn−k−1 gn−k
+0
+· · ·
+0
+0
+0
+· · ·
+· · ·
+0
+0
+0
+· · ·
+g0
+g1 · · · gn−k
+
+
+.
+In this way, the row space generates C. If we can write xn −1 = w1(x)w2(x) · · · wt(x) as the decomposition of
+xn −1 into irreducible factors, then the code generated by xn−1
+wi(x) is called an irreducible cyclic code. In algebraic terms
+what this means is that the code C is a minimal ideal of Fqk[x]/(xn −1), i.e., C contains no subspace (other than
+0) which is closed under the cyclic shift operator [33]. The reason we are interested in irreducible cyclic codes is that
+there is an established connection between the weights of the code words and Gauss sums.
+We now turn to the representation of irreducible cyclic codes, speciﬁcally 1) the form that the generator matrix can
+take, 2) a description of the codewords in terms of the trace function. Issue 1) relates back to the matrix representation
+of the cycle matroid of graphs and issue 2) will allow us to make the connection to Gauss sums.
+2.
+Generator matrix of a cyclic code and the cycle matroid matrix
+There is an alternative (but equivalent) way of constructing the generator matrix of a cyclic code which will
+immediately show its usefulness in its relationship with the cycle matroid matrix representation. Let C be an [n, k]
+cyclic code and let g(x) be the generator polynomial. Now, divide xn−k+i by g(x) for 0 ≤i ≤k −1. We have
+xn−k+i = qi(x)g(x) + ri(x)
+where deg ri(x) < deg g(x) = n −k or ri(x) = 0. What this means is that we have a set of linearly independent code
+words. Namely, we have the k code words given by
+xn−k+i −ri(x) = qi(x)g(x)
+in C.
+More explicitly, take the remainder polynomials ri(x) after applying the division algorithm and using the
+correspondence (B1) above, form the k × (n −k) matrix R and append the k × k identity matrix to it. The rows of R
+are the coeﬃcients of the ri(x) and one then has the k × n generator matrix [Ik|R]. This is precisely the form of the
+matrix representation for matroids discussed above. Thus, we have a correspondence between the generator matrix
+for an irreducible cyclic code and the matrix representation for the cycle matroid of a graph.
+Proposition 1 In an [n, k] irreducible cyclic code there are at most N words of diﬀerent non-zero weight where
+N = (qk −1)/n.
+Proof. For any irreducible cyclic code we have the relation qk −1 = nN over the ﬁeld Fq. The length of each word
+is n and any cyclic permutation of a word preserves the Hamming weight. Therefore, for each word there are n −1
+other words of equal weight. As there are qk −1 words of non-zero weight, if we assume that every word that does
+not arise from the cyclic permutation of another word is of a diﬀerent weight, then there are (qk −1)/n words of
+diﬀerent weight. Being however that there is the possibility of repeats in weight among words which are not cyclic
+permutations of each other, there are at most N diﬀerent weights.
+APPENDIX C: GAUSS SUMS AND A QUANTUM ALGORITHM FOR THE ESTIMATION OF GAUSS
+SUMS
+Gauss sums are sums of products of group characters.
+
+
+=== PAGE 21 ===
+21
+1.
+Characters
+A character of a ﬁnite group (G, ∗) is a homomorphism Φ from G to the group of the non-zero complex numbers
+C.
+We are interested in two types of characters, namely the multiplicative and additive characters. Let F ≡Fqk (where
+k is a positive integer) be a ﬁnite ﬁeld as deﬁned previously, and let F∗be the multiplicative group of F. Let g be a
+primitive element of F (i.e., g generates F). Let
+ζq = e2πi/q
+denote the qth root of unity. Let x = gk ∈F∗. A multiplicative character χj(x) is a mapping from the set of powers
+{m} in x = gm to powers of roots of unity. Speciﬁcally, the group of multiplicative characters χ = {χj}j consists of
+the elements
+χj(x) = χj(gm) = ζjm
+qk−1,
+m = 0, . . . , q −2 ∈Fq;
+j = 0, . . . , qk −2 ∈F.
+Let a ∈F. An additive character ej(a) is a mapping from F to powers of roots of unity via the trace function.
+Speciﬁcally, the group of additive characters e = {eβ}β consists of the elements
+eβ(a) = ζTr(βa)
+q
+∀a, β = 0, . . . , qk −1 ∈F
+where the trace is deﬁned in Eq. (17).
+2.
+Discrete Log
+For every non-zero x ∈F∗the discrete logarithm with respect to a primitive element g ∈F is given by
+logg(x) = logg(gm) = m mod (qk −1).
+This means that every multiplicative character can be written
+χj(x) = χj(gm) = ζ
+j logg(x)
+qk−1
+(C1)
+for x ̸= 0 and χ(0) = 0.
+3.
+Gauss Sums
+Let eβ and χj be an additive and multiplicative character respectively. Then the Gauss Sum G(χj, eβ) is deﬁned
+as:
+G(χj, eβ) =
+X
+x∈F∗
+χj(x)eβ(x).
+(C2)
+Gauss sums are used extensively in number theory, e.g., in the study of quadratic residues or Dirichlet L-functions.
+To compute a Gauss sum we need to specify the ﬁeld F and the indices β ∈F and j ∈F of the additive and
+multiplicative characters respectively. Thus the input size to a Gauss sum computation is O(k log q) bits. We can
+now deﬁne the Gauss sum over F as
+GF(χj, β) =
+X
+x∈F∗
+χj(x)ζTr(βx)
+q
+.
+It is well known that if χj ̸= 1 then [32]:
+GF(χj, β) = √qreiγ,
+(C3)
+where γ = γF(χj, β). This means that all we need to do is approximate the angle γ mod (2π) in order to approximate
+the Gauss sum. This is precisely the Gauss sum approximation problem for ﬁnite ﬁelds.
+
+
+=== PAGE 22 ===
+22
+4.
+Quantum Algorithm for Gauss Sums
+Van Dam and Seroussi devised an eﬃcient quantum algorithm to estimate Gauss Sums [25]. The following is an
+outline of the essentials of the proof; we refer the reader to [25] for a complete description as well as a discussion of
+the complexity of estimating Gauss sums.
+Theorem 2 {Quantum Amplitude Ampliﬁcation} Let f : S 7→{0, 1} be a function for which we know the total
+weight ∥f∥l1 but not those values x ∈S for which f(x) = 1. Then the corresponding state
+|f⟩=
+1
+∥f∥l2
+X
+x∈S
+f(x)|x⟩
+can be eﬃciently and exactly prepared on a quantum computer where we have to make a number of queries to f of the
+order O
+q
+|S|
+∥f∥l1
+
+.
+This is an essential ingredient in Grover’s quantum search algorithm. For a proof and details see [2]. It follows
+from Eq. (C1) and Shor’s discrete log algorithm [1] that given g, qk and j, we can eﬃciently create the state |χj⟩.
+The following lemma is essential in this regard. First note that for any set S we deﬁne
+|S⟩≡
+1
+p
+|S|
+X
+x∈S
+|x⟩.
+Lemma 1 For a ﬁnite ﬁeld Fqk and the triplet (qk, g, r) (the speciﬁcation of a multiplicative character χr), the state
+|χr⟩=
+1
+p
+qk −1
+X
+x∈Fqk
+χr(x)|x⟩
+and its Fourier transform | ˆχr⟩can be created in polylog(qk) time steps on a quantum computer.
+Proof. We ﬁrst create the state
+|F∗
+qk⟩|ˆ1⟩=
+1
+p
+qk(qk −1)
+X
+x∈F∗
+qk
+|x⟩
+qk−2
+X
+j=0
+ζj
+qk−1|j⟩
+by using Grover’s amplitude ampliﬁcation on Fqk and the Fourier transform. Next, in superposition over all x ∈F∗
+qk,
+we calculate logg(x) and subtract r logg(x).
+|F∗
+qk⟩|ˆ1⟩−→
+1
+p
+qk(qk −1)
+X
+x∈F∗
+qk
+|x⟩
+qk−2
+X
+j=0
+ζj
+qk−1|j −r logg(x)⟩
+(C4)
+=
+1
+p
+qk(qk −1)
+X
+x∈F∗
+qk
+|x⟩
+qk−2
+X
+j=0
+ζj
+qk−1ζ
+r logg(x)
+qk−1
+|k⟩
+(C5)
+=
+1
+p
+qk −1
+X
+x∈F∗
+qk
+ζ
+r logg(x)
+qk−1
+|x⟩|ˆ1⟩
+(C6)
+=
+|χr⟩|ˆ1⟩
+(C7)
+To get | ˆχr⟩we just need to apply the Fourier transform.
+The technique used in the above proof is known as the phase kickback trick. Now we are ready for the following.
+Theorem 3 Algorithm for approximating Gauss Sums. Consider Fqk, a nontrivial multiplicative character χr
+and β ∈F∗
+qk. If we apply the quantum Fourier transform over this ﬁeld to |χr⟩, followed by a phase change
+|y⟩−→χ2
+r(y)|y⟩
+(C8)
+then we generate an overall phase change given by
+|χr⟩=
+1
+p
+qk −1
+X
+x∈Fqk
+χr(x)|x⟩−→
+GFqk (χr, β)
+p
+qk
+|χr⟩.
+
+
+=== PAGE 23 ===
+23
+Proof. After a Fourier transform we have
+| ˆχr⟩=
+1
+p
+qk(qk −1)
+X
+y∈F∗
+qk
+
+X
+x∈Fqk
+χr(x)ζTr(βxy)
+q
+
+|y⟩
+=
+1
+p
+qk(qk −1)
+X
+y∈F∗
+qk
+GFqk (χr, βy)|y⟩
+=
+1
+p
+qk(qk −1)
+X
+y∈F∗
+qk
+χr(y−1)GFqk (χr, β)|y⟩.
+Then
+|χr⟩=
+GFqk (χr, β)
+p
+qk(qk −1)
+X
+y∈F∗
+qk
+χr(y−1)|y⟩.
+Now we know that we can eﬃciently (and exactly) create the phase change given by (C8). Doing so gives us
+|ˆχ⟩−→
+GFqk (χr, β)
+p
+qk(qk −1)
+X
+y∈F∗
+qk
+χr(y−1)χ2
+r(y)|y⟩=
+GFqk (χr, β)
+p
+qk
+|χr⟩
+since |χr⟩=
+1
+√
+qk−1
+P
+y∈F∗
+qk χr(y)|y⟩and χr(y−1)χr(y) = 1. Thus, the coeﬃcient of |χr⟩is just eiγ. It is well known
+that one can eﬃciently estimate the phase of such a function to within an expected error of O(1/n) where n is the
+number of copies of eiγ|χr⟩we sample. Therefore we arrive at an estimate of γ and hence of the Gauss sum in
+question.
+This gives way to the following theorem about the time complexity of the algorithm and is the culmination of the
+ﬁrst part of the paper [25].
+Theorem 4 For any ǫ > 0, there is a quantum algorithm that estimates the phase γ in GFqk (χr, β) =
+p
+qkeiγ, with
+expected error E(|γ −˜γ|) < ǫ. The time complexity of this algorithm is bounded by O( 1
+ǫ · polylog(qk)) [25].
+Note that the “poly” in polylog refers to a quadratic polynomial.

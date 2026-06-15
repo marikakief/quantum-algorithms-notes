@@ -1,0 +1,818 @@
+
+
+--- PAGE 1 ---
+arXiv:1603.07856v3  [quant-ph]  31 Jan 2017
+USING SIMON’S ALGORITHM TO ATTACK SYMMETRIC-KEY
+CRYPTOGRAPHIC PRIMITIVES
+THOMAS SANTOLIa
+Mathematical Institute, University of Oxford;
+Andrew Wiles Building, Radcliﬀe Observatory Quarter
+Woodstock Road, Oxford, OX2 6GG
+CHRISTIAN SCHAFFNERb
+ILLC, University of Amsterdam
+Centrum Wiskunde & Informatica (CWI)
+QuSoft
+P.O. Box 94242, 1090 GE Amsterdam, Netherlands
+We present new connections between quantum information and the ﬁeld of classical
+cryptography. In particular, we provide examples where Simon’s algorithm can be used to
+show insecurity of commonly used cryptographic symmetric-key primitives. Speciﬁcally,
+these examples consist of a quantum distinguisher for the 3-round Feistel network and a
+forgery attack on CBC-MAC which forges a tag for a chosen-preﬁx message querying only
+other messages (of the same length). We assume that an adversary has quantum-oracle
+access to the respective classical primitives. Similar results have been achieved recently
+in independent work by Kaplan et al. [KLLNP16]. Our ﬁndings shed new light on the
+post-quantum security of cryptographic schemes and underline that classical security
+proofs of cryptographic constructions need to be revisited in light of quantum attackers.
+Keywords: quantum cryptanalysis, Simon’s algorithm, Feistel network, CBC-MAC
+1
+Introduction
+The main goal of cryptography is secure communication. While encryption ensures the se-
+crecy of a message, its integrity is guaranteed by means of authentication. In private-key
+cryptography, it is assumed that honest players Alice and Bob share a private key unknown
+to any attacker. The situation is symmetric between Alice and Bob, hence this scenario is
+also referred to as symmetric cryptography. Here, private-key encryption (e.g. the Advanced
+Encryption Standard AES in a certain encryption mode) can be used to ensure secrecy of a
+message, while Message-Authentication Codes (MACs) allow to verify that a message origi-
+nated from the secret-key holder and that the message has not been altered in transit. Cryp-
+athsantoli1@gmail.com
+bc.schaﬀner@uva.nl
+65
+
+
+--- PAGE 2 ---
+2
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+tographic research has come up with satisfactory solutions for these tasks, but even if we
+assume that these problems are solved, the problem of pre-establishing secret keys remains.
+In groundbreaking work, very elegant solutions to this key-establishing problem have been
+suggested by Merkle [Mer78] and Diﬃe and Hellman [DH76]. The key idea is to split the key
+up into a public and private part, where only the latter needs to be kept secretc. However,
+compared to private-key cryptography, public-key cryptoschemes often require some richer
+mathematical structure which makes them more vulnerable to attacks.
+Post-quantum cryptography [BBD09]dstudies the security of cryptographic systems against
+quantum attackers. Most currently used public-key systems (such as RSA [RSA78] or elliptic-
+curve cryptography) are known to be insecure against attackers with large-scale quantum
+computers, because their security relies on the hardness of mathematical problems such as
+factoring large integer numbers or taking discrete logarithms.
+For these problems, there
+is an exponential gap between the quantum and classicalerunning times of the best-known
+algorithms: these problems can be solved in polynomial time by Shor’s algorithm [Sho94] on
+a large enough quantum computer, whereas we do not know of any polynomial-time classical
+algorithms for them.
+In light of the fact that quantum algorithms break most of currently used public-key
+cryptography, it is natural to study the impact of quantum attacks also on private-key (or
+symmetric) cryptosystems. However, not much is known about the security of cryptographic
+primitives (such as hash functions or encryption schemes) under the assumption that an
+attack may involve quantum queries to the primitive. So, for example, apart from querying
+the primitive on a single input, a quantum adversary is allowed to query it on a superposition
+of inputs. Such a model is easily justiﬁed in case of a hash function [BDF+11] which is given by
+a classical algorithm. That algorithm can then be run on a quantum superposition of possible
+inputs. Other settings of superposition queries have been considered as well [BZ13b, DFNS14,
+BZ13a, GHS16]. The common belief so far was that quantum attacks on symmetric primitives
+are of minor concern, as they mainly consist of employing Grover’s algorithm [Gro96] to
+generically speed up search (sub-)problems, for instance for ﬁnding collisions in hash functions.
+Grover search usually allows to get at most a quadratic improvement in the number of queries
+required to attack the primitive, see for instance [KLLNP16] for recent cryptanalytic results
+in this direction. In these cases, doubling the security parameter (such as the bit-size of the
+output of the hash function) would be a simple solution to overcome quantum attacks.
+In this article, we exhibit two examples of commonly used classical symmetric-key cryp-
+tographic primitives which have well-established classical security proofs showing that an
+exponential number of queries is required for an attack. However, we demonstrate that se-
+curity is broken by a quantum attacker which only makes a polynomial number of quantum
+queries. This is a similar exponential gap between classical and quantum security as in the
+devastating attacks using Shor’s algorithm in the public-key setting. Our results shed new
+light on the relation between quantum information and classical cryptography, suggesting that
+cIn fact, public-key cryptography was invented already in the early 70s by Ellis, Cocks and Williams at the
+British intelligence agency GHCQ, but these works had been classiﬁed until 1997.
+dThe term is quite well-established by now, but chosen somewhat unfortunately, because the research area is
+concerned with cryptography which is still secure at the beginning and not after the end of the era of large-scale
+quantum computers.
+eHere and throughout the article, we will use the term classical as synonym for non-quantum.
+
+
+--- PAGE 3 ---
+T. Santoli and C. Schaﬀner
+3
+many classical cryptographic security proofs have been carried out in an incomplete (namely
+classical) security model and need to be revisited in the light of the currently most accurate
+description of Nature, which is quantum mechanics.
+1.1
+Simon’s Algorithm
+Simon’s algorithm was proposed in 1994 [Sim94] as ﬁrst quantum algorithm exhibiting an
+exponential speedup in query complexity compared to any classical algorithm (in the bounded-
+error setting). It solves the following problem: given a function f : {0, 1}n →{0, 1}n with
+the promise that for some s ∈{0, 1}n, it holds that [f(x) = f(y)] ⇔[x⊕y ∈{0n, s}], ﬁnd the
+n-bit string s. It can be shown [MW16] that any classical algorithm requires Ω(2n/2) classical
+queries to f in order to ﬁnd s, whereas Simon’s algorithm succeeds using only O(n) quantum
+queries to f. The quantum part of Simon’s algorithm consists of executing the following
+circuit:
+|0⟩
+/n
+H⊗n
+Uf
+H⊗n
+|0⟩
+/n
+where the quantum query to the classical function f is formalized in the standard way by a
+unitary transform
+Uf |x⟩|y⟩= |x⟩|y ⊕f(x)⟩
+(1)
+where ⊕denotes bitwise addition modulo 2.
+The ﬁrst Hadamard operation leads to the state P
+x∈{0,1}n |x⟩|0⟩, which after querying
+f becomes P
+x∈{0,1}n |x⟩|f(x)⟩. Measuring the second register gives a random outcome f(x)
+and collapses the ﬁrst register to
+1
+√
+2(|x⟩+ |x ⊕s⟩) because of the promised structure of f.
+Applying another Hadamard transform leads to the state P
+y∈{0,1}n(−1)y·x(1 + (−1)y·s) |y⟩.
+Note that for y ∈{0, 1}n with y · s = y1s1 ⊕· · · ⊕ynsn = 1, we have destructive interference
+and the amplitudes of those strings y vanish. Therefore, measuring the register will result in
+a (random) n-bit string y with the property that y · s = 0. Running this quantum procedure
+O(n) of times results in a full-rank system of linear equations which can be solved eﬃciently
+classically to obtain the string s.
+1.2
+Our Contributions
+In this article, we observe that requiring only the forward implication of Simon’s promise
+x = y ⊕s ⇒f(x) = f(y) suﬃces for Simon’s subroutine to give a j such that j · s = 0.
+The diﬀerence between this weakened condition and full Simon’s promise is that we cannot
+bound the number of runs of the subroutine which are required in order to get an independent
+system of n such equations, and there are cases in which such an independent system cannot
+be obtained at all.
+Our contributions build on a technique developed by Kuwakado and Morii. They make
+clever use of Simon’s algorithm to distinguish a three-round Feistel construction with internal
+permutations from a random permutation (see explanations below) [KM10], and to recover
+the key in the Evan-Mansour encryption scheme [KM12]. In Section 3, we slightly extend the
+result from [KM10]. Using our observation above, we can relax the assumption from [KM10]
+that the internal functions have to be permutations, replacing them with arbitrary functions.
+Using random functions (instead of permutations) is relevant in the application where a
+
+
+--- PAGE 4 ---
+4
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+Feistel network is used to convert pseudorandom functions into pseudorandom permutations.
+In Section 4 we present the main new result of this article, a quantum forgery attack on a
+commonly used scheme for message authentication called CBC-MAC (of ﬁxed-size messages).
+In our attack, we assume an adversary to be able to query arbitrary quantum superpositions
+of messages, provided these do not contain the message for which she forges a tag in the end.
+In fact, our attack also applies to an extension of the basic CBC-MAC to arbitrary-length
+messages by prepending the length of the message.
+1.3
+Related work
+Concurrent to this work, very similar results to ours are presented in a recent article by
+Kaplan, Leurent, Leverrier, and Naya-Plasencia [KLLNP16]. While there has been an initial
+exchange of ideas in early stages of the work, the communication stopped after a while and
+our respective results have been obtained independently.
+One diﬀerence between our work and [KLLNP16] is that we use diﬀerent ways to handle
+the case in which Simon’s promise is not fully satisﬁed, that is when there is an s such
+that f(x) = f(x ⊕s) for all inputs s, but there can be unwanted collisions f(x) = f(y)
+where y ̸∈{x, x ⊕s}. These unwanted collisions may increase the number of runs of Simon’s
+subroutine needed to obtain an independent system of equations. We observe that this does
+not constitute a problem when it comes to distinguishing f from a random function. Instead,
+the authors of [KLLNP16] give a more general analysis of Simon’s algorithm, and introduce
+a quantity to measure the number of the aforementioned unwanted collisions, and they show
+how to bound the number of needed repetitions of the subroutine in terms of this quantity.
+Another diﬀerence between our works is the variant of CBC-MAC which we analyze. In
+our attack, we focus on MACs for ﬁxed-size messages. In particular, we manage to forge a
+tag for a message (with a chosen preﬁx) by querying the MAC with messages of the same
+length. In [KLLNP16], they consider a slight variant of the basic CBC-MAC which can handle
+arbitrary-size messages by using two separate keys. While we show how to forge a tag for a
+message in which each block is non-zero by querying only messages which have at least one
+block of zeros, what they do is showing how to forge a tag for a message which is strictly
+longer than all messages queried in their attack.
+Moreover, the results from [KLLNP16] illustrate that Simon’s algorithm can be used to
+break not only CBC-MAC, but a whole range of modes of operation for authentication and
+authenticated encryption.
+Furthermore, Simon’s algorithm can be used to speed up slide
+attacks, a cryptanalytic technique against classical symmetric cryptoschemes.
+2
+Pseudorandom Functions and Permutations
+In this section, we provide formal deﬁnitions and statements about classical cryptography,
+following the lines of [KL07].
+In the following, we consider keyed functions. These are two-input functions F : {0, 1}∗×
+{0, 1}∗→{0, 1}∗.
+Given a keyed function F, we say that it is eﬃcient if there exists a
+polynomial-time algorithm which computes F(k, x) given k and x as inputs, and we say that
+it is length-preserving if it accepts only pairs of inputs (k, x) where k and x have the same
+length, and if also the output F(k, x) has this same length.
+For each n ∈N, let Funcn be the set of all functions mapping n-bit strings to n-bit strings.
+
+
+--- PAGE 5 ---
+T. Santoli and C. Schaﬀner
+5
+A length-preserving keyed function F induces a distribution on Funcn, given by randomly
+choosing k ←{0, 1}n and then considering the single-input function Fk(·) := F(k, ·).
+Intuitively we say that F is pseudorandom if, choosing k at random in {0, 1}n, the function
+Fk cannot be eﬃciently distinguished from a function f chosen uniformly at random from the
+set of all functions Funcn. In order to give the formal deﬁnition of pseudorandom function,
+we use the notion of oracle-distinguisher, which consists of an algorithm DO(·) having access
+to an oracle function O(·). This means that in one time step, D can query the oracle at a
+point x, obtaining the value of O(x).
+Deﬁnition 1. Let F : {0, 1}∗× {0, 1}∗→{0, 1}∗be an eﬃcient length-preserving keyed
+function. We call F a pseudorandom function if for any probabilistic polynomial-time oracle-
+distinguisher D there exists a negligible function negl(n) such that
+
+Pr
+k←{0,1}n[DFk(·)(1n) = 1] −
+Pr
+f←Funcn[Df(·)(1n) = 1]
+ ≤negl(n)
+where a negligible function is one which grows slower than any inverse polynomial in n.
+An eﬃcient length-preserving function F : {0, 1}∗× {0, 1}∗→{0, 1}∗is called keyed
+permutation if for every n and for every k ∈{0, 1}n the function Fk(·) : {0, 1}n →{0, 1}n
+is a permutation (that is, a bijection). A keyed permutation is called eﬃcient if there are
+polynomial-time algorithms which, on inputs k and x, compute Fk(x) and F −1
+k
+(x) respectively.
+Let Permn be the set of all permutations of {0, 1}n. In the same way as a length-preserving
+keyed function induces a distribution on Funcn, a keyed permutation induces a distribution
+on Permn. This leads to the deﬁnition of pseudorandom permutations, analogous to pseudo-
+random functions:
+Deﬁnition 2. Let F : {0, 1}∗× {0, 1}∗→{0, 1}∗be an eﬃcient keyed permutation. We call
+F a pseudorandom permutation if for any probabilistic polynomial-time oracle-distinguisher
+D there exists a negligible function negl(n) such that
+
+Pr
+k←{0,1}n[DFk(·)(1n) = 1] −
+Pr
+π←Permn[Dπ(·)(1n) = 1]
+ ≤negl(n).
+We can use the Feistel construction to build a pseudorandom permutation from a pseu-
+dorandom function:
+Theorem 3. [LR88] If F is a pseudorandom function, then the 3-round Feistel network (as in
+Figure 1) with internal round functions Fk1, Fk2, Fk3 is a pseudorandom permutation mapping
+2n-bit strings to 2n-bit strings, and using a key k = k1||k2||k3 of length 3n.
+The notion of pseudorandomness of classical functions can be generalized to a post-
+quantum setting, where we assume that adversaries are allowed to perform quantum com-
+putation.
+In this context, we consider quantum oracle-distinguishers.
+A quantum oracle-
+distinguisher is a quantum algorithm D|O(·)⟩which is allowed to make quantum queries of
+the form |x, y⟩7→|x, y ⊕O(x)⟩. This means that D can evaluate the function O(·) not only
+on classical inputs, but also on superpositions of classical inputs. This leads to the following
+quantum generalizations of pseudorandomness:
+Deﬁnition 4. Let F : {0, 1}∗× {0, 1}∗→{0, 1}∗be an eﬃcient length-preserving keyed
+function. We call F a quantum pseudorandom function if for any polynomial-time quantum
+
+
+--- PAGE 6 ---
+6
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+oracle-distinguisher D there exists a negligible function negl(n) such that
+
+Pr
+k←{0,1}n[D|Fk(·)⟩(1n) = 1] −
+Pr
+f←Funcn[D|f(·)⟩(1n) = 1]
+ ≤negl(n).
+If F : {0, 1}∗× {0, 1}∗→{0, 1}∗is an eﬃcient keyed permutation, we call it a quantum
+pseudorandom permutation if for any polynomial-time quantum oracle-distinguisher D there
+exists a negligible function negl(n) such that
+
+Pr
+k←{0,1}n[D|Fk(·)⟩(1n) = 1] −
+Pr
+π←Permn[D|π(·)⟩(1n) = 1]
+ ≤negl(n).
+Quantum pseudorandomness is a strictly stronger requirement than classical pseudoran-
+domness. For example, by the distinguisher which we showed in Section 3, the 3-round Feistel
+network is not a quantum pseudorandom permutation, while by Theorem 3 it is a classical
+pseudorandom permutation.
+3
+Quantum distinguisher for the 3-round Feistel network
+A Feistel network is a common cryptographic way of building block ciphers. Block ciphers
+are the basic building blocks of encryption schemes. Ideally, a block cipher with block size
+n bits behaves like a fully random permutation from {0, 1}n to {0, 1}n. Many block ciphers
+such as DES (Data Encryption Standard) are based on a Feistel construction.
+A Feistel network operates in a series of k rounds where internal randomizing functions
+P1, . . . , Pk (from n bits to n bits) are cleverly put together to result in a permutation. More
+speciﬁcally, if the input of the i-th round is Li−1||Ri−1 ∈{0, 1}2n, the output produced by
+the round is Li||Ri ∈{0, 1}2n deﬁned by Li := Ri−1 and Ri := Li−1 ⊕Pi(Ri−1), see Figure 1.
+Interestingly, this classical cryptographic construction is not alien to quantum information
+theorists, as it is akin to the standard way of implementing a classical function Pi in a
+unitary way as in Equation (1).
+Thus, a k-round Feistel network takes an input L0||R0 ∈{0, 1}2n and produces an output
+Lk||Rk ∈{0, 1}2n by subsequently executing the round functions. One important feature of
+Feistel networks is that, regardless of the internal functions P1, . . . , Pk, the resulting function
+L0||R0 7→Lk||Rk is always a permutation. Indeed, in order to invert the function one only
+needs to reverse the construction without the need of computing the inverse of the internal
+functions P1, . . . , Pk (in other words, the internal functions do not have to be bijective).
+This is also handy in practice, because it makes the decryption process very similar to the
+encryption process.
+Classically, Theorem 3 states that a 3-round Feistel network constitutes a cryptographi-
+cally secure pseudorandom permutation as long as the internal functions are pseudorandom
+as well. That is, a polynomial-time classical distinguisher cannot distinguish a 3-round Feistel
+network from a random permutation, see Section 2 for formal deﬁnitions and statements of
+this classical result. Quantumly, this implication does not hold, and in this section we show
+a polynomial-time quantum attacker which can distinguish a 3-round Feistel network (with
+internal random functions) from a fully random permutation. Our proof follows the lines of
+the results by Kuwakado and Morii [KM10]. The main diﬀerence is that they assume the
+internal functions of the Feistel network to be permutations, while here we can handle the
+more general scenario of arbitrary (random) functions.
+
+
+--- PAGE 7 ---
+T. Santoli and C. Schaﬀner
+7
+L0
+R0
+L
+P1
+L
+P2
+L
+P3
+L3
+R3
+L1
+L2
+R1
+R2
+Fig. 1. A three-round Feistel network with internal functions P1, P2, P3.
+In this scenario, a distinguishing adversary has an oracle V : {0, 1}2n →{0, 1}2n which is
+either a fully random permutation of 2n-bit strings, or a 3-round Feistel network with internal
+random functions P1, P2, P3, that is
+V (a||c) = c ⊕P2(a ⊕P1(c)) || a ⊕P1(c) ⊕P3(c ⊕P2(a ⊕P1(c))) .
+Let W : {0, 1}2n →{0, 1}n be the ﬁrst n bits of V : W(a||c) = c ⊕P2(a ⊕P1(c)). Let
+α, β ∈{0, 1}n be distinct ﬁxed strings, and let us consider the function f : {0, 1}n+1 →{0, 1}n
+deﬁned as
+f(b||a) :=
+(
+W(a||α) ⊕α
+if b = 0
+W(a||β) ⊕β
+if b = 1
+for all b ∈{0, 1} and a ∈{0, 1}n. In case V is the Feistel network, we have
+f(b||a) =
+(
+α ⊕P2(a ⊕P1(α)) ⊕α
+if b = 0
+β ⊕P2(a ⊕P1(β)) ⊕β
+if b = 1
+=
+(
+P2(a ⊕P1(α))
+if b = 0
+P2(a ⊕P1(β))
+if b = 1
+.
+For each y in the image img(P2) of P2, denote its pre-image by P −1
+2
+(y) = {x1, . . . , xly},
+we have
+f(b||a) = y
+⇔b||a ∈{0||xi ⊕P1(α)}i=1...ly ∪{1||xi ⊕P1(β)}i=1...ly
+= {a1, . . . , aly} ∪{a1 ⊕s, . . . , aly ⊕s}
+
+
+--- PAGE 8 ---
+8
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+where s = 1||(P1(α) ⊕P1(β)) and ai = 0||(xi ⊕P1(α)) for i = 1 . . . ly. In particular, in case V
+is a Feistel network, for each u ∈{0, 1}n+1, we have f(u) = f(u ⊕s). On the other hand, in
+case V is a random permutation, no such relation is expected to hold.
+Using at most two invocations of the unitary operator UV : |x, y⟩7→|x, y ⊕V (x)⟩for
+computing V , we can construct the unitary operator Uf : |u, y⟩7→|u, y ⊕f(u)⟩. Using this
+operator, one can mount the following attack, based on Simon’s algorithm, to distinguish
+whether V is a random permutation or a 3-round Feistel network:
+1. Initialize X as the empty set.
+2. Run Simon’s subroutine:
+|0⟩/n+1 H⊗n+1
+Uf
+H⊗n+1
+j
+|0⟩
+/n
+3. Add the result j = (j0, j1, . . . , jn) to X. If X does not contain n linearly independent
+j’s, go back to Step 2, unless X already contains 2n elements. In the latter case, guess
+V to be a 3-round Feistel network. Otherwise, solve this linear system of equations:
+
+
+|
+j1
+. . .
+jn
+|
+
+
+
+
+
+s1
+...
+sn
+
+
+=
+
+
+|
+j0
+|
+
+
+4. Choose u ∈{0, 1}n+1 at random, and guess V to be a 3-round Feistel network if f(u) =
+f(u ⊕s), where s = (1, s1, . . . , sn). Otherwise guess V to be a random permutation.
+Let us ﬁrst analyze the case when V is a 3-round Feistel network. After applying Uf, we
+have the state
+1
+√
+2n+1
+X
+u∈{0,1}n+1
+|u, f(u)⟩=
+1
+√
+2n+1
+X
+y∈img(P2)
+ly
+X
+i=1
+(|ai⟩+ |ai ⊕s⟩) |y⟩.
+Before measuring, we get
+1
+2n+1
+X
+y∈img(P2)
+ly
+X
+i=1
+
+X
+j∈{0,1}n+1
+(−1)ai·j |j⟩+
+X
+j∈{0,1}n+1
+(−1)(ai⊕s)·j |j⟩
+
+|y⟩
+=
+1
+2n+1
+X
+y∈img(P2)
+X
+j∈{0,1}n+1
+ly
+X
+i=1
+(−1)ai·j(1 + (−1)s·j) |j⟩|y⟩
+= 1
+2n
+X
+y∈img(P2)
+
+X
+j∈{0,1}n+1
+s·j=0
+ ly
+X
+i=1
+(−1)ai·j
+|j⟩
+
+|y⟩.
+
+
+--- PAGE 9 ---
+T. Santoli and C. Schaﬀner
+9
+Hence, all measurement outcomes j satisfy s · j = 0 mod 2, so if at some point we solve
+the system in Step 3 we get (s1, . . . , sn) = P1(α) ⊕P1(β), and the condition f(u) = f(u ⊕s)
+in Step 4 is satisﬁed for all u ∈{0, 1}n+1, so the algorithm gives the correct answer. If we
+do not reach the step of solving the system because after collecting 2n vectors we still do not
+have n independent vectors, then we give the correct answer because we will guess V to be
+the 3-round Feistel network.
+If V is a random permutation, then the j’s will be uniform random vectors.
+In that
+case, we make an error if we do not have n independent vectors after 2n extractions, or if
+f(u) = f(u ⊕s) in Step 4. Notice that the probability that after 2n extractions of uniform
+vectors, we still do not have n independent vectors is negligible in n.fIn case we continue to
+solve a random system of independent equations in Step 3, we get a random vector s1, . . . , sn
+as a result. Then, at Step 4, the algorithm makes an error if the randomly chosen u ∈{0, 1}n+1
+satisﬁes the condition f(u) = f(u ⊕s), but this also happens only with negligible probability.
+So we conclude that also if V is a random permutation, the algorithm gives a wrong answer
+by guessing it to be a 3-round Feistel network with only negligible probability.
+In summary, we have constructed a quantum adversary which can eﬃciently distinguish a
+3-round Feistel construction with internal functions from a fully random permutation. This
+extends the results from [KM10] to the important setting where a Feistel construction is used
+to turn pseudorandom functions into pseudorandom permutations.
+4
+Quantum forgery attack on CBC-MAC
+The goal of message authentication and integrity is to allow communicating parties to verify
+that a received message comes from the expected sender, and that the message has not
+been altered in transit.
+Parties who share a secret key can use Message Authentication
+Codes (MACs) to achieve this goal: the sender feeds the key k and the message m to an
+algorithm Mac(k, m) which computes a tag t for the message, and sends the pair (m, t) to
+the receiver. Then the receiver, using the same key k, can check whether t is a valid tag for
+m. A message authentication code is considered secure if no eﬃcient adversary who can ask
+arbitrary adaptive queries to the oracle Mac(k, ·) (where k is uniform and unknown to the
+adversary) can produce a valid tag for a message m that has not been queried before.
+CBC-MAC is an eﬃcient way of constructing a message authentication code based on
+a pseudorandom permutation (formally deﬁned in Section 2). CBC-MAC is widely used in
+practice, and comes in many variants. Given a pseudorandom permutation F : K ×{0, 1}n →
+{0, 1}n, the basic CBC-MAC construction is deﬁned as
+CBCℓ: K × {0, 1}ℓn →{0, 1}n
+(k, m1||m2|| . . . ||mℓ) 7→CBCℓ
+Fk(m1||m2|| . . . ||mℓ) ,
+where
+CBCℓ
+Fk(m1||m2|| . . . ||mℓ) = Fk(Fk(. . . Fk(Fk(m1) ⊕m2) ⊕. . . ) ⊕mℓ) .
+fThis can be proven as follows: the probability that n uniform vectors of length 2n are linearly independent is
+exactly Πn
+i=1(1 −2i−1−2n) ≥1 −2−n. In other words, the column rank of a random binary 2n × n matrix is
+n except with probability at most 2−n. The claim then follows directly from the equality of row and column
+rank, see e.g. [War05].
+
+
+--- PAGE 10 ---
+10
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+Fk
+Fk
+Fk
+L
+L
+m1
+m2
+m3
+t
+Fig. 2. Illustration of the computation of t = CBC3
+Fk(m1||m2||m3).
+The case ℓ= 3 is depicted in Figure 2.
+Using this construction, a sender who wants to send a message m of length ℓn can compute
+a tag t := CBCℓ(k, m) and send the tuple (m, t) to the receiver who can verify whether
+t = CBCℓ(k, m).
+One can prove that CBCℓis a pseudorandom function. Therefore, as explained in [BKR00],
+it (classically) constitutes a secure MAC. Quantumly, even if F is a quantum-secure pseudo-
+random permutation, this construction does not yield a secure MAC, and not even a quantum
+pseudorandom function (qPRF) as deﬁned in Section 2.
+According to the deﬁnition given in [BZ13a], a signature scheme is quantum secure if there
+is no quantum attacker who can produce q + 1 valid tags by making only q queries. This
+notion of security is also the one used in [KLLNP16]. In this work, we use a diﬀerent notion
+of security. Namely, we show how to forge a valid tag for a chosen-preﬁx message without
+ever querying that particular message (not even as small part of a big superposition query).
+We note that basic CBC-MAC is only secure for ﬁxed-length messages, but fails in case the
+attacker is allowed to query and forge diﬀerent-length messages. However, we would like to
+stress that our quantum attack does not rely on that weakness, but also breaks the extension
+of CBC-MAC where the length of the messages is prepended. This extension can be proven
+secure classically.
+In the following, we describe our forgery attack on CBC-MAC for messages of ﬁxed length
+ℓn, where ℓ≥3. We want to forge a tag for a message which has some ﬁxed preﬁx β ∈{0, 1}kn
+of length kn for some k ≤ℓ−2. For simplicity, we restrict ourselves to the case k = 1. In
+Section 4.1, we explain how to extend the attack to preﬁxes of arbitrary size k ≤ℓ−2.
+In a ﬁrst step, we assume that the pseudorandom permutation Fk is replaced with a fully
+random permutation π. If this replacement made a diﬀerence in our forging algorithm, then
+this diﬀerence would allow us to use our algorithm to distinguish Fk from a fully random
+permutation, in contradiction with the fact that F is a qPRF.
+Suppose we want to tag a message having α1 ∈{0, 1}n as a preﬁx. Choose some α0 ̸= α1.
+For j = 1 . . . ℓ−1, let us consider the following functions:
+
+
+--- PAGE 11 ---
+T. Santoli and C. Schaﬀner
+11
+gj :{0, 1}n+1 →{0, 1}n
+b||x 7→CBCℓ
+π(αb||0(j−1)n||x||0(ℓ−j−1)n) = πℓ−j(πj(αb) ⊕x)
+Note that, for distinct u, v ∈{0, 1}n+1, we have gj(u) = gj(v) if and only if v = u ⊕
+1||
+ πj(α0) ⊕πj(α1)
+
+.
+Using one invocation of the unitary operator UCBCℓ
+π we can construct the unitary operator
+Ugj, for j = 1 . . . ℓ−1. A quantum adversary can use these operators to forge a tag on a
+message without querying it as follows:
+1. For j = 1 . . . ℓ−1, run Simon’s subroutine on Ugj in order to ﬁnd zj := πj(α0) ⊕
+πj(α1).gNote that all queries made in this process are on (superpositions of) messages
+m1||m2|| . . . ||mℓsuch that mi = 0n for at least one i ∈{1 . . . ℓ} h.
+2. Classically query t0 := CBCℓ
+π(α0||0(ℓ−1)n) = πℓ(α0) and t1 := CBCℓ
+π(α1||0(ℓ−1)n) =
+πℓ(α1).
+Also these queries are made on messages m1||m2|| . . . ||mℓsuch that mi = 0n for at least
+one i ∈{1 . . .ℓ}.
+3. If ℓis even, forge (m, t) := (α1||z1||z2|| . . . ||zℓ−1, t0). If ℓis odd, forge (m, t) := (α1||z1||z2|| . . . ||zℓ−1, t1).
+The message m = α1||z1||z2|| . . . ||zℓ−1 is never queried in the above procedure, where we
+query only messages m1||m2|| . . . ||mℓsuch that mi = 0n for at least one i ∈{1 . . . ℓ}. In fact,
+as the πi are permutations, we have zj = πj(α0) ⊕πj(α1) ̸= 0n for all j’s.
+Therefore, in order to show that the above forging attack is successful, it remains to prove
+that t is a valid tag for m, which means that CBCℓ
+π(m) = t, where t = t0 = πℓ(α0) if ℓis even
+and t = t1 = πℓ(α1) if ℓis odd. This claim is proven by induction on ℓ≥3:
+We have two base cases, ℓ= 3 and ℓ= 4. For ℓ= 3 we have:
+CBC3
+π(α1||z1||z2) = π(π(π(α1) ⊕z1) ⊕z2)
+= π
+ π (π(α1) ⊕π(α0) ⊕π(α1)) ⊕π2(α0) ⊕π2(α1)
+
+= π((π2(α0) ⊕π2(α0) ⊕π2(α1)) = π3(α1) = t1 .
+For ℓ= 4 we similarly argue that
+CBC4
+π(α1||z1||z2||z3) = π(π(π(π(α1) ⊕z1) ⊕z2) ⊕z3)
+= π
+
+π(π(π(α1) ⊕π(α0) ⊕π(α1)) ⊕π2(α0) ⊕π2(α1)) ⊕π3(α0) ⊕π3(α1)
+
+= π(π(π2(α0) ⊕π2(α0) ⊕π2(α1)) ⊕π3(α0) ⊕π3(α1))
+= π(π3(α1) ⊕π3(α0) ⊕π3(α1)) = π4(α0) = t0 .
+gThis step of the algorithm shows that also for the case ℓ= 2, CBCℓ
+π is not a quantum pseudorandom
+permutation: We can run Simon’s algorithm with g1 (which exists also in the case ℓ= 2) to get a solution
+1||z1. Then, we pick u at random and check if g1(u) = g1(u ⊕1||z1) holds. For CBCℓ
+π, this will always be the
+case, whereas for a fully random permutation, the check will only be passed with negligible probability.
+hThis would not be the case for ℓ= 2, which is why we require ℓ≥3 for the attack.
+
+
+--- PAGE 12 ---
+12
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+If ℓ+ 1 is even then ℓis odd, and the induction step works as
+CBCℓ+1
+π
+(α1||z1||z2|| . . . ||zℓ−1||zℓ)
+= π(CBCℓ
+π(α1||z1||z2|| . . . ||zℓ−1) ⊕zℓ)
+= π(πℓ(α1) ⊕πℓ(α0) ⊕πℓ(α1)) = πℓ+1(α0) = t0 .
+Otherwise, if ℓ+ 1 is odd, then ℓis even and one can argue similarly that
+CBCℓ+1
+π
+(α1||z1||z2|| . . . ||zℓ−1||zℓ)
+= π(CBCℓ
+π(α1||z1||z2|| . . . ||zℓ−1) ⊕zℓ)
+= π(πℓ(α0) ⊕πℓ(α0) ⊕πℓ(α1)) = πℓ+1(α1) = t1 .
+Thus, we can conclude by induction that the output pair (m, t) is correct.
+4.1
+Extension of the Attack on CBC-MAC
+The algorithm presented in this section can be adapted for forging a tag for a message having
+arbitrary β1|| · · · ||βk ∈{0, 1}kn as a preﬁx, for some k ≤ℓ−2.
+Choose α1|| · · · ||αk such that
+α := π(· · · π(π(α1) ⊕α2) · · · ) ⊕αk ̸= π(· · · π(π(β1) ⊕β2) · · · ) ⊕βk =: β .
+This inequality can be achieved by repeatedly choosing α1|| · · · ||αk at random and query-
+ing CBCℓ
+π(α1|| · · · ||αk||0(ℓ−k)n) = πℓ−k
+π(π(· · · π(π(α1) ⊕α2) · · · ) ⊕αk)
+
+= πℓ−k(π(α)) =
+πℓ−k+1(α) and CBCℓ
+π(β1|| · · · ||βk||0(ℓ−k)n) = πℓ−k
+π(π(· · · π(π(β1)⊕β2) · · · )⊕βk)
+
+= πℓ−k(π(β)) =
+πℓ−k+1(β) until πℓ−k+1(α) and πℓ−k+1(β) are diﬀerent (which will already be the case after
+a single try except with negligible probability). Then, since πℓ−k+1(α) ̸= πℓ−k+1(β), we must
+also have α ̸= β.
+We have
+CBCℓ
+π(α1|| · · · ||αk||0(ℓ−k)n) = CBCℓ−k+1
+π
+(α||0(ℓ−k)n)
+and similarly
+CBCℓ
+π(β1|| · · · ||βk||0(ℓ−k)n) = CBCℓ−k+1
+π
+(β||0(ℓ−k)n) .
+So, for j = 1 . . . ℓ−k we deﬁne
+gj : {0, 1}n+1 →{0, 1}n
+b||x 7→
+(
+CBCℓ
+π(α1|| · · · ||αk||0(j−1)n||x||0(ℓ−k−j)n) if b = 0
+CBCℓ
+π(β1|| · · · ||βk||0(j−1)n||x||0(ℓ−k−j)n) if b = 1
+=
+(
+CBCℓ−k+1
+π
+(α||0(j−1)n||x||0(ℓ−k−j)n) if b = 0
+CBCℓ−k+1
+π
+(β||0(j−1)n||x||0(ℓ−k−j)n) if b = 1
+=
+(
+πℓ−k+1−j(πj(α) ⊕x) if b = 0
+πℓ−k+1−j(πj(β) ⊕x) if b = 1 .
+Then we can run the algorithm from Section 4 because ℓ−k + 1 ≥3. Thereby, we obtain
+a tag for the message m = β1|| · · · ||βk||z1|| · · · ||zℓ−k, where zj = πj(α) ⊕πj(β), and only
+(superpositions of) messages with at least one zero-block have been queried in the process.
+
+
+--- PAGE 13 ---
+T. Santoli and C. Schaﬀner
+13
+5
+Conclusion and Open Questions
+We have shown two applications of Simon’s algorithm to breaking classical symmetric cryp-
+toschemes. As illustrated in the independent work of [KLLNP16], the same attack technique
+can be applied in various other cryptographic scenarios as well. These results shed new light
+on the post-quantum cryptographic security of classical cryptography and suggest that many
+classical security proofs need to be revisited in the light of quantum attackers.
+Very recent work by Zhandry [Zha16] shows the existence of quantum-secure pseudo-
+random permutations (PRPs).
+However, the construction does not use Feistel networks.
+Therefore, it remains an intriguing open question to prove that a constant number (strictly
+larger than 3) of Feistel rounds suﬃces to obtain a quantum-secure pseudorandom permu-
+tation from a quantum secure PRF. In the case of message-authentication codes, our work
+suggests that one has to be very careful in using popular constructions such as CBC-MAC.
+Acknowledgements
+We would like to thank the authors of [KLLNP16] and Tommaso Gagliardoni for useful
+discussions about this topic, and Ronald de Wolf for feedback on a draft of the article. Large
+parts of this work was carried out when TS was a master student at ILLC. CS is supported
+by an NWO VIDI grant.
+References
+[BBD09]
+D. J. Bernstein, J. Buchmann, and E. Dahmen, editors. Post-Quantum Cryptography. Springer,
+2009.
+DOI: 10.1007/978-3-540-88702-7.
+[BDF+11]
+D. Boneh, ¨O. Dagdelen, M. Fischlin, A. Lehmann, C. Schaﬀner, and M. Zhandry. Random oracles
+in a quantum world. In Advances in Cryptology—ASIACRYPT 2011, pages 41–69, 2011.
+DOI: 10.1007/978-3-642-25385-0 3.
+[BKR00]
+M. Bellare, J. Kilian, and P. Rogaway. The security of the cipher block chaining message authen-
+tication code. Journal of Computer and System Sciences, 61(3): 362–399, 2000.
+DOI: 10.1006/jcss.1999.1694.
+[BZ13a]
+D. Boneh and M. Zhandry. Quantum-secure message authentication codes. In T. Johansson and
+P. Q. Nguyen, editors, EUROCRYPT 2013, volume 7881 of LNCS, pages 592–608, Athens, Greece,
+2013. Springer, Heidelberg, Germany.
+DOI: 10.1007/978-3-642-38348-9 35.
+[BZ13b]
+D. Boneh and M. Zhandry. Secure signatures and chosen ciphertext security in a quantum com-
+puting world. In Advances in Cryptology—CRYPTO 2013, pages 361–379, 2013.
+DOI: 10.1007/978-3-642-40084-1 21.
+[DFNS14]
+I. Damg˚ard, J. Funder, J. B. Nielsen, and L. Salvail.
+Superposition attacks on cryptographic
+protocols. In Information Theoretic Security, pages 142–161, 2014.
+DOI: 10.1007/978-3-319-04268-8 9.
+[DH76]
+W. Diﬃe and M. Hellman. New directions in cryptography. IEEE Transactions on Information
+Theory, 22(6): 644–654, 1976.
+DOI: 10.1109/tit.1976.1055638.
+[GHS16]
+T. Gagliardoni, A. H¨ulsing, and C. Schaﬀner. Semantic security and indistinguishability in the
+quantum world. In M. Robshaw and J. Katz, editors, CRYPTO 2016, Part III, volume 9816 of
+LNCS, pages 60–89, Santa Barbara, CA, USA, 2016. Springer, Heidelberg, Germany.
+DOI: 10.1007/978-3-662-53015-3 3.
+
+
+--- PAGE 14 ---
+14
+Using Simon’s algorithm to attack symmetric-key cryptographic primitives
+[Gro96]
+L. K. Grover. A fast quantum mechanical algorithm for database search. In 28th ACM STOC,
+pages 212–219, Philadephia, PA, USA, 1996. ACM Press.
+[KL07]
+J. Katz and Y. Lindell. Introduction to Modern Cryptography (Chapman & Hall/Crc Cryptography
+and Network Security Series). Chapman & Hall/CRC, 2007.
+[KLLNP16] M. Kaplan, G. Leurent, A. Leverrier, and M. Naya-Plasencia. Breaking symmetric cryptosystems
+using quantum period ﬁnding. In M. Robshaw and J. Katz, editors, CRYPTO 2016, Part II,
+volume 9815 of LNCS, pages 207–237, Santa Barbara, CA, USA, 2016. Springer, Heidelberg,
+Germany.
+DOI: 10.1007/978-3-662-53008-5 8.
+[KM10]
+H. Kuwakado and M. Morii. Quantum distinguisher between the 3-round feistel cipher and the
+random permutation. In Information Theory Proceedings (ISIT), 2010 IEEE International Sym-
+posium on, pages 2682–2685. IEEE, 2010.
+[KM12]
+H. Kuwakado and M. Morii. Security on the quantum-type even-mansour cipher. In Information
+Theory and its Applications (ISITA), 2012 International Symposium on, pages 312–316. IEEE,
+2012.
+[LR88]
+M. Luby and C. Rackoﬀ.
+How to construct pseudorandom permutations from pseudorandom
+functions. SIAM Journal on Computing, 17(2), 1988.
+[Mer78]
+R. C. Merkle. Secure communications over insecure channels. Communications of the ACM, 21(4):
+294–299, 1978.
+DOI: 10.1145/359460.359473.
+[MW16]
+A. Montanaro and R. d. Wolf. A Survey of Quantum Property Testing. Number 7 in Graduate
+Surveys. Theory of Computing Library, 2016.
+DOI: 10.4086/toc.gs.2016.007.
+[RSA78]
+R. L. Rivest, A. Shamir, and L. Adleman. A method for obtaining digital signatures and public-
+key cryptosystems. Communications of the ACM, 21(2): 120–126, 1978.
+DOI: 10.1145/359340.359342.
+[Sho94]
+P. W. Shor. Algorithms for quantum computation: discrete logarithms and factoring. In 35th
+Annual Symposium on Foundations of Computer Science—FOCS 1994, pages 124–134. IEEE,
+1994.
+DOI: 10.1109/SFCS.1994.365700.
+[Sim94]
+D. R. Simon. On the power of quantum cryptography. In 35th FOCS, pages 116–123, Santa Fe,
+New Mexico, 1994. IEEE Computer Society Press.
+[War05]
+W. P. Wardlaw. Row rank equals column rank. Mathematics Magazine, 78(4): 316–318, 2005.
+Online: http://www.jstor.org/stable/30044181.
+[Zha16]
+M. Zhandry. A note on quantum-secure prps, 2016.

@@ -6,15 +6,15 @@
 
 ## What the paper does
 
-Introduces **quantized bipartite walks** — the quantum analogue of classical Markov chains — and proves a general quadratic speedup for search on any symmetric Markov chain. The main result is the $\sqrt{\delta\epsilon}$ rule: if a classical walk-based search costs $O(1/\delta\epsilon)$ steps (where $\delta$ is the spectral gap of the chain and $\epsilon$ is the fraction of marked elements), the quantum version costs $O(1/\sqrt{\delta\epsilon})$.
+Introduces **quantized bipartite walks** — the quantum analogue of classical Markov chains — and proves a general quadratic speedup for detecting marked states in symmetric Markov chains. The main result is the $\sqrt{\delta\epsilon}$ rule: if a classical walk-based detection procedure costs $O(1/\delta\epsilon)$ steps (where $\delta$ is the spectral gap of the chain and $\epsilon$ is the marked density), the quantum version costs $O(1/\sqrt{\delta\epsilon})$.
 
-This unifies and generalizes Grover search and Ambainis's element distinctness algorithm under a single framework. It is also the foundation for the walk operators that later became [[Qubitization Iterate|qubitization]] in [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|Low & Chuang (2019)]].
+This unifies and generalizes Grover search and Ambainis's element distinctness algorithm under a single framework. Its product-of-reflections spectral map is also an important ancestor of the walk operators used in [[Qubitization Iterate|qubitization]], though modern block-encoding and QSP/QSVT add substantial additional structure.
 
 ---
 
 ## The setup
 
-**Classical problem:** A symmetric Markov chain $P$ on $[n]$ with spectral gap $\delta$. Some elements are marked (set $G$), with $|G| \geq \epsilon n$ or $|G| = 0$. Distinguish these cases.
+**Classical problem:** A symmetric Markov chain $P$ on $[n]$ with spectral gap $\delta$. Some elements are marked (set $G$), with $|G| \geq \epsilon n$ or $|G| = 0$. Distinguish these cases. In this uniform symmetric-chain formulation, $\epsilon$ is a cardinal fraction; in later nonuniform Markov-chain templates the analogous parameter is stationary marked probability.
 
 **Three subroutines with costs:**
 
@@ -34,20 +34,20 @@ This unifies and generalizes Grover search and Ambainis's element distinctness a
 
 ### Classical bipartite walk
 
-A bipartite walk on $[n| \cup |m]$ is a pair of stochastic matrices $(c, r)$: $c$ maps $[n| \to |m]$ and $r$ maps $|m] \to [n|$. For a Markov chain $P$ on $[n]$, take $(c, r) = (P, P)$.
+A bipartite walk on two copies $X$ and $Y$ is a pair of stochastic matrices $(c, r)$: $c$ maps $X \to Y$ and $r$ maps $Y \to X$. For a symmetric Markov chain $P$ on $[n]$, take $(c, r) = (P, P)$ on the two copies.
 
 ### Quantization
 
-The quantum version lives in $\mathbb{C}^{[n|} \otimes \mathbb{C}^{|m]}$. Define states:
+The quantum version lives in $\mathbb{C}^{X} \otimes \mathbb{C}^{Y}$. Define normalized row states:
 
 $$
-\sqrt{c_i} = \sum_j \sqrt{c[i,j]}\, |i\rangle|j\rangle, \qquad \sqrt{r_j} = \sum_i \sqrt{r[j,i]}\, |i\rangle|j\rangle
+|c_i\rangle = \sum_j \sqrt{c[i,j]}\, |i\rangle|j\rangle, \qquad |r_j\rangle = \sum_i \sqrt{r[j,i]}\, |i\rangle|j\rangle
 $$
 
 and projection operators:
 
 $$
-C = \sum_{i=1}^n \sqrt{c_i}\sqrt{c_i}^\dagger, \qquad R = \sum_{j=1}^m \sqrt{r_j}\sqrt{r_j}^\dagger
+C = \sum_i |c_i\rangle\langle c_i|, \qquad R = \sum_j |r_j\rangle\langle r_j|
 $$
 
 The **two-step walk operator** is:
@@ -76,15 +76,15 @@ $$
 
 ```
  Eigenvalues of M          Eigenvalues of μ
- 
+
  -1 ─────── 0 ─────── 1    maps to the unit circle:
-                            
+
                               eiθ
  λ ∈ [-1,1] ──────────▶  ╱     ╲
                         ·         ·   θ = arccos(2λ²-1)
                          ╲     ╱
                            e-iθ
-                            
+
  [−1,1] folds and wraps onto the unit circle
 ```
 
@@ -93,7 +93,7 @@ $$
 - $\lambda = 0$: eigenvalue $-1$
 - $|\lambda| < 1$: complex eigenvalues on the unit circle
 
-For a symmetric Markov chain $P$, the discriminant matrix is $M = \begin{pmatrix} 0 & P \\ P & 0 \end{pmatrix}$, so the eigenvalues of $M$ are $\pm$ the eigenvalues of $P$.
+Equivalently, if $\lambda=\cos\phi$ then the nontrivial walk phases are often written as $e^{\pm 2i\phi}=e^{\pm 2i\arccos \lambda}$. For a symmetric Markov chain $P$, the discriminant matrix is $M = \begin{pmatrix} 0 & P \\ P & 0 \end{pmatrix}$, so the eigenvalues of $M$ are $\pm$ the eigenvalues of $P$.
 
 ---
 
@@ -133,6 +133,8 @@ This means all non-trivial eigenvalues of $\nu$ have phases $|\theta| \geq \sqrt
 
 **Element distinctness (Corollary 1):** Given oracle $f: X \to Y$, distinguish "all distinct" from "collision exists" in $O(|X|^{2/3})$ queries. Set $\alpha = 2/3$ and use the Johnson graph walk.
 
+Szegedy's 2004 theorem is primarily a **detection** result: it distinguishes no marked states from a promised marked density. The later MNRS framework turns this product-of-reflections machinery into a finding algorithm with separated setup, update, and checking costs.
+
 **Grover on expanders (Theorem 4):** Grover search in $\sqrt{n}$ steps using only edges of a $d$-regular expander.
 
 **Triangle finding** (Magniez-Santha-Szegedy): $O(n^{1.3})$ using this framework.
@@ -147,7 +149,7 @@ The quantized walk operator $\mu = (2R-I)(2C-I)$ is a product of two reflections
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]]: quantum walk simulation of sparse Hamiltonians
 - [[Oblivious Amplitude Amplification (Robust)|Amplitude amplification]]: Grover's algorithm is the special case with a trivial (complete-graph) Markov chain
 
-The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant matrix to eigenvalues of the walk operator via the map $\lambda \mapsto e^{\pm i\arccos(2\lambda^2-1)}$ — is the ancestor of the eigenvalue relationship in [[Qubitization Iterate|qubitization]].
+The Spectral Theorem (Theorem 1) — relating eigenvalues of the discriminant matrix to eigenvalues of the walk operator via the map $\lambda \mapsto e^{\pm i\arccos(2\lambda^2-1)}$ — is an ancestor of the eigenvalue relationship in [[Qubitization Iterate|qubitization]].
 
 ---
 

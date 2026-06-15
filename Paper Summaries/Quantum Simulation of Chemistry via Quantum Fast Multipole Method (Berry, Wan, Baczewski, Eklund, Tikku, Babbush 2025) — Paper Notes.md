@@ -1,5 +1,6 @@
 > **Source:** Dominic W. Berry, Kianna Wan, Andrew D. Baczewski, Elliot C. Eklund, Arkin Tikku, Ryan Babbush, *Quantum simulation of chemistry via quantum fast multipole method*, arXiv:2510.07380 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2510.07380)
+> **Version note:** This note follows the revised arXiv v2 crossover: the interaction-picture crossover is $N < \eta^7$ for the QFMM advantage. Older wording with $N < \eta^6$ should be read as v1-era or superseded.
 > **Tags:** #quantum-simulation #quantum-chemistry #first-quantized #product-formula #real-space #Coulomb #fast-multipole #FMM #sorting-network #QRAM-avoidance #fault-tolerant
 
 ---
@@ -10,7 +11,7 @@ Simulate the Born-Oppenheimer electronic structure Hamiltonian
 
 $$H = T + U + V + \sum_{l \neq \kappa} \frac{q_l q_\kappa}{2\|R_l - R_\kappa\|}$$
 
-on a real-space grid in [[First-Quantized Plane-Wave Chemistry Encoding|first quantization]], where $T$ is the kinetic energy (diagonal after QFT), $U$ is the electron-nuclear potential, and $V = \sum_{i \neq j} 1/(2\|r_i - r_j\|)$ is the electron-electron Coulomb interaction. Parameters: $\eta$ electrons, $N$ grid points, $\Omega$ cell volume, precision $\epsilon$, evolution time $t$.
+on a [[Real-Space Grid Encoding for Many-Body Simulation|real-space grid]] in first quantization, where $T$ is the kinetic energy (diagonal after QFT), $U$ is the electron-nuclear potential, and $V = \sum_{i \neq j} 1/(2\|r_i - r_j\|)$ is the electron-electron Coulomb interaction. Parameters: $\eta$ electrons, $N$ grid points, $\Omega$ cell volume, precision $\epsilon$, evolution time $t$. The relation to plane-wave methods is through the first-quantized grid/dual-grid machinery and QFT for kinetic energy, not through a plane-wave orbital LCU.
 
 The bottleneck: computing $V$ requires summing over all $\binom{\eta}{2}$ pairs, giving $O(\eta^2)$ cost per Trotter step. The question this paper answers is whether the classical fast multipole method's $\widetilde{O}(\eta)$ scaling can be recovered on a quantum computer.
 
@@ -22,7 +23,7 @@ Yes, it can. The paper constructs a quantum version of the fast multipole method
 
 $$t\left(\eta^{4/3} N^{1/3} + \eta^{1/3} N^{2/3}\right) \left(\frac{\eta N t}{\epsilon}\right)^{o(1)}$$
 
-in the thermodynamic limit $\Omega \propto \eta$. This is roughly an $O(\eta)$ speedup over all prior first-quantized [[Product Formulas]] approaches (which pay $O(\eta^2)$ for the Coulomb sum), and gives the **lowest known complexity for any approach** when $N < \eta^6$ — the regime that covers essentially all practical molecular and materials simulations.
+in the thermodynamic limit $\Omega \propto \eta$. This is roughly an $O(\eta)$ speedup over prior first-quantized [[Product Formulas]] approaches that pay $O(\eta^2)$ for direct Coulomb summation, and gives the **lowest known complexity for any approach** when $N < \eta^7$ in the revised comparison — the regime that covers essentially all practical molecular and materials simulations.
 
 The space complexity is $O(\eta \log N \cdot \text{polylog}(1/\epsilon))$.
 
@@ -72,7 +73,7 @@ For uniformly distributed particles, each leaf box has at most $c = O(1)$ partic
 4. **Compute far-field potential** by iterating over the interaction list at each level: for each box, multiply its charge $Q_b$ by the precomputed potential $\Phi(c_a, c_b)$ from each box $a \in I(b)$.
 5. **Compute near-field potential** via exact pairwise Coulomb interactions between particles in neighbouring leaf boxes, using [[QROM Interpolation plus Newton-Raphson for Inverse Square Root|QROM + Newton iteration]] for inverse square root evaluation.
 
-Dominant cost: the pairwise near-field interactions in step 5, giving $O(\eta \log^2(1/\epsilon) \log\log(1/\epsilon))$.
+For the evenly distributed construction, the dominant arithmetic cost is the pairwise near-field interactions in step 5, giving $O(\eta \log^2(1/\epsilon) \log\log(1/\epsilon))$. In the adaptive construction below, shifted-order potential access and sorting-related terms become the stated dominant asymptotic pieces.
 
 ### Adaptive case for arbitrary distributions (Section V)
 
@@ -92,7 +93,7 @@ Key subtlety: only the forward direction is needed (not backward), because $a \i
 
 Per-step cost for the adaptive quantum FMM:
 
-- Sorting: $O(\eta \log \eta \log^2 N)$ — $O(\log N)$ sorts, each $O(\eta \log \eta)$ comparators on $O(\log N)$-bit items
+- Sorting: $O(\eta \log^2 \eta \log N)$ in the paper's sorting-network gate-count convention
 - Charge aggregation: $O(\eta \log N \cdot \text{polylog}(1/\epsilon))$
 - Potential computation: $O(\eta \log \eta \log N \log(1/\epsilon))$ — dominant term
 
@@ -127,13 +128,13 @@ where the $o(1)$ exponent can be made arbitrarily small by increasing the [[Prod
 | Algorithm | Year | Gate complexity (thermodynamic limit) | Best regime |
 |---|---|---|---|
 | Kassal et al. (1st quant, Trotter, naïve) | 2008 | $\widetilde{O}(\eta^2 \cdot \text{Trotter steps})$ | — |
-| [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes\|Babbush et al. 2019]] (interaction picture) | 2019 | $\widetilde{O}(\eta^{8/3} N^{1/3} / \epsilon)$ | $N > \eta^6$ |
+| [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes\|Babbush et al. 2019]] (interaction picture) | 2019 | $\widetilde{O}(\eta^{8/3} N^{1/3} / \epsilon)$ | $N > \eta^7$ |
 | [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes\|Babbush et al. 2023]] (1st quant Trotter) | 2023 | $(\eta^{7/3} N^{1/3} + \eta^{4/3} N^{2/3})(Nt/\epsilon)^{o(1)}$ | — |
 | [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes\|Rubin et al. 2024]] (1st quant Trotter) | 2024 | $\eta^2 (\eta^{2/3} N^{1/3} + N^{2/3}/\eta^{2/3})(\eta N/\epsilon)^{o(1)}$ | — |
 | Stetina & Wiebe 2025 (Gauss's law) | 2025 | $\eta^2 N^{2/3} (\eta N/\epsilon)^{o(1)}$ | — |
-| **This work** (quantum FMM) | 2025 | $(\eta^{4/3} N^{1/3} + \eta^{1/3} N^{2/3})(\eta N t/\epsilon)^{o(1)}$ | $N < \eta^6$ |
+| **This work** (quantum FMM) | 2025 | $(\eta^{4/3} N^{1/3} + \eta^{1/3} N^{2/3})(\eta N t/\epsilon)^{o(1)}$ | $N < \eta^7$ |
 
-The improvement over Rubin et al. (2024) is roughly a factor of $\eta$. The interaction-picture method wins only when $N > \eta^6$, which is well outside the regime of practical interest for most molecular and materials simulations.
+The improvement over Rubin et al. (2024) is roughly a factor of $\eta$. In the revised comparison, the interaction-picture method wins only when $N > \eta^7$, which is well outside the regime of practical interest for most molecular and materials simulations.
 
 ---
 
@@ -170,7 +171,7 @@ The improvement over Rubin et al. (2024) is roughly a factor of $\eta$. The inte
 ## References within this paper
 
 Key cited papers with vault notes:
-- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush, Berry, McClean, Neven (2019)]] — First-quantized interaction-picture simulation; best scaling for $N > \eta^6$
+- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes|Babbush, Berry, McClean, Neven (2019)]] — First-quantized interaction-picture simulation; best scaling for $N > \eta^7$ in the revised comparison
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry, Wiebe, Rubin, Babbush (2021)]] — First constant-factor first-quantized chemistry compilation
 - [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes|Rubin, Berry, Babbush et al. (2024)]] — First-quantized [[Product Formulas]] for stopping power; direct predecessor
 - [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes|Babbush, Huggins, Berry et al. (2023)]] — First-quantized Trotter for dynamics; same framework without FMM
@@ -191,7 +192,7 @@ Papers not yet in the vault:
 ## Cross-links
 
 ### Related paper notes
-- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]] — First-quantized interaction picture; wins for $N > \eta^6$
+- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]] — First-quantized interaction picture; wins for $N > \eta^7$ in the revised comparison
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes]] — Compiled first-quantized qubitization circuits
 - [[Quantum Computation of Stopping Power for Inertial Fusion Target Design (Rubin, Berry, Babbush et al 2023) — Paper Notes]] — Direct predecessor; same Trotter framework without FMM
 - [[Quantum Simulation of Exact Electron Dynamics Can Be More Efficient Than Classical Mean-Field Methods (Babbush, Huggins, Berry et al 2023) — Paper Notes]] — First-quantized dynamics; $O(\eta^2)$ Coulomb version

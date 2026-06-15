@@ -1,0 +1,656 @@
+arXiv:1511.04385v3  [quant-ph]  2 Mar 2017
+Factoring Safe Semiprimes with a Single Quantum Query
+Frédéric Grosshans,1 Thomas Lawson,2 François Morain,3 and Benjamin Smith4
+1Laboratoire Aimé Cotton, CNRS, Univ.
+Paris-Sud,
+ENS Cachan, Univ.
+Paris-Saclay, 91405 Orsay, France
+2LTCI — Télécom ParisTech, 23 avenue d’Italie, 75013, Paris, France
+3École Polytechnique/LIX and Institut national de recherche en informatique et en automatique (INRIA)
+4INRIA and École Polytechnique/LIX
+(Dated: March 3, 2017)
+Shor’s factoring algorithm (SFA), by its ability to eﬃciently factor large numbers, has the poten-
+tial to undermine contemporary encryption. At its heart is a process called order ﬁnding, which
+quantum mechanics lets us perform eﬃciently. SFA thus consists of a quantum order ﬁnding al-
+gorithm (QOFA), bookended by classical routines which, given the order, return the factors. But,
+with probability up to 1/2, these classical routines fail, and QOFA must be rerun. We modify these
+routines using elementary results in number theory, improving the likelihood that they return the
+factors.
+The resulting quantum factoring algorithm is better than SFA at factoring safe semiprimes, an
+important class of numbers used in cryptography. With just one call to QOFA, our algorithm almost
+always factors safe semiprimes. As well as a speed-up, improving eﬃciency gives our algorithm other,
+practical advantages: unlike SFA, it does not need a randomly picked input, making it simpler to
+construct in the lab; and in the (unlikely) case of failure, the same circuit can be rerun, without
+modiﬁcation.
+We consider generalizing this result to other cases, although we do not ﬁnd a simple extension,
+and conclude that SFA is still the best algorithm for general numbers (non safe semiprimes, in other
+words). Even so, we present some simple number theoretic tricks for improving SFA in this case.
+I.
+INTRODUCTION
+Shor’s factoring algorithm (SFA) [1] is a promising ap-
+plication of quantum computers. Like classical factoring
+algorithms, it returns a nontrivial factor of an integer
+N = Qk
+i=1 pei
+i , where the pi are primes, with pi ̸= pj and
+ei > 0. But, unlike its classical counterparts, SFA does
+this eﬃciently—its runtime increases just polynomially
+in the length of N, as opposed to subexponentially for
+the best classical algorithms. This speed-up is due to the
+quantum subroutine at the heart of SFA, the quantum
+order ﬁnding algorithm (QOFA). QOFA eﬃciently calcu-
+lates the order of an integer a modulo N: that is, given
+coprime integers a and N, QOFA returns the smallest in-
+teger r > 0 such that ar mod N = 1, where mod is the
+modulo operator. (In practice, QOFA is only guaranteed
+to return a divisor of the order.)
+SFA proceeds as follows: an integer a is chosen at ran-
+dom. In the unlikely event that gcd(a, N) (the greatest
+common divisor of a and N) is greater than 1, then we
+have already found a nontrivial factor of N. Otherwise,
+we use QOFA to ﬁnd the order r of a modulo N. If r is
+even (which occurs with probability at least 1/2), then
+a factor of N may be given by gcd(ar/2 ± 1, N).
+If a
+factor is not found, or if r is odd, then the procedure is
+relaunched with a diﬀerent random value of a [1–3].
+Much work has been done on the quantum part of the
+algorithm [4–10]. In this letter we take a diﬀerent ap-
+proach: we reduce the probability of failure by applying
+elementary results in number theory to the classical part
+of SFA.
+Our main result concerns safe semiprimes, deﬁned here
+to be the product N = p1p2 of two safe primes p1 and
+p2 of the form pi = 2qi + 1, where qi is prime.
+Safe
+primes were introduced by Sophie Germain in her study
+of Fermat’s last theorem [11].
+They are now called safe because of their relation to
+strong primes—primes p such that p −1 has at least a
+large prime factor. The strong and safe name of these
+primes comes from the hardness to factor their products
+using Pollard’s “p −1” factoring algorithm [12]. The safe
+primes are the strongest of all strong prime, and are well
+deﬁned in terms of number theory. Until the discovery
+of elliptic curve factorization [13], they were widely held
+as being the hardest to factor for this reason. This led to
+the recommendation of using the related strong primes
+for RSA cryptography, that is prime such that p −1 has
+large prime factors but this recommendation is contested
+[14], even if they are still recommended in the National
+Institute of Standard’s FIPS 186-4 [15].
+Independently
+of
+their
+relationship
+to
+strong
+semiprimes, safe semiprimes are used in the Cramer–
+Shoup signature scheme [16], where the primality of
+q1 and q2 allows to reduce the cost of the signature
+generation and, more importantly, to prove the security
+of the scheme against an adaptive chosen message attack
+under the strong RSA assumption. Both properties come
+from the fact that a random hash h generates the group
+of quadratic residues modulo N with overwhelming
+probability.
+We present an algorithm which, given one call to
+QOFA, factors safe semiprimes N with probability ≈
+1 −4/N. In contrast, for a single query of QOFA, SFA’s
+classical routines fail to factor these numbers half the
+
+
+2
+time.
+At the core of our algorithm is the simple observation
+that for these numbers, the output d of QOFA always
+divides 2q1q2, and all divisors of 2q1q2, except 1 and 2,
+allow to compute p1 and p2. This information, contained
+in d, is not used optimally by SFA. Interestingly, the
+property that makes safe semiprimes the hardest num-
+bers to factor using Pollard’s classical p −1 algorithm is
+exactly that which makes them easy to factor with our
+quantum algorithm. We also consider moving from the
+special case of safe semiprimes to general numbers. Al-
+though the proofs do not extend naturally, we ﬁnd a few
+tricks that may make factoring general numbers easier.
+The idea of modifying the classical parts of SFA so
+as to reduce the dependence on QOFA is not new, al-
+though previous studies ﬁne-tune the algorithm, rather
+than re-think part of it, as we try to do. References [17–
+19] discuss how best to pick a to maximize the probability
+of factoring. References [2, 20] increase eﬃciency by ex-
+tracting r from failed outputs of QOFA. These results
+oﬀer practical advantages beyond simple theoretical im-
+provements: although eﬃcient in theory, in practice each
+call to QOFA needs an individual experiment, which is
+time-consuming and costly in resources. Indeed, for some
+architectures—photonics, for instance—each experiment
+requires a new circuit.
+Beyond its low failure rate, our algorithm has two ad-
+vantages when factoring safe semiprimes (and possibly a
+larger class of numbers). The ﬁrst is that rather than
+picking the value of a randomly, we can keep it constant.
+In this letter we use a = 2, but other sensible choices can
+be made. The second is that, when our algorithm does
+fail, exactly the same circuit can be used again, unlike
+SFA which needs to be reset with a diﬀerent value of a.
+We note that this is not the ﬁrst time speciﬁc values
+of a have been used in investigations of SFA. Experi-
+mentalists, held back by young technology, have so far
+picked values of a that let them simplify the circuit and
+focus on certain interesting parts of the algorithm [4–10].
+Reference [21] highlighted the danger of this approach,
+arguing that the value of a should not rely on knowledge
+of the factors. We emphasize that the success of our al-
+gorithm does not rely on knowing the factors in advance:
+our value a = 2 is obviously independent of the number
+being factored.
+II.
+NUMBER THEORETIC TOOLS
+We write x | y to mean x is a divisor of y: that is,
+there exists an integer z such that y = xz. A positive
+integer is prime if it has no divisors other than itself
+and 1. If y1, . . . , yk are integers, then gcd(y1, . . . , yk) de-
+notes their greatest common divisor: that is, the largest
+positive integer x such that x | yi for all 1 ≤i ≤k. Du-
+ally, lcm(y1, . . . , yk) denotes the least common multiple
+of the yi: that is, the smallest positive integer x such that
+yi | x for all 1 ≤i ≤k.
+Two concepts from elementary number theory will be
+essential throughout this letter. In the following
+N =
+k
+Y
+i=1
+pei
+i ,
+where the pi are distinct primes.
+The ﬁrst important
+concept is the Euler φ function,
+φ(N) =
+k
+Y
+i=1
+pei−1
+i
+(pi −1),
+(1)
+which gives the number of integers x in [1, N] such that
+gcd(x, N) = 1. The second is the Carmichael λ func-
+tion, λ(N), deﬁned as the smallest integer such that
+xλ(N) mod N = 1 for every x satisfying gcd(x, N) = 1.
+It follows that if r is the order of some a modulo N, then
+r | λ(N). Carmichael’s theorem shows that if N factors
+as above, then
+λ(N) = lcm(λ(pe1
+1 ), . . . , λ(pek
+k )) ,
+(2)
+where
+λ(pei
+i ) = φ(pei
+i ) for odd primes pi,
+(3)
+λ(2ei) = 1
+2φ(2ei) = 2ei−2 for ei > 2,
+(4)
+and λ(21) = 1, λ(22) = 2.
+III.
+FACTORING SAFE SEMIPRIMES
+A semiprime is a product of two primes, hence ﬁnding
+any nontrivial factor of a semiprime amounts to ﬁnd-
+ing its complete prime factorization. An odd prime p is
+called safe if (p −1)/2 is also prime (note that p −1 is
+always divisible by 2 when p is odd, so p being safe can
+be understood to mean that p −1 is “as close to prime
+as possible”). A safe semiprime is a product of two safe
+primes.
+A.
+Semiprimes and Euler’s φ function
+If N = p1p2 is a semiprime [22] (including—but not
+restricted to—the case of safe semiprimes), then knowing
+φ(N) is suﬃcient for ﬁnding a factor of N. Indeed, the
+factors can be found immediately and deterministically.
+In this case φ(N) = N +1−(p1+p2) which, when solved
+simultaneously with N = p1p2, gives a factor. Explicitly,
+expanding the product (X −p1)(X −p2) shows that p1
+and p2 are the solutions of the quadratic equation
+X2 −(N −φ(N) + 1)X + N = 0 .
+(5)
+For general N = Qk
+i=1 pei
+i , Miller [23] has shown that
+knowing both N and φ(N) lets us eﬃciently factor N
+probabilistically, or deterministically under the extended
+Riemann hypothesis.
+
+
+3
+TABLE I: The possible multiplicative orders for integers mod-
+ulo safe semiprimes N = p1p2 (where pi = 2qi + 1 with
+p1, p2, q1, and q2 all prime). The number of integers is de-
+duced from the isomorphism between the multiplicative group
+(Z/nZ)×and the product of cyclic groups C2q1 × C2q2.
+r
+Number of integers
+Restrictions on a
+1 ≤a < N of order r
+1
+1
+a = 1
+2
+3
+a = N −1 and two
+other a ≥
+√
+N + 1 > 2
+q1
+q1 −1
+a ̸= 2
+q2
+q2 −1
+a ̸= 2
+2q1
+3(q1 −1)
+a ̸= 2
+2q2
+3(q2 −1)
+a ̸= 2
+q1q2
+(q1 −1)(q2 −1)
+2q1q2
+3(q1 −1)(q2 −1)
+B.
+Shor’s factoring algorithm for safe semiprimes
+Let N = p1p2 be a safe semiprime, so p1 = 2q1 + 1 and
+p2 = 2q2 + 1 with q1 and q2 both prime. SFA chooses a
+random residue a modulo N and attempts to compute its
+order r using a call to QOFA. SFA iterates this process
+until r is even and ar/2 is not congruent to −1 modulo
+N; if r = ordN(a), then gcd(ar/2 −1, N) yields a factor
+of N (either p1 or p2).
+We have φ(N) = 4q1q2 and λ(N) = 2q1q2. As noted
+above, if r is the order of some a modulo N, then r |
+λ(N); so r must be one of the eight divisors of 2q1q2.
+Their frequencies are listed in Table I.
+Despite its name, QOFA does not always return the
+order of a modulo N. In practice, the quantum Fourier
+transform (QFT) in QOFA yields an approximation of
+the fraction t/ ordN(a) for some integer t uniformly ran-
+domly chosen from {1, . . . , ordN(a)} [3]. The quality of
+this approximation depends on the implementation of the
+QFT: the output is always a bit granular and blurred,
+depending on the number of qubits [2, 3, 20]; circuits
+approximating the QFT are available to save resources
+at the expense of precision [24–26]. In all theses cases;
+the exact value of the output of an ideal QFT can be
+found with high probability by trying values neighboring
+close to the output [2, 20]. As our primary theoretical
+concern is independent of this implementation-dependent
+consideration, we simplify our theoretical analysis by as-
+suming the implementation to actually give us t/ ordN(a)
+exactly. QOFA then uses a continued fraction expansion
+to get d = ordN(a)/ gcd(t, ordN(a)).
+The probability
+that this is the true order depends visibly on the number
+of nontrivial divisors of ordN(a).
+We can use Table I to prove that if N is a safe semi-
+prime and we sample a uniformly at random, then each
+iteration of SFA yields a factor of N with probability
+≤1/2. The probability would be exactly 1/2 if QOFA
+were a perfect order ﬁnding algorithm: looking at Table I,
+we see that for a given a we have P(r is even) = 3/4, but
+then P(ar/2 ̸≡−1 (mod N)) = 2/3; so the probability
+that a uniformly randomly chosen a yields a factor is
+3/4·2/3 = 1/2. Taking QOFA imperfection into account
+(that is, the fact that QOFA sometimes returns a proper
+divisor of ordN(a)) decreases this probability. It follows
+that if N is a safe semiprime, then the expected number
+of iterations of SFA—and hence the expected number of
+calls to QOFA—is ≥2. When a = 2 is ﬁxed and the
+safe semiprime is chosen randomly, SFA is conjectured
+to succeed with probability 1
+2. A numerical investigation
+of all the 960,392,564 safe primes pi ≤1012 indeed gives
+success probability 1
+2 −2.06 × 10−10.
+C.
+Factoring safe semiprimes with one call to
+QOFA
+We propose a change in the classical part of SFA.
+This leads to a new, simple quantum factoring algorithm
+which almost always succeeds in factoring a safe semi-
+prime N = p1p2 = (2q1 + 1)(2q2 + 1) with exactly one
+call to QOFA.
+The algorithm is given in pseudocode in Algorithm 1.
+It is based on Lemma 1 which shows that the only two
+possible values for ordN(2) are q1q2 and 2q1q2, and that
+QOFA returns a useful factor of ordN(2) with extremely
+high probability.
+Lemma 1. Let N = p1p2 = (2q1 + 1)(2q2 + 1) be a safe
+semiprime, with q1 ̸= q2 and q1, q2 > 2 (so in particular,
+p1 and p2 are distinct safe primes greater than 3). Then
+1. ordN(2) is either q1q2 or 2q1q2.
+2. QOFA yields d ∈{q1, q2, q1q2, 2q1, 2q2, 2q1q2} with
+probability 1 −
+1
+q1q2 ∼1 −4
+N ; otherwise, d ∈{1, 2}.
+Proof. Referring to Table I, we know that there are only
+eight possibilities for the order of an integer modulo N:
+namely, the four odd values 1, q1, q2, and q1q2, and the
+four even values 2, 2q1, 2q2, and 2q1q2.
+But ordN(2)
+can never be 1 or 2, since N > 3.
+Now, note that
+ordN(2) = lcm(ordp1(2), ordp2(2)) (since p1 ̸= p2) and
+ordpi(2) | λ(pi) = 2qi.
+Hence, ordN(2) cannot be q1,
+q2, 2q1, or 2q2, since otherwise ordp2(2) would in {1, 2},
+which contradicts p2 > 5. The only remaining possibili-
+ties for ordN(2) are q1q2 and 2q1q2, which proves the ﬁrst
+statement.
+For the second statement, recall that QOFA returns
+ordN(2)/ gcd(t, ordN(2)) for some uniformly randomly
+distributed integer t in {1, . . . , ordN(2)}. But we have
+just seen that the value of ordN(2) can only be q1q2 or
+2q1q2. If ordN(2) = q1q2 then QOFA only returns 1 if
+t = q1q2, which occurs with probability 1/(q1q2); it can-
+not return 2. If ordN(2) = 2q1q2 then QOFA returns 1
+if t = 2q1q2 and 2 if t = q1q2; the probability of t taking
+
+
+4
+one of these two values is 2/(2q1q2) = 1/(q1q2). Hence,
+regardless of the true value of ordN(2), the probability of
+having a “bad” t leading to a result of 1 or 2 is 1/(q1q2),
+which tends to 4/N for large N.
+Let d be the result of QOFA applied to 2 modulo N.
+Our algorithm then attempts to recover the factors of
+N from d.
+The cases of odd and even d are virtually
+identical, and we can unify them by setting s = d if d
+is even, and s = 2d if d is odd; then s = 2, 2q1, 2q2,
+or 2q1q2.
+The case s = 2 is trivial to recognise, and
+we can determine whether s = 2q1q2 or one of the 2qi
+using the elementary inequality 2q1, 2q2 < N/3 < 2q1q2.
+If s is one of the 2qi then s + 1 is one of the pi (and
+N/(s + 1) is the other). If s is 2q1q2 then we recover
+p1 and p2 by using φ(N) = 2s in Eq. 5 and applying
+the quadratic formula: the factors of N are t ±
+√
+t2 −N,
+where t = (N + 1)/2 −s. In the unlikely event that s =
+2 (probability ∼4/N, according to Lemma 1, which is
+negligible even for moderate N) then we fail to factor N.
+Compared to SFA, the advantages of our algorithm are:
+1. It requires only one call to QOFA.
+2. It only ever computes the order of 2 modulo N,
+rather than randomly (or specially) chosen 1 < a <
+N; this may be helpful when implementing QOFA,
+since multiplication by 2 is a simple bitshift.
+3. The probability of failure decreases exponentially
+with the length (in bits) of N.
+4. In the unlikely event of failure, then we can at-
+tempt to factor N by simply running exactly the
+same algorithm again. In contrast to SFA, rather
+than changing the base, we can repeat with the
+convenient a = 2.
+In particular, our algorithm is never slower than SFA.
+Indeed, the only way that SFA can beat it is to never
+call QOFA, which means the very ﬁrst randomly chosen a
+must be a factor of N; but this is extremely improbable
+for even moderate-sized N.
+Our
+algorithm and its
+analysis imply that
+safe
+semiprimes, (which are considered the hardest inputs for
+classical factoring algorithms) are among the easiest in-
+puts for quantum factoring algorithms.
+IV.
+REMARKS ON FACTORING OTHER
+INTEGERS
+A.
+The restriction of Algorithm 1 to safe
+semiprimes
+Algorithm 1 only works for safe semiprimes: indeed,
+its correctness depends on the extremely small number
+of divisors of λ(N) when N is a safe semiprime. It does
+not generalize to more general odd composites N, nor
+Algorithm 1 Given a safe semiprime N = p1p2, where
+p1 = 2q1 + 1 and p2 = 2q2 + 1 with p1, p2, q1, and q2 all
+distinct primes, returns {p1, p2} or Failure
+1: function FactorSafeSemiprime(N)
+2:
+if 5 | N then return {5, N/5}
+3:
+d ←Qofa(2, N)
+4:
+if 2 | d then s ←d
+5:
+else s ←2d
+6:
+if s = 2 then return Failure
+⊲Prob. 1/(q1q2)
+7:
+if s < N/3 then p ←s + 1
+⊲s = 2q1 or 2q2
+8:
+else
+⊲s = 2q1q2
+9:
+t ←(N + 1)/2 −s
+10:
+p ←t +
+√
+t2 −N
+11:
+return {p, N/p}
+even to products of two primes where only one prime is
+safe, without further information on the factors of N.
+For example, suppose N = p1p2 where p1 = 2q1 + 1
+with q1 prime and p2 = 2q2q′
+2 + 1 where q2 and q′
+2 are
+prime (that is, p1 is safe and p2 is “almost safe”). Then
+λ(N) = 2q1q2q′
+2, which has sixteen divisors, so there are
+sixteen possible orders for integers modulo N. Suppose
+QOFA returns the correct order r of 2 (or of any other a)
+modulo N. The most common element order is 2q1q2q′
+2;
+but this value of r does not immediately yield factors of
+N. If r = q1, then (2r+1) is a factor of N; but if r = q2 or
+q′
+2, then we generally cannot derive a factor from r. The
+problem is that we cannot distinguish between the cases
+r = q1, q2, and q′
+2 without further information (such as
+the relative sizes of the pi or qi).
+The situation degenerates further as the number of
+prime factors of λ(N) increases, and indeed as the num-
+ber of prime factors pi of N increases.
+Similarly, the
+accuracy of QOFA as an order-ﬁnding routine is reduced
+(increasing the expected runtime of SFA) when λ(N) has
+a more complicated factorization.
+B.
+Simple improvements to SFA for general
+integers
+For general integers N, therefore, we return to SFA.
+We note, however, that the expected number of calls to
+QOFA in SFA for general integers N can be reduced with
+two simple modiﬁcations.
+First, once the putative or-
+der r of a modulo N is calculated, we can easily compute
+gcd(r, N), which, if not 1, is a nontrivial factor of N. We
+note that this happens very often for N with a square
+factor (though it never happens for any RSA modulus).
+Second, rather than restricting our search to even r,
+we could check whether r is a multiple of a small prime ℓ
+(for example, ℓin {2, 3, 5}); if ar/ℓis not 1 modulo all of
+the factors of N, then it leads to a nontrivial factor of N.
+This essentially amounts to trial division of r.
+These tricks, while unlikely to reveal the factors, are far
+less computationally expensive than rerunning QOFA.
+They may be worth trying when an iteration of SFA
+
+
+5
+has not found the factors, before recalling QOFA. Sim-
+ulating SFA for composite numbers N in [10, 108] shows
+that these cheap improvements reduce the proportion
+of such N that escape factoring after a single correct
+call to QOFA with a = 2 by a factor of 4 (from 6%
+to 1.5%). For 60% of the remaining failures, we obtain
+ordN(2) = 2−kλ(N), from which we can ﬁnd λ(N) and
+then factor N using Miller’s algorithm [23]. This gives a
+global eﬃciency gain over SFA of an order of magnitude.
+V.
+CONCLUSION
+Changing the classical part of SFA without changing
+its quantum part, we have proposed a new algorithm
+factoring safe semiprimes, numbers used in cryptogra-
+phy. With high probability, our algorithm ﬁnds the fac-
+tors from just one call to QOFA, and always outperforms
+SFA. This oﬀers an improvement in terms of complexity
+on SFA, which fails to ﬁnd the factors from each call to
+QOFA with probability 50%, but it also brings practical
+beneﬁts. First, since each instance of QOFA requires a
+complicated physical experiment, the potential savings
+in runtime are large—much larger than that suggested
+by the improvement in computational complexity. Some
+architectures have particularly large overheads, as each
+call to QOFA requires the construction of a new circuit.
+The second beneﬁt is that we can ﬁx the value of a,
+rather than picking it at random as in SFA. We chose a =
+2 because it slightly increases the success probability, but
+this improvement is marginal and other sensible choices
+exist; experimentalists may even wish to tailor a value to
+the circuit they are building.
+Finally, in the unlikely event that our algorithm fails,
+the factors can usually be found by rerunning the exact
+same quantum circuit, saving time in the lab.
+Interestingly, safe semiprimes—which were used in
+classical encryption precisely because they were believed
+to be hard to factor—are the easiest numbers to factor
+with a quantum computer. Two forces push in the same
+direction: the order is very likely to give λ(N) (from
+which the factors are easily found); and QOFA performs
+well when given a safe semiprime, returning the order
+more often than when acting on a general number.
+As we move away from this class to weaker semiprimes
+our algorithm becomes ineﬃcient, and we revert to SFA,
+boosted by two improvements. We note that even classi-
+cal techniques that are unlikely to work can save time if
+they avoid rerunning QOFA.
+Much work has been done on improving the quantum
+part of SFA. We have shown that improving the classical
+routines, using simple classical mathematics, can speed
+up quantum factoring by reducing the dependence on the
+quantum circuit. Our intuition is that this is a promising
+path, which will yield more improvements in eﬃciency.
+[1] P. W. Shor, “Algorithms for quantum computation: Dis-
+crete logarithms and factoring,” in Proc. 35th Annu.
+Symp. Foundations of Computer Science and IEEE Com-
+puter Society and Los Alamitos and CA, pp. 124–134,
+1994. Ed. S. Goldwasser.
+[2] P. W. Shor, “Polynomial time algorithms for prime fac-
+torization and discrete logarithms on a quantum com-
+puter,” SIAM J. Sci. Statist. Comput., vol. 26, p. 1484,
+1997.
+[3] M. A. Nielsen and I. L. Chuang, Quantum Computation
+and Quantum Information. Cambridge U.P., 2000.
+[4] L. M. K. Vandersypen, M. Steﬀen, G. Breyta, C. S. Yan-
+noni, M. H. Sherwood, and I. L. Chuang, “Experimental
+realization of Shor’s quantum factoring algorithm using
+nuclear magnetic resonance,” Nature, vol. 414, no. 6866,
+pp. 883–887, 2001.
+[5] C.-Y. Lu, D. E. Browne, T. Yang, and J.-W. Pan,
+“Demonstration of a compiled version of Shor’s quantum
+factoring algorithm using photonic qubits,” Phys. Rev.
+Lett., vol. 99, no. 25, p. 250504, 2007.
+[6] B. P. Lanyon, T. J. Weinhold, N. K. Langford, M. Barbi-
+eri, D. F. V. James, A. Gilchrist, and A. G. White, “Ex-
+perimental demonstration of a compiled version of Shor’s
+algorithm with quantum entanglement,” Phys. Rev. Lett.,
+vol. 99, p. 250505, Dec 2007.
+[7] A. Politi, J. C. F. Matthews, and J. L. O’Brien, “Shor’s
+quantum factoring algorithm on a photonic chip,” Sci-
+ence, vol. 325, no. 5945, p. 1221, 2009.
+[8] E. Martin-Lopez, A. Laing, T. Lawson, R. Alvarez, X.-
+Q. Zhou, and J. L. O’Brien, “Experimental realization
+of Shor’s quantum factoring algorithm using qubit recy-
+cling,” Nat Photon, vol. 6, pp. 773–776, 11 2012.
+[9] E. Lucero, R. Barends, Y. Chen, J. Kelly, M. Mariantoni,
+A. Megrant, P. O’Malley, D. Sank, A. Vainsencher,
+J. Wenner, T. White, Y. Yin, A. N. Cleland, and
+J. M. Martinis, “Computing prime factors with a Joseph-
+son phase qubit quantum processor,” Nat Phys, vol. 8,
+pp. 719–723, 10 2012.
+[10] T. Monz, D. Nigg, E. A. Martinez, M. F. Brandl,
+P. Schindler, R. Rines, S. X. Wang, I. L. Chuang, and
+R. Blatt, “Realization of a scalable Shor algorithm,” Sci-
+ence, vol. 351, no. 6277, pp. 1068–1070, 2016.
+[11] R. Laubenbacher and D. Pengelley, “‘Voici ce que j’ai
+trouvé:’
+Sophie Germain’s grand plan to prove Fer-
+mat’s last theorem,” Historia Mathematica, vol. 37, no. 4,
+pp. 641–692, 2010.
+[12] J. M. Pollard, “Theorems on factorization and primal-
+ity testing,” Mathematical Proceedings of the Cambridge
+Philosophical Society, vol. 76, pp. 3049–3052, 1974.
+[13] H. W. Lenstra, Jr., “Factoring integers with elliptic
+curves,” Ann. of Math. (2), vol. 126, no. 3, pp. 649–673,
+1987.
+[14] R. L. Rivest and R. D. Silverman, “Are ‘strong’ primes
+needed for RSA?.” Cryptology ePrint Archive, Report
+2001/007, 2001.
+[15] National Institute of Standards and Technology, FIPS
+PUB 186-4: Digital Signature Standard (DSS). Gaithers-
+burg, MD 20899–8900, USA: National Institute of Stan-
+
+
+6
+dards and Technology, July 2013.
+[16] R. Cramer and V. Shoup, “Signature schemes based on
+the strong RSA assumption,” ACM Trans. Inf. Syst. Se-
+cur., vol. 3, pp. 161–185, Aug. 2000.
+[17] G. Leander, “Improving the Success Probability for
+Shor’s Factoring Algorithm,” arXiv:quant-ph/0208183,
+Aug. 2002.
+[18] I. L. Markov and M. Saeedi, “Constant-optimized quan-
+tum circuits for modular multiplication and exponentia-
+tion,” Quantum Info. Comput., vol. 12, pp. 361–394, May
+2012.
+[19] T. Lawson, “Odd orders in Shor’s factoring algorithm,”
+Quantum Information Processing, vol. 14, no. 3, pp. 831–
+838, 2015.
+[20] E. Knill, “On Shor’s quantum factor ﬁnding algorithm:
+Increasing the probability of success and tradeoﬀs involv-
+ing the Fourier transform modulus,” Tech. Rep. LAUR-
+95-3350, Los Alamos National Laboratory, 1995.
+[21] J. A. Smolin, G. Smith, and A. Vargo, “Oversimplifying
+quantum factoring,” Nature, vol. 499, pp. 163–165, 2013.
+[22] R. L. Rivest, A. Shamir, and L. Adleman, “A method
+for obtaining digital signatures and public-key cryptosys-
+tems,” Communications of the ACM, vol. 21, pp. 120–
+126, 1978.
+[23] G. L. Miller, “Riemann’s hypothesis and tests for primal-
+ity,” Journal of Computer and System Sciences, vol. 13,
+no. 3, pp. 300 – 317, 1976.
+[24] D. Coppersmith, “An approximate Fourier transform use-
+ful in quantum factoring,” Tech. Rep. RC 19642, IBM,
+1994.
+[25] R. Cleve and J. Watrous, “Fast parallel circuits for the
+quantum Fourier transform,” in Proceedings 41st An-
+nual Symposium on Foundations of Computer Science,
+pp. 526–536, 2000.
+[26] D. Cheung,
+“Improved bounds for the approximate
+QFT,” in Proceedings of the Winter International Synpo-
+sium on Information and Communication Technologies,
+WISICT ’04, pp. 1–6, Trinity College Dublin, 2004.

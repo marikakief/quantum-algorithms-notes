@@ -5,11 +5,13 @@
 > **See also:** [[Linear Combination of Unitaries (LCU)]]
 
 ## What it does
-Deterministically boosts the success probability of [[Linear Combination of Unitaries (LCU)|LCU]] from $\sin^2(\theta)$ to $\sim 1$, for **any** input state simultaneously ("oblivious" to the system register).
+Deterministically boosts the success probability of a [[Linear Combination of Unitaries (LCU)|LCU]] block from $\sin^2(\theta)$ to $\sim 1$, for **any** input state simultaneously ("oblivious" to the system register), when the success amplitude is the same for all inputs and the target block is unitary or sufficiently close to unitary.
 
 ## The trick
 Given unitary $U$ on $(\mu + n)$ qubits such that for any $|\psi\rangle$:
 $$U|0^\mu\rangle|\psi\rangle = \sin\theta\,|0^\mu\rangle V|\psi\rangle + \cos\theta\,|\Phi^\perp\rangle$$
+
+Here $V$ is unitary, the bad component has zero projection on the $|0^\mu\rangle$ ancilla subspace, and the same $\theta$ works for every input state. These hypotheses are what make the reflection independent of $|\psi\rangle$.
 
 Define $R = 2\Pi - \mathbb{1}$ where $\Pi = |0^\mu\rangle\langle 0^\mu| \otimes \mathbb{1}$, and $S = -URU^\dagger R$. Then:
 
@@ -17,7 +19,7 @@ $$S^\ell U|0^\mu\rangle|\psi\rangle = \sin((2\ell+1)\theta)|0^\mu\rangle V|\psi\
 
 **Why "oblivious":** $R$ reflects about the **ancilla** being $|0^\mu\rangle$, not about the input state $|0^\mu\rangle|\psi\rangle$. Works for any $|\psi\rangle$ without knowing it.
 
-**The $p = 1/4$ sweet spot:** In the standard application, $\sin^2\theta = 1/4$ ($\theta = \pi/6$), so a single round ($\ell = 1$) gives $\sin(3\pi/6) = 1$ — **exact** amplification with 3 queries.
+**The $p = 1/4$ sweet spot:** In the standard application, $\sin^2\theta = 1/4$ ($\theta = \pi/6$), so a single round ($\ell = 1$) gives $\sin(3\pi/6) = 1$ — **exact** amplification using the sequence $U,U^\dagger,U$ plus reflections.
 
 ## The proof: 2D Subspace Lemma
 
@@ -38,7 +40,7 @@ $S^\ell U$ implements $\sin\theta \to \sin((2\ell+1)\theta)$, which is the Cheby
 
 ## Robust version (arXiv:1412.4687)
 
-When $\tilde{U}$ is only approximately unitary ($\|\tilde{U} - U_r\| = O(\delta)$):
+When $\tilde{U}$ is only approximately unitary ($\|\tilde{U} - U_r\| = O(\delta)$) and the normalization has been arranged so $s$ is close to $2$:
 $$A = -WRW^\dagger RW \quad\Rightarrow\quad \|PA|0\rangle|\psi\rangle - |0\rangle U_r|\psi\rangle\| = O(\delta)$$
 
 Error is **linear** in $\delta$. Derived by expanding $PA = 3PW/s - 4PWPW^\dagger PW/s^3$ and using $\tilde{U}\tilde{U}^\dagger \approx \mathbb{1}$.
@@ -50,15 +52,15 @@ If the natural success probability $p > 1/4$, introduce an extra ancilla qubit a
 ## When to reach for it
 - After any [[Linear Combination of Unitaries (LCU)|LCU]] where $s \approx 2$ (choose segment length to ensure this)
 - [[Hamiltonian simulation]] via truncated Taylor series
-- Any [[Block-Encoding Composition Algebra|block-encoding]] construction that needs deterministic success
+- [[Block-Encoding Composition Algebra|Block-encoding]] constructions whose top-left block is near-unitary and has uniform success amplitude
 - When the target operation is only approximately unitary (truncation, discretisation)
 - As a conceptual stepping stone to [[QSVT Meta-Template|QSVT]]
 
 ## Complexity
-$(2\ell + 1) \times$ the cost of a single $U$ application. For $\ell = 1$: $3\times$ cost. General $\ell$: $O(1/\sqrt{p})$ rounds for success probability $p$.
+$(2\ell + 1) \times$ the cost of a single $U$ or $U^\dagger$ application. For $\ell = 1$: $3\times$ cost. For a generic success probability $p$, ordinary amplitude amplification uses $O(1/\sqrt{p})$ rounds, but exact deterministic amplification only occurs for special angles or with additional fixed-point/phase-matched variants.
 
 ## Caveat
-For exact single-round amplification, need $\sin^2\theta = 1/4$ exactly. For general $p$, choose $\ell$ closest to $\pi/(4\theta) - 1/2$ — residual error $\cos((2\ell+1)\theta) \neq 0$ unless $\theta$ divides $\pi/2$ evenly.
+For exact single-round amplification, need $\sin^2\theta = 1/4$ exactly. For general $p$, choose $\ell$ closest to $\pi/(4\theta) - 1/2$ — residual error $\cos((2\ell+1)\theta) \neq 0$ unless $\theta$ divides $\pi/2$ evenly. Do not apply this as a black-box postselection remover for an arbitrary nonunitary contraction; the robust theorem relies on closeness to a unitary target.
 
 ## Related Paper Notes
 

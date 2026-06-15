@@ -20,7 +20,7 @@ This paper delivers two independent advances stacked on top of existing qubitiza
 
 2. **Active Volume (AV) compilation:** Compiles the resulting quantum circuits for a fusion-based photonic FTQC platform using the AV architecture, which eliminates connectivity overheads of surface-code implementations and reduces runtime by fully utilizing the available hardware volume.
 
-Combined, these two advances deliver a $\sim 100\times$ speedup in estimated runtime over prior art (THC, Lee et al. 2021) run on comparable hardware, primarily for P450. For FeMoCo, the improvements are cited in an appendix.
+Combined, these two advances deliver a $\sim 100\times$ speedup in estimated runtime over prior art (THC, Lee et al. 2021) under the paper's comparable-device and active-volume photonic compilation assumptions, primarily for P450. This is a wall-clock/hardware-scheduling claim, not a universal Toffoli-count reduction. For FeMoCo, the improvements are cited in an appendix.
 
 ---
 
@@ -32,7 +32,7 @@ Combined, these two advances deliver a $\sim 100\times$ speedup in estimated run
 
 $$H \to H + \sum_k \mu_k \hat{S}_k$$
 
-where $\hat{S}_k \in \{\hat{N}, \hat{N}^2, \hat{S}_z, \hat{S}_z^2, \ldots\}$ are symmetry operators that commute with $H$ (conserved quantities), and $\{\mu_k\}$ are free parameters. Since $\hat{S}_k$ annihilates energy eigenvalue differences (all eigenvalues in the physical sector shift by the same amount), the shifted $\tilde{H} = H + \sum_k \mu_k \hat{S}_k$ has the same eigenvalue spectrum on the physical subspace. However, its 1-norm $\lambda(\mu)$ depends on $\mu$ and can be minimized over $\mu$.
+where $\hat{S}_k \in \{\hat{N}, \hat{N}^2, \hat{S}_z, \hat{S}_z^2, \ldots\}$ are symmetry operators that commute with $H$ (conserved quantities), and $\{\mu_k\}$ are free parameters. In the target symmetry sector, each $\hat{S}_k$ has a fixed eigenvalue, so the shift changes all target-sector energies by a known constant and preserves energy differences after that constant is accounted for. However, the shifted $\tilde{H} = H + \sum_k \mu_k \hat{S}_k$ has a 1-norm $\lambda(\mu)$ that depends on $\mu$ and can be minimized.
 
 **Step 2: THC factorization of $\tilde{H}$.** Apply THC to decompose the two-electron integrals of the shifted Hamiltonian:
 
@@ -84,6 +84,8 @@ PREPARE and SELECT follow the standard qubitization template with THC:
 **BLISS-THC 1-norm improvement:**
 - $\sim 25\%$ reduction in $\lambda$ vs. THC alone for P450 and FeMoCo — in line with subsequent [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low et al. 2025]] characterization
 
+The total speedup decomposes into different effects: BLISS-THC reduces the Hamiltonian normalization and factorization cost; AV compilation changes layout/routing/scheduling assumptions; photonic hardware parameters determine the wall-clock conversion. Those components should not be collapsed into a single algorithmic Toffoli improvement.
+
 ---
 
 ## Comparison with prior work
@@ -91,11 +93,11 @@ PREPARE and SELECT follow the standard qubitization template with THC:
 | Method | FeMoCo Toffolis | System | Key improvement |
 |---|---|---|---|
 | [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee et al. 2021]] (THC) | $5.3 \times 10^9$ | 54e/54o | THC baseline |
-| [[Accelerating Quantum Computations of Chemistry Through Regularized Compressed Double Factorization (Oumarou, Scheurer, Parrish, Hohenstein, Gogolin 2024) — Paper Notes|Oumarou et al. 2024]] (RC-DF) | $2.6 \times 10^9$ | 54e/54o | Regularized DF |
+| [[Accelerating Quantum Computations of Chemistry Through Regularized Compressed Double Factorization (Oumarou, Scheurer, Parrish, Hohenstein, Gogolin 2024) — Paper Notes|Oumarou et al. 2024]] (RC-DF) | not directly comparable here | P450/FeMoCo benchmarks | Regularized DF compression; distinct from later SCDF symmetry-shift results |
 | **Caesura et al. 2025 (BLISS-THC + AV)** | $\mathbf{4.3 \times 10^9}$ | **113e/76o** | **BLISS + AV compilation** |
 | [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low et al. 2025]] (DFTHC+BLISS+SA) | $3.4 \times 10^8$ | 54e/54o | Spectrum amplification |
 
-Note: the 4.3×10⁹ figure is for a larger (113e, 76o) active space — comparing to 54e/54o numbers directly undersells the improvement.
+Note: the 4.3×10⁹ figure is for a larger (113e, 76o) active space — comparing it directly to 54e/54o numbers mixes active spaces. The table is a timeline/context table, not a controlled apples-to-apples ranking.
 
 ---
 
@@ -111,9 +113,9 @@ Note: the 4.3×10⁹ figure is for a larger (113e, 76o) active space — compari
 
 ## Reusable ideas
 
-1. [[Symmetry-Adapted Block Encoding via QROAM Data Reduction]] — BLISS shifts symmetry operators to reduce 1-norm without changing physical eigenvalues.
+1. **BLISS symmetry shifts** — Add sector-constant symmetry operators to reduce the LCU 1-norm without changing target-sector energy differences after the known constant shift is removed.
 
-2. [[DFTHC Factorization]] — The BLISS-THC approach combines two ideas: pre-conditioning via symmetry and compression via THC. The joint optimization is the key.
+2. **BLISS-THC joint optimization** — Combines pre-conditioning via symmetry shifts with THC compression. This is distinct from [[DFTHC Factorization]], which appears in later spectrum-amplification work.
 
 3. **Active Volume Architecture** — A photonic FTQC compilation strategy that eliminates planar connectivity overhead by allowing arbitrary qubit-to-qubit connections in each cycle.
 

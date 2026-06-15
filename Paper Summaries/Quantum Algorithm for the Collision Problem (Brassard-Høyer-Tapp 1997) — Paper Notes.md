@@ -19,7 +19,7 @@ For $r = 2$ and $N$ domain elements: classical needs $\Theta(\sqrt{N})$ queries,
 
 Combines a classical birthday-style table with [[Standard Amplitude Amplification|Grover search]] to get a cube-root query complexity for collision finding. The idea is beautifully simple: build a table of $k$ function evaluations classically, then use Grover to find an element outside the table that collides with something in the table.
 
-This is the first quantum algorithm for collision finding, and it established the $O(N^{1/3})$ bound that was later shown to be optimal by Aaronson and Shi (2004).
+This is the first quantum algorithm for collision finding, and it established the $O(N^{1/3})$ bound that was later matched by polynomial-method lower bounds due to Shi and Aaronson--Shi.
 
 ---
 
@@ -36,7 +36,7 @@ This is the first quantum algorithm for collision finding, and it established th
 ### Query count
 
 - Step 1: $k$ evaluations of $F$ (classical)
-- Step 3: Grover search over $N$ elements with $t = (r-1)k$ solutions → $O(\sqrt{N/((r-1)k)})$ evaluations
+- Step 3: Grover search over $N$ elements with $t = (r-1)k$ solutions when the sampled table has no internal collisions → $O(\sqrt{N/((r-1)k)})$ evaluations
 - Total: $O(k + \sqrt{N/(rk)})$
 
 **Optimising over $k$:** Set $k = (N/r)^{1/3}$ to balance the two terms:
@@ -49,16 +49,16 @@ Space: $\Theta(k) = \Theta(\sqrt[3]{N/r})$.
 
 ### The space-time tradeoff
 
-For general $k$: space $S = \Theta(k)$ and queries $T = O(k + \sqrt{N/(rk)})$, giving:
+For general $k$: space $S = \Theta(k)$ and expected queries $T = O(k + \sqrt{N/(rk)})$. In the part of this algorithmic family where the Grover phase dominates, this gives the scaling relation:
 
 $$
-ST^2 \geq |F(X)| = N/r
+S T^2 \approx |F(X)| = N/r
 $$
 
-This is a continuous tradeoff:
-- $S = 1$: $T = O(\sqrt{N/r})$ (pure Grover, no table)
+This is an achieved birthday-plus-Grover interpolation, not a lower bound for arbitrary collision algorithms:
+- $S = 1$: $T = O(\sqrt{N/r})$ in the limiting one-stored-target version
 - $S = (N/r)^{1/3}$: $T = O((N/r)^{1/3})$ (the sweet spot)
-- $S = \sqrt{N/r}$: $T = O(\sqrt{N/r})$ (pure birthday, no Grover advantage)
+- $S = \sqrt{N/r}$: the purely classical birthday strategy also uses $\Theta(\sqrt{N/r})$ space and evaluations; it is a different endpoint strategy rather than the same Grover circuit with a larger table
 
 ---
 
@@ -72,7 +72,7 @@ This is a continuous tradeoff:
 3. Run $\text{Grover}(H, 1)$ where $H(y) = 1$ iff $(x, G(y)) \in L$ for some $x$
 4. Output the claw $(x_0, y_0)$
 
-**Query count:** $k$ evaluations of $F$ + $O(\sqrt{N/k})$ evaluations of $G$. For $k = N^{1/3}$: total $O(N^{1/3})$.
+**Query count:** $k$ evaluations of $F$ + $O(\sqrt{|Y|/k})$ evaluations of $G$ in the equal-size one-to-one case. For $|X|=|Y|=N$ and $k=N^{1/3}$: total $O(N^{1/3})$. The source also gives asymmetric choices when the two domains have different sizes.
 
 For $r$-to-one functions: same $O(\sqrt[3]{N/r})$ with minor modifications (random $K$ selection to avoid table collisions).
 
@@ -84,7 +84,7 @@ For $r$-to-one functions: same $O(\sqrt[3]{N/r})$ with minor modifications (rand
 |---|---|---|---|
 | Classical birthday | $\Theta(\sqrt{N})$ | $\Theta(\sqrt{N})$ | Any 2-to-1 function |
 | Grover (no table) | $O(\sqrt{N})$ | $O(1)$ | Search for preimage, but need target |
-| **BHT (this paper)** | $O(N^{1/3})$ | $O(N^{1/3})$ | **Any $r$-to-1 function** |
+| **BHT (this paper)** | $O((N/r)^{1/3})$ | $O((N/r)^{1/3})$ | Promised $r$-to-one function |
 | [[On the Power of Quantum Computation (Simon 1994) — Paper Notes\|Simon's algorithm]] | $O(n)$ = $O(\log N)$ | $O(n)$ | Only for $f(x) = f(x \oplus s)$ (structured) |
 | Ambainis (element distinctness, 2007) | $O(N^{2/3})$ | $O(N^{2/3})$ | No $r$-to-1 promise |
 
@@ -94,9 +94,11 @@ BHT sits between Simon (exponential speedup but requires algebraic structure) an
 
 ## Optimality
 
-Aaronson (2002) and Aaronson-Shi (2004) proved $\Omega(N^{1/3})$ for the collision problem in the quantum setting, confirming BHT is optimal. The proof uses the polynomial method for quantum query complexity.
+Shi's collision lower bound, and the related Aaronson--Shi polynomial-method treatment, prove $\Omega((N/r)^{1/3})$ quantum queries for the promised $r$-to-one collision problem, confirming the BHT query complexity is tight. This is a query lower bound, not the space-time tradeoff statement above.
 
 For the claw problem (without the $r$-to-1 promise): the tight bound is $\Theta(N^{2/3})$ via Ambainis's element distinctness algorithm using quantum walks. BHT achieves $N^{1/3}$ only because of the $r$-to-1 promise, which guarantees many collisions.
+
+The headline is query complexity. Sorting the table and checking membership by binary search or QROM/QRAM lookup are separate costs in an actual circuit or RAM model.
 
 ---
 
@@ -118,7 +120,7 @@ This directly impacts:
 
 1. **[[Classical Preprocessing plus Grover Search]]:** Build a classical table of $k$ oracle evaluations, then use Grover to search for elements that interact with the table. Balancing $k$ against the Grover cost $\sqrt{N/k}$ gives cube-root complexity. A general template for combining classical and quantum computation.
 
-2. **[[Birthday-Grover Space-Time Tradeoff]]:** For collision-type problems, there's a continuous tradeoff $ST^2 \geq N$ between space $S$ (table size) and queries $T$. At one extreme: pure birthday ($S = T = \sqrt{N}$). At the other: pure Grover ($S = 1$, $T = \sqrt{N}$). The sweet spot is $S = T = N^{1/3}$.
+2. **[[Birthday-Grover Space-Time Tradeoff]]:** BHT's birthday-plus-Grover family gives an achieved interpolation between table space $S$ and Grover queries $T$, with scale $S T^2 \approx N/r$ when the Grover step dominates. This should not be read as a universal lower bound.
 
 ---
 

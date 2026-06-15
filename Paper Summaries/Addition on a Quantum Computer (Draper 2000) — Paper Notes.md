@@ -6,9 +6,13 @@
 
 ## The computational problem
 
-Add two $n$-bit integers on a quantum computer. Input: registers $|a\rangle$ and $|b\rangle$. Output: $|a\rangle|a+b\rangle$ (or a variant). The cost measures are qubit count and gate count.
+Add two $n$-bit integers on a quantum computer. This note uses Draper's convention where the second register is preserved and the first register is updated:
 
-Classical reversible adders (Vedral-Barenco-Ekert, Beckman-Chari-Devabhaktuni-Preskill) require $3n$ qubits because they need $n$ temporary carry qubits. The question is whether quantum mechanics offers a way to avoid this overhead.
+$$|a\rangle|b\rangle \mapsto |a+b\rangle|b\rangle.$$
+
+Equivalent variants can add into the other register by swapping labels. The cost measures are qubit count and gate count.
+
+At the time, the standard classical reversible adders used for comparison (Vedral-Barenco-Ekert, Beckman-Chari-Devabhaktuni-Preskill) required $3n$ qubits because they used $n$ temporary carry qubits. Later ripple-carry constructions, especially Cuccaro-Draper-Kutin-Moulton, changed this baseline, so the $3n$ comparison should be read historically.
 
 ## What the paper does
 
@@ -68,7 +72,7 @@ The addition step alone uses $\frac{1}{2}n(n+1)$ controlled rotation gates — t
 
 ### Approximate version
 
-Barenco, Ekert, Suominen, and Torma showed that for the QFT, rotations $R_k$ with $k > O(\log n)$ can be dropped with negligible error (the approximate QFT, or AQFT). The same applies to the addition step. Truncating rotations at $k = O(\log n)$ reduces the gate count from $O(n^2)$ to $O(n \log n)$ for each of the three stages (QFT, addition, inverse QFT).
+Barenco, Ekert, Suominen, and Torma showed that for the QFT, rotations $R_k$ with $k > O(\log n)$ can be dropped with negligible error (the approximate QFT, or AQFT). The same applies to the addition step. Truncating rotations at $k = O(\log n)$ reduces the abstract rotation count from $O(n^2)$ to $O(n \log n)$ for each of the three stages (QFT, addition, inverse QFT). Fault-tolerant Clifford+T synthesis changes the practical cost because these small-angle rotations are not native Clifford gates.
 
 ### Classical-to-quantum addition
 
@@ -76,7 +80,7 @@ When adding a classical number $b$ (known at compile time) to a quantum register
 
 ### Parallelism
 
-All controlled rotations in the addition step commute with each other (unlike the QFT, which has non-commuting Hadamard gates). If the hardware supports $n/2$ simultaneous two-qubit gates, the addition step can be parallelised to $O(n)$ time slices. With AQFT-style truncation, this drops to $O(\log n)$ time slices.
+All controlled rotations in the addition step commute with each other (unlike the QFT, which has non-commuting Hadamard gates). If the hardware supports $n/2$ simultaneous two-qubit gates, the addition step can be parallelised to $O(n)$ time slices. With AQFT-style truncation, this drops to $O(\log n)$ time slices for the addition rotations. The depth of the full QFT-add-inverse-QFT adder also includes the forward and inverse QFT implementations, and depends on connectivity and whether extra workspace or semiclassical variants are allowed.
 
 ## Key results
 
@@ -89,10 +93,10 @@ $$O(n^2) \text{ controlled rotations (addition step alone: } \tfrac{1}{2}n(n+1)\
 **Gate count (approximate, AQFT-style truncation):**
 $$O(n \log n)$$
 
-**Parallel depth of addition step (with AQFT truncation):**
+**Parallel depth of addition step only (with AQFT truncation):**
 $$O(\log n) \text{ time slices}$$
 
-**Application to [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]]:** replaces the $3n$-qubit adder in Zalka's optimised implementation, bringing the total qubit count from $3n$ to $2n$ while maintaining $O(n^3)$ gate count.
+**Application to [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]]:** in the historical Zalka/Draper setting, replaces the $3n$-qubit adder in Zalka's optimised implementation and brings the arithmetic register count down to $2n$ while maintaining $O(n^3)$ abstract gate count. Later Beauregard and Toffoli-based constructions use different qubit/gate tradeoffs.
 
 ## Comparison with prior work
 

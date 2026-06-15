@@ -1,0 +1,1495 @@
+
+
+--- PAGE 1 ---
+arXiv:0811.0562v2  [quant-ph]  21 Apr 2009
+Fast quantum algorithms for approximating some irreducible
+representations of groups
+Stephen P. Jordan∗
+Institute for Quantum Information, California Institute of Technology. sjordan@caltech.edu
+Abstract
+We consider the quantum complexity of estimating matrix elements of unitary irreducible represen-
+tations of groups. For several ﬁnite groups including the symmetric group, quantum Fourier transforms
+yield eﬃcient solutions to this problem. Furthermore, quantum Schur transforms yield eﬃcient solu-
+tions for certain irreducible representations of the unitary group. Beyond this, we obtain poly(n)-time
+quantum algorithms for approximating matrix elements from all the irreducible representations of the al-
+ternating group An, and all the irreducible representations of polynomial highest weight of U(n), SU(n),
+and SO(n).
+These quantum algorithms oﬀer exponential speedup in worst case complexity over the
+fastest known classical algorithms. On the other hand, we show that average case instances are classi-
+cally easy, and that the techniques analyzed here do not oﬀer a speedup over classical computation for
+the estimation of group characters.
+1
+Introduction
+Explicit representations of groups have many uses in physics, chemistry, and mathematics. All representa-
+tions of ﬁnite groups and compact linear groups can be expressed as unitary matrices given an appropriate
+choice of basis[5]. This makes them natural candidates for implementation using quantum circuits. Here we
+show that polynomial size quantum circuits can implement:
+• The irreducible representations of any ﬁnite group which has an eﬃcient quantum Fourier transform.
+This includes the symmetric group Sn.
+• The irreducible representations of the alternating group An.
+• The irreducible representations of polynomial highest weight of the unitary U(n), special unitary
+SU(n), and special orthogonal SO(n) groups.
+Using these quantum circuits one can ﬁnd a polynomially precise additive approximation to any matrix
+element of these representations by repeating a simple measurement called the Hadamard test, as described
+in section 2.
+More precisely, for the ﬁnite groups Sn and An we obtain any matrix element of any irreducible rep-
+resentation to within ±ǫ in time that scales polynomially in 1/ǫ and n. For the Lie groups U(n), SU(n),
+and SO(n) we obtain any matrix element of any irreducible representation of polynomial highest weight
+to within ±ǫ in time that scales polynomially in 1/ǫ and n. Because the representations considered are of
+exponentially large dimension, one cannot eﬃciently ﬁnd these matrix elements by classically multiplying
+the matrices representing a set of generators. Note that, many computer science applications use multiplica-
+tive approximations. In this case, one computes an estimate ˜x of a quantity x with the requirement that
+(1−ǫ)x ≤˜x ≤(1−ǫ)x. The approximations obtained in this paper are all additive rather than multiplicative.
+∗Parts of this work were completed at MIT’s Center for Theoretical Physics and RIKEN’s Digital Materials Laboratory.
+1
+
+
+--- PAGE 2 ---
+symmetric
+braid
+matrix elements
+in BQP
+BQP-complete [3, 37]
+normalized characters
+in BPP
+DQC1-complete [33, 25]
+Figure 1: The complexity results on the symmetric group refer arbitrary irreducible representations in Young’s
+orthogonal form. The results on the braid group refer to the Jones-Wenzl representations, which give rise to Jones
+and HOMFLY polynomials. The complexity class DQC1 is the set of problems solvable in polynomial time on a one
+clean qubit computer. It is generally believed that one clean qubit computers are weaker than standard quantum
+computers but still capable of solving some problems outside of BPP.
+For some problems, the computational complexity of additive approximations can diﬀer greatly from that of
+mulitplicative approximations[11, 2].
+For exponentially large unitary matrices, the typical matrix element is exponentially small. Thus for
+average instances, a polynomially precise additive approximation provides almost no information. However,
+it is common that the worst case instances of a problem are hard whereas the average case instances are
+trivial.
+In section 5 I narrow down a class of potentially hard instances for the problem of additively
+approximating the matrix elements of the irreducible representations of the symmetric group to polynomial
+precision. I also present a classical randomized algorithm to estimate normalized characters of the symmetric
+group Sn to within ±ǫ in poly(n, 1/ǫ) time. (The character is normalized by dividing by the dimension of
+the representation, so that the character of the identity element of the group is 1.) Thus, the techniques
+described here for evaluating matrix elements of irreducible representations of groups on quantum computers
+do not provide an obvious quantum speedup for the evaluation of the characters of Sn.
+Our results on the symmetric group relate closely to the quantum complexity of evaluating Jones polyno-
+mials and other topological invariants. Certain problems of approximating Jones and HOMFLY polynomials
+can be reduced to the approximation of matrix elements or characters of the Jones-Wenzl representation
+of the braid group, which is a q-deformation of certain irreducible representations of the symmetric group
+[3, 37, 33, 25]. Figure 1 compares the complexity of estimating matrix elements and characters of the Jones-
+Wenzl representation of the braid group to the complexity of the corresponding problems for the symmetric
+group. Exact complexity characterizations (i.e. completeness results) are not known for all of these problems,
+and the exact relationships between the complexity classes referenced in ﬁgure 1 are not rigorously known.
+Nevertheless, the results seem to suggest that in general the matrix elements are harder to approximate
+than the normalized characters, and that the Jones-Wenzl representation of braid group is computationally
+harder than the corresponding irreducible representations of the symmetric group.
+2
+Hadamard Test
+The Hadamard test is a standard technique in quantum computation for approximating matrix elements of
+unitary transformations. Suppose we have an eﬃcient quantum circuit implementing a unitary transforma-
+tion U, and an eﬃcient procedure for preparing the state |ψ⟩. We can then approximate the real part of
+⟨ψ| U |ψ⟩using the following quantum circuit.
+1
+√
+2(|0⟩+ |1⟩)
+•
+H
+FE
+
+|ψ⟩
+/
+U
+/
+The probability of measuring |0⟩is
+p0 = 1 + Re(⟨ψ| U |ψ⟩)
+2
+.
+Thus, one can obtain the real part of ⟨ψ| U |ψ⟩to precision ǫ by making O(1/ǫ2) measurements and counting
+what fraction of the measurement outcomes are |0⟩. Similarly, if the control bit is instead initialized to
+2
+
+
+--- PAGE 3 ---
+1
+√
+2(|0⟩−i |1⟩), one can estimate the imaginary part of ⟨ψ| U |ψ⟩. Thus the problem of estimating matrix
+elements of unitary representations of groups reduces to the problem of implementing these representations
+with eﬃcient quantum circuits.
+3
+Fourier Transforms
+Let G be a ﬁnite group and let ˆG be the set of all irreducible representations of G. We choose a basis for
+the representations such that for any ρ ∈ˆG and g ∈G, g is represented by a dρ × dρ unitary matrix with
+entries ρi,j(g). The quantum Fourier transform over G is the following unitary operator[29]
+UFT =
+X
+g∈G
+X
+ρ∈ˆ
+G
+dρ
+X
+i,j=1
+s
+dρ
+|G|ρi,j(g) |ρ, i, j⟩⟨g| .
+Here |g⟩is a computational basis state (bitstring) indexing the element g of G. Similarly, |ρ, i, j⟩is three
+bitstrings, one indexing the element ρ ∈ˆG, and two writing out the numbers i and j in binary. The standard
+discrete Fourier transform is the special case where G is a cyclic group.
+The regular representation of any g ∈G is
+Ug =
+X
+h∈G
+|gh⟩⟨h| .
+A short calculation shows
+UFTUgU −1
+FT =
+X
+ρ∈ˆ
+G
+dρ
+X
+i,j=1
+dρ
+X
+i′,j′=1
+δj,j′ρi,i′(g−1) |ρ, i, j⟩⟨ρ, i′, j′| .
+In other words, by conjugating the regular representation of g with the quantum Fourier transform, one
+recovers the direct sum of all irreducible representations of g−1.
+Given an eﬃcient quantum circuit implementing UFT one can thus eﬃciently estimate any matrix element
+of any irreducible representation of G using the Hadamard test. Quantum circuits implementing the Fourier
+transform in polylog(|G|) time are known for the symmetric group[8] and several other groups[28]. The
+matrix elements of the representations depend on a choice of basis. The bases used in quantum Fourier
+transforms are subgroup adapted (see [28]). In particular, the symmetric group Fourier transform described
+in [8] uses the Young-Yamanouchi basis, also known as Young’s orthogonal form.
+In section 8 we describe a more direct quantum circuit implementation of the irreducible representations
+of the symmetric group, which generalizes to yield eﬃcient implementations for the alternating group.
+4
+Schur Transform
+Let H be the Hilbert space of n d-dimensional qudits.
+H = (Cd)⊗n.
+We can act on this Hilbert space by choosing an element u ∈U(d) and applying it to each qudit.
+|ψ⟩→u⊗n |ψ⟩
+We can also act on this Hilbert space by choosing an element π ∈Sn and correspondingly permuting the n
+qudits.
+|ψ⟩→Mπ |ψ⟩
+3
+
+
+--- PAGE 4 ---
+u⊗n and Mπ are reducible unitary nd-dimensional representations of U(d) and Sn, respectively. These two
+actions on H commute.
+The irreducible representations of Sn are in bijective correspondence with the partitions of n.
+Any
+partition of n into d parts indexes a unique irreducible representation of U(d). U(d) has inﬁnitely many
+irreducible representations, so these partitions only index a special subset of them. As discussed in [6], there
+exists a unitary change of basis USchur such that
+USchurMπu⊗nU −1
+Schur =
+M
+λ
+ρλ(π) ⊗νλ(u),
+where λ ranges over all partitions of n into d parts.
+As shown in [6], USchur can be implemented by a poly(n, d) size quantum circuit.
+Thus, using the
+Hadamard test, one can eﬃciently obtain matrix elements of these representations of the symmetric and
+unitary groups.
+5
+Complexity of Symmetric Group Representations
+As described in section 3, quantum computers can solve the following problem with probability 1 −δ in
+poly(n, 1/ǫ, log(1/δ)) time. Note that standard Young tableaux index the Young-Yamanouchi basis vectors,
+as discussed in section 8.1.
+Problem 1: Approximate a matrix element in the Young-Yamanouchi basis of an irreducible representation
+for the symmetric group Sn.
+Input:
+A Young diagram specifying the irreducible representation, a permutation from Sn, a pair of
+standard Young tableaux indicating the desired matrix element, and a polynomially small parameter ǫ.
+Output: The speciﬁed matrix element to within ±ǫ.
+It appears that no polynomial time classical algorithm for this problem is known. Due mainly to applica-
+tions in quantum chemistry, many exponential time classical algorithms for the exact computation of entire
+matrices from representations of the symmetric group have been developed[22, 10, 38, 39, 14, 13, 31, 30].
+There appears to be no literature on the computation or approximation of individual matrix elements of
+representations of Sn.
+On the other hand, the precision of approximation achieved by the quantum algorithm is trivial for average
+instances. We can see this as follows. Let λ be a Young diagram of n boxes, let ρλ be the corresponding
+irreducible representation of Sn, and let dλ be the dimension of ρλ. For any π ∈Sn, the root mean square
+of the matrix elements of ρλ(π) is
+RMS(ρλ(π)) =
+s
+1
+d2
+λ
+X
+a,b∈B
+| ⟨a| ρλ(π) |b⟩|2,
+where B is any complete orthonormal basis for the vector space on which ρλ acts. We see that
+X
+a∈B
+| ⟨a| ρλ(π) |b⟩|2 = 1
+since, by the unitarity of ρλ(π), this is just the norm of |b⟩. Thus,
+RMS(ρλ(π)) =
+s
+1
+d2
+λ
+X
+b∈B
+1 =
+1
+√dλ
+.
+(1)
+The interesting instances of problem 1 are those in which dλ is exponentially large. In these instances,
+the typical matrix element is exponentially small, by equation 1. Running the quantum algorithm yields
+polynomial precision, thus one could instead simply guess zero every time, with similar results.
+4
+
+
+--- PAGE 5 ---
+3
+10
+8
+Figure 2: Here is a sequence of Young diagrams, such that as the number of boxes increases, the Young diagram
+converges asymptotically to some ﬁxed shape, in this case a triangle.
+That the average case instances are trivial does not mean that the algorithm is trivial. Hard problems
+that are trivial on average are a common occurrence. The most relevant example of this is the problem
+of estimating a knot invariant called the Jones polynomial.
+A certain problem of estimating the Jones
+polynomial of knots is BQP-complete[16, 3, 1]. The Jones polynomial algorithm is based on estimating
+matrix elements of certain representations of the braid group to polynomial precision. On average these
+matrix elements are exponentially small. Nevertheless, the BQP-hardness of the Jones polynomial problem
+shows that the worst-case instances are as hard as any problem in BQP.
+By analogy to the results on Jones polynomials, one might ask ask whether problem 1 is BQP-hard.
+The existing proofs of BQP-hardness of Jones polynomial estimation rely on the fact that the relevant
+representations of the braid group are dense in the corresponding unitary group. Thus, one can construct
+a braid whose representation implements approximately the same unitary as any given quantum circuit.
+Furthermore, it turns out that the number of crossings needed to achieve a good approximation scales only
+polynomially with the number of quantum gates in the circuit.
+Unlike the braid group, the symmetric
+group is ﬁnite. Thus, no representation of it can be dense in a continuous group. Hence, if the problem of
+estimating matrix elements of the symmetric group is BQP-hard, the proof will have to proceed along very
+diﬀerent lines than the BQP-hardness proof for Jones polynomials.
+Lacking a hardness proof, the next best thing is to identify a class of instances in which the matrix
+elements are large enough to make the approximation nontrivial. As shown below, we can do this using
+the asymptotic character theory of the symmetric group. Note that we need not worry about the matrix
+elements being too large, because even if we know a priori that a given matrix element has magnitude 1, it
+could still be nontrivial to compute its sign.
+Let π be a permutation in Sn, and let λ be a Young diagram of n boxes. The character
+χλ(π) = Tr(ρλ(π))
+is clearly independent of the basis in which ρλ is expressed. Furthermore, the character of a group element
+depends only on the conjugacy class of the group element, because for any representation ρ,
+Tr(ρ(hgh−1)) = Tr(ρ(h)ρ(g)ρ(h)−1) = Tr(ρ(g)).
+To understand the behavior of the characters of Sn as n becomes large, consider a sequence of Young
+diagrams λ1, λ2, λ3, . . ., where λn has n boxes. Suppose that the diagram λn, when scaled down by a factor
+of 1/√n, converges to a ﬁxed shape ω in the limit of large n, as illustrated in ﬁgure 2. Let dλn be the
+dimension of the irreducible representation corresponding to Young diagram λn. Let π be a permutation in
+Sk. We can also consider π to be an element of Sn for any n > k which leaves the remaining n −k objects
+ﬁxed. As shown by Biane[9],
+χλn(π)
+dλn
+= Cπ(ω)n−|π|/2 + O(n−|π|/2−1).
+(2)
+Here |π| denotes the minimum number of transpositions needed to obtain π. Note that these are general
+transpositions, not transpositions of neighbors. Cπ(ω) is a constant that only depends on π ∈Sk and the
+shape ω. A precise deﬁnition of what it means for the sequence to converge to a ﬁxed shape is given in [9],
+but for present purposes, the intuitive picture of ﬁgure 2 should be suﬃcient.
+5
+
+
+--- PAGE 6 ---
+χλn(π)/dλn is the average of the matrix elements on the diagonal of ρλn(π). In the present setting, where
+π is ﬁxed, χλn(π)/dλn shrinks only polynomially with n. Thus polynomial precision is suﬃcient to provide
+nontrivial estimates of these matrix elements. Nevertheless, ﬁnding diagonal matrix elements of ρλn(π) for
+ﬁxed π and large n is not computationally hard. This is because, as discussed in section 8, the Young-
+Yamanouchi basis is subgroup adapted. Thus, for any π which leaves all bit the ﬁrst k objects ﬁxed, ρλn(π)
+is a direct sum of irreducible representations of π in Sk. Because k is ﬁxed, any irreducible representations of
+Sk has dimension O(1) and can therefore be computed in O(1) time by multiplying the matrices representing
+transpositions.
+To produce a candidate class of hard instances of problem 1, we recall that the character χλn(π) depends
+only on the conjugacy class of π. Thus, we consider π′ conjugate to π. Like π ∈Sn, π′ ∈Sn leaves at least
+n −k objects ﬁxed, and the representations χλn(π′) have diagonal matrix elements with polynomially small
+average value. However, the objects left ﬁxed by π′ need not be k + 1, k + 2, . . . , n. Indeed, π′ can be chosen
+so that the object n is not left ﬁxed, in which case ρλn(π′) cannot be written as the direct sum of irreducible
+representations of Sm for any m < n.
+There is an additional simple way in which an instance of problem 1 can fail to be hard. Let r(π) be the
+minimal number of transpositions of neighbors needed to construct the permutation π. If r(π) is constant
+or logarithmic, then the matrix elements of the irreducible representations of π can be computed classically
+in polynomial time by direct recursive application of equation 13. For a class of hard instances of problem
+1 I propose the following.
+Hypothesis 1 Let π be a permutation in Sn.
+We consider it to permute a series of objects numbered
+1, 2, 3, . . ., n. Let s(π) be the number of objects that π does not leave ﬁxed. Let l(π) be the largest numbered
+object that π does not leave ﬁxed. Let r(π) be the minimum number of transpositions of neighbors needed to
+construct π. Let λ be a Young diagram of n boxes, and let ρλ be the corresponding dλ-dimensional irreducible
+representation of Sn. I propose the problems of estimating the diagonal matrix elements of ρλ(π) such that
+s(π) = O(1), l(π) = Ω(n), and r(π) = Ω(n) as a possible class of instances of problem 1 not solvable
+classically in polynomial time.
+Although this hypothesis contains many restrictions on π, it is clear that permutations satisfying all of these
+conditions exist. One simple example is the permutation that transposes 1 with n.
+6
+Characters of the Symmetric Group
+Because characters do not depend on a choice of basis, the computational complexity of estimating characters
+is especially interesting. Hepler[24] showed that computing the characters of the symmetric group exactly is
+#P-hard. It is clear that an algorithm for eﬃciently approximating matrix elements of a representation can
+aid in approximating the corresponding character. Speciﬁcally, the quantum algorithm for problem 1 yields
+an eﬃcient solution for the following problem.
+Problem 2: Approximate a character for the symmetric group Sn.
+Input: A Young diagram λ specifying the irreducible representation, a permutation π from Sn, and a
+polynomially small parameter ǫ.
+Output: Let χλ(π) be the character, and let dλ be the dimension of the irreducible representation. The
+output χout must satisfy |χout −χλ(π)/dλ| ≤ǫ with high probability.
+However, as we show in this section, problem 2 is eﬃciently solvable using only classical randomized
+computation. Thus the techniques used for problem 1 do not oﬀer immediate beneﬁt for problem 2. Although
+this is in some sense a negative result, it provides an interesting illustration of the diﬀerence in complexity
+between estimating individual matrix elements of representations and estimating the characters.
+We can reduce problem 2 to problem 1 by sampling uniformly at random from the standard Young
+tableaux compatible with Young diagram λ. For each Young tableau sampled we estimate the corresponding
+diagonal matrix element of ρλ(π), as described in problem 1. By averaging the diagonal matrix elements
+6
+
+
+--- PAGE 7 ---
+for polynomially many samples, we obtain the normalized character to polynomial precision. The problem
+of sampling uniformly at random from the standard Young tableaux of a given shape is nontrivial but it
+has been solved. Greene, Nijenhuis, and Wilf proved in 1979 that their “hook-walk” algorithm produces the
+standard Young tableaux of any given shape with uniform probability[21]. Examination of [21] shows that
+the time needed by the hook-walk algorithm to produce a random standard Young tableaux compatible with
+a Young diagram of n boxes is upper bounded by O(n2).
+By averaging over diagonal matrix elements we lose some information contained in the individual matrix
+elements. This observation gives the intuition that it should often be harder to estimate individual matrix
+elements of a representation than to estimate its trace. Jones polynomials provide an example in which this
+intuition is conﬁrmed. As discussed in [33], computing the Jones polynomial of the trace closure of a braid
+reduces to computing the normalized character of a certain representation of the braid group. The problem
+of additively approximating this normalized character is only DQC1-complete. In contrast, the individual
+matrix elements of this representation yield the Jones polynomial of the plat closure of the braid and are
+BQP-complete to approximate. We see a very similar phenomenon in the symmetric group; problem 2 is is
+solvable by a randomized polynomial-time classical algorithm, whereas problem 1 is not, as far as we know.
+To construct a classical algorithm for problem 2, ﬁrst recall that the character of a given group element
+depends only on the element’s conjugacy class. We can think of any π ∈Sn as acting on the set {1, 2, . . ., n}.
+The sizes of the orbits of the elements of {1, 2, . . ., n} under repeated application of π form a partition of
+the integer n. For example, consider the permutation π ∈S5 deﬁned by
+π(1) = 2
+π(2) = 3
+π(3) = 1
+π(4) = 5
+π(5) = 4.
+This divides the set {1, 2, 3, 4, 5} into the orbits {1, 2, 3} and {4, 5}. Thus it corresponds to the partition
+(3, 2) of the integer 5. Two permutations in Sn are conjugate if and only if they correspond to the same
+partition. Thus, we can introduce the following notation. For any two partitions µ and λ of n deﬁne χλ
+µ to
+be the irreducible character of Sn corresponding to the Young diagram of λ evaluated at the conjugacy class
+corresponding to µ.
+To obtain an eﬃcient classical solution to problem 2 we use the following theorem due to Roichman[32].
+Theorem 1 (From [32]) For any partitions µ = (µ1, . . . , µl) and λ = (λ1, . . . , λk) of n, the corresponding
+irreducible character of Sn is given by
+χλ
+µ =
+X
+Λ
+Wµ(Λ)
+where the sum is over all standard Young tableaux Λ of shape λ and
+Wµ(Λ) =
+Y
+1≤i≤k
+i/∈B(µ)
+fµ(i, Λ)
+where B(µ) = {µ1 + . . . + µr|1 ≤r ≤l} and
+fµ(i, Λ) =
+
+
+
+−1
+box i + 1 of Λ is in the southwest of box i
+0
+i + 1 is in the northeast of i, i + 2 is in the southwest of i + 1, and i + 1 /∈B(µ)
+1
+otherwise
+By using the hook walk algorithm we can sample uniformly at random from the standard Young tableaux
+Λ of shape λ. By inspection of theorem 1 we see that for each Λ sampled we can compute Wµ(Λ) classically
+in poly(n) time.
+By averaging the values of Wµ(Λ) obtained during the course of the sampling we can
+thus obtain a polynomially accurate additive approximation the the normalized character, thereby solving
+problem 2.
+Some readers may notice that theorem 1 is similar in form to the much older and better-known Murnaghan-
+Nakayama rule. However, the Murnaghan-Nakayama rule is based on a sum over all “rim-hook tableaux”
+of shape λ (see [32]). It is not obvious how to sample uniformly at random from the rim-hook tableaux of
+a given shape. Thus, it is not obvious how to use the Murnaghan-Nakayame rule to obtain a probabilistic
+classical algorithm for problem 2.
+7
+
+
+--- PAGE 8 ---
+7
+Lie Groups
+7.1
+Introduction
+Because U(n), SU(n) and SO(n) are compact linear groups, all of their representations are unitary given the
+right choice of basis[5]. In section 4 we described how to eﬃciently approximate the matrix elements from
+certain unitary irreducible representation of U(n). Here we present a more direct approach to this problem,
+which can handle a larger set of representations of U(n) and also extends to some other compact Lie groups:
+SU(n) and SO(n).
+U(n), SU(n), and SO(n) are subgroups of GL(n), the group of all invertible n × n matrices. All of the
+irreducible representations of U(n) and SU(n) can be obtained by restricting the irreducible representations
+of GL(n) to these subgroups. The best classical algorithms for computing irreducible representations of
+GL(n) and U(n) appear to be those of [12] and [20]. These classical algorithms work by manipulating matrices
+whose dimension equals the dimension of the representation. Thus, they do not provide a polynomial time
+algorithm for computing matrix elements from representations whose dimension is exponentially large. The
+implementation of irreducible representations of SO(3) and SU(2) by quantum circuits has been studied
+previously by Zalka[40].
+7.2
+Gel’fand-Tsetlin representation of U(n)
+The irreducible representations of the Lie group U(n) are most easily described in terms of the corresponding
+Lie algebra u(n). It is not necessary here delve into the theory of Lie groups and Lie algebras, but those who
+are interested can see [19]. For now it suﬃces to say that u(n) is the set of all antihermitian n × n matrices,
+and for any u ∈U(n) there exists h ∈u(n) such that u = eh. Given any representation a : u(n) →u(m)
+one can construct a representation A : U(n) →U(m) as follows. For any u ∈U(n) ﬁnd a corresponding
+h(u) ∈u(n) such that eh = u, and set A(u) = ea(h(u)). If a is an antihermitian representation of u(n)
+then A is a unitary representation of U(n). Furthermore, it is clear that A is irreducible if and only if a is
+irreducible.
+It turns out that the irreducible representations of the algebra gl(n) of all n×n complex matrices remain
+irreducible when restricted to the subalgebra u(n). Furthermore, all of the irreducible representations of
+u(n) are obtained this way. Let Eij be the n × n matrix with all matrix elements equal to zero except for
+the matrix element in row i, column j, which is equal to one. The set of all n2 such matrices forms a basis
+over C for gl(n). Thus to describe a representation of gl(n) it suﬃces to describe its action on each of the
+Eij matrices.
+As described in chapter 18, volume 3 of [35], explicit matrix representations of gl(n) were constructed by
+Gel’fand and Tsetlin. (See also [18].) In their construction, one thinks of the representation as acting on the
+formal span of a set of combinatorial objects called Gel’fand patterns. The Gel’fand-Tsetlin representations
+of Ep,p−1 and Ep−1,p are sparse and simple to compute for all p ∈{2, 3, . . ., n}. This property makes the
+Gel’fand-Tsetlin representations particularly useful for quantum computation.
+A Gel’fand pattern of width n consists of n rows of integers1. The jth row (from bottom) has j entries
+m1,j, m2,j, . . . , mj,j. (Note that, in contrast to matrix elements, the subscripts on the entries of Gel’fand
+patterns conventionally indicate column ﬁrst, then row.) These entries must satisfy
+mj,n+1 ≥mj,n ≥mj+1,n+1.
+Gel’fand patterns are often written out diagrammatically. For example the Gel’fand pattern of width 3 with
+rows
+m1,3 = 4
+m2,3 = 1
+m3,3 = 0
+m1,2 = 3
+m2,2 = 0
+m1,1 = 2
+1Some sources omit the top row, as it is left unchanged by the action of the representation.
+8
+
+
+--- PAGE 9 ---
+is represented by the diagram
+
+
+4
+1
+0
+3
+0
+2
+
+.
+This notation has the advantage that the entries that appear directly to the upper left and upper right of a
+given entry form the upper and lower bounds on the values that entry is allowed to take.
+We call the top row of a Gel’fand pattern its weight2. To each weight of width n corresponds one ir-
+reducible representation of gl(n). This irreducible representation acts on the formal span of all Gel’fand
+patterns with that weight (of which there are always ﬁnitely many). To describe the action of the represen-
+tation of gl(n) on these patterns let
+lp,q
+=
+mp,q −p
+(3)
+aj
+p−1
+=
+
+Qp
+i=1(li,p −lj,p−1) Qp−2
+i=1 (li,p−2 −lj,p−1 −1)
+Q
+i̸=j(li,p−1 −lj,p−1)(li,p−1 −lj,p−1 −1)
+
+1/2
+(4)
+bj
+p−1
+=
+
+Qp
+i=1(li,p −lj,p−1 + 1) Qp−2
+i=1 (li,p−2 −lj,p−1)
+Q
+i̸=j(li,p−1 −lj,p−1)(li,p−1 −lj,p−1 + 1)
+
+1/2
+.
+(5)
+Let M be a Gel’fand pattern and let M +j
+p
+be the Gel’fand pattern obtained from M by replacing mj,p with
+mj,p + 1. Similarly, let M −j
+p
+be the Gel’fand pattern in which mj,p has been replaced with mj,p −1. The
+representation a⃗m of gl(n) corresponding to weight ⃗m ∈Zn is deﬁned by the following rules3, known as the
+Gel’fand-Tsetlin formulas.
+a⃗m(Ep−1,p)M
+=
+p−1
+X
+j=1
+aj
+p−1M +j
+p−1
+(6)
+a⃗m(Ep,p−1)M
+=
+p−1
+X
+j=1
+bj
+p−1M −j
+p−1
+(7)
+a⃗m(Ep,p)M
+=
+
+
+p
+X
+i=1
+mi,p −
+p−1
+X
+j=1
+mj,p−1
+
+M
+(8)
+These formulas give implicitly a representation for all of gl(n), because any Eij can be obtained from
+operators of the form Ep−1,p and Ep,p−1 by using the commutation relation [Eik, Ekl] = Eil. By restricting
+the representation a⃗m to antihermitian subalgebra of gl(n) and taking the exponential, one obtains an
+irreducible group representation A⃗m : U(n) →U(d⃗m), where d⃗m is the number of Gel’fand patterns with
+weight ⃗m.
+It should be noted that some references claim that the set of allowed weights for representations of
+GL(n) is Nn, whereas others identify, as we do, Zn as the allowed set of weights.
+The reason for this
+is that irreducible representations of GL(n) in which the entries mn,1, mn,2, . . . , mn,n of the weight are all
+nonnegative are polynomial invariants[26]. That is, for any g ∈GL(n) and any ⃗m ∈Nn, each matrix element
+of the representation ρ⃗m(u) is a polynomial function of the n2 matrix elements of u. The representations
+involving negative weights are called holomorphic representations, and many sources choose to neglect them.
+In the case that ⃗m ∈Nn, the Gel’fand diagrams of width n bijectively correspond to the semistandard Young
+tableaux of n rows (cf. [15], pg. 517).
+2It is actually the highest weight of the representation[35], but for brevity I just call it the weight throughout this paper.
+3Warning: [35] contains a misprint, in which the sums in equations 6 and 7 are taken up to j = p instead of j = p −1.
+9
+
+
+--- PAGE 10 ---
+7.3
+Quantum Algorithm for U(n)
+In this section we obtain an eﬃcient quantum circuit implementation of any irreducible representation of
+U(n) in which the entries m1,n, . . . , mn,n of the highest weight are all at most polynomially large. The
+dimension of such representations can grow exponentially with n. Unlike the Schur transform, the method
+here does not require m1,n, . . . , mn,n to be nonnegative. We start by ﬁnding a quantum circuit implementing
+the Gel’fand-Tsetlin representation of an n × n unitary matrix of the form
+u0 =
+
+
+u11
+u12
+u21
+u22
+1
+...
+1
+
+
+,
+where all oﬀ-diagonal matrix elements not shown are zero.
+After that we describe how to extend the
+construction to arbitrary n × n unitaries.
+For a given weight ⃗m ∈Zn we wish to implement the corresponding representation A⃗m(u0) with a
+quantum circuit. To do this, we ﬁrst ﬁnd an n × n Hermitian matrix H0 such that eiH0 = u0. It is not hard
+to see that H0 can be computed in polynomial time and takes the form
+H0 =
+
+
+h11
+h12
+h∗
+12
+h22
+0
+...
+0
+
+
+.
+Thus,
+H0 = h11E11 + h12E12 + h∗
+12h21 + h22E22.
+(9)
+Hence,
+a⃗m(H0) = h11a⃗m(E11) + h12a⃗m(E12) + h∗
+12a⃗m(E21) + h22a⃗m(E22).
+(10)
+To implement A⃗m(u0) with a quantum circuit, we think of a⃗m(H0) as a Hamiltonian and simulate the
+corresponding unitary time evolution e−ia ⃗
+m(H0)t for t = −1. The Hamiltonian a⃗m(H0) has exponentially
+large dimension in the cases of computational interest. However, examination of equation 9 shows that H0
+is a linear combination of operators of the form Ep,p−1 and Ep−1,p. Thus, by the Gel’fand-Tsetlin rules
+of section 7.2, a⃗m(H0) is sparse and that its individual matrix elements are easy to compute. Under this
+circumstance, one can use the general method for simulating sparse Hamiltonians proposed in [4].
+Deﬁne row-sparse Hamiltonians to be those in which each row has at most polynomially many nonzero
+entries. Further, deﬁne row-computable Hamiltonians to be those such that there exists a polynomial time
+algorithm which, given an index i, outputs a list of the nonzero matrix elements in row i and their locations.
+Clearly, all row computable Hamiltonians are row-sparse. As shown in [4], the unitary e−iHt induced by any
+row-computable Hamiltonian can be simulated in polynomial time provided that the spectral norm ∥H∥and
+the time t are at most polynomially large. We have already noted that a⃗m(H0) is row-computable. a⃗m(H0)
+is row sparse, and because we are considering only polynomial highest weight, the entries of the Gel’fand
+patterns, and hence the matrix elements of a⃗m(H0) are only polynomially large. Thus, by Gershgorin’s circle
+theorem ∥a⃗m(H0)∥is at most poly(n).
+Having shown that a quantum circuit of poly(n) gates can implement the Gel’fand-Tsetlin representation
+of an n × n unitary of the form u0, the remaining task is to extend this to arbitrary n × n unitaries.
+Examination of the preceding construction shows that it works just the same for any unitary of the form
+up = 1p ⊕u ⊕1n−p−2,
+10
+
+
+--- PAGE 11 ---
+where 1p denotes the p × p identity matrix and u is a 2 × 2 unitary.
+Corresponding to up is again an
+antihermitian matrix of the form
+Hp = 0p ⊕h ⊕0n−p−2
+where 0p is the p×p matrix of all zeros and h is a 2×2 antihermitian matrix such that eh = u. The only issue
+to worry about is whether ∥a⃗m(Hp)∥is at most poly(n). By symmetry, one expects that ∥a⃗m(Hp)∥should
+be independent of p. However, this is not obvious from examination of equations 3 through 8. Nevertheless,
+it is true, as shown in appendix A. Thus, the norm is no diﬀerent than in the p = 0 case, i.e. H0.
+By concatenating the quantum circuits implementing A⃗m(u1), A⃗m(u2), . . . , A⃗m(uL), one can implement
+A⃗m(u1u2 . . . uL). We next show that any n × n unitary can be obtained as a product of poly(n) matrices,
+each of the form up, thus showing that the quantum algorithm is completely general and always runs in
+polynomial time.
+For any 2 × 2 matrix M, let E(M, i, j) be the n × n matrix in which M acts on the ith and jth basis
+vectors. In other words, the k, l matrix element of E(M, i, j) is
+E(M, i, j)kl =
+
+
+
+
+
+
+
+
+
+
+
+M11
+if k = i and l = i
+M12
+if k = i and l = j
+M21
+if k = j and l = i
+M22
+if k = j and l = j
+δkl
+otherwise
+.
+Thus
+up = E
+
+u11
+u12
+u21
+u22
+
+, m + 1, m + 2
+
+.
+Next note that,
+E
+ u11
+u12
+u21
+u22
+
+, m + 1, m + 3
+
+=
+E
+ 0
+1
+1
+0
+
+, m + 2, m + 3
+
+E
+ u11
+u12
+u21
+u22
+
+, m + 1, m + 2
+
+E
+ 0
+1
+1
+0
+
+, m + 2, m + 3
+
+.
+Thus the matrix
+E
+
+u11
+u12
+u21
+u22
+
+, m + 1, m + 3
+
+is obtained as a product of three matrices of the form up. By repeating this conjugation process, one can
+obtain
+E
+
+u11
+u12
+u21
+u22
+
+, i, j
+
+(11)
+for arbitrary i, j as a product of one matrix of the form
+E
+ u11
+u12
+u21
+u22
+
+, p + 1, p + 2
+
+for some p and at most O(n) matrices of the form
+E
+ 0
+1
+1
+0
+
+, q + 1, q + 2
+
+with various q. A matrix of the form shown in equation 11 is called a two-level unitary. As shown in section
+4.5.1 of [29], any n × n unitary is obtainable as a product of poly(n) two-level unitaries. Thus we obtain
+A⃗m(U) for any n × n unitary U using poly(n) quantum gates. One can then obtain any matrix element of
+A⃗m(U) to precision ±ǫ by repeating the Hadamard test O(1/ǫ2) times.
+11
+
+
+--- PAGE 12 ---
+7.4
+Special Orthogonal Group
+The special orthogonal group SO(n) consists of all n × n real orthogonal matrices with determinant equal
+to one.
+The irreducible representations of SO(n) are closely related to those of U(n) and can also be
+expressed unitarily using a Gel’fand-Tsetlin basis. As discussed in chapter 18, volume 3 of [35], the nature
+of the representations of SO(n) depends on whether n is even or odd. Following [35] and [18], we therefore
+introduce an integer k and consider SO(2k + 1) and SO(2k) separately.
+The irreducible representations of SO(2k + 1) are in bijective correspondence with the set of allowed
+weight vectors ⃗m consisting of k entries, each of which is an integer or half-integer. Furthermore, the entries
+must satisfy
+m1,n ≥m2,n ≥. . . ≥mk,n ≥0.
+The irreducible representations of SO(2k) correspond to the weight vectors ⃗m with k −1 entries, each of
+which must be an integer or half integer, and which must satisfy
+m1,n ≥m2,n ≥. . . ≥mk−1,n ≥|mk,n|.
+As in the case of U(n), the set of allowed Gel’fand patterns is determined by rules for how a row can
+compare to the one above it. For SO(n) these rules are slightly more complicated, and the rule for the jth
+row depends on whether j is odd or even. Speciﬁcally the even rule for j = 2k is
+m1,2k+1 ≥m1,2k ≥m2,2k+1 ≥m2,3k ≥. . . ≥mk,2k+1 ≥mk,2k ≥−mk,2k−1,
+and the odd rule for j = 2k −1 is
+m1,2k ≥m1,2k−1 ≥m2,2k ≥m2,2k−1 ≥. . . ≥mk−1,2k ≥mk−1,2k−1 ≥|mk,2k|.
+The Lie algebra so(n) corresponding to the Lie group SO(n) is the algebra of all antisymmetric n × n
+matrices. For any G ∈SO(n) there exists a g ∈so(n) such that eg = G. The Lie algebra so(n) is the space
+of all n × n real traceless antisymmetric matrices. Thus it is spanned by operators of the form
+Ik,i = Ei,k −Ek,i
+1 ≤i < k ≤n.
+We can fully specify a representation of so(n) by specifying the representations of the operators of the form
+Iq+1,q because these generate so(n). That is, any element of so(n) can be obtained as a linear combination
+of commutators of such operators. The Gel’fand-Tsetlin representation b⃗m of these operators depends on
+whether q is even or odd, and is given by the following formulas.
+Aj
+2p(M)
+=
+1
+2
+
+Qp−1
+r=1
+
+(lr,2p−1 −1
+2)2 −(lj,2p + 1
+2)2 Qp
+r=1
+
+(lr,2p+1 −1
+2)2 −(lj,2p + 1
+2)2
+Q
+r̸=j(l2
+r,2p −l2
+j,2p)(l2
+r,2p −(lj,2p + 1)2)
+
+1/2
+Bj
+2p+1(M)
+=
+
+Qp
+r=1(l2
+r,2p −l2
+j,2p+1) Qp+1
+r=1(l2
+r,2p+2 −l2
+j,2p+1)
+l2
+j,2p+1(4l2
+j,2p+1 −1) Q
+r̸=j(l2
+r,2p+1 −l2
+j,2p+1)(l2
+j,2p+1 −(lr,2p+1 −1)2)
+
+1/2
+C2p(M)
+=
+Qp
+r=1 lr,2p
+Qp+1
+r=1 lr,2p+2
+Qp
+r=1 lr,2p+1(lr,2p+1 −1)
+b⃗m(I2p+1,2p)M
+=
+p
+X
+j=1
+Aj
+2p(M)M +j
+2p −
+p
+X
+j=1
+Aj
+2p(M2p−j)M −j
+2p
+b⃗m(I2p+2,2p+1)M
+=
+p
+X
+j=1
+Bj
+2p+1(M)M +j
+2p+1 −
+p
+X
+j=1
+Bj
+2p+1(M −j
+2p+1)M −j
+2p+1 + iC2p(M)M
+By applying these rules to the set of allowed Gel’fand patterns described above one obtains the irreducible
+representations of the algebra so(n). By exponentiating these, one then obtains the irreducible represen-
+tations of the group SO(n). Thus the quantum algorithm for approximating the matrix elements of the
+irreducible representations of SO(n) is analogous to that for U(n).
+12
+
+
+--- PAGE 13 ---
+7.5
+Special Unitary Group
+The irreducible representations of SU(n) can be easily constructed from the irreducible representations of
+U(n), using the following facts taken from chapter 10 of [7]. The representations of U(n) can be partitioned
+into a set of equivalence classes of projectively equivalent representations. Two representations of U(n)
+with weights ⃗l = (l1, l2, . . . , ln) and ⃗m = (m1, m2, . . . , mn) are projectively equivalent if and only if there
+exists some integer s such that mi = li + s for all 1 ≤i ≤n.
+Any irreducible representation of U(n)
+remains irreducible when restricted to SU(n). Furthermore, by choosing one representative from each class
+of projectively equivalent representations of U(n) and restricting to SU(n) one obtains a complete set of
+inequivalent irreducible representations of SU(n). The Lie algebra su(n) corresponding to the Lie group
+SU(n) is easily characterized; it is the space of all traceless n × n antihermitian matrices. Thus the matrix
+elements of the irreducible representations of SU(n) are obtained by essentially the same quantum algorithm
+given for U(n) in section 7.3.
+7.6
+Characters of Lie Groups
+As always, an algorithm for approximating matrix elements immediately gives us an algorithm for approx-
+imating the normalized characters.
+However, the characters of U(n), SU(n), and SO(n) are classically
+computable in poly(n) time. As discussed in [17], the characters of any compact Lie group are given by the
+Weyl character formula. In general this formula may involve sums of exponentially many terms. However,
+in the special cases of U(n), SU(n), and SO(n) the formula reduces to simpler forms[17], given below.
+Because characters depend only on conjugacy class, the character χ⃗m(u) depends only on the eigenvalues
+of u. For u ∈U(n) let λ1, . . . , λn denote the eigenvalues. Let ⃗m = (m1, m2, . . . , mn) ∈Zn be the weight of
+a representation of U(n). Let
+li = mi + n −i
+(12)
+for each i ∈{1, 2, . . ., n}. The character of the representation of weight ⃗m is
+χU(n)
+⃗m
+(u) = det A
+det B
+where A and B are the following n × n matrices
+Aij
+=
+λlj
+i
+Bij
+=
+λn−j
+i
+.
+This formula breaks down if u has a degenerate spectrum.
+However, the value of the character for
+degenerate u can be obtained by taking the limit as some eigenvalues converge to the same value.
+As
+shown in [36], one can obtain the dimension d⃗m of the representation corresponding to a given weight ⃗m by
+calculating limu→1 χ⃗m(u). Speciﬁcally, by choosing λj = eijǫ for each 1 ≤j ≤n and taking the limit as
+ǫ →0 one obtains
+d⃗m =
+Q
+i<j(lj −li)
+Q
+i<j(j −i) ,
+where li is as deﬁned in equation 12.
+As discussed in section 7.5, the irreducible representations of SU(n) are restrictions of irreducible rep-
+resentations of U(n), therefore the characters of SU(n) are given by the same formula as the characters of
+U(n).
+SO(n) consists of real matrices. The characteristic polynomials of these matrices have real coeﬃcients,
+and thus their roots come in complex conjugate pairs. Thus, the eigenvalues of an element g ∈SO(2k + 1)
+take the form
+λ1, λ2, . . . , λk, 1, λ∗
+1, λ∗
+2, . . . , λ∗
+k,
+and for g ∈SO(2k), the eigenvalues take the form
+λ1, λ2, . . . , λk, λ∗
+1, λ∗
+2, . . . , λ∗
+k.
+13
+
+
+--- PAGE 14 ---
+As discussed in [17], the characters of the special orthogonal group are given by
+χSO(2k+1)
+⃗m
+(g) = det C
+det D
+and
+χSO(2k)
+⃗m
+(g) = det E + det F
+det G
+where C and D are the following k × k matrices
+Cij
+=
+λmi+n−i+1/2
+j
+−λ−(mi+n−i+1/2)
+j
+Dij
+=
+λn−i+1/2
+j
+−λ−(n−i+1/2)
+j
+and E, F, G are the following (k −1) × (k −1) matrices
+Eij
+=
+λli
+j + λ−li
+j
+Fij
+=
+λli
+j −λ−li
+j
+Gij
+=
+λn−i
+j
++ λ−(n−i)
+j
+,
+where li is as deﬁned in equation 12.
+As with U(n), the character of any element with a degenerate spectrum can be obtained by taking an
+appropriate limit.
+7.7
+Open Problems Regarding Lie groups
+The quantum circuits presented in the preceeding sections eﬃciently implement the irreducible representa-
+tions of U(n), SU(n), and SO(n) that have polynomial highest weight and polynomial n. It is an interesting
+open problem to implement irreducible representations with quantum circuits that scale polynomially in the
+number of digits used to specify the highest weight. Alternatively, one could try to implement an Schur
+transform to handle exponential highest weight, which is also an open problem. It is even concievable that
+Schur-like transforms could be eﬃciently implemented for exponential n. That is, there could exist a quan-
+tum circuit of polylog(n) gates implementing a unitary transform V such that for any U ∈U(n), V UV −1 is
+a direct sum of irreducible representations of U. Of course, if n is exponentially large, than we cannot have
+an explicit description of U, rather the group element U could itself be deﬁned by a quantum circuit.
+A completely diﬀerent open problem is presented by the symplectic group. Having constructed quantum
+circuits for SO(n) and SU(n), the symplectic group is the only “classical” Lie group remaining to be
+analyzed. Thus it is natural to ask whether its irreducible representations can be eﬃciently implemented by
+quantum circuits. Two diﬀerent groups can go by the name symplectic group depending on the reference.
+Connected non-compact simple Lie groups have no nontrivial ﬁnite-dimensional unitary representations (see
+[7], theorem 8.1.2). This applies to one of the groups that goes by the name of symplectic. On the other
+hand, the irreducible representations of the compact symplectic group seem promising for implementation
+by quantum circuits. The main task seems to be ﬁnding a basis for these representations that is subgroup
+adapted and makes the representations unitary. A non-unitary subgroup-adapted basis is given in [27].
+8
+Alternating Group
+In section 3, we described a method to approximate matrix elements of the irreducible representations of
+the symmetric group using the symmetric group quantum Fourier transform. Here we take a more direct
+approach to this problem, which extends to the alternating group. To do this we must ﬁrst explicitly describe
+the Young-Yamanouchi representation of the symmetric group.
+14
+
+
+--- PAGE 15 ---
+ρ
+ρ
+ρ
+1
+2
+3
+4
+1
+3
+4
+2
+1
+2
+4
+3
+1
+2
+3
+4
+1
+2
+4
+3
+1
+3
+4
+2
+1
+2
+3
+4
+1
+3
+4
+2
+1
+2
+4
+3
+(σ3) =
+
+
+−1
+3
+√
+8
+3
+0
+√
+8
+3
+1
+3
+0
+0
+0
+1
+
+
+(σ1) =
+
+
+1
+0
+0
+0
+1
+0
+0
+0
+−1
+
+
+(σ2) =
+
+
+1
+0
+0
+0
+−1
+2
+√
+3
+2
+0
+√
+3
+2
+1
+2
+
+
+Figure 3: The above matrices are irreducible representations in the Young-Yamanouchi basis with Young diagram
+. Here σi is the permutation in S4 that swaps i with i + 1.
+8.1
+Young-Yamanouchi Representation
+For a given Young diagram λ, let Vλ be the vector space formally spanned by all standard Young tableaux
+compatible with λ. For example, if
+λ =
+then Vλ is the 3-dimensional space consisting of all formal linear combinations of
+3
+1
+2
+4
+2
+4
+1
+3
+1
+2
+4
+3
+,
+.
+, and
+For any given Young diagram λ, the corresponding irreducible representation in the Young-Yamanouchi
+basis is a homomorphism ρλ from Sn to the group of orthogonal linear transformations on Vλ. It is not
+easy to directly compute ρλ(π) for an arbitrary permutation π. However, it is much easier to compute the
+representation of a transposition of neighbors. That is, we imagine the elements of Sn as permuting a set
+of objects 1, 2, . . . , n, arranged on a line. A neighbor transposition σi swaps objects i and i + 1. It is well
+known that the set {σ1, σ2, . . . , σn−1} generates Sn.
+The matrix elements for the Young-Yamanouchi representation of transpositions of neighbors can be
+obtained using a single simple rule: Let Λ be any standard Young tableau compatible with Young diagram
+λ then
+ρλ(σi)Λ = 1
+τ Λ
+i
+Λ +
+s
+1 −
+1
+(τ Λ
+i )2 Λ′,
+(13)
+where Λ′ is the Young tableau obtained from Λ by swapping boxes i and i + 1, and τ Λ
+i is the axial distance
+from box i + 1 to box i. That is, we are allowed to hop vertically or horizontally to nearest neighbors, and τ
+is the number of hops needed to get from box i + 1 to box i, where going down or left counts as +1 hop and
+going up or right counts as −1 hop. To illustrate the use of equation 13, some examples are given in ﬁgure
+3.
+In certain cases, starting with a standard Young tableau and swapping boxes i and i + 1 does not yield
+a standard Young tableau, as illustrated below.
+i
+i+1
+i+1
+i
+i+1
+i
+i
+i+1
+standard
+nonstandard
+nonstandard
+standard
+15
+
+
+--- PAGE 16 ---
+Figure 4: To obtain the conjugate ˆλ of Young diagram λ, reﬂect λ about its diagonal. In other words the number of
+boxes in the ith column of ˆλ is equal to the number of boxes in the ith row of λ.
+Some thought shows that all such cases are of one of the two types shown above. In both of these types, the
+axial distance is ±1. By equation 13, the coeﬃcient on the invalid Young tableau is
+q
+1 −
+1
+(±1)2 = 0. Thus
+the representation lies strictly within the space of standard Young tableaux.
+8.2
+Direct Quantum Algorithm for Sn
+We can directly implement the irreducible representations of Sn by ﬁrst decomposing the given permutation
+into a product of transposition of neighbors. The classical bubblesort algorithm achieves this eﬃciently. For
+any permutation in Sn, it yields a decomposition consisting of at most O(n2) transpositions. As seen in the
+previous section, the Young-Yamanouchi representation of any transposition is a direct sum of 2×2 and 1×1
+blocks, and the matrix elements of these blocks are easy to compute. As shown in [4], any unitary with these
+properties may be implemented by a quantum circuit with polynomially many gates. By concatenating at
+most O(n2) such quantum circuits we obtain the representation of any permutation in Sn. The Hadamard
+test allows a measurement to polynomial precision of the matrix elements of this representation.
+8.3
+Algorithm for Alternating Group
+Any permutation π corresponds to a permutation matrix with matrix element i, j given by δπ(i),j. The
+determinant of any permutation matrix is ±1, and is known as the sign of the permutation. The permutations
+of sign +1 are called even, and the permutations of sign −1 are called odd. This is because a transposition
+has determinant −1, and therefore any product of an odd number of transpositions is odd and any product
+of an even number of transpositions is even.
+The even permutations in Sn form a subgroup called the alternating group An, which has size n!/2. An
+is a simple group (i.e. it contains no normal subgroup) and it is the only normal subgroup of Sn other
+than {1} and Sn. As one might guess, the irreducible representations of the alternating group are closely
+related to the irreducible representations of the symmetric group. Consequently, as shown in this section, the
+quantum algorithm of section 8.2 can be easily adapted to approximate any matrix element of any irreducible
+representation of An to within ±ǫ in poly(n, 1/ǫ) time.
+Explicit orthogonal matrix representations of the alternating group are worked out in [34] and recounted
+nicely in [23]. Any representation ρ of Sn is automatically also a representation of An. However an irreducible
+representation ρ of Sn may no longer be irreducible when restricted to An. Each irreducible representation
+of Sn either remains irreducible when restricted to An or decomposes into a direct sum of two irreducible
+representations of An. All of the irreducible representations of An are obtained in this way.
+The conjugate of Young diagram λ is obtained by reﬂecting λ about the main diagonal, as shown in ﬁgure
+4. If λ is not self-conjugate then the representation ρλ of Sn remains irreducible when restricted to An. In
+this case we can simply use the algorithm of section 8.2. If λ is self-conjugate then the representation ρλ
+of Sn becomes reducible when restricted to An. It is a direct sum of two irreducible representations of An,
+called ρλ+ and ρλ−. The two corresponding invariant subspaces of the reducible representation are the +1
+and −1 eigenspaces, respectively, of the “associator” operator S deﬁned as follows.
+Let λ be a self-conjugate Young diagram of n boxes. Let Λ0 be the “typewriter-order” Young tableau
+obtained by numbering the boxes from left to right across the ﬁrst row, then left to right across the second
+row, and so on, as illustrated in ﬁgure 5. For any standard Young tableau Λ of shape λ, let wΛ ∈Sn be the
+16
+
+
+--- PAGE 17 ---
+1
+2
+3
+4
+5
+6
+7
+Figure 5: For a given Young diagram, there is a unique Young tableau in “typewriter” order, in which the boxes are
+numbered from left to right across the top row then from left to right across the next row, and so on, as illustrated
+in the example above.
+permutation that brings the boxes into typewriter order. That is, wΛΛ = Λ0. Let ˆΛ be the conjugate of Λ,
+obtained by reﬂecting Λ about the main diagonal. If Λ is standard then so is ˆΛ. Let d(λ) be the length of
+the main diagonal of λ. S is the linear operator on Vλ deﬁned by
+SΛ = i(n−d(λ))/2sign(wΛ)ˆΛ.
+(14)
+An orthonormal basis for each of the eigenspaces of S can be easily constructed from the Young-
+Yamanouchi basis. When (n −d(λ))/2 is odd, every standard Young tableau Λ of shape λ has the property
+sign(wΛ) = −sign(wˆΛ), and S is a direct sum of 2 × 2 blocks of the form
+ 0
+−i
+i
+0
+
+interchanging Λ and ˆΛ. In this case, the linear combinations
+1
+√
+2(Λ + iˆΛ) for each conjugate pair of standard
+Young tableaux form an orthonormal basis for the +1 eigenspace of S, and the linear combinations
+1
+√
+2(Λ−iˆΛ)
+form an orthonormal basis for the −1 eigenspace of S. Similarly, when (n −d(λ))/2 is even, sign(wΛ) =
+sign(wˆΛ) for all standard Young tableaux Λ of shape λ. Thus S is a direct sum of 2 × 2 blocks of the form
+
+0
+−1
+−1
+0
+
+interchanging Λ and ˆΛ. In this case the linear combinations
+1
+√
+2(Λ −ˆΛ) form an orthonormal basis for the
++1 eigenspace of S and the linear combinations
+1
+√
+2(Λ + ˆΛ) form an orthonormal basis for the −1 eigenspace
+of S.
+Suppose λ is self-conjugate and (n−d(λ))/2 is even. Any matrix element of the irreducible representation
+ρλ+ of An is given by
+1
+2(Λ + ˆΛ)ρλ(π)(Γ + ˆΓ),
+where Λ, Γ is some pair of standard Young tableaux and π is some element of An. This is a linear combination
+of only four Young-Yamanouchi matrix elements of ρλ(π).
+One can use the algorithm of section 8.2 to
+calculate each of these and then simply add them up with the appropriate coeﬃcients. The cases where
+(n −d(λ))/2 is odd and/or we want a matrix element of ρλ−are analogous.
+9
+Acknowledgements
+I thank Greg Kuperberg and anonymous referees for suggesting the approaches described in sections 3 and 4.
+I thank Daniel Rockmore, Cris Moore, Andrew Childs, Aram Harrow, John Preskill, and Jeﬀrey Goldstone
+for useful discussions. I thank Isaac Chuang and Vincent Crespi for comments that helped to inspire this
+work, and anonymous referees for useful comments.
+Parts of this work were completed the Center for
+Theoretical physics at MIT, the Digital Materials Laboratory at RIKEN, and the Institute for Quantum
+Information at Caltech. I thank these institutions as well as the Army Research Oﬃce (ARO), the Disruptive
+Technology Oﬃce (DTO), the Department of Energy (DOE), and Franco Nori and Sahel Ashab at RIKEN.
+17
+
+
+--- PAGE 18 ---
+A
+∥a⃗m(Hp)∥is independent of p
+As shown in section 7.3, the irreducible representation of an arbitrary u ∈U(n) with weight ⃗m can be
+computed by simulating the time evolution according to a series of Hamiltonians of the form A⃗m(Hp), where
+A⃗m is the Gel’fand-Tsetlin representation of the Lie algebra su(n) and
+Hp = 0p ⊕h ⊕0n−p−2,
+where h is a 2 × 2 antihermitian matrix. The quantum algorithm for simulating these Hamiltonians require
+that ∥A⃗m(Hp)∥be at most poly(n). In section 7.3 we showed this to be the case for p = 0. Here we prove
+it for all p by showing:
+Proposition 1 Let h be a ﬁxed 2 × 2 antihermitian matrix and let Hp = 0p ⊕h ⊕0n−p−2. Let a⃗m be the
+Gel’fand-Tsetlin representation of su(n) with weight ⃗m. Then ∥a⃗m(Hp)∥is independent of p.
+Proof:
+Let U k
+p = ekHp. Then
+U k
+p = 1p ⊕ekh ⊕1n−p−2.
+Thus for any 0 ≤q ≤n, there exists V ∈U(n) such that
+U k
+q = V U k
+p V −1.
+(15)
+Speciﬁcally, V is just a permutation matrix. Let A⃗m be the Gel’fand-Tsetlin representation of SU(n). That
+is,
+A⃗m(U k
+q ) = ea ⃗
+m(kHq).
+Thus
+
+d
+dkA⃗m(U k
+p )
+
+=
+∥a⃗m(Hp)eka ⃗
+m(Hp)∥
+=
+∥a⃗m(Hp)∥.
+(16)
+Here we have used the fact that A⃗m is a unitary representation. Similarly,
+∥a⃗m(Hq)∥=
+
+d
+dk A⃗m(U k
+q )
+ .
+Using equation 15, this is equal to
+
+d
+dk A⃗m(V U k
+p V −1)
+ .
+Because A⃗m is a group homomorphism and V is independent of k this is equal to
+A⃗m(V )
+ d
+dk A⃗m(U k
+p )
+
+A⃗m(V )−1
+ .
+Because A⃗m is a unitary representation this is equal to
+
+d
+dk A⃗m(U k
+p )
+ .
+By equation 16 this is equal to ∥a⃗m(Hp)∥. □
+18
+
+
+--- PAGE 19 ---
+References
+[1] Dorit Aharonov and Itai Arad. The BQP-hardness of approximating the Jones polynomial. arXiv:quant-
+ph/0605181, 2006.
+[2] Dorit Aharonov, Itai Arad, Elad Eban, and Zeph Landau. Polynomial quantum algorithms for additive
+approximations of the Potts model and other points of the Tutte plane. arXiv:quant-ph/0702008, 2008.
+[3] Dorit Aharonov, Vaughan Jones, and Zeph Landau. A polynomial quantum algorithm for approximating
+the Jones polynomial. In Proceedings of the 38th ACM Symposium on Theory of Computing, 2006.
+arXiv:quant-ph/0511096.
+[4] Dorit Aharonov and Amnon Ta-Shma. Adiabatic quantum state generation and statistical zero knowl-
+edge.
+In Proceedings of the 35th ACM Symposium on Theory of Computing, 2003.
+arXiv:quant-
+ph/0301023.
+[5] Michael Artin. Algebra, chapter 9. Prentice Hall, 1991.
+[6] Dave Bacon, Isaac Chuang, and Aram Harrow. The quantum Schur tranform I. Eﬃcient qudit circuits.
+In Proceedings of the 18th Annual ACM-SIAM Symposium on Discrete Algorithms (SODA), pages
+1235–1244, 2007. arXiv:quant-ph/0601001.
+[7] A. O. Barut and R. Ra¸czka. Theory of Group Representations and Applications. World Scientiﬁc, 2nd
+edition, 1986.
+[8] Robert Beals. Quantum computation of fourier transforms over symmetric groups. In Proceedings of
+the twenty-ninth annual ACM symposium on the theory of computing, pages 48–53, 1997.
+[9] Phillippe Biane. Representations of symmetric groups and free probability. Advances in Mathematics,
+138:126–181, 1998.
+[10] H. Boerner. Representations of Groups. North-Holland, 1963.
+[11] M. Bordewich, M. Freedman, L. Lovasz, and D. Welsh. Approximate counting and quantum computa-
+tion. Combinatorics, Probability, and Computing, 14:737–754, 2005.
+[12] Peter B¨urgisser. The computational complexity to evaluate representations of general linear groups.
+SIAM Journal on Computing, 30(3):1010–1022, 2000. preliminary version appears in Proc. 10th Inter-
+national Conference on Formal Power Series and Algebraic Combinatorics.
+[13] Joseph M. Clifton. A simpliﬁcation of the computation of the natural representation of the symmetric
+group Sn. Proceedings of the American Mathematical Society, 83(2):248–250, 1981.
+[14] ¨Omer Eˇgecioˇglu. Algorithms for the character theory of the symmetric group.
+In EUROCAL ’85,
+volume 204/1985 of Lecture Notes in Computer Science, pages 206–224, 1985.
+[15] Philippe Di Francesco, Pierre Mathieu, and David S´en´echal. Conformal Field Theory. Springer, 1997.
+[16] Michael Freedman, Michael Larsen, and Zhenghan Wang. A modular functor which is universal for
+quantum computation. arXiv:quant-ph/0001108, 2000.
+[17] William Fulton and Joe Harris. Representation Theory: A ﬁrst course. Springer, 2004.
+[18] Izrail M. Gelfand. Collected Papers, volume 2. Springer-Verlag, 1988.
+[19] Robert Gilmore. Lie groups, Lie algebras, and some of their applications. Dover, 2006.
+19
+
+
+--- PAGE 20 ---
+[20] Johannes Grabmeier and Adalbert Kerber. The evaluation of irreducible polynomial representations
+of the general linear groups and the unitary groups over ﬁelds of characteristic 0. Acta Applicandai
+Mathematicae, 8:271–291, 1987.
+[21] Curtis Greene, Albert Nijenhuis, and Herbert S. Wilf. A probabilistic proof of a formula for the number
+of Young tableaux of a given shape. Advances in Mathematics, 31(1):104–109, 1979.
+[22] Morton Hamermesh. Group Theory and its Application to Physical Problems. Addison-Wesley, 1962.
+[23] Patrick Headley. On Young’s orthogonal form and the characters of the alternating group. Journal of
+Algebraic Combinatorics, 5(2):127–134, 1996.
+[24] Charles Thomas Hepler. On the complexity of computing characters of ﬁnite groups. Master’s thesis,
+University of Calgary, 1994.
+[25] Stephen P. Jordan and Pawel Wocjan. Estimating Jones and HOMFLY polynomials with one clean
+qubit. arXiv:0807.4688, 2008.
+[26] Robert K¨onig. de Finetti theorems for quantum states. PhD thesis, University of Cambridge, 2007. see
+pg. 37.
+[27] Alexander Molev. A basis for representations of symplectic Lie algebras. Communications in Mathe-
+matical Physics, 201:591–618, 1999. arXiv:math/9804127.
+[28] Cristopher Moore, Daniel Rockmore, and Alexander Russell. Generic quantum Fourier transforms. In
+SODA ’04: Proceedings of the ﬁfteenth annual ACM-SIAM Symposium On Discrete Algorithms, pages
+778–787. Society for Industrial and Applied Mathematics, 2004. arXiv:quant-ph/0304064.
+[29] Michael A. Nielsen and Isaac L. Chuang. Quantum Computation and Quantum Information. Cambridge
+University Press, Cambridge, UK, 2000.
+[30] Ruben Pauncz. The Symmetric Group in Quantum Chemistry. CRC Press, 1995.
+[31] Sten Rettrup. A recursive formula for Young’s orthogonal representation. Chemical Physics Letters,
+47(1):59–60, 1977.
+[32] Yuval Roichman. Characters of the symmetric groups: formulas, estimates and applications. In D. A.
+Hejhal, J. Friedman, M. C. Gutzwiller, and A. M. Odlyzko, editors, Emerging Applications of Number
+Theory, volume 109 of The IMA Volumes in Mathematics and its Applications, pages 525–546. Springer,
+1999.
+[33] Peter W. Shor and Stephen P. Jordan. Estimating Jones polynomials is a complete problem for one
+clean qubit. Quantum Information and Computation, 8(8-9):681–714, 2008. arXiv:0707.2831.
+[34] R. M. Thrall. Young’s semi-normal representation of the symmetric group. Duke Mathematical Journal,
+8:611–624, 1941.
+[35] N. Ja. Vilenkin and A. U. Klimyk. Representation of Lie groups and special functions. Kluwer, 1992.
+[36] Hermann Weyl. The Classical Groups, chapter 7. Princeton University Press, 1946.
+[37] Pawel Wocjan and Jon Yard. The Jones polynomial: quantum algorithms and applications in quan-
+tum complexity theory. Quantum Information and Computation, 8(1-2):147–180, 2008. arXiv:quant-
+ph/0603069.
+[38] Wei Wu and Qianer Zhang. An eﬃcient algorithm for evaluating the standard Young-Yamanouchi
+orthogonal representation with two-column Young tableaux for symmetric groups. Journal of Physics
+A: Mathematical and General, 25:3737–3747, 1992.
+20
+
+
+--- PAGE 21 ---
+[39] Wei Wu and Qianer Zhang.
+The orthogonal and the natural representation for symmetric groups.
+International Journal of Quantum Chemistry, 50:55–67, 1994.
+[40] Christof Zalka. Implementing high dimensional unitary representations of SU(2) on a quantum com-
+puter. arXiv:quant-ph/0407140, 2004.
+21

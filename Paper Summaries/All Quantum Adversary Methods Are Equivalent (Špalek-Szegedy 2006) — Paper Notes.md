@@ -1,3 +1,5 @@
+# All Quantum Adversary Methods Are Equivalent (Špalek-Szegedy 2006) — Paper Notes
+
 > **Source:** Robert Špalek and Mario Szegedy, "All Quantum Adversary Methods Are Equivalent", *Theory of Computing* 2:1–18, 2006 (originally ICALP 2005)
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0409116) · [Journal](http://theoryofcomputing.org/articles/v002a001/)
 > **Tags:** #query-complexity #lower-bounds #adversary-method #semidefinite-programming #quantum-complexity
@@ -18,7 +20,7 @@ It was known that the Kolmogorov complexity method was at least as strong as the
 
 ## What the paper does
 
-Shows that all five adversary methods above, plus two new formulations (minimax over probability distributions and a generalized spectral adversary SDP), give exactly the same lower bound (up to constant factors for the Kolmogorov variant). There is essentially one quantum adversary method — the different formulations are just different ways of writing the same SDP. The paper also provides a clean proof that all adversary bounds are limited by $\sqrt{C_0 C_1}$ for total functions (where $C_0, C_1$ are certificate complexities), explaining exactly why the adversary method fails for problems like element distinctness and triangle finding.
+Shows that the positive/nonnegative adversary methods above, plus two new formulations (minimax over probability distributions and a generalized spectral adversary SDP), give exactly the same lower bound (up to constant factors for the Kolmogorov variant). Within the positive-weight framework, the different formulations are ways of writing the same SDP. The paper also provides a clean proof that these positive adversary bounds are limited by $\sqrt{C_0 C_1}$ for total functions (where $C_0, C_1$ are certificate complexities), explaining why this framework cannot prove tight bounds for problems like element distinctness and triangle finding.
 
 ## The unified SDP framework
 
@@ -65,7 +67,7 @@ SMM = GSA  (Thm 5.2, SDP duality via Lagrange multipliers)
    =
 GSA = SA  (Thm 6.1, rescaling by diagonal matrix)
    =
-KA = Θ(WA)  (Thms 7.1-7.2, from Laplante-Magniez: Shannon-Fano coding connects 
+KA = Θ(WA)  (Thms 7.1-7.2, from Laplante-Magniez: Shannon-Fano coding connects
               Kolmogorov complexity to probability distributions)
 ```
 
@@ -110,10 +112,10 @@ This barrier explains why the adversary method cannot prove good lower bounds fo
 
 ## Limits / caveats
 
-- The adversary method (in all its forms) is fundamentally limited by the certificate complexity barrier. For problems like element distinctness, the polynomial method (Aaronson-Shi) gives tight $\Omega(n^{2/3})$ bounds that are beyond the adversary's reach.
-- The adversary method fails completely for exact and zero-error quantum complexity — it can only give the bounded-error lower bound.
+- The positive adversary methods studied in this paper are fundamentally limited by the certificate complexity barrier. For problems like element distinctness, the polynomial method (Aaronson-Shi) gives tight $\Omega(n^{2/3})$ bounds that are beyond the positive adversary framework.
+- These formulations are designed for bounded-error lower bounds. A bounded-error lower bound also applies to exact and zero-error algorithms, but the positive adversary framework does not characterize exact or zero-error quantum query complexity.
 - The Kolmogorov complexity formulation is equal only up to constants (depending on the universal Turing machine), not exactly.
-- This paper treats only the *positive-weight* adversary. The breakthrough came later with the **negative-weight adversary** (Høyer-Lee-Špalek 2007), which removes the non-negativity constraint on $\Gamma$ and breaks through the certificate complexity barrier. The negative-weight adversary is tight for all Boolean functions (Reichardt 2009).
+- Terminology: in this note, "unweighted", "weighted", "spectral", "strong weighted", "minimax", and "Kolmogorov" all mean positive/nonnegative formulations. The breakthrough came later with the **negative-weight adversary** (Høyer-Lee-Špalek 2007), which removes the non-negativity constraint on $\Gamma$ and breaks through the certificate complexity barrier. The negative-weight/general adversary is tight for all Boolean functions (Reichardt 2009/2011).
 
 ## Reusable ideas
 

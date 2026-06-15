@@ -9,13 +9,13 @@ Encodes the spectrum of a Hamiltonian $H$ exactly (up to rotation synthesis) in 
 
 Given $H$ in LCU form
 
-$$H = \sum_\ell w_\ell H_\ell, \quad H_\ell^2 = I, \quad \lambda = \sum_\ell w_\ell$$
+$$H = \sum_\ell w_\ell H_\ell, \quad H_\ell^2 = I, \quad \lambda = \sum_\ell |w_\ell|$$
 
 construct two oracles:
 
-$$\text{PREPARE}|0\rangle = |L\rangle = \sum_\ell \sqrt{w_\ell/\lambda}\,|\ell\rangle \qquad \text{(block-encodes coefficients)}$$
+$$\text{PREPARE}|0\rangle = |L\rangle = \sum_\ell \sqrt{|w_\ell|/\lambda}\,|\ell\rangle \qquad \text{(block-encodes coefficient magnitudes)}$$
 
-$$\text{SELECT} = \sum_\ell |\ell\rangle\langle\ell| \otimes H_\ell \qquad \text{(applies Hamiltonians conditioned on index)}$$
+$$\text{SELECT} = \sum_\ell |\ell\rangle\langle\ell| \otimes \operatorname{phase}(w_\ell)H_\ell \qquad \text{(applies phases and Hamiltonians conditioned on index)}$$
 
 These satisfy the **block-encoding relation**:
 
@@ -41,9 +41,15 @@ $$2^m < \sqrt{2\pi}\,\lambda/\Delta E \implies \text{total queries} = O(\lambda/
 
 This is Heisenberg-limited (optimal) for spectroscopy.
 
-### Comparison with LCU time evolution
+### Spectroscopy versus time evolution
 
-The Taylor series / LCU approach simulates $e^{-iHt}$ at cost $O(\lambda t \log(1/\varepsilon))$ queries, then wraps in phase estimation for another $O(1/\varepsilon)$ overhead — total $O(\lambda t / \varepsilon)$ with a large log factor. Qubitization achieves the same $O(\lambda/\varepsilon)$ query count *directly* for the spectroscopy problem, without simulating time evolution explicitly.
+For spectroscopy, phase estimation on $W$ estimates \(E_k\) directly with \(O(\lambda/\varepsilon)\) uses of the walk for energy precision \(\varepsilon\). For real-time simulation, QSP/qubitization applies a polynomial transformation to the same walk and implements \(e^{-iHt}\) with
+
+$$
+O\!\left(\lambda t+\frac{\log(1/\varepsilon)}{\log\log(1/\varepsilon)}\right)
+$$
+
+uses of the signal oracle. Taylor-LCU instead has \(O(\lambda t\,\log(\lambda t/\varepsilon)/\log\log(\lambda t/\varepsilon))\) query scaling, so the improvement is the additive precision term, not merely the existence of the walk.
 
 ## When to reach for it
 
@@ -62,10 +68,10 @@ The Taylor series / LCU approach simulates $e^{-iHt}$ at cost $O(\lambda t \log(
 
 ## Caveat
 
-- $O(\lambda/\varepsilon)$ is *tight for spectroscopy* (cannot be improved). If you want *simulation* ($e^{-iHt}$), not spectra, qubitization gives $O(\lambda t)$ — same as Taylor series, no improvement in query count.
+- $O(\lambda/\varepsilon)$ is *tight for spectroscopy* under phase-estimation precision scaling. If you want *simulation* ($e^{-iHt}$), use the QSP/qubitization phase sequence with additive precision dependence rather than running phase estimation.
 - If $\lambda$ is large (e.g., bad basis choice), the $O(\lambda/\varepsilon)$ cost can be worse than Trotter in practice. Basis choice drives everything.
 - Eigenphases near $0$ or $\pi$ (i.e., $E_k \approx \pm\lambda$) suffer from the large derivative of $\arccos$ — coefficient discretization errors amplify. See Appendix A of [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush 2018]] for the rigorous bound.
-- The QSVT framework (Berry, Babbush et al. 2019) generalizes and improves upon this; qubitization is a special case of block encoding.
+- The QSVT framework of Gilyén, Su, Low, and Wiebe generalizes this polynomial-transformation viewpoint; qubitization is the Hermitian/block-encoding specialization.
 
 ## Related notes
 

@@ -6,12 +6,12 @@
 
 ## What the paper does
 
-A compact survey of quantum walks and their algorithmic applications as of 2003–2004. Covers both discrete and continuous-time quantum walks, then classifies known algorithms into two families:
+A compact survey of quantum walks and their algorithmic applications as of 2003–2004. It is best read as a map of examples and paradigms, not as a source of final cost theorems for every walk model. Covers both discrete and continuous-time quantum walks, then classifies known algorithms into two families:
 
 1. **Exponentially faster hitting times** — reaching a target vertex on structured graphs
 2. **Quantum walk search** — finding marked vertices on graphs (generalizing Grover)
 
-This is the paper that introduced the framework for thinking about quantum walk algorithms as a unified toolkit.
+This survey helped popularize the framework for thinking about quantum walk algorithms as a unified toolkit, but individual cost claims should be checked against the cited application paper.
 
 ---
 
@@ -74,7 +74,7 @@ Analysis: reduce to walk on the line by Hamming weight layers (like glued trees)
 | $3$ | No speedup | $O(\sqrt{N})$ |
 | $2$ | No speedup | $O(\sqrt{N\log N})$ |
 
-Surprising: **discrete walks beat continuous walks** in low dimensions. The coin provides extra structure that helps.
+Surprising: **discrete walks beat continuous walks** in low dimensions. The coin provides extra structure that helps. The dimensional thresholds, logarithmic factors, and success-probability amplification are model-specific; use the Childs-Goldstone and Ambainis-Kempe-Rivosh papers for exact lattice-search costs.
 
 Also surprising: the choice of coin matters. Some natural coins give no speedup at all.
 
@@ -95,28 +95,33 @@ Compare with [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp
 **Generalizations:**
 - **$k$-element distinctness** (find $k$ equal items): $O(N^{k/(k+1)})$ queries
 - **Triangle finding** in a graph on $n$ vertices: $O(n^{1.3})$ queries
-- **$k$-clique finding:** via reduction to $k$-element distinctness
+- **Fixed subgraph and clique finding:** via related subset-search frameworks, where the maintained data structure and checking cost determine the actual exponent
 
 ---
 
 ## The quantum walk search framework
 
-The common structure across all walk search algorithms:
+The common structure across many walk search algorithms:
 
-1. Define a graph $G$ on the search space (items, subsets, configurations)
-2. Choose a coin (Grover diffusion is the default)
-3. Marked vertices satisfy the search criterion
-4. At marked vertices, apply $-I$ to the coin register (a phase flip, like Grover's oracle)
-5. Run for $O(\sqrt{N/M})$ steps where $M$ = number of marked vertices
-6. Measure
+1. Define a graph or Markov chain on the search space (items, subsets, configurations)
+2. Choose the walk operator or coin; Grover diffusion is common but not universal
+3. Define marked states and implement the marked reflection/checking procedure
+4. Analyze the spectral gap, marked stationary measure, setup cost, update cost, and checking cost
+5. Measure and verify a candidate
 
-This is a **quantum analogue of random-walk-based search**: classically, a random walk on $G$ with checking at each vertex finds a marked item in $O(T_{\text{hit}}/\epsilon)$ steps (where $\epsilon$ = fraction of marked vertices, $T_{\text{hit}}$ = hitting time). Quantumly, the walk achieves a quadratic improvement.
+There is no generic theorem saying every graph-search instance costs $O(\sqrt{N/M})$ walk steps. In the later MNRS notation, a typical safe template is
+
+$$
+S + \frac{1}{\sqrt{\epsilon}}\left(\frac{1}{\sqrt{\delta}}U + C\right),
+$$
+
+where $S$ is setup cost, $U$ is update cost, $C$ is checking cost, $\delta$ is the classical spectral gap, and $\epsilon$ is the marked stationary probability. Highly symmetric examples such as hypercube search reduce to Grover-like behavior, while Johnson-graph and lattice searches have their own spectral factors and success-probability caveats.
 
 ---
 
 ## Reusable ideas
 
-1. **[[Coined Quantum Walk Search on Graphs]]:** Define a walk on the natural graph of the search space, use Grover diffusion coin with phase flip at marked vertices. The walk explores quadratically faster than classical, and the coin choice determines whether full $\sqrt{N}$ speedup is achieved. The framework for element distinctness, triangle finding, and spatial search.
+1. **[[Coined Quantum Walk Search on Graphs]]:** Define a walk on the natural graph of the search space, use a suitable coin/shift rule, and mark vertices with a phase perturbation. This is a framework with strong example-specific analyses, not a universal Grover theorem for arbitrary graphs.
 
 2. **[[Walk on the Johnson Graph for Subset Search]]:** For problems where the answer is a small subset $S \subseteq [N]$ satisfying some property, walk on $J(N, r)$ (the graph of $r$-element subsets with Hamming distance 1). Each step queries one new element. With $r$ tuned to $N^{k/(k+1)}$, achieves $O(N^{k/(k+1)})$ for $k$-element problems.
 
@@ -131,7 +136,7 @@ This is a **quantum analogue of random-walk-based search**: classically, a rando
 - [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes|Childs & Goldstone (2004)]] — continuous walk search on lattices
 - Ambainis, Kempe & Rivosh (2004) — coined walk search; coins make walks faster
 - Shi (2002) — $\Omega(N^{2/3})$ lower bound for element distinctness
-- [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Grover (1996)]] — the original quantum search; walk search generalises it
+- [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the original quantum search; walk search generalises it in some structured settings
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis (2007)]] — the full element distinctness paper; $O(N^{2/3})$ via Johnson graph walk
 
 ---

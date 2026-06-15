@@ -34,7 +34,7 @@ For the interaction picture, $\text{HAM-T}_j$ is built with $O(\log M)$ controll
 
 - The error from first-order Magnus truncation scales as $O(h^2 \|[H(\tau), H(s)]\|)$ — you can't reduce this by increasing $M$. Higher accuracy needs smaller $h$ (more segments), not more quadrature points.
 - The PREPARE oracle is simple (Hadamard gates) for uniform quadrature, but non-uniform quadrature would require more complex state preparation.
-- The block-encoding of $e^{-ih\bar{H}}$ is approximate; the QSVT implementation has failure probability, leading to global failure probability $O(\varepsilon)$.
+- The block-encoding of $e^{-ih\bar{H}}$ is approximate; QSVT/LCU approximation error and any postselection overhead must be included in the global error budget.
 
 ## Related notes
 - [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes]]

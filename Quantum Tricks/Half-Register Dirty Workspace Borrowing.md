@@ -17,6 +17,12 @@ Many quantum arithmetic circuits need $O(n)$ dirty ancillae as scratch space (e.
 
 The sequencing matters: each half must be in a state where it can be borrowed (i.e., not mid-computation) when the other half needs it. The paper's specific application interleaves vented additions and carry-xor phases across the two halves to satisfy this constraint.
 
+| Phase | Bottom half | Top half |
+|---|---|---|
+| 1. Bottom-half pass | active data being updated | untouched data, not yet borrowed if a later clean value is needed |
+| 2. Top-half pass | finished/known quantum data, borrowed as dirty workspace and restored | active data being updated |
+| 3. Bottom-half cleanup | deferred carry-xor/phasing work is completed | finished data, borrowed as dirty workspace and restored |
+
 ## When to reach for it
 
 - Any circuit that needs $O(n)$ dirty ancillae but has no external workspace — only the target register itself.

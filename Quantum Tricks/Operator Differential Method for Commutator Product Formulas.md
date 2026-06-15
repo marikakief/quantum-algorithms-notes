@@ -11,7 +11,35 @@ Define the operator differential $\delta_A O := [A, O]$. Then for a product $e^{
 
 $$\Phi(x) = \sum_{k=0}^{\infty} \frac{(-1)^k}{k+1} \int_0^x \left(\prod_j e^{p_j t \delta_{A \text{ or } B}} - 1\right)^k \cdot \left(\sum_j p_j \cdot (\text{appropriate operator})\right) dt.$$
 
-For a 6-gate formula, this reduces $\Phi(x)$ to a polynomial in five derived quantities $l, m, q, r, s$ (specific symmetric polynomials in the $p_i$). Setting conditions on these quantities — e.g., $l = m = 0$, $q = -1$, $r = s = 0$ for a third-order commutator formula — yields polynomial equations whose solutions give the formula coefficients.
+For the alternating 6-gate ansatz
+$$
+e^{p_1xA}e^{p_2xB}e^{p_3xA}e^{p_4xB}e^{p_5xA}e^{p_6xB}=e^{\Phi(x)},
+$$
+the expansion through third order can be expressed using five derived coefficient polynomials $l,m,q,r,s$:
+$$
+\Phi(x)=x(lA+mB)
++\frac{x^2}{2}(lm-2q)[A,B]
++\frac{x^3}{6}\left[\left(\frac{l^2m}{2}-3r\right)[A,[A,B]]
++\left(\frac{m^2l}{2}-3s\right)[B,[B,A]]\right]
++O(x^4).
+$$
+Here $l=p_1+p_3+p_5$, $m=p_2+p_4+p_6$, and $q,r,s$ are the paper's corresponding higher-order polynomials in the $p_i$.
+
+For a pure third-order commutator formula, impose
+$$
+l=m=0,\qquad q=-1,\qquad r=s=0.
+$$
+One solution is
+$$
+S_3(x)=
+e^{\frac{\sqrt{5}-1}{2}xA}
+e^{\frac{\sqrt{5}-1}{2}xB}
+e^{-xA}
+e^{-\frac{\sqrt{5}+1}{2}xB}
+e^{\frac{3-\sqrt{5}}{2}xA}
+e^{xB}
+=e^{x^2[A,B]+O(x^4)}.
+$$
 
 ## When to reach for it
 - Constructing new [[Product Formulas|product formulas]] for commutators or sums at a specific order

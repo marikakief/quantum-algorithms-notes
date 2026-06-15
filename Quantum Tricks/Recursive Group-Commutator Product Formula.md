@@ -4,7 +4,7 @@
 
 ## What it does
 
-Builds a [[Product Formulas]] of arbitrary approximation order for $e^{[A,B]T}$ using only elementary exponentials $e^{\pm At}$ and $e^{\pm Bt^k}$. At each recursion step the approximation order increases by 2, so you can get as high an order as desired by iterating.
+Builds a [[Product Formulas]] of arbitrary approximation order for $e^{[A,B]T}$ using only elementary evolutions under $A$ and $B$ for chosen times. The base formula writes the $B$ evolution time as $t^k$; this means running the available $B$ Hamiltonian for a scaled time $t^k$, not requiring a new primitive Hamiltonian $B t^{k-1}$. At each recursion step the approximation order increases by 2, so you can get as high an order as desired by iterating.
 
 ## The trick
 
@@ -31,9 +31,10 @@ Each level multiplies the exponential count by 6; after $p$ levels from the base
 
 ## When to reach for it
 
-- You have access to $e^{\pm At}$ and $e^{\pm Bt}$ but need $e^{[A,B]T}$ — e.g., you can directly implement each term of a commutator but not the commutator's exponential.
+- You have access to $e^{\pm As}$ and $e^{\pm Bs}$ for variable real times $s$, but need $e^{[A,B]T}$ — e.g., you can directly implement each term of a commutator but not the commutator's exponential.
 - Quantum control: any target Hamiltonian can in principle be reached through iterated commutators (if the Lie algebra closes), so this gives a constructive simulation route.
 - Simulating $k$-body interactions that arise as products of simple terms; the [[Anticommutator Simulation via Qubit Dilation]] trick converts these to commutator form.
+- Engineering effective interactions such as next-nearest-neighbor hopping from controllable nearest-neighbor pieces when the desired term appears in the generated Lie algebra.
 
 ## Complexity
 
@@ -45,7 +46,7 @@ where $\Lambda \geq 2\max_j \|A_j\|$. Near-linear in $(\Lambda T)^{k+1}$; sub-po
 
 ## Caveat
 
-The $6^{p-1}$ exponential count grows fast with recursion depth $p$, and optimizing the tradeoff between $p$ and the number of segments requires solving a system of equations. For $k \geq 2$ the constants become large. The method does not achieve polylog$(1/\varepsilon)$ — that requires LCU or [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]]; this paper's lower bound (Theorem 12) shows the $(\Lambda T)^{k+1}$ factor is unavoidable.
+The $6^{p-1}$ exponential count grows fast with recursion depth $p$, and optimizing the tradeoff between $p$ and the number of segments requires solving a system of equations. For $k \geq 2$ the constants become large. The method does not achieve polylog$(1/\varepsilon)$ in its commutator-simulation query model. LCU or [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] can have better precision dependence for ordinary Hamiltonian simulation with different access assumptions, but that is not a direct contradiction of the commutator lower bound.
 
 ## Related notes
 

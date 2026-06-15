@@ -1,3 +1,4 @@
+# Hamiltonian Simulation by Qubitization (Low-Chuang 2019)
 
 > **Source:** Guang Hao Low and Isaac L. Chuang, *Hamiltonian Simulation by Qubitization*, arXiv:1610.06546, Quantum **3**, 163 (2019)
 > **Links:** [arXiv](https://arxiv.org/abs/1610.06546) · [Quantum](https://doi.org/10.22331/q-2019-07-12-163)
@@ -23,29 +24,53 @@ It does two things at once:
 
 The paper assumes a standard-form encoding
 $$
-H = (\langle G| \otimes I) \, U \, (|G\rangle \otimes I),
+\frac{H}{\alpha} = (\langle G| \otimes I) \, U \, (|G\rangle \otimes I),
 $$
-where \(|G\rangle\) is prepared by one oracle and \(U\) is the signal oracle.
+where \(|G\rangle\) is prepared by one oracle, \(U\) is the signal oracle, and \(\alpha \geq \|H\|\) is the normalization.
 
 Today we would mostly call this a block-encoding style interface. The point is that many different Hamiltonian-access models can be funneled into this one abstraction.
 
 ## The key move: qubitization
 
-From the standard-form encoding, build an iterate \(W\) using the controlled versions of the two oracles. For each eigenvalue \(\lambda\) of \(H\), the action of \(W\) is confined to a two-dimensional invariant subspace and becomes a simple \(SU(2)\) rotation by angle \(\arccos(\lambda)\).
+From the standard-form encoding, define the reflection
+
+$$
+R_G := 2|G\rangle\langle G| \otimes I - I
+$$
+
+and the qubitization iterate
+
+$$
+W := R_G U
+$$
+
+up to the paper's harmless convention choices about left/right multiplication and controlled versions. For each eigenvector \(|\lambda\rangle\) of \(H\), the action of \(W\) is confined to the two-dimensional invariant subspace spanned by \(|G\rangle|\lambda\rangle\) and \(U|G\rangle|\lambda\rangle\). If \(x=\lambda/\alpha\), the corresponding walk eigenvalues are
+
+$$
+e^{\pm i\arccos x}.
+$$
+
+Thus the Hamiltonian eigenvalue has become a walk eigenphase, and the simulation problem becomes a simple \(SU(2)\) rotation problem in each eigenspace sector.
 
 The spectral transform problem reduces to programmable single-qubit geometry inside each eigenspace sector. At most two additional ancilla qubits are needed beyond the encoding.
 
 ## Why QSP plugs in
 
-Once each eigenvalue has become a rotation angle, phase-modulated sequences of the iterate implement polynomial transformations of the spectrum. [[Hamiltonian simulation]] becomes "choose the right polynomial approximation to \(e^{-i\lambda t}\)" rather than "invent a fresh simulation circuit."
+Once each eigenvalue has become a rotation angle, phase-modulated sequences of the iterate implement polynomial transformations of the normalized spectrum. [[Hamiltonian simulation]] becomes "choose the right polynomial approximation to \(e^{-i\alpha t x}\) on \(x=\lambda/\alpha\)" rather than "invent a fresh simulation circuit." The required QSP degree is
+
+$$
+O\!\left(\alpha t + \frac{\log(1/\epsilon)}{\log\log(1/\epsilon)}\right),
+$$
+
+matching the query complexity up to convention-dependent constants.
 
 ## Main result
 
 The paper achieves query complexity
 $$
-O\big(t + \log(1/\epsilon)\big)
+O\!\left(\alpha t + \frac{\log(1/\epsilon)}{\log\log(1/\epsilon)}\right)
 $$
-in the normalized standard-form setting, which is optimal up to model-dependent normalization factors.
+for a standard-form/block-encoding normalization $\alpha$. In the normalized setting $\alpha=1$ this is the optimal additive time/precision benchmark.
 
 This is the modern asymptotic benchmark Hamiltonian-simulation papers are measured against.
 
@@ -57,12 +82,11 @@ This is the modern asymptotic benchmark Hamiltonian-simulation papers are measur
 | qubitization | invariant SU(2) geometry behind optimal transforms |
 | QSVT era | general singular-value transformation framework |
 
-Qubitization is the middle layer where the geometry becomes explicit. The paper also subsumes the sparse-access and LCU access models as special cases, and gives a quadratic speedup for precision simulations in those settings.
+Qubitization is the middle layer where the geometry becomes explicit. The paper also subsumes the sparse-access and LCU access models as special cases, and gives the optimal additive precision dependence in those settings.
 
 ## References within this paper
 
 - [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low & Chuang (2017)]] — QSP; qubitization provides the signal-processing oracle for it
-- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT generalization that builds on qubitization
 - [[LCU Origins (Childs-Wiebe 2012) — Paper Notes|Childs & Wiebe (2012)]] — LCU as a predecessor to block-encoding
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes|Berry & Childs (2012)]] — quantum walk simulation; qubitization refines the walk operator idea
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes|Szegedy (2004)]] — [[Quantized Bipartite Walk Construction|quantum walk framework]] underlying the [[Qubitization Iterate|qubitization iterate]]
@@ -90,5 +114,6 @@ Qubitization is the middle layer where the geometry becomes explicit. The paper 
 - [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — halves the query count of qubitization-based simulation using directional walk control and GQSP; direct improvement on the algorithm introduced here
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — alternative resolution of the QSP parity obstruction for $e^{-ixt}$ via affine spectrum compression; uses the walk operator from this paper
 - [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes]] — companion paper; uses the qubitization simulation result (Theorem 1) as backend for uniform spectral amplification
+- [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — later QSVT generalization that builds on qubitization
 - [[Quantum Simulation with Sum-of-Squares Spectral Amplification (King, Low, Babbush, Somma, Rubin 2025) — Paper Notes]] — SOSSA framework: builds on the qubitization walk operator with SOS-based spectral amplification; $\sqrt{N}$ SYK speedup
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — chemistry application of SOSSA with DFTHC; current best FeMoCo resource estimates

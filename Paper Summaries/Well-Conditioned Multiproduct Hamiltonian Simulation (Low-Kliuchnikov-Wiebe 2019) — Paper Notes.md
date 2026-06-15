@@ -14,7 +14,7 @@ The goal: combine the *system-size* advantages of [[Product Formulas]]s (which e
 
 ## What the paper does
 
-Constructs **well-conditioned multiproduct formulas** — linear combinations of [[Product Formulas]]s at different step sizes — that achieve near-optimal $O(t\lambda \log^2(t\lambda/\epsilon))$ query complexity while inheriting the commutator-dependent scaling of the base product formula. The key technical result is a super-exponential reduction in the condition number $\|\vec{a}\|_1$ from $e^{\Omega(m)}$ (prior multiproduct formulas) to $O(\log m)$, via an elegant connection to Chebyshev polynomials. This is the paper that made multiproduct formulas practical — both classically and quantumly.
+Constructs **well-conditioned multiproduct formulas** — linear combinations of [[Product Formulas]]s at different step sizes — that achieve worst-case \(O(t\log^2(t/\epsilon))\) scaling in the base-formula query model, or \(O(t\lambda \log^2(t\lambda/\epsilon))\) after inserting a model-dependent normalization \(\lambda\). The formulas inherit commutator-dependent scaling from the base product formula. The key technical result is a super-exponential reduction in the LCU condition number/resolution factor \(\|\vec{a}\|_1\) from \(e^{\Omega(m)}\) (prior multiproduct formulas) to \(O(\log m)\), via an elegant connection to Chebyshev polynomials. This is the paper that made multiproduct formulas practical — both classically and quantumly.
 
 This work is the direct precursor to [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]], which replaces the coherent [[Linear Combination of Unitaries (LCU)|LCU]] implementation with randomized sampling — eliminating the ancilla overhead entirely while keeping the error cancellation structure.
 
@@ -34,7 +34,11 @@ $$V_{m,M}(\vec{k}^{-2})\,\vec{a} = \hat{e}_1$$
 
 This is a generalisation of [[Richardson Extrapolation over Randomized Step Sizes|Richardson extrapolation]] from classical numerical analysis (Chin 2010). The simplest choice $k_j = j$ (arithmetic progression) gives polynomial query cost $\|\vec{k}\|_1 \in O(m^2)$ — but the coefficients are exponentially ill-conditioned: $\|\vec{a}\|_1 \in e^{\Omega(m)}$.
 
-In the quantum setting, the multiproduct is implemented via [[Linear Combination of Unitaries (LCU)|LCU]]: prepare a coefficient state $|a\rangle = \sum_j \sqrt{a_j}|j\rangle$, apply a selector $S = \sum_j |j\rangle\langle j| \otimes \text{sign}(a_j)\, U_2^{k_j}(\Delta/k_j)$, and postselect. Success probability $\sim 1/\|\vec{a}\|_1^2$, boosted by [[Oblivious Amplitude Amplification (Robust)|oblivious amplitude amplification]] at cost $O(\|\vec{a}\|_1)$. With $\|\vec{a}\|_1 \in e^{\Omega(m)}$, this kills the advantage entirely.
+In the quantum setting, the multiproduct is implemented via [[Linear Combination of Unitaries (LCU)|LCU]]: prepare a coefficient state
+$$
+|a\rangle = \frac{1}{\sqrt{\|\vec a\|_1}}\sum_j \sqrt{|a_j|}|j\rangle,
+$$
+apply a selector $S = \sum_j |j\rangle\langle j| \otimes \text{sign}(a_j)\, U_2^{k_j}(\Delta/k_j)$, and postselect. Success probability is controlled by \(1/\|\vec{a}\|_1^2\), boosted by [[Oblivious Amplitude Amplification (Robust)|oblivious amplitude amplification]] at cost $O(\|\vec{a}\|_1)$. With $\|\vec{a}\|_1 \in e^{\Omega(m)}$, this kills the advantage entirely.
 
 ---
 
@@ -109,11 +113,11 @@ This commutator dependence is what gives multiproduct formulas their system-size
 |---|---|---|---|
 | Suzuki order-$2m$ (Eq. 2) | $O(t^{1+1/2m}\epsilon^{-1/2m})$ | $O(N^{1+o(1)})$ for local $H$ | ✓ |
 | [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes\|Truncated Taylor series]] | $O(t\,\text{polylog}(t/\epsilon))$ | $O(\lambda) = O(N^2)$ in general | ✗ |
-| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP]] | $O(t + \log(1/\epsilon))$ | $O(\lambda) = O(N^2)$ in general | ✗ |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP]] | $O(\alpha t + \log(1/\epsilon)/\log\log(1/\epsilon))$ | set by block-encoding normalization \(\alpha\) | ✗ |
 | Ill-conditioned MPF (Childs-Wiebe 2012) | $O(t\,\text{polylog}(t/\epsilon))$ in principle | Inherits from base PF | Exponentially small success prob. |
 | **This paper (LKW 2019)** | $O(t\log^2(t/\epsilon))$ | Inherits from base PF | ✓ |
 
-The unique selling point: this is the only method that simultaneously achieves near-optimal $t/\epsilon$ scaling *and* exploits commutativity. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] is asymptotically better in $t$ and $\epsilon$ but pays $O(\lambda)$ regardless of how commutative the system is. For geometrically local systems where $\sum_{j<k}\|[h_j, h_k]\| \ll \lambda^2$, multiproduct formulas can win.
+The distinctive selling point: it combines near-optimal time/error scaling in the product-formula query model with sensitivity to commutator structure inherited from the base formula. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] is asymptotically better in $t$ and $\epsilon$ for a given block-encoding normalization, but generic block-encoding costs need not reflect commutativity. For geometrically local systems where $\sum_{j<k}\|[h_j, h_k]\| \ll \lambda^2$, multiproduct formulas can win.
 
 ---
 
@@ -156,7 +160,7 @@ The system-size scaling is the headline: it tracks the base product formula's sc
 
 This paper sits at a branching point in the Hamiltonian simulation literature:
 
-- **[[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]]** directly builds on this work, replacing the coherent LCU with randomized sampling. The well-conditioned coefficients from LKW19 keep the resolution factor $\Xi = \|\vec{a}\|_1$ small, which directly controls the shot overhead $\Xi^4/\epsilon^2$. Without the conditioning result of this paper, randomized multiproduct formulas would be impractical. This is Marika's paper — the connection is tight.
+- **[[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]]** directly builds on this work, replacing the coherent LCU with randomized sampling. The well-conditioned coefficients from LKW19 keep the resolution factor $\Xi = \|\vec{a}\|_1$ small, which directly controls the shot overhead $\Xi^4/\epsilon^2$. Without the conditioning result of this paper, randomized multiproduct formulas would be impractical.
 
 - **[[Randomly Compiled Quantum Simulation with Exponentially Reduced Circuit Depths (Watson 2025) — Paper Notes|Watson (2025)]]** applies [[Richardson Extrapolation over Randomized Step Sizes|Richardson extrapolation over randomised step sizes]], citing LKW19's conditioning results to keep the extrapolation weights bounded.
 

@@ -27,7 +27,7 @@ $$
 h(\rho,O)=\sum_{|P|\le k} \hat\alpha_P\operatorname{tr}(P\rho).
 $$
 
-This works when the input-state distribution kills high-degree terms on average, so low-degree truncation captures most of the signal.
+This works when the input-state distribution is locally flat or otherwise structured enough to kill high-degree terms on average, so low-degree truncation captures most of the signal. The [[Quantum Bohnenblust--Hille Inequality for Local Observables]] supplies the bounded-degree coefficient-control that makes the thresholding step sample efficient.
 
 ## When to reach for it
 
@@ -37,7 +37,7 @@ This works when the input-state distribution kills high-degree terms on average,
 
 ## Complexity
 
-The learned model has size roughly the number of retained Pauli strings up to degree $k=O(\log(1/\varepsilon))$. Sample complexity is polylogarithmic in system size at constant precision, but quasi-polynomial in $1/\varepsilon$.
+The learned model has size roughly the number of retained Pauli strings up to degree $k=O(\log(1/\varepsilon))$. Sample complexity is polylogarithmic in system size at constant precision, but quasi-polynomial in $1/\varepsilon$; the precision dependence is part of the cost, not a suppressed implementation detail.
 
 ## Caveat
 
@@ -50,3 +50,4 @@ If the input distribution is not locally flat enough, or if the Heisenberg-evolv
 - [[Information-Theoretic Bounds on Quantum Advantage in ML (Huang-Kueng-Preskill 2021) — Paper Notes]]
 - [[Predicting Many Properties from Very Few Measurements (Huang-Kueng-Preskill 2020) — Paper Notes]]
 - [[Quantum Bohnenblust--Hille Inequality for Local Observables]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — is a different Heisenberg-picture learning tool; useful contrast with the Heisenberg learning tree lower-bound method.

@@ -1,6 +1,7 @@
+# Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes
 
-> **Source:** Dominic W. Berry, Andrew M. Childs, Aaron Ostrander, and Guoming Wang, *Quantum algorithm for linear differential equations with exponentially improved dependence on precision*, arXiv:1701.03684, Commun. Math. Phys. **356**, 1057–1081 (2017)  
-> **Links:** [arXiv](https://arxiv.org/abs/1701.03684) · [CMP](https://doi.org/10.1007/s00220-017-3002-y)  
+> **Source:** Dominic W. Berry, Andrew M. Childs, Aaron Ostrander, and Guoming Wang, *Quantum algorithm for linear differential equations with exponentially improved dependence on precision*, arXiv:1701.03684, Commun. Math. Phys. **356**, 1057–1081 (2017)
+> **Links:** [arXiv](https://arxiv.org/abs/1701.03684) · [CMP](https://doi.org/10.1007/s00220-017-3002-y)
 > **Tags:** #linear-odes #QLSA #taylor #precision-scaling
 
 ---
@@ -24,6 +25,33 @@ That is the conceptual heart of the method.
 The key gain is the same kind of gain that appeared in post-HHL linear-systems work: **exponentially improved dependence on precision** compared with earlier quantum algorithms for differential equations.
 
 The paper is interesting because it shows how to transfer that gain to dynamics problems that are not phrased as matrix inversion to begin with.
+
+## Key results and parameters
+
+The source problem is a system of possibly inhomogeneous linear ODEs with constant coefficients. The output is a quantum state proportional to the solution at the desired final time.
+
+The query complexity is linear up to logarithmic factors in the main physical/problem parameters:
+
+| Parameter | Meaning |
+|---|---|
+| \(T\) | final evolution time |
+| \(s\) | sparsity of the coefficient matrix/oracle access |
+| \(\|A\|\) or max-norm analogue | coefficient-matrix scale entering the segment count |
+| \(\kappa_V\) | eigenvector-condition parameter for diagonalizable \(A\) |
+| \(g=\max_t\|x(t)\|/\|x(T)\|\) | output-norm amplification factor |
+| \(\varepsilon\) | target state error, appearing only polylogarithmically |
+
+The central improvement over Berry (2014) is the exponentially improved precision dependence: the Taylor/history-state linear system can be solved using high-precision QLSP machinery, so the error tolerance enters as \(\operatorname{polylog}(1/\varepsilon)\) rather than a power of \(1/\varepsilon\).
+
+## Linear-system construction
+
+The interval is divided into segments. Within each segment, the algorithm encodes a truncated Taylor recurrence for the propagator and forcing terms. The unknown vector of the larger linear system contains:
+
+- Taylor coefficients or step states inside each segment;
+- continuity constraints connecting adjacent segments;
+- padding/final-time registers so that measuring the clock yields the final-time solution with non-negligible probability.
+
+The resulting matrix is sparse and structured, so it can be passed to the Childs-Kothari-Somma high-precision QLSP solver.
 
 ## What is actually reusable here
 

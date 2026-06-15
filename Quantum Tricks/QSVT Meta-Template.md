@@ -7,7 +7,7 @@
 
 1. Build a [[Standard-Form Encoding (Prepare + Signal Oracle)|block-encoding]] of \(A/\alpha\).
 2. Identify the scalar function \(f\) you want to apply to singular values or eigenvalues.
-3. Approximate \(f\) by a bounded polynomial \(P\) with the right parity. See [[Parity-Aware Polynomial Design]].
+3. Approximate \(f\) by a bounded polynomial \(P\) with the admissibility conditions required by QSVT: degree limit, parity compatible with the sequence, and \(|P(x)|\le 1\) on the relevant normalized interval. See [[Parity-Aware Polynomial Design]].
 4. Compile the phase sequence and run [[QSVT Meta-Template|QSVT]]. See [[Phased Qubitization Sequence]].
 5. Account for normalization, postselection, and success amplification if needed. See [[Oblivious Amplitude Amplification (Robust)]].
 
@@ -17,12 +17,16 @@ This is the master pattern behind a huge fraction of modern quantum linear-algeb
 
 ## What to remember
 
-The complexity driver is usually just:
-> degree of the approximating polynomial.
+The complexity drivers are:
 
-That is the main simplification [[QSVT Meta-Template|QSVT]] brings.
+- degree of the approximating polynomial,
+- cost of each block-encoding and controlled block-encoding call,
+- normalization \(\alpha\), because the polynomial acts on \(A/\alpha\), not \(A\) itself,
+- approximation and block-encoding error budgets.
 
-## Variant: stochastic QSP
+The main simplification [[QSVT Meta-Template|QSVT]] brings is that once the encoding and admissible polynomial are fixed, the quantum transform is essentially mechanical.
+
+## Later variant: stochastic QSP
 
 The template above produces a single coherent unitary. If you can tolerate a quantum channel instead (e.g., for observable estimation), [[Stochastic QSP via Chebyshev Tail Truncation]] randomizes over a family of lower-degree polynomials and cuts the average degree — and thus query complexity — roughly in half. See [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes]].
 

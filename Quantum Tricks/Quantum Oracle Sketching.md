@@ -5,11 +5,11 @@
 
 ## What it does
 
-Builds a usable quantum oracle directly from streaming classical samples, without storing the full dataset or assuming qRAM.
+Builds a usable quantum oracle directly from streaming classical samples, without storing the full dataset. This is explicitly **not qRAM**: the point is to pay for streaming data access rather than assume coherent random access to a preloaded classical array.
 
 ## The trick
 
-Suppose samples arrive as $(x, f(x))$ with $x \sim p$, and the downstream quantum algorithm wants coherent access to a phase oracle like
+Suppose samples arrive as $(x, f(x))$ with $x \sim p$, and the downstream quantum algorithm wants coherent access to a phase oracle schematically like
 $$
 U = \sum_x e^{i p(x) f(x) t} |x\rangle\langle x|.
 $$
@@ -33,9 +33,9 @@ In the paper's model, if the downstream algorithm uses $Q$ oracle queries, oracl
 $$
 M \sim N Q^2
 $$
-up to logs and model-dependent factors such as repetition number $R$, precision, and distribution parameters.
+up to logs and model-dependent factors such as precision, failure probability, repetition/correlation number $R$, distribution parameters such as $p_{\max}$, and the downstream query family.
 
-A central lower bound in the paper shows this $Q^2$ dependence is sample-optimal up to logarithmic factors.
+A central lower bound in the paper shows this $Q^2$ dependence is sample-optimal up to logarithmic factors in the paper's phase-oracle setting. Exact constants and normalizations are theorem-specific.
 
 ## Caveat
 

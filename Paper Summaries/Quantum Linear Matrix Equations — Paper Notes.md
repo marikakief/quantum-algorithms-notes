@@ -1,6 +1,7 @@
+# Quantum Linear Matrix Equations — Paper Notes
 
-> **Source:** Rolando D. Somma, Guang Hao Low, Dominic W. Berry, and Ryan Babbush, *Quantum algorithm for linear matrix equations*, arXiv:2508.02822  
-> **Links:** [arXiv](https://arxiv.org/abs/2508.02822)  
+> **Source:** Rolando D. Somma, Guang Hao Low, Dominic W. Berry, and Ryan Babbush, *Quantum algorithm for linear matrix equations*, arXiv:2508.02822
+> **Links:** [arXiv](https://arxiv.org/abs/2508.02822)
 > **Tags:** #quantum-algorithms #linear-algebra #sylvester #block-encoding #matrix-equations
 
 ---
@@ -23,6 +24,8 @@ $$
 $$
 But that pushes you into an \(N^2\)-dimensional state problem and makes the normalization tied to state-preparation geometry rather than operator use.
 
+The vectorized route also changes the output resource: a QLSP-style state \(|X\rangle\rangle\) is useful only through measurements on amplitudes, while a block-encoding of \(X/x\) can be composed as an operator. The scalar \(x\) is a normalization/rescaling factor and must be tracked in downstream costs.
+
 This paper instead keeps the answer as an operator. That is often the right abstraction if the downstream task wants to:
 - compose with \(X\),
 - estimate entries or norms of \(X\),
@@ -37,6 +40,19 @@ $$
 where the operator family acts from the left and from the right. This is the natural generalization of standard LCU from one-sided linear combinations to a **sandwich LCU** acting on an operator in the middle.
 
 That is the trick to remember.
+
+## Theorem scaffold
+
+This recent note should be kept with a maintenance marker until the theorem symbols are transcribed from the paper. The abstract-level guarantees are:
+
+| Item | What must be recorded |
+|---|---|
+| Equation | Sylvester equation \(AX+XB=C\) |
+| Input model | Block-encoding access to the matrices and supporting primitives assumed by the paper |
+| Output | A block-encoding of \(X/x\), not a prepared vectorized state |
+| Normalization | The rescaling factor \(x\) needed to make the block-encoding valid |
+| Complexity | Almost linear in a condition number depending jointly on \(A\) and \(B\); logarithmic in dimension and inverse error |
+| Caveat | The effective condition number is that of the Sylvester operator \(A\otimes I+I\otimes B^T\), not merely \(\kappa(A)\) or \(\kappa(B)\) separately |
 
 ## What is genuinely interesting here
 
@@ -61,9 +77,19 @@ If the equation is intrinsically left-right coupled, then a left-right quantum c
 
 ## BQP-completeness and connections
 
-The paper shows that their quantum circuits can solve BQP-complete problems efficiently, which provides hardness evidence that the task is genuinely quantum and not efficiently classifiable classically. The abstract also mentions a connection to the Riccati equation—an important nonlinear generalization where the same structural ideas may be relevant.
+The paper shows that its circuits can solve BQP-complete problems efficiently. This is evidence that the operator-output model can express genuinely quantum computations, but it is not a standard proof that the full task is "not efficiently classifiable classically" in every formulation. The abstract also mentions a connection to the Riccati equation—an important nonlinear generalization where the same structural ideas may be relevant.
 
 This is a very recent paper (arXiv submission August 2025; arXiv:2508.02822v2 is from late August 2025), so some results are likely still being absorbed by the community.
+
+## Follow-up: matrix differential equations
+
+[[Efficient Quantum Algorithm for Linear Matrix Differential Equations and Applications to Open Quantum Systems (Simon-Berry-Somma 2026) — Paper Notes]] extends the same operator-native instinct to
+
+$$
+\dot X(t)=A^\dagger X(t)+X(t)B+C.
+$$
+
+Instead of outputting a block-encoding of a static solution matrix, it estimates entries of $X(t)$ via [[Two-Sided History-State Overlap for Matrix ODE Entries]]. This is not just a time-dependent variant of the same problem: the Duhamel integral forces a clock-diagonal short-integral construction, and the paper proves a matching $\Omega(Lt/\epsilon)$ query lower bound.
 
 ## Caveats
 

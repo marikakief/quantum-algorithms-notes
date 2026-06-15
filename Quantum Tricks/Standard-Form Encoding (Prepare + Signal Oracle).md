@@ -7,13 +7,17 @@
 
 Represent the target operator as the projected block of a larger unitary:
 $$
-H = (\langle G| \otimes I) \, U \, (|G\rangle \otimes I),
+\frac{H}{\alpha} = (\langle G| \otimes I) \, U \, (|G\rangle \otimes I),
 $$
-where one oracle prepares \(|G\rangle\) and another implements the signal unitary \(U\).
+where one oracle prepares \(|G\rangle\), another implements the signal unitary \(U\), and \(\alpha\ge\|H\|\) is the normalization.
 
 ## Why it matters
 
 This is the abstraction layer that lets many different access models feed into the same higher-level simulation machinery. Once an operator is in this form, [[Qubitization Iterate|qubitization]] and later [[Phased Qubitization Sequence|QSP]]/[[QSVT Meta-Template|QSVT]] techniques can act on it uniformly.
+
+Modern block-encoding notation would call this an \((\alpha,a,\epsilon)\)-block-encoding when \(a\) ancillas are used and the projected block approximates \(H/\alpha\) to error \(\epsilon\). In Low-Chuang's standard-form notation this is often written as a tuple \((H,\alpha,U,d)\), where \(d\) tracks the ancilla dimension or access overhead.
+
+For an LCU \(H=\sum_j \beta_j V_j\), the standard PREPARE/SELECT construction gives \(\alpha=\sum_j|\beta_j|\).
 
 ## When to use it
 
@@ -21,7 +25,7 @@ Use this as the interface step whenever you want to translate a concrete Hamilto
 
 ## Caveat
 
-The normalization hidden in the encoding is not bookkeeping fluff — it directly determines the final complexity parameter.
+The normalization hidden in the encoding is not bookkeeping fluff — it directly determines the final complexity parameter, e.g. qubitized simulation costs \(O(\alpha t+\log(1/\epsilon)/\log\log(1/\epsilon))\) uses of the encoding.
 
 ## Related notes
 

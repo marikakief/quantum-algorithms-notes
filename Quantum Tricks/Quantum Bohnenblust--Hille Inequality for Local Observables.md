@@ -21,7 +21,7 @@ $$
 \|H\| \gtrsim_k \|\alpha\|_{2k/(k+1)}.
 $$
 
-For bounded-degree observables this can be strengthened to an effective $\ell_1$ control. The paper gets this by first designing a better product-state optimization algorithm for local Hamiltonians, then turning that constructive approximation guarantee into a norm inequality.
+For bounded-degree observables this can be strengthened to an effective $\ell_1$ control. This bounded-degree condition matters: a $k$-local Hamiltonian with many heavily overlapping terms is not automatically in the friendly regime. The paper gets this by first designing a better product-state optimization algorithm for local Hamiltonians, then turning that constructive approximation guarantee into a norm inequality.
 
 The practical consequence is that a low-degree observable with bounded operator norm cannot hide too many large Pauli coefficients. That is exactly the sparsity statement needed for thresholded learning.
 
@@ -38,6 +38,8 @@ Using the inequality is free once proved. The expensive part is whichever local-
 ## Caveat
 
 This is a structural inequality for local / bounded-degree observables. It does not rescue genuinely nonlocal operators whose Pauli mass is spread over high-weight terms.
+
+The hidden constants can grow with $k$, so the statement is most useful for fixed or slowly growing locality.
 
 ## Related notes
 

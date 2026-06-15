@@ -1,4 +1,4 @@
-> **Source:** Gilles Brassard, Peter Høyer, Michele Mosca, and Alain Tapp, *Quantum [[Amplitude Amplification and Estimation]]*, Contemporary Mathematics **305**, AMS (2002); arXiv:quant-ph/0005055
+> **Source:** Gilles Brassard, Peter Høyer, Michele Mosca, and Alain Tapp, *Quantum Amplitude Amplification and Estimation*, Contemporary Mathematics **305**, AMS (2002); arXiv:quant-ph/0005055
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0005055)
 > **Tags:** #amplitude-amplification #amplitude-estimation #grover #counting #foundational
 
@@ -8,7 +8,7 @@
 
 Generalizes Grover's search algorithm into two tools that became ubiquitous in quantum algorithms:
 
-1. **Amplitude amplification:** Given any quantum algorithm $A$ that produces a good state with probability $a$, boost the success probability to near 1 using $O(1/\sqrt{a})$ applications of $A$ and $A^{-1}$. Grover search is the special case where $A$ is the Hadamard transform.
+1. **Amplitude amplification:** Given a quantum algorithm $A$ with no intermediate measurements that produces a good state with probability $a$, boost the success probability using $O(1/\sqrt{a})$ applications of $A$ and $A^{-1}$. Grover search is the special case where $A$ is the Hadamard transform.
 
 2. **Amplitude estimation:** Estimate the success probability $a$ itself, to additive error $\epsilon$, using $O(1/\epsilon)$ applications of $A$. This combines amplitude amplification with [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]].
 
@@ -44,9 +44,11 @@ where $|\Psi_1'\rangle = |\Psi_1\rangle/\sqrt{a}$ and $|\Psi_0'\rangle = |\Psi_0
 
 After $m = \lfloor \pi/(4\theta_a) \rfloor$ iterations, the success probability is $\sin^2((2m+1)\theta_a) \geq 1 - a$.
 
-**Key result (Theorem 2):** If $a$ is known, a good state is found with certainty after $\lfloor \pi/(4\theta_a)\rfloor$ applications of $Q$, i.e., $O(1/\sqrt{a})$ uses of $A$ and $A^{-1}$.
+**Ordinary amplitude amplification (Theorem 2):** If $a$ is known, the usual $\pi$-reflection iterate finds a good state with high probability after $m=\lfloor\pi/(4\theta_a)\rfloor$ applications of $Q$, specifically success at least $1-a$. It does not generally land on the good subspace with certainty.
 
-**When $a$ is unknown (Theorem 3):** Run with exponentially increasing guesses for $m$. Expected number of applications of $A$: $O(1/\sqrt{a})$.
+**Exact amplitude amplification:** Certainty requires an exact variant with adjusted phases/iteration choice under additional knowledge of the success angle. This is distinct from the ordinary Grover iterate above.
+
+**When $a$ is unknown (Theorem 3):** Run with exponentially increasing guesses for $m$. The expected number of applications of $A$ and $A^{-1}$ is $O(1/\sqrt{a})$, with constant-success-probability guarantees as in the BBHT-style randomised schedule.
 
 ---
 
@@ -75,7 +77,7 @@ Given $f: \{0, \ldots, N-1\} \to \{0,1\}$ with $t$ satisfying elements:
 | Estimate $t$ within $\sqrt{t}$ | $O(\sqrt{N})$ |
 | Estimate $t$ within $\epsilon t$ | $O(\sqrt{N/t}/\epsilon)$ |
 | Decide $t = 0$ vs. $t = t_0$ | $O(\sqrt{N/t_0})$ (exact, with certainty) |
-| Exact count | $O(\sqrt{t(N-t)})$ with high probability |
+| Exact count | endpoint-sensitive; do not read bare $O(\sqrt{t(N-t)})$ as covering $t=0$ or $t=N$ |
 
 These are optimal — matching lower bounds from polynomial method.
 
@@ -83,14 +85,14 @@ These are optimal — matching lower bounds from polynomial method.
 
 ## Generalizations from classical heuristics (Section 3)
 
-If a classical heuristic algorithm $\mathcal{A}$ finds a good element in expected time $T$, the quantized version finds it in time $O(\sqrt{T})$. This applies to:
+If a classical heuristic algorithm $\mathcal{A}$ can be made into a coherent preparation over its random choices, has a checkable success predicate, and has its reversible implementation cost included, then the quantized version finds a good element in time $O(\sqrt{T})$ when the classical expected time is $T$. This applies to:
 - Las Vegas algorithms (always correct, random runtime)
 - Randomized search with restart strategies
 - Markov chain heuristics
 
 **Theorem 6:** If the classical heuristic uses $T$ steps on average, amplitude amplification finds a good element in $O(\sqrt{T})$ quantum steps.
 
-This is the generic "quadratic speedup for search" result. It's the reason amplitude amplification shows up everywhere — any classical search subroutine can be quantumly sped up by the square root.
+This is the generic "quadratic speedup for coherently implementable search" result. It does not automatically apply to arbitrary adaptive classical computation with irreversible measurements, data-dependent stopping, or unaccounted data-loading/oracle costs.
 
 ---
 
@@ -111,14 +113,14 @@ This is the generic "quadratic speedup for search" result. It's the reason ampli
 
 2. **[[Amplitude Estimation via Phase Estimation on Q]]:** Apply [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]] to $Q$ to extract $\theta_a = \arcsin\sqrt{a}$. Cost: $O(1/\epsilon)$ for additive error $\epsilon$. Converts search oracles into counting oracles.
 
-3. **Quadratic speedup for classical heuristics:** Any classical randomized algorithm with expected runtime $T$ can be quantumly accelerated to $O(\sqrt{T})$. This is a black-box result — works without understanding the heuristic's internal structure.
+3. **Quadratic speedup for classical heuristics:** A classical randomized search heuristic with expected runtime $T$ can be quantumly accelerated to $O(\sqrt{T})$ when its random choices, computation, and success check can be implemented coherently and reversibly. The black-box result still depends on this oracle/circuit model.
 
 ---
 
 ## References within this paper
 
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996, 1997)]] — original database search; amplitude amplification is the generalization
-- [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — [[Gapped Phase Estimation|phase estimation]] used for amplitude estimation
+- [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — eigenvalue-measurement ancestor of the phase-estimation subroutine used for amplitude estimation
 - Brassard & Høyer (1997) — earlier version of amplitude amplification
 - Boyer, Brassard, Høyer & Tapp (1998) — tight bounds for search with unknown number of solutions
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — $\Omega(\sqrt{N})$ lower bound for search; Grover is optimal

@@ -11,7 +11,7 @@ Eliminates carry garbage from a quantum adder by measuring carry qubits in the X
 
 During a ripple-carry addition $x \to x + d + c_0$, each carry bit $c_{k+1} = \text{maj}(x_k, d_k, c_k)$ is computed, used, and then becomes garbage. Normally you'd uncompute it (running the carry logic in reverse), which costs additional gates and requires workspace to hold intermediate values.
 
-The key identity: the carries of $x + d + c_0$ are exactly reproduced by adding the same offset $d$ into the bitwise complement of the result:
+The key identity, under the paper's modulo/carry-in convention for the internal carry chain: the carries of $x + d + c_0$ are exactly reproduced by adding the same offset $d$ into the bitwise complement of the result:
 
 $$\text{carry}(\sim x', d, c_0) = \text{carry}(x, d, c_0)$$
 
@@ -34,7 +34,7 @@ The result: carry qubits are recycled immediately (only 2 clean ancillae needed 
 ## Complexity
 
 - **Per carry vented:** 1 X-basis measurement + 1 classical bit of bookkeeping.
-- **Resolving all phasing tasks:** Requires $n \pm O(1)$ additional Toffolis via the carry-xor construction, plus $n - 2$ dirty qubits as a scratch register.
+- **Resolving all internal-carry phasing tasks:** Requires $n \pm O(1)$ additional Toffolis via the carry-xor construction, plus $n - 2$ dirty qubits as a scratch register. Boundary carries depend on the exact adder variant.
 - **Net effect on adder:** Reduces clean ancillae from $O(n)$ to $O(1)$ while keeping Toffoli count at $O(n)$.
 
 ## Caveat
@@ -42,6 +42,8 @@ The result: carry qubits are recycled immediately (only 2 clean ancillae needed 
 Venting converts qubit garbage into phasing tasks, which must still be resolved. The resolution requires either dirty workspace (a register of $n - 2$ qubits to target with carry-xor) or the [[Half-Register Dirty Workspace Borrowing]] trick. You don't get something for nothing — you trade qubit garbage for classical bookkeeping and deferred gate cost.
 
 Requires mid-circuit measurement and classical feedforward of measurement outcomes. In the surface code, this is the native mode of operation. In other architectures, measurement latency may be a concern.
+
+Compared with compute-copy-uncompute, venting is most attractive when the garbage is classically recoverable from surviving quantum data but expensive to uncompute coherently. If the ordinary reverse computation is cheap and workspace is available, measurement venting may not be the simplest choice.
 
 ## Related notes
 - [[A Classical-Quantum Adder with Constant Workspace and Linear Gates (Gidney 2025) — Paper Notes]] — source paper

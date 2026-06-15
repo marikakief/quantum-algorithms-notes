@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Constructs a black-box graph traversal problem with an exponential quantum-classical separation, where the quantum algorithm uses a **continuous-time quantum walk** — not a Fourier transform. This is the first exponential speedup from a technique other than the QFT family, and it established quantum walks as a genuinely different algorithmic primitive.
+Constructs a black-box graph traversal query problem with an exponential quantum-classical separation, where the quantum algorithm uses a **continuous-time quantum walk** — not a Fourier transform. This is the first exponential speedup from a technique other than the QFT family, and it established quantum walks as a genuinely different algorithmic primitive.
 
 The problem: given an oracle for a graph (vertex names and their neighbours), find the name of a designated EXIT vertex starting from a designated ENTRANCE. The quantum walk traverses the graph in $\mathrm{poly}(n)$ time; any classical algorithm needs $2^{\Omega(n)}$ queries.
 
@@ -38,7 +38,7 @@ The structure of $G'_n$ is highly symmetric *within* each column. Define column 
 
 $$|\text{col } j\rangle = \frac{1}{\sqrt{N_j}} \sum_{a \in \text{column } j} |a\rangle$$
 
-Despite the random leaf connections, the column subspace is **invariant under $H$** — every vertex in column $j$ connects to the same number of vertices in columns $j \pm 1$. So the quantum walk starting from ENTRANCE (= $|\text{col } 0\rangle$) reduces to a walk on a line of $2n+2$ vertices.
+Despite the random leaf connections, the column-uniform subspace is **invariant under $H$** — every vertex in column $j$ connects to the same number of vertices in columns $j \pm 1$. Thus the quantum walk starting from ENTRANCE (= $|\text{col } 0\rangle$) reduces to a walk on a line of $2n+2$ vertices. This is a statement about the symmetric initial state, not about arbitrary states in the full graph Hilbert space.
 
 The line has uniform hopping rate 1 everywhere except a $\sqrt{2}$ defect at the centre (where the trees meet). Setting $\gamma = 1/\sqrt{2}$, the effective 1D Hamiltonian is:
 
@@ -64,7 +64,7 @@ The proof has two parts:
 1. **Lemma 1:** The time-averaged probability of finding EXIT is $\geq \frac{1}{2n} - \frac{2}{\tau \Delta E}$, where $\Delta E$ is the minimum eigenvalue gap
 2. **Lemma 2:** $\Delta E > \frac{2\pi^2}{(1+\sqrt{2})n^3} + O(1/n^4)$, from the quantization condition $\frac{\sin((n+1)p)}{\sin np} = \pm \sqrt{2}$
 
-Repeat $O(n)$ times → high probability of success. Total: $\mathrm{poly}(n)$ oracle queries.
+Repeat $O(n)$ times to obtain high probability of success. The walk time in one run is polynomial, with $t$ sampled up to $\Theta(n^4/\varepsilon)$, so the total query cost is still $\mathrm{poly}(n)$.
 
 ---
 
@@ -84,13 +84,13 @@ The construction:
 - The graph oracle $V_c$ maps $|a, 0, 0\rangle \to |a, v_c(a), f_c(a)\rangle$ where $v_c(a)$ is the neighbour of $a$ along colour $c$
 - The walk Hamiltonian is $H = \sum_c V_c^\dagger T V_c$ — a sum of unitarily conjugated copies of $T$
 
-This requires a consistent **edge colouring** of the graph (using $k = O(1)$ colours), provided by the oracle. The colouring is shown to be classically useless (a classical algorithm can make up its own colouring as it goes).
+This requires a consistent **edge colouring** of the graph (using $k = O(1)$ colours), provided as part of the oracle model. The colouring is shown to be classically useless (a classical algorithm can make up its own colouring as it goes).
 
 ---
 
 ## The classical lower bound
 
-**Theorem 9:** Any classical algorithm making $\leq 2^{n/6}$ oracle queries finds EXIT with probability $\leq 4 \cdot 2^{-n/6}$.
+**Theorem 9:** Over the random welded graph and random vertex labels, any classical algorithm making $\leq 2^{n/6}$ oracle queries finds EXIT with probability $\leq 4 \cdot 2^{-n/6}$.
 
 The proof proceeds through a sequence of game reductions:
 - **Game 1 → Game 2:** Can't guess random vertex names (exponentially many possible names)
@@ -110,7 +110,7 @@ The core combinatorial argument: the right half of $G'_n$ decomposes into $2^{n/
 | Quantum upper bound | EXIT found in $\mathrm{poly}(n)$ oracle queries with high probability |
 | Classical lower bound | Any classical algorithm needs $2^{\Omega(n)}$ queries |
 | Separation | Exponential (query complexity) |
-| Oracle type | BQP $\neq$ BPP relative to this oracle |
+| Oracle type | BQP $\neq$ BPP relative to an oracle encoding this black-box traversal problem |
 | Walk implementation | $\mathrm{poly}(n)$ gates per walk step using edge-coloured oracle |
 
 ---

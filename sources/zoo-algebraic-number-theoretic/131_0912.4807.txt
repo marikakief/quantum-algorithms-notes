@@ -1,0 +1,916 @@
+
+
+--- PAGE 1 ---
+arXiv:0912.4807v1  [quant-ph]  24 Dec 2009
+Quantum Algorithms for many-to-one Functions to Solve the
+Regulator and the Principal Ideal Problem
+Arthur Schmidt
+Department of Computer Science, University of Calgary
+2500 University Drive NW, Calgary, Alberta, Canada T2N 1N4
+Abstract. We propose new quantum algorithms to solve the regulator and the principal ideal problem
+in a real-quadratic number ﬁeld. We improve the algorithms proposed by Hallgren ([Hal02b], [Hal07])
+by using two diﬀerent techniques. The ﬁrst improvement is the usage of a period function which is not
+one-to-one on its period. We show that even in this case Shor’s algorithm computes the period with
+constant probability. The second improvement is the usage of reduced forms (a, b, c) of discriminant ∆
+with a > 0 instead of reduced ideals of the same discriminant. These improvements reduce the number
+of required qubits by at least 2 log ∆.
+1
+Introduction
+Quantum algorithms can be used to achieve a sub-exponential or even exponential speed-up over known
+classical algorithms for some mathematical problems by using Shor’s quantum framework. Shor’s algorithms
+for factoring and solving the discrete logarithm problem [Sho94] have been adapted to diﬀerent problems.
+The computation of the regulator (Regulator Problem) of a real-quadratic number ﬁeld and the solution
+of the principal ideal problem (PIP) are two examples of such adaptions. Classically, these problems can
+be solved in sub-exponential time assuming the generalized Riemann hypothesis (GRH). For the quantum
+world, polynomial time algorithms were proposed by Hallgren in [Hal02b].
+Regulator computation and the PIP are interesting problems not only from a pure mathematical point
+of view. In [BW90], Buchmann and Williams proposed a Diﬃe-Hellman-like cryptosystem which security is
+based on PIP. Thus, if we could solve the PIP, we can break the cryptosystem from [BW90].
+The regulator computation diﬀers from all the other settings where Shor’s algorithm can be applied. It
+operates on a structure (the infrastructure of principal reduced ideals) which is not a group, since it lacks
+the associativity. However, Hallgren showed that Shor’s algorithm can still be used in this case.
+RP and PIP require the computation of natural logarithms. Thus, one problem which arises during these
+computations is the choice of the right approximation of natural logarithms. There is no known way to
+choose the approximation a priori for a given number ﬁeld. Thus, the functions proposed in [Hal02b] cannot
+be computed in polynomial time. This problem was solved by Schmidt and Vollmer in [SV05] by using non-
+canonical number theoretic constructions, and by Hallgren himself in [Hal07], by deﬁning functions which
+are periodic only on a subset of the possible function values. In our paper we show that this problem can also
+be solved by using functions which are always periodic but are many-to-one on their fundamental period. We
+show that Shor’s framework computes the right period even in such a case with constant success probability.
+We obtain a Monte Carlo type algorithm which does not depend on GRH.
+The problem to compute the period of a function which is not one-to-one was ﬁrst addressed by Boneh
+and Lipton in [BL95]. The authors presented algorithms for functions in Z which have integer periods. In
+[ME99], Mosca and Eckert generalized this result for ﬁnitely generated Abelian groups for some restricted
+class of functions. In [HH00] and [Hal02a], these restrictions were eliminated by Hales and Hallgren. In our
+paper, we solve this problem for certain many-to-one functions whose periods are irrational.
+There are two equivalent languages which can be used to describe elements of and problems in quadratic
+number ﬁelds. The ﬁrst is the language of ideals, which is usually used for formal deﬁnitions of the underlying
+concepts and elements of a number ﬁeld. The second is the language of quadratic forms, which is used to
+describe algorithms and carry out computations. In this paper, we will use both languages in exactly such a
+way.
+Our contribution in this paper is the following. We present more eﬃcient versions of algorithms for
+computing the regulator and solving the PIP. Since the PIP problem is a basis for a cryptosystem, it gives
+
+
+--- PAGE 2 ---
+us a better tool to compare this cryptosystem to others in their resistance against quantum attacks. Thus,
+we can make a better choice which cryptosystem should be used if we assume that quantum computers
+of a certain size can be build ([Sch06], [Sch07]). The second contribution are examples for problems which
+solution can be improved by using functions which are not one-to-one on their fundamental periods. In this
+paper, we do not do a full analysis of the number of qubits for the presented algorithms. Instead, we only
+reduce the complexity of certain parts of the known algorithms. A ﬁrst complete analysis of the algorithms
+was presented in [Sch07]. We will improve this analysis by using more eﬃcient algorithms in a subsequent
+paper.
+Our paper is organized as follows. In the next section, we give a short overview of the quantum framework.
+In section 3, we present the necessary background from number theory. In section 4, we describe a quantum
+algorithm for computing the regulator of a given number ﬁeld. In section 5, we present an algorithm for solving
+the principal ideal problem. We summarize our results and describe open problems in the last section.
+2
+Quantum Computing Background
+Many polynomial time quantum algorithms that solve problems for which only sub-exponential or even
+exponential classical algorithms are known use the (inverse) quantum Fourier transform (QFT) as a sub-
+routine. The problems in this class can be reduced to the problem of ﬁnding a basis for a period lattice Λ
+of an appropriate function1. For example, Shor’s factoring algorithms computes the factors of an integer n
+by determining the period of the function f(x) = ax mod n, with 1 < a < n. The period of f is the order
+of a in the ﬁnite abelian group (Z/nZ)∗, and the corresponding lattice is order(a)Z. The objective of the
+quantum subroutine is to ﬁnd an approximation of a basis B for the dual lattice Λ∗. During the classical
+post-computation step the basis B is used to compute a basis of the original lattice Λ. The latter task can be
+done by using a continued fraction expansion as proposed in Shor’s original paper [Sho94], by using a simul-
+taneous Diophantine approximation as proposed by Seifert in [Sei01], or by using techniques by Buchmann
+and Pohst ([BP89], [BK93]) as proposed by Hallgren in [Hal05] and Schmidt and Vollmer in [SV05].
+The framework for such an algorithm is the following. The quantum computer uses two registers: one to
+store the input vector of the function and one to store the function value. The algorithm starts by creating a
+superposition of all possible states in the ﬁrst register, by computing the function value to the second register,
+and by measuring the second register. By the laws of quantum mechanics, the measurement changes the state
+of the quantum computer to P
+v∈L |k + v⟩|f(k)⟩where k is a random vector and L is a subset of Λ. Next,
+the QFT and a measurement is applied to the ﬁrst register. One useful property of the set computed by the
+QFT is that it is independent of the coset k + Λ. Thus, QFT always creates a superposition of values which
+approximate the basis of Λ∗independent of k. The other useful property of the QFT is that the elements in
+the superposition are almost uniformly distributed. These two properties imply that, for a ﬁxed dimension
+of the lattice, an approximation of the basis B is computed with a constant probability after running the
+above algorithm a constant number of times.
+In the following sections, we will deﬁne periodic functions whose period lattices can be used to compute
+the regulator and to solve the PIP resp. DL-problem.
+3
+Number Theory Background
+3.1
+Ideals
+Let ∆be a positive integer which is not a square such that ∆≡0, 1 mod 4. Then the module O∆=
+Z + ∆+
+√
+∆
+2
+Z is a real-quadratic order. The ﬁeld of fractions of the order O∆is the real-quadratic ﬁeld
+K = Q(
+√
+∆). An element α ∈Q(
+√
+∆) can be written as α = a + b
+√
+∆with a, b ∈Q. The norm of α is
+N(α) = a2 −b2∆.
+Let X and Y be two subsets of K, then the product XY is the additive subgroup of K generated by
+{ xy | x ∈X, y ∈Y }. An integral O∆-ideal is a module a ⊆O∆such that aO∆⊆a. A (fractional) ideal a
+is a subset of K such that da is a integral ideal for a d ∈Z. An ideal a is invertible, if there exists an ideal b
+with ab = O∆. By I, we denote the set of invertible ideals.
+1 We say that a function f : Rn →S has a period lattice Λ ⊂Rn if Λ is a lattice and f(x) = f(x + λ) for all λ ∈Λ
+
+
+--- PAGE 3 ---
+Each ideal a has the form
+a = q(aZ + b +
+√
+∆
+2
+Z),
+where a, b ∈Z, q ∈Q, a, q > 0, b is unique modulo 2a, c = (b2 −∆)/(4a) ∈Z, and gcd(a, b, c) = 1. The ideal
+is called reduced, if a > 0 and |
+√
+∆−2|a|| < b <
+√
+∆. By R we denote the set of reduced ideals.
+Two ideals a and b are equivalent if there is α ∈K such that b = αa. The set of equivalence classes
+of ideals forms a ﬁnite abelian group under ideal multiplication. We denote this group by Cl∆We have
+Cl∆= I/P, where P = {αO∆| with α ∈K} is the set of principal ideals.
+Every ideal a is equivalent to a reduced ideal. The equivalent reduced ideal can be computed by applying
+the reduction operator ρ(a) = γa, with γ = −2c/(q(b +
+√
+∆)), at most log2(a/
+√
+∆) + 2 times.
+By theorem of Dirichlet, every unit of O∆can be written as ±ǫk with an integer k and a fundamental unit
+ǫ. It is easy to see that the norm of every unit is equal to plus or minus one.2 In general, the number of bits
+which are necessary to represent a unit is exponential (in log ∆). Thus, instead of computing a fundamental
+unit ǫ we compute the regulator deﬁned as R = ln |ǫ|. If we conﬁne ourself to units with norm plus one, then
+there is a fundamental unit ǫ′ of norm one such that every unit of norm one has the form ±(ǫ′)k. In this
+case, R+ = ln |ǫ′| is called the regulator in the narrow sense. Note that in a number ﬁeld either R = R+ or
+R = R+/2. In our computations we will only consider the narrow case.
+Principal ideals can be ordered on a circle of circumference R by using the distance function δ : P →
+R/RZ
+:
+αO∆7→Log α with Log α = 1
+2 ln |σ(α)/α| mod R. Note that the unit ideal has distance zero.
+The distance between two ideals a and b is deﬁned by δ(a, b) = δ(a) −δ(b) mod R+. It has two important
+properties: 1/
+√
+∆< δ(a, ρ(a)) < ln
+√
+∆and δ(a, ρ(ρ(a))) > ln 2 for all reduced ideals a. There is a minimal
+positive integer k such that the sequence (O∆, ρ(O∆), . . . , ρk(O∆) = O∆) contains all principal reduced
+ideals. Thus, by applying ρ we can “walk” through all these ideals. The product of all γ’s which occur during
+the computation of ρ is a fundamental unit.
+For an x ∈R and a principal ideal a = αO∆, we deﬁne δ(a, x) = x −Log α mod R. Let a ∈P be such
+that δ(a, x) ≤0 and δ(ρ(a), x) > 0, then we say that the ideal is left of or at x and denote it by a−(x). The
+computation of a−(x) requires the computation of natural logarithms. We cannot do this exactly. Moreover,
+to the best of our knowledge, the computation Log α to any a priori ﬁxed precision does not allow to correctly
+make the decision for some x’s whether δ(a, x) ≤0 or δ(a, x) > 0. If, however, we successively increase the
+precision to break a tie, we might spend an amount of time on this single computation that exceeds any
+a priori given polynomial bound for the run-time of the total algorithm.3 Therefore, in our algorithms, we
+only approximate natural logarithms. For an x ∈Q, this approach produces some ˜a−(x) which is left of
+or at x according to these approximative logarithm computations. We take into account that for some x’s
+a−(x) ̸= ˜a−(x).
+In the rest of the section, we consider quadratic forms, show their correspondence to ideals, and describe
+the advantage to use them in our algorithms.
+3.2
+Quadratic Forms
+An integer indeﬁnite quadratic form of discriminant ∆is a polynomial aX2 + bXY + cY 2, where a, b, c ∈Z,
+gcd(a, b, c) = 1, and ∆= b2 −4ac > 0. If ∆is not a square, then the form is irreducible. The form is reduced
+if |
+√
+∆−2|a|| < b <
+√
+∆. It is easy to see that if (a, b, c) is reduced, then ac < 0.
+There is a well known bijection (see [BV07], Theorem 4.4.4) between invertible ideals and Γ-Orbits4 of
+irreducible indeﬁnite forms with positive a. This bijection maps distances of ideals to distances of forms.
+Similarly to the ideal case, we can “walk” on the principal circle by applying the ρ-operator to the form f =
+(a, b, c) which is ρ(f) = (c, B, A) such that B ≡−b mod 2c, |
+√
+∆−2|c|| < B <
+√
+∆and A = (B2 −∆)/(4c).
+The diﬀerence to the ideal case is that here, the sign of the ﬁrst coeﬃcient alternates whereas in the ideal case
+it is always positive. In our computations, we use this fact and look at reduced principal forms (a, b, c) left of
+2 Note that there is well know connection between fundamental units and solutions of the famous Pell equation (see
+[JW09] for more information about it).
+3 This is exactly the point where there remains a gap in Hallgrens proof of polynomial run-time of his algorithm for
+the quadratic case.
+4 A Γ-Orbit of a form (a, b, c) is the set {(a, B, C) | b ≡B mod 2a and C = (B2 −∆)/4a}.
+
+
+--- PAGE 4 ---
+or at x with the additional condition that a > 0. We denote the set of reduced principal forms with positive a
+by R+. The advantage in using forms from R+ over all reduced forms is the following. As mentioned above,
+the distance between an ideal a and ρ2(a) is at least ln 2. This implies that the distance between two forms
+from R+ is at least ln 2, too. In contrast, the distance between forms in the set of all principal reduced forms
+is at least 1/
+√
+∆. Thus, by using R+, we have the property that the minimum distance between two forms
+is independent of ∆.
+In our algorithms, we have to compute forms left of or at x with x > ∆. Since δ(a, ρ(a)) < log
+√
+∆,
+the time complexity of this computation is exponential in log ∆. To “jump” over larger distances, we use
+giant steps which consist of form composition and reduction. Let f = (a, b, c) be the composition of two
+forms (resp. ideals) f1 = (a1, b1, c1) and f2 = (a2, b2, c2). Form f has coeﬃcients a = a1a2/m, b = (ja2b1 +
+ka1b2 + l(b1b2 + ∆)/2)/m mod 2a, where ja2 + ka1 + l(b1 + b2)/2 = m = gcd(a1, a2, (b1 + b2)/2), and
+c = (b2 −∆)/(4a). Form f is in general not reduced, so by applying ρ at most log
+√
+∆+ 2 times we obtain
+a reduced form which is equivalent to the composition of f1 and f2. Let k be the number of ρ-applications.
+For the distances, we have the following equation:
+δ(f1 ∗f2) = δ(ρk(f)) = δ(f1) + δ(f2) + δ′,
+(1)
+where δ′ = δ(f, ρk(f)) is small (at most ± ln ∆). An ideal composition followed by a reduction imply a
+structure which is almost a group (since, in general, δ′ ̸= 0 it is not exactly a group), we call it the
+infrastructure (see [Len82], [BV07], or [JW09] for more details).
+In our algorithm we compute the form ˜gx/4 left of or at x ∈(1/4)Z using an approximate logarithm
+computation. This can be done as follows. Let g be the unit form. We ﬁrst compute the form h = ρ(ρ(g)).
+We know that δ(g, h) > ln 2. Thus, we can use a square-and-multiply method to compute the form ˜gx/4. We
+need to estimate the number of operations (squares, multiplications, reduction) to determine a necessary
+logarithm precision. Since in our algorithms x < ∆2, the number of squares and multiplication is at most
+2(2 log2 ∆+ 2). Each square and multiplication is followed by log
+√
+∆+ 2 reductions. Therefore, the total
+number of operations is at most (c log2 ∆), where c < 10 is a constant. If we choose the precision of each
+logarithm computation to be at least 1/(8c log ∆), then, by (1), we obtain |δ(˜gx/4)−˜δ(˜gx/4)| < 1/8, where ˜δ is
+the approximation of δ computed by the above algorithm. This approximation is required in the subsequent
+sections. The computation of ˜gx/4 can be done in time polynomial in log ∆, since all the computations
+(square, multilication, reduction, and logarithm evaluations with the necessary precision) can be done in
+polynomial time.
+4
+Computing the Regulator
+In this section we solve the regulator problem which is deﬁned as follows.
+Deﬁnition 1 (Regulator Problem). Given ∆, ﬁnd an integer R′ with |R′ −R+| < 1 where R+ is the
+regulator of Q(
+√
+∆).
+We ﬁrst give the deﬁnition of the periodic function for computing the regulator.
+Deﬁnition 2. Fix an algorithm ˜ln for computing an approximation of the natural algorithm. The function
+Reg : Z →R+ : x 7−→˜gx/4
+maps an integer x to the principal reduced form ˜gx/4 = (a, b, c), a > 0, such that, with respect to ˜ln, ˜gx/4 is
+left of or at x/4. The precision of ˜ln must be chosen such that, for all x, |δ(˜gx/4) −˜δ(˜gx/4)| < 1/8, where ˜δ
+is the approximation of δ which uses ˜ln instead of ln.
+In the next two lemmas, we will show that Reg is periodic. In Lemma 2, we will show that for every
+g ∈R+ there are areas of successive integers in every period of Reg which are all mapped to g, that the
+number of integers in these areas is at most ln ∆+ 3, and that this number diﬀers by at most 4 in diﬀerent
+periods. In Lemma 1, we will show that the areas are non-empty and the ﬁrst element occurs with a period
+≈4R+
+
+
+--- PAGE 5 ---
+Lemma 1. For every g ∈R+, there is a y = 4δ(g) + 1/2 such that
+∀k ∈Z.∃ǫ ∈R, |ǫ| ≤1.(x = y + 4kR+ + ǫ ∈Z, Reg(x) = g, and Reg(x −1) = ρ−2(g)).
+Proof. Let g ∈R+, y = 4δ(g)+ 1/2, k ∈Z, and x ∈Z, such that x/4 = δ(g)+ kR+ + δ with −1/8 ≤δ < 1/8
+From ln 2 < δ(ρ2(g)) −δ(g), we obtain ˜δ(ρ2(g)) −˜δ(g) > ln 2 −1/4 > 1/4. That means that for every g
+there is at least one x in each period with Reg(x) = g and the period lattice of Reg has no gaps.
+Now assume −1/8 ≤δ ≤0. In this case we have x/4 ≤δ(g)+kR+ ≤x/4+1/8 and therefore x/4−1/8 <
+˜δ(g) + kR+ < (x + 1)/4. This implies that Reg(x −1) = ρ−2(g), Reg(x + 1) = g, and Reg(x) ∈{ρ−2(g), g}.
+If Reg(x) = ρ−2(g), then |x −y −4kR+| ≤1/2. If Reg(x) = ρ−2(g), then |(x + 1) −y −4kR+| ≤1. Thus in
+both cases the ǫ, as deﬁned in the lemma, exists.
+The case 0 < δ < 1/8 is analogous.
+⊓⊔
+Lemma 2. Let ∆be a discriminant of a real-quadratic number whose regulator R+ is greater than 5 ln ∆.
+Let g ∈R+, y = 4δ(g) + 1/2, k ∈Z, and ǫ(g,k) ∈R, be deﬁned as in the last lemma. Then there exists an
+m(g,k) ∈Z, 1 ≤m(g,k) < ln ∆+ 3, such that the following is true:
+1. Reg(y + 4kR+ + ǫ(g,k) + m(y,k) + 1) = ρ2(g).
+2. Reg(y + 4kR+ + ǫ(g,k) + m) = g, for all m ∈Z, 0 ≤m ≤m(g,k)
+3. maxk,k′∈Z|m(g,k) −m(g,k′)| ≤4.
+Proof. We ﬁrst prove the existence of m(y,k) ∈Z, 0 ≤m(y,k) < ln ∆+3 such that (1) is satisﬁed. This follows
+from
+δ(ρ2(g)) −δ(g) ≤ln ∆and the assumption that R+ > 5 ln ∆, which implies Reg(y + 4kR+ + ǫ(y,k)) ̸=
+Reg(y + 4kR+ + ǫ(y,k) + ⌈ln ∆⌉+ 2).
+(2) and (3) follow easily from the fact that we look for ideals left of or at a multiple of 1/4 and the
+approximation quality of function Reg is at least 1/8.
+⊓⊔
+Now we present our algorithms. We ﬁrst start with the quantum subroutine.
+Algorithm 1 Regulator-Dual
+Input: Discriminant ∆, q which is a power of two and q/2 ≤5∆(ln ∆)2 < q.
+Output: Approximation of a number from (q/R+)Z.
+1. (initial state) |0⟩, |(1, ∆mod 2)⟩.
+2. (create superposition)
+−→
+1
+√q
+Pq−1
+x=0 |x⟩, |(1, ∆mod 2)⟩.
+3. (compute Reg)
+−→
+1
+√q
+Pq−1
+x=0 |x⟩, | Reg(x)⟩.
+4. (measure the second register)
+−→
+1
+√p
+X
+k∈M
+m(x′,k)
+X
+m=0
+|x′ + 4R+k + m + ǫ(x′,k)⟩, | Reg(x′)⟩
+with a random x′ ∈{0, . . . , ⌊4R+⌋}, ǫ(x′,k) and m(x′,k) as deﬁned in lemma 2, M = Mx′ = { k ∈Z | 0 ≤
+x′ + 4R+k + ǫ(x′,k) < q } and p = card { x ∈Z | 0 ≤x < q and Reg(x) = Reg(x′) }.
+5. (apply quantum Fourier transform to the ﬁrst register)
+−→
+1
+2√pq
+4q−1
+X
+y=0
+X
+k∈M
+m(x′,k)
+X
+m=0
+exp
+„
+2πix′ + 4R+k + m + ǫ(x′,k)
+4q
+y
+«
+|y⟩, | Reg(x′)⟩.
+6. Measure and return the ﬁrst register y.
+Theorem 1. Let ∆be a discriminant of a real-quadratic number ﬁeld whose regulator is at least 32 ln ∆.
+The algorithm Regulator-Dual computes an approximation of a random element from (q/R+)Z. The
+
+
+--- PAGE 6 ---
+approximation has the form (q/R+)z + ω where z ∈Z and |ω| ≤1/2. The algorithm succeeds with probability
+at least 2−11 and requires at most 2 log(∆) + 2 log ln ∆+ N + 7 qubits, where N is the number of temporary
+qubits which are necessary to execute operations on forms to compute Reg.5
+Proof. We use the same notation as in the theorem and algorithm. Let mmax = maxk∈Mx′ m(x′,k), mmin =
+mink∈Mx′ m(x′,k), and
+Y = { y ∈Z | 0 ≤y ≤
+q
+4(mmax + 1) and y
+4q =
+z
+4R+ + ωy with z ∈Z and |ωy| ≤1
+8q }.
+(2)
+The probability to measure a y ∈Y is
+Pr(y ∈Y) =
+1
+4pq
+
+X
+k∈M
+m(x′,k)
+X
+m=0
+exp
+
+2πi4R+k + m + ǫ(x′,k)
+4q
+y
+
+2
+.
+Since we have
+(4R+k + m + ǫ(x′,k))y
+4q
+= 4kR+(
+z
+4R+ + ωy) + m + ǫ(x′,k)
+4q
+y ≡4R+kωy + (m + ǫ(x′,k))y
+4q
+modulo 1 and since the function exp is periodic, we can write
+Pr(y ∈Y) =
+1
+4pq
+
+X
+k∈M
+m(x′,k)
+X
+m=0
+exp
+
+2πi(4R+kωy + (m + ǫ(x′,k))y
+4q
+)
+
+2
+.
+(3)
+By Lemma 1, 2, and Equation (2), we follow |4R+kωy| ≤1/8 and −1/16 ≤(m + ǫ(x′,k))y/(4q) ≤1/16. This
+means that (3) is a sum of p vectors of length one which all lie in a segment of size π/2. Thus, the probability
+that we measure a certain y ∈Y is
+Pr(y ∈Y) ≥
+1
+4pq
+p
+√
+2
+2
+
+2
+= p
+8q.
+Next we approximate the lower bound for p and the cardinality of Y. We have
+p ≥(card Mx′ −1)(mmin + 1) + 1 ≥
+ q
+4R −9
+4
+
+(mmin + 1) + 1 ≥q
+8R(mmin + 1)
+card Y ≥{ z ∈Z | 1 ≤z ≤
+R
+4(mmax + 1) −R
+2q } ≥
+R
+4(mmax + 1) −3
+2 ≥
+R
+8(mmax + 1).
+The condition R+ > 32 ln ∆ensures that the set Y contains at least three diﬀerent elements. Thus, we have
+X
+y∈Y
+Pr(y ∈Y) ≥p
+8q card Y ≥
+mmin + 1
+29(mmax + 1) ≥
+1
+211 .
+The number of qubits can be determined as follows. The ﬁrst register requires at most log ∆+2 log(ln ∆)+5
+qubits to keep q < 10∆(ln ∆)2. For the second register, log ∆+2 qubits are necessary to keep the coeﬃcients
+a and b of the form (a, b, c). Since ∆is ﬁxed, it is not necessary to store c. Since (a, b, c) ∈R+ is reduced,
+we have 0 < a, b ≤
+√
+∆.
+⊓⊔
+On the next page, we present the complete algorithm for computing the regulator based on the quantum
+subroutine described above. We have the following theorem.
+Lemma 3. Let q > (R+)2 and yi, zi be deﬁned as in Regulator, then we have |y1/y2 −z1/z2| ≤1/(2z2
+2).
+5 In [Sch07], it it shown that N < 10.5 log ∆+ O(log2(log ∆))
+
+
+--- PAGE 7 ---
+Algorithm 2 Regulator
+Input: A discriminant ∆of a real-quadratic ﬁeld K.
+Output: The regulator R+ of K.
+1. Test classically whether R+ < 32 ln ∆. If the answer is yes, compute classically the required approximation of
+R+ and go to 4.
+2. Use Regulator-Dual to compute y1 = (q/R+)z1 + ω1 and y2 = (q/R+)z2 + ω2, |ω1|, |ω2| ≤1/2, which
+approximate random vectors in (q/R+)Z.
+3. W.l.o.g. assume y1 ≤y2. Use the continued fraction expansion algorithm applied to y1/y2 to compute z1 and z2.
+The number qz1/y1 is an approximation of the regulator which can be improved classically.
+4. Return the approximation R+.
+Proof. We have the following inequality
+
+y1
+y2
+−z1
+z2
+ ≤
+
+qz1 + R+ω1
+qz2 + R+ω2
+−z1
+z2
+ ≤R+
+2
+
+z1 + z2
+z2(qz2 + R+ω2)
+ ≤
+R+
+qz2 −R+/2 ≤
+1
+2z2
+2
+.
+The last inequality is true because of the choice of q > (R+)2 and y ∈Y with Y from (2).
+⊓⊔
+Theorem 2. Regulator computes an approximation of the regulator R+ of a real-quadratic number ﬁeld
+Q(
+√
+∆) in quantum-polynomial time O(polylog(log ∆)). It is a Monte Carlo type algorithm which succeeds
+with probability at least 2−26. The algorithm requires at most 2 log(∆) + 2 log ln ∆+ N + 7 qubits, where N
+is the number of temporary qubits which are necessary to execute operations on forms to compute Reg.
+Proof. We use the same notation as in the theorem and the algorithm.
+First, assume R+ < 32 ln ∆. In this case, the regulator can be computed completely classically by using
+the polynomial time algorithm from [BB94].
+Next, assume R+ > 32 ln ∆. In this case the cardinality of Y from (2) is at least 3. Thus, by running
+Regulator-Dual twice we obtain two diﬀerent non-zero y1, y2 ∈Y with probability at least (1/8)2−112−11 =
+2−25. Since |Cl∆|R+ <
+√
+∆(ln
+√
+∆+ 1)/2 (see [Hua82]), we have (4R+)2 < ∆(ln
+√
+∆+ 1)2 < q. Therefore
+Lemma 3 holds and we can apply the continued fraction expansion algorithm to y1 and y2 to compute z1
+and z2 (assuming gcd(z1, z2) = 1 which is true with probability at least 6/π2). The number qz1/y1 is an
+approximation of the regulator which can be improved classically ([BB94] [Mau00]). The success probability
+of the algorithm is at least (6/π2)2−25 > 2−26
+The number of qubits follows directly from Theorem 1.
+⊓⊔
+5
+Solving the Principal Ideal Problem
+In this section, we present an algorithm for solving the principal ideal problem and the discrete logarithm
+problem in the infrastructure of a real-quadratic number ﬁeld.
+Deﬁnition 3 (Principal ideal problem). Given a reduced form g, decide whether g is principle and, if
+so, ﬁnd δ(g).
+To solve the PIP, we extend the function Reg to the following one.
+Deﬁnition 4. Let g be a reduced principal form. Fix an algorithm ˜ln for computing an approximation of the
+natural algorithm. All the distance operations δ below are carried out with this ˜ln. The function
+PIP : Z × Z →R+ : (x, y) 7−→˜g(x,y)
+maps two integers x and y to a reduced principal form ˜g(x,y) = (a, b, c), a > 0, left of or at δ(gx) + y/4. The
+precision of ˜ln must be chosen such that |δ(˜g(x,y)) −˜δ(˜g(x,y))| < 1/8. for all x and y.
+The next lemma is an extension of Lemmas 1 and 2.
+
+
+--- PAGE 8 ---
+Lemma 4. Let n be the smallest positive integer such that gn ∼O∆. Let S = dist(O∆, bn) and Λ be
+the lattice generated by ((n, −S)t, (0, R+)t).6 Then for all (x1, x2), (x′
+1, x′
+2) ∈Z2, there exist an ǫ(x,x′
+2),
+|ǫ(x,x′
+2)| < 1, and 1 ≤m(x,x′
+2) ≤ln ∆+ 3 such that −4x1S + 4x2R+ + m + ǫ(x,x′
+2) ∈Z and
+PIP(x′
+1 + x1n, x′
+2 −x1S + 4x2R+ + m + ǫ(x,x′
+2)) = PIP(x′
+1, x′
+2)
+iﬀ(x1, x2) ∈Λ and 0 ≤m ≤m(x,x′
+2). As in Lemma 2, we have maxx∈Λ|m(x,x′
+2)| ≤4.
+⊓⊔
+Lattice Λ is the period lattice of PIP. Let Λ∗be the lattice dual to Λ. It is easy to see that
+
+1/n
+0
+s/(4nR+) 1/(4R+)
+
+is a basis of Λ∗.
+Algorithm 3 AlgPIP-Dual
+Input: Discriminant ∆, integer q such that 2q < ∆(ln ∆)2 < 4q.
+Output: An approximation of a vector from 8qΛ∗
+1. (initial state) |0⟩|0⟩|(1, ∆mod 2)⟩.
+2. (create superposition)
+−→
+1
+q
+Pq−1
+x1=0
+Pq−1
+x2=0 |x1⟩|x2⟩|(1, ∆mod 2)⟩.
+3. (compute PIP)
+−→
+1
+q
+Pq−1
+x1=0
+Pq−1
+x2=0 |x1⟩|x2⟩| PIP(x1, x2)⟩.
+4. (measure the third register)
+1
+√p
+⌊(q−x′
+1−1)/n⌋
+X
+x1=0
+X
+x2∈M
+m(x,x′
+2)
+X
+m=0
+|x′
+1 + x1n⟩|x′
+2 −x1S + 4x2R+ + m + ǫ(x,x′
+2)⟩| PIP(x′)⟩,
+with random x1 ∈{0, . . . , n −1} × {0, . . . , ⌊4R+⌋}, m(x,x′
+2) and ǫ(x,x′
+2) as deﬁned in Lemma 4, M = Mx1,x′ =
+{ x2 ∈Z | 0 ≤x′
+2 −x1S + 4x2R+ + ǫ(x,x′
+2) < q }, and p = P⌊(q−x1−1)/n⌋
+x1=0
+P
+x2∈M(m(x,x′
+2) + 1).
+5. (apply QFT to the ﬁrst two registers)
+1
+8q√p
+8q−1
+X
+y1,y2=0
+⌊(q−x1−1)/n⌋
+X
+x1=0
+X
+x2∈M
+m(x,x′
+2)
+X
+m=0
+exp
+„
+2πix′
+1 + x1n
+8q
+y1
+«
+|y1⟩×
+× exp
+ 
+x′
+2 −x1S + 4x2R+ + m + ǫ(x,x′
+2)
+8q
+y2
+!
+|y2⟩| PIP(x′)⟩.
+6. Measure and return the ﬁrst two registers (y1, y2).
+Theorem 3. The set of approximations for vectors from 8qΛ∗is
+Y = { (y1, y2) ∈Z2 | 0 ≤y1 < 8q and y1
+8q = z1
+n +
+z2S
+4nR+ + ω1 with z1, z2 ∈Z and |ω1| ≤
+1
+16q
+0 ≤y2 <
+q
+mmax + 2 and y2
+8q =
+z2
+4R+ + ω2 with |ω2| ≤
+1
+16q }.
+(4)
+AlgPIP-Dual computes vectors (y1, y2) ∈Y in quantum polynomial time with probability at least 2−16
+and requires at most 3 log(∆) + 4 log ln ∆+ N qubits, where N is the number of temporary qubits which are
+necessary to execute operations on forms to compute Reg.7
+6 By xt, we denote the transpose of the vector x
+7 In [Sch07], it it shown that N < 10.5 log ∆+ O(log2(log ∆))
+
+
+--- PAGE 9 ---
+Proof. The probability to measure a y ∈Y is
+Pr(y ∈Y) =
+1
+64q2p
+
+⌊(q−x1−1)/n⌋
+X
+x1=0
+X
+x2∈M
+m(x,x′
+2)
+X
+m=0
+e
+2πi
+8q
+“
+y1x1n+(−x1S+4x2R++m+ǫ(x,x′
+2))y2
+”
+2
+.
+(5)
+We have
+x1ny2
+8q + (−x1S + 4x2R+ + m + ǫ(x,x′
+2))y2
+8q =
+x1n
+z1
+n +
+z2S
+4nR+ + ω1
+
++ (−x1S + 4x2R+ + m + ǫ(x,x′
+2))
+ z2
+4R+ + ω2
+
+≡
+x1nω1 + (−x1S + 4x2R+)ω2 + (m + ǫ(x,x′
+2))y2
+8q
+(mod 1),
+where |ω1|, |ω2| ≤1/(16q) and 0 ≤y2 < q/(mmax + 2). Hence, the sum in (5) is a sum of p vectors of length
+one which all lie in a segment of size π/2. This implies Pr(y ∈Y) = |p
+√
+2/2|2/(64q2p) ≥p/(128q2).
+Next, we estimate the lower bound for p and card Y. We have
+p = (⌊(q −x1 −1)/n⌋+ 1)
+X
+x2∈M
+(m(x,x′
+2) + 1) ≥q
+n
+q
+8R+ (mmin + 1) and
+card Y= card{ (z1, z2) ∈Z2 | 0 ≤z1
+n + z2S
+nR+ + ω1 < 1 and
+0 ≤
+z2
+4R+ + ω2 ≤
+1
+8(mmax + 2), with |ω1|, |ω2| ≤
+1
+16q }
+≥card{ (z1, z2) ∈Z2 |
+n
+16q ≤z1 < n16q −1
+16q
+and 1 ≤z2 ≤
+R+
+2(mmax + 2) −1 }
+≥
+nR+
+8(mmax + 2).
+From the above results, it follows
+X
+y∈Y
+Pr(y ∈Y) ≥
+nR+
+8(mmax + 2)
+q
+n
+q
+8R+ (mmin + 1)
+1
+128q2 ≥
+1
+216 .
+The number of qubits can be determined as follows. Each of the ﬁrst two registers requires at most
+log ∆+ 2 log(ln ∆) qubits to keep q < (1/2)∆(ln ∆)2. As in algorithm Regulator-Dual, the third register
+requires log ∆+ 2 qubits.
+⊓⊔
+Algorithm 4 AlgPIP
+Input: Reduced form g of discriminant ∆, regulator R+.
+Output: “fail”, “not principal”, or δ(g), if g is principal
+1. If R+ < 64 ln ∆, classically compute and return the solution.
+2. Use SampleDual-RQ to compute (y1, y2) and (y′
+1, y′
+2)
+3. Set z2 = ⌊y2R+/(2q)⌉and z′
+2 = ⌊y′
+2R+/(2q)⌉and compute k1, k2 ∈Z such that k1z2 + k2z′
+2 = gcd(z2, z′
+2).
+4. If gcd(z2, z′
+2) = 1, then set p = y1k1 + y′
+1k2 mod 8q and S′ = pR+/8q. In this case S is an approximation for S.
+If gcd(z2, z′
+2) > 1, return “fail”.
+5. Test whether S′ is an approximation for S. If not, return “not principal”.
+6. Return the approximation S′ (improve it classically, if necessary).
+
+
+--- PAGE 10 ---
+Theorem 4. AlgPIP solves the principal ideal problem in a real-quadratic number ﬁeld Q(
+√
+∆) for every
+reduced form g in quantum-polynomial time O(polylog(log ∆)). It is a Monte Carlo type algorithm with
+success probability at least 2−37. The algorithm requires at most 3 log(∆) + 2 log ln ∆+ N qubits, where N is
+the number of temporary qubits which are necessary to execute operations on forms to compute Reg.
+Proof. We use the same notation as in the theorem and the algorithms.
+First, we test classically whether R+ < 64 ln ∆and, if so, the problem can be solved in classical polynomial
+time using algorithms from [BB94] or [Mau00].
+Now, we assume that R+ ≥64 ln ∆. With probability at least 2−32−32, the quantum subroutine AlgPIP-Dual
+returns two diﬀerent vectors (y1, y2), (y′
+1, y′
+2) ∈Y\{0, 0}. By (4)
+y2
+8q =
+z2
+4R+ + ω2,
+|ω2| ≤
+1
+16q,
+which implies
+z2 = y2R+
+2q
+−4R+ω2 = y2R+
+2q
++ ω′ =
+y2R+
+2q
+
+,
+|ω′| ≤1
+4.
+Analogically, z′
+2 = ⌊y′
+2R+/(2q)⌉. Using an extended GCD algorithm, we compute k1, k2 ∈Z such that
+k1z2 + k2z′
+2 = gcd(z2, z′
+2). We assume gcd(z2, z′
+2) = 1 which is true with probability at least 6/π2.
+Next, assume g is a principal form. In this case n = 1. Using (4), we can write
+y1k1 + y′
+1k2
+8q
+= k1z1 + k2z′
+1 + S
+R+ + ω,
+|ω| ≤k1 + k2
+16q
+<
+1
+R+ .
+From k1z1 + k2z′
+1 ∈Z and 0 ≤S/R+ < 1, it follows that S′ = pR+/(8q), p = y1k1 + y′
+1k2 mod 8q, is an
+approximation of S. Now, we test classically whether this is true and, if so, we improve the approximation
+classically with algorithms from [Mau00]. If S′ is not an approximation for S, then our assumption is wrong
+and g is not a principal form.
+Finally, we estimate the success probability of AlgPIP which is the probability to measure two diﬀerent
+non-zero vectors from Y such that gcd(z2, g′
+2) = 1. This probability is at least 2−356/π2 > 2−36.
+The number of qubits follows directly from Theorem 3.
+⊓⊔
+Notice, if the output of AlgPIP is “not principal”, then we cannot decide whether it is correct or not.
+However, this case can be solved by applying more advanced techniques from [BP89] and [BK93] for ﬁnding
+a basis of a lattice given approximations for vectors from the dual lattice.
+However, if the output of AlgPIP is a distance δ, we can easily test classically whether this distance is
+correct. This case is suﬃcient to break the cryptosystem proposed in [BW90], since in this cryptosystem, g
+is always principal by construction.
+6
+Conclusion
+In this paper, we presented polynomial-time quantum algorithms for solving the regulator and the principal
+ideal problem in real-quadratic number ﬁelds by using functions which are many-to-one on a period. These
+algorithms reduce the number of qubits by at least 2 log ∆compared to Hallgren’s algorithms. This is due
+to the facts that the period of the lattice is smaller (8R vs. ⌈
+√
+∆⌉R), the necessary precision for natural
+algorithms is smaller (1/8 vs. 1/
+√
+∆), and the function value of Reg and PIP is a form and not a pair of a
+form and a distance.
+An open problem is whether this method can be used for computing the class group of a real-quadratic
+number ﬁeld and for improving the algorithms for number ﬁelds of degree greater than two which are
+presented in [Hal05] and [SV05].
+References
+BB94. I. Biehl and J. Buchmann. Algorithms for quadratic orders. In Proceedings of Symposia in Applied Math.,
+volume 48, pages 425–449, 1994.
+
+
+--- PAGE 11 ---
+BK93. J. Buchmann and V. Kessler. Computing a reduced lattice basis from a generating system. Technical Report
+??/93, Technische Universit¨at Darmstadt, Fachbereich Informatik, 1993.
+BL95.
+D. Boneh and R. Lipton. Quantum cryptanalysis of hidden linear functions (extended abstract). In Don
+Coppersmith, editor, Advances in Cryptology - CRYPTO ’95, volume 963 of Lecture Notes in Computer
+Science. Springer, 1995.
+BP89.
+J. Buchmann and M. Pohst. Computing a lattice basis from a system of generating vectors. In James H.
+Davenport, editor, EUROCAL 1987, volume 378 of Lecture Notes in Computer Science, pages 54–63. Springer,
+1989.
+BV07. Johannes Buchmann and Ulrich Vollmer. Algorithms for binary quadratic forms. Springer, 2007.
+BW90. Johannes Buchmann and Hugh C. Williams. A key-exchange system based on real quadratic ﬁelds. In Gilles
+Brassard, editor, Advances in Cryptology – CRYPTO ’89, volume 435 of Lecture Notes in Computer Science,
+pages 335–343. Springer-Verlag, 1990.
+Hal02a. Lisa Hales. The Quantum Fourier Transform and Extensions of the Abelian Hidden Subgroup Problem. PhD
+thesis, UC Berkeley, 2002.
+Hal02b. Sean Hallgren. Polynomial-time quantum algorithms for pell’s equation and the principal ideal problem. In
+STOC, pages 653–658. ACM Press, 2002.
+Hal05. Sean Hallgren. Fast quantum algorithms for computing the unit group and class group of a number ﬁeld. In
+STOC, pages 468–474, 2005.
+Hal07. Sean Hallgren. Polynomial-time quantum algorithms for pell’s equation and the principal ideal problem. J.
+ACM, 54(1), 2007.
+HH00. Lisa Hales and Sean Hallgren. An improved quantum fourier transform algorithm and applications. In IEEE
+Symposium on Foundations of Computer Science, pages 515–525, 2000.
+Hua82. Loo-Keng Hua. Introduction to Number Theory. Springer, New York, 1982.
+JW09. Michael J. Jacobson, Jr. and Hugh C. Williams. Solving the Pell Equation. Springer-Verlag, 2009.
+Len82. Hendrik W. Lenstra, Jr. On the calculation of regulators and class numbers of quadratic ﬁelds. In J. V.
+Armitage, editor, Journees Arithmetiques, Exeter 1980, volume 56 of London Mathematical Society Lecture
+Notes Series, pages 123–150. Cambridge University Press, 1982.
+Mau00. Markus Maurer. Regulator approximation and fundamental unit computation for real quadratic orders. PhD
+thesis, Technische Universit¨at Darmstadt, 2000.
+ME99. Michele Mosca and Artur Ekert. The hidden subgroup problem and eigenvalue estimation on a quantum
+computer. Lecture Notes in Computer Science, 1509:174–188, 1999.
+Sch06. Arthur Schmidt. Quantum algorithm for solving the discrete logarithm problem in the class group of an
+imaginary quadratic ﬁeld and security comparison of current cryptosystems at the beginning of quantum
+computer age. In G¨unter M¨uller, editor, ETRICS, volume 3995 of Lecture Notes in Computer Science, pages
+481–493. Springer, 2006.
+Sch07. Arthur Schmidt.
+Zur L¨osung von zahlentheoretischen Problemen mit klassischen und Quantencomputern.
+PhD thesis, Technische Universit¨at Darmstadt, 2007.
+Sei01.
+Jean-Pierre Seifert. Using fewer qubits in shor’s factorization algorithm via simultaneous diophantine ap-
+proximation. In David Naccache, editor, CT-RSA, volume 2020 of Lecture Notes in Computer Science, pages
+319–327. Springer, 2001.
+Sho94. Peter W. Shor. Algorithms for quantum computation: Discrete logarithms and factoring. In IEEE Symposium
+on Foundations of Computer Science, pages 124–134, 1994.
+SV05.
+Arthur Schmidt and Ulrich Vollmer. Polynomial time quantum algorithm for the computation of the unit
+group of a number ﬁeld. In STOC, pages 475–480, 2005.

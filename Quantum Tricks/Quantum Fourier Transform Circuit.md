@@ -8,33 +8,26 @@ Implements the quantum Fourier transform over $\mathbb{Z}_{2^n}$ — the unitary
 
 ## The circuit
 
-Two types of gates:
-- **$R_j$:** Hadamard on qubit $j$ (creates $\frac{1}{\sqrt{2}}(|0\rangle + (-1)^{a_j}|1\rangle)$)
-- **$S_{j,k}$:** Controlled phase gate on qubits $j < k$: $|1\rangle|1\rangle \mapsto e^{i\pi/2^{k-j}}|1\rangle|1\rangle$, identity on all other basis states
+Use two gate types:
+- **$H_j$:** Hadamard on qubit $j$.
+- **$CP_m$:** controlled phase $\operatorname{diag}(1,1,1,e^{2\pi i/2^m})$ between a pair of qubits.
 
-Apply in order (right to left on the state):
-
-$$
-R_{n-1},\; S_{n-2,n-1},\; R_{n-2},\; S_{n-3,n-1},\; S_{n-3,n-2},\; R_{n-3},\; \ldots,\; R_0
-$$
-
-Between $R_{j+1}$ and $R_j$: apply all $S_{j,k}$ for $k > j$.
-
-**Output is bit-reversed** — either reverse qubit order with SWAPs ($O(n)$ gates) or read in reverse.
-
-### Why it works
-
-The total phase accumulated on the path $|a\rangle \to |b\rangle$ (with $b$ the bit-reversal of $c$) is:
+A standard exact QFT applies, for each output qubit, one Hadamard and controlled phase rotations from the less-significant input bits that contribute to that output phase. Up to final bit reversal, the basis-state factorization is:
 
 $$
-\sum_{j < l} \pi a_j b_j + \sum_{j < k < l} \frac{\pi}{2^{k-j}} a_j b_k = \frac{2\pi}{2^l} \left(\sum_j 2^j a_j\right)\left(\sum_k 2^k c_k\right) = \frac{2\pi ac}{q}
+F_{2^n}|a_1\ldots a_n\rangle
+=
+\bigotimes_{k=1}^{n}
+\frac{|0\rangle+e^{2\pi i(0.a_{n-k+1}\ldots a_n)}|1\rangle}{\sqrt 2}.
 $$
 
-using $b_k = c_{l-1-k}$ (bit reversal) and the distributive law. This matches the QFT phase $e^{2\pi iac/q}$.
+This product-state identity is the safest way to track the circuit: each output qubit encodes one binary fraction of the input bits. The usual circuit implements these binary fractions using controlled phase rotations.
+
+**Output bit reversal:** many circuit diagrams output the qubits in reversed order. In algorithms where the register is immediately measured, this is usually handled by relabeling classical bits rather than physical SWAP gates.
 
 ## Approximate QFT (Coppersmith)
 
-Drop all $S_{j,k}$ with $k - j > m$ for some threshold $m = O(\log n)$. The omitted phases $e^{i\pi/2^{k-j}}$ are exponentially small and contribute negligible error. This reduces the gate count to $O(n \log n)$ while maintaining sufficient precision for period finding.
+Drop controlled rotations below a threshold set by the target error. Coppersmith-style approximate QFT keeps only $O(\log(n/\varepsilon))$ nearby rotations per qubit to achieve overall error $O(\varepsilon)$, reducing the gate count to $O(n\log(n/\varepsilon))$ for period-finding-style applications.
 
 ## When to reach for it
 
@@ -45,24 +38,27 @@ Drop all $S_{j,k}$ with $k - j > m$ for some threshold $m = O(\log n)$. The omit
 
 ## Complexity
 
-| Version | Gates | Depth |
-|---|---|---|
-| Exact QFT | $O(n^2)$ | $O(n^2)$ |
-| Approximate QFT | $O(n \log n)$ | $O(n \log n)$ |
+| Version | Gates | All-to-all parallel depth | Line-nearest-neighbor depth |
+|---|---:|---:|---:|
+| Exact QFT | $O(n^2)$ | $O(n)$ with disjoint controlled rotations scheduled in layers | model/routing dependent, commonly $O(n^2)$ without extra structure |
+| Approximate QFT | $O(n\log(n/\varepsilon))$ | still convention/model dependent; gate count improves first | model/routing dependent |
+| Semiclassical inverse QFT | same controlled powers in the algorithm, fewer coherent qubits | measurement/feed-forward latency matters | architecture dependent |
 
 ## Caveat
 
 The QFT is efficient as a quantum circuit, but the output is a quantum state — you can't read all $2^n$ amplitudes. The power comes from combining the QFT with structure in the input (periodicity, eigenvalue encoding) that concentrates the output amplitudes on a few basis states.
 
-The controlled phase gates $S_{j,k}$ require interaction between potentially distant qubits. On architectures with limited connectivity, SWAP overhead can increase the depth.
+The controlled phase gates require interaction between potentially distant qubits. On architectures with limited connectivity, SWAP overhead can increase the depth.
+
+Do not compare QFT depth without specifying connectivity, whether final bit reversal is physical, and whether a semiclassical inverse QFT is allowed.
 
 ## Related notes
 
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]]
 - [[Order-Finding via QFT and Continued Fractions]]
 - [[Coset Sampling via Fourier Transform]]
-- [[Gapped Phase Estimation]]
+- [[Iterative Phase Estimation (Kitaev)]]
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]]
-- [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] — optimistic QFT in $O(\log(n/\varepsilon))$ depth with zero ancillae; uses block QPE to parallelise
+- [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] — optimistic QFT in $O(\log(n/\varepsilon))$ depth with zero ancillae and logarithmic-range 1D locality; uses block QPE to parallelise
 - [[Quantum Phase Estimation on Blocks for QFT Parallelisation]] — the trick that enables the log-depth optimistic QFT
 - [[Optimistic Quantum Circuits]] — framework formalising circuits with small average error

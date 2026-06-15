@@ -1,0 +1,710 @@
+
+
+--- PAGE 1 ---
+arXiv:math/0301179v1  [math.NT]  16 Jan 2003
+Primality Proving via One Round in ECPP
+and One Iteration in AKS
+Qi Cheng∗
+Abstract
+On August 2002, Agrawal, Kayal and Saxena announced the ﬁrst deterministic and poly-
+nomial time primality testing algorithm. For an input n, the AKS algorithm runs in heuristical
+time ˜O(log6 n). Veriﬁcation takes roughly the same amount of time. On the other hand, the
+Elliptic Curve Primality Proving algorithm (ECPP), runs in random heuristical time ˜O(log6 n)
+( ˜O(log5 n) if the fast multiplication is used), and generates certiﬁcates which can be easily
+veriﬁed.
+More recently, Berrizbeitia gave a variant of the AKS algorithm, in which some
+primes cost much less time to prove than a general prime does. In this paper, we explore
+the possibility of combining the ideas in these celebrated algorithms to design a more eﬃcient
+algorithm. A random primality proving algorithm with heuristic time complexity ˜O(log4 n)
+is presented. It generates a certiﬁcate of primality which is O(log n) bits long and can be
+veriﬁed in deterministic time ˜O(log4 n). The reduction in time complexity is achieved by ﬁrst
+generalizing Berrizbeitia’s algorithm to one which has higher density of easily-proved primes.
+For a general prime, one round of ECPP is deployed to reduce its primality proof to the proof
+of a random easily-proved prime.
+1
+Introduction
+Testing whether a number is prime or not is one of the fundamental problems in computational
+number theory. It has wide applications in computer science, especially in cryptography. After
+tremendous eﬀorts invested by researchers in about two hundred years, it was ﬁnally proved by
+Agrawal, Kayal and Saxena [2] that the set of primes is in the complexity class P. For a given
+integer n, the AKS algorithm runs in time no longer than ˜O(log12 n), while the best deterministic
+algorithm before it has subexponential complexity [1]. Under a reasonable conjecture, The AKS
+algorithm should give out answer in time ˜O(log6 n).
+Notation: In this paper, we use “ln” for logarithm base e and “log” for logarithm base 2.
+We write rα||n, if rα|n but rα+1 ̸ |n. By ˜O(f(n)), we mean O(f(n)polylog(f(n))).
+The AKS algorithm is based on the derandomization of a polynomial identity testing.
+It
+involves many iterations of polynomial modular exponentiation. To test the primality of a integer
+n, the algorithm ﬁrst searches for a suitable r, which is provably O(log6 n), or heuristically
+O(log2 n). Then the algorithm will check for s from 1 to S = ⌈2√r log n⌉, whether
+(x + s)n = xn + s
+(mod n, xr −1).
+(1)
+The algorithm declares that n is a prime if all the checks pass.
+The computing of (x + s)n
+(mod n, xr −1) takes time ˜O(r log2 n) if we use the fast multiplication. The total time complexity
+is thus ˜O(rS log2 n).
+∗School of Computer Science, the University of Oklahoma, Norman, OK 73019, USA. Email: qcheng@cs.ou.edu
+1
+
+
+
+--- PAGE 2 ---
+While the AKS algorithm is a great accomplishment in the theory, the current version is
+very slow. Unless its time complexity can be dramatically improved, it cannot replace random
+primality testing algorithms with better eﬃciency. In most of applications in cryptography, an
+eﬃcient random algorithm is suﬃcient, as long as the algorithm can generate a certiﬁcate of
+primality, which in deterministic time convinces a veriﬁer who does not believe any number theory
+conjectures. A primality testing algorithm which generates a certiﬁcate of primality is sometimes
+called primality proving algorithm.
+Similarly a primality testing algorithm which generates a
+certiﬁcate of compositeness is sometimes called compositeness proving algorithm. Very eﬃcient
+random compositeness proving algorithms have long been known. Curiously, primality proving
+algorithms lag far behind of compositeness proving algorithms in term of eﬃciency and simplicity.
+Recently, Berrizbeitia [6] proposed a brilliant modiﬁcation to the AKS original algorithm. He
+used the polynomial x2s −a instead of xr −1 in equation (1), where 2s ≈log2 n. Among others,
+he was able to prove the following proposition:
+Proposition 1 Given an integer n ≡1 (mod 4). Denote s = ⌈2 log log n⌉. Assume that 2k||n−1
+and k ≥s. If there exists an integer a, such that ( a
+n) = −1 and a
+n−1
+2
+≡−1 (mod n), then
+(1 + x)n ≡1 + xn
+(mod n, x2s −a)
+iﬀn is a power of a prime.
+Unlike the AKS algorithm, where each prime costs roughly the same, there are “easily-proved
+primes” in Berrizbeitia’s algorithm, namely, the primes p where p −1 has a factor of a power of
+two larger than log2 n. For those primes, one iteration of polynomial modular exponentiation,
+which runs in time ˜O(log4 n), establishes the primality of p, provided that a suitable a exists. In
+fact, a can be found easily if n is indeed a prime and randomness is allowed in the algorithm. It
+serves as a prime certiﬁcate for n.
+Deﬁnition 1 In this paper, for a primality proving algorithm, we call a prime p easily-proved, if
+the algorithm runs in expected time ˜O(log4 p) on p.
+What is the density of the easily-proved primes in Berrizbeitia’s algorithm? Heuristically for
+a random prime p, p −1 should have probability
+1
+log2 p to have a factor 2s ≈log2 p, hence the
+easily-proved primes have density
+1
+log2 p around p in his algorithm.
+1.1
+Increasing the density of easily-proved primes
+We prove the following theorem in Section 5, which can be regarded as a generalization of Propo-
+sition 1.
+Theorem 1 (Main) Given a number n which is not a power of an integer. Suppose that there
+exists a prime r, rα||n −1(α ≥1) and r ≥log2 n. In addition, there exists a number 1 < a < n,
+such that arα ≡1 (mod n), gcd(arα−1 −1, n) = 1, and
+(1 + x)n = 1 + xn
+(mod n, xr −a),
+then n is a prime.
+2
+
+
+
+--- PAGE 3 ---
+The number a can be found easily if n is a prime and randomness is allowed. It serves as a
+prime certiﬁcate for n. Base on this theorem, we propose a random algorithm which establishes
+the primality of p in time ˜O(log4 p) if p −1 contains a prime factor between log2 p and C log2 p
+for some small constant C.
+Deﬁnition 2 We call a positive integer n C-good, if n−1 has a prime factor p such that log2 n ≤
+p ≤C log2 n.
+What is the density of C-good primes? Apparently the density should be higher than the density
+of easily-proved primes in Berrizbeitia’s algorithm. Let m = Q
+p prime,b1≤p≤Cb1 p. First we count
+the number of integers between 1 and m which have a prime factor between b1 and Cb1. This is
+precisely the number of zero-divisors in ring Z/mZ:
+(m −1) −m
+Y
+p prime,b1≤p≤Cb1
+(1 −1
+p).
+We will prove in Section 4 that this number is greater than
+m
+ln b1 for C = c and b1 suﬃciently
+large, where c is an absolute constant to be determined later. To analyze the time complexity of
+our algorithm, we mainly concern the density of 2-good primes in short intervals. For simplicity,
+we call a number good, when it is 2-good. Since compared with log2 n, n is very big, we expect
+that
+Conjecture 1 There exists an absolute constant λ, such that for any suﬃciently large integer n,
+Number of 2 −good primes between n −2√n + 1 and n + 2√n + 1
+Number of primes between n −2√n + 1 and n + 2√n + 1
+>
+λ
+ln(log2 n).
+We are unable to prove this inequality however, but we present in the paper some numerical
+evidences. We comment that questions about the prime distribution in a short interval are usually
+very hard to answer.
+1.2
+Algorithm for the general primes
+For general primes, we apply the idea in the Elliptic Curve Primality Proving algorithm (ECPP).
+ECPP was proposed by Goldwasser, Kilian [7] and Atkin [3] and implemented by Atkin and
+Morain [4]. In practice, ECPP performs much better than the current version of AKS. It has
+been used to prove primality of numbers up to thousands of decimal digits [9].
+In ECPP, if we want to prove that an integer n is a prime, we reduce the problem to the proof
+of primality of a smaller number (less than n/2). To achieve this, we try to ﬁnd an elliptic curve
+with ωn′ points over Z/nZ, where ω is completely factored and n′ is a probable prime greater
+than ( 4√n + 1)2. Once we have such a curve and a point on the curve with order n′, the primality
+of n′ implies the primality of n. Since point counting on elliptic curves is expensive, we usually
+use the elliptic curves with complex multiplications of small discriminants.
+Nonetheless, it is
+plausible to assume that the order of the curve has the desired form with the same probability
+as a random integer does. ECPP needs O(log n) rounds of reductions to eventually reduce the
+problem to a primality proof of a very small prime, say, less than 1000. As observed in [8], one
+round of reduction takes heuristic time ˜O(log5 n), or ˜O(log4 n) if we use the fast multiplication.
+To get the time complexity, it is assumed that the number of primes between n −2√n + 1 and
+n + 2√n + 1 is greater than √n/ log2 n, and the number of points on an elliptic curve with small
+3
+
+
+
+--- PAGE 4 ---
+discriminant complex multiplication behaves like a random number in the Hassa range. We refer
+the assumption as the ECPP heuristics. Rigorous proof of the time complexity seems out of reach,
+as it involves the study of the prime distribution in a short interval.
+Our algorithm can be decomposed into two stages. In the ﬁrst stage, for a general probable
+prime n, we will use one round of ECPP to reduce its proof of primality to a good probable
+prime n′ near n.
+For convenience, we require that n −2√n + 1 ≤n′ ≤n + 2√n + 1 (See
+section 6 for implementation issues). Note that up to a constant factor, the time complexity of
+one round reduction in ECPP is equivalent to the time complexity of ﬁnding a curve with a prime
+order. In the set of primes between n −2√n + 1 and n + 2√n + 1, the density of good primes
+is
+λ
+ln(log2 n) by conjecture. Hence heuristically the extra condition on n′ (that n′ should be good)
+will increase the time complexity merely by a factor of O(log log n). Therefore for all the primes,
+without signiﬁcant increase of time complexity, we reduce its primality proving to the proof of
+a good prime. In the second stage, we ﬁnd a primality certiﬁcate for n′. To do this, we search
+for a which satisﬁes the conditions in the main theorem, and compute the polynomial modular
+exponentiation. Heuristically, the total expected running time of the ﬁrst and the second stages
+becomes ˜O(log4 n). However, due to the short interval of the number of points over elliptic curves,
+it seems diﬃcult to obtain the rigorous time complexity. Put it altogether, we now have a general
+purpose prime proving algorithm, which has following properties:
+1. it runs very fast ( ˜O(log4 n) ) assuming reasonable heuristics.
+2. For many primes, ECPP subroutine is not needed.
+3. The certiﬁcate, which consists of the curve, a point on the curve with order n′, n′ and a, is
+very short. It consists of only O(log n) bits as opposed to O(log2 n) bits in ECPP.
+4. A veriﬁer can be convinced in deterministic time ˜O(log4 n). In fact, the most time consuming
+part in the veriﬁcation is the iteration of polynomial modular exponentiation.
+This paper is organized as following: In Section 2, we review the propositions used by AKS
+and ECPP to prove primality.
+In Section 3, we describe our algorithm and present the time
+complexity analysis. In Section 4, we prove a theorem which can be regarded as an evidence for
+the density heuristics. The main theorem is proved in Section 5. We conclude this paper with
+some discussions on the implementation of the algorithm.
+2
+Proving primality in AKS and ECPP
+The ECPP algorithm depends on rounds of reductions of the proof of primality of a prime to the
+proof of primality of a smaller prime. The most remarkable feature of ECPP is that a veriﬁer
+who does not believe any conjectures can be convinced in time ˜O(log3 n) if the fast multiplication
+is used. It is based on the following proposition [4].
+Proposition 2 Let N be an integer prime to 6, E be an elliptic curve over Z/NZ, together with
+a point P on E and two integers m and s with s|m. Denote the inﬁnite point on E by O. For each
+prime divisor q of s, denote (m/q)P by (xq : yq : zq). Assume that mP = O and gcd(zq, N) = 1
+for all q. If s > (
+4√
+N + 1)2, then N is a prime.
+4
+
+
+
+--- PAGE 5 ---
+The certiﬁcate for N in ECPP consists of the curve E, the point P, m, s and the certiﬁcate
+of primality of s. Usually the ECPP algorithm uses elliptic curves with complex multiplications
+of small discriminants. For implementation details, see [4].
+The AKS algorithm proves a number is a prime through the following proposition.
+Proposition 3 Let n be a positive integer. Let q and r be prime numbers. Let S be a ﬁnite set
+of integers. Assume
+1. that q divides r −1;
+2. that n
+r−1
+q
+̸≡0, 1 (mod r);
+3. that gcd(n, b −b′) = 1 for all the distinct b, b′ ∈S;
+4. that
+ q+|S|−1
+|S|
+
+≥n2⌊√r⌋;
+5. that (x + b)n ≡xn + b (mod xr −1, n) for all b ∈S.
+Then n is a power of a prime.
+3
+Description and time complexity analysis of our algorithm
+Now we are ready to sketch our algorithm.
+Input: a positive integer n
+Output: a certiﬁcate of primality of n, or “composite”.
+1. If n is a power of an integer, return “composite”.
+2. In parallel run a composite proving algorithm, for example, the Rabin-Miller testing [5,
+Page 282], on n.
+3. If n −1 contains a prime factor between log2 n and 2 log2 n, skip this step. Otherwise, call
+ECPP to ﬁnd an elliptic curve on Z/nZ with n′ points, where n′ is a probable prime and
+n′ is 2-good. Set n = n′. Let r be the prime factor of n −1 satisfying log2 n ≤r ≤2 log2 n.
+4. Randomly select a number 1 < b < n. If bn−1 ̸= 1 (mod n), output “composite” and exit.
+5. Let a = b
+n−1
+rα
+(mod n); If a = 1, or arα−1 = 1, go back to step 4.
+6. If gcd(arα−1 −1, n) ̸= 1, output “composite” and exit.
+7. If (1 + x)n ̸= 1 + xn (mod n, xr −a), return “composite”;
+8. Use ECPP procedure to construct the curve and the point and compute the order. Output
+them with a. Return “prime”;
+Testing whether a number n is good or not can be done in time ˜O(log3 n). The step 3 takes
+time ˜O(log4 n), if the ECPP heuristics is true, Conjecture 1 in the introduction section is true,
+and the fast multiplication algorithm is used.
+If n is indeed a prime, then the probability of going back in step 5 is at most 1/r.
+The
+step 6 takes time at most ˜O(log2 n). The step 7 takes time ˜O(log4 n), since r ≤2 log2 n. Hence
+the heuristic expected running time of our algorithm is ˜O(log4 n).
+Obviously the veriﬁcation
+algorithm takes deterministic time ˜O(log4 n).
+5
+
+
+
+--- PAGE 6 ---
+4
+Density of good numbers
+What is the probability that a random number has a prime factor between b1 and b2 = cb1? Let
+m = Q
+p prime,b1≤p≤b2 p. We ﬁrst compute the density of integers between 1 and m −1 which has
+a prime factor between b1 and b2. Those numbers are precisely the zero-divisors in Z/mZ. The
+number of non-zero-divisors between 1 and m is φ(m) = m Q
+p prime,b1≤p≤b2(1−1
+p), where φ is the
+Euler phi-function. First we estimate the quantity:
+βb1,b2 =
+Y
+p prime,b1≤i≤b2
+(1 −1
+p)
+It is known [10] that Q
+p<x,p prime(1 −1
+p) = e−γ
+ln x (1 + O( 1
+ln x)), where γ is the Euler constant.
+There must exist two absolute constants c1, c2, such that
+e−γ
+ln x(1 + c1
+ln x) ≤
+Y
+p<x,p prime
+(1 −1
+p) ≤e−γ
+ln x(1 + c2
+ln x)
+Set c = ec2−c1+2.
+Y
+p prime,b1≤p≤b2
+(1 −1
+p)
+=
+Q
+p prime,p≤b2(1 −1
+p)
+Q
+p prime,p≤b1(1 −1
+p)
+≤
+ln b1
+ln cb1
+1 +
+c2
+ln cb1
+1 +
+c1
+ln b1
+=
+ln3 b1 + (ln c + c2) ln2 b1
+ln3 b1 + (2 ln c + c1) ln2 b1 + (ln2 c + 2c1 ln c) ln b1 + c1 ln2 c
+Thus 1 −βb1,b2 =
+(ln c+c1−c2) ln2 b1−(ln2 c+2c2 ln c) ln b1−c2 ln2 c
+ln3 b1+(2 ln c+c1) ln2 b1+(ln2 c+2c1 ln c) ln b1+c1 ln2 c >
+1
+ln b1 , when b1 is suﬃciently
+large. It is expected that the density of good primes in the set of primes in a large interval should
+not be very far away from
+1
+ln b1 . See Table 1 for numerical data concerning the density of 2-good
+primes around 2500. Notice that
+β250000,500000
+=
+0.9472455
+1 −β250000,500000
+=
+0.0527545
+1
+ln 250000
+=
+0.0804556
+5
+Proof of the main theorem
+In this section we prove the main theorem. It is built on a series of lemmas. Most of them are
+straight-forward generalizations of the lemmas in Berrizbeitia’s paper [6]. We include slightly
+diﬀerent proofs of those lemmas, though, for completeness.
+Some of the proofs are brief, for
+details see [6].
+Lemma 1 Let r, p be primes, r|p −1. If a ∈Fp is not a r-th power of any element in Fp, then
+xr −a is irreducible over Fp.
+6
+
+
+
+--- PAGE 7 ---
+Table 1: Number of 2-good primes around 2500
+From
+To
+Number of primes
+Number of 2-good primes
+Ratio
+2500 + 0
+2500 + 200000
+576
+35
+6.07%
+2500 + 200000
+2500 + 400000
+558
+38
+6.81%
+2500 + 400000
+2500 + 600000
+539
+30
+5.56%
+2500 + 600000
+2500 + 800000
+568
+23
+4.05%
+2500 + 800000
+2500 + 1000000
+611
+39
+6.38%
+2500 + 1000000
+2500 + 1200000
+566
+26
+4.59%
+2500 + 1200000
+2500 + 1400000
+566
+38
+6.71%
+2500 + 1400000
+2500 + 1600000
+526
+27
+5.13%
+2500 + 1600000
+2500 + 1800000
+580
+26
+4.48%
+2500 + 1800000
+2500 + 2000000
+563
+20
+3.55%
+2500 + 2000000
+2500 + 2200000
+562
+22
+3.91%
+2500 + 2200000
+2500 + 2400000
+561
+21
+3.74%
+2500 + 2400000
+2500 + 2600000
+609
+34
+5.58%
+2500 + 2600000
+2500 + 2800000
+601
+28
+4.66%
+2500 + 2800000
+2500 + 3000000
+603
+33
+5.47%
+2500 + 3000000
+2500 + 3200000
+579
+37
+6.39%
+2500 + 3200000
+2500 + 3400000
+576
+31
+5.38%
+2500 + 3400000
+2500 + 3600000
+604
+35
+5.79%
+2500 + 3600000
+2500 + 3800000
+612
+40
+6.53%
+2500 + 3800000
+2500 + 4000000
+588
+29
+4.93%
+2500 + 4000000
+2500 + 4200000
+574
+33
+5.75%
+2500 + 4200000
+2500 + 4400000
+609
+27
+4.43%
+2500 + 4400000
+2500 + 4600000
+549
+35
+6.37%
+2500 + 4600000
+2500 + 4800000
+561
+30
+5.34%
+2500 + 4800000
+2500 + 5000000
+545
+29
+5.32%
+2500 + 5000000
+2500 + 5200000
+590
+20
+3.39%
+2500 + 5200000
+2500 + 5400000
+557
+27
+4.84%
+2500 + 5400000
+2500 + 5600000
+591
+28
+4.73%
+2500 + 5600000
+2500 + 5800000
+517
+33
+6.38%
+2500 + 5800000
+2500 + 6000000
+566
+18
+3.18%
+2500 + 6000000
+2500 + 6200000
+575
+30
+5.21%
+2500 + 6200000
+2500 + 6400000
+573
+26
+4.53%
+2500 + 6400000
+2500 + 6600000
+558
+36
+6.45%
+2500 + 6600000
+2500 + 6800000
+574
+32
+5.57%
+2500 + 6800000
+2500 + 7000000
+594
+22
+3.70%
+2500 + 7000000
+2500 + 7200000
+596
+31
+5.20%
+2500 + 7200000
+2500 + 7400000
+567
+26
+4.58%
+2500 + 7400000
+2500 + 7600000
+619
+28
+4.52%
+2500 + 7600000
+2500 + 7800000
+565
+25
+4.42%
+2500 + 7800000
+2500 + 8000000
+561
+25
+4.45%
+2500 + 8000000
+2500 + 8200000
+570
+26
+4.56%
+7
+
+
+
+--- PAGE 8 ---
+Proof: Let θ be one of the roots of xr −a = 0. Certainly [Fp(θ) : Fp] > 1. Let ξ ∈Fp be one
+of the r-th primitive roots of unity.
+xr −a = xr −θr =
+Y
+0≤i≤r−1
+(x −ξiθ).
+Let [Fp(θ) : Fp] = r′. Then for all i, [Fp(ξiθ) : Fp] = r′. Hence xr −a will be factored into
+polynomials of degree r′ only. Since r is a prime, this is impossible, unless that r′ = r.
+✷
+Lemma 2 Let n > 2 be an integer. Let r be a prime and rα||n −1. Suppose that there exists a
+integer 1 < a < n such that
+1. arα ≡1 (mod n);
+2. gcd(arα−1 −1, n) = 1;
+Then there must exist a prime factor p of n, such that rα||p −1 and a is not a r-th power of any
+element in Fp.
+Proof: For any prime factor q of n, arα ≡1 (mod q) and arα−1 ̸≡1 (mod q), so rα|q −1. If
+rα+1|q −1 for all the prime factors, then rα+1|n −1, contradiction. Hence there exists a prime
+factor p, such that rα||p −1. Let g be a generator in F∗
+p. If a = gt in Fp, then p −1|trα, and
+p −1 ̸ |trα−1. Hence r ̸ |t.
+✷
+In the following text, we assume that n is an integer, n = pld where p is a prime and gcd(p, d) =
+1. Assume r is a prime and r|p−1. Let xr −a be an irreducible polynomial in Fp. Let θ be one of
+the roots of xr −a. For any element in the ﬁeld Fp(θ), we can ﬁnd a unique polynomial f ∈Fp[x]
+of degree less than r such that the element can be represented by f(θ). Deﬁne σm : Fp(θ) →Fp(θ)
+as σ(f(θ)) = f(θm).
+Lemma 3 We have that am = a in Fp iﬀσm ∈Gal(Fp(θ)/Fp).
+Proof: (⇐): Since σm ∈Gal(Fp(θ)/Fp), θm must be a root of xr −a. Hence a = (θm)r = am
+in Fp.
+(⇒): For any two elements a, b ∈Fp(θ), we need to prove that σm(a + b) = σm(a) + σm(b)
+and σm(ab) = σm(a)σm(b). The ﬁrst one is trivial from the deﬁnition of σm. Let a = fa(θ) and
+b = fb(θ) where fa(x), fb(x) ∈Fp[x] has degree less than r −1. If deg(fa(x)fb(x)) ≤r −1, it is
+easy to see that σm(ab) = σm(a)σm(b). Now assume that deg(fa(x)fb(x)) ≥r. Then fa(x)fb(x) =
+h(x) + (xr −a)p(x) where h(x), p(x) ∈Fp[x] and deg(h(x)) < r. Then σm(ab) = σm(h(θ)) =
+h(θm) = h(θm) + (am −a)p(θm) = h(θm) + (θmr −a)p(θm) = fa(θm)fb(θm) = σm(a)σm(b).
+This shows that σm is a homomorphism. Now we need to prove that it is one-to-one. It is
+obvious since θm is a root of xr −a = 0.
+✷
+Deﬁne Gm = {f(θ) ∈Fp(θ)∗|f(θm) = f(θ)m}. It can be veriﬁed that Gm is a group when σm
+is in Gal(Fp(θ)/Fp).
+Lemma 4 Suppose σn ∈Gal(Fp(θ)/Fp). Then for any i, j ≥0, σdipj ∈Gal(Fp(θ)/Fp) and
+Gn ⊆Gdipj.
+8
+
+
+
+--- PAGE 9 ---
+Proof: Notice that the map x →xpl is a one-to-one map in Fp(θ). The equation an = a
+implies that (ad)pl = a, hence ad = a, and adipj = a. We have σdipj ∈Gal(Fp(θ)/Fp).
+Let f(θ) ∈Gn.
+Thus f(θn) = f(θ)n, this implies f(θpld) = f(θ)pld = f(θpl)d.
+So θpl is
+a solution of f(xd) = f(x)d.
+Since it is one of the conjugates of θ, θ must be a solution as
+well. This proves that f(θd) = f(θ)d. Similarly since θd is also one of the conjugates of θ, as
+σd ∈Gal(Fp(θ)/Fp), we have f(θd2) = f(θd)d = f(θ)d2. By reduction, f(θdi) = f(θ)di for k ≥0.
+Hence f(θdipj) = f(θdi)pj = f(θ)dipj. This implies that f(θ) ∈Gdipj.
+✷
+Lemma 5 If σm1, σm2 ∈Gal(Fp(θ)/Fp) and σm1 = σm2, then |Gm1 ∩Gm2| divides m1 −m2.
+This lemma is straight forward from the deﬁnition.
+Lemma 6 Let A = arα−1. If (1 + θ) ∈Gn, so is 1 + Aiθ for any i = 1, 2, 3, · · · , r −1. And
+|Gn| ≥2r.
+Proof: If (1 + θ) ∈Gn, this means that (1 + θ)n = 1 + θn. It implies that (1 + θ′)n = 1 + θ′n
+for any conjugate θ′ of θ. Since A is a primitive root of unity in Fp, hence Aiθ are conjugates of
+θ. We have (1 + Aiθ)n = 1 + (Aiθ)n = 1 + (An)iθn and we know that An = A. This proves that
+1 + Aiθ ∈Gn. The group Gn contains all the elements in the set
+{
+r−1
+Y
+i=0
+(1 + Aiθ)ǫi|
+r−1
+X
+i=0
+ǫi < r},
+by simple counting we have |Gn| ≥2r.
+✷
+Finally we are ready to give the proof of the main theorem (Theorem 1) of this paper.
+Proof: Since |Gal(Fp(θ)/Fp)| = r, hence there exist two diﬀerent pairs (i1, j1) and (i2, j2)
+with 0 ≤i1, j1, i2, j2 ≤⌊√r⌋, such that σdi1pj1 = σdi2pj2. According to Lemma 4, Gn ⊆Gdi1pj1,
+Gn ⊆Gdi2pj2, this implies that Gn ⊆Gdi1pj1 ∩Gdi2pj2. Therefore |Gn| divides di1pj1 −di2pj2, but
+di1pj1 −di2pj2 < n⌊√r⌋≤2
+√r log n ≤2r. hence di1pj1 −di2pj2 = 0, which in turn implies that n is
+a power of p.
+✷
+6
+Implementation and conclusion
+In this paper, we propose a random primality proving algorithm which runs in heuristic time
+˜O(log4 n).
+It generates a certiﬁcate of primality of length O(log n) which can be veriﬁed in
+deterministic time ˜O(log4 n).
+When it comes to implement the algorithm, space is a bigger issues than time. Assume that
+n has 1000 bit, which is the range of practical interests. To compute (1+ x)n (mod n, xr −a), we
+will have an intermediate polynomial of size 230 bit, or 128M bytes. As a comparison, ECPP is
+not very demanding on space. In order to make the algorithm available on a desktop PC, space
+eﬃcient exponentiation of 1 + x is highly desirable. This is the case for the original version of the
+AKS algorithm as well.
+9
+
+
+
+--- PAGE 10 ---
+For the sake of theoretical clarity, we use just one round of ECPP reduction in the algorithm.
+To implement the algorithm, it may be better to follow the ECPP algorithm and launch the
+iteration of AKS as soon as an intermediate prime becomes good.
+Again assuming that the
+intermediate primes are distributed randomly in the range, the expected number of rounds will
+be log log n. It is a better strategy since the intermediate primes get smaller and smaller.
+Acknowledgements:
+We thank Professor Pedro Berrizbeitia for very helpful discussions and
+comments.
+References
+[1] L. M. Adleman, C. Pomerance, and R. S. Rumely. On distinguishing prime numbers from
+composite numbers. Annals of Mathematics, 117:173–206, 1983.
+[2] M.
+Agrawal,
+N.
+Kayal,
+and
+N.
+Saxena.
+Primes
+is
+in
+P.
+http://www.cse.iitk.ac.in/news/primality.pdf, 2002.
+[3] A.O.L. Atkin. Lecture notes of a conference in Boulder (Colorado), 1986.
+[4] A.O.L. Atkin and F. Morain. Elliptic curves and primality proving. Mathematics of Com-
+putation, 61:29–67, 1993.
+[5] Eric Bach and Jeﬀrey Shallit. Algorithmic Number theory, volume I. The MIT Press, 1996.
+[6] Pedro Berrizbeitia.
+Sharpening “primes is in p” for a large family of numbers.
+http://lanl.arxiv.org/abs/math.NT/0211334, 2002.
+[7] S. Goldwasser and J. Kilian. Almost all primes can be quickly certiﬁed. In Proc. 18th ACM
+Symp. on Theory of Computing, pages 316–329, Berkeley, CA, 1986. ACM.
+[8] A. Lenstra and H. W. Lenstra Jr. Handbook of Theoretical Computer Science A, chapter
+Algorithms in Number Theory, pages 673–715. Elsevier and MIT Press, 1990.
+[9] F. Morain. Primality proving using elliptic curves: An update. In Proceedings of ANTS III,
+volume 1423 of Lecture Notes in Computer Science, 1998.
+[10] G. Tenenbaum. Introduction to analytic and probabilistic number theory (English Transla-
+tion). Cambridge University Press, 1995.
+10

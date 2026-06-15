@@ -16,7 +16,7 @@ The challenge: [[Standard Amplitude Amplification|standard amplitude amplificati
 
 Provides the first fixed-point amplitude amplification that retains the optimal $O(1/\sqrt{\lambda})$ query complexity. The algorithm guarantees $P_L \geq 1 - \delta^2$ for all $\lambda \geq w$ simultaneously, where $w$ shrinks as the number of iterations $L$ grows. The query complexity is $L = O\!\left(\frac{\log(2/\delta)}{\sqrt{\lambda}}\right)$, optimal for any algorithm with this fixed-point property.
 
-This is the paper that seeded the entire [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|quantum signal processing]] programme — the idea that by choosing **phases of generalised Grover reflections**, you can implement any bounded polynomial of the overlap, and that Chebyshev polynomials solve the optimal design problem.
+This is a direct precursor to the [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|quantum signal processing]] programme: it shows that by choosing **phases of generalised Grover reflections**, one can engineer an optimal polynomial response in the overlap, with Chebyshev polynomials solving the fixed-point design problem.
 
 ---
 
@@ -40,9 +40,13 @@ Apply $l$ generalised Grover iterates with different phases:
 
 $$S_L = \prod_{j=1}^{l} G(\alpha_j, \beta_j), \qquad L = 2l + 1$$
 
-The success probability is:
+Let $\gamma^{-1}=T_{1/L}(1/\delta)$. The success probability is:
 
-$$P_L = |\langle T|S_L|s\rangle|^2 = 1 - \delta^2 \left[\frac{T_L\!\left(T_{1/L}(1/\delta)\sqrt{1-\lambda}\right)}{1}\right]^2$$
+$$
+P_L = |\langle T|S_L|s\rangle|^2
+= 1 - \delta^2 T_L\!\left(T_{1/L}(1/\delta)\sqrt{1-\lambda}\right)^2
+= 1-\delta^2 T_L\!\left(\frac{\sqrt{1-\lambda}}{\gamma}\right)^2
+$$
 
 where $T_L(x) = \cos(L\cos^{-1}x)$ is the $L$-th [[Chebyshev polynomial]] of the first kind.
 
@@ -56,13 +60,13 @@ where $\gamma^{-1} = T_{1/L}(1/\delta)$. These are **analytical closed-form expr
 
 **Special cases:**
 - $\delta = 1$: $\alpha_j = \pm\pi$, $\beta_j = \pm\pi$ — recovers standard Grover search exactly.
-- $\delta = 0$: recovers Grover's $\pi/3$-algorithm (which is fixed-point but $O(1/\lambda)$ query complexity).
+- $\delta = 0$ is a singular limit in the displayed $\gamma$ definitions; the paper identifies the limiting fixed-point construction with Grover's $\pi/3$-style behavior.
 
 ### Why it works: polynomial design
 
 The key insight is that $P_L$ is a degree-$L$ polynomial in $x = \cos(\phi/2) = \sqrt{1-\lambda}$. The freedom to choose $2l$ phase angles $\{\alpha_j, \beta_j\}$ gives control over the polynomial coefficients. The Dolph-Chebyshev design (from antenna array theory!) provides the optimal polynomial: it achieves the widest possible interval $[0, w]$ where $P_L \geq 1 - \delta^2$ for a given degree $L$.
 
-The proof reduces to showing that the recurrence relation for the amplitudes under the phase sequence reproduces the Chebyshev recurrence $T_L(x) = 2xT_{L-1}(x) - T_{L-2}(x)$ when $\gamma = \delta = 1$, and a generalised version for other $\gamma$.
+The proof reduces to showing that the recurrence relation for the amplitudes under the phase sequence reproduces the Chebyshev response in Eq. (1), with the rescaling by $\gamma$ setting the width of the fixed-point interval.
 
 ### Nesting (concatenation)
 
@@ -70,7 +74,7 @@ Sequences can be **nested**: replace the state preparation $A$ in a sequence $S_
 
 $$P_{L_2}(P_{L_1}(\lambda, \delta_1), \delta_2) = P_{L_1 L_2}(\lambda, \delta)$$
 
-This means the algorithm is **adaptive**: you can run $S_{L_1}$, check if the result is good enough, and extend to $S_{L_1 L_2}$ without restarting from scratch.
+This means the sequences can be coherently nested: a sequence of effective length $L_1$ can be used as the state-preparation block inside a second sequence to obtain the $L_1L_2$ response. Experimental/adaptive stopping would require measurement and restart; the "without restarting" statement is about coherent circuit concatenation, not checking a measured result midstream.
 
 ---
 
@@ -90,14 +94,14 @@ To achieve $P_L \geq 1 - \delta^2$ for all $\lambda \geq \lambda_0$:
 
 $$L = O\!\left(\frac{\log(2/\delta)}{\sqrt{\lambda_0}}\right)$$
 
-This is **optimal**: any fixed-point search with error $\delta$ over range $[\lambda_0, 1]$ requires this many queries.
+This is **optimal within the fixed-point model** considered in the paper: any algorithm whose success probability is at least $1-\delta^2$ uniformly over the overlap range $[\lambda_0,1]$ requires this scaling in $\log(1/\delta)/\sqrt{\lambda_0}$. It is not a lower bound for all search algorithms without the fixed-point/uniform-range requirement.
 
 ### Comparison
 
 | Algorithm | Queries | Fixed-point? | Analytical phases? |
 |---|---|---|---|
 | [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes\|Grover (1996)]] | $O(1/\sqrt{\lambda})$ | No (oscillates) | — |
-| [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes\|Brassard et al.]] + estimation | $O(1/\sqrt{\lambda} \cdot \log\log(1/\lambda))$ | Effectively | — |
+| [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes\|Brassard et al.]] + amplitude estimation/search scheduling | $O(1/\sqrt{\lambda})$ scale plus estimation/scheduling overhead depending on the confidence target | Avoids severe overshoot by learning/scheduling rather than fixed-point polynomial design | — |
 | Grover $\pi/3$-algorithm (2005) | $O(1/\lambda)$ | Yes | Yes |
 | Li-Li (2007), Toyama et al. (2009) | Numerical | Yes | No |
 | **This paper** | $O(\log(1/\delta)/\sqrt{\lambda})$ | **Yes** | **Yes** |
@@ -126,7 +130,7 @@ This is **optimal**: any fixed-point search with error $\delta$ over range $[\la
 
 1. [[Chebyshev Polynomial Design for Fixed-Point Amplitude Amplification]] — Choose phases $\{\alpha_j, \beta_j\}$ in generalised Grover iterates so the success probability equals a Dolph-Chebyshev function of the overlap. Achieves the broadest possible range of $\lambda$ values where $P \geq 1 - \delta^2$ for a given query budget.
 
-2. [[Chebyshev Nesting (Semigroup Concatenation)]] — Exploit $T_p(T_q(x)) = T_{pq}(x)$ to concatenate fixed-point search sequences without restarting. A sequence of complexity $L_1$ can be extended to $L_1 L_2$ by nesting inside a second sequence of complexity $L_2$. Enables adaptive, restartless search.
+2. [[Chebyshev Nesting (Semigroup Concatenation)]] — Exploit $T_p(T_q(x)) = T_{pq}(x)$ to concatenate fixed-point search sequences without re-preparing the initial state. A sequence of complexity $L_1$ can be used as the coherent prefix of a sequence of complexity $L_1 L_2$ by nesting it inside a second sequence of complexity $L_2$.
 
 ---
 

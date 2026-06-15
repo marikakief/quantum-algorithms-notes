@@ -1,3 +1,5 @@
+# Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes
+
 > **Source:** Andris Ambainis, *Quantum lower bounds by quantum arguments*, Journal of Computer and System Sciences **64**(4):750–767, 2002 (originally STOC 2000); arXiv:quant-ph/0002066
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0002066) · [JCSS](https://doi.org/10.1016/S0022-0000(02)00018-4)
 > **Tags:** #query-complexity #lower-bound #adversary-method #quantum-arguments #Boolean-functions
@@ -14,13 +16,13 @@ The paper doesn't solve a computational problem — it introduces a *method* for
 
 ## What the paper does
 
-Introduces the **quantum adversary method** (also called the Ambainis adversary bound), which became one of the two standard techniques for proving quantum query lower bounds. The other is the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]].
+Introduces the original **positive-weight Ambainis adversary method**, which became one of the two standard families of techniques for proving quantum query lower bounds. The other is the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]].
 
 The core idea: instead of a classical adversary that runs the algorithm on one input and then modifies it, use a *quantum adversary* that runs the algorithm on a **superposition of inputs**. If the algorithm is correct, its state must become entangled with the input register. Bounding how fast queries can create this entanglement gives lower bounds.
 
 The method proves new tight $\Omega(\sqrt{N})$ bounds for inverting a permutation and AND-of-ORs, and provides cleaner proofs of several known bounds (search, approximate counting) that previously required different techniques.
 
-My take: this is one of the most influential papers in quantum query complexity. The adversary method and the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]] are the two pillars of quantum lower bounds, and hundreds of papers use one or both. The weighted generalisation in [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes|Ambainis (2003/2006)]] and the spectral reformulation by Barnum-Saks-Szegedy eventually led to the general adversary bound, which is now known to be tight for all Boolean functions (Reichardt 2009/2011).
+My take: this is one of the most influential papers in quantum query complexity. Positive adversary methods and the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]] are the two classical pillars of quantum lower bounds, and hundreds of papers use one or both. The weighted positive generalisation in [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes|Ambainis (2003/2006)]], the spectral reformulation by Barnum-Saks-Szegedy, the negative-weight/general adversary of Høyer-Lee-Špalek, and Reichardt's span-program tightness theorem are distinct later steps.
 
 ---
 
@@ -56,7 +58,7 @@ So the off-diagonal entries of $\rho$ between inputs with different function val
 
 This gives $T \geq (S_0 - S_T) / \max_k |S_{k-1} - S_k|$.
 
-### The general adversary bound (Theorem 2)
+### The unweighted positive adversary bound (Theorem 2)
 
 The main result in its cleanest form:
 
@@ -122,7 +124,7 @@ The adversary method strictly generalises the block sensitivity bound: setting $
 
 ## Limits / caveats
 
-1. **Certificate complexity barrier.** The adversary bound (in all its forms, including the weighted version of [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes|Ambainis (2003)]]) is bounded by $O(\sqrt{C_0(f) \cdot C_1(f)})$ for total functions, where $C_0, C_1$ are certificate complexities. This means it cannot prove, e.g., the $\Omega(N^{2/3})$ lower bound for element distinctness (where $C_1 = 2$, $C_0 = N$, giving only $\Omega(\sqrt{N})$).
+1. **Certificate complexity barrier for positive adversary methods.** The positive-weight adversary formulations, including the weighted version of [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes|Ambainis (2003)]], are bounded by $O(\sqrt{C_0(f) \cdot C_1(f)})$ for total functions, where $C_0, C_1$ are certificate complexities. This means they cannot prove, e.g., the $\Omega(N^{2/3})$ lower bound for element distinctness (where $C_1 = 2$, $C_0 = N$, giving only $\Omega(\sqrt{N})$).
 
 2. **Not tight in general.** The polynomial method gives better bounds for some problems (element distinctness, collision). For total functions, the adversary bound and polynomial method are incomparable — each beats the other on some functions.
 
@@ -154,7 +156,7 @@ Then $\|\phi_x^t - \phi_y^t\|^2 = 1 - |\langle \phi_x^t | \phi_y^t \rangle|^2$ a
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — period finding
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|Brassard, Høyer, Tapp (1997)]] — collision problem
-- Nayak & Wu (1999) — quantum query complexity of approximate median; proved here by adversary method
+- Nayak & Wu (1999) — quantum query complexity of approximate median; this paper gives an adversary-style proof of the related approximate-counting lower bound
 - Grover (1998), quant-ph/9809029 — distance-based lower bound proof, shown equivalent to adversary method
 - Shi (1999), quant-ph/9904107 — lower bounds via average sensitivity
 
@@ -166,7 +168,7 @@ Then $\|\phi_x^t - \phi_y^t\|^2 = 1 - |\langle \phi_x^t | \phi_y^t \rangle|^2$ a
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes]] — predecessor: hybrid argument
 - [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes]] — the other pillar of quantum lower bounds
 - [[Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes]] — extends the adversary method with weighted schemes; proves deg(f) vs Q(f) separation
-- [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — the matching $O(N^{2/3})$ upper bound for element distinctness; the adversary method here gives $\Omega(N^{2/3})$ via a more involved argument
+- [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — the matching $O(N^{2/3})$ upper bound for element distinctness; the tight $\Omega(N^{2/3})$ lower bound is due to the polynomial method of Aaronson-Shi, not the positive adversary method in this paper
 - [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes]] — optimal quantum-classical query separation
 - [[Sharp Quantum vs Classical Query Complexity Separations (de Beaudrap-Cleve-Watrous 2002) — Paper Notes]] — early quantum-classical separation
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — Ambainis is a coauthor; adversary-based lower bounds are relevant

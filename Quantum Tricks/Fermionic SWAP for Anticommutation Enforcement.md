@@ -12,9 +12,9 @@ The standard SWAP gate exchanges two qubits, but fermionic modes satisfy $\{c_i,
 
 $$U_{\text{fSWAP}} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & -1 \end{pmatrix}$$
 
-This is identical to a standard SWAP except for the $-1$ phase on $|11\rangle$ (both modes occupied). Decomposition: SWAP followed by a controlled-Z, or equivalently three CNOTs plus a phase gate.
+This is identical to a standard SWAP except for the $-1$ phase on $|11\rangle$ (both modes occupied). It swaps fermionic mode labels, not merely qubit states. Decomposition: SWAP followed by a controlled-Z, or equivalently three CNOTs plus a phase gate, with the exact native count depending on the gate set.
 
-Any circuit implementing fermionic operations on qubits via [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner]] must use fermionic SWAPs whenever non-adjacent modes need to interact. The [[Fermionic Swap Network]] is the systematic application of this idea.
+When a compilation strategy physically reorders [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner]] modes, it must use fermionic SWAPs so the anticommutation sign is preserved. A JW circuit can also implement non-adjacent interactions directly with parity strings instead of reordering. The [[Fermionic Swap Network]] is the systematic routing-based application of this idea.
 
 ## When to reach for it
 
@@ -25,7 +25,7 @@ Any circuit implementing fermionic operations on qubits via [[Jordan-Wigner Tran
 
 ## Complexity
 
-One fermionic SWAP = one standard SWAP + one CZ = $O(1)$ two-qubit gates. The overhead per swap is a single additional phase gate compared to a bosonic/qubit SWAP.
+One fermionic SWAP = one standard SWAP + one CZ = $O(1)$ two-qubit gates. The overhead per swap is a single additional controlled phase compared to a bosonic/qubit SWAP, but the dominant routing cost is architecture- and compilation-dependent.
 
 ## Caveat
 

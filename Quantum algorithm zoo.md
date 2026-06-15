@@ -82,21 +82,21 @@ Quantum algorithm for the collision problem.
 _ACM SIGACT News_, 28:14-19, 1997.
 [[arXiv:quant-ph/9705002](http://arxiv.org/abs/quant-ph/9705002)]
 
-**19.** Harry Buhrman and Robert Špalek
+**19. ✓** Harry Buhrman and Robert Špalek
 Quantum verification of matrix products.
 In _Proceedings of the 17th ACM-SIAM Symposium on Discrete Algorithms_, pages 880-889, 2006.
 [[arXiv:quant-ph/0409035](http://arxiv.org/abs/quant-ph/0409035)]
 
-**20.** David Bulger
+**20. ✓** David Bulger
 Quantum basin hopping with gradient-based local optimisation.
-_[arXiv:quant-ph/0507193](http://arxiv.org/abs/quant-ph/0507193)_, 2005.
+[Paper](http://www.arxiv.org/abs/quant-ph/0507193) · [[Quantum Basin Hopping with Gradient-Based Local Optimisation (Bulger 2005) — Paper Notes|notes]]
 
 **21. ✓** Harry Burhrman, Christoph Dürr, Mark Heiligman, Peter Høyer, Frédéric Magniez, Miklos Santha, and Ronald de Wolf
 Quantum algorithms for element distinctness.
 In _Proceedings of the 16th IEEE Annual Conference on Computational Complexity_, pages 131-137, 2001.
 [[arXiv:quant-ph/0007016](http://arxiv.org/abs/quant-ph/0007016)]
 
-**22.** Dong Pyo Chi, Jeong San Kim, and Soojoon Lee
+**22. ✓** Dong Pyo Chi, Jeong San Kim, and Soojoon Lee
 Notes on the hidden subgroup problem on some semi-direct product groups.
 _Phys. Lett. A_ 359(2):114-116, 2006.
 [[arXiv:quant-ph/0604172](http://arxiv.org/abs/quant-ph/0604172)]
@@ -200,7 +200,7 @@ _SIAM Journal on Computing_ Vol. 43, pp. 1-24, 2014.
 Appeared earlier in _Proceedings of the 35th ACM Symposium on Theory of Computing_, pages 1-9, 2003.
 [[arXiv:quant-ph/0211091](http://arxiv.org/abs/quant-ph/0211091)]
 
-**44.** D. Gavinsky
+**44. ✓** D. Gavinsky
 Quantum solution to the hidden subgroup problem for poly-near-Hamiltonian-groups.
 _Quantum Information and Computation_, 4:229-235, 2004.
 
@@ -213,7 +213,7 @@ _Quantum Information Processing_, 7(5):227-242, 2008.
 A theorem on the quantum evaluation of weight enumerators for a certain class of cyclic Codes with a note on cyclotomic cosets.
 _[arXiv:cs/0703129](http://arxiv.org/abs/cs/0703129)_, 2007.
 
-**47.** Joseph Geraci and Daniel A. Lidar
+**47. ✓** Joseph Geraci and Daniel A. Lidar
 On the exact evaluation of certain instances of the Potts partition function by quantum computers.
 _Comm. Math. Phys._ Vol. 279, pg. 735, 2008.
 [[arXiv:quant-ph/0703023](http://arxiv.org/abs/quant-ph/0703023)]
@@ -239,7 +239,7 @@ _SIAM Journal on Computing_, 32(4):916-934, 2003.
 Quantum algorithms for lowest weight paths and spanning trees in complete graphs.
 _[arXiv:quant-ph/0303131](http://arxiv.org/abs/quant-ph/0303131)_, 2003.
 
-**53.** Yoshifumi Inui and François Le Gall
+**53. ✓** Yoshifumi Inui and François Le Gall
 Efficient quantum algorithms for the hidden subgroup problem over a class of semi-direct product groups.
 _Quantum Information and Computation_, 7(5/6):559-570, 2007.
 [[arXiv:quant-ph/0412033](http://arxiv.org/abs/quant-ph/0412033)]
@@ -249,17 +249,17 @@ Quantum algorithm for commutativity testing of a matrix set.
 Master's thesis, University of Waterloo, 2005.
 [[arXiv:quant-ph/0509206](http://arxiv.org/abs/quant-ph/0509206)]
 
-**55.** Gábor Ivanyos, Frédéric Magniez, and Miklos Santha
+**55. ✓** Gábor Ivanyos, Frédéric Magniez, and Miklos Santha
 Efficient quantum algorithms for some instances of the non-abelian hidden subgroup problem.
 In _Proceedings of the 13th ACM Symposium on Parallel Algorithms and Architectures_, pages 263-270, 2001.
 [[arXiv:quant-ph/0102014](http://arxiv.org/abs/quant-ph/0102014)]
 
-**56.** Gábor Ivanyos, Luc Sanselme, and Miklos Santha
+**56. ✓** Gábor Ivanyos, Luc Sanselme, and Miklos Santha
 An efficient quantum algorithm for the hidden subgroup problem in extraspecial groups.
 In _Proceedings of the 24th Symposium on Theoretical Aspects of Computer Science_, 2007.
 [[arXiv:quant-ph/0701235](http://arxiv.org/abs/quant-ph/0701235)]
 
-**57.** Gábor Ivanyos, Luc Sanselme, and Miklos Santha
+**57. ✓** Gábor Ivanyos, Luc Sanselme, and Miklos Santha
 An efficient quantum algorithm for the hidden subgroup problem in nil-2 groups.
 In _LATIN 2008: Theoretical Informatics_, pg. 759-771, Springer (LNCS 4957).
 [[arXiv:0707.1260](http://arxiv.org/abs/0707.1260)]
@@ -318,7 +318,7 @@ Calculating the thermal rate constant with exponential speedup on a quantum comp
 _Physical Review E_, 59(2):2429-2438, 1999.
 [[arXiv:quant-ph/9807009](http://arxiv.org/abs/quant-ph/9807009)]
 
-**69.** Chris Lomont
+**69. ✓** Chris Lomont
 The hidden subgroup problem - review and open problems.
 _[arXiv:quant-ph/0411037](http://arxiv.org/abs/quant-ph/0411037)_, 2004.
 
@@ -327,11 +327,11 @@ Quantum algorithms for the triangle problem.
 _SIAM Journal on Computing_, 37(2):413-424, 2007.
 [[arXiv:quant-ph/0310134](http://arxiv.org/abs/quant-ph/0310134)]
 
-**71.** Carlos Magno, M. Cosme, and Renato Portugal
+**71. ✓** Carlos Magno, M. Cosme, and Renato Portugal
 Quantum algorithm for the hidden subgroup problem on a class of semidirect product groups.
 _[arXiv:quant-ph/0703223](http://arxiv.org/abs/quant-ph/0703223)_, 2007.
 
-**72.** Cristopher Moore, Daniel Rockmore, Alexander Russell, and Leonard Schulman
+**72. ✓** Cristopher Moore, Daniel Rockmore, Alexander Russell, and Leonard Schulman
 The power of basis selection in Fourier sampling: the hidden subgroup problem in affine groups.
 In _Proceedings of the 15th ACM-SIAM Symposium on Discrete Algorithms_, pages 1113-1122, 2004.
 [[arXiv:quant-ph/0211124](http://arxiv.org/abs/quant-ph/0211124)]
@@ -372,7 +372,7 @@ Span-program-based quantum algorithm for evaluating formulas.
 _Proceedings of STOC 2008_
 [[arXiv:0710.2630](http://arxiv.org/abs/0710.2630)]
 
-**81.** Martin Roetteler and Thomas Beth
+**81. ✓** Martin Roetteler and Thomas Beth
 Polynomial-time solution to the hidden subgroup problem for a class of non-abelian groups.
 _[arXiv:quant-ph/9812070](http://arxiv.org/abs/quant-ph/9812070)_, 1998.
 
@@ -412,7 +412,7 @@ Quantum algorithms for some hidden shift problems.
 _SIAM Journal on Computing_, 36(3):763-778, 2006.
 [[arXiv:quant-h/0211140](http://arxiv.org/abs/quant-ph/0211140)]
 
-**90.** Wim van Dam and Gadiel Seroussi
+**90. ✓** Wim van Dam and Gadiel Seroussi
 Efficient quantum algorithms for estimating Gauss sums.
 _[arXiv:quant-ph/0207131](http://arxiv.org/abs/quant-ph/0207131)_, 2002.
 
@@ -488,7 +488,7 @@ Quantum algorithms for highly non-linear Boolean functions.
 _Proceedings of SODA 2010_
 [[arXiv:0811.3208](http://arxiv.org/abs/0811.3208)]
 
-**106.** Stephen P. Jordan
+**106. ✓** Stephen P. Jordan
 Fast quantum algorithms for approximating the irreducible representations of groups.
 _[arXiv:0811.0562](http://arxiv.org/abs/0811.0562)_, 2008.
 
@@ -501,7 +501,7 @@ _Physical Review A_, 73, 022328, 2006.
 On the Power of Quantum Computation.
 In _Proceedings of the 35th Symposium on Foundations of Computer Science_, pg. 116-123, 1994.
 
-**109.** John Proos and Christof Zalka
+**109. ✓** John Proos and Christof Zalka
 Shor's discrete logarithm quantum algorithm for elliptic curves.
 _Quantum Information and Computation_, Vol. 3, No. 4, pg.317-344, 2003.
 [[arXiv:quant-ph/0301141](http://arxiv.org/abs/quant-ph/0301141)]
@@ -511,7 +511,7 @@ Quantum algorithms using the curvelet transform.
 _Proceedings of STOC 2009_, pg. 391-400.
 [[arXiv:0810.4968](http://arxiv.org/abs/0810.4968)]
 
-**111.** Wim van Dam and Igor Shparlinski
+**111. ✓** Wim van Dam and Igor Shparlinski
 Classical and quantum algorithms for exponential congruences.
 _Proceedings of TQC 2008_, pg. 1-10.
 [[arXiv:0804.1109](http://arxiv.org/abs/0804.1109)]
@@ -567,7 +567,7 @@ Quantum speed-up for approximating partition functions.
 _Physical Review A_ 80:022340, 2009.
 [[arXiv:0811.0596](http://arxiv.org/abs/0811.0596)]
 
-**123.** Ashley Montanaro
+**123. ✓** Ashley Montanaro
 Quantum search with advice.
 In _Proceedings of the 5th conference on Theory of quantum computation, communication, and cryptography (TQC 2010)_
 [[arXiv:0908.3066](http://arxiv.org/abs/0908.3066)]
@@ -605,7 +605,7 @@ Quantum algorithms to solve the hidden shift problem for quadratics and for func
 In _Proceedings of MFCS 2009_, pg 663-674.
 [[arXiv:0911.4724](http://arxiv.org/abs/0911.4724)]
 
-**131.** Arthur Schmidt
+**131. ✓** Arthur Schmidt
 Quantum Algorithms for many-to-one Functions to Solve the Regulator and the Principal Ideal Problem.
 _[arXiv:0912.4807](http://arxiv.org/abs/0912.4807)_, 2009.
 
@@ -661,7 +661,7 @@ Quantum algorithm for the Boolean hidden shift problem.
 In _Proceedings of the 17th annual international conference on Computing and combinatorics (COCOON '11)_, 2011.
 [[arXiv:1103.3017](http://arxiv.org/abs/1103.3017)]
 
-**143.** Mark Ettinger and Peter Høyer
+**143. ✓** Mark Ettinger and Peter Høyer
 On quantum algorithms for noncommutative hidden subgroups.
 _Advances in Applied Mathematics_, Vol. 25, No. 3, pg. 239-251, 2000.
 [[arXiv:quant-ph/9807029](http://arxiv.org/abs/quant-ph/9807029)]
@@ -676,7 +676,7 @@ Quantum algorithms for Fermionic simulations.
 _Physical Review A_ 64: 022319, 2001.
 [[arXiv:cond-mat/0012334](http://arxiv.org/abs/cond-mat/0012334)]
 
-**146.** Ashley Montanaro
+**146. ✓** Ashley Montanaro
 The quantum query complexity of learning multilinear polynomials.
 _Information Processing Letters_, 112(11):438-442, 2012.
 [[arXiv:1105.3310](http://arxiv.org/abs/1105.3310)]
@@ -712,7 +712,7 @@ A learning graph based quantum query algorithm for finding constant-size subgrap
 _Chicago Journal of Theoretical Computer Science_, Vol. 2012, Article 10, 2012.
 [[arXiv:1109.5135](http://arxiv.org/abs/1109.5135)]
 
-**154.** Aleksandrs Belovs and Troy Lee
+**154. ✓** Aleksandrs Belovs and Troy Lee
 Quantum algorithm for k-distinctness with prior knowledge on the input.
 _[arXiv:1108.3022](http://arxiv.org/abs/1108.3022)_, 2011.
 
@@ -773,7 +773,7 @@ Quantum algorithms for quantum field theories.
 _Science_, Vol. 336, pg. 1130-1133, 2012.
 [[arXiv:1111.3633](http://arxiv.org/abs/1111.3633)]
 
-**167.** Andris Ambainis and Ashley Montanaro
+**167. ✓** Andris Ambainis and Ashley Montanaro
 Quantum algorithms for search with wildcards and combinatorial group testing.
 _[arXiv:1210.1148](http://arxiv.org/abs/1210.1148)_, 2012.
 
@@ -913,7 +913,7 @@ _[arXiv:0811.0416](http://arxiv.org/abs/0811.0416)_, 2008.
 Quantum computation of Fourier transforms over symmetric groups.
 In _Proceedings of STOC 1997_, pg. 48-53.
 
-**197.** Dave Bacon, Isaac L. Chuang, and Aram W. Harrow
+**197. ✓** Dave Bacon, Isaac L. Chuang, and Aram W. Harrow
 The quantum Schur transform: I. efficient qudit circuits.
 In _Proceedings of SODA 2007_, pg. 1235-1244.
 [[arXiv:quant-ph/0601001](http://arxiv.org/abs/quant-ph/0601001)]
@@ -938,11 +938,11 @@ _[arXiv:1305.1021](http://arxiv.org/abs/1305.1021)_, 2013.
 Classical and quantum algorithms for testing equivalence of group extensions.
 _[arXiv:1305.1327](http://arxiv.org/abs/1305.1327)_, 2013.
 
-**203.** Andrew Childs and Gábor Ivanyos
+**203. ✓** Andrew Childs and Gábor Ivanyos
 Quantum computation of discrete logarithms in semigroups.
 _[arXiv:1310.6238](http://arxiv.org/abs/1310.6238)_, 2013.
 
-**204.** Matan Banin and Boaz Tsaban
+**204. ✓** Matan Banin and Boaz Tsaban
 A reduction of semigroup DLP to classic DLP.
 _[arXiv:1310.7903](http://arxiv.org/abs/1310.7903)_, 2013.
 
@@ -954,7 +954,7 @@ _[arXiv:1308.5424](http://arxiv.org/abs/1308.5424)_, 2013.
 Quantum algorithms for matrix products over semirings.
 _[arXiv:1310.3898](http://arxiv.org/abs/1310.3898)_, 2013.
 
-**207.** Nolan Wallach
+**207. ✓** Nolan Wallach
 A quantum polylog algorithm for non-normal maximal cyclic hidden subgroups in the affine group of a finite field.
 _[arXiv:1308.1415](http://arxiv.org/abs/1308.1415)_, 2013.
 
@@ -988,7 +988,7 @@ In _Proceedings of STOC 2014_ pg. 293-302.
 Quantum algorithms for supervised and unsupervised machine learning
 _[arXiv:1307.0411](http://arxiv.org/abs/1307.0411)_
 
-**215.** Ashley Montanaro
+**215. ✓** Ashley Montanaro
 Quantum pattern matching fast on average
 _[arXiv:1408.1816](http://arxiv.org/abs/1408.1816)_
 
@@ -1002,7 +1002,7 @@ String matching in  quantum time
 _Journal of Discrete Algorithms 1:103-110, 2003_
 [[arXiv:quant-ph/0011049](http://arxiv.org/abs/quant-ph/0011049)]
 
-**218.** Greg Kuperberg
+**218. ✓** Greg Kuperberg
 Another subexponential-time quantum algorithm for the dihedral hidden subgroup problem
 In _Proceedings of TQC pg. 20-34, 2013_
 [[arXiv:1112.3333](http://arxiv.org/abs/1112.3333)]
@@ -1094,7 +1094,7 @@ Uselessness for an oracle model with internal randomness
 _Quantum Information and Computation 14(7/8):608-624, 2014_
 [[arXiv:1111.1462](http://arxiv.org/abs/1111.1462)]
 
-**238.** Jon R. Grice and David A. Meyer
+**238. ✓** Jon R. Grice and David A. Meyer
 A quantum algorithm for Viterbi decoding of classical convolutional codes
 _[arXiv:1405.7479](http://arxiv.org/abs/1405.7479)_
 
@@ -1165,7 +1165,7 @@ _Proceedings of the Cambridge Philosophical Society._ 76:521-228, 1974.
 Polynomial-time theory of matrix groups
 In _Proceedings of STOC 2009_, pg. 55-64.
 
-**254.** Neil J. Ross and Peter Selinger
+**254. ✓** Neil J. Ross and Peter Selinger
 Optimal ancilla-free Clifford+T approximations of z-rotations
 _[arXiv:1403.2975](http://arxiv.org/abs/1403.2975)_, 2014.
 
@@ -1199,7 +1199,7 @@ _[arXiv:1505.03424](http://arxiv.org/abs/1505.03424)_, 2015.
 Amplified Quantum Transforms
 _[arXiv:1406.0190](http://arxiv.org/abs/1406.0190)_, 2015.
 
-**262.** T. Laarhoven, M. Mosca, and J. van de Pol
+**262. ✓** T. Laarhoven, M. Mosca, and J. van de Pol
 Solving the shortest vector problem in lattices faster using quantum search
 _Proceedings of PQCrypto13_, pp. 83-101, 2013.
 [[arXiv:1301.6176](http://arxiv.org/abs/1301.6176)]
@@ -1239,7 +1239,7 @@ _[arXiv:1511.02235](http://arxiv.org/abs/1511.02235)_, 2015.
 Separations in query complexity using cheat sheets
 _[arXiv:1511.01937](http://arxiv.org/abs/1511.01937)_, 2015.
 
-**271.** Frédéric Grosshans, Thomas Lawson, François Morain, and Benjamin Smith
+**271. ✓** Frédéric Grosshans, Thomas Lawson, François Morain, and Benjamin Smith
 Factoring safe semiprimes with a single quantum query
 _[arXiv:1511.04385](http://arxiv.org/abs/1511.04385)_, 2015.
 
@@ -1265,7 +1265,7 @@ Improved quantum algorithm for triangle finding via combinatorial arguments
 In _Proceedings of the 55th IEEE Annual Symposium on Foundations of Computer Science (FOCS)_, pg. 216-225, 2014.
 [[arXiv:1407.0085](http://arxiv.org/abs/1407.0085)]
 
-**277.** Ashley Montanaro
+**277. ✓** Ashley Montanaro
 The quantum complexity of approximating the frequency moments
 _[arXiv:1505.00113](http://arxiv.org/abs/1505.00113)_, 2015.
 
@@ -1291,20 +1291,20 @@ Quantum Gibbs Samplers: the commuting case
 _Communications in Mathematical Physics_, 344(3):915-957 (2016)
 [[arXiv:1409.3435](http://arxiv.org/abs/1409.3435)]
 
-**283.** Andrew M. Childs, David Jao, and Vladimir Soukharev
+**283. ✓** Andrew M. Childs, David Jao, and Vladimir Soukharev
 Constructing elliptic curve isogenies in quantum subexponential time
 _Journal of Mathematical Cryptology_, 8(1):1-29 (2014)
 [[arXiv:1012.4019](http://arxiv.org/abs/1012.4019)]
 
-**284.** Markus Grassl, Brandon Langenberg, Martin Roetteler, and Rainer Steinwandt
+**284. ✓** Markus Grassl, Brandon Langenberg, Martin Roetteler, and Rainer Steinwandt
 Applying Grover's algorithm to AES: quantum resource estimates
 _[arXiv:1512.04965](http://arxiv.org/abs/1512.04965)_, 2015.
 
-**285.** M. Ami, O. Di Matteo, V. Gheorghiu, M. Mosca, A. Parent, and J. Schanck
+**285. ✓** M. Ami, O. Di Matteo, V. Gheorghiu, M. Mosca, A. Parent, and J. Schanck
 Estimating the cost of generic quantum pre-image attacks on SHA-2 and SHA-3
 _[arXiv:1603.09383](http://arxiv.org/abs/1603.09383)_, 2016.
 
-**286.** Marc Kaplan, Gaetan Leurent, Anthony Leverrier, and Maria Naya-Plasencia
+**286. ✓** Marc Kaplan, Gaetan Leurent, Anthony Leverrier, and Maria Naya-Plasencia
 Quantum differential and linear cryptanalysis
 _[arXiv:1510.05836](http://arxiv.org/abs/1510.05836)_, 2015.
 
@@ -1312,7 +1312,7 @@ _[arXiv:1510.05836](http://arxiv.org/abs/1510.05836)_, 2015.
 Quantum Cryptanalysis of NTRU
 _[Cryptology ePrint Archive: Report 2015/676](https://eprint.iacr.org/2015/676)_, 2015.
 
-**288.** Marc Kaplan
+**288. ✓** Marc Kaplan
 Quantum attacks against iterated block ciphers
 _[arXiv:1410.1434](http://arxiv.org/abs/1410.1434)_, 2014.
 
@@ -1324,11 +1324,11 @@ In _Proceedings of IEEE International Symposium on Information Theory (ISIT)_, 
 Security on the quantum-type Even-Mansour cipher
 In _Proceedings of International Symposium on Information Theory and its Applications (ISITA)_, pg. 312-316, 2012.
 
-**291.** Martin Roetteler and Rainer Steinwandt
+**291. ✓** Martin Roetteler and Rainer Steinwandt
 A note on quantum related-key attacks
 _[arXiv:1306.2301](http://arxiv.org/abs/1306.2301)_, 2013.
 
-**292.** Thomas Santoli and Christian Schaffner
+**292. ✓** Thomas Santoli and Christian Schaffner
 Using Simon's algorithm to attack symmetric-key cryptographic primitives
 _[arXiv:1603.07856](http://arxiv.org/abs/1603.07856)_, 2016.
 
@@ -1408,11 +1408,11 @@ _Innovations in Theoretical Computer Science (ITCS 2017)_, LIPIcs, vol. [67](ht
 Elucidating reaction mechanisms on quantum computers
 _[arXiv:1605.03590](http://arxiv.org/abs/1605.03590)_, 2016.
 
-**311.** Aram W. Harrow and Ashley Montanaro
+**311. ✓** Aram W. Harrow and Ashley Montanaro
 Sequential measurements, disturbance, and property testing
 _[arXiv:1607.03236](http://arxiv.org/abs/1607.03236)_, 2016.
 
-**312.** Martin Roetteler
+**312. ✓** Martin Roetteler
 Quantum algorithms for abelian difference sets and applications to dihedral hidden subgroups
 _[arXiv:1608.02005](http://arxiv.org/abs/1608.02005)_, 2016.
 
@@ -1433,7 +1433,7 @@ Cost analysis of hash collisions: Will quantum computers make SHARCS obsolete?
 In _Proceedings of the 4th Workshop on Special-purpose Hardware for Attacking Cryptographic Systems (SHARCS'09)_, pg. 105-116, 2009.
 [available [here](https://cr.yp.to/hash/collisioncost-20090517.pdf)]
 
-**317.** Chris Cade, Ashley Montanaro, and Aleksandrs Belovs
+**317. ✓** Chris Cade, Ashley Montanaro, and Aleksandrs Belovs
 Time and space efficient quantum algorithms for detecting cycles and testing bipartiteness
 _[arXiv:1610.00581](http://arxiv.org/abs/1610.00581)_, 2016.
 
@@ -1720,7 +1720,7 @@ Quantum SDP Solvers: Large Speed-ups, Optimality, and Applications to Quantum Le
 _Proceedings of ICALP 2019_
 [[arXiv:1710.02581](https://arxiv.org/abs/1710.02581)]
 
-**384.** M. Ekerå and J. Håstad
+**384. ✓** M. Ekerå and J. Håstad
 Quantum Algorithms for Computing Short Discrete Logarithms and Factoring RSA Integers
 _[Proceedings of PQCrypto 2017](https://link.springer.com/chapter/10.1007/978-3-319-59879-6_20)_, pg. 347-363. (LNCS Volume 10346), 2017.
 
@@ -1757,7 +1757,7 @@ _Proceedings of COCOON 2005_, pg. 420-429.
 Polynomial interpolation and identity testing from high powers over finite fields
 _Algorithmica_, 80:560-575, 2017.
 
-**393.** Qi Cheng
+**393. ✓** Qi Cheng
 Primality Proving via One Round in ECPP and One Iteration in AKS
 _Journal of Cryptology_, Volume 20, Issue 3, pg. 375-387, July 2007.
 
@@ -1765,15 +1765,15 @@ _Journal of Cryptology_, Volume 20, Issue 3, pg. 375-387, July 2007.
 Proving primality in essentially quartic random time
 _Mathematics of Computation_, Vol. 76, pg. 389-403, 2007.
 
-**395.** F. Morain
+**395. ✓** F. Morain
 Implementing the asymptotically fast version of the elliptic curve primality proving algorithm
 _Mathematics of Computation_, Vol. 76, pg. 493-505, 2007.
 
-**396.** Alvaro Donis-Vela and Juan Carlos Garcia-Escartin
+**396. ✓** Alvaro Donis-Vela and Juan Carlos Garcia-Escartin
 A quantum primality test with order finding
 _[arXiv:1711.02616](https://arxiv.org/abs/1711.02616)_, 2017.
 
-**397.** H. F. Chau and H.-K. Lo
+**397. ✓** H. F. Chau and H.-K. Lo
 Primality test via quantum factorization
 _International Journal of Modern Physics C_, Vol. 8, No. 2, pg. 131-138, 1997.
 [[arXiv:quant-ph/9508005](https://arxiv.org/abs/quant-ph/9508005)]
@@ -1925,12 +1925,12 @@ _[arXiv:2005.03791](https://arxiv.org/abs/2005.03791)_
 A quantum algorithm for the direct estimation of the steady state of open quantum systems
 _[arXiv:2008.07133](https://arxiv.org/abs/2008.07133)_
 
-**431.** Craig Gidney and Martin Ekera
+**431. ✓** Craig Gidney and Martin Ekera
 How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits
 _Quantum_ 5:433, 2021.
 [[arXiv:1905.09749](https://arxiv.org/abs/1905.09749)]
 
-**432.** Martin Roetteler, Michael Naehrig, Krysta M. Svore, and Kristin Lauter
+**432. ✓** Martin Roetteler, Michael Naehrig, Krysta M. Svore, and Kristin Lauter
 Quantum resource estimates for computing elliptic curve discrete logarithms
 _Proceedings of ASIACRYPT 2017_
 [[arXiv:1706.06752](https://arxiv.org/abs/1706.06752)]
@@ -1981,7 +1981,7 @@ High-precision quantum algorithms for partial differential equations
 _Quantum_ 5:574, 2021.
 [[arXiv:2002.07868](https://arxiv.org/abs/2002.07868)]
 
-**443.** Dong An, Noah Linden, Jin-Peng Liu, Ashley Montanaro, Changpeng Shao, and Jiasu Wang
+**443. ✓** Dong An, Noah Linden, Jin-Peng Liu, Ashley Montanaro, Changpeng Shao, and Jiasu Wang
 Quantum-accelerated multilevel Monte Carlo methods for stochastic differential equations in mathematical finance
 _Quantum_ 5:481, 2021.
 [[arXiv:2012.06283](https://arxiv.org/abs/2012.06283)]
@@ -2059,7 +2059,7 @@ _Physical Review Letters_ 131(15):150603, 2023.
 Quantum eigenvalue processing
 _[arXiv:2401.06240](https://arxiv.org/abs/2401.06240)_, 2024.
 
-**460.** Sergey Bravyi, Anirban Chowdhury, David Gosset, Vojtěch Havlíček, and Guanyu Zhu
+**460. ✓** Sergey Bravyi, Anirban Chowdhury, David Gosset, Vojtěch Havlíček, and Guanyu Zhu
 Quantum complexity of the Kronecker coefficients
 _PRX Quantum_ 5(1):010329, 2023.
 [[arXiv:2302.11454](https://arxiv.org/abs/2302.11454)]
@@ -2136,7 +2136,7 @@ Quantum algorithms for sampling log-concave distributions and estimating normali
 _Advances in Neural Information Processing Systems (NeurIPS)_, 35:23205-23217, 2022.
 [[arXiv:2210.06539](https://arxiv.org/abs/2210.06539)]
 
-**476.** Sami Boulebnane and Ashley Montanaro
+**476. ✓** Sami Boulebnane and Ashley Montanaro
 Solving boolean satisfiability problems with the quantum approximate optimization algorithm
 _[arXiv:2208.06909](https://arxiv.org/abs/2208.06909)_, 2022.
 
@@ -2312,11 +2312,11 @@ Gate-Based Quantum Simulation of Gaussian Bosonic Circuits on Exponentially Many
 _Physical Review Letters_, 134:070604, 2025.
 [[arXiv:2407.06290](https://arxiv.org/abs/2407.06290)]
 
-**515.** Greta Panova
+**515. ✓** Greta Panova
 Polynomial time classical versus quantum algorithms for representation theoretic multiplicities
 _[arXiv:2502.20253](https://arxiv.org/abs/2502.20253)_, 2025.
 
-**516.** Martin Larocca and Vojtech Havlicek
+**516. ✓** Martin Larocca and Vojtech Havlicek
 Quantum Algorithms for Representation-Theoretic Multiplicities
 _[arXiv:2407.17649](https://arxiv.org/abs/2407.17649)_, 2024.
 
@@ -2403,12 +2403,12 @@ Finding Many Collisions via Reusable Quantum Walks: Application to Lattice Sievi
 In _Proceedings of Eurocrypt_, pg. 221-251, 2022.
 [[arXiv:2205.14023](https://arxiv.org/abs/2205.14023)]
 
-**536.** André Chailloux and Johanna Loyer
+**536. ✓** André Chailloux and Johanna Loyer
 Lattice Sieving via Quantum Random Walks
 In _Proceedings of Asiacrypt_, pg. 63-91, 2021.
 [[arXiv:2105.05608](https://arxiv.org/abs/2105.05608)]
 
-**537.** Lior Eldar and Sean Hallgren
+**537. ✓** Lior Eldar and Sean Hallgren
 An efficient quantum algorithm for lattice problems achieving subexponential approximation factor
 _[arXiv:2201.13450](https://arxiv.org/abs/2201.13450)_, 2022.
 
@@ -2416,22 +2416,22 @@ _[arXiv:2201.13450](https://arxiv.org/abs/2201.13450)_, 2022.
 A note on a Claim of Eldar and Hallgren: LLL already solves it
 _[github](https://github.com/lducas/BDD-note)_, 2021.
 
-**539.** Yu-Ao Chen and Xiao-Shan Gao
+**539. ✓** Yu-Ao Chen and Xiao-Shan Gao
 Quantum Algorithm for Boolean Equation Solving and Quantum Algebraic Attack on Cryptosystems
 _Journal of Systems Science and Complexity_ 35, 373-412, 2022.
 [[arXiv:1712.06239](https://arxiv.org/abs/1712.06239)]
 
-**540.** Yu-Ao Chen, Xiao-Shan Gao, and Chun-Ming Yuan
+**540. ✓** Yu-Ao Chen, Xiao-Shan Gao, and Chun-Ming Yuan
 Quantum Algorithm for Optimization and Polynomial System Solving over Finite Field and Application to Cryptanalysis
 _Journal of Systems Science and Complexity_, 2025.
 [[arXiv:1802.03856](https://arxiv.org/abs/1802.03856)]
 
-**541.** Jintai Ding, Vlad Gheorghiu, András Gilyén, Sean Hallgren, and Jianqiang Li
+**541. ✓** Jintai Ding, Vlad Gheorghiu, András Gilyén, Sean Hallgren, and Jianqiang Li
 Limitations of the Macaulay matrix approach for using the HHL algorithm to solve multivariate polynomial systems
 _Quantum_ 7, 1069, 2023.
 [[arXiv:2111.00405](https://arxiv.org/abs/2111.00405)]
 
-**542.** David Harvey and Markus Hittmeir
+**542. ✓** David Harvey and Markus Hittmeir
 A log-log speedup for exponent one-fifth deterministic integer factorization
 _[arXiv:2105.11105](https://arxiv.org/abs/2105.11105)_, 2021.
 

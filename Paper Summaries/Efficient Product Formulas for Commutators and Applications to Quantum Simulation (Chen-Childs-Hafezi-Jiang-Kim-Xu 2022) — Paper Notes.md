@@ -48,7 +48,7 @@ In the large-$R$ limit (i.e., small step size), approximate solutions have coeff
 
 $$\left(f_{\beta n/\alpha^2}(\alpha/n)\right)^n = e^{\alpha(A+B) + \beta[A,B] + O((\alpha\beta + \beta^2)/n)}.$$
 
-This uses $6n$ gates. The sum $A + B$ comes for free alongside the commutator — no extra gates needed.
+This uses $6n$ gates. The sum $A + B$ comes for free in the gate count relative to the six-gate commutator formula, but the coefficients can scale like \(\sqrt{R}\) and the small-step/large-\(R\) regime is part of the approximation.
 
 ### Improved recursive constructions
 
@@ -72,9 +72,15 @@ Starting from $S_3$ (6 gates, 3rd order), the closed-form gate counts for order 
 
 ### Why $\sqrt{10}$-copy wins despite more copies
 
-Numerically, $G_5$ (the $\sqrt{10}$-copy at 5th order, using 56 gates per step) outperforms all others in total gate count to fixed accuracy — the larger number of exponentials per step is offset by much smaller error constants. The paper attributes this to the "time evolution trajectory" of the coefficients staying in a narrower range.
+Numerically, $G_5$ (the $\sqrt{10}$-copy at 5th order, using 56 gates per step) outperforms all others in the paper's tested examples — the larger number of exponentials per step is offset by much smaller error constants. This is a numerical finding, not a theorem that the \(\sqrt{10}\)-copy formula is universally best. The paper attributes the observed performance to the "time evolution trajectory" of the coefficients staying in a narrower range.
 
 ## Key results
+
+| Construction type | Target | Main point |
+|---|---|---|
+| Pure commutator | \(e^{x^2[A,B]}\) | Six-gate \(S_3(x)\) improves the base formula to third order |
+| Sum + commutator | \(e^{x(A+B)+Rx^2[A,B]}\) | Same six-gate structure includes the linear sum in the appropriate regime |
+| Applications | counterdiabatic driving, NNN hopping, FQH models | Use commutator formulas as compilation gadgets inside concrete simulation tasks |
 
 **Equation (14) — Third-order commutator formula:** $S_3(x) = e^{x^2[A,B] + O(x^4)}$ using 6 exponentials — one order better than the group commutator $S_2(x)$ (4 exponentials, error $O(x^3)$).
 
@@ -140,7 +146,7 @@ The Kapit-Mueller Hamiltonian on a square lattice with magnetic flux $\phi$ requ
 
 ### Paper notes
 - [[Product Formulas for Exponentials of Commutators (Childs-Wiebe 2013) — Paper Notes]] — direct predecessor; this paper improves the base formula and all recursive constructions
-- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) �� Paper Notes]] — commutator-scaling error analysis framework
+- [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes]] — commutator-scaling error analysis framework
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — uses commutator correctors at boundaries; related approach to error reduction
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]] — Suzuki recursion for ordered exponentials
 - [[Large Time-Step Discretisation of Adiabatic Quantum Dynamics (An-Costa-Berry 2025) — Paper Notes]] — adiabatic simulation; the counterdiabatic application connects to this

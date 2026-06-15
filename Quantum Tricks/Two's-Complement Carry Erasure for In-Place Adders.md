@@ -15,6 +15,20 @@ $$a + \overline{s} \equiv a + \overline{a + b} \equiv a - a - b - 1 \equiv \over
 
 means the carry string of the addition $a + \overline{s}$ is exactly $c$ (since $a \oplus \overline{s} \oplus c = \overline{b}$ matches $a \oplus b \oplus c$ up to complementation). So:
 
+Bit-level check: for the original addition, write
+
+$$s_i = a_i \oplus b_i \oplus c_i,\qquad c_{i+1}=\operatorname{maj}(a_i,b_i,c_i).$$
+
+In the reverse-erasure addition with inputs $a_i$ and $\overline{s_i}$ and the same carry-in $c_i$,
+
+$$a_i \oplus \overline{s_i} \oplus c_i = \overline{b_i},$$
+
+and the full-adder equation refines this to
+
+$$a_i+\overline{s_i}+c_i=\overline{b_i}+2c_{i+1}.$$
+
+Thus the next carry is also the original $c_{i+1}$, so the entire carry string is reproduced and can be uncomputed.
+
 1. Complement $s$ (in-place NOT gates on the sum register)
 2. Run the carry computation in reverse, using $a$ and $\overline{s}$ as inputs
 3. The carry ancillae reset to zero

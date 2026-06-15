@@ -9,10 +9,10 @@ Combines a classical preprocessing phase (build a table of $k$ oracle evaluation
 ## The trick
 
 1. **Classical phase:** Evaluate $F$ on a set $K$ of $k$ inputs. Store the results in a sorted table $L$. Cost: $k$ queries, $\Theta(k)$ space.
-2. **Quantum phase:** Define $H(x) = 1$ iff $F(x)$ matches something in $L$ (and $x \notin K$). Run [[Standard Amplitude Amplification|Grover search]] for $H$. There are $t = \Theta(rk)$ solutions (for $r$-to-1 functions), so Grover costs $O(\sqrt{N/(rk)})$ queries.
+2. **Quantum phase:** Define $H(x) = 1$ iff $F(x)$ matches something in $L$ (and $x \notin K$). Run [[Standard Amplitude Amplification|Grover search]] for $H$. There are $t = \Theta((r-1)k)$ solutions when the function is exactly $r$-to-one and the table has no internal collisions, so Grover costs $O(\sqrt{N/(rk)})$ queries up to constants.
 3. **Total:** $k + O(\sqrt{N/(rk)})$. Minimise over $k$: set $k = (N/r)^{1/3}$, getting $O((N/r)^{1/3})$.
 
-Each Grover oracle call evaluates $F$ once and does a binary search in $L$ — the table lives in quantum-accessible memory (QRAM or quantum-readable classical memory).
+Each Grover oracle call evaluates $F$ once and checks membership in $L$. In the pure query model, sorting and binary search are counted separately from oracle evaluations; in a circuit/resource model, table lookup must be implemented by QROM/QRAM or reversible comparison logic and can dominate constants.
 
 ## When to reach for it
 
@@ -25,11 +25,11 @@ Each Grover oracle call evaluates $F$ once and does a binary search in $L$ — t
 
 Total queries: $O(N^{1/3})$ at the sweet spot. Space: $\Theta(N^{1/3})$ for the table.
 
-General tradeoff: $ST^2 \geq N$ where $S$ = space and $T$ = queries.
+Algorithmic tradeoff for this birthday-plus-Grover family: with table space $S=\Theta(k)$ and Grover-dominated query cost $T\approx\sqrt{N/(rS)}$, the achieved scaling is $S T^2\approx N/r$. This is not a lower bound for all collision algorithms.
 
 ## Caveat
 
-The table must be **quantum-accessible** — Grover's oracle needs to check against $L$ in superposition. This requires either QRAM or embedding the sorted table into the quantum circuit. The QRAM model is powerful but physically controversial.
+The table must be queried coherently inside Grover's predicate. This can mean QRAM, QROM, or a reversible comparison circuit over a sorted table; the choice changes actual time/space constants even though the oracle-query headline is unchanged.
 
 The $N^{1/3}$ bound is optimal for $r$-to-1 collision (Aaronson-Shi 2004), but for unstructured element distinctness (no $r$-to-1 promise), the tight bound is $\Theta(N^{2/3})$ via quantum walks (Ambainis 2007).
 

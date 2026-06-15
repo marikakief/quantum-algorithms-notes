@@ -30,6 +30,7 @@ $2 \cdot T_{\mathrm{QFT}(H)} + T_{C_\rho}$, where $T_{C_\rho}$ is the cost of co
 Requires efficient QFT over $H$ and efficient controlled representation multiplication. For arbitrary groups $H$, these may not be available. Works cleanly for Young subgroups of $S_n$ because they decompose as direct products of smaller symmetric groups.
 
 ## Related notes
+- [[The Quantum Schur Transform I Efficient Qudit Circuits (Bacon-Chuang-Harrow 2006) — Paper Notes]] — comparison point: BCH uses Clebsch--Gordan recursion rather than GPE for the strong transform
 - [[An Efficient High Dimensional Quantum Schur Transform (Krovi 2019) — Paper Notes]]
 - [[QFT over Permutation Modules]]
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — phase estimation is the abelian special case of GPE

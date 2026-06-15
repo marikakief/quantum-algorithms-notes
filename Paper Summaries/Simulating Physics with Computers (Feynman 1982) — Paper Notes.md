@@ -6,9 +6,9 @@
 
 ## What the paper does
 
-This is the paper that started quantum computing as a research programme. Feynman asks: can a classical computer efficiently simulate a quantum physical system? His answer is no — and the reason is that quantum mechanics requires negative "probabilities" (the Wigner function can go negative), which a classical probabilistic computer cannot represent. He then proposes that the right way to simulate quantum physics is with a computer that is itself quantum mechanical — a *quantum computer*.
+This is the paper that started quantum computing as a research programme. Feynman asks: can a locally interconnected classical computer simulate quantum physics without exponential blow-up? His answer is that this seems impossible for local classical probabilistic simulation: quantum correlations force one outside ordinary nonnegative probability descriptions, for example through negative quasi-probabilities and Bell-type obstructions. He then proposes that the right way to simulate quantum physics is with a computer that is itself quantum mechanical — a *quantum computer*.
 
-The paper is a keynote address, not a technical contribution. There are no theorems, no algorithms, no complexity bounds. What there is: a clean argument structure that identifies exactly *why* classical simulation fails for quantum systems, and a concrete proposal for what to do about it. Everything that followed — [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd's 1996 proof]], [[Quantum Algorithms for Quantum Field Theories (Jordan-Lee-Preskill 2012) — Paper Notes|Jordan-Lee-Preskill's QFT algorithms]], the entire field of [[Hamiltonian simulation]] — traces back to this talk.
+The paper is a keynote address, not a technical contribution. There are no theorems, no algorithms, no complexity bounds. What there is: a clear physical argument for why local classical simulation is not the right model for quantum systems, and a concrete proposal for what to do about it. Feynman's target is exact, local physical simulation, not the later complexity-theoretic task of approximating local observables of local Hamiltonian dynamics to inverse-polynomial error. Everything that followed — [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd's 1996 proof]], [[Quantum Algorithms for Quantum Field Theories (Jordan-Lee-Preskill 2012) — Paper Notes|Jordan-Lee-Preskill's QFT algorithms]], the entire field of [[Hamiltonian simulation]] — traces back to this talk.
 
 ---
 
@@ -48,7 +48,7 @@ All physical probabilities (sums of $f$'s) come out correct and non-negative. Bu
 
 **The key statement:** "The only difference between a probabilistic classical world and the equations of the quantum world is that somehow or other it appears as if the probabilities would have to go negative, and that we do not know, as far as I know, how to simulate."
 
-### 4. Bell's inequality makes it impossible (Sections 7–8)
+### 4. Bell's inequality exposes the locality obstruction (Sections 7–8)
 
 To show this isn't just a mathematical inconvenience, Feynman gives the EPR-Bell argument. Two photons from an atomic cascade are measured through calcite crystals at angles $\phi_1$ and $\phi_2$. Quantum mechanics predicts:
 
@@ -56,7 +56,7 @@ $$P_{OO} = \tfrac{1}{2}\cos^2(\phi_2 - \phi_1)$$
 
 For a local hidden-variable model: each photon must carry a deterministic instruction for every measurement angle (otherwise you couldn't predict one from the other). For six angles at $30°$ intervals, you can show that the probability of matching measurements at $30°$ separation is at most $2/3$ for any classical assignment. But quantum mechanics gives $\cos^2 30° = 3/4$.
 
-"That's all. That's the difficulty. That's why quantum mechanics can't seem to be imitable by a local classical computer."
+"That's all. That's the difficulty. That's why quantum mechanics can't seem to be imitable by a local classical computer." This is a locality/no-hidden-variable obstruction, not a lower bound against arbitrary classical algorithms. A nonlocal classical simulation can still reproduce the correlations, at exponential cost in the usual state-vector representation.
 
 ### 5. The proposal: quantum computers (Section 4)
 
@@ -64,7 +64,7 @@ Feynman proposes that a quantum computer — built from quantum mechanical eleme
 
 1. Every finite quantum system can be described by a lattice of spin-1/2 systems (using the Pauli matrices $\sigma_x, \sigma_y, \sigma_z$, creation/annihilation operators $a, a^\dagger$)
 2. A suitable class of quantum machines can imitate any quantum system
-3. There should be a "universal quantum simulator" — the quantum analogue of a universal Turing machine
+3. There should be a "universal quantum simulator" — a quantum analogue of a universal Turing machine, but not yet the later formal quantum Turing machine or gate-model universality theorem
 
 He's confident this works for bosonic systems. He's unsure about fermions ("I'm not sure whether Fermi particles could be described by such a system"). This uncertainty was resolved later by [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes|Abrams and Lloyd (1997)]].
 
@@ -74,7 +74,7 @@ He's confident this works for bosonic systems. He's unsure about fermions ("I'm 
 
 This paper did three things:
 
-1. **Identified the exponential cost** of classical quantum simulation — not just as a practical difficulty, but as a structural consequence of quantum mechanics (negative Wigner function / Bell inequality violation)
+1. **Identified the exponential-state-space pressure** in classical quantum simulation and tied it to structural nonclassical features such as negative quasi-probabilities and Bell inequality violation, without proving a modern complexity lower bound
 
 2. **Proposed quantum computers** as the solution — the first articulation of the idea that quantum hardware is needed to simulate quantum physics
 
@@ -87,7 +87,7 @@ Feynman's conjecture that quantum computers can efficiently simulate local quant
 ## Limits / caveats
 
 - This is a vision paper, not a rigorous result. There are no formal definitions of "quantum computer" or "efficient simulation."
-- Feynman's argument for classical intractability (negative Wigner function) is correct but informal. The formal version requires Bell inequality violations or, more precisely, contextuality results.
+- Feynman's argument for classical intractability is informal and model-specific: it targets local classical probabilistic imitation of exact quantum physics. Wigner negativity, contextuality, Bell nonlocality, and classical simulation hardness are later formal lenses on related but non-equivalent obstructions.
 - The universal gate set question he raises was later answered by [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]], who formalized the quantum Turing machine.
 - Feynman's uncertainty about fermion simulation was resolved: the [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner transformation]] maps fermions to spins.
 
@@ -95,7 +95,7 @@ Feynman's conjecture that quantum computers can efficiently simulate local quant
 
 ## Reusable ideas
 
-1. [[Negative Wigner Function as Classical Simulation Obstruction]] — The observation that quantum mechanics requires quasi-probabilities that go negative, and this negativity is precisely what prevents efficient classical simulation. This idea was later formalised and quantified in the resource theory of Wigner negativity.
+1. [[Negative Wigner Function as Classical Simulation Obstruction]] — The observation that some quantum descriptions require quasi-probabilities that go negative. This is one important later resource-theoretic lens on classical simulation obstruction, but it is not equivalent to all forms of quantum computational hardness.
 
 ---
 
@@ -111,8 +111,12 @@ Feynman's conjecture that quantum computers can efficiently simulate local quant
 
 - Ed Fredkin — inspired Feynman's interest in the connection between physics and computation
 - Bennett, Fredkin, and Toffoli — reversible computation (proceedings of the same conference)
-- Lloyd's 1995 PRL and Deutsch-Barenco-Ekert 1995 — universality of nonlinear two-body interactions (references [20, 21])
 - Einstein-Podolsky-Rosen (1935) — the EPR paradox, which Feynman uses to demonstrate Bell inequality violation
+
+## Later developments
+
+- [[Universal Quantum Simulators (Lloyd 1996) — Paper Notes|Lloyd (1996)]] later gave a formal product-formula theorem for simulating local Hamiltonian dynamics.
+- Deutsch, Barenco, and Ekert (1995) and Lloyd (1995/1996) belong to the later universality/simulation literature, not to Feynman's 1982 reference list.
 
 ---
 

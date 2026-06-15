@@ -1,4 +1,4 @@
-> **Source:** Dominic W. Berry, Richard Cleve, and Sevag Gharibian, *Gate-efficient discrete simulations of continuous-time quantum query algorithms*, arXiv:1211.4637, QIC **14**, 105–140 (2014)
+> **Source:** Dominic W. Berry, Richard Cleve, and Sevag Gharibian, *Gate-efficient discrete simulations of continuous-time quantum query algorithms*, arXiv:1211.4637, QIC **14** (2014)
 > **Links:** [arXiv](https://arxiv.org/abs/1211.4637)
 > **Tags:** #query-complexity #hamiltonian-simulation #fractional-queries #continuous-time #gate-complexity #compression
 
@@ -16,7 +16,7 @@ Prior work by Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (CGMSY, 2009) showed the q
 
 ## What the paper does
 
-Shows that any continuous-time query algorithm with cost $T$ and efficiently implementable driving Hamiltonian can be converted to a discrete-query algorithm with:
+Shows that any continuous-time query algorithm in this standard self-inverse query model, with cost $T$ and efficiently implementable driving Hamiltonian, can be converted to a discrete-query algorithm with:
 - $O(T \log T / \log\log T)$ queries
 - $O(TG\log T + T\log^3(\|H\|T))$ gates
 - $O(\log^3(\|H\|T))$ ancilla qubits
@@ -25,7 +25,7 @@ where $G$ is the gate cost of implementing (controlled) evolution under $H(t)$ f
 
 The headline: gate cost is **linear in $T$** (up to logs) and **polylogarithmic in $\|H\|$**. The CGMSY construction had gate cost superlinear in $\|H\|T$; Lee-Mittal-Reichardt-Špalek-Szegedy (2011, arXiv:1011.3020) had optimal $O(T)$ query cost but no known gate-efficient implementation.
 
-The motivating application: the Farhi-Goldstone-Gutmann continuous-time algorithm for [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes|AND-OR tree evaluation]]. Without this result, substituting in a concrete circuit for $f$ and using CGMSY directly gives $N \cdot \text{polylog}(N)$ gates — killing the square-root speedup. With this result: $N^{1/2+o(1)}$ gates and $O(\text{polylog}\, N)$ space.
+The motivating application is the Farhi-Goldstone-Gutmann continuous-time NAND-tree algorithm, whose simpler query conversion is discussed in [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes|Childs-Cleve-Jordan-Yonge-Mallo]]. Without this result, substituting in a concrete circuit for the continuous-time algorithm and using CGMSY directly gives $N \cdot \text{polylog}(N)$ gates — killing the square-root speedup. With this result: $N^{1/2+o(1)}$ gates and $O(\text{polylog}\, N)$ space.
 
 ---
 
@@ -48,11 +48,11 @@ Within each segment, the $m$ control qubits are treated jointly. The key observa
 
 ### The compression: succinct encoding
 
-This paper's contribution is showing that the entire CGMSY construction can be executed with the $m$ control qubits stored in a **compressed representation** using only $O(k \log m) = O(\log^2(\|H\|T))$ qubits.
+This paper's contribution is showing that the low-Hamming-weight part of the CGMSY control register can be executed in a **compressed representation** using only $O(k \log m) = O(\log^2(\|H\|T))$ qubits, while the high-weight tail is truncated with controlled error.
 
 **The encoding $C_m^k$:** For an $m$-bit string $x$ with Hamming weight $|x| \leq k$, write $x = 0^{s_1}10^{s_2}1\ldots 0^{s_h}10^t$. Then $C_m^k|x\rangle = |s_1, s_2, \ldots, s_h, m, \ldots, m\rangle$ — store the *positions of the ones* in registers of dimension $m+1$, padding unused registers with $m$.
 
-This uses $(k+1)$ registers of $\lceil\log(m+1)\rceil$ qubits instead of $m$ qubits. Since $k = O(\log(1/\varepsilon)/\log\log(1/\varepsilon))$, the space is polylogarithmic.
+This uses $(k+1)$ registers of $\lceil\log(m+1)\rceil$ qubits instead of $m$ qubits for strings of Hamming weight at most $k$. Since $k = O(\log(1/\varepsilon)/\log\log(1/\varepsilon))$, the space is polylogarithmic.
 
 ### Preparing the compressed state
 
@@ -135,13 +135,13 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 
 1. **Queries not optimal.** Lee et al. achieve $O(T)$; this paper has an extra $\log T / \log\log T$ factor. The authors note this seems inherent to the CGMSY approach.
 
-2. **Requires efficient driving Hamiltonian implementation.** If $G$ scales linearly in $\|H\|$, the gate cost becomes linear in $\|H\|T$ — no better than [[Product Formulas]]s. The power is when $G = \text{polylog}(\|H\|T)$.
+2. **Requires efficient driving Hamiltonian implementation.** If $G$ scales linearly in $\|H\|$, the gate cost becomes linear in $\|H\|T$ — no better than [[Product Formulas]]. The power is when $G = \text{polylog}(\|H\|T)$.
 
 3. **The approach is specific to self-inverse oracles.** The oracle $Q$ satisfies $Q^2 = I$, which gives $e^{-iH_Q t} = \cos(t/2)I + i\sin(t/2)Q$. Generalising to non-self-inverse Hamiltonians requires additional work (and is addressed in the subsequent [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|Berry-Cleve-Somma (2013)]] paper).
 
 4. **Error correction overhead.** Failed measurements (outcome $b_j = 1$) trigger a biased random walk correction procedure. The expected overhead is $O(1)$, but worst-case bounds rely on Markov inequality arguments that absorb failures into the total error budget.
 
-5. **Historical context:** This paper was largely superseded for *[[Hamiltonian simulation]]* by the truncated [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Taylor series]] approach (Berry-Childs-Cleve-Kothari-Somma, 2015), which avoids the fractional-query machinery entirely. But the *query model conversion* result — continuous-time to gate-efficient discrete — remains the definitive statement. The compression technique is also a precursor to ideas used in the [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|precision-exponential improvement]] line.
+5. **Historical context:** This paper was largely superseded for *[[Hamiltonian simulation]]* by the truncated [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Taylor series]] approach (Berry-Childs-Cleve-Kothari-Somma, 2015), which avoids the fractional-query machinery entirely. But the *query model conversion* result — continuous-time to gate-efficient discrete under the paper's assumptions — remains a central statement. The compression technique is also a precursor to ideas used in the [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes|precision-exponential improvement]] line.
 
 ---
 
@@ -163,7 +163,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 - Lee-Mittal-Reichardt-Špalek-Szegedy (2011, arXiv:1011.3020) [Ref 3] — optimal $O(T)$ query cost for state conversion, but no gate-efficient construction.
 - Farhi-Goldstone-Gutmann (2008) [Ref 4] — continuous-time quantum algorithm for the Hamiltonian NAND tree. This paper's motivating example.
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes|Ambainis-Childs-Reichardt-Špalek-Zhang (2007)]] [Ref 6] — discrete-time AND-OR evaluation via coined walks.
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] [Ref 7] — Lie-Trotter-Suzuki [[Product Formulas]]s for sparse Hamiltonians.
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry-Ahokas-Cleve-Sanders (2007)]] [Ref 7] — Lie-Trotter-Suzuki [[Product Formulas]] for sparse Hamiltonians.
 - [[Creating Superpositions That Correspond to Efficiently Integrable Probability Distributions (Grover-Rudolph 2002) — Paper Notes|Grover-Rudolph (2002)]] [Ref 8] — state preparation for probability distributions (mentioned as alternative for cleanup step).
 - Wiebe-Berry-Høyer-Sanders (2010) [Ref 9] — higher-order Suzuki decompositions for time-dependent Hamiltonians.
 
@@ -175,7 +175,7 @@ The query cost matches CGMSY. The gate cost is exponentially better in $\|H\|$ (
 - [[Exponential Improvement in Precision for Hamiltonian-Evolution Simulation (Berry-Cleve-Somma 2013) — Paper Notes]] — extends the compression and fractional-query techniques from this paper to achieve $\log(1/\varepsilon)$ precision scaling for [[Hamiltonian simulation]]
 - [[Exponential Improvement in Precision for Simulating Sparse Hamiltonians (Berry-Childs-Cleve-Kothari-Somma 2014) — Paper Notes]] — cites this paper for the gate-efficient implementation
 - [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes]] — related black-box simulation
-- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[Product Formulas]]s used in the Lie-Trotter step
+- [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes]] — [[Product Formulas]] used in the Lie-Trotter step
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — the quantum walk that motivates this work
 - [[Discrete-Query Quantum Algorithm for NAND Trees (Childs-Cleve-Jordan-Yonge-Mallo 2009) — Paper Notes]] — simpler predecessor: converts FGG to discrete queries via product formulas, without addressing gate efficiency
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — the discrete algorithm that renders the continuous-time AND-OR result implementable

@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Proves that [[Product Formulas]] can simulate $n$-qubit nearest-neighbour lattice Hamiltonians with gate complexity $(nt)^{1+o(1)}$ — **nearly matching the $\tilde{\Omega}(nt)$ lower bound** of Haah-Hastings-Kothari-Low. This is the strongest rigorous justification for the practical effectiveness of Trotter methods on physically relevant systems.
+Proves that [[Product Formulas]] can simulate geometrically local $n$-qubit nearest-neighbour lattice Hamiltonians with gate complexity $(nt)^{1+o(1)}$ — **nearly matching the $\tilde{\Omega}(nt)$ lower bound** of Haah-Hastings-Kothari-Low. This is the strongest rigorous justification for the practical effectiveness of Trotter methods on this physically local model. Sparse black-box Hamiltonians are a different access model.
 
 The key insight: product-formula error for lattice Hamiltonians scales as $O(nt^{p+1})$ — **linear in $n$** — rather than the $O(n^{p+1} t^{p+1})$ scaling of generic (non-local) bounds. The improvement comes from analysing the *local error structure* of the product formula: nested commutators of lattice terms are mostly zero due to non-overlapping supports.
 
@@ -80,7 +80,7 @@ $$\|S_{2k}(t) - e^{-iHt}\| = O(n t^{2k+1})$$
 |---|---|---|---|
 | 1st order | $O(nt^2)$ | $O(nt^2/\varepsilon)$ | $O((nt)^2/\varepsilon)$ |
 | $(2k)$-th order | $O(nt^{2k+1})$ | $O(t(nt/\varepsilon)^{1/(2k)})$ | $O((nt)^{1+1/(2k)}/\varepsilon^{1/(2k)})$ |
-| Any $\delta > 0$ (choose $k = \lceil 1/(2\delta)\rceil$) | — | — | $O((nt)^{1+\delta})$ |
+| Any $\delta > 0$ (choose $k = \lceil 1/(2\delta)\rceil$) | — | — | $O((nt)^{1+\delta})$ for constant target accuracy, with fixed-\(\delta\) constants |
 
 **Main result:** For any $\delta > 0$, the gate complexity is $(nt)^{1+\delta}$ with constant accuracy. Combined with the $\tilde{\Omega}(nt)$ lower bound of [[Quantum Algorithm for Simulating Real Time Evolution of Lattice Hamiltonians (Haah-Hastings-Kothari-Low 2021) — Paper Notes|HHKL]], this is **nearly optimal**.
 
@@ -91,7 +91,7 @@ $$\|S_{2k}(t) - e^{-iHt}\| = O(n t^{2k+1})$$
 | Method | Gate complexity | Locality required? | Ancilla-free? |
 |---|---|---|---|
 | Naïve Trotter (prior bounds) | $O(n(nt)^{1+1/(2k)}/\varepsilon^{1/(2k)})$ | No (works for any $H$) | Yes |
-| Commutator bound ([[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes\|Childs et al. 2019]]) | Improved but still superlinear in $n$ | Partially | Yes |
+| Commutator bound ([[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes\|Childs et al. 2019]]) | Depends on how the commutator sum is bounded | Partially | Yes |
 | [[Faster Quantum Simulation by Randomization (Childs-Ostrander-Su 2019) — Paper Notes\|Randomized Trotter (Childs-Ostrander-Su 2019)]] | Better $L$-dependence but not linear in $n$ | No | Yes |
 | [[Quantum Algorithm for Simulating Real Time Evolution of Lattice Hamiltonians (Haah-Hastings-Kothari-Low 2021) — Paper Notes\|HHKL (Lieb-Robinson)]] | $O(nT\,\text{polylog}(nT/\varepsilon))$ | Yes (lattice) | Yes (with PF blocks) |
 | **This paper** | $(nt)^{1+o(1)}$ | Yes (lattice) | Yes |
@@ -134,7 +134,7 @@ The analysis extends to:
 - **Lattice structure required.** The improved bounds depend on geometric locality — specifically, that commutators of non-overlapping terms vanish. For general sparse Hamiltonians without this structure, the old bounds still apply.
 - **Asymptotic, not explicit.** The "nearly optimal" claim uses $k \to \infty$. For any fixed $k$, there's still a polynomial gap. The practical message is to use moderate $k$ (4th order seems optimal for current system sizes).
 - **Constant prefactors grow with $k$.** The Suzuki recursion introduces factors like $5^{k-1}$ in the number of stages, so very high-order formulas have large constants even if the asymptotic exponent is small.
-- **Comparison with HHKL.** The [[Lieb-Robinson Decomposition for Lattice Simulation]] approach of HHKL also achieves near-optimal complexity but with a much larger constant prefactor (Fig. 1 in supplementary: HHKL is ~50× more expensive than pure product formulas for $n \leq 300$). Product formulas win practically.
+- **Comparison with HHKL.** The [[Lieb-Robinson Decomposition for Lattice Simulation]] approach of HHKL also achieves near-optimal complexity but has a larger constant prefactor in the paper's tested regimes (Fig. 1 in supplementary: HHKL is ~50× more expensive than pure product formulas for $n \leq 300$). This is evidence that product formulas win in those practical regimes, not a universal rule for every lattice-simulation implementation.
 
 ---
 

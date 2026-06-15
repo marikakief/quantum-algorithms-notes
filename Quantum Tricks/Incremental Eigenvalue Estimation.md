@@ -13,9 +13,9 @@ When $\mathrm{HT}^+(P,M)$ is unknown, the required precision $T = O(\sqrt{\mathr
 2. Run Search($P, M, s^*, t$) a constant $k = 50$ times.
 3. If no marked vertex found, set $t \leftarrow t+1$ and repeat.
 
-Once $t$ reaches the threshold $t_0$ where $2^{t_0} \geq 14\sqrt{\mathrm{HT}^+}$, each Search succeeds with probability $\geq 1/36$. The $k = 50$ repetitions boost the failure probability per level to $\leq 1/4$.
+Once $t$ reaches the threshold $t_0$ where $2^{t_0} \geq 14\sqrt{\mathrm{HT}^+}$, each Search succeeds with probability $\geq 1/36$. The constants 14 and 50 are proof constants from the paper, not optimized algorithmic thresholds. The $k = 50$ repetitions boost the failure probability per level to $\leq 1/4$.
 
-The total expected cost is dominated by the final level: $O(\log T) \cdot S + T \cdot (U + C)$ where $T = \sqrt{\mathrm{HT}^+}$. The geometric sum ensures earlier levels contribute only $O(1)$ multiplicative overhead.
+The total expected cost is dominated by the first sufficiently precise level: $O(\log T) \cdot S + T \cdot (U + C)$ where $T = \sqrt{\mathrm{HT}^+}$. The geometric sum ensures earlier levels contribute only $O(1)$ multiplicative overhead to update/check costs, while setup is repeated at each level.
 
 ## When to reach for it
 - Any eigenvalue-estimation-based algorithm where the required precision isn't known in advance
@@ -26,7 +26,7 @@ The total expected cost is dominated by the final level: $O(\log T) \cdot S + T 
 Same asymptotic complexity as the known-precision case ($O(\sqrt{\mathrm{HT}^+})$ walk steps), with an $O(\log T)$ multiplicative overhead in the setup cost $S$.
 
 ## Caveat
-The $O(\log T)$ factor in setup cost can matter when $S \gg U + C$. In applications where setup is the bottleneck (e.g. preparing the stationary distribution), this overhead is non-trivial. Also, the constant factor from 50 repetitions per level is large, though asymptotically irrelevant.
+The $O(\log T)$ factor in setup cost can matter when $S \gg U + C$. In applications where setup is the bottleneck (e.g. preparing the stationary distribution), this overhead is non-trivial. Incremental precision removes the need to know $\mathrm{HT}^+$, but it does not remove the need for suitable knowledge or bounds on the marked stationary probability $p_M$. Also, the constant factor from 50 repetitions per level is large, though asymptotically irrelevant.
 
 ## Related notes
 - [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes]]

@@ -25,3 +25,8 @@ Note: Dicke state preparation independent of this paper has been studied extensi
 
 ## Caveat
 Need a good bound on acceptance amplitude for AA efficiency. If valid subset ratio is tiny, prep can still be costly.
+
+## Related notes
+
+- [[Verifiable Quantum Advantage via Optimized DQI Circuits (Khattar, Shutty, Gidney et al 2025) — Paper Notes]]
+- [[Sparse Dicke State Preparation by Combinatorial Unranking]]

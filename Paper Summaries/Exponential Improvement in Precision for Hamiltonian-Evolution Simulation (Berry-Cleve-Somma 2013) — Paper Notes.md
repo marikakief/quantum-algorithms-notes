@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-First algorithm achieving **polylogarithmic dependence on inverse precision** ($\log(1/\varepsilon)$) for [[Hamiltonian simulation]]. This is an exponential improvement over all prior methods, which scaled as $\text{poly}(1/\varepsilon)$.
+First algorithm achieving **polylogarithmic dependence on inverse precision** for [[Hamiltonian simulation]]. The relevant truncation/compression terms are logarithmic up to additional polylogarithmic factors, giving an exponential improvement over prior methods that scaled as $\text{poly}(1/\varepsilon)$.
 
 The approach is indirect and somewhat baroque: decompose the Hamiltonian into self-inverse terms, simulate each via ancilla-controlled unitaries, then use compression and concentration bounds from the fractional-query framework of Cleve-Gottesman-Mosca-Somma-Yonge-Mallo (2009) and Berry-Cleve-Gharibian (2013) to reduce the query count. The result is technically impressive but hard to parse, which is exactly why the later simplifications (BCCKS STOC 2014, then the truncated Taylor paper) were needed.
 
@@ -19,7 +19,7 @@ The approach is indirect and somewhat baroque: decompose the Hamiltonian into se
 **Result (Theorem 1):**
 $$O\!\left([d^2\tau + \log(1/\varepsilon)] \cdot \log^3[d(\tau + \tau')/\varepsilon] \cdot n^c\right)$$
 
-oracle calls and additional gates, where $\tau = \|H\|t$, $\tau' = \|H'\|t$ (for time-dependent $H$), and $c$ is a constant.
+oracle calls and additional gates, where $\tau = \|H\|t$ in the paper's sparse-oracle norm convention, $\tau' = \|H'\|t$ for the time-dependent extension, and $c$ is a constant.
 
 ---
 
@@ -37,7 +37,7 @@ $$\mathcal{T}\exp\!\left[-i\int_0^t H(t')\,dt'\right] \approx \prod_j \exp[-iH_j
 
 The error is $O(M^2 \delta t^2 (|H|^2 + |H'|))$, requiring $r = O(M^2t^2(\|H\|^2 + \|H'\|)/\varepsilon)$ time steps.
 
-*Note: this Trotter step introduces polynomial $1/\varepsilon$ dependence. The exponential improvement comes from the compression in Steps 4–5, not from avoiding Trotter.*
+*Note: the naive Trotterized representation would have polynomial $1/\varepsilon$ dependence if executed directly. The exponential improvement comes from the compression in Steps 4–5, which avoids paying that naive number of controlled queries.*
 
 ### Step 3: Decompose into self-inverse unitaries (Lemma 1)
 
@@ -110,7 +110,7 @@ This paper (BCS 2013) takes those ideas and applies them to [[Hamiltonian simula
 
 The subsequent papers simplified dramatically:
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|BCCKS (2015, PRL)]] replaced the entire pipeline with LCU + truncated Taylor series + robust OAA
-- The STOC 2014 version (1312.1414) was an intermediate step introducing OAA
+- The STOC 2014 version (1312.1414) was an intermediate step introducing OAA, replacing recursive measurement/fault correction with coherent oblivious amplitude amplification of each segment
 
 ---
 
@@ -128,7 +128,7 @@ The subsequent papers simplified dramatically:
 
 - **Complexity.** Six-step pipeline, recursive fault correction, self-inverse constraint — far harder to implement and understand than the later Taylor series approach.
 - **Self-inverse requirement.** The decomposition into self-inverse terms is unnatural and introduces overhead. The LCU framework in the subsequent papers dropped this constraint.
-- **First-order Trotter.** Step 2 uses first-order Lie-Trotter, introducing polynomial $1/\varepsilon$ in the number of time steps. The polylog comes from the compression, not from avoiding Trotter error — meaning the number of segments is still large.
+- **First-order Trotter representation.** Step 2 starts from a first-order Lie-Trotterized representation whose naive execution would have polynomial precision cost. The polylogarithmic query dependence comes from compression and low-Hamming-weight truncation, not from a high-order product-formula error bound.
 - **$\log^3$ and $n^c$ factors.** The gate complexity has large polylogarithmic and polynomial-in-$n$ factors.
 - **Superseded.** The truncated Taylor series paper (1412.4687) achieves the same asymptotics in four pages with a much simpler algorithm. This paper is historically important but not what you'd implement.
 

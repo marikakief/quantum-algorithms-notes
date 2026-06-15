@@ -17,11 +17,11 @@ The solution uses a multiplexed controlled swap:
 3. Apply the Givens rotations on the working qubits
 4. Swap back
 
-The controlled swap of $N$ qubits conditioned on $N_k$ values of $k$ costs $O(N_k N)$ Toffolis (one Toffoli per controlled SWAP gate, iterated over all $k$ values via unary iteration). This is done for both $k$ and $k \ominus Q$ (which must be computed from $k$ and $Q$ via modular subtraction), and for both spin sectors — but the spin swap is controlled by a single qubit, not iterated.
+The controlled swap of $N$ qubits conditioned on $N_k$ values of $k$ costs $O(N_k N)$ Toffolis in this decomposition-level model (one Toffoli per controlled SWAP gate, with Clifford gates treated as free, iterated over all $k$ values via unary iteration). This is done for both $k$ and $k \ominus Q$ (which must be computed from $k$ and $Q$ via modular subtraction), and for both spin sectors — but the spin swap is controlled by a single qubit, not iterated.
 
 The modular subtraction $k \ominus Q$ costs $O(\log N_k)$ Toffolis when dimensions are powers of two, or $O(2\log N_k)$ with a correction step for general grid sizes.
 
-**Where this dominates:** For THC and DF, the unary-iteration-based swap costs $O(N_k N)$ per application, and it's applied $O(1)$ times per walk step. This matches or exceeds the QROAM cost for THC (which is also $O(N_k N)$ after optimization), making data movement the fundamental cost floor. No amount of symmetry exploitation can reduce it below $O(N_k N)$, because you need to physically touch every qubit at least once.
+**Where this dominates:** For THC and DF, the unary-iteration-based swap costs $O(N_k N)$ per application, and it's applied $O(1)$ times per walk step. This matches or exceeds the QROAM cost for THC (which is also $O(N_k N)$ after optimization), making explicit register routing the cost floor for this implementation. This is not a representation-independent lower bound for every possible encoding or architecture; it says that this explicit swap network touches the $N_k N$ addressed system qubits.
 
 ## When to reach for it
 
@@ -34,11 +34,11 @@ The modular subtraction $k \ominus Q$ costs $O(\log N_k)$ Toffolis when dimensio
 - Toffoli cost per swap: $O(N_k N)$ (via unary iteration)
 - Called $O(1)$ times per walk step
 - Modular subtraction for $k \ominus Q$: $O(\log N_k)$ Toffolis
-- This sets an $\Omega(N_k N)$ lower bound on the per-step cost of any second-quantized periodic block encoding that requires basis rotations
+- This gives an $\Omega(N_k N)$ cost intuition for explicit second-quantized periodic block encodings that route k-selected orbital registers into a work register for basis rotations
 
 ## Caveat
 
-This is fundamentally a data-movement cost, not a computational one. It doesn't compute anything about the Hamiltonian — it just puts the right qubits in the right place. For molecular systems (single k-point), this reduces to $O(N)$ and is negligible. For periodic systems, it becomes the dominant cost for THC and a significant fraction for DF.
+This is fundamentally a data-movement cost, not a computational one. It doesn't compute anything about the Hamiltonian — it just puts the right qubits in the right place. The stated Toffoli count is an oracle/circuit cost; hardware routing or connectivity overhead is a separate compilation issue. For molecular systems (single k-point), this reduces to $O(N)$ and is negligible. For periodic systems, it becomes the dominant cost for THC and a significant fraction for DF.
 
 Reducing this cost would require a fundamentally different approach — either encoding the system so that k-dependent operations can be applied without routing (e.g., some form of native momentum-space encoding), or finding block encodings that avoid per-k basis rotations entirely.
 

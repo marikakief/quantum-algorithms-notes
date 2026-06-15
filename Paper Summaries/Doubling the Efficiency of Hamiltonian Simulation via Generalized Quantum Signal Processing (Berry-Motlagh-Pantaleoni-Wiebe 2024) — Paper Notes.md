@@ -22,7 +22,7 @@ The specific question: can we cut the query count by a factor of 2 if we can con
 
 It halves the number of block-encoding queries for [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP-based Hamiltonian simulation]] by replacing standard controlled-$U$ operations with directionally controlled operations (selecting between $U$ and $U^\dagger$). The technique uses [[Generalized Quantum Signal Processing (GQSP)|generalized quantum signal processing]] (GQSP) from Motlagh–Wiebe (arXiv:2308.01501) to handle the resulting complex Laurent polynomials.
 
-This is a clean factor-of-2 improvement on the dominant cost in QSP simulation. Not a new asymptotic regime — the scaling remains $O(\lambda t + \log(1/\epsilon))$ — but the leading constant drops by half, which matters in practice since these are already the tightest known bounds.
+This is a clean factor-of-2 improvement on the dominant cost in QSP simulation. Not a new asymptotic regime — the scaling remains \(O(\lambda t + \log(1/\epsilon)/\log\log(1/\epsilon))\) up to conventions — but the leading constant drops by half, which matters in practice since these are already the tightest known bounds.
 
 **My assessment:** This is a satisfying result. The idea is natural once you know GQSP exists: the phase-doubling trick from [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. (2018)]] already gives $2\times$ for eigenvalue estimation via controlling $U$ vs $U^\dagger$. Extending that to simulation requires more work because you need to handle the Jacobi–Anger expansion with the wrong parity, but GQSP provides exactly the right tool for that. The paper is short (9 pages, no figures), which is appropriate — the core idea is genuinely simple once the GQSP machinery is available.
 
@@ -66,12 +66,12 @@ $$P_K(U) = J_0(\tau) + \sum_{m=1}^{K/2} J_{2m}(\tau)(U^{2m} + U^{-2m})$$
 
 $$Q_K(U) = i\sum_{m=0}^{K/2} J_{2m+1}(\tau)(U^{2m+1} - U^{-(2m+1)})$$
 
-These have only odd powers of $U$ (after accounting for the Chebyshev/sin expansion structure), in steps of 2 — matching the directional-control constraint.
+The pair has the required parity structure after the GQSP shift/completion: \(P_K\) contains even powers and \(Q_K\) contains odd powers, matching the cosine/sine parts of the Jacobi-Anger expansion.
 
 To satisfy $|P|^2 + |Q|^2 = 1$ exactly (GQSP requires it, not just approximately), use the [[Polynomial Completion via Sum-of-Squares|completion procedure]]:
 
 1. Scale both by $\alpha < 1$ so that $|\alpha P_K|^2 + |\alpha Q_K|^2 \leq 1$ everywhere.
-2. Find correction polynomials $P', Q'$ with $P'^2 + Q'^2 = 1 - \alpha^2(P_K^2 - Q_K^2)$.
+2. Find correction polynomials $P', Q'$ with $P'^2 + Q'^2 = 1 - \alpha^2(P_K^2 - Q_K^2)$. The minus sign is a convention consequence of \(Q_K\) being imaginary-valued on the relevant real variable, so \(Q_K^2\) contributes with the opposite sign to the real sum-of-squares condition.
 3. Set $P(U) = U(\alpha P_K(U) + iP'(U))$ and $Q(U) = \alpha Q_K(U) + Q'(U)$.
 
 The correction step requires $1 - \alpha^2(P_K^2 - Q_K^2) \geq 0$ for all $x$ (not just $|x| \leq 1$), which is Theorem 3.
@@ -112,12 +112,14 @@ This ensures the completion polynomial $1 - \alpha^2(P_K^2 - Q_K^2)$ is non-nega
 
 | Method | Queries to block-encoding | Requires complex polynomials? | Key constraint |
 |---|---|---|---|
-| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|Standard QSP]] (Low–Chuang 2017) | $O(\lambda t + \log(1/\epsilon))$ | No (real $A, C$) | Control $\mathbb{1}$ vs $U$ |
-| **This paper (GQSP doubling)** | $O(\lambda t/2 + \log(1/\epsilon)/2)$ | Yes (complex $P, Q$) | Control $U$ vs $U^\dagger$ |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|Standard QSP]] (Low–Chuang 2017) | $O(\lambda t + \log(1/\epsilon)/\log\log(1/\epsilon))$ | No (real $A, C$) | Control $\mathbb{1}$ vs $U$ |
+| **This paper (GQSP doubling)** | roughly half the standard QSP signal-query count | Yes (complex $P, Q$) | Control $U$ vs $U^\dagger$ |
 | [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes\|Fully-coherent one-shot QSP]] (Martyn et al. 2023) | $O(\alpha t + \log(1/\epsilon) + \log(1/\delta))$ | Real (via [[Affine Spectrum Compression for QSP Parity Bypass\|affine compression]]) | Fully coherent, no postselection |
 | [[Halving the Cost of Quantum Algorithms with Randomization (Martyn-Rall 2025) — Paper Notes\|Stochastic QSP]] (Martyn–Rall 2025) | Halves $\log(1/\epsilon)$ cost | N/A (randomized channel) | Output is mixed state |
 
 The $2\times$ improvement here and the $2\times$ improvement of stochastic QSP target different parts of the complexity: this paper halves the entire query count (both the $\lambda t$ and $\log(1/\epsilon)$ terms), while stochastic QSP halves only the precision-dependent term. In principle they could compose, but this paper's approach requires coherent directional control, while stochastic QSP produces a channel.
+
+The query count here is to the walk/signal unitary. Whether the factor-of-two survives unchanged at the physical gate level depends on the underlying block-encoding implementation and on whether controlled \(U\) versus \(U^\dagger\) is genuinely comparable in cost.
 
 The factor-of-2 improvement from [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. (2018)]] for eigenvalue estimation was the direct precursor. That result used the same $U$-vs-$U^\dagger$ control trick but only for phase estimation, where the polynomial is simpler. Extending to simulation requires handling the full Jacobi–Anger expansion, which is what GQSP enables.
 

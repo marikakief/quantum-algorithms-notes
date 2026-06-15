@@ -10,7 +10,7 @@
 
 The challenge: Grover's algorithm requires all-to-all connectivity (each step flips the sign of *any* marked element). On a lattice, each step can only move to adjacent vertices, costing $O(N^{1/d})$ per Grover iteration. Naively, the total time is $\sqrt{N} \cdot N^{1/d} = N^{1/2 + 1/d}$ — **no speedup** in $d = 2$.
 
-**This paper:** Uses a continuous-time quantum walk to achieve $O(\sqrt{N})$ search time for $d > 4$, $O(\sqrt{N}\,\text{polylog}\,N)$ for $d = 4$, and shows the algorithm fails for $d < 4$.
+**This paper:** Uses a continuous-time quantum walk to achieve constant-success $O(\sqrt{N})$ search time for $d > 4$. At $d = 4$ the raw evolution time is $O(\sqrt{N\log N})$ but the success probability is only $O(1/\log N)$, so constant-success search needs extra repetition or amplification. For $d < 4$, this single-walk method does not give a useful search algorithm.
 
 ---
 
@@ -24,13 +24,15 @@ $$
 
 where $L = A - D$ is the graph Laplacian ($A$ = adjacency matrix, $D$ = degree matrix), $\gamma > 0$ is the hopping rate, and $|w\rangle\langle w|$ is the oracle marking the target vertex.
 
+Sign convention: this note follows the paper's $L=A-D$, the negative of the standard graph Laplacian $D-A$. Thus $-\gamma L$ is the usual positive hopping term up to convention; the oracle term also has the paper's sign.
+
 Start in $|s\rangle = N^{-1/2}\sum_j |j\rangle$ (uniform superposition). Evolve under $H$ for time $T$. Measure. The algorithm works when the evolved state $e^{-iHT}|s\rangle$ has large overlap with $|w\rangle$.
 
 ---
 
 ## The spectral argument (why the algorithm works)
 
-The analysis reduces to a 2D subspace spanned by $|s\rangle$ and $|w\rangle$:
+The analysis is effectively two-level near the critical hopping rate, but not an exact invariant two-dimensional subspace on the lattice:
 
 1. **$|s\rangle$ is the ground state of $-\gamma L$** (eigenvalue 0)
 2. **As $\gamma$ varies**, the ground state of $H$ transitions from being close to $|w\rangle$ (small $\gamma$) to close to $|s\rangle$ (large $\gamma$)
@@ -53,20 +55,20 @@ where $E(k) = 2(d - \sum_j \cos k_j)$ are the Laplacian eigenvalues. The ground 
 
 ## Results by dimension
 
-| Dimension $d$ | Critical $\gamma$ | Gap at critical | Success prob. | Time | Speedup? |
+| Dimension $d$ | Critical $\gamma$ | Gap at critical | Success prob. after raw evolution | Raw evolution time | Constant-success implication |
 |---|---|---|---|---|---|
 | Complete graph ($d \sim N$) | $1/N$ | $\Theta(1/\sqrt{N})$ | $\Theta(1)$ | $O(\sqrt{N})$ | Full (= Grover) |
 | Hypercube ($d = \log N$) | $\frac{2}{n} + O(n^{-2})$ | $\Theta(1/\sqrt{N})$ | $\Theta(1)$ | $O(\sqrt{N})$ | Full |
 | $d > 4$ | $I_{1,d}$ | $\Theta(1/\sqrt{N})$ | $\Theta(1)$ | $O(\sqrt{N})$ | **Full** |
-| $d = 4$ | $I_{1,4}$ | $\Theta(1/\sqrt{N\log N})$ | $O(1/\log N)$ | $O(\sqrt{N\log N})$ | Near-full |
-| $d = 3$ | $I_{1,3}$ | $O(N^{-2/3})$ | $O(N^{-1/3})$ | — | $O(N^{2/3})$ total, **not full** |
-| $d = 2$ | $\frac{\ln N}{4\pi} + A$ | $O(N^{-1}\ln N)$ | $O((\ln N)^2/N)$ | — | Essentially **none** |
+| $d = 4$ | $I_{1,4}$ | $\Theta(1/\sqrt{N\log N})$ | $O(1/\log N)$ | $O(\sqrt{N\log N})$ | Needs repetition/amplification overhead |
+| $d = 3$ | $I_{1,3}$ | $O(N^{-2/3})$ | $O(N^{-1/3})$ | $O(N^{2/3})$ scale | Not a constant-success speedup by itself |
+| $d = 2$ | $\frac{\ln N}{4\pi} + A$ | $O(N^{-1}\ln N)$ | $O((\ln N)^2/N)$ | large relative to success | Essentially **none** |
 
 where $I_{j,d} = \frac{1}{(2\pi)^d}\int \frac{d^dk}{[E(k)]^j}$ (converges for $d > 2j$).
 
 ### The critical dimension
 
-The dimension $d = 4$ is the **upper critical dimension** — a phase-transition concept from statistical mechanics. The key quantities are the lattice sums $S_{j,d}$:
+The dimension $d = 4$ is the threshold where the lattice sum controlling the two-level approximation changes from convergent to logarithmically divergent. The key quantities are the lattice sums $S_{j,d}$:
 
 $$
 S_{j,d} = \frac{1}{N}\sum_{k \neq 0} \frac{1}{[E(k)]^j}
@@ -105,9 +107,9 @@ Dropping the scalar $\gamma N I$, this is the Farhi-Gutmann "analog analogue" of
 
 ## Reusable ideas
 
-1. **[[Continuous-Time Quantum Walk Search]]:** Search by evolving under $H = -\gamma L + |w\rangle\langle w|$ starting from $|s\rangle$. At a critical hopping rate $\gamma$, the ground and first excited states mix $|s\rangle$ and $|w\rangle$, and the system oscillates between them in time $O(1/\Delta E)$. A natural alternative to Grover for spatially structured problems.
+1. **[[Continuous-Time Quantum Walk Search]]:** Search by evolving under $H = -\gamma L + |w\rangle\langle w|$ starting from $|s\rangle$. At a critical hopping rate $\gamma$, the relevant low-energy states mix enough of $|s\rangle$ and $|w\rangle$ to create oscillation on a time scale set by the gap. A natural alternative to Grover for spatially structured problems.
 
-2. **[[Avoided Crossing at Critical Hopping Rate]]:** The search algorithm works at a specific critical $\gamma$ where the ground and first excited states undergo an avoided level crossing between $|s\rangle$ and $|w\rangle$. Away from this critical value, $|s\rangle$ is approximately an eigenstate and the algorithm fails. The gap at the critical point determines the speedup, and the dimension determines whether the gap closes fast enough.
+2. **[[Avoided Crossing at Critical Hopping Rate]]:** The search algorithm works at a specific critical $\gamma$ where the target perturbation changes the relevant low-energy spectrum. Away from this critical value, the marked component is too small for this simple evolution to succeed. The gap and the marked-state overlap at the critical point determine the speedup.
 
 ---
 
@@ -116,7 +118,7 @@ Dropping the scalar $\gamma N I$, this is the Farhi-Gutmann "analog analogue" of
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the all-to-all quantum search; this paper's complete graph case
 - Aaronson & [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — spatial search via divide-and-conquer; achieves $\sqrt{N}$ for $d > 2$
 - Farhi & Gutmann (1998) — continuous-time quantum walk on the complete graph ("analog analogue of Grover")
-- [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Boyer, Brassard, Høyer & Tapp (1998)]] — tight bounds on quantum search
+- [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes|Boyer, Brassard, Høyer & Tapp (1998)]] — tight bounds on quantum search
 - Benioff (2002) — quantum robot model (spatial quantum computation)
 - Ambainis, Kempe & Rivosh (2005) — coined quantum walk search on 2D lattice
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes|Ambainis (2003)]] — survey placing spatial search in the broader quantum walk framework

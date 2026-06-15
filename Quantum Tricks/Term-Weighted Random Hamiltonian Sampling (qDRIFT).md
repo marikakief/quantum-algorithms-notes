@@ -1,6 +1,6 @@
 
-> **Source:** Earl T. Campbell, *A random compiler for fast [[Hamiltonian simulation]]*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)  
-> **Links:** [arXiv](https://arxiv.org/abs/1811.08017) · [PRL](https://doi.org/10.1103/PhysRevLett.123.070503)  
+> **Source:** Earl T. Campbell, *A random compiler for fast [[Hamiltonian simulation]]*, arXiv:1811.08017, Phys. Rev. Lett. **123**, 070503 (2019)
+> **Links:** [arXiv](https://arxiv.org/abs/1811.08017) · [PRL](https://doi.org/10.1103/PhysRevLett.123.070503)
 > **Tags:** #trick #qdrift #randomization #hamiltonian-simulation
 
 ## Idea
@@ -11,13 +11,15 @@ p_j = \frac{|h_j|}{\lambda}, \qquad \lambda = \sum_j |h_j|, \qquad \tau = \frac{
 $$
 Repeat $N$ times: sample $j \sim p_j$, apply $e^{-i\tau\,\mathrm{sgn}(h_j) H_j}$.
 
-The expected channel over $N$ steps approximates $e^{-iHt}$ with diamond-norm error $O((\lambda t)^2/N)$, so diamond-norm error $\epsilon$ requires $N = O((\lambda t)^2/\epsilon)$.
+The averaged channel over all $N$-step random circuits approximates $e^{-iHt}$ with diamond-norm error $O((\lambda t)^2/N)$, so diamond-norm error $\epsilon$ requires $N = O((\lambda t)^2/\epsilon)$. This is not a guarantee that every sampled circuit is close to the target unitary; it is a guarantee for the ensemble channel.
 
-Cost is independent of $L$ and of the largest individual coefficient $\Lambda$ — only $\lambda = \sum_j |h_j|$ matters.
+Cost is independent of the number of terms $L$ only through the value of $\lambda = \sum_j |h_j|$. If adding many terms makes $\lambda$ grow proportionally to $L$, qDRIFT still inherits that dependence. The bound also does not depend separately on the largest individual coefficient $\Lambda$.
 
 ## Why this is useful
 
-Heavy terms get sampled often; negligible terms are automatically down-weighted. For dense Pauli decompositions in quantum chemistry, $\lambda$ can be much smaller than $\Lambda L$, giving a genuine circuit-depth saving over naïve [[Order-Condition Cancellation in Product Formulas|Trotter]].
+Heavy terms get sampled often; negligible terms are automatically down-weighted. For dense Pauli decompositions in quantum chemistry, $\lambda$ can be much smaller than $\Lambda L$, giving a genuine circuit-depth saving over naïve [[Order-Condition Cancellation in Product Formulas|Trotter]] bounds.
+
+qDRIFT is different from randomized-order product formulas: qDRIFT samples one Hamiltonian term per micro-step with probability proportional to coefficient magnitude, whereas permutation randomization applies all terms in a fresh random order and exploits cancellation among ordering-dependent errors.
 
 ## When not to use it
 

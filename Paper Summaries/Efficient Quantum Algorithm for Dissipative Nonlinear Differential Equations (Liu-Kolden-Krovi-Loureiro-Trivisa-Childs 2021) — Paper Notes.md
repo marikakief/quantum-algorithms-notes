@@ -1,3 +1,5 @@
+# Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes
+
 > **Source:** Jin-Peng Liu, Herman Øie Kolden, Hari K. Krovi, Nuno F. Loureiro, Konstantina Trivisa, Andrew M. Childs, *Efficient quantum algorithm for dissipative nonlinear differential equations*, Proceedings of the National Academy of Sciences 118(35):e2026805118, 2021; arXiv:2011.03185
 > **Links:** [arXiv](https://arxiv.org/abs/2011.03185) · [PNAS](https://doi.org/10.1073/pnas.2026805118)
 > **Tags:** #nonlinear-ODE #Carleman-linearisation #quantum-algorithm #differential-equations #QLSA #lower-bound #dissipative
@@ -16,13 +18,13 @@ $$R := \frac{1}{|\operatorname{Re}(\lambda_1)|}\left(\|\mathbf{u}_{\mathrm{in}}\
 
 where $\lambda_1$ is the eigenvalue of $F_1$ closest to the imaginary axis. Assume $R < 1$. The goal: produce a quantum state proportional to $\mathbf{u}(T)$.
 
-Higher-degree polynomial nonlinearities reduce to the quadratic case by introducing auxiliary variables, so restricting to quadratic is without loss of generality.
+Higher-degree polynomial nonlinearities can be reduced to the quadratic case by introducing auxiliary variables, but this is a modeling reduction with overheads in dimension, sparsity, coefficient norms, and stability parameters. It is not "without loss" for complexity accounting.
 
 ## What the paper does
 
 This is the paper that made quantum nonlinear DE solving a real research direction. It introduces [[Carleman Linearisation for Quantum Nonlinear ODE Solvers|Carleman linearisation]] to quantum computing: embed the quadratic ODE into an infinite-dimensional linear system by lifting to tensor powers of $\mathbf{u}$, truncate at order $N$, discretise with forward Euler, and solve with a [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|quantum linear system algorithm]]. Under $R < 1$, the complexity is $T^2 q \cdot \mathrm{poly}(\log T, \log n, \log 1/\varepsilon)/\varepsilon$, exponentially better in $T$ than the previous best of $O(1/\varepsilon^T)$ from Leyton-Osborne.
 
-The paper also proves a lower bound: for $R \ge \sqrt{2}$, the problem is intractable (exponential in $T$) for any quantum algorithm — not just Carleman-based ones. The gap $1 \le R < \sqrt{2}$ remains open.
+The paper also proves a lower bound: for $R \ge \sqrt{2}$, the problem has exponential query complexity in $T$ in the paper's oracle lower-bound model — not just for Carleman-based algorithms. The gap $1 \le R < \sqrt{2}$ remains open within this line of analysis.
 
 ## The algorithm / construction
 
@@ -63,13 +65,15 @@ The measurement probability is $\Omega(1/Nq^2)$ where $q = \|\mathbf{u}_{\mathrm
 | Result | Statement |
 |---|---|
 | Main complexity (Theorem 1) | $\displaystyle \frac{sT^2 q[(\|F_2\|+\|F_1\|+\|F_0\|)^2 + \|F_0'\|]}{(1-\|\mathbf{u}_{\mathrm{in}}\|)^2(\|F_2\|+\|F_0\|)g\varepsilon} \cdot \mathrm{poly}\!\left(\frac{\log(\cdots)}{\log(1/\|\mathbf{u}_{\mathrm{in}}\|)}\right)$ |
-| Simplified (real eigenvalues) | $\displaystyle \frac{sT^2 q[(\|F_2\|+\|F_1\|+\|F_0\|)^2 + \|F_0'\|]}{g\varepsilon} \cdot \mathrm{poly}\!\left(\frac{\log(\cdots)}{\log(1/\|\mathbf{u}_{\mathrm{in}}\|)}\right)$ |
+| Simplified (real eigenvalues) | $\displaystyle \frac{sT^2 q[(\|F_2\|+\|F_1\|+\|F_0\|)^2 + \|F_0'\|]}{g\varepsilon} \cdot \mathrm{poly}\!\left(\frac{\log(\cdots)}{\log(1/\|\mathbf{u}_{\mathrm{in}}\|)}\right)$, under the additional real-eigenvalue/diagonalizability assumptions used for this simplified corollary |
 | Carleman truncation order | $N = O\!\left(\frac{\log(T\|F_2\|/g\varepsilon)}{\log(1/\|\mathbf{u}_{\mathrm{in}}\|)}\right)$ |
 | Carleman error (Lemma 2) | $\|\eta_j(t)\| \le tN\|F_2\|\|\mathbf{u}_{\mathrm{in}}\|^{N+1}$ |
 | Carleman error, homogeneous (Corollary 1) | $\|\eta_1(t)\| \le \|\mathbf{u}_{\mathrm{in}}\| R^N |1 - e^{\operatorname{Re}(\lambda_1)t}|^N$ |
 | Euler global error (Lemma 3) | $\|\hat{y}_1(T) - y_1^m\| \le 3N^{2.5}Th[(\|F_2\|+\|F_1\|+\|F_0\|)^2 + \|F_0'\|]$ |
 | Condition number (Lemma 4) | $\kappa \le 3(m+p+1)$ |
 | Lower bound (Theorem 2) | For $R \ge \sqrt{2}$, any quantum algorithm has worst-case complexity $2^{\Omega(T)}$ |
+
+Here $N$ denotes the Carleman truncation order, not the physical dimension $n$ of the original ODE.
 
 ## Comparison with prior work
 
@@ -93,7 +97,7 @@ This is independently interesting. For $R \ge \sqrt{2}$, the paper constructs a 
 
 The construction uses $\mathrm{d}u_j/\mathrm{d}t = -u_j + Ru_j^2$ whose solution is $u_j(t) = 1/(R - e^t(R - 1/u_j(0)))$. For $u_j(0) > 1/R$, the solution blows up in finite time — the nonlinearity amplifies small differences exponentially, enabling state discrimination. This is a clean lower bound that rules out *any* quantum approach (not just Carleman) for large $R$.
 
-The gap at $1 \le R < \sqrt{2}$ is still open as of 2025.
+The gap at $1 \le R < \sqrt{2}$ is left open by this paper.
 
 ## Limits / caveats
 
@@ -107,7 +111,7 @@ The gap at $1 \le R < \sqrt{2}$ is still open as of 2025.
 
 - **Output is a quantum state.** Extracting full classical information costs $O(n)$. Only global properties (expectation values, norms, sampling) are efficiently accessible.
 
-- **No qualitative nonlinear phenomena.** The truncated Carleman system is linear and cannot capture bifurcations, chaos, or blowup. The regime $R < 1$ may inherently preclude chaos (not proven, but plausible).
+- **Limited nonlinear regime.** A truncated Carleman system can approximate nonlinear dynamics inside its convergence regime, but the proven efficient regime is weakly nonlinear/strongly dissipative and excludes many strongly nonlinear phenomena such as bifurcations, chaos, or blowup.
 
 ## Reusable ideas
 

@@ -1,10 +1,10 @@
 
-> **Source:** Bagherimehrab, Berry, Schleich, Aldossary, Angulo, Aspuru-Guzik, arXiv:2409.08265  
+> **Source:** Bagherimehrab, Berry, Schleich, Aldossary, Angulo, Aspuru-Guzik, arXiv:2409.08265
 > **Tags:** #trick #product-formulas #hamiltonian-simulation #commutators #perturbation
 
 ## What it does
 
-Improves a [[Product Formulas]]'s error by one or more orders of magnitude by conjugating it with a single corrector unitary $e^{\pm C}$, where $C$ is a linear combination of nested commutators of the Hamiltonian partitions.
+Improves a [[Product Formulas]]'s local-error expansion by conjugating it with a single corrector unitary $e^{\pm C}$, where $C$ is a linear combination of nested commutators of the Hamiltonian partitions. In favorable regimes this can give large constant-factor savings or remove leading error orders.
 
 ## The trick
 
@@ -26,13 +26,17 @@ so the corrector cost is paid only once at the start and end, not per step. This
 
 ## When to reach for it
 
-- Simulating a perturbed lattice Hamiltonian ($H = A + \alpha B$ with $\alpha \ll 1$) where the two partitions are exactly simulatable (e.g., Hubbard weak-hopping, weakly-coupled Ising)
+- Simulating a perturbed lattice Hamiltonian ($H = A + \alpha B$ with $\alpha \ll 1$) where the two partitions are exactly simulatable
 - You want to stay ancilla-free and within the [[Order-Condition Cancellation in Product Formulas|product-formula framework]] but the standard [[Trotter Commutator-Scaling Bound|Trotter error bound]] is too loose
 - You need the improvement per Trotter step but can't afford the multiplicative overhead of higher-order Suzuki formulas
 
 ## Complexity
 
 The corrector itself adds $10k$ exponentials (for the $k$-th order version) at the simulation boundaries via [[Vandermonde Compilation of Nested Commutator Exponentials|Vandermonde compilation]]. Per-step cost: zero additional exponentials. Total overhead: additive, independent of step count $r$.
+
+## Relation to THRIFT
+
+[[Interaction-Picture Product Formula (THRIFT)]] reaches the same $\alpha^2$ perturbative scaling by moving to the interaction picture and using time-ordered evolutions of individual interaction-picture terms, or equivalently evolutions under $A+\alpha B_j$-type pieces. Symplectic corrector injection instead stays in the original frame and compiles boundary commutator correctors from $e^{At}$ and $e^{Bt}$. Which primitive is cheaper is model dependent.
 
 ## Caveat
 

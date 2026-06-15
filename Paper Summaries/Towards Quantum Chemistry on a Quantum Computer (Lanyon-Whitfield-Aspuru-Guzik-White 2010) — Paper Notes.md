@@ -6,13 +6,13 @@
 
 ## The computational problem
 
-Compute the full energy spectrum of a molecule — all eigenvalues of its electronic Hamiltonian — to chemical precision ($\sim 1$ kJ/mol). On a classical computer, full configuration interaction (FCI) scales exponentially in the number of orbitals. This paper tackles the simplest case: H$_2$ in the STO-3G minimal basis.
+Compute molecular electronic energies to chemical precision ($\sim 1$ kJ/mol). On a classical computer, full configuration interaction (FCI) scales exponentially in the number of orbitals. This paper tackles the simplest case: H$_2$ in the STO-3G minimal basis, where symmetry reduction splits the problem into tiny blocks and the experiment estimates selected block eigenphases.
 
 ## What the paper does
 
-First experimental demonstration of a quantum algorithm computing molecular energies. Uses a photonic quantum computer (linear optics, polarisation-encoded qubits) to calculate the complete energy spectrum of H$_2$ to 20 bits of precision via the [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|iterative phase estimation algorithm]] (IPEA).
+First experimental demonstration of a quantum algorithm computing molecular energies. Uses a photonic quantum computer (linear optics, polarisation-encoded qubits) to calculate the H$_2$ minimal-basis energy curves to 20 bits of phase precision via the [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|iterative phase estimation algorithm]] (IPEA).
 
-The result itself isn't computationally interesting — H$_2$ in minimal basis is trivial classically. The paper's value is as a proof of concept: it demonstrates the full algorithmic pipeline (state encoding → controlled time evolution → phase readout) on real quantum hardware, achieving chemical precision ($\pm 16$ J/mol, well below the $\sim 1$ kJ/mol threshold). It also provides resource estimates for scaling up, finding that the fully scalable Trotterized version of the same H$_2$ simulation requires 4 qubits and 522 gates.
+The result itself isn't computationally interesting — H$_2$ in minimal basis is trivial classically. The paper's value is as a proof of concept: it implements the phase-estimation/time-evolution core on real quantum hardware, achieving chemical precision within the minimal-basis model ($\pm 16$ J/mol, well below the $\sim 1$ kJ/mol threshold). State preparation, eigenstate/block identification, and Hamiltonian reduction are heavily classically assisted. It also provides resource estimates for scaling up, finding that the fully scalable Trotterized version of the same H$_2$ simulation requires 4 qubits and 522 gates.
 
 This was the first implementation of the IPEA using entangling gates capable of generating genuine quantum correlations, distinguishing it from earlier NMR demonstrations.
 
@@ -35,7 +35,7 @@ The IPEA extracts the eigenphase $\phi$ one bit at a time, starting from the lea
 3. Apply corrective rotation $\hat{R}_z(\omega_k)$ where $\omega_k = -2\pi b$ and $b = 0.0\phi_{k+1}\phi_{k+2}\ldots\phi_m$ encodes previously measured bits
 4. Measure control qubit → bit $\phi_k$
 
-The phase relates to energy via $E = 2\pi\phi \cdot E_h$, where $E_h$ is the Hartree energy unit. For chemical accuracy ($\sim 1$ kJ/mol), 14 bits suffice since $2\pi \cdot 2^{-14} E_h \approx 1.01$ kJ/mol. They demonstrated 20 bits.
+The phase relates to energy by $E = 2\pi\phi/t$ up to the units, offsets, and scaling used in the implemented unitary. For the paper's chosen convention this is reported in Hartree units; for chemical accuracy ($\sim 1$ kJ/mol), 14 bits suffice since $2\pi \cdot 2^{-14} E_h \approx 1.01$ kJ/mol. They demonstrated 20 bits.
 
 ### 3. Gate decomposition
 
@@ -55,10 +55,10 @@ Each bit is sampled $n = 31$ times. The mode (most frequent outcome) is taken as
 - Ground state energy at equilibrium (73.48 pm): $-535.58 \pm 0.03$ kJ/mol, matching the classical FCI value to 20 bits
 - Precision achieved: $\pm 2^{-20} E_h \approx 16$ J/mol
 
-**Scalability resource estimate:** A fully Trotterized simulation of H$_2$ (avoiding classical pre-computation of eigenstates) requires:
+**Scalability resource estimate, not the photonic circuit:** A fully Trotterized simulation of H$_2$ (avoiding classical pre-computation of eigenstates) requires:
 - 4 qubits
 - 522 elementary gates
-- Gate count for general molecules scales as $O(N^5)$ where $N$ is the number of basis functions
+- Gate count for general molecules scales with the fifth power of $N$ where $N$ is the number of basis functions
 
 ## Comparison with prior and subsequent work
 
@@ -69,9 +69,15 @@ Each bit is sampled $n = 31$ times. The mode (most frequent outcome) is taken as
 | **This paper (2010)** | **H$_2$** | **Photonic** | **IPEA** | **20 bits** |
 | [[A Variational Eigenvalue Solver on a Quantum Processor (Peruzzo-McClean et al. 2014) — Paper Notes\|Peruzzo-McClean et al. (2014)]] | He–H$^+$ | Photonic | VQE | Chemical accuracy |
 
-The key advance over NMR demonstrations: this uses genuine entangling gates (linear-optical CNOT) that can in principle scale to universal quantum computing. NMR approaches are constrained by ensemble measurements and questions about whether they exploit entanglement.
+The key advance over NMR demonstrations: this uses genuine entangling gates (linear-optical CNOT) capable of generating quantum correlations and compatible in principle with universal quantum computing. This should not be read as a claim that entanglement is what gives an algorithmic speedup in this tiny demonstration.
 
 The key limitation compared to later work: eigenstates are prepared classically and loaded, rather than prepared on the quantum computer. [[Adiabatic State Preparation for Chemistry|Adiabatic state preparation]] and the Trotterized time-evolution decomposition are discussed but not implemented.
+
+| Component | Status in the experiment |
+|---|---|
+| IPEA and controlled one-qubit block unitaries | Implemented on photonic hardware |
+| Hamiltonian block reduction and eigenstate choices | Classically precomputed |
+| ASP and scalable Trotterization | Discussed / resource-estimated, not implemented |
 
 ## Limits / caveats
 

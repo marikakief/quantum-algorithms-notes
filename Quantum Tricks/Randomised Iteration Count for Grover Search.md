@@ -15,7 +15,7 @@ The fix: randomise the iteration count.
 
 1. Set $m = 1$, $\lambda = 6/5$.
 2. Choose $j$ uniformly at random from $\{0, 1, \ldots, m-1\}$.
-3. Run $j$ Grover iterations, measure. If solution found, stop.
+3. Run $j$ Grover iterations, measure, and check the measured candidate with the oracle. If it is marked, stop.
 4. Otherwise, $m \leftarrow \min(\lambda m, \sqrt{N})$. Go to 2.
 
 The key lemma: if $j \sim \text{Uniform}\{0, \ldots, m-1\}$, the average success probability is
@@ -36,16 +36,17 @@ The geometric growth of $m$ by factor $\lambda$ ensures you hit the critical thr
 
 ## Complexity
 
-$O(\sqrt{N/t})$ expected queries — the same as the known-$t$ case, with a constant overhead factor $\leq 9/2$.
+$O(\sqrt{N/t})$ expected queries when $t>0$ — the same asymptotic scaling as the known-$t$ case, with a constant overhead factor $\leq 9/2$ in the BBHT analysis.
 
 ## Caveat
 
-The constant factor is worse than the known-$t$ case. If you have even a rough estimate of $t$, use it directly rather than this generic schedule. For the case where you need the *count* rather than just finding an element, see [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]].
+The constant factor is worse than the known-$t$ case. If you have even a rough estimate of $t$, use it directly rather than this generic schedule. If $t$ may be zero, the search loop cannot certify absence without an additional stopping/certification convention. For the case where you need the *count* rather than just finding an element, see [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]].
 
 Any $\lambda \in (1, 4/3)$ works. The paper uses $6/5$; the choice affects the constant but not the asymptotics.
 
 ## Related notes
 - [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes]]
+- [[Quantum Search with Advice (Montanaro 2009) — Paper Notes]]
 - [[Standard Amplitude Amplification]]
 - [[Amplitude Estimation via Phase Estimation on Q]]
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]]

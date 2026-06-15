@@ -46,3 +46,4 @@ The analysis itself has no computational cost — it's a proof technique. It det
 - [[Recursive Concatenation for Fault Tolerance]]
 - [[Polynomial Codes from Secret Sharing]]
 - [[Error-Detecting Codes with Concatenation for Fault Tolerance]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — uses a related good-vs-bad fault-path idea through avoiding sets and weight enumerators for surface-code injection.

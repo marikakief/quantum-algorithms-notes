@@ -12,15 +12,17 @@ Classically (deterministically): you need to query $2^{n-1} + 1$ inputs in the w
 
 ## What the paper does
 
-Gives a quantum algorithm that solves the Deutsch-Jozsa problem with **certainty** using a **single** query to the oracle (in the $n$-qubit version). This is an exponential separation between quantum and classical *deterministic* query complexity.
+Gives a quantum algorithm that solves the Deutsch-Jozsa problem with **certainty** using a **single** query to the oracle (in the $n$-qubit version). This is an exponential separation between quantum and classical *deterministic* query complexity; randomized classical query complexity is only constant for bounded error.
 
-This was the first problem demonstrating that quantum computers can be exponentially faster than classical computers for *some* computational task. It generalises [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch's 1985 algorithm]] (the $n=1$ case) to $n$ bits.
+This was the first problem demonstrating an exponential quantum speedup over deterministic classical computation for *some* computational task. It generalises [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch's 1985 algorithm]] (the $n=1$ case) to $n$ bits.
 
 **Important caveat:** A probabilistic classical algorithm can solve the problem with high confidence using $O(1)$ queries (just sample a few random inputs — if you ever see both 0 and 1, it's balanced; if not, it's almost certainly constant). So the separation is quantum vs. deterministic classical, not quantum vs. randomised classical. The first quantum-vs-randomised exponential separation came from [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]].
 
 ---
 
 ## The algorithm
+
+The 1992 paper establishes an exact quantum solution. The circuit below is the later cleaned-up textbook formulation using phase kickback; it is equivalent for the standard oracle version but should not be read as the literal original exposition.
 
 ### Oracle setup
 
@@ -53,6 +55,8 @@ So: measure all qubits. If the result is $0^n$, output "constant"; otherwise, ou
 
 ## Complexity
 
+Query complexity under the standard promise oracle; the classical randomized row is bounded error.
+
 | Model | Queries needed |
 |---|---|
 | Classical deterministic | $2^{n-1} + 1$ |
@@ -67,7 +71,7 @@ The quantum advantage over deterministic classical computation is exponential. O
 
 1. **First exponential quantum speedup** — even if only against deterministic classical algorithms, this was the proof of concept that quantum interference could be harnessed for computation.
 2. **Template for oracle algorithms** — the Hadamard-oracle-Hadamard structure became the starting point for Bernstein-Vazirani, [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon's algorithm]], and eventually [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor's algorithm]] (via the QFT generalisation).
-3. **Introduced promise problems** to quantum complexity — the function is promised to be constant or balanced, not arbitrary. This "promise" structure reappears throughout quantum algorithms.
+3. **Gave an early influential quantum promise problem** — the function is promised to be constant or balanced, not arbitrary. This "promise" structure reappears throughout quantum algorithms.
 
 ---
 
@@ -99,7 +103,7 @@ The quantum advantage over deterministic classical computation is exponential. O
 
 ### Paper notes
 - [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes]] — Deutsch's original $n=1$ algorithm; this paper is the direct generalisation
-- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — same circuit, different promise: learns hidden linear function in 1 query; first quantum-vs-randomised separation
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] — related hidden-linear-function circuit and the later oracle-separation framework; the basic Bernstein-Vazirani hidden-string problem gives a linear query separation, while the full paper gives stronger oracle separations
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — first exponential quantum-vs-randomised separation; builds on the oracle framework established here
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — replaces the Hadamard with the QFT, turning the Deutsch-Jozsa template into a factoring algorithm
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — different oracle paradigm (amplitude amplification vs. interference)

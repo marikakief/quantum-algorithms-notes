@@ -12,7 +12,7 @@ The specific question: can optimized low-order Trotter methods compete with the 
 
 ## What the paper does
 
-Shows that second-order Trotter formulas, when combined with [[Hamming Weight Phasing for Equiangular Rotations|Hamming weight phasing]] and careful error budgeting, can match or beat LCU-based methods for condensed-phase simulations — particularly when targeting extensive error $\Delta E = \Theta(N)$ (energy per unit cell rather than absolute energy). The headline results:
+Shows that second-order Trotter formulas, when combined with [[Hamming Weight Phasing for Equiangular Rotations|Hamming weight phasing]] and careful error budgeting, can match or beat LCU-based methods for the compiled condensed-phase instances considered — particularly when targeting extensive error $\Delta E = \Theta(N)$ (fixed energy-density error rather than fixed absolute error). This is a finite-resource and error-convention comparison, not a blanket asymptotic dominance claim. The headline results:
 
 - **Hubbard model** with extensive error: $O(1)$ T complexity (the number of Trotter steps *decreases* with system size, until $N > 10^5$). With intensive error: $O(N^{3/2}/\Delta E^{3/2})$.
 - **Jellium / plane-wave electronic structure** with extensive error: $O(N^2)$ T complexity. With intensive error: $O(N^{7/2}/\Delta E^{3/2})$.
@@ -35,8 +35,8 @@ $$H = \sum_{pq} T_{pq} a^\dagger_p a_q + \sum_p U_p n_p + \sum_{p \neq q} V_{pq}
 
 ### Two Trotter step circuits
 
-Both use the second-order (symmetric) Trotter formula:
-$$e^{-iHt} \approx \left(\prod_{\ell=1}^L e^{-iH_\ell t/2} \prod_{\ell=L}^1 e^{-iH_\ell t/2}\right)$$
+Both use the second-order (symmetric) Trotter formula with $r$ time slices:
+$$e^{-iHt} \approx \left(\prod_{\ell=1}^L e^{-iH_\ell t/(2r)} \prod_{\ell=L}^1 e^{-iH_\ell t/(2r)}\right)^r.$$
 
 **1. [[Fermionic Swap Network]] Trotter step** (from [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes|Kivlichan, McClean et al. (2018)]]): Uses odd-even transposition sort on a linear qubit chain. Each fermionic simulation gate simultaneously simulates hopping $T_{pq}$, density-density $V_{pq}$, and performs the fermionic swap — all in one nearest-neighbour two-qubit gate. The second-order step runs the network forward then backward. Arbitrary rotations per step: $4(N-1)^2$ (spinless jellium), $(N-1)(3N-4)$ (spinful jellium), $9N$ (Hubbard).
 
@@ -62,7 +62,7 @@ $$\|e^{-iHt} - e^{-iH_\text{eff}t}\| \leq W t^3$$
 where the Trotter error norm $W$ is:
 $$W = \frac{1}{12} \sum_{b=1}^{L-1} \left(\left\|\sum_{c>b}\sum_{a>b} [[H_b, H_c], H_a]\right\| + \frac{1}{2}\left\|\sum_{c>b} [[H_b, H_c], H_b]\right\|\right)$$
 
-This bound is non-perturbative (holds for all $t$, not just small $t$), and matches the $1/12$ factor from the BCH expansion. The energy eigenvalue shift from Trotterization satisfies $|E_n - E_n^\text{eff}| \leq W t^2 + O(W^3 t^8)$.
+This bound is non-perturbative in the sense used by the paper: the rigorous eigenvalue-error expression is not merely the leading BCH term, but the stated arctangent form is used under the condition $Wt^3 \leq \sqrt{2}$. In that regime the energy eigenvalue shift has leading behaviour $|E_n - E_n^\text{eff}| \leq W t^2 + O(W^3 t^8)$.
 
 Numerics: the split-operator step consistently has $2$–$3\times$ smaller Trotter error norm than the fermionic swap network. The Trotter error norm scales as $O(N)$ for the Hubbard model and $O(N^3)$ for jellium.
 
@@ -122,10 +122,10 @@ for all eigenvalues $n$, valid whenever $Wt^3 \leq \sqrt{2}$.
 |---|---|---|---|---|
 | Qubitization ([[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes\|Babbush, Gidney et al. 2018]]) | $O(N^2)$ | $O(N)$ | $O(N^3)$ | $O(N^2)$ |
 | **This paper (Trotter)** | $O(N^{3/2})$ | $O(1)$ | $O(N^{7/2})$ | $O(N^2)$ |
-| Campbell (2019) randomized | $O(N^2)$ | $O(1)$ | $O(N^4)$ | $O(N^2)$ (claimed but not compiled) |
+| Campbell (2019) randomized | $O(N^2)$ | $O(1)$ | $O(N^4)$ | $O(N^2)$ (asymptotic imported comparison, not compiled with the same Hamming-weight-phased finite-resource model) |
 | Childs & Su (2019) high-order | $O(N^{3/2})$ | $O(1)$ (asymptotic, no concrete circuits) | — | — |
 
-For the Hubbard model with extensive error: qubitization $O(N)$, this paper $O(1)$. That's the headline comparison. But qubitization dominates for intensive error (Hubbard and especially jellium).
+For the Hubbard model with extensive error: qubitization $O(N)$, this paper $O(1)$ under the paper's Trotter-error and finite-size assumptions, with the eventual crossover pushed to very large $N$. That is the headline comparison. It should be kept separate from the intensive-error regime, where qubitization dominates for Hubbard and especially jellium.
 
 ## Limits / caveats
 

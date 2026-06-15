@@ -25,7 +25,7 @@ Gives two algorithms that break the $O(n^{3/2})$ barrier for triangle finding:
 
 The second algorithm is the more interesting one. It generalises [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis's element distinctness algorithm]] by using a *recursive* quantum walk: the checking subroutine inside the walk is itself a quantum walk (Graph Collision), giving a nested structure.
 
-Both algorithms improve on the $O(n^{3/2})$ Grover bound. Later work by Le Gall (2014) improved this to $O(n^{5/4})$, and the current best is $\tilde{O}(n^{5/4})$, still short of the $\Omega(n)$ lower bound.
+Both algorithms improve on the $O(n^{3/2})$ Grover bound. Later work by Le Gall (2014) improved the dense adjacency-matrix query upper bound to $\tilde{O}(n^{5/4})$, and extended-learning-graph work later removed the extra logarithmic factors in the dense setting. As of June 2026, the standard comparison point in this vault is the $n^{5/4}$ exponent, still short of the $\Omega(n)$ lower bound.
 
 ---
 
@@ -41,7 +41,7 @@ Both algorithms improve on the $O(n^{3/2})$ Grover bound. Later work by Le Gall 
 
 After cleaning, the algorithm classifies remaining edges into:
 - **$T$**: edges with few length-2 paths — $T$ contains $O(n^{3-\varepsilon'})$ triangles, which can be searched by Grover in $\tilde{O}(\sqrt{n^{3-\varepsilon'}})$ queries
-- **$E$**: edges incident to high/low degree vertices — $|E \cap G| = O(n^{2-\delta} + n^{2-\varepsilon+\delta+\varepsilon'})$, so triangles touching $E$ can be found by [[Amplitude Estimation via Phase Estimation on Q|amplitude amplification]]
+- **$E$**: edges incident to high/low degree vertices — $|E \cap G| = O(n^{2-\delta} + n^{2-\varepsilon+\delta+\varepsilon'})$, so triangles touching $E$ can be found by [[Standard Amplitude Amplification|amplitude amplification]] / Grover-style search
 
 **Optimising** with $\varepsilon = 3/7$, $\varepsilon' = \delta = 1/7$ gives $\tilde{O}(n^{10/7})$.
 
@@ -101,7 +101,7 @@ $$\text{$k$-vertex subgraph:} \quad \tilde{O}(n^{2-2/k}) \text{ queries}$$
 
 $$\text{Monotone graph property with $k$-vertex 1-certificates:} \quad \tilde{O}(n^{2-2/k}) \text{ queries}$$
 
-The $\tilde{O}(n^{13/10})$ for Triangle was the best known at publication. Lower bound: $\Omega(n)$ (the adversary method is stuck at $\Omega(\sqrt{NK})$ and for Triangle $K = 3$, $N = n^2$, giving only $\Omega(n)$).
+The $\tilde{O}(n^{13/10})$ for Triangle was the best known at publication. Lower bound: $\Omega(n)$. The source-era lower-bound techniques discussed in this line of work only gave linear lower bounds for Triangle.
 
 ---
 
@@ -112,9 +112,10 @@ The $\tilde{O}(n^{13/10})$ for Triangle was the best known at publication. Lower
 | This paper (2005/2007) | $\tilde{O}(n^{13/10})$ | Recursive quantum walk |
 | Belovs (2012) | $O(n^{35/27})$ | Learning graphs |
 | Le Gall (2014) | $\tilde{O}(n^{5/4})$ | Improved quantum walk with non-uniform data structures |
-| Lower bound | $\Omega(n)$ | Adversary method (tight for this method) |
+| Jeffery-Kothari-Magniez (2016) | $O(n^{5/4})$ | Extended learning graphs; removes extra dense-case log factors |
+| Lower bound | $\Omega(n)$ | Known lower bound; gap remains open |
 
-The gap between $\tilde{O}(n^{5/4})$ and $\Omega(n)$ remains open.
+The gap between $O(n^{5/4})$ and $\Omega(n)$ remains open.
 
 ---
 
@@ -122,7 +123,7 @@ The gap between $\tilde{O}(n^{5/4})$ and $\Omega(n)$ remains open.
 
 - The $\tilde{O}$ hides polylogarithmic factors throughout.
 - The quantum walk algorithm uses $O(n)$ qubits — significantly more than the $O(\log n)$ qubits of the combinatorial algorithm.
-- The lower bound $\Omega(n)$ may not be tight. The adversary method (all variants) cannot prove anything better than $\Omega(n)$ for Triangle because of the small certificate size ($K = 3$). Proving tighter lower bounds requires different techniques.
+- The lower bound $\Omega(n)$ may not be tight. At the time, known adversary-style techniques for this graph-property setting only gave $\Omega(n)$; stronger lower bounds would require additional ideas.
 - The paper only addresses query complexity, not gate complexity. The quantum walk steps require additional computation to maintain the data structure.
 
 ---
@@ -141,7 +142,7 @@ The gap between $\tilde{O}(n^{5/4})$ and $\Omega(n)$ remains open.
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis (2004/2007)]] — the quantum walk on the Johnson graph that this paper generalises
 - [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard-Høyer-Mosca-Tapp (2002)]] — amplitude amplification used throughout
 - Buhrman et al. (2005) — prior $O(n + \sqrt{nm})$ result for sparse Triangle
-- Aaronson-Shi (2004) — $\Omega(n^{2/3})$ lower bound for collision via polynomial method
+- Aaronson/Shi polynomial-method lower bounds — background for collision and element-distinctness query lower-bound comparisons
 - Szemerédi (1976) — regularity lemma (mentioned but not used; simpler observation suffices)
 - Childs-Eisenberg (2003) — independent $k$-clique finding result
 

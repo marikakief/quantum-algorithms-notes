@@ -27,6 +27,10 @@ $$|\hat f_i-f_i|\le \varepsilon\qquad\text{for all }i.$$
 
 For incompatible observables, quantum memory can matter enormously. The same paper gives a task where a quantum learner predicts all $4^n$ Pauli expectations using $O(n)$ copies for constant error, while any classical learner needs $2^{\Omega(n)}$ copies.
 
+**Computational-assumption separations:**
+
+Some QML papers claim advantage from cryptographic assumptions, hardness of simulating a circuit family, or hardness of solving the induced classical optimization problem. Those are different from HKP's information-theoretic query/sample statements and should be labeled separately.
+
 ## When to reach for it
 
 Use this as a sanity check for QML papers:
@@ -37,11 +41,13 @@ Use this as a sanity check for QML papers:
 
 ## Complexity
 
-The average-case simulation overhead is polynomial in $m$, $N_Q$, and $1/\varepsilon$. The worst-case Pauli separation is exponential: $O(n)$ quantum copies versus $2^{\Omega(n)}$ classical copies for all Paulis at constant accuracy.
+The average-case simulation overhead is polynomial in $m$ (the output-system size / observable support parameter), $N_Q$, and $1/\varepsilon$. The worst-case Pauli separation is exponential in copy/query complexity with quantum memory: $O(n)$ quantum copies versus $2^{\Omega(n)}$ classical copies for all Paulis at constant accuracy.
 
 ## Caveat
 
 This test is about query/sample complexity, not full computational runtime. A classical learner with polynomially many samples may still be computationally infeasible if the hypothesis class or empirical-risk problem is hard.
+
+The worst-case Pauli task is a clean property-prediction separation, not by itself evidence of practical ML advantage.
 
 ## Related notes
 

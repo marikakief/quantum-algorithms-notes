@@ -133,3 +133,8 @@ This was one of the most important results in quantum algorithms: it clarified t
 - [[Quantum Self-Tomography via Phase Estimation]]
 - [[Gapped Phase Estimation]]
 - [[Hamiltonian-to-Projection via Phase Estimation]]
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler use qPCA-style optical imaging as an application where uploading protects multi-copy processing.
+

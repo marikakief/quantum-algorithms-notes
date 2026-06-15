@@ -14,11 +14,11 @@ This is the abstraction layer that makes modern quantum matrix algorithms modula
 ## What to remember
 
 Typical rules of thumb:
-- products compose by circuit concatenation,
+- products compose by circuit concatenation: an \((\alpha,a,\epsilon_A)\)-encoding of \(A\) followed by a \((\beta,b,\epsilon_B)\)-encoding of \(B\) gives an \((\alpha\beta,a+b,\alpha\epsilon_B+\beta\epsilon_A+O(\epsilon_A\epsilon_B))\)-encoding of \(AB\), up to projector/ancilla convention details,
 - linear combinations are handled by [[Linear Combination of Unitaries (LCU)|LCU]]-style control logic,
 - normalization factors multiply or add and therefore need to be tracked carefully.
 
-The real enemy is not usually the circuit shape. It is runaway normalization.
+The real enemy is not usually the circuit shape. It is runaway normalization. You also have to align ancilla projectors, controlled versions, and error budgets; the algebra is clean only when the block-encodings use compatible conventions.
 
 ## When to use it
 

@@ -19,7 +19,7 @@ $$
 \lambda_\pm = \frac{H_{xx} + H_{yy}}{2} \pm \sqrt{\left(\frac{H_{xx} - H_{yy}}{2}\right)^2 + |H_{xy}|^2}.
 $$
 
-Implementation: one oracle query to find the neighbor $y$ and read off $H_{xx}, H_{xy}, H_{yy}$. Then a controlled rotation on the $\{|x\rangle, |y\rangle\}$ subspace applies $e^{-iH_{\text{block}}t}$.
+Implementation: use the sparse-access oracles to coherently find the neighbor $y$ and read the needed block data $H_{xx}, H_{xy}, H_{yy}$, then apply a controlled rotation on the $\{|x\rangle, |y\rangle\}$ subspace implementing $e^{-iH_{\text{block}}t}$. Depending on the oracle interface, this is a constant number of oracle calls rather than literally one universal query.
 
 ## Why it matters
 
@@ -27,13 +27,13 @@ This is the base case for all [[Order-Condition Cancellation in Product Formulas
 
 ## Complexity
 
-- **Queries:** 1 call to the black-box per block
-- **Gates:** $O(1)$ per block (controlled rotation + phase)
+- **Queries:** $O(1)$ calls to the sparse-access oracles per block, with the exact constant depending on whether neighbor and matrix-entry data are separate oracles
+- **Gates:** $O(1)$ arithmetic/rotation structure per block at fixed precision; finite-precision matrix entries require reversible arithmetic and rotation synthesis
 - **Total for one 1-sparse term on $n$ qubits:** $O(1)$ oracle calls (the decomposition is implicit — you only touch the block containing your input state)
 
 ## Caveat
 
-Only works for 1-sparse matrices. Going from $d$-sparse to 1-sparse requires a decomposition step (e.g., [[Edge-Coloring Decomposition for Sparse Hamiltonians]]) that introduces overhead.
+Only works for 1-sparse Hermitian matrices with a consistent oracle: if $x$ is paired with $y$, the oracle data must also expose the conjugate entry $H_{yx}=H_{xy}^*$ coherently. Going from $d$-sparse to 1-sparse requires a decomposition step (e.g., [[Edge-Coloring Decomposition for Sparse Hamiltonians]]) that introduces overhead.
 
 ## Related notes
 

@@ -18,7 +18,7 @@ The key point: the CI matrix has $\binom{N}{\eta}$ rows/columns but is extremely
 
 ## What the paper does
 
-It gives a quantum simulation algorithm for molecular Hamiltonians with gate complexity $\tilde{O}(\eta^2 N^3 t)$ and $\tilde{O}(\eta)$ qubits. The qubit count is exponentially better than second-quantized representations (which need $\tilde{O}(N)$ qubits), and the gate count beats prior algorithms when $\eta \ll N$. Precision scaling is $O(\log 1/\varepsilon)$ (logarithmic, not polynomial as in [[Trotterized Time Evolution for Chemistry]]).
+It gives a quantum simulation algorithm for molecular Hamiltonians with gate complexity $\tilde{O}(\eta^2 N^3 t)$ and $\eta\log N=\tilde{O}(\eta)$ qubits. The qubit count can be much smaller than the $N$ qubits of second-quantized representations when $\eta\log N \ll N$, and the gate count beats the $N^4$ second-quantized Taylor/database scaling when $\eta^2 \ll N$. The "exponentially more precise" claim in the title refers to precision scaling: $O(\log 1/\varepsilon)$ rather than polynomial precision dependence as in [[Trotterized Time Evolution for Chemistry]].
 
 This is the paper where the [[Truncated Taylor Series Simulation]] approach is applied to the first-quantized CI representation, enabling [[On-the-fly Molecular Integral Evaluation]] without a classical preprocessing step. The result is asymptotically the best scaling in the literature at the time of publication.
 
@@ -30,7 +30,7 @@ The $\eta$-electron state is stored as a sorted list of $\eta$ occupied orbital 
 
 $$|\psi\rangle = \sum_{\alpha \in \binom{[N]}{\eta}} c_\alpha |\alpha\rangle, \quad |\alpha\rangle = |i_1, i_2, \ldots, i_\eta\rangle,\; i_1 < i_2 < \cdots < i_\eta$$
 
-Total qubits: $\eta \log N = \tilde{O}(\eta)$, compared to $N$ qubits for second-quantized representations. For molecules where $\eta \ll N$, this is exponentially fewer qubits.
+Total qubits: $\eta \log N = \tilde{O}(\eta)$, compared to $N$ qubits for second-quantized representations. This is advantageous when $\eta \log N \ll N$; it is a large representation saving in dilute active spaces, not the source of the paper's "exponential" precision claim.
 
 ### 2. Decompose $H$ into 1-sparse terms via graph edge-coloring
 
@@ -74,7 +74,7 @@ $$e^{-iH\tau} \approx \sum_{k=0}^{K} \frac{(-i\tau H)^k}{k!}$$
 3. Substitute $H = \frac{\zeta}{w} \sum_\ell H_\ell$ (where $w$ is a normalization), expanding $H^k$ as a sum over $k$-tuples of unitary terms.
 4. Implement as an LCU: prepare the superposition state $B|0\rangle$ over $(k, \ell_1, \ldots, \ell_k)$ tuples, apply controlled $H_{\ell_1} \cdots H_{\ell_k}$ via $k$ applications of $\text{select}(H)$, then postselect on $B^\dagger|0\rangle$.
 5. Use oblivious amplitude amplification to remove the postselection cost.
-6. Parameters: $K = O(\log 1/\varepsilon)$ and $r = O(\eta^2 N^2 \|\lambda\| t)$ where $\|\lambda\|$ is the 1-norm of the LCU coefficients.
+6. Parameters: $K = O(\log 1/\varepsilon)$ and $r=O(\lambda t)$ Taylor segments, where $\lambda$ is the LCU 1-norm after the paper's discretization and 1-sparse decomposition. Under the orbital regularity assumptions, the full theorem bounds the resulting gate count by $\tilde{O}(\eta^2 N^3 t)$.
 
 The dominant cost per segment is $O(K)$ calls to $\text{select}(H)$, each costing $\tilde{O}(N)$ gates. Total gate count: $\tilde{O}(r \cdot K \cdot N) = \tilde{O}(\eta^2 N^3 t)$.
 
@@ -95,7 +95,7 @@ The precision scaling is $O(\log 1/\varepsilon)$ — polylogarithmic in $1/\vare
 | Taylor series + on-the-fly | Second-quantized | $\tilde{O}(N)$ | $\tilde{O}(N^5 t)$ |
 | **This work (CI matrix)** | **First-quantized** | $\tilde{O}(\eta)$ | $\tilde{O}(\eta^2 N^3 t)$ |
 
-For $\eta \ll N$ (the typical chemistry regime), $\eta^2 N^3 \ll N^4$, giving a real improvement. For $\eta = O(\sqrt{N})$, the gate counts are comparable; for $\eta = O(N)$, the CI approach is worse.
+The gate-count comparison with the $N^4$ second-quantized Taylor/database scaling requires $\eta^2 \ll N$. For $\eta = O(\sqrt{N})$, the gate counts are comparable; for $\eta = O(N)$, the CI approach is worse.
 
 **Precision scaling:** The [[Truncated Taylor Series Simulation]] gives only polylogarithmic dependence on $1/\varepsilon$ (via the truncation order $K = O(\log 1/\varepsilon)$), compared to Trotter's polynomial $O(1/\varepsilon)$ dependence. This is the "exponentially more precise" of the title.
 
@@ -109,15 +109,15 @@ For $\eta \ll N$ (the typical chemistry regime), $\eta^2 N^3 \ll N^4$, giving a 
 | Babbush et al. 2016 (NJP, on-the-fly) | 2016 | Taylor series, 2nd-quantized, on-the-fly | $O(N)$ | $\tilde{O}(N^5 t)$ | $O(\log 1/\varepsilon)$ |
 | **This work** | **2018** | **Taylor series, CI matrix, on-the-fly** | $\tilde{O}(\eta)$ | $\tilde{O}(\eta^2 N^3 t)$ | $O(\log 1/\varepsilon)$ |
 
-The connection to [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley et al. (2016)]]: that paper cites an early version of this work (NJP 18, 033032) as the theoretical backing for the Taylor series simulation approach used there, even though the hardware experiment used Trotter. The current paper gives the full formal proof (v3 is a complete rewrite from 12 to 41 pages) and establishes the algorithm for larger-scale analysis.
+The connection to [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes|O'Malley et al. (2016)]] is indirect. O'Malley's hardware experiment used Trotterization but cited the Babbush et al. Taylor-series chemistry work as fault-tolerant motivation; NJP 18, 033032 is the second-quantized Taylor-series paper, not this first-quantized CI paper.
 
-The paper is a significant step toward algorithms for classically intractable molecules. The CI approach is more qubit-efficient than second-quantized methods, which matters for near-term devices. However, the gate count still scales as $\eta^2 N^3$ — getting to, say, $N = 100$ orbitals, $\eta = 10$ electrons gives $\sim 10^7$, which requires fault tolerance.
+The paper is a significant step toward algorithms for classically intractable molecules. The CI approach is more qubit-efficient than second-quantized methods in regimes with $\eta\log N \ll N$. However, the gate count still scales as $\eta^2 N^3$ — getting to, say, $N = 100$ orbitals, $\eta = 10$ electrons gives $\sim 10^8$ before hidden polylogarithmic factors, which requires fault tolerance.
 
 ## Limits / caveats
 
-- **Orbital regularity assumptions:** Theorem 1 requires the orbital basis functions to satisfy specific regularity conditions (exponential decay, bounded values and derivatives). Not all orbital choices satisfy these; plane-wave bases generally do, but standard Gaussian atomic orbital bases need care.
+- **Orbital regularity assumptions:** Theorem 1 requires the orbital basis functions to satisfy specific regularity conditions (exponential decay, bounded values and derivatives, and efficient evaluation). This is not a generic CI-matrix oracle assumption. Plane-wave first-quantized algorithms form a separate line of work; standard Gaussian atomic orbital bases also need care against the theorem's assumptions.
 - **$\tilde{O}$ hides polylogarithms:** The actual gate count has polylogarithmic factors in $N$, $\eta$, $t$, $1/\varepsilon$, and the orbital parameters $\phi_\text{max}$, $x_\text{max}$. For small molecules, these can dominate.
-- **$\eta \ll N$ regime:** The improvement over second-quantized methods requires $\eta \ll N$. For the minimal STO-6G basis of H₂ where $\eta = 2$, $N = 4$, the improvement is minimal.
+- **Regime of advantage:** The qubit saving requires $\eta\log N \ll N$, while the gate-count comparison to the $N^4$ second-quantized Taylor/database scaling requires $\eta^2 \ll N$. For the minimal STO-6G basis of H₂ where $\eta = 2$, $N = 4$, the improvement is minimal.
 - **CI vs. full CI:** The CI matrix here is the full CI matrix (all Slater determinants), not the truncated CI (CISD, CISDT) used in classical quantum chemistry. Full CI is exponentially large classically, which is why quantum simulation is interesting — but the circuit uses only $\tilde{O}(\eta)$ qubits because it works in the first-quantized picture.
 - **Ground-state problem:** The algorithm simulates time evolution, not directly the ground-state energy. Ground-state estimation requires combining with phase estimation, which needs a good initial state (Hartree-Fock or better). For strongly correlated systems, the Hartree-Fock overlap can be small.
 - **No experimental demonstration:** This is a purely theoretical algorithm; it predates the hardware implementations that would be needed to validate it. The qubit counts are still well beyond current devices for chemically interesting systems.
@@ -155,7 +155,7 @@ The paper is a significant step toward algorithms for classically intractable mo
 - [[Scalable Quantum Simulation of Molecular Energies (O'Malley, Babbush et al 2016) — Paper Notes]] — Hardware companion; cites an early version of this paper; uses the same Taylor series motivation but implements Trotter on hardware
 - [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes]] — Companion paper applying the same [[Truncated Taylor Series Simulation]] approach to real-space (position grid) first-quantized simulation; overlapping authors; complementary first-quantized strategy (grid vs. orbital basis)
 - [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes]] — Companion paper (same lead author, same year) using a second-quantized plane-wave dual basis instead of the CI first-quantized representation; achieves $\widetilde{O}(N^{8/3})$ circuit depth vs. this paper's $\widetilde{O}(\eta^2 N^3 t)$ gate count; targets periodic systems (materials) vs. this paper's molecular focus
-- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]] — Supersedes this paper for large $N$; uses first-quantized plane-wave encoding (momentum space) with interaction picture to achieve $\widetilde{O}(\eta^{8/3} N^{1/3} t)$, much better than $\widetilde{O}(\eta^2 N^3 t)$ whenever $N \gg \eta^{2/3}$
+- [[Quantum Simulation of Chemistry with Sublinear Scaling in Basis Size (Babbush, Berry, McClean, Neven 2019) — Paper Notes]] — Supersedes this paper for large $N$; uses first-quantized plane-wave encoding (momentum space) with interaction picture to achieve $\widetilde{O}(\eta^{8/3} N^{1/3} t)$, much better than $\widetilde{O}(\eta^2 N^3 t)$ in the large-basis regimes targeted by plane-wave chemistry
 - [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes]] — Full constant-factor compilation of first-quantized plane-wave algorithms; renders the CI approach obsolete for large-basis molecular simulation; shows concrete resource estimates orders of magnitude better than second-quantized methods
 - [[Quantum Simulation of Electronic Structure with Linear Depth and Connectivity (Kivlichan, McClean et al 2018) — Paper Notes]] — Second-quantized Trotter approach; provides practical near-term circuits (depth $N$, linear connectivity) that complement this paper's asymptotically better but more demanding LCU approach
 - [[Strategies for Quantum Computing Molecular Energies Using the UCC Ansatz (Romero, Babbush et al 2018) — Paper Notes]] — Near-term variational approach; contrast with this paper's fault-tolerant focus; both address molecular simulation from opposite ends of the hardware maturity spectrum

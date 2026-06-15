@@ -22,7 +22,7 @@ Classical results (Goldreich-Ron): both can be tested in $\tilde{O}(\sqrt{N})$ q
 
 ## What the paper does
 
-Gives $\tilde{O}(N^{1/3})$ quantum algorithms for testing both bipartiteness and expansion of bounded-degree graphs — a polynomial speedup over the classical $\Omega(\sqrt{N})$ lower bound. Also proves an $\tilde{\Omega}(N^{1/4})$ quantum lower bound for expansion testing, ruling out exponential speedup.
+Gives $\tilde{O}(N^{1/3})$ quantum algorithms for testing bipartiteness and expansion of bounded-degree graphs, suppressing dependencies on $d$, $\varepsilon$, $\alpha$, and logarithmic factors — a polynomial speedup over the classical $\Omega(\sqrt{N})$ lower bound. Also proves an $\tilde{\Omega}(N^{1/4})$ quantum lower bound for expansion testing, ruling out exponential speedup.
 
 The approach is clean and modular: take the existing classical property testers (which work by detecting collisions among random walk endpoints), derandomize them to use $O(\text{polylog } N)$ random bits, then plug in [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis's element distinctness algorithm]] to find collisions in $\tilde{O}(N^{1/3})$ time.
 
@@ -57,7 +57,7 @@ The approach is similar but slightly more involved:
 2. Count collisions among endpoints — many collisions indicate the walk isn't mixing rapidly → poor expansion
 3. The collision count threshold is $M \approx \frac{1}{2}N^{2\mu}$
 
-Counting (not just detecting) collisions requires a wrapper: run the element distinctness algorithm $M$ times, each time excluding previously found collisions. This costs $O(M \cdot \tilde{O}(K^{2/3})) = O(N^{1/3 + 3\mu} \cdot \text{polylog})$.
+Counting (not just detecting) collisions requires a wrapper: run the element distinctness algorithm $M$ times, each time excluding previously found collisions. This costs $O(M \cdot \tilde{O}(K^{2/3})) = O(N^{1/3 + O(\mu)} \cdot \text{polylog})$, with the note's simplified exponent $1/3+3\mu$ reflecting the paper's parameter accounting.
 
 ---
 
@@ -72,7 +72,7 @@ $$\text{Expansion lower bound:} \quad \tilde{\Omega}(N^{1/4}) \text{ quantum que
 | Problem | Classical | Quantum (this paper) | Quantum lower bound |
 |---|---|---|---|
 | Bipartiteness | $\tilde{\Theta}(\sqrt{N})$ | $\tilde{O}(N^{1/3})$ | open |
-| Expansion | $\tilde{\Theta}(\sqrt{N})$ | $\tilde{O}(N^{1/3})$ | $\tilde{\Omega}(N^{1/4})$ |
+| Expansion | $\tilde{\Theta}(\sqrt{N})$ | $\tilde{O}(N^{1/3+O(\mu)})$ | $\tilde{\Omega}(N^{1/4})$ |
 
 ---
 
@@ -85,7 +85,9 @@ This is the most technically involved part. The proof uses the polynomial method
 **Core argument:**
 1. The acceptance probability of any $T$-query quantum algorithm on input from $P_{M,\ell}$ is well-approximated by a ratio $f(M,\ell)/g(M,\ell)$ where $f, g$ are polynomials of degree $O(T \log T)$
 2. The key technical lemma analyses how monomials in the acceptance polynomial decompose over connected components of query graphs, using partition lattice combinatorics and inclusion-exclusion
-3. A polynomial degree lower bound (following Aaronson's collision lower bound approach + Paturi's theorem on polynomial approximation) gives $\deg f = \Omega(\sqrt{\delta}) = \Omega(N^{1/4})$
+3. A polynomial degree lower bound (following Aaronson's collision lower bound approach + Paturi's theorem on polynomial approximation) gives the $\Omega(N^{1/4})$ query lower bound
+
+This is not a direct black-box import of the collision lower bound: the graph oracle has consistency constraints, so the proof first expresses acceptance probabilities over the random graph distributions as controlled rational functions of the graph parameters.
 
 The algebraic techniques for handling the graph structure — expressing probabilities over random matchings as rational functions of $M$ and $\ell$, the partition identity (Proposition 5), and the careful degree analysis — are the main technical contribution.
 
@@ -105,7 +107,7 @@ Prior quantum property testing results achieved exponential speedups for some pr
 
 ## Limits / caveats
 
-- The bipartiteness lower bound is **open**. The paper cannot prove any superconstant quantum lower bound for bipartiteness testing. Whether there's a bigger gap between the $\tilde{O}(N^{1/3})$ upper bound and some (unknown) lower bound remains unresolved.
+- The bipartiteness lower bound is left **open in this paper**. The paper cannot prove any superconstant quantum lower bound for bipartiteness testing. Whether there is a bigger gap between the $\tilde{O}(N^{1/3})$ upper bound and a lower bound is not resolved here.
 - The expansion algorithm's exponent $1/3 + 3\mu$ is not tight for all parameter regimes — there's a gap between the $\tilde{O}(N^{1/3})$ upper bound and $\tilde{\Omega}(N^{1/4})$ lower bound.
 - The approach is specific to bounded-degree graphs in the adjacency-list model. Dense graphs (adjacency-matrix model) are a different story.
 - The derandomization step is critical for the quantum speedup but limits the approach to algorithms whose analysis survives $k$-wise independence. Not all classical property testers have this property.
@@ -140,6 +142,7 @@ Prior quantum property testing results achieved exponential speedups for some pr
 - [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes]]
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]]
 - [[Quantum Algorithms for Testing Properties of Distributions (Bravyi-Harrow-Hassidim 2011) — Paper Notes]]
+- [[Time and Space Efficient Quantum Algorithms for Detecting Cycles and Testing Bipartiteness (Cade-Montanaro-Belovs 2016) — Paper Notes]] — later space-efficient dense-graph cycle/bipartiteness algorithm; uses lift-to-connectivity rather than collision search
 - [[Quantum Walks and Their Algorithmic Applications (Ambainis 2003) — Paper Notes]]
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes]]
 

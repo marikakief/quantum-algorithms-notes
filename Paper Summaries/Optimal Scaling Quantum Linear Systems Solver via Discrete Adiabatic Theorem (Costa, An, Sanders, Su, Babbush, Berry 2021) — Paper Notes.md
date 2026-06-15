@@ -1,3 +1,5 @@
+# Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes
+
 > **Source:** Pedro C. S. Costa, Dong An, Yuval R. Sanders, Yuan Su, Ryan Babbush, and Dominic W. Berry, *Optimal scaling quantum linear systems solver via discrete adiabatic theorem*, arXiv:2111.08152, PRX Quantum (2022)
 > **Links:** [arXiv](https://arxiv.org/abs/2111.08152) · [PDF](https://arxiv.org/pdf/2111.08152)
 > **Tags:** #QLSP #linear-systems #adiabatic #qubitization #quantum-walk #optimal-scaling #block-encoding #eigenstate-filtering
@@ -10,13 +12,15 @@ The **quantum linear system problem (QLSP):** given oracle access to a block enc
 
 The relevant parameters are the condition number $\kappa$ and target precision $\varepsilon$. The known lower bound is $\Omega(\kappa \log(1/\varepsilon))$.
 
+The lower bound and optimality statement are for normalized solution-state preparation with block-encoding access. Converting sparse-entry or other matrix access models into a block encoding introduces additional problem-dependent overhead.
+
 ---
 
 ## What the paper does
 
 This paper gives the first QLSP solver with **optimal** $O(\kappa \log(1/\varepsilon))$ query complexity, matching the lower bound. The key innovation is a **discrete adiabatic theorem** — a rigorous version of the Dranov-Kellendonk-Seiler (DKS) result that tracks the spectral gap dependence explicitly. Combined with [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] and a new LCU-based eigenstate filtering method, this eliminates the $\log \kappa$ factor that plagued all prior approaches.
 
-Worth noting: Yuval is a co-author, and the paper builds directly on techniques from [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes|Sanders, Berry, Babbush et al. (2020)]], particularly the [[Stroboscopic Adiabatic Walk]] idea — though the approach here is fundamentally different in that it proves exact gap-dependent error bounds rather than relying on heuristic analysis.
+Worth noting: Sanders is also an author on earlier Berry/Babbush adiabatic-walk work, including [[Compilation of Fault-Tolerant Quantum Heuristics for Combinatorial Optimization (Sanders, Berry, Babbush et al 2020) — Paper Notes|Sanders, Berry, Babbush et al. (2020)]]. The connection is technical rather than biographical: this paper turns the stroboscopic/discrete-walk idea into a rigorous gap-dependent theorem for QLSP.
 
 ---
 
@@ -110,7 +114,7 @@ Numerically, the actual scaling constant is $\sim 638\kappa/T$, about $9\times$ 
 
 The progression is clear: HHL → variable-time AA → polynomial methods → continuous adiabatic → discrete adiabatic. Each step removed a log factor or polylog overhead. The continuous adiabatic approaches (Subaşı, An-Lin, Lin-Tong) all incur extra $\log \kappa$ factors because they use the Dyson series to simulate $H(s)$ — the discretization error is the bottleneck. By going directly to quantum walks, this paper sidesteps that entirely.
 
-My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The constant factors (~$834\kappa$ walk steps for the adiabatic part) are large but the authors identify them precisely, which is unusual and valuable for resource estimation. In practice the filtering step ($\kappa \ln(2/\varepsilon)$) dominates only for $\varepsilon < 10^{-180}$ or so — for realistic precisions the adiabatic step is the bottleneck due to the large constant.
+My assessment: this is the definitive QLSP algorithm for asymptotic scaling. The constant factors (~$834\kappa$ walk steps for the adiabatic part in the authors' cost model) are large but the authors identify them precisely, which is unusual and valuable for resource estimation. In the numerical follow-up's benchmark model, the filtering step dominates only at fantastically small target errors; for ordinary precision targets, the adiabatic step is the bottleneck because of the larger constant.
 
 **Update:** [[The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes|Costa, An, Babbush, Berry (2023)]] showed via numerical testing that the actual constant is ~1,500× smaller than the analytical bound ($\alpha \approx 1.56$ vs. $\alpha \approx 2305$). This makes the algorithm far more practical than the analytical bound suggests.
 

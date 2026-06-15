@@ -3,11 +3,11 @@
 > **Tags:** #trick #sum-of-squares #SDP #quantum-chemistry #classical-preprocessing
 
 ## What it does
-Computes a sum-of-squares (SOS) decomposition of a fermionic Hamiltonian at polynomial classical cost. The SOS lower bound $E_{\text{SOS}}$ determines the gap parameter for [[SOS Spectral Amplification|spectrum amplification]].
+Computes a chemistry-structured sum-of-squares (SOS) decomposition of a fermionic Hamiltonian for a chosen SDP algebra. The SOS lower bound $E_{\text{SOS}}$ determines the lower-bound gap parameter for [[SOS Spectral Amplification|spectrum amplification]].
 
 ## The trick
 
-The electronic structure Hamiltonian $H$ can be written as $H = \sum_\alpha O_\alpha^\dagger O_\alpha + E_{\text{SOS}}$ by solving the SDP:
+Any finite-dimensional lower-bounded Hamiltonian can be shifted and factored abstractly, but that is not enough for an efficient quantum algorithm. The useful chemistry construction writes the electronic structure Hamiltonian $H$ as $H = \sum_\alpha O_\alpha^\dagger O_\alpha + E_{\text{SOS}}$ with structured fermionic generators found by solving the SDP:
 
 $$\max\; E_{\text{SOS}} \quad \text{s.t.}\quad H - E_{\text{SOS}} I = \vec{o}^\dagger G \vec{o}, \quad G \succeq 0$$
 
@@ -24,15 +24,17 @@ This is the dual of the variational 2-RDM method. The SDP constrains pseudomomen
 ## When to reach for it
 - Pre-processing step for any [[SOS Spectral Amplification|SOS-based spectrum amplification]] of a fermionic Hamiltonian
 - Any time you need a certified lower bound on $E_{\text{gs}}$ that also provides a constructive operator decomposition
-- Connects to the 2-RDM variational method — if you already do N-representability relaxations, the dual SDP gives you the SOS decomposition for free
+- Connects to the 2-RDM variational method — the dual SDP produces an SOS certificate/decomposition, but extracting a numerically stable, low-rank, efficiently block-encodable representation is additional work
 
 ## Complexity
-SDP with spin-free level-2 algebra: poly($N$) classical cost. The cuLoRADS GPU solver handles up to ~150 orbitals. Low-rank factorization with rank $O(\log m)$ (where $m$ is the number of linear constraints) suffices empirically.
+SDP with spin-free level-2 algebra: polynomial classical cost for the chosen algebra, but large constants and numerical conditioning matter. The cuLoRADS GPU solver handles up to ~150 orbitals in the reported benchmarks. Low-rank factorization with rank $O(\log m)$ (where $m$ is the number of linear constraints) suffices empirically, not as a universal rank theorem.
 
 ## Caveat
 The SDP finds the *optimal* $E_{\text{SOS}}$ for the chosen algebra, but this may not be the best choice for the quantum algorithm. The [[DFTHC Factorization|DFTHC]] optimization directly minimizes $\lambda_{\text{sqrt}}$ and $E_{\text{gap}}$ jointly, which can give better overall cost even with a slightly suboptimal $E_{\text{SOS}}$.
 
 Full spinful DQG algebra gives tighter gaps but has only been computed for $\leq 60$ orbitals and produces coefficients that break spin symmetry in the block-encoding.
+
+Numerical precision and certification matter: a near-PSD Gram matrix or approximate SDP solution must be converted into a decomposition whose lower bound and block-encoding normalization remain valid within the final error budget.
 
 ## Related notes
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]]

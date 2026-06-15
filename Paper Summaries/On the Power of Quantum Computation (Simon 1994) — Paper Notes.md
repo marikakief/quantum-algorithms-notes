@@ -18,9 +18,11 @@ Find $s$. (If $s = 0^n$, the function is 1-to-1; otherwise it's 2-to-1 with peri
 
 ## What the paper does
 
-Gives a quantum algorithm that finds $s$ using $O(n)$ queries to $f$ — an **exponential separation** over any classical algorithm, which requires $\Omega(2^{n/2})$ queries (birthday bound). This was the first exponential quantum speedup for a computational (not just decision) problem, and the direct precursor to Shor's factoring algorithm.
+Gives a quantum algorithm that finds the hidden mask $s$ using $O(n)$ queries to $f$ in the nonzero-mask case, and equivalently distinguishes the promised injective and two-to-one function classes. This is the first **exponential bounded-error quantum versus probabilistic classical oracle separation**: classical algorithms require $\Omega(2^{n/2})$ queries by a birthday-bound argument.
 
 The oracle separation it establishes: there exists an oracle $\mathcal{O}$ relative to which $\mathsf{BPP}^\mathcal{O} \neq \mathsf{BQP}^\mathcal{O}$. This was the strongest evidence at the time that quantum computers are strictly more powerful than classical probabilistic ones.
+
+In later language, Simon's problem is the abelian hidden subgroup problem over $\mathbb{Z}_2^n$, with hidden subgroup $\{0^n,s\}$. The paper predates that unified HSP vocabulary.
 
 ---
 
@@ -58,6 +60,8 @@ The interference is constructive when $y \cdot s = 0 \pmod{2}$ and destructive w
 
 **Step 6: Repeat** $O(n)$ times. Collect $n-1$ linearly independent vectors $y_1, \ldots, y_{n-1} \in s^\perp$. Solve the linear system $y_i \cdot s = 0$ over $\mathbb{F}_2$ to find $s$.
 
+This recovery discussion assumes $s \neq 0^n$. The $s=0^n$ case is the injective promise case and is usually handled through the decision version: distinguish injective functions from two-to-one functions with a nonzero XOR mask.
+
 ### Probability of success
 
 After $n + c$ rounds, the probability of having $n-1$ linearly independent vectors is at least $1 - 2^{-c}$ (each new vector is linearly independent with probability $\geq 1 - 2^{-(n-k)}$ when $k$ independent vectors are already collected). $O(n)$ rounds suffice for overwhelming success probability.
@@ -82,20 +86,20 @@ Simon's algorithm is the direct conceptual predecessor to [[Quantum Measurements
 
 | [[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]] | [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] |
 |---|---|
-| Hidden subgroup of $\mathbb{Z}_2^n$ | Hidden subgroup of $\mathbb{Z}_N$ |
-| Hadamard transform = Fourier over $\mathbb{Z}_2^n$ | QFT over $\mathbb{Z}_N$ |
-| Coset sampling → linear equations over $\mathbb{F}_2$ | Coset sampling → continued fractions |
+| Exact hidden subgroup of $\mathbb{Z}_2^n$ | Period/order finding over a cyclic group, implemented with a power-of-two Fourier register |
+| Hadamard transform = Fourier over $\mathbb{Z}_2^n$ | Approximate QFT/Fourier sampling because the period need not divide the register size |
+| Exact coset sampling → linear equations over $\mathbb{F}_2$ | Peaks near multiples of the reciprocal period → continued fractions |
 | Exact period recovery from $O(n)$ samples | Period recovery from $O(\log N)$ samples |
 | Oracle problem | Concrete number-theoretic problem |
 
-Shor has acknowledged that Simon's result was a direct inspiration. The structure — prepare a superposition, evaluate, Fourier transform, sample from the dual — became the template for the entire [[Hidden Subgroup Problem]] framework.
+Shor has acknowledged that Simon's result was a direct inspiration. The structure — prepare a superposition, evaluate, Fourier transform, sample frequency information — became the template for the entire [[Hidden Subgroup Problem]] framework, but Shor's order finding uses approximate Fourier sampling and classical continued-fraction postprocessing rather than the exact finite-group coset sampling of Simon's problem.
 
 ### Oracle separations in context
 
 | Separation | Paper | Type |
 |---|---|---|
 | $\mathsf{EQP} \neq \mathsf{P}$ relative to oracle | Deutsch-Jozsa (1992) | Total function, but $\mathsf{EQP}$ (exact) vs $\mathsf{P}$ |
-| $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | Bernstein-Vazirani (1993) | Polynomial separation |
+| $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | Bernstein-Vazirani (1993) | Superpolynomial recursive Fourier-sampling separation; the basic hidden-linear-string problem is only polynomial |
 | $\mathsf{BQP} \neq \mathsf{BPP}$ relative to oracle | **[[On the Power of Quantum Computation (Simon 1994) — Paper Notes|Simon (1994)]]** | **Exponential separation** |
 | Concrete factoring speedup | [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] | Under hardness assumptions, not oracle |
 
@@ -114,7 +118,7 @@ Simon's is the first **exponential** oracle separation between bounded-error qua
 ## References within this paper
 
 - [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes|Deutsch & Jozsa (1992)]] — first quantum oracle speedup (promised constant vs balanced)
-- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — polynomial quantum oracle separation (BPP vs BQP)
+- [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein & Vazirani (1993)]] — superpolynomial recursive Fourier-sampling oracle separation; the simple hidden-linear-string algorithm gives only a polynomial query gap
 - Berthiaume & Brassard (1992) — oracle separations for quantum complexity classes
 - Yao (1993) — quantum circuit model
 - Bennett, Bernstein, Brassard & Vazirani (1997) — $\Omega(\sqrt{N})$ lower bound for search, placing limits on quantum speedups

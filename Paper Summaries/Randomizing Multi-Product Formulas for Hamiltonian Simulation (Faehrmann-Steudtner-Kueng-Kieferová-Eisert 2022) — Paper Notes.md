@@ -1,18 +1,18 @@
-> **Source:** Paul K. Faehrmann, Mark Steudtner, Richard Kueng, Mária Kieferová, Jens Eisert, *Randomizing multi-[[Product Formulas]]s for [[Hamiltonian simulation]]*, Quantum **6**, 806 (2022)  
-> **Links:** [arXiv:2101.07808](https://arxiv.org/abs/2101.07808) · [Quantum journal](https://doi.org/10.22331/q-2022-09-19-806)  
+> **Source:** Paul K. Faehrmann, Mark Steudtner, Richard Kueng, Mária Kieferová, Jens Eisert, *Randomizing multi-product formulas for Hamiltonian simulation*, Quantum **6**, 806 (2022)
+> **Links:** [arXiv:2101.07808](https://arxiv.org/abs/2101.07808) · [Quantum journal](https://doi.org/10.22331/q-2022-09-19-806)
 > **Tags:** #hamiltonian-simulation #multi-product #randomization #product-formulas
 
 ---
 
 ## What the paper does
 
-Multi-[[Product Formulas]]s (MPFs) combine product-formula circuits at different step counts to cancel higher-order Trotter errors. The problem: doing this coherently requires implementing a linear combination of unitaries — ancilla registers, oblivious amplitude amplification, significant overhead. This paper cuts that overhead by replacing coherent LCU with randomized sampling. Instead of building the coherent superposition $\sum_q C_q V_q$, you sample term $q$ with probability proportional to $|C_q|$, run the corresponding product-formula circuit, and estimate observables classically. The cost is $O(\Xi^4/\varepsilon^2)$ shots, where $\Xi = \sum_q |C_q|$ is the resolution factor.
+Multi-[[Product Formulas]]s (MPFs) combine product-formula circuits at different step counts to cancel higher-order Trotter errors. The problem: doing this coherently requires implementing a linear combination of unitaries — ancilla registers, oblivious amplitude amplification, significant overhead. This paper cuts that overhead for observable estimation by replacing coherent LCU with randomized sampling. Instead of building the coherent superposition \(\sum_q C_q V_q\), the estimator samples pairs of MPF branches and measures the corresponding interference terms classically. The cost is \(O(\Xi^4/\varepsilon^2)\) shots, where \(\Xi = \sum_q |C_q|\) is the resolution factor.
 
 Two new MPF families are introduced — "matching" and "closed-form" — specifically designed to keep $\Xi$ small, which is the key to making the shot overhead tolerable.
 
 ---
 
-## Background: multi-[[Product Formulas]]s
+## Background: multi-product formulas
 
 For $H = \sum_{j=1}^L H_j$, a $2\chi$-th order Suzuki formula $S_{2\chi}(t)^r$ has error that scales as $t^{2\chi+1}$ in the time step. A multi-[[Product Formulas]] takes a linear combination:
 $$V_{\mathrm{MPF}} = \sum_{q=1}^K C_q \, S_{2\chi}\!\left(\frac{t}{\ell_q}\right)^{\!\ell_q}$$
@@ -24,18 +24,25 @@ choosing coefficients $C_q$ and step counts $\ell_q$ so that error terms cancel 
 
 ## The randomized sampling protocol
 
-**Algorithm 1 (informal):**
+**Algorithm 1 (informal, observable estimation):**
 
 1. Compute $\Xi = \sum_q |C_q|$ and probabilities $p_q = |C_q|/\Xi$.
 2. For each of $N$ repetitions:
-   a. Sample index $q$ with probability $p_q$.
-   b. Run circuit $V_q = S_{2\chi}(t/\ell_q)^{\ell_q}$ (a standard [[Product Formulas]] — no ancillas needed).
-   c. Measure observable $O$ using the **Hadamard test**: a single ancilla qubit, a controlled-$V_q$ gate, and a measurement. This gives an unbiased estimator of $\mathrm{Re}\langle \psi | V_q^\dagger O V_q | \psi \rangle$.
-3. Classical post-processing: multiply each sample by $\mathrm{sgn}(C_q) \cdot \Xi^2$ and average.
+   a. Sample two indices \(q,q'\) independently with probabilities \(p_q,p_{q'}\).
+   b. Estimate the cross term \(\operatorname{tr}(O V_q\rho V_{q'}^\dagger)\) using a Hadamard-test-style interference measurement, decomposing \(O\) into unitary/Pauli terms when needed.
+   c. Multiply the sample by \(\Xi^2\,\operatorname{sgn}(C_q)\operatorname{sgn}(C_{q'})\) for real coefficients, with phases used analogously for complex coefficients.
+3. Average \(N\) samples.
 
-The estimator is unbiased for $\mathrm{tr}(O \, U(T) \rho \, U(T)^\dagger)$ up to the MPF approximation error.
+The double index is essential. If \(V_{\mathrm{MPF}}=\sum_q C_q V_q\), then
 
-**Why one ancilla qubit?** The Hadamard test extracts $\mathrm{Re}\langle \psi | V_q^\dagger O V_q | \psi \rangle$ using a single ancilla — far cheaper than the $O(\log K)$ ancilla register needed for coherent LCU. The ancilla just controls which circuit runs; it's measured and discarded each shot.
+$$
+\operatorname{tr}(O V_{\mathrm{MPF}}\rho V_{\mathrm{MPF}}^\dagger)
+= \sum_{q,q'} C_q C_{q'}^*\,\operatorname{tr}(O V_q\rho V_{q'}^\dagger).
+$$
+
+A single-index average over \(\operatorname{tr}(O V_q\rho V_q^\dagger)\) would estimate a mixture, not the coherent MPF observable. The two-index estimator is unbiased for \(\operatorname{tr}(O \, U(T) \rho \, U(T)^\dagger)\) up to the MPF approximation error.
+
+**Why one ancilla qubit?** The Hadamard test extracts real or imaginary parts of the sampled cross term using a single ancilla — far cheaper than the \(O(\log K)\) ancilla register needed for coherent LCU. The ancilla is measured and discarded each shot.
 
 **Structural note:** This works for observable estimation only. You cannot reconstruct the full quantum state this way — the randomization averages over different unitaries, so the output is a classical mixture. Fine for most near-term applications; a genuine constraint nonetheless.
 
@@ -71,15 +78,15 @@ $\Xi = \sum_q |C_q|$ is the central quantity. It appears in three places:
 
 **Intuition:** $\Xi$ measures how "cancellative" the linear combination is. If all $C_q > 0$, there's no cancellation, $\Xi = \sum C_q = 1$ by normalization, and things are fine. If the formula requires large positive and negative coefficients that nearly cancel, $\Xi$ grows, and the sampling overhead blows up. The matching MPF design philosophy is precisely to minimize $\Xi$ by keeping the coefficient magnitudes small.
 
-**The $\Xi^4$ penalty:** this is not a typo. Each shot gives an estimator of $\mathrm{tr}(O V_q \rho V_q^\dagger)$, and the classical combination involves multiplying by $\Xi^2$ per sample. When you square to get the variance, you get $\Xi^4$. This is unavoidable with importance sampling over signed linear combinations.
+**The $\Xi^4$ penalty:** this is not a typo. Each shot samples two coefficient factors and the classical combination involves multiplying by \(\Xi^2\) per sample. When you square to get the variance, you get \(\Xi^4\). This is the signed-importance-sampling cost for a coherent linear combination's observable expectation.
 
 ---
 
 ## Key results
 
-**Theorem 1 (direct observable estimation):** For any state $\rho$, observable $O$, and unitary ensemble $\{V_q, p_q\}$ that samples exactly from $\sum_q C_q V_q \rho V_q^\dagger$, the estimator described above achieves additive error $\varepsilon$ with failure probability $\delta$ using
+**Theorem 1 (direct observable estimation):** For any state $\rho$, observable $O$, and sampled interference estimator for the coherent MPF observable, the estimator described above achieves additive error $\varepsilon$ with failure probability $\delta$ using
 $$N \geq \frac{2\|O\|^2 \ln(2/\delta)}{\varepsilon^2}$$
-repetitions. (This is the ideal case where the ensemble implements the MPF exactly.)
+repetitions in the normalized ideal case. The resolution factor is accounted for in Theorem 2.
 
 **Theorem 2 (approximate ensemble):** When the ensemble approximates $U(T)$ with resolution factor $\Xi$ — meaning $\|(1/\Xi)\sum_q C_q V_q - U(T)\| \leq \eta$ — the total error $\varepsilon$ is achievable with
 $$N \geq \frac{2\|O\|^2 \ln(2/\delta) \, \Xi^4}{\varepsilon^2}$$

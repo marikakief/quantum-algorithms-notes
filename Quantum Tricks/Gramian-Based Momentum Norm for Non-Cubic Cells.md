@@ -16,7 +16,7 @@ $$\|k_\nu\|^2 = g_{11} \nu_x^2 + g_{22} \nu_y^2 + g_{33} \nu_z^2 + 2g_{12} \nu_x
 
 The worst-case arithmetic cost is $(5/2)(n_x^2 + n_y^2 + n_z^2) + 2(n_x + n_y + n_z)^2 + 4b(n_x + n_y + n_z)$ Toffolis, where $b$ is the precision for real-number arithmetic.
 
-**The payoff comes from crystal symmetries.** Real lattices rarely have all six $g_{ij}$ independent. Structure-specific simplifications:
+**The payoff comes from crystal symmetries.** Real lattices rarely have all six $g_{ij}$ independent. The following are structure-specific examples from the paper, not a general classification theorem:
 
 | Crystal class | Simplification | Arithmetic cost |
 |---|---|---|
@@ -25,9 +25,9 @@ The worst-case arithmetic cost is $(5/2)(n_x^2 + n_y^2 + n_z^2) + 2(n_x + n_y + 
 | Monoclinic (LNO-C2/m) | $g_{11} = g_{22}$; $g_{23} = -g_{13}$ | Reduced to 2 squares + 2 products + 3 multiplications by constants |
 | Orthorhombic (Li₀.₇₅MnO₂F) | $g_{22} = g_{33}$; all off-diagonal zero | $n_x^2 + n_y^2 + n_z^2 + 2n_x(n_x + b)$ |
 
-The inner product $k_p \cdot k_q$ (needed for Legendre polynomials in the nonlocal pseudopotential) has exactly double the integer arithmetic cost, because squarings become products of different numbers. But the real-number multiplication cost is unchanged.
+The inner product $k_p \cdot k_q$ (needed for Legendre polynomials in the nonlocal pseudopotential) has roughly double the integer arithmetic cost in the source accounting, because squarings are replaced by cross-products of different integer registers. The real-constant multiplication cost is not doubled in the same way.
 
-An important subtlety: since $\|k_\nu\|^2$ always gets multiplied by another constant elsewhere in the algorithm, one overall scale factor in the Gramian can be absorbed for free — eliminating one multiplication.
+An important subtlety: since $\|k_\nu\|^2$ always gets multiplied by another constant elsewhere in the algorithm, one overall scale factor in the Gramian can be absorbed into that later constant — eliminating one separate multiplication.
 
 ## When to reach for it
 
@@ -41,13 +41,15 @@ Worst case (triclinic, all $g_{ij}$ independent): $(5/2)(n_x^2 + n_y^2 + n_z^2) 
 
 Best case (FCC diamond): $3n^2$ — same as the cubic case.
 
-Typical materials fall between these extremes. For $n \sim 6$, $b = 20$: worst case ~1,000 Toffolis, best case ~108 Toffolis.
+Typical materials fall between these extremes. For $n \sim 6$, $b = 20$, the rough examples range from hundreds to about a thousand Toffolis depending on the paper's $n$ and $b$ conventions; use source tables for benchmark numbers.
 
 ## Caveat
 
 The Gramian must be precomputed classically from the lattice geometry — it's baked into the circuit at compile time. Changing the lattice geometry requires recompilation. This is fine for materials simulation (you know the crystal structure before you run), but wouldn't work for geometry optimisation where the lattice vectors are dynamic.
 
-For very low-symmetry crystals (triclinic), the overhead over the cubic case is substantial: a factor of ~5–10 in the norm computation. But this cost is typically small compared to the controlled swaps ($12\eta n$) that dominate the total block encoding.
+For very low-symmetry crystals (triclinic), the overhead over the cubic case is substantial: a factor of ~5–10 in the norm computation. This cost is often smaller than the controlled swaps ($12\eta n$) in the large systems emphasized by the paper, but for low-symmetry small cells the arithmetic can be non-negligible.
+
+This is also why the older [[Kinetic Energy as Bit-Product LCU]] trick no longer applies cleanly: non-cubic cells replace a sum of coordinate squares by a Gramian quadratic form with cross-products and real constants.
 
 ## Related notes
 - [[Quantum Simulation of Realistic Materials in First Quantization Using Non-Local Pseudopotentials (Berry, Rubin, Babbush et al 2024) — Paper Notes]] — The paper introducing this technique

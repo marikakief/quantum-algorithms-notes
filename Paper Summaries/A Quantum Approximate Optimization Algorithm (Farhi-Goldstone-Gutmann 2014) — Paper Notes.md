@@ -146,6 +146,10 @@ Proved performance limitations of constant-level QAOA on large sparse hypergraph
 
 Implemented QAOA-like variational optimisation for MIS on Rydberg atom arrays (up to 289 atoms). Notable as a physical implementation, though the quantum advantage question remains unresolved — classical solvers can handle these instance sizes.
 
+### Random SAT as exact solution finding (Boulebnane & Montanaro 2022)
+
+[[Solving Boolean Satisfiability Problems with QAOA (Boulebnane-Montanaro 2022) — Paper Notes|Boulebnane & Montanaro (2022)]] study QAOA as a sampler for exact satisfying assignments of random $k$-SAT, optimising success probability rather than expected energy. Their saddle-point analysis estimates average success-probability exponents for random-$2^q$-SAT, and their random 8-SAT simulations suggest $p\approx14$ QAOA matches WalkSATlm's scaling exponent, with larger $p$ looking better but not yet proving advantage.
+
 ### Near-symmetric optimisation problems (Montanaro & Zhou 2024)
 
 Montanaro & Zhou (arXiv:2411.04979) proved that QAOA$_1$ achieves success probability $\Omega(1/\sqrt{n})$ (sometimes $\Omega(1)$) for finding exact solutions to near-symmetric combinatorial optimisation problems with planted solutions. They constructed instances where $O(1)$ quantum queries suffice vs $\Omega(n/\log n)$ classical queries — an *exponential separation* for planted problems. They benchmarked against state-of-the-art classical SAT solvers, finding instances where all known classical algorithms require exponential time. This is currently one of the strongest theoretical cases for QAOA speedup, though the problem families are somewhat synthetic.

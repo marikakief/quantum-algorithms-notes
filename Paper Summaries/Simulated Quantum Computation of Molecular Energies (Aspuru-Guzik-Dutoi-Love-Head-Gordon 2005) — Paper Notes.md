@@ -21,21 +21,23 @@ Three practical contributions:
 
 Two mappings considered:
 
-**Direct mapping:** Each qubit = one spin-orbital. Occupation 0 or 1 → qubit $|0\rangle$ or $|1\rangle$. Total: $M$ qubits for $M$ spin-orbitals. This is the [[Jordan-Wigner Transformation for Chemistry Hamiltonians|Jordan-Wigner]] encoding. Advantage: at most 4-qubit interactions in the second-quantised Hamiltonian, so gate decomposition is straightforward.
+**Direct mapping:** Each qubit = one spin-orbital. Occupation 0 or 1 → qubit $|0\rangle$ or $|1\rangle$. Total: $M$ qubits for $M$ spin-orbitals. In modern language this is the occupation-number/Jordan-Wigner-style direct mapping, but the paper is not yet using the later Pauli-string compilation vocabulary. The fermionic Hamiltonian has up to four ladder operators per term before mapping; Jordan-Wigner parity strings can make the resulting Pauli products higher weight.
 
-**Compact mapping:** Enumerate only the $\binom{M}{N_e}$ configurations with the correct electron number $N_e$ (or further restrict to a spin sector). Encode these as binary labels. Uses fewer qubits but harder to decompose the Hamiltonian into elementary gates.
+**Compact mapping:** Enumerate only the $\binom{M}{N_e}$ configurations with the correct electron number $N_e$ (or further restrict to a spin sector). Encode these as binary labels. The register size is logarithmic in the number of retained configurations, which can be much smaller than direct mapping in a fixed symmetry sector, but the Hamiltonian is harder to decompose into elementary gates.
 
-Both scale linearly in the number of basis functions. Specific estimates (Table 1): H₂O with STO-3G needs 8 qubits (compact, singlet subspace) or 14 (direct). With cc-pVTZ: 47 qubits (compact, full Hilbert space).
+Specific estimates (Table 1): H₂O with STO-3G needs 8 qubits (compact, singlet subspace) or 14 (direct). With cc-pVTZ: 47 qubits (compact, full Hilbert space). These are encoding estimates within the paper's chosen active spaces and symmetry restrictions.
 
 ### 2. Recursive phase estimation
 
 Standard [[Gapped Phase Estimation|phase estimation]] needs $\sim 20$ qubits in the readout register for chemical precision ($\sim 10^{-6}$ a.u.). The [[Recursive Phase Estimation for Qubit-Efficient Readout|recursive variant]] replaces this with iterative 4-qubit PEA:
 
-- **Iteration 0:** Run 4-qubit PEA on $U = e^{iH\tau}$. Get first 4 bits of $\phi$ (energy encoded as phase).
+- **Iteration 0:** Run 4-qubit PEA on $U = e^{iH\tau}$. Get an initial 4-bit coarse estimate of $\phi$ (energy encoded as phase).
 - **Iteration $k$:** Shift the Hamiltonian by the current estimate, square the operator: $V_{k+1} = (e^{-i2\pi\phi_k} V_k)^2$. Run 4-qubit PEA on $V_{k+1}$. Get one more bit of precision.
-- After $k$ iterations: $k$ bits of precision using only 4 readout qubits.
+- After the initial 4-bit estimate, recursive squaring/refinement extracts additional bits using the same 4-qubit readout register.
 
 Each iteration doubles the Trotter circuit depth (because of the squaring), but saves qubits.
+
+The energy is recovered from the eigenphase of $U=e^{iH\tau}$, so the timestep $\tau$ and any energy offset determine the phase-to-energy conversion.
 
 ### 3. Adiabatic state preparation
 
@@ -43,7 +45,7 @@ When Hartree-Fock has poor overlap with the true ground state (e.g., stretched H
 
 $$H(s) = (1-s) H_{\text{HF}} + s H_{\text{FCI}}, \quad s: 0 \to 1$$
 
-where $H_{\text{HF}}$ is diagonal with the HF energy as its only non-trivial element (so $|0\rangle$ is trivially the ground state). Evolve slowly enough that the system stays in the ground state. The speed limit is set by the minimum gap along the path.
+where $H_{\text{HF}}$ is chosen to have the Hartree-Fock reference as an easily prepared ground state in the selected encoding/order. Evolve slowly enough that the system stays in the ground state. The speed limit is set by the minimum gap and path-derivative norms along the interpolation, not merely by having a Hartree-Fock endpoint.
 
 Demonstrated for H₂ at various bond lengths. The gap remains large, so the adiabatic evolution converges quickly (1000 time steps suffice).
 
@@ -53,7 +55,7 @@ Using [[Product-Formula Time-Slicing for Local Hamiltonians|Trotter decompositio
 
 $$e^{iH\tau} \approx \left(\prod_X e^{ih_X \tau/M}\right)^M$$
 
-The number of terms $h_X$ scales as $O(N_{\text{basis}}^4)$ (two-electron integrals). Each $h_X$ acts on at most 4 qubits (in the direct mapping) + 1 control qubit from the readout register. An arbitrary 4-qubit gate decomposes into $< 400$ elementary gates.
+The number of terms $h_X$ scales as $O(N_{\text{basis}}^4)$ (two-electron integrals). In the paper's pre-fault-tolerant arbitrary-elementary-gate cost model, a local occupation-term implementation plus one control is decomposed into $<400$ elementary gates. This is a historical circuit model, not a modern T-count or surface-code resource estimate.
 
 ---
 
@@ -64,14 +66,14 @@ The number of terms $h_X$ scales as $O(N_{\text{basis}}^4)$ (two-electron integr
 | H₂O | STO-3G | Compact (singlet) | 8 | −84.203663 | −84.203665 |
 | LiH | 6-31G | Compact (singlet) | 11 | −9.1228936 | −9.1228934 |
 
-Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discrepancy comes from Trotter error in the matrix exponentiation, not from the phase estimation.
+Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discrepancy is attributed in the paper's simulation pipeline mainly to Hamiltonian-simulation/Trotter choices; finite phase-estimation precision and numerical choices are also part of the full error budget.
 
 ---
 
 ## Why it matters
 
 1. **Made quantum chemistry on quantum computers concrete.** Prior work (Abrams-Lloyd, Zalka) was abstract. This paper used real molecules, real basis sets, and demonstrated real chemical precision.
-2. **The 30–100 qubit estimate** became the benchmark for near-term quantum advantage in chemistry. A cc-pVTZ calculation on H₂O (47 qubits) would be at the edge of classical FCI capability.
+2. **The 30–100 qubit estimate** became an influential early benchmark for quantum chemistry, not a modern near-term advantage threshold. A cc-pVTZ calculation on H₂O (47 logical qubits in the compact estimate) would be at the edge of classical FCI capability in the paper's framing.
 3. **Launched a field.** Almost every quantum chemistry paper since — from VQE to fault-tolerant resource estimates — traces its lineage to this paper.
 4. **Introduced recursive PEA** as a practical qubit-saving technique. This idea reappeared in later iterative and Bayesian phase estimation variants.
 
@@ -82,7 +84,7 @@ Chemical precision ($\sim 10^{-6}$ a.u.) achieved in both cases. The small discr
 - **Classical simulation only** — no quantum hardware was used. The "quantum computation" was simulated on a classical computer, which limits the problem sizes to those classically tractable anyway.
 - **Small basis sets.** STO-3G and 6-31G are far below production quality. Chemical accuracy with large basis sets is the actual target.
 - **Trotter error uncontrolled.** The paper doesn't bound the Trotter error rigorously; later work (Berry, Childs, etc.) showed this scaling can be worse than assumed.
-- **Adiabatic state preparation** relies on the gap staying open, which isn't guaranteed for strongly correlated systems. This remains an open problem.
+- **Adiabatic state preparation** relies on a gapped path and adequate initial overlap; neither is guaranteed for strongly correlated systems. This remains an open problem.
 - **Gate counts not explicitly given.** The polynomial scaling is established but actual gate counts for relevant molecules weren't computed until later resource estimation papers.
 
 ---

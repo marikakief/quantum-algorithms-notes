@@ -19,13 +19,13 @@ The hierarchy is: LLSD generalises ABNE (for clique-dense graphs), and BNE reduc
 
 Three things:
 
-1. **DQC1-hardness of LLSD** (Theorem 1): Shows that estimating the low-lying spectral density of sparse PSD matrices is as hard as simulating the [[Power of One Bit of Quantum Information (Knill-Laflamme 1998) — Paper Notes|one-clean-qubit model]]. This is the strongest evidence that quantum TDA resists dequantization — any classical algorithm for LLSD would imply efficient classical simulation of DQC1.
+1. **DQC1-hardness of LLSD** (Theorem 1): Shows that estimating the low-lying spectral density of general sparse PSD matrices is as hard as simulating the [[Power of One Bit of Quantum Information (Knill-Laflamme 1998) — Paper Notes|one-clean-qubit model]]. This is strong evidence against broad, structure-blind dequantization of spectral-density primitives.
 
 2. **DQC1-completeness for log-local Hamiltonians** (Theorem 2): When restricted to log-local Hamiltonians, LLSD is exactly DQC1-complete.
 
 3. **New quantum algorithms** for rank estimation and spectral entropy estimation of combinatorial Laplacians, with applications to complex network analysis.
 
-My assessment: this paper is the theoretical backbone of the quantum TDA advantage story. The DQC1-hardness result for LLSD eliminates generic dequantization attacks (à la Tang). The gap that remains — whether LLSD restricted to *combinatorial Laplacians of clique complexes* is still hard — is a structural question about whether clique complexes are "rich enough" to encode arbitrary computations. [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes|Gyurik et al. (2024)]] later proved BQP₁-hardness for a related persistence problem.
+My assessment: this paper is the theoretical backbone of the quantum TDA advantage story, but with an important scope restriction. The DQC1-hardness result for LLSD blocks generic dequantization attacks (à la Tang) for general sparse or log-local matrices. The gap that remains — whether LLSD / ABNE restricted to *combinatorial Laplacians of clique complexes* is still hard — is a structural question about whether clique complexes are "rich enough" to encode arbitrary computations. [[Quantum Computing and Persistence in TDA (Gyurik-Schmidhuber-King-Dunjko-Hayakawa 2024) — Paper Notes|Gyurik et al. (2024)]] later proved BQP₁-hardness for a related persistence problem.
 
 ## The algorithm and hardness proof
 
@@ -50,7 +50,7 @@ This shows LLSD is a legitimate generalisation of the problem the [[Quantum Algo
 
 ### Quantum algorithms for rank estimation and spectral entropy
 
-**Numerical rank estimation:** Since $r_H(b) = 1 - N_H(0,b)$, LLSD directly gives the numerical rank. The DQC1-hardness of LLSD implies an exponential quantum speedup for rank estimation of sparse matrices. For matrices with $\text{nnz}$ nonzero entries stored in qRAM, the quantum algorithm runs in $O(\text{poly}(n, \log \text{nnz}))$ vs. classical $O(\text{nnz})$.
+**Numerical rank estimation:** Since $r_H(b) = 1 - N_H(0,b)$, LLSD directly gives the numerical rank. The DQC1-hardness of LLSD is complexity-theoretic evidence for an exponential quantum advantage for numerical rank estimation of sparse matrices, assuming DQC1 is not efficiently classically simulable and using the paper's sparse/qRAM-style input model. For matrices with $\text{nnz}$ nonzero entries stored in qRAM, the quantum algorithm runs in $O(\text{poly}(n, \log \text{nnz}))$ vs. classical $O(\text{nnz})$.
 
 **Spectral entropy estimation:** Constructs "purified quantum query access" to the eigenvalue distribution $p(\lambda_j) = \lambda_j / \text{Tr}(H)$ via QPE + controlled rotations + fixed-point [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|amplitude amplification]]. Sampling from this distribution enables spectral entropy estimation, useful for comparing complex networks.
 
@@ -66,7 +66,7 @@ LLSD restricted to log-local Hamiltonians is DQC1-complete.
 
 For clique sizes $k \geq 3$, graphs with edge density $\gamma > (k-2)/(2(k-1))$:
 - The clique density theorem guarantees $\chi_k \in \Omega(n^{k+1})$ ("supersaturation")
-- Quantum algorithm runs in $\tilde{O}(n^3)$
+- Quantum algorithm runs in $\tilde{O}(n^3)$ in the fixed- or controlled-$k$ dense-clique regime analyzed in the paper
 - Classical algorithm requires $O(n^{k+1})$
 - For $k \sim \log n$: **superpolynomial** quantum speedup ($2^{O(\log n \log \log n)}$ vs. $2^{O((\log n)^2)}$)
 
@@ -80,7 +80,7 @@ This links TDA complexity to the complexity of quantum many-body physics.
 
 ## Limits / caveats
 
-1. **Gap between LLSD and ABNE.** DQC1-hardness of LLSD doesn't directly prove ABNE is classically hard, because ABNE restricts to combinatorial Laplacians. Whether this family is "rich enough" remains open.
+1. **Gap between LLSD and ABNE.** DQC1-hardness of LLSD doesn't directly prove ABNE is classically hard, because ABNE restricts to combinatorial Laplacians of clique complexes. Whether this family is "rich enough" remains open, and this caveat should be kept next to any dequantization-resistance claim.
 
 2. **Approximate vs. exact Betti numbers.** The algorithm estimates approximate Betti numbers (eigenvalue count below a threshold), not exact Betti numbers. The distinction matters when $\lambda_{\min}$ is unknown.
 
@@ -92,14 +92,14 @@ This links TDA complexity to the complexity of quantum many-body physics.
 
 1. [[DQC1-Hardness via Histogram Approximation of Low-Lying Eigenvalues]] — Reduce normalised sub-trace estimation to spectral density estimation by binning eigenvalues. The key insight: misplacing eigenvalues by at most one bin still allows accurate mean computation.
 
-2. [[Spectral Density Estimation as Dequantization Shield]] — If a quantum algorithm's core subroutine is LLSD (not just matrix inversion or SVD), it resists dequantization because LLSD is DQC1-hard for general sparse matrices. This is a meta-technique for arguing quantum advantage.
+2. [[Spectral Density Estimation as Dequantization Shield]] — If a quantum algorithm's core subroutine is LLSD (not just matrix inversion or SVD), it resists broad generic dequantization because LLSD is DQC1-hard for general sparse matrices. This is a meta-technique for arguing quantum advantage, not a proof against structure-specific algorithms for clique-complex Laplacians.
 
 ## References within this paper
 
 - **[[Quantum Algorithms for Topological and Geometric Analysis of Data (Lloyd-Garnerone-Zanardi 2016) — Paper Notes|Lloyd, Garnerone, Zanardi (2016)]]** — Original quantum TDA algorithm.
 - **Brandão (2016)** — DQC1-hardness of normalised sub-trace estimation, which this paper's LLSD hardness proof builds on.
 - **[[Power of One Bit of Quantum Information (Knill-Laflamme 1998) — Paper Notes|Knill-Laflamme (1998)]]** — DQC1 model.
-- **Tang (2019), Tang et al.** — Dequantization results that motivated this investigation. This paper shows TDA is immune to those techniques.
+- **Tang (2019), Tang et al.** — Dequantization results that motivated this investigation. This paper shows that general spectral-density primitives avoid the low-rank assumptions behind those techniques; it does not settle all clique-complex TDA instances.
 - **Cade & Crichigno (2021)** — Showed DQC1-hardness for general chain complexes (not necessarily clique complexes). Cited as parallel work.
 - **Alon & Shikhelman (2016)** — Clique density theorem (supersaturation).
 

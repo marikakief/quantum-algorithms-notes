@@ -1,3 +1,4 @@
+# Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017)
 
 > **Source:** Guang Hao Low and Isaac L. Chuang, *Optimal Hamiltonian Simulation by Quantum Signal Processing*, arXiv:1606.02685, Phys. Rev. Lett. **118**, 010501 (2017)  
 > **Links:** [arXiv](https://arxiv.org/abs/1606.02685) · [PRL](https://doi.org/10.1103/PhysRevLett.118.010501)  
@@ -36,7 +37,7 @@ For sparse-[[Hamiltonian simulation]], the paper obtains query complexity
 $$
 O\!\left(td\|H\|_{\max} + \frac{\log(1/\epsilon)}{\log\log(1/\epsilon)}\right),
 $$
-which matches lower bounds in all parameters.
+where $\tau = td\|H\|_{\max}$ is the normalized sparse-access time parameter. This matches lower bounds in both $\tau$ and $\epsilon$.
 
 That is the headline result to remember.
 
@@ -49,11 +50,11 @@ That is the headline result to remember.
 | qubitization | invariant-\(SU(2)\) geometry makes the framework cleaner |
 | QSVT | singular-value transformation becomes the general umbrella |
 
-So this paper is the first clean appearance of the modern “polynomial/phase sequence is the algorithm” philosophy.
+So this paper is the first clean appearance of the modern “polynomial/phase sequence is the algorithm” philosophy. The achievable scalar polynomial is not arbitrary: it must obey degree, boundedness, and parity/admissibility constraints on the normalized signal interval. A degree-$n$ admissible QSP polynomial is implemented by a length-$n$ phase sequence, hence by $n$ signal-oracle queries up to convention-dependent endpoint factors. The optimal precision term comes from the known lower bound on the degree needed to approximate the simulation function, $\Theta(\log(1/\epsilon)/\log\log(1/\epsilon))$.
 
 ## Note
 
-The companion paper (arXiv:1610.06546) gives the full qubitization treatment with cleaner notation and more general access models. Read them together — the PRL is the high-level argument; the Quantum journal paper fills in the construction and broader applications.
+The companion paper (arXiv:1610.06546) gives the full qubitization treatment with the standard-form/block-encoding access model and the invariant-subspace construction. Read them together — the PRL is the high-level QSP simulation result; the Quantum journal paper fills in the construction and broader applications.
 
 ## References within this paper
 
@@ -61,7 +62,6 @@ The companion paper (arXiv:1610.06546) gives the full qubitization treatment wit
 - [[Efficient Quantum Algorithms for Simulating Sparse Hamiltonians (Berry-Ahokas-Cleve-Sanders 2005) — Paper Notes|Berry, Ahokas, Cleve & Sanders (2005)]] — [[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki-based]] [[Product Formulas]]s
 - Berry, Childs, Cleve, Kothari & Somma (2015, PRL 114, 090502) — Taylor-series LCU simulation
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes|Low, Yoder & Chuang (2016)]] — composite pulse design underlying the QSP construction
-- Haah (2019) — efficient algorithm for finding QSP phase factors
 
 ---
 
@@ -78,3 +78,4 @@ The companion paper (arXiv:1610.06546) gives the full qubitization treatment wit
 - [[Efficient Fully-Coherent Quantum Signal Processing Algorithms for Real-Time Dynamics Simulation (Martyn-Liu-Chin-Chuang 2023) — Paper Notes]] — extends QSP-based simulation to the fully-coherent setting; the one-shot construction resolves the parity obstruction that prevents direct QSP approximation of $e^{-ix\tau}$ on $[-1,1]$
 - [[Doubling the Efficiency of Hamiltonian Simulation via Generalized Quantum Signal Processing (Berry-Motlagh-Pantaleoni-Wiebe 2024) — Paper Notes]] — halves the query count of this paper's simulation algorithm by using [[Directional Walk Control for Phase Doubling|directional walk control]] ($U$ vs $U^\dagger$) and [[Generalized Quantum Signal Processing (GQSP)|GQSP]]
 - [[Hamiltonian Simulation by Uniform Spectral Amplification (Low-Chuang 2017) — Paper Notes]] — extends QSP to uniform spectral amplification; introduces flexible QSP, amplitude multiplication, and $O(t\sqrt{d\|H\|_{\max}\|H\|_1})$ sparse simulation
+- Haah (2019) — later efficient algorithm for finding QSP phase factors

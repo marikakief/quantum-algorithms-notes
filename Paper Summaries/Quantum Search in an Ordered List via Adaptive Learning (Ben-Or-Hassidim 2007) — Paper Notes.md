@@ -1,3 +1,5 @@
+# Quantum Search in an Ordered List via Adaptive Learning (Ben-Or-Hassidim 2007) — Paper Notes
+
 > **Source:** Michael Ben-Or and Avinatan Hassidim, *The Bayesian Learner is Optimal for Noisy Binary Search (and Pretty Good for Quantum as Well)*, arXiv:quant-ph/0703231 (2007)
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0703231)
 > **Tags:** #search #ordered-list #binary-search #Bayesian #noisy-computation #query-complexity
@@ -25,7 +27,7 @@ $$
 \frac{\log n}{I(p)} + O\left(\frac{\log\log n \cdot \log(1/\delta)}{I(p)}\right)
 $$
 
-where $I(p) = 1 + p\log p + (1-p)\log(1-p)$ is the mutual information per query. This is optimal up to $\log\log n$ additive terms.
+where $I(p) = 1 + p\log_2 p + (1-p)\log_2(1-p)$ is the mutual information per query in bits. This is optimal up to $\log\log n$ additive terms.
 
 **2. Improved quantum search in an ordered list.** Uses the Bayesian noisy search framework to optimally exploit the Farhi-Goldstone-Gutmann-Sipser (FGGS) greedy quantum algorithm as a subroutine.
 
@@ -74,11 +76,13 @@ This is exactly the input format for the generalised noisy search: we get a nois
 
 ### Best parameters found
 
-Using $K = 223$ elements and $t = 6$ quantum queries gives $I(p_0, \ldots, p_{K-1}) = 18.5625$ bits of information per subroutine call of 6 queries, i.e., $18.5625/6 \approx 3.094$ bits per query. Since $\log_2 n$ bits are needed:
+Using an FGGS subroutine with $K = 223$ elements and $t = 6$ quantum queries gives the best numerical constant quoted in the paper. The paper's optimized analysis reports enough normalized Bayesian progress per 6-query subroutine call to obtain the bound
 
 $$
-\text{Expected queries} = \frac{6 \log_2 n}{18.5625} \approx 0.323 \log_2 n
+\text{Expected queries} < \frac{\log_2 n}{3}.
 $$
+
+This should not be read as a direct Shannon-information count from a 223-outcome measurement; such a count cannot exceed $\log_2 223$. The constant depends on the paper's specific optimized subroutine and normalization.
 
 Compare: classical binary search needs $\log_2 n$ queries. The quantum advantage here is a constant-factor improvement, not a complexity class separation.
 
@@ -100,7 +104,7 @@ The gap between $0.32$ and $0.221$ remains open.
 
 ## Quantum lower bounds
 
-**Theorem 4.2:** Any quantum algorithm finding the correct element with probability $\geq 1 - \delta$ needs at least $\frac{\ln 2}{\pi}((1-\delta)\log k) - O(\delta)$ queries.
+**Theorem 4.2:** Any quantum ordered-search algorithm finding the correct element with probability $\geq 1 - \delta$ needs at least $\frac{\ln 2}{\pi}((1-\delta)\log k) - O(\delta)$ queries.
 
 This is proved by plugging the quantum subroutine into the Bayesian framework and using the information-theoretic bound: no quantum algorithm can extract more than $\pi/\ln 2$ bits per query (from Høyer-Neerbek-Shi).
 
@@ -121,7 +125,7 @@ This is proved by plugging the quantum subroutine into the Bayesian framework an
 
 - The quantum speedup is a constant factor improvement on $\log n$, not a complexity class separation. Ordered search is inherently $\Theta(\log n)$ for both classical and quantum — only the constant matters.
 - The lower bound gap ($0.32$ vs $0.221$) remains open. The optimal constant for quantum ordered search is unknown.
-- The algorithm is somewhat implicit: the FGGS subroutine is optimised numerically for specific list sizes ($K = 223$, $t = 6$), not derived from a clean closed-form.
+- The algorithm is somewhat implicit: the FGGS subroutine is optimised numerically for specific list sizes ($K = 223$, $t = 6$), and the final constant should be quoted with the paper's normalization rather than recomputed as a simple Shannon-bits ratio.
 - The Bayesian approach is elegant but the connection between noisy classical search and quantum search relies on treating the quantum measurement output as a noisy classical oracle — which is valid but obscures the quantum mechanics.
 
 ---

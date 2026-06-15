@@ -33,5 +33,8 @@ Useful only when the resulting unitary family is implementable efficiently and t
 - [[Near-Optimal Hardy-Space Kernel for LCHS]]
 - [[Phragmén–Lindelöf Decay Barrier for Analytic Kernels]]
 - [[Quantum Linear Matrix Equations — Paper Notes]]
+- [[Efficient Quantum Algorithm for Linear Matrix Differential Equations and Applications to Open Quantum Systems (Simon-Berry-Somma 2026) — Paper Notes]]
+- [[Log-Norm Shifted LCHS History States]]
+- [[Two-Sided History-State Overlap for Matrix ODE Entries]]
 - [[Hubbard-Stratonovich Decoupling]]
 - [[Linear Combination of Unitaries (LCU)]]

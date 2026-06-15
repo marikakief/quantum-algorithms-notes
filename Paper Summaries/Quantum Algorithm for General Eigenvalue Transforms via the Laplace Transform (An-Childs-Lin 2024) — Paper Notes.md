@@ -1,5 +1,5 @@
-> **Source:** Dong An, Andrew M. Childs, and Lin Lin, *Quantum algorithm for eigenvalue transformation of general matrices using the Laplace representation*, arXiv:2411.04010 (2024)
-> **Links:** [arXiv](https://arxiv.org/abs/2411.04010)
+> **Source:** Dong An, Andrew M. Childs, Lin Lin, and Lexing Ying, *Laplace Transform-Based Quantum Eigenvalue Transformation via Linear Combination of Hamiltonian Simulation*, arXiv:2411.04010 (2024); SIAM J. Comput. (2026)
+> **Links:** [arXiv](https://arxiv.org/abs/2411.04010) · [SIAM](https://doi.org/10.1137/24M1720160)
 > **Tags:** #quantum-algorithm #hamiltonian-simulation #non-unitary #eigenvalue-transform #LCHS #LCU #dissipative #ODE #block-encoding
 
 ---
@@ -30,11 +30,11 @@ This is a genuinely different approach from [[Quantum Eigenvalue Processing and 
 
 ### Step 1: LCHS identity (restated from An-Liu-Lin 2023)
 
-For $A = L + iH$ with $L \succeq 0$, choose a kernel $f \in H^1(\mathbb{C}^-)$ (the Hardy space of the left half-plane) with $\int_\mathbb{R} f(k)/(1-ik)\, dk = 1$. Then for $t \geq 0$:
+For $A = L + iH$ with $L \succeq 0$, choose a kernel $f \in H^1(\mathbb{C}^-)$, where $\mathbb{C}^-$ denotes the lower half-plane in the LCHS kernel variable, with $\int_\mathbb{R} f(k)/(1-ik)\, dk = 1$. Then for $t \geq 0$:
 
 $$e^{-tA} = \int_\mathbb{R} \frac{f(k)}{1-ik}\, e^{-it(kL+H)}\, dk.$$
 
-**Near-optimal kernel choice:** $f(k) = \frac{1}{2\pi} e^{-2\beta}\, e^{(1+ik)^\beta}$ for $\beta \in (0,1)$. This gives near-exponential decay $|f(k)| \sim e^{-c|k|^\beta}$, so truncation to $|k| \leq K$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ introduces error $\leq \varepsilon$.
+**Near-optimal kernel choice:** $f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}$ for $\beta \in (0,1)$, with $C_\beta = 2\pi e^{-2^\beta}$ under the normalization convention of the generalized LCHS paper. This gives near-exponential decay $|f_\beta(k)| \sim e^{-c|k|^\beta}$, so truncation to $|k| \leq K$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ introduces error $\leq \varepsilon$.
 
 ### Step 2: Lap-LCHS representation
 
@@ -44,7 +44,7 @@ $$h(A) = \int_0^\infty \int_\mathbb{R} w(k,t)\, e^{-it(kL+H)}\, dk\, dt, \quad w
 
 ### Step 3: Discretisation
 
-Truncate: $k \in [-K, K]$, $t \in [0, T]$. Apply Riemann sums (or higher-order quadrature) with grid spacings $h_k$, $h_t$, giving $M_k \times M_t$ quadrature points.
+Truncate: $k \in [-K, K]$, $t \in [0, T]$. Discretise the two integrals using quadrature chosen to satisfy the theorem's smoothness and tail assumptions; the costs are not determined by "Riemann sums" alone. The $k$ and $t$ cutoffs come from different tails and must be chosen separately.
 
 - **$k$-truncation error:** controlled by $\|f\|_{L^1(\mathbb{R} \setminus [-K,K])}$, which decays like $e^{-cK^\beta}$ for the near-optimal kernel.
 - **$t$-truncation error:** controlled by $\|g\|_{L^1((T,\infty))}$, which depends on the tail decay of the specific transform $h$.
@@ -96,7 +96,7 @@ Compared to truncated-Taylor/QLSA methods: better state-preparation cost (fewer 
 ### Fractional power inverse: $h(z) = (\eta + z)^{-p}$, $p > 0$
 
 **Corollary 9:** Prepare $(\eta I + A)^{-p}|b\rangle / \|\cdot\|$ with
-$$O\!\left(\frac{\alpha_A}{\eta^{-(p+1)} \|x\|} \cdot \left(\log \frac{1}{\varepsilon \eta \|x\|}\right)^{1+1/\beta}\right)$$
+$$O\!\left(\frac{\alpha_A}{\eta^{p+1} \|x\|} \cdot \left(\log \frac{1}{\varepsilon \eta \|x\|}\right)^{1+1/\beta}\right)$$
 queries to $A$.
 
 This extends quantum linear system solvers to non-integer matrix powers — fractional resolvent operators that appear in fractional diffusion equations and regularisation theory.
@@ -123,7 +123,7 @@ Lap-LCHS sits between LCHS (which it directly extends) and QEVT (which handles n
 
 ## Limits / caveats
 
-1. **Dissipativity is non-negotiable.** The method requires $L = (A + A^\dagger)/2 \succeq 0$. Matrices with eigenvalues in the left half-plane (growing dynamics) are excluded. This is inherited from the original LCHS identity and can't be removed without a fundamentally different representation.
+1. **Dissipativity is a real constraint.** The representation requires $L = (A + A^\dagger)/2 \succeq 0$, or a shift that makes the Hermitian part positive semidefinite. Such a shift is not free: it changes the normalization and can increase the amplification burden. Matrices with genuinely growing dynamics remain outside the efficient guarantee.
 
 2. **Tail decay of $g(t)$ controls $T$.** If the inverse Laplace transform $g$ decays only polynomially, the truncation parameter $T$ grows polynomially in $1/\varepsilon$, degrading the complexity. The nice applications in the paper (fractional powers, matrix exponentials of inverses) have exponential or compact-support $g$. For general $h$, this needs case-by-case analysis.
 
@@ -150,7 +150,7 @@ The connection to Marika's work is through the [[Hamiltonian simulation]] underp
 ## Reusable ideas
 
 1. [[Laplace-Transform LCU Lifting for Eigenvalue Transforms]] — the core idea of writing $h(A)$ as a double LCU via its Laplace representation
-2. [[Near-Optimal Hardy-Space Kernel for LCHS]] — the specific kernel choice $f(k) = \frac{1}{2\pi} e^{-2\beta} e^{(1+ik)^\beta}$ with near-exponential decay
+2. [[Near-Optimal Hardy-Space Kernel for LCHS]] — the specific kernel choice $f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}$ with near-exponential decay
 3. [[Double-Integral Quadrature for Operator LCU]] — the discretisation scheme for converting a continuous 2D LCU into a finite sum
 
 ---

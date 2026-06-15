@@ -40,15 +40,19 @@ These are Bloch functions by construction. After a self-consistent field (Hartre
 
 The one-electron integrals are nonzero only when $k_p = k_q$ (translational symmetry). The two-electron integrals $V_{pk_p, qk_q, rk_r, sk_s}$ are nonzero only when $k_p - k_q - (k_s - k_r) = \mathbf{G}$ (a reciprocal lattice vector). Introducing $Q = k_p \ominus k_q$, the Hamiltonian factors into momentum-conserving blocks.
 
-The key structural difference from molecular systems: the integrals are complex-valued with only four-fold symmetry (not eight-fold), so $\lambda$ for the sparse LCU is a factor of 2 larger than in the molecular case.
+The key structural difference in this Bloch-orbital sparse-LCU construction is that the $k$-space two-electron integrals are complex and have only four-fold symmetry (not the eight-fold real molecular symmetry). That symmetry loss doubles the sparse-LCU contribution relative to the analogous real molecular construction; it is not a generic statement about every complex-valued chemistry representation.
 
 ### Qubitization framework (common to all four LCUs)
 
-All four methods express $H = \sum_\ell \omega_\ell U_\ell$ as a linear combination of unitaries with non-negative weights $\omega_\ell$ and $\lambda = \sum_\ell \omega_\ell$. The phase estimation cost is:
+All four methods express $H = \sum_\ell \omega_\ell U_\ell$ as a linear combination of unitaries with non-negative weights $\omega_\ell$ and $\lambda = \sum_\ell \omega_\ell$. A single qubitized walk call has a factorization-dependent circuit cost
+
+$$C_{\rm walk} \approx C_{\rm SELECT} + C_{\rm PREPARE} + C_{\rm PREPARE^\dagger} + \log L,$$
+
+and the total Toffoli cost for phase estimation is estimated as:
 
 $$\frac{\pi\lambda}{2\varepsilon_{\rm PEA}} \left(C_{\rm SELECT} + C_{\rm PREPARE} + C_{\rm PREPARE^\dagger} + \log L\right)$$
 
-where the intensive quantity is $\lambda/N_k$ (energy per unit cell). The choice of LCU factorization affects all three quantities: $\lambda$, SELECT cost, and PREPARE cost.
+where the intensive quantity is $\lambda/N_k$ (energy per unit cell). The choice of LCU factorization affects both the walk-call cost and the number of walk calls through $\lambda$.
 
 ### 1. Sparse representation
 
@@ -98,7 +102,9 @@ The k-THC factors are obtained via interpolative separable density fitting (ISDF
 
 ### Asymptotic scaling (Table II)
 
-| Representation | Walk-step Toffolis (symmetry-adapted) | Walk-step Toffolis (supercell) | Speedup |
+The table below follows the paper's phase-estimation cost proxies: each row combines the asymptotic walk-call cost with the $\lambda/\varepsilon$ query factor. The $\sqrt{N_k}$ comparison should therefore be read as a total-cost scaling under the displayed $\lambda$ assumptions, not as a literal per-walk-step Toffoli count.
+
+| Representation | Total PE Toffolis proxy (symmetry-adapted) | Total PE Toffolis proxy (supercell) | Speedup |
 |---|---|---|---|
 | Sparse | $\tilde{O}(N_k^{3/2} N^2 \lambda_{\rm sparse}/\varepsilon)$ | $\tilde{O}(N_k^2 N^2 \lambda_{\rm sparse,SC}/\varepsilon)$ | $\sqrt{N_k}$ |
 | SF | $\tilde{O}(N_k N^{3/2} \lambda_{\rm SF}/\varepsilon)$ | $\tilde{O}(N_k^{3/2} N^{3/2} \lambda_{\rm SF,SC}/\varepsilon)$ | $\sqrt{N_k}$ |
@@ -115,7 +121,7 @@ The k-THC factors are obtained via interpolative separable density fitting (ISDF
 | THC | [1,1,1] | $1.7 \times 10^{10}$ | 18,095 | 14.2 | 3.1 |
 | THC | [2,2,2] | $4.9 \times 10^{11}$ | 36,393 | 35.6 | 105 |
 
-DF dominates at all tested system sizes. THC looks competitive at small $N_k$ but its classical preprocessing (reoptimizing THC factors) is prohibitively expensive for larger systems.
+DF gives the lowest Toffoli counts and runtimes in the compiled Diamond table entries shown here. THC looks competitive at small $N_k$ but its classical preprocessing (reoptimizing THC factors) is prohibitively expensive for larger systems; this is a metric-specific resource comparison, not a theorem that DF dominates every materials instance or hardware objective.
 
 ### LNO resource estimates (Table VI, GTH-DZVP, 116 spin-orbitals per primitive cell for R$\bar{3}$m)
 
@@ -144,7 +150,7 @@ Even at the smallest useful k-meshes, these are year-scale runtimes. Convergence
 
 The paper fills a genuine gap: prior plane-wave methods can't describe localized phenomena (catalysis, cusps) efficiently, while prior Gaussian-orbital methods didn't handle periodicity. The Bloch orbital approach inherits the compact basis of Gaussian methods while recovering $O(\sqrt{N_k})$ from translational symmetry — at least in the per-step cost.
 
-But the first-quantized plane-wave approach of [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. 2021]] has fundamentally better scaling in basis size ($\eta^{4/3} N^{2/3}$ vs. $N_k N$ for THC or $\sqrt{N_k} N \sqrt{\Xi}$ for DF). For systems where plane waves converge (extended solids without sharp cusps), first quantization is still the better asymptotic bet. The Bloch orbital approach wins when you need a small, chemically meaningful basis — e.g., describing $d$-electron correlation in transition metal oxides where plane waves would need $N = O(10^6)$ to converge.
+But the first-quantized plane-wave approach of [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su et al. 2021]] has fundamentally better scaling in its grid/basis-size parameter. Notation differs across the papers: here $N$ denotes orbitals per primitive cell or per $k$ point and $N_k$ is the number of sampled momenta, so the total second-quantized orbital count scales with $N_k N$; in the first-quantized plane-wave literature $N$ usually denotes grid points/plane waves and $\eta$ denotes electrons. For systems where plane waves converge (extended solids without sharp cusps), first quantization is still the better asymptotic bet. The Bloch orbital approach wins when you need a small, chemically meaningful basis — e.g., describing $d$-electron correlation in transition metal oxides where a plane-wave basis would need very large grid sizes to converge.
 
 ---
 
@@ -158,7 +164,7 @@ But the first-quantized plane-wave approach of [[Fault-Tolerant Quantum Simulati
 
 4. **Classical methods also struggle.** The paper's own CCSD and ph-AFQMC calculations on LNO couldn't converge to the thermodynamic limit either. This isn't a quantum-computer-specific failure — it's a fundamental difficulty of correlated condensed-phase simulation. But it does mean the quantum advantage case rests on *eventual* hardware scaling, not current capabilities.
 
-5. **Four-fold vs. eight-fold symmetry.** Complex-valued integrals in the periodic setting give only four-fold symmetry, doubling $\lambda$ for the sparse LCU relative to the molecular case. This structural penalty is unavoidable for periodic systems with time-reversal-broken orbitals.
+5. **Four-fold vs. eight-fold symmetry.** The Bloch-orbital $k$-space integrals used in the sparse construction have only four-fold symmetry, doubling the sparse-LCU contribution relative to the real molecular case. This is a representation-specific penalty of the periodic Bloch formulation, not a universal penalty for complex-valued Hamiltonians.
 
 6. **Space group symmetry unexploited.** The paper only uses translational (Abelian) symmetry. Point group symmetries could provide additional savings but are left to future work.
 

@@ -1,3 +1,5 @@
+# Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002)
+
 > **Source:** Sean Hallgren, *Polynomial-time quantum algorithms for Pell's equation and the principal ideal problem*, Proc. 34th ACM STOC, pp. 653–658 (2002); Journal version: J. ACM 54(1), Article 4 (2007)
 > **Links:** [JACM](https://dl.acm.org/doi/10.1145/1206035.1206039) · [Jozsa's notes (arXiv)](https://arxiv.org/abs/quant-ph/0302134)
 > **Tags:** #hidden-subgroup-problem #period-finding #number-theory #foundational
@@ -59,7 +61,9 @@ This gives $|NR - m| < 1$, i.e., $R$ to accuracy $1/N$.
 
 **Theorem (Hallgren 2002).** There is a quantum algorithm that computes the regulator $R$ of $\mathbb{Q}[\sqrt{d}]$ to accuracy $10^{-n}$ in time $\text{poly}(\log d, n)$ with success probability $1/\text{poly}(\log d, n)$.
 
-**Corollary.** Pell's equation, the principal ideal problem, and the class group of $\mathbb{Q}[\sqrt{d}]$ can all be solved in quantum polynomial time.
+**Corollary.** Pell's equation/regulator computation and the principal ideal problem for real quadratic fields can be solved in quantum polynomial time.
+
+For PIP, the positive output is a generator or equivalent distance data for the principal ideal and can be checked classically. The Monte Carlo success probability is amplified by repeating the period-finding routine and verifying candidate outputs; a negative decision should be understood within the algorithm's bounded-error model.
 
 ## Comparison with prior work
 
@@ -67,15 +71,17 @@ This gives $|NR - m| < 1$, i.e., $R$ to accuracy $1/N$.
 |---|---|---|
 | Pell's equation / regulator | $\exp(O(\sqrt{\log d}))$ (assuming GRH) | $\text{poly}(\log d)$ |
 | Principal ideal problem | $\exp(O(\sqrt{\log d}))$ (assuming GRH) | $\text{poly}(\log d)$ |
-| Class group computation | $\exp(O(\sqrt{\log d}))$ (assuming GRH) | $\text{poly}(\log d)$ |
-| Factoring | $\exp(O((\log N)^{1/3}))$ (NFS) | $\text{poly}(\log N)$ ([[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor]]) |
+| Broader class group / unit group computation | subexponential by classical methods in many settings | later Hallgren and Schmidt--Vollmer algorithms, not the 2002 Pell/PIP paper |
+| Factoring | $\exp(O((\log N)^{1/3}))$ (NFS) | $\text{poly}(\log N)$ ([[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor]]) |
 
-Pell's equation is *harder* than factoring classically ($\exp(\sqrt{\log d})$ vs $\exp((\log N)^{1/3})$), and factoring reduces to computing regulators. So Hallgren's result handles a strictly harder problem than Shor's.
+By the best known classical algorithms, real-quadratic regulator/Pell computation has worse asymptotic exponents than integer factoring, and factoring reduces to computing regulators in standard reductions. That is evidence that Hallgren's result reaches beyond Shor's original factoring/discrete-log setting, not a formal complexity-theoretic separation.
 
 ## Limits / caveats
 
 - The algorithm is for *real quadratic* number fields ($\mathbb{Q}[\sqrt{d}]$ with $d > 0$). It does not directly apply to imaginary quadratic fields or higher-degree number fields.
 - Hallgren later extended to unit groups and class groups of arbitrary-degree number fields (STOC 2005), but those algorithms are more involved.
+- [[Quantum Algorithms for Many-to-One Functions to Solve the Regulator and the Principal Ideal Problem (Schmidt 2009) — Paper Notes|Schmidt (2009)]] later gives a lower-qubit real-quadratic variant by using many-to-one period functions and reduced quadratic forms with positive first coefficient.
+- Hallgren's note uses the real-quadratic regulator convention for the fundamental unit; Schmidt's later note works with the narrow regulator $R^+$, where $R=R^+$ or $R=R^+/2$ depending on the field.
 - The success probability is $1/\text{poly}(\log d)$ per run, requiring $O(\text{poly}(\log d))$ repetitions. Standard amplification applies.
 - The weak periodicity notion tolerates a $1/\log d$ fraction of "bad" points. This works because the QFT output probabilities are insensitive to small perturbations of the input state.
 - The connection to lattice problems (via Regev's subsequent work) gives the dihedral HSP and lattice-based cryptography as downstream implications. Solving the dihedral HSP efficiently would break certain lattice-based crypto.
@@ -99,6 +105,7 @@ Pell's equation is *harder* than factoring classically ($\exp(\sqrt{\log d})$ vs
 
 ### Paper notes
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — Shor's algorithm; Hallgren generalises the period-finding component
+- [[Quantum Algorithms for Many-to-One Functions to Solve the Regulator and the Principal Ideal Problem (Schmidt 2009) — Paper Notes]] — lower-qubit refinement for the same real-quadratic regulator/PIP setting
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] — phase estimation framework
 - [[Quantum Algorithms Revisited (Cleve-Ekert-Macchiavello-Mosca 1998) — Paper Notes]] — unified phase estimation / QFT framework
 - [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] — Simon's problem as HSP precursor

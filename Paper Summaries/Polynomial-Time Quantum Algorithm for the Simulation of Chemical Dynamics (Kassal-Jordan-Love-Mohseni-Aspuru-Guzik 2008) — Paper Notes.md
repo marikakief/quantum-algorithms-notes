@@ -13,7 +13,7 @@ Simulating chemical reaction dynamics — time-evolving the full quantum state o
 Yes. A complete quantum algorithm for chemical dynamics that:
 
 1. Propagates the full electron-nuclear wavefunction on a real-space grid using the split-operator method
-2. Evaluates the Coulomb potential in $O(B^2 m^2)$ time ($B$ particles, $m$ bits of precision)
+2. Evaluates the Coulomb potential in $O(B^2 m^3)$ arithmetic-gate time in the paper's space-efficient model ($B$ particles, $m$ bits of precision)
 3. Shows that **skipping the Born-Oppenheimer approximation is actually faster** on a quantum computer for reactions with more than ~4 atoms
 4. Gives efficient recipes for state preparation (Gaussian wavepackets, harmonic oscillator eigenstates, antisymmetrised electronic states)
 5. Shows how to extract chemically useful observables: reaction probabilities, thermal rate constants, state-to-state transition probabilities
@@ -26,9 +26,9 @@ The headline: **~100 qubits could outperform classical computers** for chemical 
 
 ### Real-space grid simulation (Zalka-Wiesner improved)
 
-Store the $d$-dimensional wavefunction on a grid of $2^{nd}$ points using $nd$ qubits ($n$ qubits per degree of freedom, $d = 3B - 6$ degrees of freedom for $B$ particles). The spatial resolution is exponential in qubit count.
+Store the $d$-dimensional wavefunction on a grid of $2^{nd}$ points using $nd$ qubits ($n$ qubits per degree of freedom). The count $d=3B-6$ is the internal-coordinate count after removing global translation and rotation for a molecule; the grid algorithm can also be described in Cartesian particle coordinates. The spatial resolution is exponential in qubit count.
 
-Time-evolve via split-operator (first-order Trotter):
+Time-evolve via split-operator (first-order Trotter). Up to QFT sign/order convention, starting in the position basis this means applying the potential phase, switching to momentum basis for the kinetic phase, and switching back:
 
 $$\hat{U}(\delta t) \approx \text{QFT} \cdot e^{-iT(p)\delta t} \cdot \text{QFT}^\dagger \cdot e^{-iV(x)\delta t}$$
 
@@ -43,11 +43,11 @@ This is the key implementation detail. To apply $e^{-iV(x)\delta t}$:
 3. Compute the potential: $|x\rangle |y\rangle \to |x\rangle |y \oplus V(x)\rangle$
 4. The Fourier eigenstate is an eigenstate of addition mod $M$ with eigenvalue $e^{-2\pi i V(x)/M}$
 
-So the potential value kicks back as a phase — exactly [[Fourier-Eigenstate Kickback for Arithmetic Oracles|Fourier-eigenstate kickback]]. The ancilla decouples after each application. Choose $\delta t = 2\pi/M$.
+So the potential value kicks back as a phase — exactly [[Fourier-Eigenstate Kickback for Arithmetic Oracles|Fourier-eigenstate kickback]]. The potential value, timestep, and fixed-point scale are encoded into an integer phase modulo $M$; $\delta t$ is not intrinsically forced to equal $2\pi/M$ outside that normalization convention.
 
 Same trick for kinetic energy in momentum space: compute $T(p) = p^2/2m$, add to the Fourier-eigenstate ancilla.
 
-**Improvement over Zalka:** No need to uncompute the potential — the ancilla state is restored automatically by the eigenstate property. This halves the gate count.
+**Improvement over Zalka:** The value register can be left in the Fourier eigenstate when the oracle is pure modular addition — the ancilla state is restored automatically by the eigenstate property. Any scratch used to compute $V(x)$ or $T(p)$ still must be uncomputed or avoided.
 
 ### Coulomb potential evaluation
 
@@ -66,9 +66,9 @@ Qubit count: $n(3B - 6) + 4m$ total ($n$ qubits per spatial degree of freedom, $
 On a classical computer, the Born-Oppenheimer approximation is essential — computing the full electron-nuclear dynamics is impractical. On a quantum computer, the situation inverts:
 
 - **BO approach:** Pre-compute potential energy surfaces, then propagate nuclei. But storing/interpolating the PES requires $K^{3B-6}$ points (degree-$K$ polynomial along each of $3B-6$ dimensions) — exponential in $B$.
-- **Full dynamics:** Evaluate the Coulomb potential directly in $O(B^2 m^2)$ — polynomial in $B$.
+- **Full dynamics:** Evaluate the Coulomb potential directly in $O(B^2 m^3)$ arithmetic-gate time in the paper's model — polynomial in $B$.
 
-For $K \geq 15$ (needed for 0.1% accuracy), the crossover is at ~4 atoms. Beyond that, the diabatic treatment is both **more accurate** and **faster**.
+For $K \geq 15$ (needed for 0.1% accuracy in the benchmark PES interpolation model used by the paper), the crossover is at ~4 atoms. This is an estimate under those interpolation, accuracy, and benchmark-reaction assumptions, not a universal theorem about Born-Oppenheimer methods.
 
 The intuition: classically, memory is the bottleneck (exponential wavefunction), so pre-computing the PES is cheap relative to storing $\psi$. Quantumly, the wavefunction fits in $O(nB)$ qubits, but evaluating a complicated fitted PES is expensive. Better to just compute Coulomb on the fly.
 
@@ -80,7 +80,7 @@ Three approaches, all polynomial:
 
 1. **Gaussian wavepackets and harmonic oscillator states** — efficiently preparable since they're products of efficiently integrable functions (Zalka's result)
 2. **Electronic states** — expand in Gaussian-type orbitals, occupy according to electronic structure calculation (using their earlier [[Simulated Quantum Computation of Molecular Energies (Aspuru-Guzik-Dutoi-Love-Head-Gordon 2005) — Paper Notes|quantum chemistry algorithm]]), antisymmetrise via Abrams-Lloyd
-3. **Thermal states** — prepare superposition $\sum_{\zeta,E} \Gamma(E,T) |\zeta, E\rangle |\phi_0(\zeta,E)\rangle$ where $\Gamma$ is the Boltzmann weight; this is efficient because the Boltzmann factor is exponential in energy
+3. **Thermal-state inputs** — the paper sketches structured preparations involving Boltzmann weights and chemically motivated eigenstate labels. This should not be read as an efficient method for arbitrary thermal-state preparation, which is hard in general.
 
 ---
 
@@ -94,7 +94,7 @@ Three readout schemes for extracting chemistry:
 | **Thermal rate constant** | Propagate the thermal mixed state; measure reaction probability → $C^2 k(T)$ directly |
 | **State-to-state transition probabilities** | Project final state onto product eigenstates; probability = $|\langle \text{product} | \psi(t) \rangle|^2$ |
 
-All can be improved to $1/M$ precision (vs. $1/\sqrt{M}$) using amplitude estimation.
+All can be improved to $1/M$ additive estimation precision (vs. $1/\sqrt{M}$ sampling) using amplitude estimation, assuming coherent access to the relevant state-preparation and yes/no measurement circuits.
 
 ---
 
@@ -116,7 +116,7 @@ Using $n = 10$ qubits per degree of freedom (grid of $2^{30}$ points) and $m = 1
 
 | Result | Statement |
 |---|---|
-| Complexity | $O(B^2 m^2)$ gates per timestep for $B$ Coulomb particles at $m$-bit precision |
+| Complexity | $O(B^2 m^3)$ arithmetic gates per timestep for $B$ Coulomb particles at $m$-bit precision in the paper's model |
 | Qubits | $n(3B-6) + 4m$ total |
 | BO crossover | Full dynamics faster than BO for $> 4$ atoms ($K \geq 15$) |
 | 100-qubit threshold | Can outperform classical computers for Li-scale electron dynamics |
@@ -130,7 +130,8 @@ Using $n = 10$ qubits per degree of freedom (grid of $2^{30}$ points) and $m = 1
 - **First-order Trotter** error $O(\delta t^2)$ means many timesteps needed for long simulations. Higher-order Trotter helps but adds gates.
 - **State preparation** of arbitrary correlated states is still hard. The efficient methods work for states expressible as products of Gaussians/polynomials. Strongly correlated initial states may need adiabatic preparation.
 - **Electronic timestep** is ~1000× shorter than nuclear timestep — the full dynamics simulation needs many more timesteps than a BO simulation.
-- The 100-qubit estimate assumes a fault-tolerant machine. Error correction overhead would increase the physical qubit count significantly.
+- The 100-qubit estimate is a logical-qubit-era estimate and excludes full error-correction overhead.
+- The full error budget includes grid discretization, split-operator/Trotter error, arithmetic phase precision, and sampling or amplitude-estimation error.
 
 ---
 

@@ -4,7 +4,7 @@
 
 ## What it does
 
-Eliminates all multiplication circuits from the block encoding of a kinetic energy operator by decomposing the squared momentum $\|p\|^2$ into a sum of single-bit products, each implementable with one Toffoli gate.
+Eliminates multiplication circuits from the qubitized LCU block encoding of a kinetic energy operator by decomposing the squared momentum $\|p\|^2$ into a sum of single-bit products, each implementable with one Toffoli gate in the paper's signed momentum-bit convention.
 
 ## The trick
 
@@ -18,23 +18,23 @@ $$p_{w,r} \cdot p_{w,s} = \frac{1 - (-1)^{p_{w,r} \cdot p_{w,s} \oplus 1}}{2}$$
 
 to write $T$ as an LCU where each unitary just applies a $(-1)$ phase conditioned on two bits of the momentum register. The PREPARE oracle creates a weighted superposition $\sum_{r,s} 2^{(r+s)/2}|r\rangle|s\rangle$ (using cascading controlled Hadamards, $n_p - 2$ Toffolis). The SELECT oracle computes the bit product in an ancilla and does a controlled-Z on a $|+\rangle$ state — one Toffoli total, independent of system size.
 
-The SEL cost for $T$ is only $5(n_p - 1) + 2$ Toffolis (to copy the relevant bits and compute the product), compared to $O(\eta n_p^2)$ for direct squaring.
+The local SEL primitive for the selected kinetic bit product costs only $5(n_p - 1) + 2$ Toffolis (to copy the relevant bits and compute the product), compared to $O(\eta n_p^2)$ for direct squaring. The full block encoding still includes selecting the electron register and surrounding PREPARE/SELECT logic, so the total savings depend on branch frequency and electron-index preparation.
 
 ## When to reach for it
 
-- Block encoding any diagonal operator that involves squares of integer-valued registers (e.g., kinetic energy in a discrete momentum basis)
+- Qubitized LCU block encoding of diagonal operators that involve squares of integer-valued registers (e.g., kinetic energy in a discrete momentum basis)
 - Any setting where multiplication is the dominant cost and the operator is a sum of products of individual bits of the input register
 - Most valuable when the operator must be block-encoded many times (as in [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] where $O(\lambda/\varepsilon)$ calls are needed)
 
 ## Complexity
 
 - PREPARE for $r, s$: $2(n_p - 2)$ Toffolis (preparation + inverse)
-- SELECT for $T$: $5(n_p - 1) + 2$ Toffolis
+- SELECT for the local $T$ bit-product primitive: $5(n_p - 1) + 2$ Toffolis, plus electron/register-selection overhead in the full block encoding
 - Compare to naive: $O(\eta n_p^2)$ Toffolis for arithmetic squaring — the savings are a factor of $\sim \eta n_p$
 
 ## Caveat
 
-Only works when $T$ is diagonal in the computational basis and the squared quantity is stored as a binary integer. If the kinetic energy involves non-orthogonal Bravais vectors (non-cubic lattices), the squared norm $\|k_p\|^2$ becomes a sum of cross-products of different momentum components, breaking the clean bit-product decomposition. The paper flags non-cubic lattices as future work.
+Only works cleanly when $T$ is diagonal in the computational basis and the squared quantity is stored as a binary integer in the source's momentum convention. If the kinetic energy involves non-orthogonal Bravais vectors (non-cubic lattices), the squared norm $\|k_p\|^2$ becomes a quadratic form with cross-products of different momentum components, breaking the simple bit-product decomposition. Later pseudopotential work handles this through [[Gramian-Based Momentum Norm for Non-Cubic Cells]] arithmetic.
 
 Also, this trick applies to the qubitization approach only. In the interaction picture, $e^{-iT\tau}$ requires the actual numerical value of the kinetic energy for the phase rotation, so the bit-product LCU structure doesn't help directly — though the [[Incremental Kinetic Energy Register]] trick addresses that cost instead.
 

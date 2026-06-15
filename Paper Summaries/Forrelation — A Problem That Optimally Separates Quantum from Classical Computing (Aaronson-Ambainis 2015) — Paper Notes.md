@@ -1,3 +1,5 @@
+# Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes
+
 > **Source:** Scott Aaronson, Andris Ambainis, *Forrelation: A Problem That Optimally Separates Quantum from Classical Computing*, Proceedings of STOC 2015, pp. 307–316.
 > **Links:** [arXiv:1411.5729](https://arxiv.org/abs/1411.5729) · [ACM](https://doi.org/10.1145/2746539.2746547)
 > **Tags:** #query-complexity #quantum-classical-separation #lower-bound #BQP #PH #Fourier-analysis #boolean-functions
@@ -11,6 +13,8 @@
 $$\Phi_{f,g} := \frac{1}{2^{3n/2}} \sum_{x, y \in \{0,1\}^n} f(x)\,(-1)^{x \cdot y}\,g(y) = \frac{1}{\sqrt{N}} \sum_{y} \hat{f}(y)\,g(y)$$
 
 where $\hat{f}$ is the Boolean Fourier transform of $f$ and $N = 2^n$.
+
+Here $N$ is the truth-table size of each function. The query register has $n=\log_2 N$ qubits, plus whatever work and control registers the oracle convention uses.
 
 **Promise:** Either $|\Phi_{f,g}| \leq 1/100$ (unforrelated) or $\Phi_{f,g} \geq 3/5$ (forrelated). Decide which.
 
@@ -31,7 +35,7 @@ Three results in one go:
 
 3. **$k$-fold Forrelation is BQP-complete** (for $k = \text{poly}(n)$). This gives a concrete natural problem complete for BQP under classical reductions, analogous to what CIRCUIT-SAT is for NP.
 
-My take: result 1 is the headline and it's genuinely clean. The separation was previously known for *total* Boolean functions (Grover: 1 vs. $\Omega(N^{1/2})$ for search) but for *partial* functions this is the first example achieving the optimal gap, and Forrelation is arguably the most natural possible problem for doing so — it's literally "how correlated is $f$ with the Fourier transform of $g$?" Result 2 is also important: it closes off a whole class of hoped-for separations.
+My take: result 1 is the headline and it's genuinely clean. Constant-query versus $\tilde{\Omega}(\sqrt N)$ separations are possible only for partial/promise problems; total functions such as OR/search have $Q=\Theta(\sqrt N)$ rather than constant quantum query complexity. Forrelation is arguably the most natural possible problem for achieving the optimal partial-function gap — it is literally "how correlated is $f$ with the Fourier transform of $g$?" Result 2 is also important: it closes off a whole class of hoped-for separations.
 
 ---
 
@@ -49,7 +53,7 @@ My take: result 1 is the headline and it's genuinely clean. The separation was p
 
 In this circuit, the amplitude of $|0^n\rangle$ is exactly $\Phi_{f,g}$, so the probability of observing $|0^n\rangle$ is $\Phi_{f,g}^2$. Under the promise used in the paper, this is still enough to distinguish the two cases with constant bias: the YES case has probability at least $(3/5)^2 = 9/25$, while the NO case has probability at most $10^{-4}$.
 
-**About the query count.** The paper states the 2-fold problem as a 1-query quantum problem in its oracle convention. The circuit above is the clearest way to see the Fourier-correlation structure, but operationally it is best thought of as a constant-query algorithm with one phase query to each function. I am being slightly more conservative here than the paper's headline statement because the exact "1 query" accounting depends on how the joint oracle for $(f,g)$ is packaged.
+**About the query count.** The paper states the 2-fold problem as a 1-query quantum problem in a combined-oracle convention. The circuit above is the clearest way to see the Fourier-correlation structure, but operationally it uses one phase query to $f$ and one to $g$. Both descriptions are standard; comparisons with earlier 1-vs-exponential separations should keep the oracle packaging fixed.
 
 **Improved: $\lceil k/2 \rceil$ queries for $k$-fold Forrelation.** The paper also gives a cleaner query-count construction for $k$-fold Forrelation: prepare a control qubit in $|+\rangle$, run the first half of the chain on one branch and the second half backwards on the other, then interfere the two branches. This reduces the naive $k$-query implementation to $\lceil k/2 \rceil$ queries.
 
@@ -189,6 +193,7 @@ The simulation works via **block-multilinear polynomial approximation**:
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — the $O(\sqrt{N})$ upper bound that matches this lower bound for total functions
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — query complexity separations via walk methods
 - [[Classical Simulation of Commuting Quantum Computations Implies Collapse of the Polynomial Hierarchy (Bremner-Jozsa-Shepherd 2011) — Paper Notes]] — related quantum-classical separation story via sampling
+- [[Exponential Quantum Advantage in Processing Massive Classical Data (Zhao, Zlokapa, Neven et al 2026) — Paper Notes]] — uses a Forrelation-style oracle separation as the backbone for turning a quantum query advantage into a bounded-space advantage for massive classical data processing.
 - [[The Learnability of Quantum States (Aaronson 2006) — Paper Notes]] — earlier Aaronson paper; block-multilinear polynomial idea recurs there
 - [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — BQP-completeness result for coupled oscillator simulation; the glued-trees oracle separation underlying that result is in the same spirit as Forrelation's optimal query separation
 - [[Quartic Quantum Speedups for Planted Inference (Schmidhuber, O'Donnell, Kothari, Babbush 2024) — Paper Notes]] — quartic query separation for planted $k$XOR; different oracle model but same project of finding natural problems with provable quantum-classical gaps

@@ -163,6 +163,7 @@ This paper is important and I think it will age well. Here's why:
 - [[A Quantum Approximate Optimization Algorithm (Farhi-Goldstone-Gutmann 2014) — Paper Notes]] — QAOA is the main competing approach for max-XORSAT; DQI beats QAOA's information-theoretic ceiling at large $k$ but QAOA wins at $k=2,3$ with classical decoders
 - [[Exponential Quantum Speedup in Simulating Coupled Classical Oscillators (Babbush, Berry, Kothari, Somma, Wiebe 2023) — Paper Notes]] — another Babbush-group quantum advantage result; that paper uses [[Hamiltonian simulation]] for exponential speedup, DQI uses QFT + decoding for superpolynomial optimization speedup
 - [[Is There Evidence for Exponential Quantum Advantage in Quantum Chemistry (Lee, Babbush, Chan et al 2022) — Paper Notes]] — parallel question about whether quantum advantage is real; DQI provides a positive answer for a concrete structured optimization problem class
+- [[Verifiable Quantum Advantage via Optimized DQI Circuits (Khattar, Shutty, Gidney et al 2025) — Paper Notes]] — follow-up that moves DQI+OPI to binary extension fields, optimizes the reversible RS decoder, analyzes Extended Prange attacks, and lowers concrete Toffoli estimates by about two orders of magnitude
 
 ### Trick cards
 - [[Dicke State Preparation via Inequality Testing]]

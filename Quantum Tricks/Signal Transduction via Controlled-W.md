@@ -14,8 +14,18 @@ Add single-qubit phase shifts to get phased iterate $U_\phi$.
 
 This is the transducer from high-dimensional spectral data to one-qubit signal processing.
 
+Explicitly, if \(W|u\rangle=e^{i\theta}|u\rangle\), then
+
+$$
+U_0|0\rangle|u\rangle
+=\frac{|+\rangle+e^{i\theta}|-\rangle}{\sqrt2}|u\rangle
+=e^{i\theta/2}\left(\cos\frac{\theta}{2}|0\rangle-i\sin\frac{\theta}{2}|1\rangle\right)|u\rangle
+$$
+
+up to the sign convention for \(|-\rangle\). Thus the eigenphase of \(W\) becomes a controllable single-qubit rotation angle. QSP then applies only the polynomial transformations allowed by its parity and boundedness constraints.
+
 ## When to use
-Any eigenphase/eigenvalue transform workflow before [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] phase sequencing.
+Eigenphase/eigenvalue transform workflows where the signal unitary has the QSP-compatible controlled form and the desired scalar transformation has an admissible polynomial approximation.
 
 ## Related Paper Notes
 

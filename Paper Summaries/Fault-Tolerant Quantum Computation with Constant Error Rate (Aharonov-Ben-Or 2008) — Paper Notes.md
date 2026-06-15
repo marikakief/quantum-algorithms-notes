@@ -189,3 +189,8 @@ Kitaev and Knill-Laflamme-Zurek independently proved threshold results around th
 - [[Solovay-Kitaev Recursive Gate Compilation]]
 - [[Error-Detecting Codes with Concatenation for Fault Tolerance]]
 - [[Error-Correcting Teleportation]]
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler isolate the input-boundary problem for fault tolerance: arbitrary experimental states must be uploaded before long protected learning circuits help.
+

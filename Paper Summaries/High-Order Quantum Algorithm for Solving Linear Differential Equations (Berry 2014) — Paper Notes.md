@@ -1,3 +1,5 @@
+# High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes
+
 > **Source:** D. W. Berry, *High-order quantum algorithm for solving linear differential equations*, J. Phys. A: Math. Theor. **47**, 105301 (2014); arXiv:1010.2745
 > **Links:** [arXiv](https://arxiv.org/abs/1010.2745) · [JPhysA](https://doi.org/10.1088/1751-8113/47/10/105301)
 > **Tags:** #quantum-algorithm #differential-equations #linear-systems #HHL #history-state #multistep-methods
@@ -6,9 +8,9 @@
 
 ## The problem
 
-Solve a sparse system of first-order linear ODEs:
-$$\dot{x}(t) = A(t)x(t) + b(t)$$
-where $A$ is an $N_x \times N_x$ sparse matrix, $x$ and $b$ are $N_x$-component vectors. Goal: encode $x(t_0 + \Delta t)$ in a quantum state in time $O(\text{poly}\log N_x)$.
+Solve a sparse system of first-order linear ODEs with constant coefficient matrix:
+$$\dot{x}(t) = A x(t) + b(t),$$
+where $A$ is an $N_x \times N_x$ sparse matrix, $x$ and $b$ are $N_x$-component vectors, and the rigorous theorem assumes the stability/diagonalizability conditions below. Time-dependent coefficients are discussed only informally in this paper. Goal: encode $x(t_0 + \Delta t)$ in a quantum state in time $O(\text{poly}\log N_x)$.
 
 Quantum mechanics is a special case ($b = 0$, $A = iH$ with $H$ Hermitian). General linear ODEs cover classical physics: heat equations, Maxwell's equations, Stokes flow, and any PDE discretised on a mesh.
 
@@ -44,9 +46,9 @@ The first row sets the initial condition. The middle rows encode the ODE steppin
 
 The Euler method gives $\tilde{O}(\Delta t^4)$ scaling — poor because the condition number $\kappa \sim N_t \sim \Delta t^2/\varepsilon$ and HHL costs $\kappa^2$.
 
-Fix: use $k$-step linear multistep methods of order $p = k$. These replace the Euler recurrence with:
+Fix: use $k$-step linear multistep methods of order $p = k$. In the constant-coefficient setting, these replace the Euler recurrence with:
 
-$$\sum_{\ell=0}^{k} \alpha_\ell x_{j+\ell} = h \sum_{\ell=0}^{k} \beta_\ell [A(t_{j+\ell}) x_{j+\ell} + b(t_{j+\ell})]$$
+$$\sum_{\ell=0}^{k} \alpha_\ell x_{j+\ell} = h \sum_{\ell=0}^{k} \beta_\ell [A x_{j+\ell} + b(t_{j+\ell})]$$
 
 For order $p$, the number of time steps needed is $N_t = O((\|A\|\Delta t)^{1+1/p} / \varepsilon^{1/p})$ — close to linear in $\Delta t$ for large $p$.
 
@@ -84,18 +86,19 @@ This idea spawned an entire subfield. Follow-ups:
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] — exponentially improved precision ($\text{polylog}(1/\varepsilon)$ instead of $\text{poly}(1/\varepsilon)$) by encoding the Taylor series of the propagator as an LCU within the history state
 - [[Exponential Quantum Speedup for Coupled Classical Oscillators (Quantum 2020-04-20-254 follow-on) — Paper Notes|Babbush-Berry-Kothari-Somma-Wiebe (2023)]] — exponential speedup for coupled oscillators by mapping Newton's equations to block-Hamiltonian evolution
 - [[Structured PDE Hamiltonian Simulation via QFT-QSFT-QCT (Quantum 2021-11-10-574) — Paper Notes|Childs-Liu-Ostrander (2021)]] — extends to PDEs via spectral methods
-- Costa, An, Sanders, Su, Babbush, Berry (2022) — optimal ODE algorithm with $O(\text{poly}\log(1/\varepsilon))$ and near-linear $\Delta t$ scaling
+- [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes|Berry-Costa (2022)]] — later time-dependent differential-equation solver using Dyson-series machinery
+- [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa et al. (2022)]] — optimal QLSP primitive, not itself an ODE algorithm
 
 ---
 
 ## Comparison with prior and subsequent work
 
-| | [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] | Berry-Childs-Ostrander-Wang (2017) | Costa et al. (2022) |
+| | [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] | Berry-Childs-Ostrander-Wang (2017) | Berry-Costa (2022) |
 |---|---|---|---|
-| $\Delta t$ scaling | $\tilde{O}((\|A\|\Delta t)^{2+2/p})$ | $\tilde{O}((\|A\|\Delta t)^2)$ | $O(\|A\|\Delta t \cdot \text{polylog})$ |
+| $\Delta t$ scaling | $\tilde{O}((\|A\|\Delta t)^{2+2/p})$ | near-linear up to logarithmic factors in the constant-coefficient setting | near-linear up to logarithmic factors for time-dependent equations |
 | $\varepsilon$ scaling | $\text{poly}(1/\varepsilon)$ | $\text{polylog}(1/\varepsilon)$ | $\text{polylog}(1/\varepsilon)$ |
-| Approach | History state + HHL | History state + LCU/Taylor | [[Hamiltonian simulation]] (direct) |
-| Key innovation | History state for ODEs | Taylor-series propagator | Spectral methods + Hamiltonian embedding |
+| Approach | History state + HHL | History state + LCU/Taylor | Dyson-series block encoding + QLSP |
+| Key innovation | History state for ODEs | Taylor-series propagator | Handles time-dependent coefficients with improved stability parameters |
 
 ---
 

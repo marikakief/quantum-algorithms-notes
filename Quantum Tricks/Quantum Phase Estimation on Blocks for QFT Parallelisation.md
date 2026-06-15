@@ -9,17 +9,20 @@ Breaks the serial dependency in the approximate QFT by using inverse QFT on alre
 
 ## The trick
 
-The standard approximate QFT on blocks of $m$ qubits has a serial dependency: to transform block $i$, you need the original input value $X_{i+1}$ of block $i+1$ for the inter-block phase rotation $\omega^{X_{i+1} Y_i / 2^m}$. But after transforming block $i+1$, the original $X_{i+1}$ is gone — it's been replaced by the Fourier-transformed state.
+The standard approximate QFT on blocks of $m$ qubits has a serial dependency: to transform block $i$, you need the original input value $X_{i+1}$ of block $i+1$ for the inter-block phase rotation $\exp(2\pi i X_{i+1}Y_i/2^{2m})$ under the paper's two-block convention. But after transforming block $i+1$, the original $X_{i+1}$ is gone — it's been replaced by the Fourier-transformed state.
 
 The trick: **quantum phase estimation can approximately recover $X_{i+1}$ from the transformed block.** After applying $\text{QFT}_{2^m}$ to block $i+1$, the state on that block is
 
-$$[\Phi_x]_{i+1} = \sum_{Y_{i+1}} \omega^{(X_{i+1} + X_{i+2}/2^m) Y_{i+1}} |Y_{i+1}\rangle$$
+$$[\Phi_x]_{i+1}
+= \frac{1}{\sqrt{2^m}}\sum_{Y_{i+1}=0}^{2^m-1}
+\exp\!\left(\frac{2\pi i (X_{i+1}+X_{i+2}/2^m)Y_{i+1}}{2^m}\right)
+|Y_{i+1}\rangle,$$
 
 Applying $\text{QFT}_{2^m}^\dagger$ performs quantum phase estimation and yields a superposition $|\widetilde{X}_{i+1}\rangle = \sum \alpha_{X'} |X'\rangle$ peaked on values $X'$ close to $X_{i+1} + X_{i+2}/2^m$.
 
 For most values of $X_{i+1}$, the QPE distribution is tightly concentrated and using $|\widetilde{X}_{i+1}\rangle$ to control the phase rotation introduces only small error. The phase kickback to the block is also negligible when the approximation is good, so the state is approximately undisturbed and a final QFT returns it to the correct Fourier-basis output.
 
-**Where it fails:** When $X_{i+1}$ is near $0$ or $2^m$, the QPE distribution wraps around modulo $2^m$ (the Lee metric distance $|X' - X_{i+1}|_{2^m}$ is small, but $X' - X_{i+1}$ in ordinary arithmetic is large). This "wraparound" produces a large phase error. These bad states form an $O(\varepsilon)$-fraction of the Hilbert space, making the overall construction an [[Optimistic Quantum Circuits|optimistic circuit]].
+**Where it fails:** When $X_{i+1}$ is near $0$ or $2^m$, the QPE distribution wraps around modulo $2^m$. The Lee metric distance $|z|_{2^m} := \min(z \bmod 2^m, -z \bmod 2^m)$ can be small even when the signed arithmetic error $X' - X_{i+1}$ is large. This "wraparound" produces a large phase error. These bad states form an $O(\varepsilon)$-fraction of the Hilbert space, making the overall construction an [[Optimistic Quantum Circuits|optimistic circuit]].
 
 ## When to reach for it
 

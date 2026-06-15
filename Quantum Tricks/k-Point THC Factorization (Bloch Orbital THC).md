@@ -25,7 +25,7 @@ $$\zeta^{Q, G_1, G_2}_{\mu\nu} = \int d\mathbf{r}\int d\mathbf{r}'\; e^{-i(Q+G_1
 
 The $G$ vectors arise from the modular subtraction: $G_{k,k-Q} = (k - (k\ominus Q)) - Q$. For a Monkhorst-Pack grid, there are at most 8 distinct $G$ values (one per octant). So the central tensor has at most $8^2 \times N_k \times M^2$ entries — compared to $N_k^3 \times M^2$ if you naively enumerated all four-momentum combinations.
 
-**THC factor optimization:** The ISDF (interpolative separable density fitting) approach provides initial THC factors, which are then reoptimized to minimize $\lambda$ via L1-regularized least-squares (as in [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee et al. 2021]]). A rank parameter $c_{\rm THC} = 8$ (i.e., $M = 4N$) gives MP2 errors $< 0.1$ mHa/cell.
+**THC factor optimization:** The ISDF (interpolative separable density fitting) approach provides initial THC factors, which are then reoptimized to minimize $\lambda$ via L1-regularized least-squares (as in [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee et al. 2021]]). In the paper's MP2 benchmark set, a rank parameter $c_{\rm THC} = 8$ (i.e., $M = 4N$) gives MP2 errors $< 0.1$ mHa/cell; this is an empirical setting, not a universal rank guarantee.
 
 ## When to reach for it
 
@@ -38,13 +38,13 @@ The $G$ vectors arise from the modular subtraction: $G_{k,k-Q} = (k - (k\ominus 
 - Central tensor storage: $O(N_k M^2)$ — reduced from $O(N_k^3 M^2)$ by the $G$-vector structure
 - Leaf tensor storage: $O(N_k N M)$ where $N$ is the number of bands per cell
 - Classical THC factor optimization: the bottleneck — L1-regularized reoptimization scales prohibitively with $N_k$, limiting practical deployment
-- Quantum block encoding: $O(N_k N)$ Toffolis per walk step (no asymptotic improvement from symmetry, due to unary iteration floor)
+- Quantum block encoding: $O(N_k N)$ Toffolis per walk step in this second-quantized Bloch-orbital construction (no asymptotic improvement from symmetry in THC, due to the unary-iteration/data-movement floor)
 
 ## Caveat
 
 The classical cost of computing and optimizing the k-THC factors is the fatal limitation. ISDF provides a starting point, but the subsequent L1-regularized optimization to reduce $\lambda$ doesn't scale to large $N_k$. For the benchmark systems in the paper, only small k-meshes ($\leq 3 \times 3 \times 3$) were tractable. This means k-THC is currently impractical for the large-$N_k$ simulations needed to converge materials properties to the thermodynamic limit.
 
-Also: $\lambda_{\rm THC}$ in the symmetry-adapted setting scales worse than in the supercell case (less compression freedom), partially negating the structural benefits.
+Also: $\lambda_{\rm THC}$ in the symmetry-adapted setting scales worse than in the supercell case (less compression freedom), partially negating the structural benefits. k-THC can still save classical storage and constants by exploiting momentum conservation; the quantum resource outcome depends on the resulting $\lambda$ and the compiled PREPARE/SELECT costs.
 
 ## Related notes
 - [[Fault-Tolerant Quantum Simulation of Materials Using Bloch Orbitals (Rubin, Berry, Babbush et al 2023) — Paper Notes]]

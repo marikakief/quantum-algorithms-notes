@@ -11,7 +11,7 @@ Given a classical Markov chain $P$ on state space $X$ with stationary distributi
 - **Update cost $U$:** simulating one step of $P$ and updating the data structure
 - **Checking cost $C$:** determining if a state is marked
 
-Classically, the random walk approach costs $S + \frac{1}{\delta\varepsilon}(U + C)$ where $\delta$ is the spectral gap of $P$ and $\varepsilon = |M|/|X|$ is the marked fraction. The question: what's the best quantum algorithm?
+Classically, the random walk approach costs $S + \frac{1}{\delta\varepsilon}(U + C)$ where $\delta$ is the spectral gap of $P$ and $\varepsilon=\pi(M)$ is the stationary probability of the marked set. For a uniform chain this is the same as $|M|/|X|$. The question: what's the best quantum algorithm?
 
 ## What the paper does
 
@@ -25,7 +25,7 @@ Prior to this paper:
 - Ambainis achieved the separated cost $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ but only for specific Markov chains (Johnson graphs) with specific marked sets
 - Szegedy achieved the combined cost $S + \frac{1}{\sqrt{\delta\varepsilon}}(U + C)$ for any symmetric ergodic chain, but only *detected* marked elements (couldn't find them), and the checking cost $C$ was multiplied by the walk cost
 
-This paper: works for any ergodic reversible chain, finds marked elements, and achieves the separated cost.
+This paper: works for every ergodic reversible chain in the clean theorem, finds marked elements, and achieves the separated cost.
 
 ---
 
@@ -59,14 +59,14 @@ A naive approach would set $k = O(\log(1/\sqrt{\varepsilon}))$, yielding the ext
 
 $$S + \frac{1}{\sqrt{\varepsilon}}\left(\frac{\log(1/\sqrt{\varepsilon})}{\sqrt{\delta}} U + C\right)$$
 
-To remove the log, the paper adapts [[Recursive Amplitude Amplification (Høyer-Mosca-de Wolf)|recursive amplitude amplification (RAA)]] from Høyer, Mosca, and de Wolf. Instead of iterating Grover directly, define procedures recursively:
+To remove the log, the paper adapts recursive amplitude amplification from Høyer, Mosca, and de Wolf's *Quantum Search on Bounded-Error Inputs* (arXiv:quant-ph/0304052). Instead of iterating Grover directly, define procedures recursively:
 $$A_0 = \text{Id}, \quad A_i = A_{i-1} \cdot \text{ref}(\pi) \cdot A_{i-1}^\dagger \cdot \text{ref}(\mu^\perp) \cdot A_{i-1}$$
 
 Each $A_i$ rotates by $3^i \varphi$ (where $\sin\varphi = \sqrt{p_M}$), so $t = \log_3(1/\varphi)$ levels suffice. At level $i$, use an approximate reflection $R(\beta_i)$ with precision $\beta_i = O(\gamma/i^2)$. The errors form a convergent series, and the total cost is $O(3^t \cdot (c_1 \log(1/\gamma) + c_2)) = O(\frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C))$ — no extra log factor.
 
 ### Extension to non-reversible chains
 
-For non-reversible ergodic chains, the discriminant matrix $D(P) = (\sqrt{p_{xy} p^*_{yx}})$ may not be symmetric. The algorithm still works, replacing the spectral gap $\delta(P)$ with the singular value gap of $D(P)$. The phase gap of $W(P)$ is still $\geq 2\sqrt{\delta_{\text{sv}}}$, where $\delta_{\text{sv}}$ is this singular value gap.
+For the non-reversible extension treated in the paper, the discriminant matrix $D(P) = (\sqrt{p_{xy} p^*_{yx}})$ replaces the symmetric-chain transition matrix. The analogous parameter is a singular-value gap of this discriminant. This should not be paraphrased as a completely unrestricted non-reversible theorem without the discriminant/singular-gap assumptions needed to implement and analyze the walk.
 
 ---
 
@@ -75,7 +75,7 @@ For non-reversible ergodic chains, the discriminant matrix $D(P) = (\sqrt{p_{xy}
 | Result | Statement |
 |---|---|
 | Main theorem (reversible) | Cost $S + \frac{1}{\sqrt{\varepsilon}}\left(\frac{1}{\sqrt{\delta}} U + C\right)$, finds marked element w.h.p. |
-| Main theorem (non-reversible) | Same, with $\delta$ replaced by singular value gap of $D(P)$ |
+| Main theorem (non-reversible extension) | Same form, with $\delta$ replaced by the relevant singular-value gap of $D(P)$ |
 | Phase gap quadratic amplification | $\Delta(P) \geq 2\sqrt{\delta}$ — the quantum walk quadratically amplifies the classical gap |
 | Approximate reflection | $R(P)$ approximates $\text{ref}(\pi)$ to error $\leq 2^{1-k}$ using $O(k/\sqrt{\delta})$ walk steps |
 | RAA removes log | Recursive amplitude amplification eliminates the $\log(1/\sqrt{\varepsilon})$ overhead |
@@ -88,7 +88,7 @@ For non-reversible ergodic chains, the discriminant matrix $D(P) = (\sqrt{p_{xy}
 |---|---|---|---|
 | Cost | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ | $S + \frac{1}{\sqrt{\delta\varepsilon}}(U + C)$ | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}} U + C)$ |
 | Finds element? | ✓ | ✗ (detection only) | ✓ |
-| Chain class | Johnson graphs + structured $M$ | Symmetric ergodic | **Any ergodic** (reversible or non-reversible) |
+| Chain class | Johnson graphs + structured $M$ | Symmetric ergodic | **Reversible chains cleanly; non-reversible extension via discriminant singular values** |
 | Checking cost | Separated | Not separated | **Separated** |
 | Analysis | Ad hoc, hard to extend | General | **General + simple** |
 
@@ -121,7 +121,7 @@ Phase estimation on the walk then discriminates $|\pi\rangle$ (eigenvalue 1) fro
 - **Setup cost.** The $S$ term is paid once and can dominate — for Johnson graph applications, $S$ involves loading $r$-element subsets.
 - **Reversibility assumption** for the clean result. The non-reversible extension works but requires the singular value gap of the discriminant, which is less well-studied than spectral gaps.
 - **Finding vs. detection gap remains open** in general. For state-transitive chains with a unique marked state, later work (Krovi-Magniez-Ozols-Roland 2015) closes this, but the general relationship between detection and finding quantum hitting times is still not fully resolved.
-- **No speedup of hitting time** in general — the paper gives a speedup of $1/\delta\varepsilon$ (the "extended" hitting time), not the potentially smaller actual hitting time. Szegedy's result uses the actual hitting time for detection, but it's unclear if this extends to finding.
+- **Hitting-time terminology is delicate.** The clean MNRS bound is expressed through the spectral gap and marked stationary measure, not by taking the square root of every classical hitting-time notion. Later work studies detection and finding hitting times more carefully.
 
 ---
 
@@ -150,12 +150,13 @@ Phase estimation on the walk then discriminates $|\pi\rangle$ (eigenvalue 1) fro
 ### Paper notes
 - [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes]] — this paper directly builds on Szegedy's walk framework
 - [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes]] — the other predecessor; MNRS unifies the two
-- [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes]] — amplitude amplification used in the outer loop
+- [[Standard Amplitude Amplification]] — amplitude amplification used in the outer loop
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes]] — MNRS generalises Grover to walk-based settings
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — continuous-time walk-based speedup; different walk paradigm
 - [[Any AND-OR Formula Can Be Evaluated in O(N^{1⁄2+o(1)}) Queries (Ambainis-Childs-Reichardt-Špalek-Zhang 2007) — Paper Notes]] — uses Szegedy walk for formula evaluation
 - [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes]] — applies the MNRS framework to triangle finding; Magniez and Santha are co-authors on both
 - [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes]] — supersedes for finding: achieves $O(\sqrt{\mathrm{HT}})$ on any reversible chain via interpolated walk; removes state-transitivity requirement
+- [[Time and Space Efficient Quantum Algorithms for Detecting Cycles and Testing Bipartiteness (Cade-Montanaro-Belovs 2016) — Paper Notes]] — uses quantum-walk $s$-$t$ connectivity in the adjacency-array model, with local neighbour-state reflections instead of storing the graph
 
 ### Trick cards
 - [[Phase Estimation as Eigenvalue Filter for Walk-Based Search]]

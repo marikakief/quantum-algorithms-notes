@@ -28,11 +28,11 @@ Goal: simulate time evolution $e^{-iHt}$ (or perform phase estimation) to precis
 
 ## What the paper does
 
-This paper achieves gate complexity $\widetilde{O}(N^{1/3} \eta^{8/3})$ for electronic structure simulation — sublinear in the number of plane-wave orbitals $N$. The prior best using plane waves was $\widetilde{O}(N^{8/3}/\eta^{2/3})$ (Low & Wiebe 2018, second-quantized). The ratio of old to new complexity is $N^{7/3}/\eta^{10/3}$, which is enormous in the regime $N \gg \eta$ necessary for chemical accuracy in molecules.
+This paper achieves gate complexity $\widetilde{O}(N^{1/3} \eta^{8/3})$ for electronic structure simulation — sublinear in the number of plane-wave orbitals $N$. The prior best using plane waves was $\widetilde{O}(N^{8/3}/\eta^{2/3})$ (Low & Wiebe 2018, second-quantized). The ratio of old to new complexity is $N^{7/3}/\eta^{10/3}$. This can be very large in high-resolution molecular regimes, but it is not implied merely by $N \gg \eta$: for $N=c\eta$, the ratio is $c^{7/3}/\eta$.
 
-The improvement comes from combining two choices: (1) working in **first quantization** so the qubit count is $O(\eta \log N)$ instead of $N$, and (2) applying the **interaction picture** with the kinetic operator $T$ as the large piece and the potential $B = U+V$ as the perturbation. In first-quantized momentum space, $\|T\| \gg \|U+V\|$ when $N \gg \eta$ — the reverse of the second-quantized setting exploited by Low & Wiebe. The LCU 1-norm of the potential is $\lambda = O(\eta^{5/3} N^{1/3})$, much smaller than the kinetic norm $\|T\| = O(\eta N^{2/3}/\Omega^{2/3})$. Since simulation cost scales with $\lambda t$ (not $\|T\|t$), this gives the sublinear-in-$N$ result.
+The improvement comes from combining two choices: (1) working in **first quantization** so the qubit count is $O(\eta \log N)$ instead of $N$, and (2) applying the **interaction picture** with the kinetic operator $T$ as the efficiently simulable piece and the potential $B = U+V$ as the LCU-encoded piece. The relevant cost driver is the LCU 1-norm $\lambda_B = O(\eta^{5/3} N^{1/3})$, not the operator norm $\|T\| = O(\eta N^{2/3}/\Omega^{2/3})$. Kinetic norm dominance over $\lambda_B$ would require the stronger condition $N \gg \eta^6$ when $\Omega \propto \eta$; the asymptotic improvement should therefore be understood through the interaction-picture cost model, not the slogan "$N \gg \eta$ implies $\|T\| \gg \lambda_B$."
 
-The improvement over the [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|CI matrix approach]] (which achieves $\widetilde{O}(\eta^2 N^3)$) is: ratio = $\eta^2 N^3 / (N^{1/3} \eta^{8/3}) = \eta^{2/3} N^{8/3}$. For $N=100\eta$: ratio $= \eta^{2/3} (100\eta)^{8/3} = 100^{8/3} \eta^{10/3} \approx 2\times10^5 \cdot \eta^{10/3}$. Enormous for any realistic $\eta$ and $N$.
+The improvement over the [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|CI matrix approach]] (which achieves $\widetilde{O}(\eta^2 N^3)$) is: ratio = $\eta^2 N^3 / (N^{1/3} \eta^{8/3}) = N^{8/3}/\eta^{2/3}$. For $N=100\eta$: ratio $= (100\eta)^{8/3}/\eta^{2/3} = 100^{8/3}\eta^2 \approx 2\times10^5 \eta^2$, enormous for realistic $\eta$ in the large plane-wave basis regime.
 
 ---
 
@@ -52,7 +52,7 @@ Set $A = T$ (kinetic) and $B = U + V$ (external + two-body potential). The key o
 
 $$\|T\| = O\!\left(\frac{\eta N^{2/3}}{\Omega^{2/3}}\right) = O\!\left(\frac{N^{2/3}}{\eta^{1/3}}\right) \quad \text{and} \quad \lambda_{B} = O\!\left(\frac{\eta^{5/3} N^{1/3}}{1}\right)$$
 
-so $\|T\| \gg \|B\|$ when $N \gg \eta$. Simulating in the rotating frame of $T$ (the kinetic frame) avoids paying cost proportional to $\|T\|$.
+so $\|T\|/\lambda_B = O(N^{1/3}/\eta^2)$. Thus kinetic dominance over the potential LCU norm occurs only for $N \gg \eta^6$. The useful algorithmic fact is more general: $T$ is diagonal and efficiently simulable, while the Dyson/LCU cost is governed by $\lambda_B$.
 
 The interaction-picture approach (Low & Wiebe 2018) approximates $e^{-i(A+B)t}$ via the time-ordered Dyson expansion:
 
@@ -68,11 +68,11 @@ See [[Interaction Picture Simulation (Kinetic Frame)]].
 
 ### 3. LCU decomposition of $B = U + V$
 
-Write $B = \sum_s w_s H_s$ with $H_s$ unitary and $w_s \geq 0$. The terms in $U$ and $V$ would naturally not be unitary when the momentum shift $\nu$ would push an index outside $G$. This is handled by a sign-parity cancellation trick: sum over an extra bit $x \in \{0,1\}$ with alternating sign $(-1)^x$, and activate the phase flip when the index leaves $G$. For example, for $U$:
+Write $B = \sum_s w_s H_s$ with $H_s$ unitary and $w_s \geq 0$. The terms in $U$ and $V$ would naturally not be unitary when the momentum shift $\nu$ would push an index outside $G$. This is handled by a sign-parity cancellation trick: define unitary extensions of the momentum shifts on the full grid, sum over an extra bit $x \in \{0,1\}$ with alternating sign $(-1)^x$, and activate the phase flip when the index leaves $G$. For example, for $U$:
 
 $$U = \sum_{\nu \in G_0} \sum_\ell \frac{2\pi\zeta_\ell}{\Omega \|k_\nu\|^2} \sum_{j=1}^\eta \sum_{x \in \{0,1\}} \left(-e^{-ik_\nu \cdot R_\ell} \sum_{p \in G} (-1)^{x[(p-\nu)\notin G]} |p-\nu\rangle\langle p|_j\right)$$
 
-When $(p-\nu) \notin G$, the two $x$ terms contribute $+1 - 1 = 0$, canceling the invalid term. The operators inside the parentheses are unitary (they act on all of $G$ with appropriate wrapping/cancellation). Similarly for $V$.
+When $(p-\nu) \notin G$, the two $x$ terms contribute $+1 - 1 = 0$, canceling the invalid contribution in the LCU sum while each branch remains a unitary extension on the computational grid. Similarly for $V$.
 
 See [[LCU Sign-Parity Cancellation for Grid Boundaries]].
 
@@ -126,7 +126,7 @@ The paper briefly describes how [[Qubitization (Quantum Walk for Spectral Encodi
 
 $$\widetilde{O}\!\left(\eta^{4/3} N^{2/3} + \eta^{8/3} N^{1/3}\right)$$
 
-The first term dominates when $N \ll \eta^{4/3}/\eta = \eta^{1/3}$, the second when $N \gg \eta$. For molecular applications with $N \gg \eta$, the interaction picture approach gives the same $\eta^{8/3} N^{1/3}$ scaling, so neither is uniformly better — but the interaction picture version has cleaner constants and a simpler implementation.
+The first term dominates when $N > \eta^4$; the second dominates when $N < \eta^4$. For molecular applications, this means the qubitization alternative is not summarized by a simple "$N \gg \eta$" rule. The interaction-picture version gives the $\eta^{8/3}N^{1/3}$ term directly, but later constant-factor studies found qubitization more practical for many realistic parameter choices.
 
 ---
 
@@ -162,16 +162,16 @@ $$\widetilde{O}\!\left(\eta^{4/3} N^{2/3} + \eta^{8/3} N^{1/3}\right)$$
 | Aspuru-Guzik et al. 2005 | Second-quant, JW, Trotter | $O(N)$ | $\widetilde{O}(N^{11} t/\varepsilon)$ | Prior |
 | Wecker et al. 2015 | Second-quant, BK, Trotter | $O(N)$ | $O(N^{8+o(1)} t/\varepsilon)$ | Prior |
 | Berry et al. (QSVT) 2019 | Second-quant, Gaussian | $O(N)$ | $\widetilde{O}(N^4 t)$ | Concurrent |
-| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes\|Babbush, Gidney et al. 2018]] | Second-quant, dual basis, qubitization | $O(\log(\lambda N/\varepsilon))$ | $O(N^3/\varepsilon)$ T gates | Prior (same group) |
+| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes\|Babbush, Gidney et al. 2018]] | Second-quant, dual basis, qubitization | $N$ system qubits plus logarithmic ancilla | $O(N^3/\varepsilon)$ T gates | Prior (same group) |
 | [[Low-Depth Quantum Simulation of Materials (Babbush, Wiebe, McClean et al 2018) — Paper Notes\|Babbush et al. 2018 (dual basis)]] | Second-quant, dual basis, LCU | $N$ | depth $\widetilde{O}(N^{8/3})$ | Prior (same group) |
 | Low & Wiebe 2018 | Second-quant, plane-wave, interaction picture | $O(N \log N)$ | $\widetilde{O}(N^{8/3}/\eta^{2/3})$ | **Prior best for plane waves** |
 | [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes\|Babbush et al. 2018 (CI)]] | First-quant, CI matrix, Taylor series | $\widetilde{O}(\eta)$ | $\widetilde{O}(\eta^2 N^3 t)$ | Prior (same group) |
 | [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes\|Kivlichan et al. 2017]] | First-quant, real-space grid, Taylor | $\eta D \lceil\log b\rceil$ | $\widetilde{O}(\eta^2 t)$ (pairwise oracle) | Prior |
 | **This work** | **First-quant, plane-wave, interaction picture** | **$O(\eta \log N)$** | **$\widetilde{O}(N^{1/3} \eta^{8/3} t)$** | **—** |
 
-**Key comparison:** Against Low & Wiebe 2018 (the immediate predecessor for plane-wave simulation), this paper improves by a factor of $N^{7/3}/\eta^{10/3}$. For molecules where $N \approx 100\eta$ (roughly 100 plane waves per electron for chemical accuracy), this is an improvement of $100^{7/3}/\eta^{10/3-1} = 100^{7/3} \cdot \eta^{-7/3}$. For $\eta = 100$ electrons, that's a speedup of about $100^{7/3}/100^{7/3} = 1$... actually: old is $N^{8/3}/\eta^{2/3}$, new is $N^{1/3}\eta^{8/3}$, ratio is $N^{7/3}/\eta^{10/3}$. With $N=100\eta$: ratio = $(100\eta)^{7/3}/\eta^{10/3} = 100^{7/3} \cdot \eta^{7/3}/\eta^{10/3} = 100^{7/3}/\eta$. So for $\eta=100$, the improvement is $100^{7/3}/100 = 100^{4/3} \approx 460$. For $\eta=50$ it's $100^{7/3}/50 \approx 930$. This is not incremental — and the advantage grows as $\eta$ decreases (fewer electrons, more improvement).
+**Key comparison:** Against Low & Wiebe 2018 (the immediate predecessor for plane-wave simulation), this paper improves by a factor of $N^{7/3}/\eta^{10/3}$. If $N=100\eta$, the ratio is $100^{7/3}/\eta$. Thus for $\eta=100$ electrons the improvement is about $100^{4/3}\approx 460$, and for $\eta=50$ it is about 930. The advantage grows with the basis-size factor $N/\eta$ and, at fixed $N/\eta$, shrinks with larger $\eta$.
 
-Against the [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|CI matrix approach]], this paper wins when $N \gg \eta^{2/3}$: setting the two complexities equal, $\eta^{8/3} N^{1/3} = \eta^2 N^3$, gives $N^{8/3} = \eta^{2/3}$, i.e., $N = \eta^{1/4}$. Since physical applications have $N \gg \eta \gg \eta^{1/4}$, this paper wins by an enormous margin for all realistic problems.
+Against the [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|CI matrix approach]], this paper wins when $N \gg \eta^{1/4}$: setting the two complexities equal, $\eta^{8/3} N^{1/3} = \eta^2 N^3$, gives $N^{8/3} = \eta^{2/3}$, i.e., $N = \eta^{1/4}$. Since physical applications have $N \gg \eta \gg \eta^{1/4}$, this paper wins by an enormous margin for all realistic problems.
 
 The intuitive reason: second-quantized encodings waste qubits and norm on states with $\eta \neq $ const. First-quantized momentum-space pins the electron count at $\eta$, which is why $\|T\| \gg \|B\|$ in this representation (large $N$ means high kinetic energy in second quantization because states with up to $N$ electrons are included, but first quantization has exactly $\eta$ electrons with bounded kinetic energy per particle).
 
@@ -185,7 +185,7 @@ The intuitive reason: second-quantized encodings waste qubits and norm on states
 
 **Antisymmetry overhead.** In second quantization, antisymmetry is free (it's baked into the operator algebra). In first quantization, it must be maintained explicitly. Initial-state preparation costs $O(\eta \log\eta \log N)$ and requires that the input state is properly antisymmetrized. This is not a leading-order cost, but it adds circuit complexity.
 
-**No Born-Oppenheimer approximation required — but nuclei add cost.** The algorithm handles $L$ nuclei via the $U$ term (external potential). Computing nuclear phases $e^{-ik_\nu \cdot R_\ell}$ for $L$ nuclei adds $O(L \log(1/\delta_R))$ cost per oracle call. For molecules, $L \leq \eta$ so this doesn't worsen the leading $O(\eta)$ scaling, but precision in nuclear positions ($\delta_R$) adds polylog overhead.
+**Born-Oppenheimer electronic Hamiltonian.** The concrete Hamiltonian in the paper has fixed nuclei and is therefore Born-Oppenheimer. The external potential handles $L$ fixed nuclear charges; computing phases $e^{-ik_\nu \cdot R_\ell}$ adds $O(L \log(1/\delta_R))$ cost per oracle call. Extensions with dynamical nuclei are possible in the first-quantized framework, but they change the kinetic terms, interactions, statistics, and state-preparation requirements.
 
 **Constant factors not estimated.** Unlike [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. 2018]], this paper gives asymptotic scaling only — no T-gate counts, no surface-code resource estimates. The absolute costs for specific molecules are unknown. **Update:** The follow-up paper [[Fault-Tolerant Quantum Simulations of Chemistry in First Quantization (Su, Berry, Wiebe, Rubin, Babbush 2021) — Paper Notes|Su, Berry, Wiebe, Rubin, Babbush (2021)]] provides the full constant-factor compilation, with $\sim 1000\times$ circuit-level improvements and concrete resource estimates showing first-quantized qubitization outperforming second-quantized Gaussian methods.
 
@@ -197,7 +197,7 @@ The intuitive reason: second-quantized encodings waste qubits and norm on states
 
 1. [[First-Quantized Plane-Wave Chemistry Encoding]] — Use $\eta$ registers of $\log N$ qubits to encode a first-quantized many-body wavefunction in momentum space; maintain antisymmetry in the wavefunction rather than operators; qubit count $O(\eta \log N)$ vs $N$ for second-quantized encodings.
 
-2. [[Interaction Picture Simulation (Kinetic Frame)]] — In first-quantized momentum space, choose $A = T$ and $B = U+V$ so that $\|T\| \gg \lambda_B = O(\eta^{5/3} N^{1/3})$; simulate in the rotating frame of $T$ using the interaction picture (Low & Wiebe 2018); cost scales with $\lambda_B t$ not $\|T\|t$; gives sublinear-in-$N$ gate complexity.
+2. [[Interaction Picture Simulation (Kinetic Frame)]] — In first-quantized momentum space, choose $A = T$ and $B = U+V$ so that the diagonal kinetic evolution is cheap and the Dyson/LCU cost scales with $\lambda_B = O(\eta^{5/3} N^{1/3})$ rather than with a kinetic-energy norm. This gives sublinear-in-$N$ gate complexity.
 
 3. [[LCU Sign-Parity Cancellation for Grid Boundaries]] — When LCU terms involve momentum shifts that can push grid indices out of bounds, introduce a parity bit $x \in \{0,1\}$ with sign $(-1)^x$ and activate the sign flip on boundary violations; the two $x$ terms cancel ($+1 - 1 = 0$) wherever the shift is invalid, preserving unitarity without extra projection or checking circuits.
 

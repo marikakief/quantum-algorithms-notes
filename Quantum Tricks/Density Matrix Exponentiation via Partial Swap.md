@@ -52,3 +52,4 @@ For **classical data** loaded via qRAM: Tang's dequantization results (2018) sho
 - [[Quantum Self-Tomography via Phase Estimation]]
 - [[Gapped Phase Estimation]]
 - [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — uses qPCA / DME-style processing in the exoplanet-imaging application, with uploading protecting the stored photons.

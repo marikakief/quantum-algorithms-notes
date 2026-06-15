@@ -1,3 +1,5 @@
+# Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes
+
 > **Source:** John Watrous, *Quantum algorithms for solvable groups*, arXiv:quant-ph/0011023 (2001); Proc. 33rd STOC, 60–67 (2001)
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0011023)
 > **Tags:** #hidden-subgroup #solvable-groups #group-theory #black-box-groups #non-abelian
@@ -9,6 +11,8 @@
 **Setting:** Black-box groups (Babai-Szemerédi 1984). Group elements are $n$-bit strings; a group oracle computes $|g\rangle|h\rangle \mapsto |g\rangle|gh\rangle$ at unit cost. No classical polynomial-time algorithm can compute the order of a black-box group, even for abelian groups.
 
 **Main result:** Polynomial-time quantum algorithm for computing the order of a solvable group given generators. As byproducts: membership testing, subgroup equality, normality testing — all in quantum polynomial time.
+
+Warning: this paper should not be cited as a general solvable-group HSP algorithm. It solves important black-box solvable-group structural tasks and supplies tools used by some normal-HSP and quotient algorithms.
 
 ---
 
@@ -112,6 +116,8 @@ This is the first polynomial-time quantum algorithm for a natural class of **non
 3. **Climbing the subnormal chain** iteratively, reducing each step to an abelian (Shor-style) problem
 
 The paper doesn't solve graph isomorphism (which would need the full non-abelian HSP for symmetric groups, which are not solvable for $n \geq 5$). But it shows that meaningful non-abelian group problems are quantum-tractable.
+
+It also should be kept separate from normal-HSP results: Watrous gives subgroup-state and factor-group tools, not a blanket hidden-subgroup recovery theorem for every solvable group.
 
 ### Retracted claim
 

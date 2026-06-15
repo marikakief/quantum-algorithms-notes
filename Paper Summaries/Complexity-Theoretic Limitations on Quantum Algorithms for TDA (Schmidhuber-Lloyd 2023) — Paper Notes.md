@@ -16,13 +16,13 @@ Two formal problems:
 **Negative result.** Shows that computing or even approximating Betti numbers is intractable *even for quantum computers*:
 
 1. **Computing Betti numbers exactly is #P-hard** (Theorem 1), even for clique-dense complexes.
-2. **Deciding $\beta_k > 0$ is NP-hard** (Theorem 2), even for clique-dense complexes. This immediately implies that approximating Betti numbers to any multiplicative error is NP-hard.
+2. **Deciding $\beta_k > 0$ is NP-hard** (Theorem 2), even for clique-dense complexes. This immediately implies that approximating Betti numbers to any multiplicative error is NP-hard: a multiplicative approximation must output exactly zero when $\beta_k=0$ and a positive value when $\beta_k>0$.
 
 Since quantum computers are not believed to solve NP-hard or #P-hard problems, these results show the [[Quantum Algorithms for Topological and Geometric Analysis of Data (Lloyd-Garnerone-Zanardi 2016) — Paper Notes|LGZ algorithm]] cannot provide an exponential speedup in the worst case. The exponential advantage is limited to specific promise problems (e.g., when the clique fraction, spectral gap, and Betti number size are all favourable).
 
 The paper also shows that the LGZ algorithm achieves only a quadratic (Grover-like) speedup for asymptotically almost all random Vietoris-Rips complexes.
 
-My assessment: this is the paper that tempered the TDA enthusiasm. The result is clean and the implications are clear — the quantum TDA speedup is not a generic exponential advantage but a conditional one. The hardness lies not in the QPE/kernel-estimation step but in the state preparation (constructing the simplex state is #P-hard by itself). If you're given an oracle for sampling simplices, the exponential advantage can be recovered.
+My assessment: this is the paper that tempered the TDA enthusiasm. The result is clean and the implications are clear — the quantum TDA speedup is not a generic exponential advantage but a conditional one. The hardness lies not in the QPE/kernel-estimation step but in the state preparation (constructing the simplex state is #P-hard by itself). If you are given an oracle for uniform simplex sampling, one major bottleneck is removed, but the advantage still depends on clique fraction, spectral gap, target precision, and Betti-number size.
 
 ## The proofs
 
@@ -50,7 +50,7 @@ For the Vietoris-Rips complex on $n$ random points in $\mathbb{R}^d$ at scale $\
 - The number of $k$-simplices $|S_k|$ grows as $\binom{n}{k+1} \cdot p^{\binom{k+1}{2}}$
 - The quantum lower bound is $T_q = \Omega\left(\sqrt{\binom{n}{k+1}/\beta_k}\right)$
 
-This gives only a **quadratic speedup** over the classical $O(|S_k|)$ for most inputs.
+This gives only a **quadratic speedup** over the classical $O(|S_k|)$ for most inputs, under the simplex-count and Betti-scaling assumptions in the random Vietoris--Rips model.
 
 ## Key results
 
@@ -77,9 +77,11 @@ These results are complementary, not contradictory: DQC1-hardness of the general
 
 1. **Promise problems escape.** The hardness results are worst-case. For specific promise problems (e.g., "the complex has clique fraction $\geq 1/\text{poly}(n)$, spectral gap $\geq 1/\text{poly}(n)$, and $\beta_k \geq |S_k|/\text{poly}(n)$"), quantum algorithms may still have exponential advantage.
 
-2. **Oracle model recovers advantage.** If given an oracle for uniform simplex sampling (rather than vertex/edge input), the exponential speedup returns. This is relevant for problems where simplices are specified directly (e.g., hypergraph structures in social networks).
+2. **Oracle model helps but is not sufficient by itself.** If given an oracle for uniform simplex sampling (rather than vertex/edge input), the state-preparation bottleneck is removed. The remaining advantage still depends on clique fraction, spectral gap, target error, and Betti-number size. This is relevant for problems where simplices are specified directly (e.g., hypergraph structures in social networks).
 
-3. **Concurrent work.** Crichigno & Kohler (2022, arXiv:2209.11793) independently proved that Homology is QMA₁-hard (stronger than NP-hard), using supersymmetric quantum systems.
+3. **Worst-case exact hardness and approximate normalized algorithms are different regimes.** The NP/#P-hardness results apply to exact computation and zero-vs-positive / multiplicative worst-case problems. They do not contradict later positive algorithms for approximate normalized spectral-density or Betti-number estimation under gap and mixing promises.
+
+4. **Concurrent work.** Crichigno & Kohler (2022, arXiv:2209.11793) independently proved that Homology is QMA₁-hard (stronger than NP-hard), using supersymmetric quantum systems.
 
 ## Reusable ideas
 

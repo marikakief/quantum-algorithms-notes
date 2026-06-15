@@ -4,18 +4,20 @@
 
 ---
 
+> **Scope warning:** This is average-case prediction of structured observables under structured input distributions. It is not full process tomography and does not output a circuit description of $\mathcal E$.
+
 ## The computational problem
 
 Given black-box access to an unknown $n$-qubit quantum process $\mathcal E$, learn a classical predictor for quantities of the form
 
 $$
-\operatorname{tr}\!igl(O\,\mathcal E(\rho)\bigr)
+\operatorname{tr}\!\bigl(O\,\mathcal E(\rho)\bigr)
 $$
 
 where:
 
-- $\rho$ is an input state drawn from a distribution $\mathcal D$ over $n$-qubit states,
-- $O$ is a target observable, typically bounded-degree / few-body,
+- $\rho$ is an input state drawn from a locally flat or otherwise structured distribution $\mathcal D$ over $n$-qubit states,
+- $O$ is a target observable with bounded-degree / few-body structure,
 - the learner gets only a polynomial-size classical training set built from random product-state inputs and randomized single-qubit measurements on the outputs.
 
 The real question is not tomography of $\mathcal E$ in full generality — that would still be exponential — but whether one can **predict local properties of the output** efficiently even when $\mathcal E$ itself may be an exponentially long quantum circuit or very long Hamiltonian evolution.
@@ -32,7 +34,7 @@ $$
 
 then learn a low-degree approximation to the Heisenberg-evolved observable $\mathcal E^\dagger(O)$ from classical-shadow-style data. The hard process disappears behind a learnable operator surrogate.
 
-My assessment: this is one of Robert Huang’s strongest structural papers. [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes|Power of Data]] asked when data erases naive quantum advantage claims; this paper goes further and shows that even wildly complex quantum dynamics can become classically predictable for the right observables and input ensemble. The real engine is not “ML” in the vague sense; it is a sharp low-degree / low-influence statement plus a new quantum Bohnenblust--Hille-type norm inequality.
+My assessment: this is one of Huang, Chen, and Preskill's strongest structural papers. [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes|Power of Data]] asked when data erases naive quantum advantage claims; this paper goes further and shows that even wildly complex quantum dynamics can become classically predictable for locally flat input distributions and bounded-degree observables. The real engine is not “ML” in the vague sense; it is a sharp low-degree / low-influence statement plus a new quantum Bohnenblust--Hille-type norm inequality.
 
 ## The algorithm / construction
 
@@ -40,8 +42,7 @@ My assessment: this is one of Robert Huang’s strongest structural papers. [[Po
 
 For each sample $\ell=1,\dots,N$:
 
-1. Prepare a random product stabilizer state $|\psi^{\mathrm{in}}_\ell\rangle$ with each qubit drawn from $
-\{|0\rangle,|1\rangle,|+\rangle,| - \rangle,|y_+\rangle,|y_-\rangle\}$.
+1. Prepare a random product stabilizer state $|\psi^{\mathrm{in}}_\ell\rangle$ with each qubit drawn from $\{|0\rangle,|1\rangle,|+\rangle,|-\rangle,|y_+\rangle,|y_-\rangle\}$.
 2. Apply the unknown process $\mathcal E$.
 3. Measure each output qubit in a random Pauli basis, storing the resulting single-shot shadow state $|\psi^{\mathrm{out}}_\ell\rangle$.
 
@@ -130,7 +131,7 @@ This is the bridge to the norm inequalities below.
 
 ### Quantum Bohnenblust--Hille inequality
 
-They derive a quantum analogue of the Bohnenblust--Hille inequality, bounding the Pauli-coefficient norm of a local observable by its operator norm. For bounded-degree observables this becomes an $\ell_1$-type bound strong enough to show that most low-degree Pauli coefficients must be small.
+They derive a quantum analogue of the Bohnenblust--Hille inequality, bounding the Pauli-coefficient norm of a local observable by its operator norm. For bounded-degree observables this becomes an $\ell_1$-type bound strong enough to show that most low-degree Pauli coefficients must be small. This is a bounded-degree structural statement, not a claim that every bounded observable has a sparse Pauli expansion.
 
 That sparsity statement is what makes the thresholding step work.
 

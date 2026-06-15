@@ -14,7 +14,7 @@
 
 ## What the paper does
 
-Resolves the open question affirmatively for single marked elements: a quantum walk finds a marked vertex on **any** graph in $O(\sqrt{\mathrm{HT}(P,M)})$ steps, a full quadratic speedup over the classical hitting time. For multiple marked elements, the cost is $O(\sqrt{\mathrm{HT}^+(P,M)})$ where $\mathrm{HT}^+$ is a new quantity called the *extended hitting time*, which equals $\mathrm{HT}$ when $|M| = 1$ but can be larger in general.
+Resolves the open question affirmatively for single marked elements on any graph equipped with a reversible ergodic Markov chain: a quantum walk finds a marked vertex in $O(\sqrt{\mathrm{HT}(P,M)})$ steps, a full quadratic speedup over the classical hitting time. For multiple marked elements, the cost is $O(\sqrt{\mathrm{HT}^+(P,M)})$ where $\mathrm{HT}^+$ is a new quantity called the *extended hitting time*, which equals $\mathrm{HT}$ when $|M| = 1$ but can be larger in general.
 
 The approach is conceptually cleaner than all prior work. Instead of bolting Grover-style reflections onto a walk operator (as in [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|MNRS (2007)]]) or requiring state-transitivity (as in Tulsi (2008) / [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|MNRS (2012)]]), it directly quantizes an *interpolated* Markov chain $P(s) = (1-s)P + sP'$ between the original walk $P$ and the absorbing walk $P'$. The quantum algorithm is then just [[Phase Estimation as Eigenvalue Filter for Walk-Based Search|eigenvalue estimation]] on the Szegedy walk operator $W(s)$ of this interpolated chain.
 
@@ -42,7 +42,7 @@ The eigenvalues of $W(s)$ are $e^{\pm i\varphi_k(s)}$ where $\cos\varphi_k(s) = 
 
 ### The geometric picture
 
-The principal eigenvector $|v_n(s)\rangle$ lives in the 2D subspace spanned by $|U\rangle$ (normalised uniform superposition over unmarked vertices) and $|M\rangle$ (normalised uniform superposition over marked vertices, weighted by $\pi$):
+The principal eigenvector $|v_n(s)\rangle$ lives in the 2D subspace spanned by stationary-weighted superpositions $|U\rangle$ over unmarked vertices and $|M\rangle$ over marked vertices:
 
 $$|v_n(s)\rangle = \cos\theta(s)\,|U\rangle + \sin\theta(s)\,|M\rangle$$
 
@@ -52,7 +52,7 @@ $$\cos^2\theta(s) = \frac{(1-s)(1-p_M)}{1-s(1-p_M)}, \quad \sin^2\theta(s) = \fr
 
 and $p_M = \sum_{x \in M} \pi_x$ is the probability of sampling a marked vertex from $\pi$.
 
-The interpolation parameter $s$ tunes the overlap: at $s = 0$, $|v_n\rangle \approx |U\rangle$; at $s \to 1$, $|v_n\rangle \approx |M\rangle$. The algorithm chooses $s$ to balance both overlaps.
+The interpolation parameter $s$ tunes the overlap: after the initial check has removed the marked component, the algorithm starts from $|U\rangle$, while the $+1$ eigenvector moves toward $|M\rangle$ as $s \to 1$. The algorithm chooses $s$ to balance the relevant unmarked and marked overlaps.
 
 ### The search algorithm
 
@@ -71,11 +71,11 @@ where $\varepsilon_2 = \frac{\pi}{\sqrt{2}} \cdot \frac{\sqrt{\mathrm{HT}(s)}}{T
 
 ### The optimal interpolation parameter
 
-The optimal $s$ that maximises $\cos\theta(s)\sin\theta(s)$ is:
+For $p_M < 1/2$, the $s$ that balances the two overlaps solves $(1-s)(1-p_M)=p_M$, hence:
 
-$$s^* = 1 - \sqrt{\frac{p_M}{1-p_M}}$$
+$$s^* = 1 - \frac{p_M}{1-p_M}$$
 
-giving $\cos\theta(s^*) = \sin\theta(s^*) = 1/\sqrt{2}$ (equal overlap on marked and unmarked). An approximation $p^*$ of $p_M$ with $|p^* - p_M| \leq p_M/3$ suffices.
+giving $\cos\theta(s^*) = \sin\theta(s^*) = 1/\sqrt{2}$ (equal overlap on marked and unmarked). When $p_M$ is already constant, the initial check or a constant-overlap choice is enough. An approximation $p^*$ of $p_M$ with $|p^* - p_M| \leq p_M/3$ suffices in the small-$p_M$ regime.
 
 ### Extended hitting time
 
@@ -116,13 +116,13 @@ This is a full quadratic speedup over the classical hitting time, with no symmet
 | Paper | Finds? | Any $P$? | Multiple $M$? | Cost |
 |---|---|---|---|---|
 | [[Quantum Speed-Up of Markov Chain Based Algorithms (Szegedy 2004) — Paper Notes\|Szegedy (2004)]] | Detect only | Symmetric only | Yes | $O(\sqrt{\mathrm{HT}})$ |
-| [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes\|MNRS (2007)]] | Yes | Any ergodic | Yes | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}}U + C)$ — not always $\sqrt{\mathrm{HT}}$ |
-| Tulsi (2008) | Yes | State-transitive | $\|M\|=1$ only | $O(\sqrt{\mathrm{HT}})$ |
-| MNRS (2012) | Yes | State-transitive | $\|M\|=1$ only | $O(\sqrt{\mathrm{HT}})$ |
-| [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes\|Childs-Goldstone (2004)]] | Yes | Specific lattices | $\|M\|=1$ only | $O(\sqrt{N})$ for $d > 4$ |
-| **This paper** | **Yes** | **Any reversible** | **Yes** ($\mathrm{HT}^+$) | $O(\sqrt{\mathrm{HT}})$ for $\|M\|=1$ |
+| [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes\|MNRS (2007)]] | Yes | Reversible chain framework | Yes | $S + \frac{1}{\sqrt{\varepsilon}}(\frac{1}{\sqrt{\delta}}U + C)$ — not always $\sqrt{\mathrm{HT}}$ |
+| Tulsi (2008) | Yes | State-transitive | $|M|=1$ only | $O(\sqrt{\mathrm{HT}})$ |
+| MNRS (2012) | Yes | State-transitive | $|M|=1$ only | $O(\sqrt{\mathrm{HT}})$ |
+| [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes\|Childs-Goldstone (2004)]] | Yes | Specific lattices | $|M|=1$ only | $O(\sqrt{N})$ for $d > 4$ |
+| **This paper** | **Yes** | **Any reversible** | **Yes** ($\mathrm{HT}^+$) | $O(\sqrt{\mathrm{HT}})$ for $|M|=1$ |
 
-The 2D grid illustrates the gap between prior approaches: [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|MNRS (2007)]] gives $\Theta(n)$ (no speedup over classical $\Theta(n \log n)$), while this paper gives $O(\sqrt{n \log n})$ — a genuine quadratic improvement.
+The 2D grid illustrates the gap between prior approaches: for an $n$-vertex grid, [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|MNRS (2007)]] gives $\Theta(n)$ (no speedup over classical $\Theta(n \log n)$), while this paper gives $O(\sqrt{n \log n})$ — a genuine quadratic improvement.
 
 ## Limits / caveats
 

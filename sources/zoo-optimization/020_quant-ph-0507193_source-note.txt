@@ -1,0 +1,14 @@
+arXiv:quant-ph/0507193v1 20 Jul 2005
+Quantum basin hopping with gradient-based local optimisation
+David Bulger
+
+Extracted text source used for vault note: /tmp/sergey-vault-pdfs/bulger-quantum-basin-hopping.txt
+
+=== PAGE 1 ===
+Quantum basin hopping with gradient-based local optimisation
+David Bulger
+November 8, 2018
+Abstract
+The quantum basin hopping algorithm for continuous global optimisation combines a local search with Grover’s algorithm, and can locate the global optimum using effort proportional to the square root of the number of basins. This article establishes that Jordan’s quantum gradient estimation method can be incorporated into the quantum basin hopper, providing an extra acceleration proportional to the domain dimension.
+
+[Full extracted text archived in temporary working file during build; PDF source: https://arxiv.org/pdf/quant-ph/0507193]

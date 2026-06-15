@@ -49,3 +49,4 @@ The controlled-SWAP on $d$-dimensional states requires $O(\log d)$ gates, not $O
 - [[Quantum Fingerprinting via Error-Correcting Codes]]
 - [[Density Matrix Exponentiation via Partial Swap]] — uses the (uncontrolled) swap operator for a different purpose
 - [[Phase Kickback from Eigenstate Ancilla]] — similar Hadamard-control-Hadamard pattern
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — generalizes the swap/permutation-test viewpoint to cubic moments under uploaded noisy copies.

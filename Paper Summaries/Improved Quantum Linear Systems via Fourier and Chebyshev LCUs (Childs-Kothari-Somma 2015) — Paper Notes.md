@@ -1,5 +1,7 @@
-> **Source:** Andrew M. Childs, Robin Kothari, and Rolando D. Somma, *Quantum algorithm for systems of linear equations with exponentially improved dependence on precision*, arXiv:1511.02306, SIAM J. Comput. **46**, 1920–1950 (2017)  
-> **Links:** [arXiv](https://arxiv.org/abs/1511.02306) · [SIAM J. Comput.](https://doi.org/10.1137/16M1087072)  
+# Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes
+
+> **Source:** Andrew M. Childs, Robin Kothari, and Rolando D. Somma, *Quantum algorithm for systems of linear equations with exponentially improved dependence on precision*, arXiv:1511.02306, SIAM J. Comput. **46**, 1920–1950 (2017)
+> **Links:** [arXiv](https://arxiv.org/abs/1511.02306) · [SIAM J. Comput.](https://doi.org/10.1137/16M1087072)
 > **Tags:** #QLSA #LCU #chebyshev #fourier #precision-scaling #linear-systems #variable-time-amplitude-amplification
 
 ---
@@ -20,12 +22,14 @@ The key insight: instead of using [[Amplitude Estimation via Phase Estimation on
 
 This is one of the papers where the field starts to move from "HHL + phase estimation" toward "matrix functions via approximation theory." That intellectual shift is the real contribution — it opens the door to [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] and all its descendants.
 
+Why HHL had $1/\varepsilon$ precision dependence: HHL estimates eigenvalues by phase estimation and then applies a reciprocal rotation. To make the reciprocal accurate for eigenvalues as small as $1/\kappa$, the eigenvalue register must resolve phases to additive precision tied to the target state error. The Fourier/Chebyshev LCU approach avoids explicit eigenvalue readout and approximates the reciprocal function directly on the promised spectral interval.
+
 ## The algorithm / construction
 
 ### General LCU framework (Section 2)
 
 The starting point is the [[Linear Combination of Unitaries (LCU)|LCU lemma]]. Given $M = \sum_i \alpha_i U_i$ with $\alpha_i > 0$, define:
-- **SELECT:** $U := \sum_i |i\rangle\langle i| \otimes U_i$  
+- **SELECT:** $U := \sum_i |i\rangle\langle i| \otimes U_i$
 - **PREPARE:** $V|0^m\rangle := \frac{1}{\sqrt{\alpha}} \sum_i \sqrt{\alpha_i}|i\rangle$, where $\alpha = \sum_i \alpha_i$
 
 Then $W = V^\dagger U V$ satisfies:
@@ -56,7 +60,7 @@ Each term $e^{-iAy_j z_k}$ is a Hamiltonian simulation query. Poisson summation 
 
 ### Chebyshev approach (Section 4)
 
-Replace $e^{-iAt}$ with Chebyshev polynomials $T_n(A/d)$, implemented via a [[Quantum-Walk Realization of Chebyshev Matrix Polynomials|quantum walk]].
+Replace $e^{-iAt}$ with Chebyshev polynomials $T_n(A/d)$, implemented through a [[Quantum-Walk Realization of Chebyshev Matrix Polynomials|quantum-walk block]], not by directly sparse-simulating each polynomial term as a Hamiltonian evolution.
 
 **Step 1 — Quantum walk.** For $d$-sparse $A$ with $\|A\|_{\max} \le 1$, define the walk operator $W := S(2TT^\dagger - I)$ where $T$ is an isometry encoding the matrix structure. Within the invariant subspace of eigenvector $|\lambda\rangle$ of $H = A/d$:
 
@@ -122,7 +126,7 @@ Later, [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] unifi
 
 ## Limits / caveats
 
-- Still outputs a **quantum state**, not the classical solution vector. Extracting $N$ classical amplitudes costs $O(N)$ additional work, negating the exponential speedup. For the expectation-value version, $\mathrm{polylog}(1/\varepsilon)$ is impossible unless BQP = PP.
+- Still outputs a **quantum state**, not the classical solution vector. Extracting $N$ classical amplitudes costs $O(N)$ additional work, negating the exponential speedup. The polylogarithmic precision improvement is for solution-state preparation; stronger additive expectation-value/output-estimation tasks have separate lower-bound barriers.
 - Requires $\|A\| = 1$ and known $\kappa$. In practice, estimating $\kappa$ can itself be expensive.
 - Sparse oracle access is needed for the Chebyshev approach. The Fourier approach only needs Hamiltonian simulation, but still assumes efficient simulation.
 - The VTAA construction (Section 5) is complex: gapped phase estimation + variable-stopping + uncomputation. Later optimal QLSA constructions ([[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa et al.]], [[Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes|An-Lin]]) are cleaner.

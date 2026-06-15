@@ -1,3 +1,5 @@
+# Further Improving Quantum Algorithms for Nonlinear DEs via Higher-Order Methods and Rescaling (Costa-Schleich-Morales-Berry 2023) — Paper Notes
+
 > **Source:** Pedro C. S. Costa, Philipp Schleich, Mauro E. S. Morales, and Dominic W. Berry, *Further improving quantum algorithms for nonlinear differential equations via higher-order methods and rescaling*, arXiv:2312.09518, npj Quantum Information **11**, 141 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2312.09518) · [npjQI](https://doi.org/10.1038/s41534-025-01084-z)
 > **Tags:** #nonlinear-ODE #Carleman-linearisation #quantum-algorithm #differential-equations #reaction-diffusion #PDE #rescaling #block-encoding
@@ -16,6 +18,8 @@ $$R := \frac{\|F_M\| \cdot \|\mathbf{u}_{\mathrm{in}}\|^{M-1}}{|\lambda_0|}$$
 
 satisfies $R < 1$, where $\lambda_0$ is the eigenvalue of $(F_1 + F_1^\dagger)/2$ closest to zero. The task: output a quantum state encoding $\mathbf{u}(T)$.
 
+The main analysis has no driving term $F_0$; it studies $\dot{\mathbf{u}}=F_1\mathbf{u}+F_M\mathbf{u}^{\otimes M}$.
+
 The paper also applies this to a class of reaction-diffusion PDEs:
 
 $$\partial_t u(x,t) = D\Delta u(x,t) + c\, u(x,t) + b\, u^M(x,t),$$
@@ -28,7 +32,7 @@ which after spatial discretisation becomes an ODE of the above form.
 
 Three improvements to quantum algorithms for nonlinear ODEs based on [[Carleman Linearisation for Quantum Nonlinear ODE Solvers|Carleman linearisation]]:
 
-1. **Higher-order time evolution** — replaces the forward Euler method (used in Liu et al. 2021, Liu et al. 2023) with the truncated Taylor series ODE solver of Berry-Costa (2022, arXiv:2212.03544). This gives $\log(1/\varepsilon)$ dependence on error (instead of near-linear) and near-linear $T$ dependence (instead of $T^2$).
+1. **Higher-order time evolution** — replaces the forward Euler method (used in Liu et al. 2021, Liu et al. 2023) with the truncated Taylor series ODE solver of Berry-Costa (2022, arXiv:2212.03544). This gives $\log(1/\varepsilon)$ dependence on error instead of near-linear dependence on $1/\varepsilon$, and near-linear $T$ dependence instead of $T^2$.
 
 2. **Rescaling of the Carleman vector** — a variable substitution $\tilde{\mathbf{u}} = \mathbf{u}/\gamma$ that boosts the measurement probability of the solution component from exponentially small in $N$ (the Carleman truncation order) to $\Omega(1/N)$. Without this, the cost has a factor $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ that kills any quantum speedup for PDEs.
 
@@ -38,7 +42,7 @@ These together bring the oracle complexity for the ODE down to
 
 $$O\!\left(\frac{1}{\sqrt{1 - R^{2/(M-1)}}} \cdot \frac{\|\mathbf{u}_{\mathrm{in}}\|}{\|\mathbf{u}(T)\|} \cdot \lambda_{F_1} T N \log\frac{N}{\varepsilon} \log\frac{N\lambda_{F_1}T}{\varepsilon}\right),$$
 
-with $N = O\!\left(\frac{(M-1)\log(1/\varepsilon)}{\log(1/R)}\right)$.
+with $N = O\!\left(\frac{(M-1)\log(1/\varepsilon)}{\log(1/R)}\right)$. Here $N$ is the Carleman truncation order, not the physical dimension $n$.
 
 **My assessment:** This is a technically solid paper that fixes real problems with quantum Carleman algorithms. The rescaling trick is the most important contribution — it's what makes the PDE application viable at all, since without it the $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ factor makes the complexity superlinear in grid points, destroying any quantum advantage. The stability analysis for PDEs is honest about the tension between max-norm stability (needed for the PDE) and 2-norm rescaling (needed for quantum efficiency), which is a genuinely subtle point that earlier work glossed over.
 
@@ -72,7 +76,7 @@ instead of $\|\mathbf{u}_{\mathrm{in}}\|^N / \|\mathbf{u}(T)\|$ without rescalin
 
 The rescaled Carleman system $\dot{\tilde{\mathbf{y}}} = \tilde{A}_N \tilde{\mathbf{y}}$ is solved using the truncated Taylor series method of Berry-Costa (arXiv:2212.03544), which works as follows. The propagator $e^{\tilde{A}_N \Delta t}$ is approximated by a $K$th-order Taylor polynomial $W_K(\Delta t) = \sum_{\ell=0}^{K} (\tilde{A}_N \Delta t)^\ell / \ell!$, and the full evolution is encoded as a [[History-State Linear System Encoding for ODE Trajectories|history-state linear system]] solved by a [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|quantum linear system solver]].
 
-The resulting complexity scales as $\lambda_{\tilde{A}_N} T \log(1/\varepsilon) \log(\lambda_{\tilde{A}_N} T/\varepsilon)$ oracle calls, where $\lambda_{\tilde{A}_N} = O(N\lambda_{F_1})$ is the block-encoding normalisation factor. The double-log structure gives near-linear time scaling with logarithmic error dependence — a major improvement over the $T^2 / \varepsilon$ scaling from forward Euler.
+The resulting complexity scales as $\lambda_{\tilde{A}_N} T \log(1/\varepsilon) \log(\lambda_{\tilde{A}_N} T/\varepsilon)$ oracle calls, where $\lambda_{\tilde{A}_N} = O(N\lambda_{F_1})$ is the block-encoding normalisation factor. This product of logarithmic factors gives near-linear time scaling with logarithmic error dependence — a major improvement over the $T^2 / \varepsilon$ scaling from forward Euler.
 
 ### Step 4: Block-encoding construction
 
@@ -105,7 +109,7 @@ Higher-order spatial discretisation helps by reducing the number of grid points 
 |---|---|---|---|---|
 | Time dependence | $T^2$ | $T^2$ | $T \cdot \text{poly}(\log)$ | $T \cdot \text{poly}(\log)$ |
 | Error dependence | $\sim 1/\varepsilon$ | $\sim 1/\varepsilon$ | $\text{polylog}(1/\varepsilon)$ | $\log(1/\varepsilon)$ |
-| Carleman order factor | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ (unclear rescaling) | $O(1/\sqrt{1 - R^{2/(M-1)}})$ |
+| Carleman order factor | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ | $\|\mathbf{u}_{\mathrm{in}}\|^{2N}$ (does not include this paper's vector-rescaling improvement) | $O(1/\sqrt{1 - R^{2/(M-1)}})$ |
 | $N$ scaling in complexity | $N^3$ | $N^3$ | poly$(N)$ | $N$ (oracle), $N^2$ (state prep) |
 | Nonlinearity order | $M = 2$ | General $M$ | $M = 2$ | General $M$ |
 | PDE grid-point scaling | superlinear in $n$ | $n^{4/d}$ | — | $n^{2/d}$ (for $d \geq 3$: sublinear) |
@@ -117,7 +121,7 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 
 ## Limits / caveats
 
-- **$R < 1$ is restrictive.** The dissipativity ratio $R$ must be strictly less than 1. For $R \geq \sqrt{2}$, Liu et al. (2021) proved the problem is BQP-hard to solve. The "interesting" range is $R \in (0,1)$, which corresponds to weakly nonlinear, strongly dissipative systems. Many scientifically relevant nonlinear PDEs (Navier-Stokes at high Reynolds number, turbulence) have $R \gg 1$.
+- **$R < 1$ is restrictive.** The dissipativity ratio $R$ must be strictly less than 1. For $R \geq \sqrt{2}$, Liu et al. (2021) proved exponential query complexity in a lower-bound oracle model. The "interesting" range is $R \in (0,1)$, which corresponds to weakly nonlinear, strongly dissipative systems. Many scientifically relevant nonlinear PDEs (Navier-Stokes at high Reynolds number, turbulence) have $R \gg 1$.
 
 - **Max-norm vs. 2-norm tension for PDEs.** PDE stability is in terms of $\|\mathbf{u}\|_{\max}$, but the rescaling needed for quantum efficiency is in terms of $\|\mathbf{u}\|_2$. Since $\|\mathbf{u}\|_2$ grows with $\sqrt{n}$, the 2-norm stability condition $R < 1$ can fail even when the PDE is perfectly stable. The paper is honest about this. In practice, you need the PDE to be "sufficiently dissipative" (strong enough $|c|$ relative to $|b|$) to compensate for the $\sqrt{n}$ growth.
 
@@ -127,7 +131,7 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 
 - **Output is a quantum state.** Extracting classical information from $|\mathbf{u}(T)\rangle$ costs $O(n)$ in general. Only global observables (expectation values, norms) are efficiently accessible.
 
-- **The Carleman approach is inherently limited.** Even with all these improvements, the method approximates the nonlinear dynamics by a truncated linear system. The truncation order $N$ grows as $\log(1/\varepsilon)/\log(1/R)$, so as $R \to 1$ the cost diverges. The method cannot handle genuine qualitative nonlinear behaviour (bifurcations, chaos, blowup).
+- **The Carleman approach has a limited proven regime.** Even with all these improvements, the method approximates the nonlinear dynamics by a truncated linear system. The truncation order $N$ grows as $\log(1/\varepsilon)/\log(1/R)$, so as $R \to 1$ the cost diverges. The theorem covers weakly nonlinear/strongly dissipative dynamics and excludes many regimes with bifurcations, chaos, or blowup; this is a limitation of the proven guarantee, not a categorical impossibility result for finite-time approximation.
 
 ---
 
@@ -145,7 +149,7 @@ The most important comparison: without rescaling, prior work has a factor of $\|
 
 - [[High-Order Quantum Algorithm for Solving Linear Differential Equations (Berry 2014) — Paper Notes|Berry (2014)]] — the original quantum ODE algorithm via [[History-State Linear System Encoding for ODE Trajectories|history state]] + [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|HHL]]
 - [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang (2017)]] — Taylor-series-based ODE solver with exponentially improved precision
-- Berry-Costa (2022, arXiv:2212.03544) — the truncated Taylor series ODE solver used as the time-evolution subroutine; not yet in the vault
+- [[Quantum Algorithm for Time-Dependent Differential Equations Using Dyson Series (Berry-Costa 2022) — Paper Notes|Berry-Costa (2022)]] — the truncated Taylor series/Dyson ODE solver used as the time-evolution subroutine
 - [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes|Costa-An-Sanders-Su-Babbush-Berry (2022)]] — the optimal quantum linear system solver
 - [[Efficient Quantum Algorithm for Dissipative Nonlinear Differential Equations (Liu-Kolden-Krovi-Loureiro-Trivisa-Childs 2021) — Paper Notes|Liu-Kolden-Krovi-Loureiro-Trivisa-Childs (2021)]] — first quantum Carleman algorithm (quadratic nonlinearity, forward Euler)
 - Liu-An-Fang-Wang-Low-Jordan (2023) — nonlinear reaction-diffusion via Carleman with max-norm stability; the direct predecessor this paper improves on

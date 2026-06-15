@@ -18,13 +18,20 @@ The "uniform" is the hard part. Standard [[Amplitude Amplification and Estimatio
 
 Three things, each with different assumptions about structural knowledge of the signal unitary $\hat{U}$ in the [[Standard-Form Encoding (Prepare + Signal Oracle)|standard-form]] encoding:
 
-1. **QSP-based spectral amplification** (Part I): Treating $\hat{U}$ as a black box, uses [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|quantum signal processing]] to implement polynomial transformations that reduce normalization. Full-spectrum version gives no simulation advantage (the cost/normalization trade-off cancels). But the **low-energy subspace** version achieves a genuine quadratic speedup: $O(\alpha\sqrt{\Delta})$ queries instead of $O(\alpha\Delta)$, where $\Delta$ is the fractional width of the low-energy window. This is a distortion-free generalization of [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|spectral gap amplification]].
+1. **QSP-based spectral amplification** (Part I): Treating $\hat{U}$ as a black box, uses [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|quantum signal processing]] to implement polynomial transformations that reduce normalization. Full-spectrum version gives no simulation advantage (the cost/normalization trade-off cancels). But the **low-energy subspace** version gives a genuine speedup over simulating with the full normalization $\alpha$: under the low-energy promise, the effective simulation cost scales like $O(\alpha\sqrt{\Delta})$ rather than $O(\alpha)$ up to logarithmic factors, where $\Delta$ is the fractional width of the low-energy window. This is a distortion-free generalization of [[Spectral Gap Amplification (Somma-Boixo 2013) — Paper Notes|spectral gap amplification]].
 
 2. **Amplitude multiplication** (Part II): When $\hat{U}$ factors into separate "row" and "column" state-preparation oracles ($\hat{U} = \hat{U}_{\text{row}}^\dagger \hat{U}_{\text{col}}$), the matrix elements become state overlaps. By solving the amplitude multiplication problem — linearly rescaling unknown amplitudes with exponentially small error — the paper achieves uniform spectral amplification with sub-linear dependence on sparsity: $O(t\sqrt{d\|\hat{H}\|_{\max}\|\hat{H}\|_1})$ queries for $d$-sparse Hamiltonians. This matches a new lower bound from PARITY $\circ$ OR.
 
 3. **Standard-form universality** (Part III): Proves that measurement (standard-form encoding) and simulation ($e^{-i\hat{H}t}$) are interconvertible with only logarithmic overhead. Any simulation algorithm can be mapped back to a standard-form encoding, justifying the focus on manipulating standard-form as the canonical route.
 
 The key conceptual contribution: the paper establishes that **reducing the normalization $\alpha$ in a standard-form encoding** is the right abstraction for exploiting Hamiltonian structure — rather than designing bespoke simulation algorithms for each structure type.
+
+### Normalization glossary
+
+- $\alpha$: the original standard-form normalization, so the encoded matrix is effectively $\hat{H}/\alpha$.
+- $\Lambda$: the target normalization after amplification, with $\|\hat{H}\| \leq \Lambda \leq \alpha$.
+- $\Delta$: the fractional width of a promised low-energy window near a spectral boundary.
+- $\|\hat{H}\|_1$: the maximum absolute column-sum norm used in the sparse-overlap result, distinct from the coefficient 1-norm in LCU decompositions.
 
 ---
 
@@ -85,7 +92,7 @@ $$O\!\left(t\sqrt{d\|\hat{H}\|_{\max}\|\hat{H}\|_1}\;\log\!\left(\frac{t\|\hat{H
 | **This paper** (Theorem 5) | $O(t\sqrt{d\|\hat{H}\|_{\max}\|\hat{H}\|_1}\log(t\|\hat{H}\|/\epsilon))$ | Best of both: $\sqrt{d}$ sparsity, $\log(1/\epsilon)$ precision |
 | Lower bound (Theorem 6) | $\Omega(t\sqrt{d\|\hat{H}\|_1})$ | Matching (up to logs) |
 
-The improvement over QSP is a best-case $\sqrt{d}$ reduction when $\|\hat{H}\|_1 \ll d\|\hat{H}\|_{\max}$. In the worst case ($\|\hat{H}\|_1 = d\|\hat{H}\|_{\max}$), the two algorithms have the same complexity.
+The improvement over worst-case sparse QSP is structural rather than unconditional: it appears when the standard-form signal unitary factors into row/column state-preparation oracles and $\|\hat{H}\|_1 \ll d\|\hat{H}\|_{\max}$. In the worst case ($\|\hat{H}\|_1 = d\|\hat{H}\|_{\max}$), the two algorithms have the same complexity up to logarithmic factors.
 
 ---
 

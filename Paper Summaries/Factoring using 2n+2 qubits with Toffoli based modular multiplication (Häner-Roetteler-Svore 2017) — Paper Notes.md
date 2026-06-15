@@ -10,13 +10,15 @@ Implement [[Polynomial-Time Algorithms for Prime Factorization and Discrete Loga
 
 $$|x\rangle|0\rangle \mapsto |x\rangle|a^x \bmod N\rangle$$
 
+Here $n=\lceil\log_2 N\rceil$ is the bit length of the integer being factored, not the integer value.
+
 This requires $2n$ controlled modular multiplications, each built from $n$ controlled modular additions. The key design choice is what adder to use: [[Addition on a Quantum Computer (Draper 2000) — Paper Notes|QFT-based]] (Draper/Beauregard/Takahashi) or classical-reversible ([[A New Quantum Ripple-Carry Addition Circuit (Cuccaro-Draper-Kutin-Moulton 2004) — Paper Notes|Cuccaro]]-style). The cost measures are total qubit count, circuit size (gate count), circuit depth, and T-gate overhead under quantum error correction.
 
 ## What the paper does
 
 Achieves the same $2n + 2$ qubit count as Takahashi et al. (2006) for Shor's algorithm, but replaces the QFT-based adder with a purely Toffoli-based modular multiplication circuit. The circuit size is $O(n^3 \log n)$ and depth is $O(n^3)$. Because the circuit uses only Toffoli and Clifford gates (no arbitrary rotations), it avoids the $\Theta(\log n)$ overhead from rotation synthesis that plagues QFT-based implementations, and it can be classically simulated for testing and debugging.
 
-The main technical contribution is a new in-place constant adder $|a\rangle \mapsto |a + c\rangle$ using only **dirty ancilla qubits** (qubits in unknown states, borrowed from idle parts of the algorithm). This adder has size $O(n \log n)$ and depth $O(n)$, using between 1 and $n$ dirty ancillae.
+The main technical contribution is a new in-place constant adder $|a\rangle \mapsto |a + c\rangle$ using only **dirty ancilla qubits** (qubits in unknown states, borrowed from idle parts of the algorithm). This adder has size $O(n \log n)$ and depth $O(n)$, using between 1 and $n$ dirty ancillae. The dirty qubits are restored to their initial unknown states at the end; they are borrowed workspace, not scratch that can be overwritten.
 
 ## The algorithm / construction
 
@@ -94,8 +96,8 @@ $$\text{Depth: } O(n^3) \text{ vs. } O(n^3 \log n)$$
 
 | Implementation | Qubits | Gate count | Depth | Adder type | Rotation synthesis? |
 |---|---|---|---|---|---|
-| Beauregard (2003) | $2n + 3$ | $O(n^3 \log n)$ | $O(n^3)$ | QFT (Draper) | Yes |
-| Takahashi et al. (2006) | $2n + 2$ | $O(n^3 \log^2 n)$ | $O(n^3 \log n)$ | QFT (Draper) | Yes |
+| Beauregard (2003) | $2n + 3$ | $O(n^3 \log n)$ | $O(n^3)$ | QFT (Draper) | Yes, under fault-tolerant precision assumptions |
+| Takahashi et al. (2006) | $2n + 2$ | $O(n^3 \log^2 n)$ | $O(n^3 \log n)$ | QFT (Draper) | Yes, extra logarithm from synthesized rotations |
 | [[A New Quantum Ripple-Carry Addition Circuit (Cuccaro-Draper-Kutin-Moulton 2004) — Paper Notes|Cuccaro]] ripple-carry | $3n + O(1)$ | $O(n^3)$ | $O(n^3)$ | Classical | No |
 | **Häner-Roetteler-Svore (2017)** | $2n + 2$ | $O(n^3 \log n)$ | $O(n^3)$ | Classical (Toffoli) | No |
 
@@ -116,11 +118,13 @@ The constant-adder comparison (Table 1 from the paper):
 
 2. **Open problem remains open.** The paper notes that a linear-size constant adder using only dirty ancillae would reduce the full circuit to $O(n^3)$ — matching the best gate count — without increasing qubit count to $3n + 2$. As of 2017, this was open. [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney (2018)]] later addressed T-count from a different angle (measurement-based uncomputation) but did not solve this exact problem.
 
-3. **T-gate count is high compared to later work.** Each Toffoli costs 7 T gates (or 4 in matched pairs). The $64n^3 \log_2 n$ Toffoli count translates to hundreds of billions of T gates for 2048-bit RSA. Later work by Gidney and Ekerå (2021) achieved factoring with roughly $3 \times 10^8$ Toffoli gates by using entirely different techniques (windowed arithmetic, coset representation).
+3. **T-gate count is high compared to later work.** Each Toffoli costs 7 T gates (or 4 in matched pairs). The $64n^3 \log_2 n$ Toffoli count translates to trillions of Toffoli-scale operations for 2048-bit RSA. Later work by Gidney and Ekerå achieved RSA-2048 factoring with about $2.6\times 10^9$ Toffoli+T/2 operations from the abstract-circuit formula $0.3n^3+0.0005n^3\lg n$ at $n=2048$, using entirely different techniques (windowed arithmetic, coset representation).
 
 4. **No measurement-based tricks.** The circuit is purely unitary. [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney's temporary logical-AND]] would halve the T-count of paired Toffoli gates, but this paper predates that technique.
 
 5. **Testability claim is for Toffoli networks only.** The binary-search fault localisation works because intermediate states of Toffoli networks are computational basis states. It does not extend to arbitrary quantum circuits, and the semi-classical QFT at the end of Shor's algorithm still involves rotations.
+
+6. **Later landscape is not one-dimensional.** This 2017 construction optimizes for extremely low logical qubit count with Toffoli-only arithmetic. Gidney-Ekerå-style estimates optimize surface-code spacetime with more aggressive windowing, coset representations, and measurement-heavy execution. Newer lower-qubit estimates should be compared by the specific metric being optimized: logical qubits, Toffoli/T count, T depth, or physical area-time.
 
 ## Reusable ideas
 

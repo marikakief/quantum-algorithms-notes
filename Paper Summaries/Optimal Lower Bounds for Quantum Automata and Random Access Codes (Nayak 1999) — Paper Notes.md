@@ -1,3 +1,5 @@
+# Optimal Lower Bounds for Quantum Automata and Random Access Codes (Nayak 1999) — Paper Notes
+
 > **Source:** Ashwin Nayak, "Optimal lower bounds for quantum automata and random access codes", *FOCS 1999*
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/9904093)
 > **Tags:** #quantum-information #lower-bounds #random-access-codes #holevo-bound #quantum-automata #entropy
@@ -6,7 +8,7 @@
 
 ## The computational problem
 
-**Quantum random access codes (QRACs):** An $(n, m, p)$-random access code is a function mapping $n$-bit strings to mixed states over $m$ qubits such that for every index $i \in \{1, \ldots, n\}$, there exists a measurement $O_i$ recovering $x_i$ with probability at least $p$ for all $x \in \{0,1\}^n$.
+**Quantum random access codes (QRACs):** An $(n, m, p)$-random access code is a function mapping $n$-bit strings to mixed states over $m$ qubits such that for every index $i \in \{1, \ldots, n\}$, there exists a measurement $O_i$ recovering $x_i$ with probability at least $p$ for all $x \in \{0,1\}^n$. Unless otherwise stated, entropy is measured in bits and logarithms are base 2.
 
 **Quantum finite automata (QFAs):** Consider the finite regular language $L_n = \{w0 \mid w \in \{0,1\}^*, |w| \leq n\}$, recognisable by a classical DFA of size $O(n)$. How many states does a QFA need?
 
@@ -46,7 +48,7 @@ $$S(\rho_y) \geq (1 - H(p))(n - k)$$
 
 Setting $y$ to the empty string: $S(\rho) \geq (1 - H(p))n$. Since $\rho$ has support in a $2^m$-dimensional space, $S(\rho) \leq m$. Therefore $m \geq (1 - H(p))n$.
 
-The argument extends immediately to **serial codes** (where measurement $O_i$ may depend on subsequent bits $x_{i+1}, \ldots, x_n$).
+The argument extends immediately to **serial codes**, where the decoding measurement for $x_i$ may depend on the suffix bits $x_{i+1}, \ldots, x_n$ as side information.
 
 ## The QFA lower bound
 
@@ -62,7 +64,7 @@ $$S(\rho_k) \geq S(\rho_{k-1}) + (1 - H(p))$$
 
 So $S(\rho_n) \geq (1 - H(p))n$. Since $S(\rho_n) \leq \log|Q|$, the QFA needs $|Q| \geq 2^{(1-H(p))n}$ states.
 
-The bound extends to **enhanced QFA** (with intermediate measurements) because measurements can only increase entropy (Fact 3.3).
+The bound extends to **enhanced QFA** (with intermediate measurements) because the nonselective measurement channel can only increase entropy in the sense used by Fact 3.3. Conditioning on a particular measurement outcome is a different, selective process.
 
 ## An alternative to Holevo's theorem
 
@@ -84,7 +86,7 @@ where $P(X, 2^m)$ is the probability mass of the $2^m$ most likely values of $X$
 | QFA for $L_n$ | $\|Q\| \geq 2^{(1-H(p))n}$ states |
 | Enhanced QFA | Same bound (measurements don't help) |
 | In-probability decoding | $\Pr[\text{correct}] \leq P(X, 2^m)$ |
-| Corollary: non-regular languages | Enhanced QFA accept only a strict subset of regular languages |
+| Corollary: one-way QFA limitation | Enhanced one-way QFA recognise only a strict subset of regular languages |
 
 ## Comparison with prior work
 
@@ -96,7 +98,7 @@ where $P(X, 2^m)$ is the probability mass of the $2^m$ most likely values of $X$
 
 ## Limits / caveats
 
-- Nayak's bound applies to *worst-case* recovery probability $p$ across all bits. If only average-case recovery is required, better compression may be possible.
+- Nayak's bound applies to *worst-case* recovery probability $p$ across all messages and bits. Average-case variants need to specify whether the average is over messages, indices, or both.
 - The QFA results are for *one-way* automata only. Two-way quantum automata have much greater power.
 - The in-probability bound (Theorem 2.4) does not generalise to entanglement-assisted communication, unlike Holevo's theorem.
 - For QRACs with $p = 1$ (perfect recovery), the bound gives $m \geq n$ — you can't compress at all. The interesting regime is $p$ slightly above $1/2$.

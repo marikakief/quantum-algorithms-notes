@@ -20,11 +20,11 @@ The target system is the FeMo cofactor of nitrogenase (FeMoCo, Fe$_7$MoS$_9$C), 
 
 Extends [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]]-based quantum chemistry from the structured plane-wave dual basis (where [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. 2018]] achieved $O(N)$ per-oracle T cost) to **arbitrary molecular orbital bases** — the Gaussian-type bases that most of chemistry actually uses. The plane-wave dual basis has $\Theta(N^2)$ terms and diagonal Coulomb structure; molecular orbital bases have $O(N^4)$ terms and no such structure. This paper shows how to recover efficient qubitization despite this, using two independent strategies:
 
-1. **Single factorization (low rank):** Diagonalize the $N^2/4 \times N^2/4$ Coulomb supermatrix $W$ into $L = O(N)$ eigenvectors, giving an LCU with $O(N^3)$ distinct coefficients instead of $O(N^4)$. State preparation via QROAM (an improved [[QROM (Quantum Read-Only Memory)|QROM]] with space-time tradeoffs) achieves $\widetilde{O}(N^{3/2}\lambda)$ T complexity.
+1. **Single factorization (low rank):** Diagonalize the $N^2/4 \times N^2/4$ Coulomb supermatrix $W$ into empirically $L = O(N)$ eigenvectors, giving an LCU with $O(N^3)$ distinct coefficients instead of $O(N^4)$. State preparation via QROAM (an improved [[QROM (Quantum Read-Only Memory)|QROM]] with space-time tradeoffs) achieves $\widetilde{O}(N^{3/2}\lambda/\Delta E)$ Toffoli complexity for phase estimation.
 
 2. **Sparse Coulomb:** Threshold-truncate $V_{pqrs}$ to zero out near-zero entries, then use a [[Sparse State Preparation for Qubitized Chemistry|sparse state preparation]] where QROAM cost scales with the number of nonzero entries $L_V^{(c)}$ rather than the tensor dimension $N^4/16$.
 
-The best concrete result: **$8.4 \times 10^{10}$ Toffolis** for FeMoCo at chemical accuracy using the LLDUC orbitals and sparse Coulomb approach — about **$700\times$ less surface-code spacetime** than the original Reiher et al. estimate ($\sim 10^{14}$ T gates), despite using a larger active space.
+The best concrete result: **$8.4 \times 10^{10}$ Toffolis** for FeMoCo at chemical accuracy using the LLDUC orbitals and sparse Coulomb approach. Under the paper's surface-code assumptions this is about **$700\times$ less spacetime volume** than the original Reiher et al. estimate, even though it uses a larger active space. The Toffoli/T-gate count reduction and the spacetime-volume reduction are not the same metric.
 
 My assessment: this paper is the bridge between the elegant but impractical plane-wave qubitization of [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|Babbush, Gidney et al. 2018]] and the later THC-based approach of [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee, Berry et al. 2021]]. It's the first paper to make qubitization work for molecular orbitals at competitive constant factors, and the QROAM and measurement-based uncomputation techniques introduced here became standard tools in every subsequent fault-tolerant chemistry paper. The single factorization idea draws directly from [[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes|Motta et al. 2018]] but applies it in the LCU setting rather than Trotter.
 
@@ -38,7 +38,7 @@ Reshape $V_{pqrs}$ into an $N^2/4 \times N^2/4$ matrix $W$ with composite indice
 
 $$W = \sum_{\ell=1}^{L} \omega_\ell\, g^{(\ell)} (g^{(\ell)})^T$$
 
-where $g^{(\ell)}_{pq}$ are the eigenvectors and $\omega_\ell \geq 0$ the eigenvalues. The rank $L = O(N)$ — this is the density fitting / Cholesky decomposition structure long exploited in classical electronic structure. The two-electron operator factors as:
+where $g^{(\ell)}_{pq}$ are the eigenvectors and $\omega_\ell \geq 0$ the eigenvalues. The useful rank $L = O(N)$ is an empirical/physical scaling assumption inherited from density fitting and Cholesky decompositions, not a theorem for arbitrary integral tensors. The two-electron operator factors as:
 
 $$V = \sum_\ell \omega_\ell \left(\sum_{p,q,\sigma} g^{(\ell)}_{pq}\, a^\dagger_{p,\sigma} a_{q,\sigma}\right)^2$$
 
@@ -108,10 +108,12 @@ For LLDUC orbitals: $c = 10^{-4}$ a.u. gives $L_V^{(c)} = 1{,}291{,}648$ nonzero
 | **Sparse Coulomb** | **LLDUC (152)** | $\mathbf{8.4 \times 10^{10}}$ | **2,903** | **Best overall** |
 | Reiher et al. 2017 (prior) | RWSWT (108) | $\sim 5 \times 10^{13}$ | 111 | Trotter-based |
 
-Leading-order T complexities:
+Leading-order Toffoli complexities for phase estimation:
 - **Single factorization, dirty ancillae:** $\widetilde{O}(\lambda N M L / \Delta E)$
 - **Single factorization, many ancillae:** $\widetilde{O}(\lambda N \sqrt{LM} / \Delta E)$
-- **Sparse Coulomb:** $\widetilde{O}(\lambda L_V^{(c)} / \Delta E)$ (practical), $O(\lambda N^4 / \Delta E)$ (worst-case asymptotic)
+- **Sparse Coulomb:** $\widetilde{O}(\lambda L_V^{(c)} / \Delta E)$ in the sparse-table cost model, with $O(\lambda N^4 / \Delta E)$ worst-case tensor support
+
+Here $L$ is the single-factorization rank, $M$ is the QROAM output width/precision parameter in the paper's cost model, $L_V^{(c)}$ is the number of retained Coulomb entries after thresholding, $\lambda$ is the LCU 1-norm of the chosen decomposition, and $\Delta E$ is the target phase-estimation precision.
 
 Surface-code spacetime: the best variant requires $\sim 3$ megaqubitweeks (at $10^{-3}$ physical error rate and $\sim 24$ qubitseconds per Toffoli distillation). This is $\sim 700\times$ better than Reiher et al.'s $\sim 2$ gigaqubitweeks.
 
@@ -122,21 +124,21 @@ Surface-code spacetime: the best variant requires $\sim 3$ megaqubitweeks (at $1
 | Method | T / Toffoli complexity (asymptotic) | FeMoCo Toffolis | Basis type |
 |---|---|---|---|
 | Reiher et al. 2017 (Trotter) | Large (not tightly bounded) | $\sim 5 \times 10^{13}$ | Molecular orbital |
-| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes\|Babbush, Gidney et al. 2018]] | $O(N^3/\varepsilon)$ per PE | $\sim 10^8$ | Plane-wave dual only |
+| [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes\|Babbush, Gidney et al. 2018]] | $O(N^3/\varepsilon)$ per PE in plane-wave-dual setting | Not a molecular-orbital FeMoCo active-space estimate | Plane-wave dual only |
 | [[Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via Trotterization (Kivlichan, Gidney, Babbush et al 2020) — Paper Notes\|Kivlichan, Gidney et al. 2020]] | Trotter-based | N/A for FeMoCo | Plane-wave dual |
 | Babbush et al. 2016 (Taylor) | $\widetilde{O}(\lambda^2 t)$ | N/A | Arbitrary |
 | Campbell 2019 (random compiler) | $\widetilde{O}(\lambda^2)$ | N/A | Arbitrary |
-| **This paper (single factorization)** | $\widetilde{O}(N^{3/2}\lambda)$ | $9.8 \times 10^{11}$ | **Arbitrary** |
+| **This paper (single factorization)** | $\widetilde{O}(N^{3/2}\lambda/\Delta E)$ | $9.8 \times 10^{11}$ | **Arbitrary** |
 | **This paper (sparse)** | System-dependent | $8.4 \times 10^{10}$ | **Arbitrary** |
 | [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes\|Lee, Berry et al. 2021]] (later) | $\widetilde{O}(N\lambda_\zeta/\varepsilon)$ | $5.3 \times 10^9$ | Arbitrary |
 
-The $\widetilde{O}(N^{3/2}\lambda)$ scaling beats all prior methods when $\lambda = \Omega(N^{3/2})$, which holds empirically: numerics on hydrogen chains show $\lambda_V = O(N^{2.2})$ towards the thermodynamic limit and $\lambda_V = O(N^{2.7})$ towards the continuum limit.
+The $\widetilde{O}(N^{3/2}\lambda/\Delta E)$ scaling beats prior arbitrary-basis block encodings in the regimes targeted by the paper. The supporting $\lambda$ behavior is empirical: numerics on hydrogen chains show $\lambda_V = O(N^{2.2})$ towards the thermodynamic limit and $\lambda_V = O(N^{2.7})$ towards the continuum limit.
 
 ---
 
 ## Limits / caveats
 
-- **Sparse approach is not asymptotically better.** The number of nonzero Coulomb entries after thresholding is still $O(N^4)$ in the worst case. The improvement is purely from constant-factor sparsity in practical molecular systems. For extended systems with long-range interactions, the sparsity benefit diminishes.
+- **Sparse approach is not asymptotically better.** The number of nonzero Coulomb entries after thresholding is still $O(N^4)$ in the worst case. The improvement is from empirical sparsity in practical molecular systems. The threshold changes the Hamiltonian, and the paper validates the cutoff through classical CISD/MP2 energy proxies rather than a rigorous chemical-accuracy theorem for all systems. For extended systems with long-range interactions, the sparsity benefit diminishes.
 
 - **$\lambda_W > \lambda_V$:** The factorization inflates the LCU 1-norm (by the triangle inequality). Numerically, $\lambda_W / \lambda_V$ scales as roughly $O(N^{0.3})$. This tax is more than offset by the $\sqrt{N}$ reduction in QROAM cost from having $O(N^3)$ instead of $O(N^4)$ coefficients, but it's not free.
 
@@ -144,7 +146,7 @@ The $\widetilde{O}(N^{3/2}\lambda)$ scaling beats all prior methods when $\lambd
 
 - **Spacetime volume is still large.** Even $8.4 \times 10^{10}$ Toffolis × 24 qubitseconds = $\sim 3$ megaqubitweeks. Running in a day needs $\sim 23$ million physical qubits.
 
-- **Second factorization not exploited.** The paper notes that each $g^{(\ell)}_{pq}$ matrix has only $O(\log N)$ significant eigenvalues (the same observation that drives [[Double Factorization of Two-Electron Integrals|double factorization]] for Trotter), but does not exploit it for the LCU approach. Later work by [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee, Berry et al. 2021]] achieves something similar through THC.
+- **Second factorization not exploited.** The paper notes that each $g^{(\ell)}_{pq}$ matrix has only $O(\log N)$ significant eigenvalues (the same observation that drives [[Double Factorization of Two-Electron Integrals|double factorization]] for Trotter), but does not exploit it for the LCU approach. Later arbitrary-basis qubitization exploited related structure through double-factorized constructions (von Burg et al.) and through THC in [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee, Berry et al. 2021]].
 
 - **Chemist vs. physicist notation matters.** The Coulomb supermatrix has low rank only in chemist ordering $V_{pqrs} = \langle pq|rs \rangle$. Physicist ordering or spin-orbital-level symmetry reduction destroys the structure. This is a subtle but important implementation detail.
 

@@ -73,9 +73,9 @@ This is Heisenberg-limited with no spectral gap assumption. The dominant-tail ga
 
 $$T_{\max} = \tilde{\Theta}\!\left(\frac{p_{\text{tail}}}{p_{\min}\,\epsilon}\right), \qquad T_{\text{tot}} = \tilde{\Theta}\!\left(\frac{1}{p_{\text{tail}}\,p_{\min}\,\epsilon} \cdot \log(|D|/\eta)\right)$$
 
-For small $p_{\text{tail}}$, $T_{\max}$ scales sublinearly in $1/\epsilon$ — the gap buys you shorter circuits.
+This expression is tied to the theorem's short-depth parameter regime, including $T \gg \Delta_{\text{dom}}^{-1}$ and the paper's stated target-accuracy range. It should not be read as allowing arbitrarily small longest evolution time when $p_{\text{tail}} \to 0$; the spectral-gap lower scale and hidden constants/validity conditions still matter. Within that regime, small tail weight can reduce the longest circuit time, while increasing the sample complexity through the $1/p_{\text{tail}}$ factor.
 
-**Theorem 3.3 (Large gap to tail — constant depth):** When $T \gg \Delta^{-1}$ (gap between dominants and the rest of the spectrum) and choosing $\delta = \Omega(p_{\min}\epsilon/\Delta)$:
+**Theorem 3.3 (Large gap to tail — logarithmic-depth favorable case):** When $T \gg \Delta^{-1}$ (gap between dominants and the rest of the spectrum) and choosing $\delta = \Omega(p_{\min}\epsilon/\Delta)$:
 
 $$T_{\max} = \Theta\!\left(\frac{\delta}{p_{\min}\,\epsilon} \cdot \log(1/\delta)\right), \qquad T_{\text{tot}} = \tilde{\Theta}\!\left(\frac{1}{p_{\min}\,\delta\,\epsilon} \cdot \log(|D|/\eta)\right)$$
 
@@ -109,7 +109,7 @@ QMEGS is the first to tick all four boxes. The Lin group has been steadily build
 
 2. [[Greedy Peak Search with Blocking]] — after finding a spectral peak, block an interval around it before searching for the next one. Simple, effective way to resolve multiple eigenvalues from a single dataset without matrix pencil or ESPRIT-style linear algebra.
 
-3. [[Dominant-Tail Separation Condition]] — replace traditional spectral gap assumptions with a condition on the initial state overlaps: $p_{\min} > p_{\text{tail}}$. This is a weaker and more operational assumption that applies even when eigenvalues are arbitrarily close together.
+3. [[Dominant-Tail Separation Condition]] — replace traditional spectral gap assumptions with a condition on the initial state overlaps: $p_{\min} > p_{\text{tail}}$. This is a weaker and more operational assumption for detecting dominant spectral weight. In the gapless theorem it gives an $\alpha/T$ covering guarantee, not automatic resolution of two arbitrarily close eigenvalues as distinct peaks.
 
 ## References within this paper
 

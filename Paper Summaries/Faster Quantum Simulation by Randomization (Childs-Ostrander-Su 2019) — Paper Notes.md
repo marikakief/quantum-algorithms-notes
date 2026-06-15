@@ -6,7 +6,7 @@
 
 ## What the paper does
 
-Shows that randomly permuting the ordering of Hamiltonian terms in a [[Product Formulas|product formula]] gives provably stronger error bounds than any fixed ordering. The improvement is sometimes asymptotically better than bounds that exploit commutation structure, despite using less information about the Hamiltonian. This is a different randomization strategy from [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|qDRIFT]] — here you shuffle a full product formula rather than sampling individual terms.
+Shows that randomly permuting the ordering of Hamiltonian terms in a [[Product Formulas|product formula]] gives improved randomized-channel error bounds compared with the corresponding fixed-order worst-case analyses. This does not mean every deterministic ordering performs worse on every Hamiltonian. The improvement is sometimes asymptotically better than some commutator-bound estimates, despite using less information about the Hamiltonian. This is a different randomization strategy from [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|qDRIFT]] — here you shuffle a full product formula rather than sampling individual terms.
 
 ---
 
@@ -44,6 +44,8 @@ This leaves only the degenerate terms, which scale as $O(L^{s-1})$ rather than $
 
 ## Key results
 
+In the displayed bounds, \(\Lambda\) is an upper bound on the term norms, e.g. \(\max_j\|H_j\|\), as used in the paper's norm estimates.
+
 **Theorem 1 (First-order randomized bound):**
 
 $$\left\|\mathcal{V}(-it) - \frac{1}{2^r}\left(\mathcal{S}_1(-it/r) + \mathcal{S}_1^{\text{rev}}(-it/r)\right)^r\right\|_\diamond \leq \frac{(\Lambda|t|L)^4}{r^3} e^{2\Lambda|t|L/r} + \frac{2(\Lambda|t|L)^3}{3r^2} e^{\Lambda|t|L/r}$$
@@ -64,7 +66,7 @@ The error has two competing terms: the first comes from squaring the individual-
 | **Randomized $(2k)$-th order** | $\max\!\left\{O\!\left(tL^2 \left(\frac{tL}{\varepsilon}\right)^{1/(4k+1)}\right),\, O\!\left(tL^2 \left(\frac{t}{\varepsilon}\right)^{1/(2k)}\right)\right\}$ |
 | Commutator bound (1D Heisenberg) | $\max\!\left\{O\!\left(tL^2 \left(\frac{tL}{\varepsilon}\right)^{1/(2k+1)}\right),\, O\!\left(tL^2 \left(\frac{t}{\varepsilon}\right)^{1/(2k)}\right)\right\}$ |
 
-The randomized formula always improves the $L$-dependence. When $t = o(L^{2k})$, it also beats the commutator bound despite using less structural information.
+Under the theorem's norm-bounded assumptions, the randomized bound improves the leading $L$-dependence in the displayed comparison. Which term in the maximum dominates still matters. When $t = o(L^{2k})$, it also beats that commutator-bound estimate despite using less structural information.
 
 ---
 
@@ -85,7 +87,7 @@ The diamond-norm error of the channel depends **linearly** on the average-unitar
 | Method | What's randomized | Basic unit | $L$-dependence | $\varepsilon$-dependence |
 |---|---|---|---|---|
 | [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes\|qDRIFT]] | Which term to apply | Single exponential | Independent of $L$ | $O(1/\varepsilon)$ |
-| **This paper** | Term ordering | Full shuffled [[Product Formulas\|product formula]] | Reduced vs deterministic | $O(1/\varepsilon^{1/(2k)})$ or better |
+| **This paper** | Term ordering | Full shuffled [[Product Formulas\|product formula]] | Reduced vs deterministic bounds | $O(1/\varepsilon^{1/(2k)})$ or better |
 | [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes\|Cho-Berry-Hsieh (2022)]] | Correction unitaries | Half-step + random correction | Similar to this paper | Doubles the order to $4k+2$ |
 
 ---
@@ -96,7 +98,7 @@ The diamond-norm error of the channel depends **linearly** on the average-unitar
 - **Random circuit.** Each run produces a different circuit, which complicates verification and makes the method less suitable when deterministic circuits are needed.
 - **$\Theta(L \log L)$ bits of randomness per segment** for the higher-order case (a full random permutation). Not a practical concern, but worth noting.
 - **Bounds may still be loose.** Numerical evidence suggests both deterministic and randomized formulas perform much better than rigorous bounds indicate. Whether the *gap* between randomized and deterministic performance persists in practice is partially answered by Section 6's numerics: yes, but the advantage is modest for small systems.
-- **Does not exploit locality.** The randomization improvement is structure-agnostic. For lattice Hamiltonians, the [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes|Childs-Su local error analysis]] gets better scaling by directly exploiting the geometry.
+- **Does not by itself exploit locality.** The randomization improvement is structure-agnostic, but randomization can be combined with other structure-aware analyses. For lattice Hamiltonians, the [[Nearly Optimal Lattice Simulation by Product Formulas (Childs-Su 2019) — Paper Notes|Childs-Su local error analysis]] gets better scaling by directly exploiting the geometry.
 
 ---
 

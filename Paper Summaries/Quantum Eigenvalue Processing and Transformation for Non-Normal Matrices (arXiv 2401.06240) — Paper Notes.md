@@ -1,5 +1,5 @@
-> **Source:** Guang Hao Low and Yuan Su, *Quantum eigenvalue processing*, arXiv:2401.06240, Proceedings of the 65th IEEE Symposium on Foundations of Computer Science (FOCS 2024), pp. 1051–1062. Task context notes later journal publication as SIAM J. Comput. **55**(1), 135–215 (2026).
-> **Links:** [arXiv](https://arxiv.org/abs/2401.06240) · [FOCS](https://doi.org/10.1109/FOCS61266.2024.00070)
+> **Source:** Guang Hao Low and Yuan Su, *Quantum eigenvalue processing*, FOCS 2024, pp. 1051–1062; SIAM J. Comput. **55**(1), 135–215 (2026)
+> **Links:** [arXiv](https://arxiv.org/abs/2401.06240) · [FOCS](https://doi.org/10.1109/FOCS61266.2024.00070) · [SIAM](https://doi.org/10.1137/24M1689363)
 > **Tags:** #qevt #qeve #non-normal #block-encoding #qsvt-adjacent #linear-systems #matrix-functions
 
 ---
@@ -16,7 +16,7 @@ This matters for non-Hermitian physics, linear differential equations, non-norma
 
 This paper builds the missing non-normal analogue of the [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|QSP]] / [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] toolkit. It introduces **Quantum EigenValue Transformation** (QEVT), which applies polynomial transformations to eigenvalues of block-encoded non-normal operators, and **Quantum EigenValue Estimation** (QEVE), which estimates eigenvalues of diagonalizable real-spectrum matrices at Heisenberg-limited precision.
 
-The technical engine is a history-state construction in a polynomial basis. Rather than building $\sum_k |k\rangle p_k(A)|v\rangle$ term by term at linear cost in the degree, the paper converts the polynomial recurrence into a structured linear system and solves that system quantumly. For real spectra the basis is Chebyshev; for complex spectra it is Faber. That is the conceptual jump: instead of encoding the matrix through a two-level walk geometry as in qubitization, encode the whole polynomial basis through a recurrence-resolvent viewpoint.
+The technical engine is a history-state construction in a polynomial basis. Rather than implementing a numerically unstable monomial expansion or treating each polynomial component as an unrelated subroutine, the paper converts the polynomial recurrence into a structured linear system and solves that system quantumly. This manages the polynomial basis coherently, but it does not make arbitrary high-degree transformations cost only polylogarithmically in the degree; target degree/precision, non-normality, and linear-system conditioning still enter the complexity. For real spectra the basis is Chebyshev; for complex spectra it is Faber. That is the conceptual jump: instead of encoding the matrix through a two-level walk geometry as in qubitization, encode the whole polynomial basis through a recurrence-resolvent viewpoint.
 
 ## The algorithm / construction
 
@@ -31,7 +31,7 @@ $$
 
 If this state can be prepared efficiently, then measuring the $k$ register in the right basis implements either eigenvalue estimation or a polynomial transform.
 
-Naively, preparing all $p_k(A)|v\rangle$ costs $O(d)$ block-encoding queries. The whole paper is about avoiding that linear-in-degree cost.
+Naively, preparing all $p_k(A)|v\rangle$ by independent applications costs $O(d)$ block-encoding queries and can be badly conditioned. The paper reduces this to a structured history-state problem whose cost nearly matches the appropriate Hermitian/QSVT-style degree scaling after accounting for conditioning; it is not a general removal of degree dependence.
 
 ### 2. Recurrence to linear-system reduction
 
@@ -47,7 +47,7 @@ $$
 T_{k+1}(A)|v\rangle = 2A T_k(A)|v\rangle - T_{k-1}(A)|v\rangle.
 $$
 
-The stacked vector of history-state components therefore satisfies a block-tridiagonal linear system over the basis register. The paper encodes this using a lower-shift operator on the degree register and applies a [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|QLSA]]-style subroutine to prepare the entire polynomial superposition at polylogarithmic dependence on the degree, rather than linear dependence.
+The stacked vector of history-state components therefore satisfies a block-tridiagonal linear system over the basis register. The paper encodes this using a lower-shift operator on the degree register and applies a [[Quantum Algorithm for Linear Systems of Equations (Harrow-Hassidim-Lloyd 2009) — Paper Notes|QLSA]]-style subroutine to prepare the polynomial-basis history state without treating every component as a separate transform. The resulting cost should be read with the polynomial degree, target precision, and linear-system condition number kept visible.
 
 This is the reusable move captured by [[Generating-Function-to-QLSA Reduction for Polynomial Basis Histories]] and [[Lower-Shift Ancilla Encoding for Polynomial Degree Management]].
 
@@ -71,7 +71,7 @@ The paper shows how to prepare quantum superpositions of Faber-polynomial action
 
 ### 5. Fast coefficient loading
 
-The polynomial coefficients themselves are also prepared efficiently. Using Fourier structure of Chebyshev and related expansions, the paper shows how to generate coefficient superpositions in $O(\mathrm{polylog}(n))$ gates rather than linear cost. That part is of independent interest and is extracted as [[Fourier-Convolution Coefficient-State Preparation in Polylog Time]].
+The polynomial coefficients themselves are also prepared efficiently. Using Fourier structure of Chebyshev and related expansions, the paper shows how to generate coefficient superpositions in $O(\mathrm{polylog}(n))$ gates rather than linear cost. That coefficient-loading result is independent interest; it does not remove the polynomial degree/precision dependence of the full eigenvalue-transformation algorithm.
 
 ## Key results
 
@@ -99,7 +99,7 @@ up to logarithmic factors and model-dependent constants, where $\kappa_V$ contro
 
 The paper derives:
 
-- a linear differential equation solver with **strictly linear time** query complexity for average-case diagonalizable operators,
+- a linear differential equation solver with **strictly linear time** query complexity under the paper's average-case diagonalizable-operator assumptions,
 - a ground-state preparation / energy-estimation upgrade from Hermitian matrices to diagonalizable real-spectrum matrices,
 - a general framework for matrix functions of non-normal operators.
 
@@ -120,6 +120,7 @@ My read: this is not just “QSVT but for non-normal matrices”. The history-st
 - The clean QEVE guarantee is for **diagonalizable matrices with real spectra**. Jordan blocks are not handled by the main theorem.
 - Faber-polynomial methods require classical information about a spectral region and its conformal map. That preprocessing is nontrivial.
 - The linear-system subroutine introduces its own conditioning overheads, so the “polylog in degree” improvement does not mean the whole problem becomes easy.
+- Keep three costs separate: polynomial degree or target precision, eigenbasis condition number/non-normality, and spectral-region geometry. Optimising one does not remove the others.
 - For Hermitian inputs, standard QSVT is usually the cleaner tool. This paper matters when Hermiticity is genuinely absent.
 
 ## Reusable ideas

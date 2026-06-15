@@ -80,9 +80,11 @@ An out-of-place adder computing $|a\rangle|b\rangle|0\rangle \to |a\rangle|b\ran
 
 The paper includes a careful analysis of the hidden cost of holding ancilla qubits — qubits used as ancillae are qubits not being used in T factories. Using the estimate that one $|T\rangle$ state costs $\sim 960$ spacetime volume units, the opportunity cost of an ancilla is approximately $\frac{1}{480}|T\rangle$ states per measurement-depth step.
 
-Including opportunity cost, the effective T-count of the Gidney adder is $\frac{1}{480}n^2 + 4n$, vs $8n$ for Cuccaro. The Gidney adder is worse when $n > 960$ (or $n > 5760$ with memory-compressed idle qubits). For Shor's algorithm on 4096-bit RSA, $n$ is well within this range.
+Including opportunity cost under the paper's base storage model, the effective T-count of the Gidney adder is roughly $\frac{1}{480}n^2 + 4n$, vs $8n$ for Cuccaro, giving a crossover near $n=960$. With the memory-compressed idle-qubit assumption discussed in the paper, the crossover can move to about $n=5760$. Thus an RSA-4096-scale adder is favorable only under the latter storage assumption; the raw T-count advantage alone is not the whole resource comparison.
 
 A **hybrid adder** is optimal: use temporary logical-ANDs for bit positions below a cutoff, and inline carry propagation (Cuccaro-style) above the cutoff.
+
+**Raw T-count vs effective T-count.** The raw circuit count says temporary logical-ANDs halve the T gates in a ripple-carry adder. The effective surface-code cost also charges qubits held as temporary ANDs for the time they occupy hardware that could otherwise distill T states. This is why the optimal design can be hybrid even when the raw T-count of the all-temporary-AND adder is lower.
 
 ## Key results
 
@@ -112,7 +114,7 @@ $$T\text{-count} = 4n - 4$$
 | **Gidney (2018)** | $4n - 4$ | $n - 1$ | $2n - 2$ | Temporary logical-AND |
 | Draper et al. (2004) log-depth | $O(n \log n)$ raw | $O(n)$ | $O(\log n)$ | Better effective T-count for large $n$ |
 
-The factor-of-2 improvement applies to any circuit where Toffoli gates appear in compute/uncompute pairs — not just adders. This includes [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover]] oracles built from classical reversible circuits, multi-controlled NOTs, and [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|chemistry circuits]].
+The factor-of-2 improvement applies to circuits exposing suitable compute/uncompute Toffoli pairs satisfying the phase-insensitivity condition, not to arbitrary Toffoli networks. Clean compute-phase-uncompute [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover]] predicates, multi-controlled NOT constructions, and many [[Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity (Babbush, Gidney et al 2018) — Paper Notes|chemistry circuits]] are good examples when the paired structure is present.
 
 ## Limits / caveats
 

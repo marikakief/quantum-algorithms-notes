@@ -16,9 +16,9 @@ Introduces a formal framework for **approximate encoded permutations** — rever
 
 2. **Oblivious carry runways**: insert $m$-qubit carry absorbers at evenly spaced positions in a register, initialised to $|+\rangle^{\otimes m}$ then subtracted from the neighbouring high bits. This splits one long addition into independent piecewise additions on short segments, each of length $s + m$, executable in parallel. Deviation $\leq 2^{-m}$ per runway.
 
-Combining both gives modular additions in depth $O(s + m)$ with total deviation $\leq (r + 1) \cdot 2^{-m}$ for $r$ runways. Choosing $s = O(\log n)$ and $m = O(\log n)$ yields **$O(\log \log n)$ depth** for addition (using carry-lookahead adders on each piece), though the constant factors make this irrelevant in practice.
+Combining both gives modular additions in depth $O(s + m)$ with total deviation $\leq (r + 1) \cdot 2^{-m}$ for $r$ runways. The asymptotic **$O(\log \log n)$ depth** claim requires all of the following in the same construction: $s = O(\log n)$ piece size, $m = O(\log n)$ padding large enough for polynomially many additions and the chosen error budget, and carry-lookahead adders on each $O(\log n)$-length piece. The constant factors make this irrelevant in practice.
 
-The practical result: for register sizes relevant to Shor's algorithm ($n \approx 2000$–$8000$), piecewise ripple-carry adders with runways spaced every 256–512 bits achieve lower spacetime volume than both exact ripple-carry ([[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney 2018]]) and exact carry-lookahead ([[A Logarithmic-Depth Quantum Carry-Lookahead Adder (Draper-Kutin-Rains-Svore 2004) — Paper Notes|Draper-Kutin-Rains-Svore 2004]]) adders. The advantage is particularly large for modular addition, where the coset representation avoids the multiple comparisons and conditional subtractions that exact modular adders require.
+The practical result: for register sizes relevant to Shor's algorithm ($n \approx 2000$–$8000$), piecewise ripple-carry adders with runways spaced every 256–512 bits achieve lower spacetime volume than both exact ripple-carry ([[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney 2018]]) and exact carry-lookahead ([[A Logarithmic-Depth Quantum Carry-Lookahead Adder (Draper-Kutin-Rains-Svore 2004) — Paper Notes|Draper-Kutin-Rains-Svore 2004]]) adders under the paper's surface-code model, CCZ factory, and reaction-time assumptions. The advantage is particularly large for modular addition, where the coset representation avoids the multiple comparisons and conditional subtractions that exact modular adders require.
 
 ## The algorithm / construction
 
@@ -60,6 +60,8 @@ This state is approximately an eigenvector (eigenvalue 1) of the "add $N$" opera
 
 **Solution:** Initialise the runway qubits to $|+\rangle^{\otimes m}$, then subtract the runway value from the high part of the register. The resulting state is approximately an eigenvector of the "carry into runway / borrow from high half" operation.
 
+The runway is part of the encoded representation. It is not a classical carry register that records whether a particular addition overflowed; treating it that way would leak which-path information across a sequence of additions.
+
 Formally: for a register of $n$ bits with a runway of length $m$ at position $p$:
 
 $$f((g, c)) = ((g \bmod 2^p) + 2^p c, \;\; (\lfloor g / 2^p \rfloor - c) \bmod 2^{n-p})$$
@@ -75,6 +77,8 @@ With $r$ runways spaced every $s$ bits and coset padding $m$, performing $k$ add
 - **Measurement depth:** $\sim 2(s + m) \cdot k$ (each piece is a short ripple-carry addition running in parallel)
 - **Toffoli count:** $2(n + mr) \cdot k$ (total across all pieces and all additions)
 - **Trace distance from ideal:** $\leq 2\sqrt{k \cdot (r+1) \cdot 2^{-m}}$
+
+Here $k$ is the number of additions in one encoded computation. The factor $k(r+1)$ is a union-bound style use of the deviation subadditivity rules across the additions, runways, and coset boundary.
 
 ### Asymptotic depth $O(\log \log n)$
 
@@ -122,6 +126,8 @@ The coset representation is the decisive advantage for modular arithmetic: exact
 4. **$O(\log \log n)$ depth is impractical.** The constant factors from using carry-lookahead on $O(\log n)$-length pieces, combined with the ancilla overhead of carry-lookahead, make this asymptotic result irrelevant at any foreseeable problem size.
 
 5. **Runway qubits are not free.** Each runway adds $m$ qubits. With $r = \lceil n/s - 1 \rceil$ runways, the total qubit overhead is $mr$. The paper's volume estimates account for this, but the raw qubit count is higher than for ripple-carry or carry-lookahead.
+
+6. **Different from optimistic circuits.** Both this framework and [[Optimistic Quantum Circuits]] tolerate rare bad cases, but the accounting is different. Approximate encoded permutations bound deviation over random coset/padding encodings and compose it by subadditivity; optimistic circuits bound Frobenius-average circuit error over Hilbert space and need a separate distributional or reduction argument for a given algorithm.
 
 ## Reusable ideas
 

@@ -1,0 +1,1687 @@
+
+--- PAGE 1 ---
+arXiv:1510.05836v3  [quant-ph]  7 Mar 2017
+Quantum Diﬀerential and Linear Cryptanalysis
+Marc Kaplan1,2, Gaëtan Leurent3, Anthony Leverrier3 and María
+Naya-Plasencia3
+1 LTCI, Télécom ParisTech, 23 avenue d’Italie, 75214 Paris CEDEX 13, France
+2 School of Informatics, University of Edinburgh,
+10 Crichton Street, Edinburgh EH8 9AB, UK
+3 Inria Paris, France
+Abstract. Quantum computers, that may become available one day, would impact
+many scientiﬁc ﬁelds, most notably cryptography since many asymmetric primitives
+are insecure against an adversary with quantum capabilities. Cryptographers are
+already anticipating this threat by proposing and studying a number of potentially
+quantum-safe alternatives for those primitives. On the other hand, symmetric prim-
+itives seem less vulnerable against quantum computing: the main known applicable
+result is Grover’s algorithm that gives a quadratic speed-up for exhaustive search.
+In this work, we examine more closely the security of symmetric ciphers against
+quantum attacks. Since our trust in symmetric ciphers relies mostly on their ability
+to resist cryptanalysis techniques, we investigate quantum cryptanalysis techniques.
+More speciﬁcally, we consider quantum versions of diﬀerential and linear cryptanal-
+ysis.
+We show that it is usually possible to use quantum computations to obtain a quadratic
+speed-up for these attack techniques, but the situation must be nuanced: we don’t
+get a quadratic speed-up for all variants of the attacks. This allows us to demon-
+strate the following non-intuitive result: the best attack in the classical world does
+not necessarily lead to the best quantum one. We give some examples of application
+on ciphers LAC and KLEIN. We also discuss the important diﬀerence between an
+adversary that can only perform quantum computations, and an adversary that can
+also make quantum queries to a keyed primitive.
+Keywords: Symmetric cryptography · Diﬀerential cryptanalysis · Linear cryptanaly-
+sis · Post-quantum cryptography · Quantum attacks · Block ciphers.
+1
+Introduction
+Large quantum computers would have huge consequences in a number of scientiﬁc ﬁelds.
+Cryptography would certainly be dramatically impacted: for instance, Shor’s factoring
+algorithm [Sho97] makes asymmetric primitives such as RSA totally insecure in a post-
+quantum world. Even if quantum computers are unlikely to become widely available in
+the next couple of years, the cryptographic community has decided to start worrying
+about this threat and to study its impact. One compelling reason for taking action is that
+even current pre-quantum long-term secrets are at risk as it seems feasible for a malicious
+organization to simply store all encrypted data until it has access to a quantum computer.
+This explains why post-quantum cryptosystems, based for instance on lattices or codes,
+have become a very hot topic in cryptology, and researchers are now concentrating their
+eﬀorts in order to provide eﬃcient alternatives that would resist quantum adversaries.
+In this paper, we focus on symmetric cryptography, the other main branch of cryp-
+tography. Symmetric primitives also suﬀer from a reduced ideal security in the quantum
+IACR Transactions on Symmetric Cryptology
+DOI:xxx
+c⃝IACR
+
+
+--- PAGE 2 ---
+2
+Quantum Diﬀerential and Linear Cryptanalysis
+world, but this security reduction turns out to be much less drastic than for many asym-
+metric primitives. So far, the main quantum attack on symmetric algorithms follows from
+Grover’s algorithm [Gro96] for searching an unsorted database of size N in O(N 1/2) time.
+It can be applied to any generic exhaustive key search, but merely oﬀers a quadratic speed-
+up compared to a classical attack. Therefore, the current consensus is that key lengths
+should be doubled in order to oﬀer the same security against quantum algorithms. This
+was one of the motivations to require a version of AES with a 256-bit key, that appears
+in the initial recommendations of the European PQCRYPTO project [ABB+15]:
+“Symmetric systems are usually not aﬀected by Shor’s algorithm, but they are
+aﬀected by Grover’s algorithm. Under Grover’s attack, the best security a key
+of length n can oﬀer is 2n/2, so AES-128 oﬀers only 264 post-quantum security.
+PQCRYPTO recommends thoroughly analyzed ciphers with 256-bit keys to
+achieve 2128 post-quantum security.”
+Doubling the key length is a useful heuristic, but a more accurate analysis is deﬁnitely
+called for. Unfortunately, little work has been done in this direction. Only recently, a
+few results have started to challenge the security of some symmetric cryptography con-
+structions against quantum adversaries. In particular, some works have studied generic
+attacks against symmetric constructions, or attacks against modes of operations.
+First, the quantum algorithm of Simon [Sim97], which is based on the quantum Fourier
+transform, has been used to obtain a quantum distinguisher for the 3-round Feistel ci-
+pher [KM10], to break the quantum version of the Even-Mansour scheme [KM12], and in
+the context of quantum related-key attacks [RS15]. More recently, the same quantum algo-
+rithm has been used to break widely used block cipher modes of operations for MACs and
+authenticated encryption [KLLN16] (see also [SS16]). All these attacks have a complexity
+linear in the block size, and show that some constructions in symmetric cryptography are
+badly broken if an adversary can make quantum queries.
+Kaplan [Kap14] has also studied the quantum complexity of generic meet-in-the-middle
+attacks for iterated block ciphers constructions. In particular, this work shows that having
+access to quantum devices when attacking double iteration of block ciphers can only
+reduce the time by an exponent 3/2, rather than the expected quadratic improvement
+from Grover’s algorithm.
+In consequence, in stark contrast with classical adversaries,
+double iteration of block ciphers can restore the security against quantum adversaries.
+These are important steps in the right direction, providing the quantum algorithms
+associated to some generic attacks on diﬀerent constructions. These results also show that
+the situation is more nuanced than a quadratic speed-up of all classical attacks. Therefore,
+in order to get a good understanding of the actual security of symmetric cryptography
+constructions against quantum adversaries, we need to develop and analyze quantum
+cryptanalytic techniques. In particular, a possible approach to devise new quantum at-
+tacks is to quantize classical ones.
+Security of symmetric key ciphers. While the security of crypto-systems in public key
+cryptography relies on the hardness of some well-understood mathematical problems, the
+security of symmetric key cryptography is more heuristic. Designers argue that a scheme
+is secure by proving its resistance against some particular attacks. This means that only
+cryptanalysis and security evaluations can bring conﬁdence in a primitive. Even when
+a primitive has been largely studied, implemented and standardized, it remains vital to
+carry on with the cryptanalysis eﬀort using new methods and techniques. Examples of
+standards that turned out to be non-secure are indeed numerous (MD5, SHA1, RC4. . . ).
+Symmetric security and conﬁdence are therefore exclusively based on this constant and
+challenging task of cryptanalysis.
+Symmetric cryptanalysis relies on a toolbox of classical techniques such as diﬀerential
+or linear cryptanalysis and their variants, algebraic attacks, etc. A cryptanalyst can study
+the security of a cipher against those attacks, and evaluate the security margin of a design
+
+
+--- PAGE 3 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+3
+using reduced-round versions. This security margin (how far the attack is from reaching
+all the rounds) is a good measure of the security of a design; it can be used to compare
+diﬀerent designs and to detect whether a cipher is close to being broken.
+Since the security of symmetric primitives relies so heavily on cryptanalysis, it is crucial
+to evaluate how the availability of quantum computing aﬀects it, and whether dedicated
+attacks can be more eﬃcient than brute-force attacks based on Grover’s algorithm. In
+particular, we must design the toolbox of symmetric cryptanalysis in a quantum setting
+in order to understand the security of symmetric algorithms against quantum adversaries.
+In this paper, we consider quantum versions of cryptanalytic attacks for the ﬁrst time1,
+evaluating how an adversary can perform some of the main attacks on symmetric ciphers
+with a quantum computer.
+Modeling quantum adversaries. Following the notions for PRF security in a quantum
+setting given by Zhandry [Zha12], we consider two diﬀerent models for our analysis:
+Standard security: a block cipher is standard secure against quantum adversaries if no
+eﬃcient quantum algorithm can distinguish the block cipher from PRP (or a PRF)
+by making only classical queries (later denoted as Q1).
+Quantum security: a block cipher is quantum secure against quantum adversaries if no
+eﬃcient quantum algorithm can distinguish the block cipher from PRP (or a PRF)
+even by making quantum queries (later denoted as Q2).
+A Q1 adversary collects data classically and processes them with quantum operations,
+while a Q2 adversary can directly query the cryptographic oracle with a quantum superpo-
+sition of classical inputs, and receives the superposition of the corresponding outputs. The
+adversary, in the second model, is very powerful. Nevertheless, it is possible to devise se-
+cure protocols against these attacks. In particular, the model was used in [BZ13b], where
+quantum-secure signatures were introduced. Later, the same authors showed how to con-
+struct message authentiﬁcation codes secure against Q2 adversaries [BZ13a]. It was also
+investigated in [DFNS13] for secret-sharing schemes. This model is also mathematically
+well deﬁned, and it is convenient to use it to give security deﬁnitions against quantum
+adversaries, a task that is often challenging [GHS15]. A more practical issue is that even
+if the cryptographic oracle is designed to produce classical outcomes, its implementation
+may use some technology, for example optical ﬁbers, that a quantum adversary could
+exploit. In practice, ensuring that only classical queries are allowed seems diﬃcult, espe-
+cially in a world in which quantum resources become available. It seems more promising
+to assume that security against quantum queries is not granted and to study security in
+this model.
+Modes of operation. Block ciphers are typically used in a mode of operation, in order
+to accommodate messages of variable length and to provide a speciﬁc security property
+(conﬁdentiality, integrity.. . ). In classical cryptography, we prove that modes of operations
+are secure, assuming that the block cipher is secure, and we trust the block ciphers
+after enough cryptanalysis has been performed. We can do the same against quantum
+adversaries, but proofs of security in the classical model do not always translate to proofs of
+security in the quantum model. In particular, common MAC and AE modes secure in the
+classical model have recently been broken with a Q2 attack [KLLN16]. On the other hand,
+common encryption modes have been proven secure in the quantum model [ATTU16],
+assuming either a standard-secure PRF or a quantum-secure PRF. In this work, we focus
+on the security of block ciphers, but this analysis should be combined with an analysis of
+the quantum security of modes of operation to get a full understanding of the security of
+symmetric cryptography in the quantum model.
+Our results.
+We choose to focus here on diﬀerential cryptanalysis, the truncated
+diﬀerential variant, and on linear cryptanalysis. We give for the ﬁrst time a synthetic
+1Previous results as [Kap14, KM10, KM12] only consider quantizing generic attacks.
+
+
+--- PAGE 4 ---
+4
+Quantum Diﬀerential and Linear Cryptanalysis
+description of these attacks, and study how they are aﬀected by the availability of quantum
+computers. As expected, we often get a quadratic speed-up, but not for all attacks.
+.
+In this work we use the concept of quantum walks to devise quantum attacks. This
+framework contains a lot of well known quantum algorithms such as Grover’s search or
+Ambainis’ algorithm for element distinctness. More importantly, it allows one to compose
+these algorithms in the same way as classical algorithms can be composed. In order to
+keep our quantum attacks as simple as possible, we use a slightly modiﬁed Grover’s search
+algorithm that can use quantum checking procedures. This simple trick comes at the cost
+of constant factors (ignored in our analysis), but a more involved approach, making better
+use of quantum walks may remove those additional factors.
+We prove the following non-obvious results:
+• Diﬀerential cryptanalysis and linear cryptanalysis usually oﬀer a quadratic gain in
+the Q2 model over the classical model.
+• Truncated diﬀerential cryptanalysis, however, usually oﬀers smaller gains in the Q2
+model.
+• Therefore, the optimal quantum attack is not always a quantum version of the
+optimal classical attack.
+• In the Q1 model, cryptanalytic attacks might oﬀer little gain over the classical model
+when the key-length is the same as the block length (e.g. AES-128).
+• But the gain of cryptanalytic attacks in the Q1 model can be quite signiﬁcant
+(similar to the Q2 model) when the key length is longer (e.g. AES-256).
+The rest of the paper is organized as follows. We ﬁrst present some preliminaries on
+the classical (Section 2) and quantum (Section 3) settings. Section 4 treats diﬀerential
+attacks, while Section 5 deals with truncated diﬀerential attacks and Section 6 provides
+some applications on ciphers LAC and KLEIN. We study linear cryptanalysis in Section 7.
+In Section 8, we discuss the obtained results. Section 9 concludes the paper and presents
+some open questions.
+Related work. Independently of our work, Zhou, Lu, Zhang and Sun [ZLZS15] in-
+troduced quantum diﬀerential attacks. Their approach is, like ours, based on variations
+of quantum search algorithms. In their case, these are quantum counting and quantum
+maximum ﬁnding. Their results are, however, less general than ours. They only consider
+attacks returning a subkey and not the whole key, and only in the Q2 model. Moreover,
+the complexity analysis of our quantum attack is more ﬁne-grained: it considers more
+parameters which in principle leads to more eﬃcient quantization of explicit classical
+diﬀerential attacks.
+2
+Preliminaries
+In the following, we consider a block cipher E, with a blocksize of n bits, and a keysize of
+k bits. We assume that E is an iterated design with r rounds, and we use E(t) to denote
+a reduced version with t rounds (so that E = E(r)). When the cipher E is computed with
+a speciﬁc key κ ∈{0, 1}k, its action on a block x is denoted by Eκ(x). The ﬁnal goal of
+an attacker is to ﬁnd the secret key κ∗that was used to encrypt some data. A query to
+the cryptographic oracle is denoted E(x), where it is implicitly assumed that E encrypts
+with the key κ∗, i.e., E(x) = Eκ∗(x).
+Key-recovery attack. The key can always be found using a brute-force attack; follow-
+ing our notations, the complexity of such a generic attack is 2k. This deﬁnes the ideal
+security, i.e. the security a cipher should provide. Therefore, a cipher is considered broken
+if the key can be found “faster” than with the brute-force attack, where “faster” typically
+means with “less encryptions”. Three parameters deﬁne the eﬃciency of a speciﬁc attack.
+
+
+--- PAGE 5 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+5
+The data complexity is the number of calls to the cryptographic oracle E(x). The time
+complexity is the time required to recover the key κ∗. We consider that querying the
+cryptographic oracle requires one unit of time, so that the data complexity is included
+in the time complexity. The memory complexity is the memory needed to perform the
+attack.
+Distinguishers. Another type of attacks, less powerful than key-recovery ones, are
+distinguishers. Their aim is to distinguish a concrete cipher from an ideal one. A dis-
+tinguishing attack often gives rise to a key-recovery attack and is always the sign of a
+weakness of the block cipher.
+Our scenario. In this paper, we consider some of the main families of non-generic
+attacks that can be a threat to some ciphers: diﬀerential and linear attacks. We propose
+their quantized version for the distinguisher and the last-rounds key-recovery variants of
+linear, simple diﬀerentials and truncated diﬀerentials. Our aim is to provide a solid ﬁrst
+step towards “quantizing” symmetric families of attacks. To reach this objective, due
+to the technicality of the attacks themselves, and even more due to the technicality of
+combining them with quantum tools, we consider the most basic versions of the attacks.
+Success probability.
+For the sake of simplicity, in this paper we do not take into
+account the success probability in the parameters of the attacks. In particular, because
+it aﬀects in the same way both classical and quantum versions, it is not very useful for
+the comparison we want to perform. In practice, it would be enough to increase the data
+complexity by a constant factor to reach any pre-speciﬁed success probability. A detailed
+study of the success probability of statistical attacks can be found in [BGT11].
+3
+Quantum algorithms
+We use a number of quantum techniques in order to devise quantum attacks. Most of
+them are based on well-known quantum algorithms that have been studied extensively
+over the last decades. The equivalent to the classical brute-force attack in the quantum
+world is to search through the key space using a Grover’s search algorithm [Gro96], lead-
+ing to complexity 2k/2. Our goal is to devise quantum attacks that might be a threat
+to symmetric primitives by displaying a smaller complexity than the generic quantum
+exhaustive search.
+3.1
+Variations on Grover’s algorithm
+Although Grover’s algorithm is usually presented as a search in an unstructured database,
+we use in our applications the following slight generalization (see [San08] for a nice expo-
+sition on quantum-walk-based search algorithms). The task is to ﬁnd a marked element
+from a set X. We denote by M ⊆X the subset of marked elements and assume that we
+know a lower bound ε on the fraction |M|/|X| of marked elements. A classical algorithm
+to solve this problem is to repeat O(1/ε) times: (i) sample an element from X, (ii) check
+if it is marked.
+The cost of this algorithm can therefore be expressed as a function of two parameters:
+the Setup cost S, which is the cost of sampling a uniform element from X, and the Checking
+cost C, which is the cost of checking if an element is marked. The cost considered by the
+algorithm can be the time or the number of queries to the input. It suﬃces to consider
+speciﬁcally one of those resources when quantifying the Setup and Checking cost.
+Similarly, Grover’s algorithm [Gro96] is a quantum search procedure that ﬁnds a
+marked element, and whose complexity can be written as a function of the quantum
+Setup cost S, which is the cost of constructing a uniform superposition of all elements in
+X, and the quantum Checking cost C, which is the cost of applying a controlled-phase
+
+
+--- PAGE 6 ---
+6
+Quantum Diﬀerential and Linear Cryptanalysis
+gate to the marked elements. Notice that a classical or a quantum algorithm that checks
+membership to M can easily be modiﬁed to get a controlled-phase.
+Theorem 1 (Grover). There exists a quantum algorithm which, with high probability,
+ﬁnds a marked element, if there is any, at cost of order S+C
+√ε .
+In particular, the setup and the checking steps can themselves be quantum procedures.
+Assume for instance that the set X is itself a subset of a larger set ˜X. Grover’s algo-
+rithm can then ﬁnd an element x ∈X at a cost ( ˜X/X)1/2, assuming that the setup and
+checking procedures are easy. Moreover, a closer look at the algorithm shows that if one
+ignores the ﬁnal measurement that returns one element, the algorithm produces a uniform
+superposition of the elements in X, which can be used to setup another Grover search.
+Grover’s algorithm can also be written as a special case of amplitude ampliﬁcation,
+a quantum technique introduced by Brassard, Høyer and Tapp in order to boost the
+success probability of quantum algorithms [BHMT02]. Intuitively, assume that a quantum
+algorithm A produces a superposition of outputs in a good subspace G and outputs in a
+bad subspace B. Then there exists a quantum algorithm that calls A as a subroutine to
+amplify the amplitude of good outputs.
+If A was a classical algorithm, repeating it Θ(1/a), where a is the probability of pro-
+ducing a good output, would lead to a new algorithm with constant success probability.
+Just as Grover’s algorithm, the amplitude ampliﬁcation technique achieves the same result
+with a quadratic improvement [BHMT02]. The intuitive reason is that quantum opera-
+tions allow to amplify the amplitudes of good output states, and that the corresponding
+probabilities are given by the squares of the amplitudes. Therefore, the ampliﬁcation is
+quadratically faster than in the classical case.
+Theorem 2 (Amplitude ampliﬁcation). Let A be a quantum algorithm that, with no
+measurement, produces a superposition P
+x∈G αx|x⟩+ P
+y∈B αy|y⟩. Let a = P
+x∈G |αx|2
+be the probability of obtaining, after measurement, a state in the good subspace G.
+Then, there exists a quantum algorithm that calls A and A−1 as subroutines Θ(1/√a)
+times and produces an outcome x ∈G with a probability at least max(a, 1 −a).
+A variant of quantum ampliﬁcation amplitude can be used to count approximately,
+again with a quadratic speed-up over classical algorithms [BHT98].
+Theorem 3 (Quantum counting). Let F : {0, . . . N −1} →{0, 1} be a Boolean function,
+and p = |F −1(1)|/N. For every positive integer D, there is a quantum algorithm that
+makes D queries to F and, with probability at least 8/π2, outputs an estimate p′ to p such
+that |p −p′| ≤2π√p/D + π2/D2.
+3.2
+Quantum search of pairs
+We also use Ambainis’ quantum algorithm for the element distinctness problem. In our
+work, we use it to search for collisions.
+Theorem 4 (Ambainis [Amb07]). Given a list of numbers x1, . . . , xn, there exists a quan-
+tum algorithm that ﬁnds, with high probability, a pair of indices (i, j) such that xi = xj,
+if there exists one, at a cost O(n2/3).
+The quantum algorithm proposed by Ambainis can easily be adapted to ﬁnding a pair
+satisfying xi + xj = w for any given w (when the xi’s are group elements and the “+”
+operation can be computed eﬃciently).
+Ambainis’ algorithm can also be adapted to search in a list {x1, . . . , xn} for a pair of
+indices (i, j) such that (xi, xj) satisﬁes some relation R, with the promise that the input
+contains at least k possible pairs satisfying R. If the input of the problem is a uniformly
+random set of pairs, it is suﬃcient, in order to ﬁnd one, to run Ambainis’ algorithm on a
+smaller random subset of inputs.
+
+
+--- PAGE 7 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+7
+Table 1: Notations used in the attacks.
+n
+block-size
+k
+key-size
+∆in
+size (log) of the set of input diﬀerences
+∆out
+size (log) of the set of output diﬀerences
+∆ﬁn
+size (log) of the set of diﬀerences Dﬁn after last rounds
+hS
+probability (−log) of the diﬀerential characteristic (hS < n)
+hT
+probability (−log) of the truncated diﬀerential characteristic
+hout
+probability (−log) of generating δout from Dﬁn
+kout
+number of key bits required to invert the last rounds
+Ckout
+cost of recovering the last round subkey from a good pair
+C∗
+kout
+quantum cost of recovering the last round subkey from a good pair
+ε
+bias of the linear approximation
+ℓ
+number of linear approximations (Matsui’s algorithm 1)
+Theorem 5. Consider a list of numbers x1, . . . , xn with xi ∈X and a set of pairs D ⊂
+X × X such that D contains exactly k pairs. There exists a quantum algorithm that ﬁnds,
+with high probability, a pair (i, j) such that (xi, xj) ∈D, at a cost O(n2/3k−1/3) on average
+over uniformly distributed inputs.
+Proof. For a uniformly chosen subset X′ ⊂X such that |X′| = n/
+√
+k, there is, with
+constant probability, at least one pair from D in X′ × X′. According to Theorem 4, the
+cost of ﬁnding this pair is O(n2/3k−1/3). Therefore, the quantum algorithm starts by
+sampling a random X′ and then runs Ambainis’ algorithm on this subset.
+Notice that if the algorithm runs on uniformly random inputs, the set X′ does not
+need to be itself chosen at random. Any suﬃciently large subset will contain one of the
+pairs with high probability, with high probability over the distribution of inputs.
+Before ending this section on quantum algorithms, we make a remark on the outputs
+produced by quantum-walk-based algorithms, such as Ambainis’ or Grover’s algorithm.
+In our applications, we use these not necessarily to produce some output, but to prepare
+a superposition of the outputs. Similarly to Grover’s algorithm, this can be done by run-
+ning the algorithm without performing the ﬁnal measurement. However, since Ambainis’
+algorithm uses a quantum memory to maintain some data structure, the superposition
+could in principle include the data from the memory. This issue does not happen with
+Grover’s algorithm precisely because it does not require any data structure.
+In our case, the algorithm ends in a superposition of nodes containing at least one
+of the searched pairs. It has no consequence for our application, because we are nesting
+this procedure in Grover’s algorithm. Alternatively, it is possible to use amplitude ampli-
+ﬁcation afterwards in order to amplify the amplitude on the good nodes. However, this
+could be an issue when nesting our algorithm in an arbitrary quantum algorithm. For a
+discussion on nested quantum walks, see [JKM13].
+4
+Diﬀerential Cryptanalysis
+Diﬀerential cryptanalysis was introduced in [BS90] by Biham and Shamir.
+It studies
+the propagation of diﬀerences in the input of a function (δin) and their inﬂuence on the
+generated output diﬀerence (δout).
+In this section, we present the two main types of
+diﬀerential attacks on block ciphers in the classical world: the diﬀerential distinguisher
+and the last-rounds attack, and then analyze their complexities for quantum adversaries.
+
+
+--- PAGE 8 ---
+8
+Quantum Diﬀerential and Linear Cryptanalysis
+4.1
+Classical Adversary
+Diﬀerential attacks exploit the fact that there exists an input diﬀerence δin and an output
+diﬀerence δout to a cipher E such that
+hS := −log Pr
+x [E(x ⊕δin) = E(x) ⊕δout] < n,
+(1)
+i.e., such that we can detect some non-random behaviour of the diﬀerences of plaintexts
+x and x ⊕δin. Here, “⊕” represents the bitwise xor of bit strings of equal length. The
+value of hS is generally computed for a random key, and as usual in the literature, we will
+assume that Eq. (1) approximately holds for the secret key κ∗. Such a relation between
+δin and δout is typically found by studying the internal structure of the primitive in detail.
+While it seems plausible that a quantum computer could also be useful to ﬁnd good pairs
+(δin, δout), we will not investigate this problem here, but rather focus on attacks that can
+be mounted once a good pair satisfying Eq. (1) is given.
+4.1.1
+Diﬀerential Distinguisher
+This non-random behaviour can already be used to attack a cryptosystem by distinguish-
+ing it from a random function. This distinguisher is based on the fact that, for a random
+function and a ﬁxed δin, obtaining the δout diﬀerence in the output would require 2n trials,
+where n is the size of the block. On the other hand, for the cipher E, if we collect 2hS
+input pairs verifying the input diﬀerence δin, we can expect to obtain one pair of outputs
+with output diﬀerence δout. The complexity of such a distinguisher exploiting Eq. (1) is
+2hS+1 in both data and time, and is negligible in terms of memory:
+T s. dist.
+C
+= Ds. dist.
+C
+= 2hS+1.
+(2)
+Here, the subscript C refers to classical and s. dist. to “simple distinguisher” by opposition
+to its truncated version later in the text.
+Assuming that such a distinguisher exists for the ﬁrst R rounds of a cipher, we can
+transform the attack into a key recovery on more rounds by adding some rounds at the
+end or beginning of the cipher. This is called a last-rounds attack, and allows to attack
+more rounds than the distinguisher, typically one or two, depending on the cipher.
+4.1.2
+Last-Rounds Attack
+For simplicity and without loss of generality, we consider that the rounds added to the
+distinguisher are placed at the end. We attack a total of r = R + rout rounds, where R
+are the rounds covered by the distinguisher. The main goal of the attack is to reduce
+the key space that needs to be searched exhaustively from 2k to some 2k′ with k′ < k.
+For this, we use the fact that we have an advantage for ﬁnding an input x such that
+E(R)(x) ⊕E(R)(x ⊕δin) = δout.
+For a pair that generates the diﬀerence δout after R rounds, we denote by Dﬁn the set
+of possible diﬀerences generated in the output after the ﬁnal rout rounds, the size of this
+set by 2∆ﬁn = |Dﬁn|. Let 2−hout denote the probability of generating the diﬀerence δout
+from a diﬀerence in Dﬁn when computing rout rounds in the backward direction, and by
+kout the number of key bits involved in these rounds. The goal of the attack is to construct
+a list L of candidates for the partial key that contains almost surely the correct value, and
+that has size strictly less than 2kout. For this, one starts with lists LM and LK where LM
+is a random subset of 2hS possible messages and LK contains all possible kout-bit strings.
+From Eq. (1), the list LM contains an element x such that E(R)(x) ⊕E(R)(x ⊕δin) = δout
+with high probability. Let us apply two successive tests to the lists.
+
+
+--- PAGE 9 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+9
+The ﬁrst test keeps only the x ∈LM such that E(x)⊕E(x⊕δin) ∈Dﬁn. The probability
+of satisfying this equation is 2∆ﬁn−n. This gives a new list L′
+M of size |L′
+M| = 2hS+∆ﬁn−n.
+The cost of this ﬁrst test is 2hS+1.
+The second test considers the set L′
+M ×LK and keeps only the couples (x, κ) such that
+E(R)
+κ
+(x) + E(R)
+κ
+(x + δin) = δout. This is done by computing backward the possible partial
+keys for a given diﬀerence in Dout. Denote Ckout the average cost of generating those
+keys for a given input pair. Notice that Ckout can be 1 when the number of rounds added
+is reasonably small2, and is upper bounded by 2kout, that is, 1 ≤Ckout ≤2kout. For a
+random pair (x, κ), the probability of passing this test is 2−hout. The size of the resulting
+set is therefore expected to be 2−hout × |L′
+M| × |LK| = 2hS+∆ﬁn−n+kout−hout. The cost of
+this step is Ckout2hS+∆ﬁn−n.
+The previous step produces a list of candidates for the partial key corresponding to
+the key bits involved in the last rout rounds and leading to a diﬀerence δout after R
+rounds. The last step of the attack consists in performing an exhaustive search within all
+partial keys of this set completed with all possible k −kout bits. The cost of this step is
+2hS+∆ﬁn−n+k−hout.
+In practice, the lists do not need to be built and everything can be performed “on the
+ﬂy”. Consequently, memory needs can be made negligible. The total time complexity is:
+T s. att.
+C
+= 2hS+1 + 2hS+∆ﬁn−n  Ckout + 2k−hout
+,
+(3)
+while the data complexity of this classical attack is Ds. att.
+C
+= 2hS+1. The attack is more
+eﬃcient than an exhaustive search if T s. att.
+C
+< 2k.
+4.2
+Quantum Adversary
+We ﬁrst give attacks in the Q2 model, using superposition queries.
+4.2.1
+Diﬀerential Distinguisher in the Q2 model
+The distinguisher consists in applying a Grover search over the set of messages X, of size
+2n. More precisely, the algorithm makes 2hS/2+1 queries to the encryption cipher, trying
+to ﬁnd a marked element x ∈M = {x ∈X : E(x ⊕δin) = E(x) ⊕δout} . If it ﬁnds any,
+it outputs “concrete”. If it does not, it outputs “random”.
+With the notations of the previous sections, the fraction of marked elements is ε = 2−hS
+and Grover’s algorithm ﬁnds a marked element after
+1
+√ε = 2hS/2 iterations, each one
+requiring two queries to the encryption cipher. The time and data complexities are:
+T s. dist.
+Q2
+= Ds. dist.
+Q2
+= 2hS/2+1.
+(4)
+It remains to prove that in the case of a random function, the probability of ﬁnding
+a marked element is negligible. Assume that the probability of ﬁnding a marked element
+after 2hS/2 quantum queries is δ. Then, this can be wrapped into an amplitude ampliﬁca-
+tion procedure (Theorem 2), leading to a bounded error algorithm making (1/
+√
+δ)2hS/2
+queries. Since Grover’s algorithm is optimal [Zal99], we get that (1/
+√
+δ)2hS/2 ≥2n/2,
+leading to δ ≤2hS−n.
+4.2.2
+Last-Rounds Attack in the Q2 model
+An important point of the attack in the Q2 model is that it should avoid creating lists.
+Instead, the algorithm queries the cryptographic algorithm whenever it needs to sample
+an element from the list.
+2For example, using precomputation tables with the values that allow the diﬀerential transitions
+through the S-Boxes.
+
+
+--- PAGE 10 ---
+10
+Quantum Diﬀerential and Linear Cryptanalysis
+The quantum attack can be described as a Grover search, with quantum procedures
+for the setup and checking phases. The algorithm searches in the set X = {x : E(x ⊕
+δin)⊕E(x) ∈Dﬁn} for a message such that E(R)(x⊕δin)⊕E(R)(x) = δout. This procedure
+outputs a message and when it is found, it suﬃces to execute the sequence corresponding
+to the checking of the Grover search once more: generate partial key candidates and
+search among them, completed with all possible remaining k −kout bits. This outputs the
+correct key and only adds a constant overhead factor to Grover search. Notice that using
+tailor-made quantum walks, it should be possible to suppress this overhead. Here we use
+Grover search to keep the attacks as simple as possible.
+The setup phase prepares a uniform superposition of the x ∈X; this costs S =
+2(n−∆ﬁn)/2 using Grover’s algorithm. The checking phase takes a value x and must deter-
+mine whether (x, x ⊕δin) is a good pair; it consists of the following successive steps:
+1. Compute all possible partial keys κout for the kout bits that intervene in the last
+rout rounds, assuming that (x, x⊕δin) is a good pair (E(R)(x⊕δin)⊕E(R)(x) = δout);
+2. Complete the key by searching exhaustively using a Grover search, checking if the
+obtained key is the correct one.
+The cost of computing all possible partial keys is C∗
+kout. The number of partial keys is
+2kout−hout, then completed by k −kout remaining bits. The cost of checking through all of
+them is thus C = C∗
+kout + 2(k−hout)/2.
+The procedure succeeds whenever a message x is found such that E(R)(x) ⊕E(R)(x ⊕
+δin) = δout. Therefore, the probability of ﬁnding a marked element is lower bounded by
+ε ≥2−hS−∆ﬁn+n. This is the conditional probability of getting E(R)(x ⊕δin) ⊕E(R)(x) =
+δout given that the output diﬀerence is in Dﬁn.
+The total cost of the attack in the Q2 model is:
+T s. att.
+Q2
+= 2hS/2+1 + 2(hS+∆ﬁn−n)/2 
+C∗
+kout + 2(k−hout)/2
+,
+Ds. att.
+Q2
+= 2hS/2+1,
+(5)
+with a data complexity identical to that of the distinguisher.
+4.2.3
+Last-Rounds Attack in the Q1 model
+We can also have a speed-up for the last-round attack in the Q1 model. In this model, the
+quantum operations only take place after a classical acquisition of the data. In particular,
+the data complexity will be the same as for a classical adversary. After the ﬁrst ﬁltering
+step of the classical last-round attack, 2hS−n+∆ﬁn couples satisfying E(x) ⊕E(x ⊕δin) ∈
+Dﬁn are obtained. The attacker then uses a quantum algorithm to generate the partial
+keys κout, and a Grover search among those, completed with all possible remaining k−kout
+bits of the key, in order to ﬁnd the key. This leads to data and time complexities of:
+Ds. att.
+Q1
+= 2hS+1,
+T s. att.
+Q1
+= 2hS+1 + 2(hS+∆ﬁn−n)/2 
+C∗
+kout + 2(k−hout)/2
+,
+(6)
+where C∗
+kout denotes the average time complexity of generating the partial keys of length
+kout, on a quantum computer.
+Let us point out that any classical attack with data complexity smaller than square
+root of the exhaustive search of the key can be translated into an eﬀective attack also in
+the Q1 model. This is more likely to happen for larger keys, where the limiting terms
+are often the second and third terms of T s. att.
+Q1
+in Eq. (6). See a detailed example in 6.2.
+The fact that long keys are more likely to “maintain” the validity of the attacks is an
+interesting result, as longer keys correspond to the recommendations for post-quantum
+symmetric primitives. In these cases, the Q1 model is particularly meaningful.
+
+
+--- PAGE 11 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+11
+4.2.4
+Generating partial keys on a quantum computer
+We investigate further the average cost Ckout of generating the partial keys compatible
+with some input x such that E(x) ⊕E(x ⊕δin) ∈Dﬁn. These partial keys correspond to
+the key bits involved in a transition from Dﬁn to δout.
+Using a classical computer and a precomputation table, this usually takes constant
+time, but can be up to 2kout in the worst case. It turns out that the worst case this can
+be sped up using a quantum computer.
+First, when kout < hout, the search is expected to return zero or one key candidates.
+In this case, we run a Grover search over the key, with complexity C∗
+kout = 2kout/2.
+Otherwise, let K = 2kout−hout be the average number of partial key candidates com-
+patible with some input x, and denote N = 2kout. Finding one partial key can be done
+using Grover search with (N/K)1/2 steps. To ﬁnd the second one, we modify the checking
+procedure to exclude the ﬁrst result, and Grover’s algorithm uses only (N/(K −1))1/2
+iterations. In general, to ﬁnd the i-th candidate, we need (N/(K −i))1/2 iterations, but
+each iteration takes time proportional to √i −1, corresponding to the time needed to
+check that the candidate does not belong to the list (i −1) excluded ones. This leads to
+the following upper bound on C∗
+kout, the quantum version of Ckout:
+C∗
+kout ≤
+K−1
+X
+i=0
+r
+Ni
+K −i ≈K
+√
+N
+Z 1
+0
+r
+x
+1 −xdx = π
+2 K
+√
+N
+Neglecting the constant as usual, and replacing with our parameters, this gives C∗
+kout ≲
+23kout/2−hout.
+5
+Truncated Diﬀerential Cryptanalysis
+Truncated diﬀerential cryptanalysis was introduced by Knudsen [Knu94] in 94. Instead
+of ﬁxed input and output diﬀerences, it considers sets of diﬀerences (like the diﬀerences
+in the output in the last-rounds attack that we have considered in the previous section).
+We assume in the following that we are given two sets Din and Dout of input and
+output diﬀerences such that the probability of generating a diﬀerence in Dout from one in
+Din is 2−hT . We further consider that Din and Dout are vector spaces.
+5.1
+Classical Adversary
+As in the simple diﬀerential case, we ﬁrst present the diﬀerential distinguisher based on
+the non-random property of the diﬀerences behaviour, and then discuss the last-rounds
+attack obtained from the truncated diﬀerential distinguishers.
+5.1.1
+Truncated Diﬀerential Distinguisher
+Let 2∆in and 2∆out denote the sizes of the input and output sets of diﬀerences, respectively.
+For simplicity and without loss of generality, we assume to have access to an encryption
+oracle, and therefore only consider the truncated diﬀerential as directed from input to
+output3. We denote by 2−hT the probability of generating a diﬀerence in Dout from one
+in Din. The condition for the distinguisher to work is that 2−hT > 2∆out−n. In this analysis,
+we assume that 2−hT ≫2∆out−n.
+The advantage of truncated diﬀerentials is that they allow the use of structures, i.e.,
+sets of plaintext values that can be combined into input pairs with a diﬀerence in Din in
+3In the case where the other direction provides better complexities, we could instead perform queries
+to a decryption oracle and change the roles of input and output in the attack. We assume that the most
+interesting direction has been chosen.
+
+
+--- PAGE 12 ---
+12
+Quantum Diﬀerential and Linear Cryptanalysis
+many diﬀerent ways: one can generate 22∆in−1 pairs using a single structure of size 2∆in.
+This reduces the data complexity compared to simple diﬀerential attacks.
+Two cases need to be considered. If ∆in ≥(hT + 1)/2, we build a single structure S of
+size 2(hT +1)/2 such that for all pairs (x, y) ∈S × S, x ⊕y ∈Din. This structure generates
+2hT pairs. If ∆in ≤(hT +1)/2, we have to consider multiple structures Si. Each structure
+contains 2∆in elements, and generates 22∆in−1 pairs of elements. We consider 2hT −2∆in+1
+such structures in order to have 2hT candidate pairs.
+In both cases, we have 2hT candidate pairs. With high probability, one of these pairs
+shall satisfy E(x) ⊕E(y) ∈Dout, something that should not occur for a random function
+if 2−hT ≫2∆out−n. Therefore detecting a single valid pair gives an eﬃcient distinguisher.
+The attack then works by checking if, for a pair generated by the data, the output
+diﬀerence belongs to Dout. Since Dout is assumed to be a vector space, this can be reduced
+to trying to ﬁnd a collision on n −∆out bits of the output. Once the data is generated,
+looking for a collision is not expensive (e.g. using a hash table), which means that time
+and data complexities coincide:
+Dtr. dist.
+C
+= max{2(hT +1)/2, 2hT −∆in+1},
+T tr. dist.
+C
+= max{2(hT +1)/2, 2hT −∆in+1}.
+(7)
+5.1.2
+Last-Rounds Attack
+Last-rounds attacks work similarly as in the case of simple diﬀerential cryptanalysis. For
+simplicity, we assume that rout rounds are added at the end of the truncated diﬀerential.
+The intermediate set of diﬀerences is denoted Dout, and its size is 2∆out. The set Dﬁn,
+of size 2∆ﬁn denotes the possible diﬀerences for the outputs after the ﬁnal round. The
+probability of reaching a diﬀerence in Dout from a diﬀerence in Din is 2−hT , and the
+probability of reaching a diﬀerence in Dout from a diﬀerence in Dﬁn is 2−hout. Applying
+the same algorithm as in the simple diﬀerential case, the data complexity remains the
+same as for the distinguisher:
+Dtr. att.
+C
+= max{2(hT +1)/2, 2hT −∆in+1}.
+(8)
+The time complexity in this case is:
+T tr. att.
+C
+= max{2(hT +1)/2, 2hT −∆in+1} + 2hT +∆ﬁn−n  Ckout + 2k−hout
+,
+(9)
+where Ckout is the average cost of ﬁnding all the partial key candidates corresponding to a
+pair of data with a diﬀerence in Dout. As mentioned earlier, Ckout ranges from 1 to 2kout.
+5.2
+Quantum Adversary
+The truncated diﬀerential cryptanalysis is similar to the simple diﬀerential cryptanalysis,
+except that Din and Dout are now sets instead of two ﬁxed bit strings.
+5.2.1
+Truncated Diﬀerential Distinguisher
+Similarly to simple diﬀerential cryptanalysis, the distinguisher can only be more eﬃcient
+in the Q2 model. This comes from the fact that in both cases, the data complexity is the
+bottleneck. Since the Q1 model does not provide any advantage over the classical one in
+data collection, there is no advantage in this model.
+We use Ambainis’ algorithm for element distinctness, given in Theorem 4, in order to
+search for collisions inside the structures. If a single structure is involved, the algorithm
+searches for a pair of messages (x, y) in a set of size 2(hT +1)/2, such that E(x)⊕E(y) ∈Dout.
+Since there is, on average, only one such pair, this can be done using a quantum algorithm
+with 2(hT +1)/3 queries.
+
+
+--- PAGE 13 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+13
+If multiple structures are required, the strategy is to search for one structure that
+contains a pair (x, y) such that E(x)⊕E(y) ∈Dout. This is done with a Grover search on
+the structure, using Ambainis’ algorithm for the checking phase. This returns a structure
+containing a desired pair, which is suﬃcient for the distinguisher.
+The setup cost is
+constant. The checking step, consisting in searching for a speciﬁc pair inside a structure
+of size 2∆in, can be done with C = 22∆in/3 queries. Finally, since there is, with high
+probability, at least one structure in 2hT −2∆in+1 containing a pair such that E(x)⊕E(y) ∈
+Dout, we get a lower bound on the success probability ε ≥22∆in−hT −1. Using Theorem 1,
+the total queries complexity is at most 2(hT +1)/2−∆in/3.
+Combining both results leads to overall data and time complexities given by:
+Dtr. dist.
+Q2
+= T tr. dist.
+Q2
+= max
+n
+2(hT +1)/3, 2(hT +1)/2−∆in/3o
+.
+(10)
+Similarly to the the quantum simple diﬀerential distinguisher, applying the same al-
+gorithm to a random function, and stopping it after the same number of queries only
+provides a correct answer with negligible probability.
+5.2.2
+Last-Rounds Attack in the Q1 model
+As seen in Section 5.1.2, last-round attacks for truncated diﬀerential cryptanalysis are very
+similar to attacks with a simple diﬀerential. The attack in the Q1 model will diﬀer from
+the attack of Section 4.2.3 only in the ﬁrst step, when querying the encryption function
+with the help of structures. We start by generating a list of 2hT pairs with diﬀerences in
+Din, which is done with data complexity:
+Dtr. att.
+Q1
+= max{2(hT +1)/2, 2hT −∆in+1}.
+(11)
+The second step is to ﬁlter the list of elements to keep only the pairs (x, y) such that
+E(x) ⊕E(y) ∈Dﬁn. Notice that such a ﬁltering can be done at no cost. It suﬃces to sort
+the elements according to the values of their image, while constructing the list.
+Finally, similarly to the Q1 simple diﬀerential attack, a quantum search algorithm is
+run on the ﬁltered pairs, and the checking procedure consists in generating the partial
+key candidates completed with k −kout bits, and searching exhaustively for the key used
+in the cryptographic oracle. In the Q1 model, the quantum speed-up only occurs in this
+step.
+The average cost of generating the partial keys on a quantum computer is denoted
+by C∗
+kout. The average number of partial keys for a given pair of input is 2kout−hout. The
+fraction ε of marked elements is ε = 2−hT −∆ﬁn+n, the setup cost is S = 1 and the checking
+cost, a Grover search over the key space, is C = C∗
+kout + 2(k−hout)/2. This gives a total
+cost:
+T tr. att.
+Q1
+= max
+n
+2(hT +1)/2, 2hT −∆in+1o
++ 2(hT +∆ﬁn−n)/2 
+C∗
+kout + 2(k−hout)/2
+.
+(12)
+5.2.3
+Last-Rounds Attack in the Q2 model
+In the Q2 model, we want to avoid building classical lists. Instead, we query the crypto-
+graphic oracle each time we need to sample a speciﬁc element. This is challenging in the
+case of truncated diﬀerential because the use of structures made of lists is crucial. The
+idea is to query the elements of the list on the ﬂy.
+Case where hT ≤2∆in −1.
+It is possible to get 2hT pairs with diﬀerences in Din
+with a single structure, S, of size 2(hT +1)/2. The attack runs a Grover search over X =
+{(x, y) ∈S × S : E(x) ⊕E(y) ∈Dﬁn}. The checking procedure is the same as for the
+quantum simple diﬀerential attack. For a given a pair of inputs, it generates all possible
+
+
+--- PAGE 14 ---
+14
+Quantum Diﬀerential and Linear Cryptanalysis
+partial keys, and completes them to try to get the key used by cryptographic oracle. This
+procedure returns a pair (x, y). The ﬁnal step is to execute the checking procedure in
+Grover search once more, suitably modiﬁed to return the key given the pair (x, y).
+We analyze the setup cost of the attack. To prepare a superposition of the pairs in
+X, we use the quantum search algorithm given in Theorem 5. This algorithm searches in
+a list for a pair of elements with a certain property, considering there exist k such pairs.
+In our case, the list of elements is S of size 2(hT +1)/2. The total number of elements such
+that E(x) ⊕E(y) ∈Dﬁn is therefore 2hT −n+∆ﬁn. The algorithm of Theorem 5 prepares a
+superposition of elements in X in time S = 2(hT +1)/3−(hT −n+∆ﬁn)/3 = 2(n−∆ﬁn+1)/3. The
+cost of the checking procedure is C = C∗
+kout + 2(k−hout)/2, as before. The procedure is
+successful whenever a pair (x, y) such that E(R)(x)⊕E(R)(y) ∈Dout is found. Given that
+the search is among pairs satisfying x ⊕y ∈Din and E(x) ⊕E(y) ∈Dﬁn, the probability
+for a pair to be good is ε = 2−hT −∆ﬁn+n. This gives a total running time:
+T tr. att.
+Q2
+= 2hT /2−(n−∆ﬁn)/6 + 2(hT +∆ﬁn−n)/2 
+C∗
+kout + 2(k−hout)/2
+.
+Case where hT > 2∆in −1.
+Multiple structures Si of size 2∆in are now required,
+where i goes from 1 to 2hT −2∆in+1. We use a Grover search over the structures, to locate
+the structure containing a good pair (as previously, we then repeat the attack with the
+right structure, but the complexity of this step is negligible). In order to test whether
+a structure contains a good pair, the checking procedure uses the algorithm given in the
+previous section. When using the full structure with 2∆in values, it has complexity:
+C = 2∆in−(n+1−∆ﬁn)/6 + 2∆in−(n+1−∆ﬁn)/2 
+C∗
+kout + 2(k−hout)/2
+.
+We also have S = 1 and ε = 22∆in−1−hT , which gives the following complexity:
+T tr. att.
+Q2
+= 2(hT +1)/2−(n+1−∆ﬁn)/6 + 2(hT +∆ﬁn−n)/2 
+C∗
+kout + 2(k−hout)/2
+,
+which coincides with the complexity of the previous paragraph (when neglecting con-
+stants).
+Note that for some parameters (2∆in −1 −n + ∆ﬁn < 0) the expected size of X is less
+than 1. In this case, the above procedure is not valid (it would run less than one iteration of
+a Grover search). Instead, the checking procedure should run Ambainis’ algorithm to ﬁnd
+a pair with output in Dout (with complexity 22∆in/3, because the parameters are chosen
+assuming there is a solution), and use the usual key search algorithm with complexity
+C∗
+kout + 2(k−hout)/2. In this case the complexity becomes:
+T tr. att.
+Q2
+= 2(hT +1)/2−∆in/3 + 2(hT +1)/2−∆in 
+C∗
+kout + 2(k−hout)/2
+.
+Note that 2(hT +1)/2−∆in/3 is the complexity of the truncated diﬀerential distinguisher in
+the Q2 model. Moreover, with those parameters, 2(hT +1)/2−∆in/3 > 2(hT +1)/2−(n+1−∆ﬁn)/6
+and 2(hT +1)/2−∆in > 2(hT +∆ﬁn−n)/2.
+Overall, summarizing both cases, we obtain
+T tr. att.
+Q2
+=2(hT +1)/2 max
+
+2−∆in/3, 2−(n+1−∆ﬁn)/6	
++ max
+
+2(hT +∆ﬁn−n)/2, 2(hT +1)/2−∆in	
+C∗
+kout + 2(k−hout)/2
+.
+Note that the speedup is always less than quadratic.
+
+
+--- PAGE 15 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+15
+6
+Applications on existing ciphers
+In this section we describe three examples of classical and quantum diﬀerential attacks
+against block ciphers. We have chosen examples of real proposed ciphers where some of
+the best known attacks are simple variants of diﬀerential cryptanalysis. This allows us to
+illustrate the important counter-intuitive points that we want to highlight, by comparing
+the best classical attacks and the best quantum attacks. We ﬁrst consider the block cipher
+used in the authenticated encryption scheme LAC [ZWW+14], and build for it a classical
+simple diﬀerential distinguisher and a more eﬃcient classical truncated distinguisher. We
+quantize these attacks, and obtain that the quantum truncated distinguisher performs
+worse than a generic quantum exhaustive search. In the next application we consider the
+lightweight block cipher KLEIN [GNL12]. Its 64-bit key version, KLEIN-64, has been
+recently broken [LN14] by a truncated diﬀerential last-rounds attack. When quantizing
+this attack, we show that it no longer works in the quantum world, and therefore KLEIN-
+64 is no longer broken. Finally, we consider KLEIN-96 and the best known attack [LN14]
+against this cipher. We show that its quantum variant still works in the post-quantum
+world, but only in the Q2 model. These applications illustrate what we previously pointed
+out and believe to be particularly meaningful: block ciphers with longer keys, following
+the natural recommendation for resisting to generic quantum attacks, are those for which
+the truncated attacks are more likely to still break the cryptosystem in the postquantum
+world. Consequently, it is crucial to understand and compute the optimized quantum
+complexity of the diﬀerent families of attacks, as we have started doing in this paper.
+6.1
+Application 1: LAC
+We now show an example where a truncated diﬀerential attack is more eﬃcient than
+a simple diﬀerential attack using a classical computer, but the opposite is true with a
+quantum computer.
+We consider the reduced version of LBlock [WZ11] used in LAC [ZWW+14]. Accord-
+ing to [Leu15], the best known diﬀerential for the full 16 rounds has probability 2−61.5.
+This yields a classical distinguisher with complexity 262.5 and a quantum distinguisher
+with complexity 231.75. The corresponding truncated diﬀerential has the following charac-
+teristics4:
+n = 64
+∆in = 12
+∆out = 20
+˜hT ≈55.3
+We note that ˜hT > n −∆out, which is too large to provide a working attack. However,
+˜hT only considers pairs following a given characteristic, and we expect additional pairs
+to randomly give an output diﬀerence in Dout. Therefore, we estimate the probability of
+the truncated diﬀerential as 2hT = 2−44 + 2−55.3. In order to check this hypothesis, we
+implemented a reduced version of LAC with 3-bit APN S-Boxes, and veriﬁed that a bias
+can be detected5. In every structure, the probability that a pair follows the truncated
+diﬀerential is 223 · 2hT = 2−21 + 2−32.3, rather than 2−21 for a random permutation.
+As explained in Section 3 (Theorem 3), this bias can be detected after examining
+2 · 2−21 · 232.3·2 = 244.6 structures, i.e. 256.6 plaintexts in a classical attack (following
+4We consider the truncated diﬀerential with Din = 000000000000**0* and Dout = 0000***00000**00.
+If the input diﬀerential is non-zero on all active bytes, a pair follows the truncated diﬀerential when 14
+sums of active bytes cancel out, and 3 sums of active bytes don’t cancel out. This gives a probability
+(15/16)6 · (1/15)14 ≈2−55.3.
+5The truncated path for the reduced version has a probability 2hT = 2−33 + 2−40.5.
+We ran 32
+experiments with 231 structures of 29 plaintexts each. With a random function we expect about 231 ·
+29 · (29 −1)/2 · 2−33 = 32704 pairs satisfying the truncated diﬀerential, and about 32890 with LAC. The
+median number of pairs we found is 33050 and it was larger than 32704 is 31 out of 32 experiments. This
+agrees with our predictions.
+
+
+--- PAGE 16 ---
+16
+Quantum Diﬀerential and Linear Cryptanalysis
+[BGT11]). In a quantum setting, we use quantum counting [BHT98, Mos98, BHMT02]
+and examine 4π · 2−21/2 · 232.3 ≈225.4 structures, for a total cost of 225.4 · 22/3·12 = 233.4.
+To summarize, the best attack in the classical setting is a truncated diﬀerential at-
+tack (with complexity 260.9 rather than 262.5 for a simple diﬀerential attack), while the
+best attack in the quantum setting is a simple diﬀerential attack (with complexity 231.75
+rather than 233.4 for a truncated diﬀerential attack). Moreover, the quantum truncated
+diﬀerential attack is actually less eﬃcient than a generic attack using Grover’s algorithm.
+6.2
+Application 2: KLEIN-64 and KLEIN-96
+6.2.1
+KLEIN-64
+We consider exactly the attack from [LN14]. We omit here the details of the cipher and
+the truncated diﬀerential, but provide the parameters needed to compute the complexity.
+When taking into account the attack that provides the best time complexity, we have6:
+hT = 69.5, ∆in = 16, ∆ﬁn = 32, k = 64, kout = 32, n = 64, Ckout = 220 and hout = 45.
+In this case, we can recover the time and data complexities from the original result
+as7 D = 254.5 and T = 254.5 + 257.5 + 256.5 = 258.2, which is considerably faster than
+exhaustive search (264), therefore breaking the cipher.
+In the quantum scenario, the complexity of the generic exhaustive search, which we
+use to measure the security, is 232. The cipher is considered broken if we can retrieve
+the key with smaller complexity.
+When considering the Q2 or the Q1 case, the ﬁnal
+term is accelerated by square root. On the other hand the second term has a square
+root in 2hT −n+∆ﬁn, which is then multiplied by C∗
+kout. As shown in Section 4.2.4, since
+hout > kout, we have C∗
+kout = 2kout/2 = 216 instead of 220. Consequently, the second term
+becomes 234.75, thus the attack does not work.
+We have seen here an example of a primitive broken in the classical world, but remain-
+ing secure8 in the quantum one, for both models.
+6.2.2
+KLEIN-96
+Here we consider the attack of type III given in [LN14], as it is the only one with data
+complexity lower than 248, and therefore the only possible candidate for providing also an
+attack in the Q1 model.
+The parameters of this classical attack are: hT = 78, ∆in = 32, ∆ﬁn = 32, kout = 48,
+n = 64, Ckout = 230 and hout = 52. We compute and obtain the same complexities as the
+original results in time and data: D = 247 and T = 247 + 246+30 + 290. When quantizing
+this attack, we have to compare the complexities with 296/2 = 248.
+In the Q1 model, as the complexitites are going to be very tight, we consider the
+constants that take into account the cost of a computation with respect to one encryption 9
+(the unit of exhaustive search). Then, we obtain 247 + 223+24 · 13
+14 + 245 ·
+1
+14 = 247.96, ,
+which is lower that 248 encryptions , so the attack still works. The second term comes
+from C∗
+kout2(hT −n+∆out)/2, where we can compute C∗
+kout as before, obtaining 248/2 = 224.
+The constants come from the fact that the computations related to the second term cover
+13 rounds out of 14, as the last one is not computed but serves as matching point. The
+6For the attacks from [LN14] on KLEIN, hT is always bigger than n −∆in, but the distinguisher from
+∆in to ∆out still works exactly as described in Section 5.1.2 because we compare with the probability of
+producing the truncated diﬀerential path and not just the truncated diﬀerential.
+7The slight diﬀerence with respect to [LN14] is because here we have not taken into account the relative
+cost with respect to one encryption, for the sake of simplicity.
+8We want to point out that notions “not-secure” (i.e. can be attacked in practice) and “broken” (i.e.
+can be attacked faster than brute-force), are not the same, though they are diﬃcult to dissociate.
+9For the sake of simplicity, we ignore this constants in the other cases, as they barely change the
+complexities.
+
+
+--- PAGE 17 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+17
+third term constant reﬂects that considering only one round out of the 14, many keys are
+already be discarded.
+In the Q2 model, the ﬁrst term is reduced to 234.17 and becomes negligible, with the
+ﬁnal complexity at 234.17 + 247 + 245 = 247.3, showing that the cryptosystem is broken.
+7
+Linear Cryptanalysis
+Linear cryptanalysis was discovered in 1992 by Matsui [MY92, Mat93]. The idea of linear
+cryptanalysis is to approximate the round function with a linear function, in order to ﬁnd a
+linear approximation correlated to the non-linear encryption function E. We describe the
+linear approximations using linear masks; for instance, an approximation for one round is
+written as E(1)(x)[χ′] ≈x[χ] where χ and χ′ are linear masks for the input and output,
+respectively, and x[χ] = L
+i:χi=1 xi. Here, “≈” means that the probability that the two
+values are equal is signiﬁcantly larger than with a random permutation.
+The cryptanalyst has to build linear approximations for each round, such that the
+output mask of a round is equal to the input mask of the next round. The piling-up
+lemma is then used to evaluate the correlation of the approximation for the full cipher.
+As for diﬀerential cryptanalysis, we assume here that the linear approximation is given and
+use it with a quantum computer to obtain either a distinguishing attack or a key recovery
+attack. In this section, we consider linear distinguishers and key recovery attacks following
+from Matsui’s work [Mat93].
+7.1
+Classical Adversary
+7.1.1
+Linear distinguisher
+In the following, C denotes the ciphertext obtained when encrypting the plaintext P with
+the key K. We assume that we know a linear approximation with masks (χP , χC, χK)
+and constant term χ0 ∈{0, 1} satisfying Pr
+
+C[χC] = P[χP ] ⊕K[χK] ⊕χ0
+
+= (1 + ε)/2,
+with ε ≫2−n/2; or, omitting the key dependency:
+Pr
+
+C[χC] = P[χP ]
+
+= (1 ± ε)/2.
+An attacker can use this to distinguish E from a random permutation.
+The attack
+requires D = A/ε2 known plaintexts Pi and the corresponding ciphertexts Ci, where
+A is a small constant (e.g.
+A = 10).
+The attacker computes the observed bias ˆε =
+|2# {i : Ci[χC] = Pi[χP ]} /D −1|, and concludes that the data is random if ˆε ≤ε/2 and
+that it comes from E otherwise.
+If the data is generated by a random permutation, then the expected value of ˆε is 0,
+whereas, if it is generated by E, the expected value of ˆε is ε. We can compute the success
+probability of the attack assuming that the values of Ci[χC] ⊕Pi[χP ] are identically
+distributed Bernoulli random variables, with parameter 1/2 or 1/2 ± ε. From Hoeﬀding’s
+inequality, we get:
+Pr
+h
+ˆε ≥ε/2
+random permutation
+i
+≤2 exp
+
+−2ε2
+42 D
+
+≤2 exp
+
+−A
+8
+
+,
+Pr
+h
+ˆε ≤ε/2
+cipher E
+i
+≤exp
+
+−2ε2
+42 D
+
+≤exp
+
+−A
+8
+
+;
+both error terms can also be made arbitrarily small by increasing A.
+Overall, the complexity of the linear distinguisher is
+Dlin. dist.
+C
+= T lin. dist.
+C
+= 1/ε2.
+(13)
+As explained in Section 2, we do not take into account the factor A that depends on the
+success probability, and keep only the asymptotic term in the complexity.
+
+
+--- PAGE 18 ---
+18
+Quantum Diﬀerential and Linear Cryptanalysis
+7.1.2
+Key-recovery using an r-round approximation (Matsui’s Algorithm 1)
+The linear distinguisher readily gives one key bit according to the sign of the bias: if
+K[χK] = 0, then we expect # {i : Ci[χC] = Pi[χP ] ⊕χ0} > D/2.
+The attack can be
+repeated with diﬀerent linear approximations in order to recover more key bits. If we
+have ℓindependent linear approximations (χj
+P , χj
+C, χj
+K, χj
+0) with bias at least ε, the total
+complexity is:
+DMat.1
+C
+= 1/ε2,
+T Mat.1
+C
+= ℓ/ε2 + 2k−ℓ.
+(14)
+7.1.3
+Last-rounds attack (Matsui’s Algorithm 2)
+Alternatively, linear cryptanalysis can be used in a last-rounds attack that will often be
+more eﬃcient. Following the notations of the previous sections, we consider a total of
+R + rout rounds, with an R-round linear distinguisher (χP , χC′) with bias ε, and we use
+partial decryption for the last rout rounds.
+We denote by kout the number of key bits necessary to compute C′[χC′], where C′ =
+E−rout(C) from C. The attack proceeds as follows:
+1. Initialize a set of 2kout counters Xk′ to zero, for each key candidate.
+2. For each (P, C) pair, and for every partial key guess k′, compute C′ from C and k′,
+and increment Xk′ if P[χP ] = C′[χC′].
+3. This gives Xk′ = #
+
+P, C : E−rout
+k′
+(C)[χC′] = P[χP ]
+	
+.
+4. Select the partial key k′ with the maximal absolute value of Xk′.
+This gives the following complexity:
+DMat.2
+C
+= 1/ε2
+T Mat.2
+C
+= 2kout/ε2 + 2k−kout,
+(15)
+where, as before, we neglect constant factors.
+We note that this algorithm can be improved using a distillation phase where we count
+the number of occurrences of partial plaintexts and ciphertexts, and an analysis phase
+using only these counters rather the full data set. In some speciﬁc cases, the analysis
+phase can be improved by exploiting the Fast Fourier Transform [CSQ07], but we will
+focus on the simpler case described here.
+7.2
+Quantum Adversary
+7.2.1
+Distinguisher in the Q2 model
+As in the previous sections, a speed-up for distinguishers is only observed for the Q2 model.
+The distinguisher is based on the quantum approximate counting algorithm of Theorem
+3. As in the classical case, the goal is to distinguish between two Bernoulli distributions
+with parameter 1/2 and 1/2 + ε, respectively.
+Using the quantum approximate counting algorithm, it is suﬃcient to make O(1/ε)
+queries in order to achieve an ε-approximation. The data complexity of the quantum
+distinguisher is therefore,
+Dlin. dist.
+Q2
+= T lin. dist.
+Q2
+= 1/ε,
+(16)
+which constitutes a quadratic speed-up compared to the classical distinguisher.
+7.2.2
+Key-recovery using an r-round approximation in the Q1 model
+Each linear relation allows the attacker to recover a bit of the key using 1/ε2 data, as
+the classical model. Once ℓbits of the key have been recovered, one can apply Grover’s
+algorithm to obtain the full key. For ℓlinear relations, the attack complexity is therefore:
+DMat.1
+Q1
+= ℓ/ε2
+T Mat.1
+Q1
+= ℓ/ε2 + 2(k−ℓ)/2.
+(17)
+
+
+--- PAGE 19 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+19
+7.2.3
+Key-recovery using an r-round approximation in the Q2 model
+Each linear relation allows the attacker to recover a bit of the key using 1/ε data. If there
+are ℓsuch relations, the attack complexity is:
+DMat.1
+Q2
+= ℓ/ε
+T Mat.1
+Q2
+= ℓ/ε + 2(k−ℓ)/2.
+(18)
+Note that we do not a priori obtain a quadratic improvement for the data complexity
+compared to the classical model. This is because the same data can be used many times
+in the classical model, whereas it is unclear whether something similar can be achieved
+using Grover’s algorithm.
+7.2.4
+Last-rounds attack in the Q1 model
+As usual for the Q1 model, one samples the same quantity of data as in the classical
+model and stores it in a quantum memory. Then the idea is to perform two successive
+instances of Grover’s algorithm: the goal of the ﬁrst one is to ﬁnd a partial key of size
+kout for which a bias ε is detected for the ﬁrst R rounds: this has complexity 2kout/2/ε
+with quantum counting; the second Grover aims at ﬁnding the rest of the key and has
+complexity 2(k−kout)/2. Overall, the complexity of the attack is
+DMat.2
+Q1
+= 1/ε2
+T Mat.2
+Q1
+= 1/ε2 + 2kout/2/ε + 2(k−kout)/2.
+(19)
+7.2.5
+Last-rounds attack in the Q2 model.
+The strategy is similar, but the ﬁrst step of the algorithm, i.e. ﬁnding the correct partial
+key, can be improved compared to the Q1 model. One uses a Grover search to obtain the
+partial key, and the checking step of Grover now consists of performing an approximate
+counting to detect the bias. Overall, the complexity of the attack is
+DMat.2
+Q2
+= 2kout/2/ε
+T Mat.2
+Q2
+= 2kout/2/ε + 2(k−kout)/2.
+(20)
+8
+Discussion
+In this section, we ﬁrst recall all the time complexities obtained through the paper. The
+data complexities correspond to the ﬁrst term of each expression for the diﬀerential attacks.
+Next, we discuss how these results aﬀect the post-quantum security of symmetric ciphers
+with respect to diﬀerential and linear attacks. As a remainder, notations are given in
+Table 1.
+Simple Diﬀerential Distinguishers:
+T s. dist.
+C
+= 2hS+1
+T s. dist.
+Q2
+= 2hS/2+1
+Simple Diﬀerential Last-Rounds Attacks:
+T s. att.
+C
+= 2hS+1
++ 2hS+∆ﬁn−n
+Ckout + 2k−hout
+T s. att.
+Q1
+= 2hS+1
++ 2(hS+∆ﬁn−n)/2
+C∗
+kout + 2(k−hout)/2
+T s. att.
+Q2
+= 2hS/2+1 + 2(hS+∆ﬁn−n)/2
+C∗
+kout + 2(k−hout)/2
+Truncated Diﬀerential Distinguishers:
+T tr. dist.
+C
+= max{2(hT +1)/2, 2hT −∆in+1}
+T tr. dist.
+Q2
+= max
+
+2(hT +1)/3, 2(hT +1)/2−∆in/3	
+
+
+--- PAGE 20 ---
+20
+Quantum Diﬀerential and Linear Cryptanalysis
+Truncated Diﬀerential Last-Rounds Attacks:
+T tr. att.
+C
+= max
+
+2(hT +1)/2, 2hT −∆in+1	
++ 2hT +∆ﬁn−n
+
+Ckout + 2k−hout
+T tr. att.
+Q1
+= max
+
+2(hT +1)/2, 2hT −∆in+1	
++ 2(hT +∆ﬁn−n)/2
+
+C∗
+kout + 2(k−hout)/2
+T tr. att.
+Q2
+= 2(hT +1)/2 max
+
+2−∆in/3, 2−(n+1−∆ﬁn)/6	
++ max
+
+2(hT +∆ﬁn−n)/2, 2(hT +1)/2−∆in	
+C∗
+kout + 2(k−hout)/2
+Linear Distinguishers:
+T lin. dist.
+C
+= 1/ε2
+T lin. dist.
+Q2
+= 1/ε
+Linear Attacks:
+T Mat.1
+C
+= ℓ/ε2 + 2k−ℓ
+T Mat.2
+C
+= 2kout/ε2 + 2k−kout
+T Mat.1
+Q1
+= ℓ/ε2 + 2(k−ℓ)/2
+T Mat.2
+Q1
+= 1/ε2 + 2kout/2/ε + 2(k−kout)/2.
+T Mat.1
+Q2
+= ℓ/ε + 2(k−ℓ)/2
+T Mat.2
+Q2
+= 2kout/2/ε + 2(k−kout)/2
+The ﬁrst observation we make is that the cost of a quantum diﬀerential or linear attack
+is at least the square root of the cost of the corresponding classical attack. In particular, if
+a block cipher is resistant to classical diﬀerential and/or linear cryptanalysis (i.e. classical
+attacks cost at least 2k), it is also resistant to the corresponding quantum cryptanalysis
+(i.e. quantum diﬀerential and/or linear attacks cost at least 2k/2). However, a quadratic
+speed-up is not always possible with our techniques; in particular truncated attacks might
+be less accelerated than simple diﬀerential ones.
+Q1 model vs Q2 model.
+We have studied quantum cryptanalysis with the notion of
+standard security (Q1 model with only classical encryption queries) and quantum security
+(Q2 model with quantum superposition queries). As expected, the Q2 model is stronger,
+and we often have a smaller quantum acceleration in the Q1 model. In particular, the
+data complexity of attack in the Q1 model is the same as the data complexity of classical
+attacks. Still, there are important cases where quantum diﬀerential or linear cryptanalysis
+can be more eﬃcient than Grover’s search in the Q1 model, which shows that quantum
+cryptanalysis is also relevant in the more realistic setting with only classical queries.
+Quantum diﬀerential and linear attacks are more threatening to ciphers with larger
+key sizes.
+Though it seems counter-intuitive, the fact is that larger key sizes also mean
+higher security claims to consider a cipher as secure. In the complexity ﬁgure given above,
+the terms that depend on the key size (the right hand size terms) are likely to be the
+bottleneck for ciphers with long keys with respect to the internal state size. In all the
+attacks studied here, this term is quadratically improved using quantum computation, in
+both models. Therefore, attacks against those ciphers will get the most beneﬁts from
+quantum computers. We illustrated this eﬀect in Section 6.2, by studying KLEIN with
+two diﬀerent key sizes.
+This eﬀect is very strong in the Q1 model because most attacks have a data complexity
+larger than 2n/2 (because hS > n/2, hT > n/2, or ε < 2−n/4). If the keysize is equal to n,
+this makes those attacks less eﬃcient than Grover’s search, but they become interesting
+when k is larger than n. In particular, with k ≥2n, the data complexity is always smaller
+than 2k/2.
+This observation is particularly relevant because the recommended strategy against
+quantum adversaries is to use longer keys [ABB+15]. We show that with this strategy, it
+is likely that classical attacks that break the cryptosystem lead to quantum attacks that
+also break it, even in the Q1 model where the adversary only makes classical queries to
+the oracle.
+
+
+--- PAGE 21 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+21
+The best attack might change from the classical to the quantum world.
+Since trun-
+cated diﬀerential attacks use collision ﬁnding in the data analysis step, they do not enjoy
+a quadratic improvement in the quantum setting. Therefore, as we show in Section 6.1, a
+truncated diﬀerential attack might be the best known attack in the classical world, while
+the simple diﬀerential might become the best in the quantum world. In particular, simply
+quantizing the best known attack does not ensure obtaining the best possible attack in the
+post-quantum world, which emphasizes the importance of studying quantum symmetric
+cryptanalysis.
+More strikingly, there are cases where diﬀerential attacks are more eﬃcient than brute
+force in the classical world, but quantum diﬀerential attacks are not faster than Grover’s
+algorithm, as we show in the example of Section 6.2.1.
+9
+Conclusion and open questions
+Our work is an important step towards building a quantum symmetric cryptanalysis
+toolbox. Our results have corroborated our ﬁrst intuition that symmetric cryptography
+does not seem ready for the post-quantum world. This not a direct conclusion from the
+paper, though indirectly the ﬁrst logical approach for quantum symmetric cryptanalysis
+would be to quantize the best classical attack, and that would simplify the task. As we
+know for sure applications where the best attacks might change exist, cryptanalysis must
+be started anew. The non-intuitive behaviors shown in our examples of applications help
+to illustrate the importance of understanding how symmetric attacks work in the quantum
+world, and therefore, of our results. For building trust against quantum adversaries, this
+work should be extended, and other classical attacks should be investigated. Indeed, we
+have concluded that quantizing the best known classical diﬀerential attacks may not give
+the best quantum attack. This emphasizes the importance of studying and ﬁnding the
+best quantum attacks, including all known families of cryptanalysis.
+We have devised quantum attacks that break classical cryptosystems faster than a
+quantum exhaustive search.
+However, the quantum-walk-based techniques used here
+can only lead to polynomial speed-ups, and the largest gap is quadratic, achieved by
+Grover’s algorithm. Although this is signiﬁcant, it can not be interpreted as a collapse
+of cryptography against quantum adversaries similar to public-key cryptography based
+on the hardness of factoring. However, we already mentioned that attacks based on the
+quantum Fourier transform, which is at the core of Shor’s algorithm for factoring and
+does not fall in the framework of quantum walks, have been found for symmetric ci-
+phers [KM10, KM12, RS15, KLLN16].
+We end by mentioning a few open questions that we leave for future work. In this work,
+we have studied quantum versions of diﬀerential and linear cryptanalysis. In each of these
+cases, we were either given a diﬀerential characteristics or a linear approximation to begin
+with, and used quantum algorithms to exploit them to perform a key recovery attack for
+instance. A natural question is whether quantum computers can also be useful to come
+up with good diﬀerential characteristics or linear approximations in the ﬁrst place.
+So far, we have only scratched the surface of linear cryptanalysis by quantizing the
+simplest versions of classical attacks, that is excluding more involved constructions using
+counters or the fast Fourier transform. Of course, since the quantum Fourier transform
+oﬀers a signiﬁcant speed-up compared to its classical counterpart, it makes sense to inves-
+tigate whether it can be used to obtain more eﬃcient quantum linear cryptanalysis.
+A major open question in the ﬁeld of quantum cryptanalysis is certainly the choice
+of the right model of attack. In this work, we investigated two such models. The Q2
+model might appear rather extreme and perhaps even unrealistic since it is unclear why
+an attacker could access the cipher in superposition. But this model has the advantage of
+
+
+--- PAGE 22 ---
+22
+Quantum Diﬀerential and Linear Cryptanalysis
+consistency. Also, a cipher secure in this model will remain secure in any setting. On the
+other hand, the Q1 model appears more realistic, but might be a little bit too simplistic.
+In particular, it seems important to better understand the interface between the classical
+register that stores the data that have been obtained by querying the cipher and the
+quantum register where they must be transferred in order to be further processed by the
+quantum computer.
+Acknowledgements
+This work was supported by the Commission of the European Communities through the
+Horizon 2020 program under project number 645622 PQCRYPTO. MK acknowledges
+funding through grants ANR-12-PDOC-0022-01 and ESPRC EP/N003829/1.
+References
+[ABB+15]
+Daniel
+Augot,
+Lejla
+Batina,
+Daniel
+J
+Bernstein,
+Joppe
+Bos,
+Johannes
+Buchmann,
+Wouter
+Castryck,
+Orr
+Dunkelman,
+Tim
+Güneysu,
+Shay Gueron,
+Andreas Hülsing,
+et al.
+Initial recommen-
+dations
+of
+long-term
+secure
+post-quantum
+systems.
+Available
+at
+http: // pqcrypto.eu. org/ docs/initial-recommendations.pdf , 2015.
+[Amb07]
+A. Ambainis. Quantum walk algorithm for element distinctness. SIAM J.
+Comput., 37(1):210–239, 2007.
+[ATTU16]
+Mayuresh Vivekanand Anand, Ehsan Ebrahimi Targhi, Gelo Noel Tabia, and
+Dominique Unruh. Post-quantum security of the CBC, CFB, OFB, CTR,
+and XTS modes of operation.
+In Tsuyoshi Takagi, editor, Post-Quantum
+Cryptography - 7th International Workshop, PQCrypto 2016, Fukuoka, Japan,
+February 24-26, 2016, Proceedings, volume 9606 of Lecture Notes in Computer
+Science, pages 44–63. Springer, 2016.
+[BGT11]
+Céline Blondeau, Benoît Gérard, and Jean-Pierre Tillich. Accurate estimates
+of the data complexity and success probability for various cryptanalyses. Des.
+Codes Cryptography, 59(1-3):3–34, 2011.
+[BHMT02] Gilles Brassard, Peter Høyer, Michele Mosca, and Alain Tapp.
+Quantum
+amplitude ampliﬁcation and estimation. In Quantum computation and infor-
+mation (Washington, DC, 2000), volume 305 of Contemp. Math., pages 53–74.
+Amer. Math. Soc., Providence, RI, 2002.
+[BHT98]
+Gilles Brassard, Peter Høyer, and Alain Tapp.
+Quantum counting.
+In
+Kim Guldstrand Larsen, Sven Skyum, and Glynn Winskel, editors, Automata,
+Languages and Programming, 25th International Colloquium, ICALP’98, Aal-
+borg, Denmark, July 13-17, 1998, Proceedings, volume 1443 of Lecture Notes
+in Computer Science, pages 820–831. Springer, 1998.
+[BS90]
+Eli Biham and Adi Shamir. Diﬀerential cryptanalysis of DES-like cryptosys-
+tems. In Alfred Menezes and Scott A. Vanstone, editors, Advances in Cryptol-
+ogy - CRYPTO ’90, 10th Annual International Cryptology Conference, Santa
+Barbara, California, USA, August 11-15, 1990, Proceedings, volume 537 of
+Lecture Notes in Computer Science, pages 2–21. Springer, 1990.
+[BZ13a]
+Dan Boneh and Mark Zhandry.
+Quantum-secure message authentication
+codes. In Thomas Johansson and Phong Q. Nguyen, editors, Advances in
+
+
+--- PAGE 23 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+23
+Cryptology - EUROCRYPT 2013, 32nd Annual International Conference on
+the Theory and Applications of Cryptographic Techniques, Athens, Greece,
+May 26-30, 2013. Proceedings, volume 7881 of Lecture Notes in Computer
+Science, pages 592–608. Springer, 2013.
+[BZ13b]
+Dan Boneh and Mark Zhandry. Secure signatures and chosen ciphertext secu-
+rity in a quantum computing world. In Ran Canetti and Juan A. Garay, edi-
+tors, Advances in Cryptology - CRYPTO 2013 - 33rd Annual Cryptology Con-
+ference, Santa Barbara, CA, USA, August 18-22, 2013. Proceedings, Part II,
+volume 8043 of Lecture Notes in Computer Science, pages 361–379. Springer,
+2013.
+[CSQ07]
+Baudoin Collard, François-Xavier Standaert, and Jean-Jacques Quisquater.
+Improving the time complexity of matsui’s linear cryptanalysis. In Kil-Hyun
+Nam and Gwangsoo Rhee, editors, Information Security and Cryptology -
+ICISC 2007, 10th International Conference, Seoul, Korea, November 29-30,
+2007, Proceedings, volume 4817 of Lecture Notes in Computer Science, pages
+77–88. Springer, 2007.
+[DFNS13]
+Ivan Damgård, Jakob Funder, Jesper Buus Nielsen, and Louis Salvail. Su-
+perposition attacks on cryptographic protocols. In Carles Padró, editor, In-
+formation Theoretic Security - 7th International Conference, ICITS 2013,
+Singapore, November 28-30, 2013, Proceedings, volume 8317 of Lecture Notes
+in Computer Science, pages 142–161. Springer, 2013.
+[GHS15]
+Tommaso Gagliardoni, Andreas Hülsing, and Christian Schaﬀner.
+Seman-
+tic security and indistinguishability in the quantum world. arXiv preprint
+arXiv:1504.05255, 2015.
+[GNL12]
+Zheng Gong, Svetla Nikova, and Yee Wei Law. KLEIN: A new family of
+lightweight block ciphers.
+In RFID. Security and Privacy - 7th Interna-
+tional Workshop, RFIDSec 2011, Amherst, USA, June 26-28, 2011, Revised
+Selected Papers, volume 7055 of Lecture Notes in Computer Science, pages
+1–18. Springer, 2012.
+[Gro96]
+Lov K. Grover. A fast quantum mechanical algorithm for database search.
+In Gary L. Miller, editor, Proceedings of the Twenty-Eighth Annual ACM
+Symposium on the Theory of Computing, Philadelphia, Pennsylvania, USA,
+May 22-24, 1996, pages 212–219. ACM, 1996.
+[JKM13]
+S. Jeﬀery, R. Kothari, and F. Magniez. Nested quantum walks with quantum
+data structures. In Proceedings of 24th AMC-SIAM symposium on discrete
+algorithms, 2013.
+[Kap14]
+Marc Kaplan.
+Quantum attacks against iterated block ciphers.
+CoRR,
+abs/1410.1434, 2014.
+[KLLN16]
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier, and María Naya-Plasencia.
+Breaking symmetric cryptosystems using quantum period ﬁnding.
+In
+Matthew Robshaw and Jonathan Katz, editors, Advances in Cryptology -
+CRYPTO 2016 - 36th Annual International Cryptology Conference, Santa
+Barbara, CA, USA, August 14-18, 2016, Proceedings, Part II, volume 9815 of
+Lecture Notes in Computer Science, pages 207–237. Springer, 2016.
+
+
+--- PAGE 24 ---
+24
+Quantum Diﬀerential and Linear Cryptanalysis
+[KM10]
+H. Kuwakado and M. Morii. Quantum distinguisher between the 3-round
+Feistel cipher and the random permutation. In Information Theory Proceed-
+ings (ISIT), 2010 IEEE International Symposium on, pages 2682–2685, June
+2010.
+[KM12]
+H. Kuwakado and M. Morii. Security on the quantum-type Even-Mansour ci-
+pher. In Information Theory and its Applications (ISITA), 2012 International
+Symposium on, pages 312–316, Oct 2012.
+[Knu94]
+Lars R. Knudsen. Truncated and higher order diﬀerentials. In Bart Preneel,
+editor, Fast Software Encryption: Second International Workshop. Leuven,
+Belgium, 14-16 December 1994, Proceedings, volume 1008 of Lecture Notes in
+Computer Science, pages 196–211. Springer, 1994.
+[Leu15]
+Gaëtan Leurent. Diﬀerential forgery attack against LAC. In Orr Dunkel-
+man and Liam Keliher, editors, Selected Areas in Cryptography - SAC 2015 -
+22nd International Conference, Sackville, NB, Canada, August 12-14, 2015,
+Revised Selected Papers, volume 9566 of Lecture Notes in Computer Science,
+pages 217–224. Springer, 2015.
+[LN14]
+Virginie Lallemand and María Naya-Plasencia. Cryptanalysis of KLEIN. In
+Carlos Cid and Christian Rechberger, editors, Fast Software Encryption - 21st
+International Workshop, FSE 2014, London, UK, March 3-5, 2014. Revised
+Selected Papers, volume 8540 of Lecture Notes in Computer Science, pages
+451–470. Springer, 2014.
+[Mat93]
+Mitsuru Matsui. Linear cryptanalysis method for DES cipher. In Tor Helle-
+seth, editor, Advances in Cryptology - EUROCRYPT ’93, Workshop on the
+Theory and Application of of Cryptographic Techniques, Lofthus, Norway,
+May 23-27, 1993, Proceedings, volume 765 of Lecture Notes in Computer
+Science, pages 386–397. Springer, 1993.
+[Mos98]
+Michele Mosca. Quantum searching, counting and amplitude ampliﬁcation
+by eigenvector analysis. In MFCS’98 workshop on Randomized Algorithms,
+pages 90–100, 1998.
+[MY92]
+Mitsuru Matsui and Atsuhiro Yamagishi. A new method for known plain-
+text attack of FEAL cipher.
+In Advances in Cryptology - EUROCRYPT
+’92, Workshop on the Theory and Application of of Cryptographic Techniques,
+Balatonfüred, Hungary, May 24-28, 1992, Proceedings, pages 81–91, 1992.
+[RS15]
+Martin Roetteler and Rainer Steinwandt. A note on quantum related-key
+attacks. Information Processing Letters, 115(1):40–44, 2015.
+[San08]
+Miklos Santha. Quantum walk based search algorithms. In Theory and Ap-
+plications of Models of Computation, pages 31–46. Springer, 2008.
+[Sho97]
+P. W. Shor. Polynomial-time algorithms for prime factorization and discrete
+logarithms on a quantum computer.
+SIAM J. Comput., 26(5):1484–1509,
+1997.
+[Sim97]
+Daniel R Simon. On the power of quantum computation. SIAM journal on
+computing, 26(5):1474–1483, 1997.
+[SS16]
+Thomas Santoli and Christian Schaﬀner. Using simon’s algorithm to attack
+symmetric-key cryptographic primitives.
+arXiv preprint arXiv:1603.07856,
+2016.
+
+
+--- PAGE 25 ---
+Marc Kaplan, Gaëtan Leurent, Anthony Leverrier and María Naya-Plasencia
+25
+[WZ11]
+Wenling Wu and Lei Zhang. Lblock: A lightweight block cipher. In Applied
+Cryptography and Network Security - 9th International Conference, ACNS
+2011, Nerja, Spain, June 7-10, 2011. Proceedings, volume 6715 of Lecture
+Notes in Computer Science, pages 327–344, 2011.
+[Zal99]
+Christof Zalka. Grover’s quantum searching algorithm is optimal. Phys. Rev.
+A, 60:2746–2751, Oct 1999.
+[Zha12]
+Mark Zhandry. How to construct quantum random functions. In 53rd Annual
+IEEE Symposium on Foundations of Computer Science, FOCS 2012, New
+Brunswick, NJ, USA, October 20-23, 2012, pages 679–687. IEEE Computer
+Society, 2012.
+[ZLZS15]
+Qing Zhou, Songfeng Lu, Zhigang Zhang, and Jie Sun. Quantum diﬀerential
+cryptanalysis. Quantum Information Processing, 14(6):2101–2109, 2015.
+[ZWW+14] Lei Zhang, Wenling Wu, Yanfeng Wang, Shengbao Wu, and Jian Zhang. LAC:
+A Lightweight Authenticated Encryption Cipher. Submission to CAESAR.
+Available from: http://competitions.cr.yp.to/round1/lacv1.pdf (v1),
+March 2014.

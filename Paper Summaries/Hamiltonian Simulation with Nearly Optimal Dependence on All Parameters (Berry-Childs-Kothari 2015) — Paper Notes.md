@@ -121,10 +121,10 @@ where $Z = PWP = \frac{1}{s}(|\varsigma\rangle\langle\varsigma| \otimes \tilde{V
 
 ## Limits / caveats
 
-- **Still not strictly optimal.** The $\log\log(\tau/\varepsilon)$ denominator persists. [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] achieved $O(\tau + \log(1/\varepsilon)\log\log(1/\varepsilon))$ via QSP — additive rather than multiplicative, and with better log factors.
-- **Upper-lower gap.** Upper bound has $\tau \cdot \log(\tau/\varepsilon)$ (product); lower bound has $\tau + \log(1/\varepsilon)$ (sum). Still open whether the tight answer is the product or the sum.
+- **Still not strictly optimal.** [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes|Low-Chuang (2017)]] achieved $O(\tau + \log(1/\varepsilon)/\log\log(1/\varepsilon))$ via QSP/qubitization — additive rather than multiplicative in the time and precision terms.
+- **Upper-lower gap at the time.** This paper's upper bound has $\tau \cdot \log(\tau/\varepsilon)/\log\log(\tau/\varepsilon)$, while its lower bound has $\tau + \log(1/\varepsilon)/\log\log(1/\varepsilon)$. QSP later closed this gap in the normalized sparse-query model.
 - **Gate complexity.** The $\log^{5/2}$ factor from classical elementary function evaluation is not pretty. Improved classical arithmetic helps but only for extremely high precision.
-- **Superseded in practice** by QSP-based methods, which achieve better constants and don't need the walk construction.
+- **Superseded in practice** by QSP/qubitization methods, which still use a walk or signal unitary but package it as a programmable spectral transformation rather than this Bessel-LCU walk-step expansion.
 
 ---
 

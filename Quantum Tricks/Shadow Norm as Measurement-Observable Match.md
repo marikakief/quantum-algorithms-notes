@@ -55,3 +55,4 @@ A low sample bound does not guarantee cheap classical post-processing. Clifford 
 - [[Median-of-Means Shadow Prediction]]
 - [[Matchgate Shadows for Fermionic Quantum Simulation (Wan, Huggins, Lee, Babbush 2022) — Paper Notes]]
 - [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — uses noisy shadow weights to show that raw randomized preprocessing can be exponentially worse than uploaded logical preprocessing.

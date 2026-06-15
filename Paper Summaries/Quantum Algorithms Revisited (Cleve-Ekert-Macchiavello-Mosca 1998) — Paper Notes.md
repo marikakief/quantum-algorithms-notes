@@ -6,11 +6,11 @@
 
 ## What this paper does
 
-Provides a unified framework for understanding quantum algorithms as **multi-particle interferometry** — specifically, as instances of **phase estimation**. The paper:
+Provides a unified framework for understanding many then-known quantum algorithms as **multi-particle interferometry** and phase readout. This is a review/unification paper, not the original invention of phase estimation. The paper:
 
 1. Reformulates Deutsch's, Deutsch-Jozsa's, and Bernstein-Vazirani's algorithms as phase kickback from controlled-$U$ operations on eigenstates
 2. Gives a clean derivation of the quantum Fourier transform circuit (the standard one everyone uses)
-3. Introduces the general **phase estimation algorithm** explicitly
+3. Gives a clean explicit circuit presentation of **phase estimation**, building on Kitaev's earlier eigenvalue-measurement procedure
 4. Shows that Shor's factoring algorithm is phase estimation applied to the modular exponentiation operator
 5. Constructs a universal method for generating arbitrary interference patterns
 
@@ -49,9 +49,13 @@ This is the quantum analogue of a Mach-Zehnder interferometer, where $\phi$ is t
 
 ## The Quantum Fourier Transform circuit
 
-The paper gives the standard QFT network (Fig. 5), with the key insight that the QFT state is **unentangled**:
+The paper gives the standard QFT network (Fig. 5), with the key insight that the QFT of a computational basis state factors into single-qubit states:
 
-$$F_{2^m}|a_1\ldots a_m\rangle = \bigotimes_{k=1}^{m} \left(|0\rangle + e^{2\pi i(0.a_{m-k+1}\ldots a_m)}|1\rangle\right)$$
+$$
+F_{2^m}|a_1\ldots a_m\rangle
+= \bigotimes_{k=1}^{m}
+\frac{|0\rangle + e^{2\pi i(0.a_{m-k+1}\ldots a_m)}|1\rangle}{\sqrt{2}}
+$$
 
 This product structure is why the QFT can be computed with $O(m^2)$ gates: each qubit gets a Hadamard plus controlled-$R_k$ rotations that build up the binary fraction in the exponent.
 
@@ -70,7 +74,10 @@ Given:
 
 The phase estimation circuit produces:
 
-$$\bigotimes_{k=0}^{m-1}\left(|0\rangle + e^{2\pi i 2^k \phi}|1\rangle\right) = \sum_{y=0}^{2^m-1} e^{2\pi i \phi y}|y\rangle$$
+$$
+\frac{1}{2^{m/2}}\bigotimes_{k=0}^{m-1}\left(|0\rangle + e^{2\pi i 2^k \phi}|1\rangle\right)
+= \frac{1}{2^{m/2}}\sum_{y=0}^{2^m-1} e^{2\pi i \phi y}|y\rangle
+$$
 
 Applying the inverse QFT yields the best $m$-bit approximation to $\phi$.
 
@@ -78,19 +85,19 @@ Applying the inverse QFT yields the best $m$-bit approximation to $\phi$.
 
 If $\phi$ is exactly an $m$-bit fraction ($\phi = a/2^m$), the output is deterministic. Otherwise, the best $m$-bit approximation is obtained with probability $\geq 4/\pi^2 \approx 0.405$.
 
-**Amplification (Appendix C):** To get an estimate within $1/2^{n+1}$ of $\phi$ with probability $\geq 1 - \epsilon$, use $m = n + \lceil\log_2(1/(2\epsilon) + 1/2)\rceil$ bits. Cost: $O(\log(1/\epsilon))$ extra controlled-$U$ operations.
+**Amplification (Appendix C):** To get an estimate within $1/2^{n+1}$ of $\phi$ with probability $\geq 1 - \epsilon$, use $m = n + \lceil\log_2(1/(2\epsilon) + 1/2)\rceil$ bits. This adds $O(\log(1/\epsilon))$ controlled-power gates to the phase-estimation register; if controlled powers are synthesized by repeated calls to $U$, the underlying $U$-query/time cost scales with the largest power used.
 
 ### The $|1\rangle$ trick for order-finding
 
-When the eigenvectors of $U$ are unknown (as in Shor's algorithm), use the simple state $|1\rangle$ instead. Since $|1\rangle = \sum_{k=1}^{r} |\psi_k\rangle$ (a uniform superposition of eigenstates), the algorithm effectively measures a random eigenphase $k/r$. Two independent runs give coprime $k_1, k_2$ with probability $> 0.54$, from which $r$ is extracted via continued fractions.
+When the eigenvectors of $U$ are unknown (as in Shor's algorithm), use a computational basis state such as $|1\rangle$ instead. For modular multiplication of order $r$, this state decomposes into a uniform superposition of eigenstates, so phase estimation samples a random eigenphase $k/r$. A single sample recovers $r$ only when $\gcd(k,r)=1$; otherwise it gives a denominator dividing $r$, and Shor's algorithm uses repeated samples and classical checks, multiples, or lcm post-processing to recover the order.
 
-**This shows Shor's algorithm is literally phase estimation** — the controlled modular exponentiation is the controlled-$U$, and the QFT extracts the phase.
+**This shows Shor's order-finding routine as phase estimation** — controlled modular multiplication is the controlled-$U$, and the QFT register extracts an eigenphase. Recovering the order still requires the usual continued-fraction and candidate-validation post-processing.
 
 ---
 
 ## Improved Deutsch-Jozsa (Section 3)
 
-The paper gives a slightly improved version of Deutsch-Jozsa: one $f$-evaluation instead of two. The original [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] algorithm for the single-bit case was probabilistic; this paper gives the deterministic version that's now standard.
+The paper reviews a one-query Deutsch-Jozsa presentation and frames it through phase kickback/interference. The original [[Quantum Theory, the Church-Turing Principle and the Universal Quantum Computer (Deutsch 1985) — Paper Notes|Deutsch (1985)]] single-bit algorithm was probabilistic, while the exact Deutsch-Jozsa algorithm itself predates this paper; CEMM's contribution is the clean interferometric presentation and related improvements, not origination of deterministic Deutsch-Jozsa.
 
 Also generalises to:
 - $f: \{0,1\}^n \to \{0,1\}^m$ with parity promise
@@ -100,7 +107,7 @@ Also generalises to:
 
 ## Universal interference pattern generation (Section 7)
 
-Given any function $\phi(x)$ computable by a reversible circuit, you can create the state $\sum_x e^{2\pi i \phi(x)}|x\rangle$ using a single eigestate in the auxiliary register and a controlled addition circuit. The key is that adding $a$ to a register in a QFT eigenstate $\sum_y e^{-2\pi i y/2^m}|y\rangle$ kicks back the phase $e^{2\pi i a/2^m}$.
+Given any function $\phi(x)$ computable by a reversible circuit, you can create the state $\sum_x e^{2\pi i \phi(x)}|x\rangle$ using a single eigenstate in the auxiliary register and a controlled addition circuit. The key is that adding $a$ to a register in a QFT eigenstate $\sum_y e^{-2\pi i y/2^m}|y\rangle$ kicks back the phase $e^{2\pi i a/2^m}$.
 
 This is the conceptual ancestor of later "phase function" techniques used in quantum signal processing and block encoding.
 
@@ -110,7 +117,7 @@ This is the conceptual ancestor of later "phase function" techniques used in qua
 
 | Result | Statement |
 |---|---|
-| Unifying framework | All known quantum algorithms are instances of phase estimation / interferometric phase readout |
+| Unifying framework | Many central quantum algorithms can be viewed as phase estimation or interferometric phase readout |
 | QFT circuit | Standard $O(m^2)$-gate circuit for $F_{2^m}$; QFT output is unentangled |
 | Phase estimation | $m$-bit estimate of eigenphase with probability $\geq 4/\pi^2$; amplifiable to $1-\epsilon$ with $O(\log 1/\epsilon)$ overhead |
 | Shor = phase estimation | Order-finding is phase estimation on $U: |x\rangle \to |ax \bmod N\rangle$; use $|1\rangle$ as surrogate eigenstate |
@@ -135,7 +142,7 @@ This is the conceptual ancestor of later "phase function" techniques used in qua
 The main reusable ideas are already captured as trick cards:
 - **[[Phase Kickback from Eigenstate Ancilla]]** — the $U|u\rangle = e^{i\phi}|u\rangle$ kickback mechanism (already attributed to this paper)
 - **[[Phase Kickback from Oracle Queries]]** — the $(-1)^{f(x)}$ phase oracle conversion
-- **[[Gapped Phase Estimation]]** — descendant of the QPE framework here
+- **[[Iterative Phase Estimation (Kitaev)]]** — single-ancilla / semiclassical phase-estimation descendants of the QPE framework here
 
 The QFT circuit construction is standard enough that it doesn't need a separate trick card.
 
@@ -143,7 +150,7 @@ The QFT circuit construction is standard enough that it doesn't need a separate 
 
 ## Limits / caveats
 
-- **Not a new algorithm.** This is a review / unification paper. The individual algorithms (Deutsch, Shor, etc.) are cited as prior work. The contribution is the framework and the explicit QPE circuit.
+- **Review / unification paper.** The individual algorithms and Kitaev's eigenvalue-measurement idea are cited as prior work. The contribution is the framework, the explicit textbook-style QPE circuit presentation, and the interference-pattern construction.
 - **Requires controlled-$U^{2^k}$.** Phase estimation as presented needs efficient implementation of controlled powers of $U$. For some unitaries (like [[Hamiltonian simulation]]), constructing these is the hard part.
 - **Eigenstate preparation.** The "$|1\rangle$ trick" for Shor's algorithm works because $|1\rangle$ decomposes nicely into eigenstates of the modular multiplication operator. For general unitaries, preparing or having the eigenstate is non-trivial.
 
@@ -180,5 +187,6 @@ The QFT circuit construction is standard enough that it doesn't need a separate 
 - [[Phase Kickback from Eigenstate Ancilla]] — the core mechanism; attributed partly to this paper
 - [[Phase Kickback from Oracle Queries]] — the $|-\rangle$ ancilla phase oracle conversion
 - [[Superposition Query for Global Properties]] — the broader framework
-- [[Gapped Phase Estimation]] — modern descendant
+- [[Iterative Phase Estimation (Kitaev)]] — semiclassical / single-ancilla QPE variants
+- [[Gapped Phase Estimation]] — modern SOSSA interval-classifier descendant, not ordinary textbook QPE
 - [[Coset Sampling via Fourier Transform]] — related QFT-based technique

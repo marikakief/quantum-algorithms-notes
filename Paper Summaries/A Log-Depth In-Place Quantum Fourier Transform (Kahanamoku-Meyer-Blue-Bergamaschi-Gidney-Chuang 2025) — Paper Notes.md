@@ -6,13 +6,13 @@
 
 ## The computational problem
 
-Implement the $n$-qubit [[Quantum Fourier Transform Circuit|quantum Fourier transform]] (QFT) as a quantum circuit, minimising three resources simultaneously: circuit depth, number of ancilla qubits, and gate locality (interaction range in a 1D qubit layout). Prior constructions could achieve $O(\log n)$ depth but required $O(n)$ ancillae (Cleve–Watrous 2000, Hales 2002) or measurement and feedforward (Bäumer–Sutter–Woerner 2025). No prior construction achieved logarithmic depth, zero ancillae, and locality simultaneously.
+Implement the $n$-qubit [[Quantum Fourier Transform Circuit|quantum Fourier transform]] (QFT) as a quantum circuit, minimising three resources simultaneously: circuit depth, number of ancilla qubits, and gate range/locality in a 1D qubit layout. Prior constructions could achieve $O(\log n)$ depth but required $O(n)$ ancillae (Cleve-Watrous 2000, Hales 2002) or measurement and feedforward (Bäumer-Sutter-Woerner 2025). No prior construction achieved logarithmic depth, zero ancillae, and logarithmic gate range simultaneously in this optimistic sense.
 
 ## What the paper does
 
-Introduces the concept of **optimistic quantum circuits** — circuits that approximate a unitary well on all but an $O(\varepsilon)$-fraction of the Hilbert space — and builds an optimistic in-place QFT with depth $O(\log(n/\varepsilon))$, zero ancilla qubits, nearest-neighbour gates in 1D, and no measurements. The paper also provides a [[Worst-to-Average-Case Reduction for Optimistic Circuits|worst-to-average-case reduction]] that converts any optimistic circuit into one with bounded error on all inputs, yielding the first approximate QFT at asymptotically optimal depth $O(\log(n/\varepsilon))$ with sublinear ancillae.
+Introduces the concept of **optimistic quantum circuits** — circuits that approximate a unitary well on all but an $O(\varepsilon)$-fraction of the Hilbert space — and builds an optimistic in-place QFT with depth $O(\log(n/\varepsilon))$, zero ancilla qubits, logarithmic gate range/locality in a 1D layout, and no measurements. The paper also provides a [[Worst-to-Average-Case Reduction for Optimistic Circuits|worst-to-average-case reduction]] that converts any optimistic circuit into one with bounded error on all inputs, yielding an approximate QFT at asymptotically optimal depth $O(\log(n/\varepsilon))$ with sublinear ancillae.
 
-Combined with QFT-based fast arithmetic (Kahanamoku-Meyer–Yao 2024), the optimistic QFT gives a factoring circuit with depth $O(n^{1+\epsilon})$ using only $2n + O(n/\log n)$ qubits — by far the best depth at this qubit count.
+Combined with QFT-based fast arithmetic (Kahanamoku-Meyer-Yao 2024), the optimistic QFT gives a factoring circuit with depth $O(n^{1+\epsilon})$ using only $2n + O(n/\log n)$ qubits in that construction.
 
 ## The algorithm / construction
 
@@ -30,7 +30,7 @@ The definition is basis-independent (unlike average-case classical complexity, w
 
 Divide the $n$-qubit register into blocks of $m = O(\log(n/\varepsilon))$ qubits each. Let $X_i$ denote the $m$-bit integer value of block $i$.
 
-The standard approximate QFT (Coppersmith 1994) truncates inter-block interactions to nearest neighbours, yielding a "blockwise" construction: iterate through blocks, applying a local $m$-bit QFT to block $i$, then a phase rotation $\omega^{X_{i+1} Y_i / 2^m}$ between blocks $i$ and $i+1$. This has linear depth because block $i-1$ needs access to $X_i$ before block $i$ can be processed.
+The standard approximate QFT (Coppersmith 1994) truncates inter-block interactions to neighbouring blocks, yielding a "blockwise" construction: iterate through blocks, applying a local $m$-bit QFT to block $i$, then the appropriate inter-block phase rotation, e.g. $\exp(2\pi i X_{i+1}Y_i/2^{2m})$ under the paper's two-block convention, between blocks $i$ and $i+1$. This has linear depth because block $i-1$ needs access to $X_i$ before block $i$ can be processed.
 
 The optimistic QFT breaks this serial dependency using [[Quantum Phase Estimation on Blocks for QFT Parallelisation|block-wise quantum phase estimation]]:
 
@@ -57,11 +57,11 @@ The reduction converts an optimistic circuit into one with bounded error on all 
 1. Draw $V$ from a unitary 1-design on $\mathcal{H}$.
 2. Apply $V$, then $\widetilde{U}$, then $\hat{V}^\dagger = U V^\dagger U^\dagger$.
 
-The pre-randomisation by $V$ turns any input into an effectively random state (where the optimistic circuit has low error), and $\hat{V}^\dagger$ undoes the randomisation. By Theorem 1, the expected error is at most $\varepsilon$ for any input state.
+The pre-randomisation by $V$ is a 1-design average, which is enough for the expected squared-error calculation; it should not be read as full Haar randomization. The correction $\hat{V}^\dagger$ undoes the randomisation. By Theorem 1, the expected error is at most $\varepsilon$ for any input state.
 
 For the QFT, a natural 1-design is the Weyl–Heisenberg group: $V(r_1, r_2) = X_{2^n}^{r_1} Z_{2^n}^{r_2}$, where $X_{2^n}$ adds $r_1$ into the register and $Z_{2^n}$ applies a phase gradient $e^{2\pi i r_2 x / 2^n}$. The conjugated operator is simply $\hat{V}^\dagger(r_1, r_2) = V(r_2, -r_1)$ — the QFT swaps the roles of $X$ and $Z$ in the Weyl–Heisenberg group.
 
-**Derandomisation via purification (Theorem 2):** Encode the 1-design into a quantum control register: $V' = \sum_i |i\rangle\langle i| \otimes V_i$. Applying $\hat{V}'^\dagger (\mathbb{I} \otimes \widetilde{U}) V'$ to $\frac{1}{\sqrt{k}} \sum_i |i\rangle \otimes |\psi\rangle$ achieves error $\leq \varepsilon$ deterministically.
+**Derandomisation via purification (Theorem 2):** Encode the 1-design into a quantum control register: $V' = \sum_i |i\rangle\langle i| \otimes V_i$. Applying $\hat{V}'^\dagger (\mathbb{I} \otimes \widetilde{U}) V'$ to $\frac{1}{\sqrt{k}} \sum_i |i\rangle \otimes |\psi\rangle$ achieves error $\leq \varepsilon$ deterministically, but on an enlarged input space that includes the control register.
 
 ### Application to factoring
 
@@ -83,7 +83,15 @@ Expected error $\varepsilon$ on any input. Uses classical-quantum addition (Taka
 $$\text{Depth} = O(\log(n/\varepsilon)), \quad \text{Total qubits} = 3n + O(n/\log(n/\varepsilon)), \quad \text{Gates} = O(n \log(n/\varepsilon))$$
 Deterministic, no measurements. Uses quantum-quantum addition (Takahashi–Tani–Kunihiro 2009) for controlled Weyl–Heisenberg operators.
 
-**Factoring (combining with Kahanamoku-Meyer–Yao 2024):**
+The guarantees split into three levels:
+
+| Circuit | Guarantee |
+|---|---|
+| Optimistic QFT | Frobenius-average / optimistic error |
+| Randomized reduction | worst-input expected squared error over the random 1-design element |
+| Purified reduction | deterministic coherent error bound on an enlarged register |
+
+**Factoring (combining with Kahanamoku-Meyer-Yao 2024):**
 $$\text{Depth} = O(n^{1+\epsilon}), \quad \text{Qubits} = 2n + O(n/\log n)$$
 
 ## Comparison with prior work
@@ -94,11 +102,11 @@ $$\text{Depth} = O(n^{1+\epsilon}), \quad \text{Qubits} = 2n + O(n/\log n)$$
 | Cleve–Watrous (2000) | $O(\log n)$ | $n + O(n \log n)$ | $O(n \log n)$ | Long-range | No |
 | Hales (2002) | $O(\log n)$ | $2n$ | $O(n)$ | Long-range | No |
 | Bäumer–Sutter–Woerner (2025) | $O(\log n)$ | $2n$ | $O(n)$ | Nearest-neighbour | Yes |
-| **Optimistic QFT (this paper)** | $O(\log(n/\varepsilon))$ | $n$ | **0** | **NN in 1D** | **No** |
+| **Optimistic QFT (this paper)** | $O(\log(n/\varepsilon))$ | $n$ | **0** | **logarithmic range in 1D** | **No** |
 | **Randomized approx QFT** | $O(\log(n/\varepsilon))$ | $n + O(n/\log(n/\varepsilon))$ | $O(n/\log(n/\varepsilon))$ | Long-range | No |
 | **Unitary approx QFT** | $O(\log(n/\varepsilon))$ | $3n + O(n/\log(n/\varepsilon))$ | $2n + O(n/\log(n/\varepsilon))$ | Long-range | No |
 
-The optimistic QFT achieves something provably impossible for a standard approximate QFT: simultaneous logarithmic depth, zero ancillae, and locality — at the cost of allowing small error on a small fraction of inputs. The randomized reduction is the first to achieve optimal depth with sublinear ancillae. The unitary version is the first deterministic circuit at this depth with $3n + o(n)$ total qubits.
+The optimistic QFT achieves something unavailable to standard worst-case approximate QFT circuits in this resource regime: simultaneous logarithmic depth, zero ancillae, and logarithmic-range locality — at the cost of allowing large error on a small fraction of inputs. The randomized reduction achieves optimal depth with sublinear ancillae in expectation over the reduction randomness. The unitary version is deterministic at this depth with $3n + o(n)$ total qubits.
 
 ## Limits / caveats
 
@@ -106,7 +114,7 @@ The optimistic QFT achieves something provably impossible for a standard approxi
 
 2. **Bad subspace structure.** The states with large error are exactly those where some block $X_i$ is near $0$ or $2^m$ — the QPE wraparound states. These are the same states that require long-range information propagation in the QFT (the $|000\ldots0\rangle$ / $|111\ldots1\rangle$ counterexample). This is not a defect of the construction but a fundamental feature of the QFT.
 
-3. **Long-range gates in the reduction.** The optimistic QFT itself uses only nearest-neighbour gates, but the randomized/unitary reductions require the integer addition $X_{2^n}^{r_1}$, which uses long-range gates (or ancillae for carry propagation). Using [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes|Häner et al.'s]] classical-quantum adder keeps locality but adds depth; using the QFT-based adder adds long-range gates. The block size can be tuned — using $m = 2\sqrt{\log(n/\varepsilon)}$ with optimised Toffoli ladders (Remaud–Vandaele 2025) reduces ancillae to $O(n / 2^{\sqrt{\log(n/\varepsilon)}})$.
+3. **Long-range gates in the reduction.** The optimistic QFT itself has logarithmic gate range in a 1D layout, but the randomized/unitary reductions require the integer addition $X_{2^n}^{r_1}$, which uses long-range gates or extra ancillae/routing for carry propagation. Using [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes|Häner et al.'s]] classical-quantum adder keeps locality only with its own depth/routing costs; using the QFT-based adder adds long-range rotations. The block size can be tuned — using $m = 2\sqrt{\log(n/\varepsilon)}$ with optimised Toffoli ladders (Remaud-Vandaele 2025) reduces ancillae to $O(n / 2^{\sqrt{\log(n/\varepsilon)}})$.
 
 4. **Not yet optimised for implementation.** The paper notes several practical optimisations left unexplored: using [[Phase Gradient State for Controlled Rotations|phase gradient states]] for the local QFT blocks, tuning block sizes differently for odd and even blocks, and exploiting locality for routing cost reduction in factoring circuits.
 

@@ -20,7 +20,7 @@ Each measurement round chooses a full-weight Pauli basis string
 
 $$p_m\in\{X,Y,Z\}^n,$$
 
-measures all qubits once, and can be reused for any target Pauli string $o_\ell\in\{I,X,Y,Z\}^n$ that it **hits**, meaning $o_\ell$ is obtained from $p_m$ by replacing some local Paulis with identities. If $h(o_\ell;P)$ counts how many measurement settings in $P=[p_1,\ldots,p_M]$ hit $o_\ell$, then the natural estimator is the empirical average over those hits.
+measures all qubits once, and can be reused for any target Pauli string $o_\ell\in\{I,X,Y,Z\}^n$ that it **hits**. Write $o_\ell\triangleright p_m$ when every non-identity entry of $o_\ell$ matches the corresponding entry of $p_m$; equivalently, $o_\ell$ is obtained from the full measurement basis $p_m$ by replacing some local Paulis with identities. If $h(o_\ell;P)$ counts how many measurement settings in $P=[p_1,\ldots,p_M]$ hit $o_\ell$, then the natural estimator is the empirical average over those hits.
 
 The whole design problem is therefore: choose the measurement settings $P$ so that every target observable gets hit often enough, without wasting shots on incompatible strings.
 
@@ -60,6 +60,8 @@ $$
 $$
 
 then all $L$ estimates are $\varepsilon$-accurate with probability at least $1-\delta$.
+
+The confidence score is a union-bound objective: each term penalizes a Pauli observable that has too few compatible shots, and the greedy schedule tries to lower the whole sum rather than optimizing one Pauli at a time.
 
 ### Randomized baseline
 
@@ -111,6 +113,8 @@ P^\sharp[k,m]=\arg\min_{W\in\{X,Y,Z\}}
 $$
 
 This is just the method of conditional expectations in a measurement-design costume.
+
+For example, one shot in basis $XYZI$ would hit targets $XYII$, $IYZI$, and $XIII$ simultaneously, but not $XXII$ or $IYXI$. The derandomized schedule exploits this partial overlap structure instead of grouping only fully commuting terms.
 
 ### What the greedy rule is really doing
 

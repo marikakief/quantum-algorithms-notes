@@ -1,3 +1,5 @@
+# The Discrete Adiabatic QLSP Has Lower Constant Factors than the Randomized Solver (Costa, An, Babbush, Berry 2023) — Paper Notes
+
 > **Source:** Pedro C. S. Costa, Dong An, Ryan Babbush, and Dominic W. Berry, *The discrete adiabatic quantum linear system solver has lower constant factors than the randomized adiabatic solver*, arXiv:2312.07690, Quantum **9**, 1887 (2025)
 > **Links:** [arXiv](https://arxiv.org/abs/2312.07690) · [Quantum journal](https://quantum-journal.org/papers/q-2025-10-20-1887/)
 > **Tags:** #QLSP #linear-systems #adiabatic #qubitization #quantum-walk #constant-factors #resource-estimation #numerical-benchmarks
@@ -10,7 +12,7 @@ This is a follow-up to [[Optimal Scaling Quantum Linear Systems Solver via Discr
 
 The paper also benchmarks the randomized adiabatic method (Subaşı, Somma, Orsucci 2019; improved by Jennings et al. 2023) on the same instances and finds the discrete walk method is **~20× cheaper** in practice, directly contradicting the claim in Jennings et al. that the randomized approach is faster for certain condition numbers.
 
-My assessment: this is not a new algorithm — it's a numerical validation paper. But it's an important one. The original Costa et al. result had constant factors so large ($\sim 5632\kappa/T$ for PD Hermitian, $\sim 15307\kappa/T$ for general $A$) that it was hard to take seriously for resource estimation. This paper makes the optimal QLSP solver viable for practical costing. It also settles a minor controversy about whether the randomized method could be competitive. (It can't.)
+My assessment: this is not a new algorithm — it's a numerical validation paper. But it's an important one. The original Costa et al. result had constant factors so large ($\sim 5632\kappa/T$ for PD Hermitian, $\sim 15307\kappa/T$ for general $A$) that it was hard to take seriously for resource estimation. This paper makes the optimal QLSP solver more credible for practical costing. On the benchmarked random instances, the randomized method is not competitive, undermining the earlier practical-cost claim.
 
 ---
 
@@ -26,7 +28,7 @@ Same as [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic T
 
 They simulate the full quantum circuit for the [[Qubitization (Quantum Walk for Spectral Encoding)|qubitized]] walk operator $W_T(s)$, not just the Hamiltonian evolution. Matrices are $4\times4$, $8\times8$, and $16\times16$ random matrices (both positive definite Hermitian and general non-Hermitian), with condition numbers $\kappa \in \{10, 20, 30, 40, 50\}$ and 100 independent samples per $\kappa$.
 
-The test protocol: start with a small total step count $T$ and increment until $\||\tilde{x}\rangle - |x\rangle\| \leq \Delta = 0.2$. The schedule function uses $p = 1.4$ (not the analytically convenient $p = 3/2$ from the original paper — they optimize numerically).
+The benchmark holds fixed the matrix distribution, target intermediate error $\Delta=0.2$, and the schedule choice $p=1.4$ while varying $\kappa$. The test protocol starts with a small total step count $T$ and increments until $\||\tilde{x}\rangle - |x\rangle\| \leq \Delta$. The schedule is not the analytically convenient $p = 3/2$ from the original paper; it is chosen numerically.
 
 Key numerical results (non-Hermitian, $8 \times 8$, fixed step count):
 
@@ -68,7 +70,7 @@ which gives a tighter relation between $\varepsilon_f$ and the final error $\var
 
 **Discrete vs. randomized (head-to-head):** The discrete adiabatic walk is ~20× cheaper than the randomized method in walk steps vs. evolution time. The actual advantage is larger because the randomized method's evolution time must still be converted to quantum circuit operations via [[Hamiltonian simulation]].
 
-**Cost partition:** For $\alpha \approx 1$, the adiabatic step accounts for the majority of the total cost across all practically relevant $\varepsilon$ values. The filtering step dominates only at astronomically small $\varepsilon$ (consistent with the analysis in the original paper, which identified $\varepsilon \lesssim 10^{-180}$ as the crossover point).
+**Cost partition:** For $\alpha \approx 1$, the adiabatic step accounts for the majority of the total cost across all practically relevant $\varepsilon$ values. The filtering step dominates only at astronomically small $\varepsilon$, far beyond the precision regime used in the paper's numerical benchmarks.
 
 ---
 
@@ -77,10 +79,10 @@ which gives a tighter relation between $\varepsilon_f$ and the final error $\var
 | Method | Asymptotic scaling | Practical constant ($\alpha$) | Notes |
 |---|---|---|---|
 | [[Optimal Scaling Quantum Linear Systems Solver via Discrete Adiabatic Theorem (Costa, An, Sanders, Su, Babbush, Berry 2021) — Paper Notes\|Discrete adiabatic walk (analytical)]] | $O(\kappa\log(1/\varepsilon))$ — optimal | $\alpha \sim 2305$ (PD), $\sim 5632$ (general) | Way too loose |
-| Discrete adiabatic walk (numerical, **this paper**) | $O(\kappa\log(1/\varepsilon))$ — optimal | $\alpha \approx 1.56$ (general), $\sim 0.2$ (PD) | **Tight** |
+| Discrete adiabatic walk (numerical, **this paper**) | $O(\kappa\log(1/\varepsilon))$ — optimal | $\alpha \approx 1.56$ (general), $\sim 0.2$ (PD) | Empirically tight on tested random instances |
 | Randomized adiabatic (Jennings et al. 2023) | $O(\kappa\log(\kappa/\varepsilon))$ — suboptimal | Total time $\sim 20\times$ walk steps | Worse scaling *and* worse constant |
 
-The conclusion is clean: the discrete method wins on both asymptotic scaling and practical constant factors. The randomized method's tighter *analytical* bound was misleading — it was tighter only because the discrete method's bound was spectacularly loose, not because the randomized method was actually better.
+The benchmark conclusion is clean: on these random instances, the discrete method wins on both asymptotic scaling and practical constant factors. The randomized method's tighter *analytical* bound was misleading in this comparison because the discrete method's proof bound was spectacularly loose.
 
 ---
 

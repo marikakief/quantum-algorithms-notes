@@ -1,3 +1,5 @@
+# Symmetries, Graph Properties, and Quantum Speedups (Ben-David-Childs-Gilyén-Kretschmer-Podder-Wang 2020) — Paper Notes
+
 > **Source:** Shalev Ben-David, Andrew M. Childs, András Gilyén, William Kretschmer, Srijita Podder, Daochen Wang, *Symmetries, graph properties, and quantum speedups*, FOCS 2020; arXiv:2006.12760
 > **Links:** [arXiv](https://arxiv.org/abs/2006.12760) · [FOCS](https://doi.org/10.1109/FOCS46700.2020.00066)
 > **Tags:** #query-complexity #quantum-speedup #symmetry #graph-property #property-testing #well-shuffling #adjacency-list #adjacency-matrix #exponential-separation
@@ -10,6 +12,8 @@
 
 This addresses a foundational question: structure is necessary for exponential quantum speedups (total functions have at most polynomial separation by Beals et al.), but which symmetries are compatible with super-polynomial gaps?
 
+**Model checklist.** The main symmetry theorems are about partial Boolean functions in the query model, with a specified group action on the input coordinates. The graph-property results distinguish adjacency-matrix oracles from bounded-degree adjacency-list property-testing oracles. The primitive-group dichotomy is for primitive permutation groups; imprimitive cases are only partially classified.
+
 ---
 
 ## What the paper does
@@ -20,7 +24,7 @@ Three things:
 
 2. **Classification of symmetries:** Gives a complete dichotomy for primitive permutation groups. A collection of primitive groups $G$ allows super-polynomial quantum speedups if and only if $b(G) = n^{o(1)}$ (small minimal base size). Groups with $b(G) = n^{\Omega(1)}$ are "well-shuffling" and force $R(f) = Q(f)^{O(1)}$.
 
-3. **Adjacency list model:** Constructs an explicit graph property testing problem in the adjacency list model (bounded-degree graphs) with an exponential quantum speedup — resolving open questions from [[Quantum Property Testing for Bounded-Degree Graphs (Ambainis-Childs-Liu 2011) — Paper Notes|Ambainis-Childs-Liu (2011)]] and Montanaro-de Wolf (2013).
+3. **Adjacency list model:** Constructs an explicit bounded-degree graph property testing problem in the adjacency list model with an exponential quantum speedup — resolving open questions from [[Quantum Property Testing for Bounded-Degree Graphs (Ambainis-Childs-Liu 2011) — Paper Notes|Ambainis-Childs-Liu (2011)]] and Montanaro-de Wolf (2013).
 
 The punchline-free summary: the answer to "can graph properties have exponential quantum speedups?" is model-dependent. No in the adjacency matrix model; yes in the adjacency list model.
 
@@ -92,7 +96,7 @@ Constructs a graph property $P_k$ based on "candy graphs" — multiple copies of
 | Graph properties, adjacency matrix | $R(f) = O(Q(f)^6)$ — at most polynomial separation |
 | $p$-uniform hypergraph properties | $R(f) = O(Q(f)^{3p})$ |
 | Primitive group classification | $b(G) = n^{\Omega(1)} \iff$ well-shuffling $\iff$ no super-polynomial speedup |
-| Adjacency list property testing | $Q(P_k) = \mathrm{poly}(k)$, $R(P_k) = 2^{\Omega(k)}$ — exponential gap |
+| Adjacency list property testing | For the constructed bounded-degree candy-graph property family, $Q(P_k) = \mathrm{poly}(k)$ and $R(P_k) = 2^{\Omega(k)}$ — exponential gap |
 
 ---
 
@@ -111,7 +115,7 @@ Constructs a graph property $P_k$ based on "candy graphs" — multiple copies of
 
 - The $R(f) = O(Q(f)^6)$ bound for graph properties in the adjacency matrix model is unlikely tight. The best known lower bound on the exponent is 2 (from OR), and the authors conjecture it might be closer to 3 (the $S_n$ case).
 - The classification uses the classification of finite simple groups (via Liebeck's theorem). Whether the dichotomy can be proved without CFSG remains open.
-- The adjacency list exponential separation is for a somewhat artificial property $P_k$ (candy graphs with advice edges). Whether "natural" graph properties like bipartiteness can exhibit exponential quantum speedup in the adjacency list model is open.
+- The adjacency list exponential separation is for a somewhat artificial property $P_k$ (candy graphs with advice edges), not for all adjacency-list graph properties. Whether "natural" graph properties like bipartiteness can exhibit exponential quantum speedup in the adjacency list model is open.
 - The imprimitive group case isn't fully resolved: Conjecture 72 posits that well-shuffling is exactly characterised by conditions (i)–(iv) of Corollary 55.
 
 ---

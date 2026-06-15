@@ -4,18 +4,24 @@
 
 ## What it does
 
-Establishes a continuous space-time tradeoff for quantum collision finding: any algorithm using space $S$ and $T$ queries must satisfy $ST^2 \geq N/r$ (for $r$-to-1 functions over domain of size $N$).
+Describes the space-query interpolation achieved by the BHT birthday-plus-Grover collision algorithm. It is an algorithmic tradeoff for that construction, not a universal space-time lower bound.
 
 ## The tradeoff curve
 
 | Space $S$ | Queries $T$ | Regime |
 |---|---|---|
-| $1$ | $O(\sqrt{N})$ | Pure Grover (pick one element, search for its pair) |
-| $N^{1/3}$ | $O(N^{1/3})$ | **BHT sweet spot** |
-| $\sqrt{N}$ | $O(\sqrt{N})$ | Pure birthday (classical) |
+| $1$ | $O(\sqrt{N/r})$ | Limiting one-stored-target Grover search |
+| $(N/r)^{1/3}$ | $O((N/r)^{1/3})$ | **BHT sweet spot** |
+| $\sqrt{N/r}$ | $O(\sqrt{N/r})$ | Classical birthday endpoint |
 
-The constraint $ST^2 \geq N$ means:
-- Doubling the table size cuts the query count by $\sqrt{2}$
+For the BHT family, when the Grover phase dominates,
+
+$$
+S T^2 \approx N/r = |F(X)|.
+$$
+
+This means:
+- Doubling the table size cuts the Grover query count by about $\sqrt{2}$
 - The cube root is the unique point where $S = T$
 
 ## When to reach for it
@@ -32,11 +38,11 @@ For an $n$-bit hash function:
 - Quantum security (BHT sweet spot): $\Theta(2^{n/3})$
 - To get $\lambda$-bit quantum collision resistance: need $n \geq 3\lambda$ output bits
 
-This is why post-quantum hash function parameters are set to $3\times$ the target security level for collision resistance (e.g., SHA-384 for 128-bit quantum security).
+This is the generic-query rule of thumb behind using roughly $3\lambda$ output bits for $\lambda$ bits of quantum collision resistance.
 
 ## Caveat
 
-The $ST^2 \geq N$ lower bound holds in the standard oracle model for $r$-to-1 functions. For more structured problems (e.g., Simon's problem with $f(x) = f(x \oplus s)$), the structure enables exponentially better algorithms. For less structured problems (element distinctness without an $r$-to-1 promise), the tight bound is $\Theta(N^{2/3})$ even with unlimited space.
+Shi's lower bound proves $\Omega((N/r)^{1/3})$ quantum queries for promised $r$-to-one collision finding. That is a query lower bound matching the BHT sweet spot, not an `ST^2` lower bound. For more structured problems, such as Simon's promise $f(x)=f(x\oplus s)$, algebraic structure enables exponentially fewer queries. For less promised problems such as element distinctness, the tight query complexity is $\Theta(N^{2/3})$.
 
 ## Related notes
 

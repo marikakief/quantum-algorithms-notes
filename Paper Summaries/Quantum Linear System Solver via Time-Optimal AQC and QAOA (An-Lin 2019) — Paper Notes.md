@@ -1,3 +1,5 @@
+# Quantum Linear System Solver via Time-Optimal AQC and QAOA (An-Lin 2019) — Paper Notes
+
 > **Source:** Dong An and Lin Lin, *Quantum Linear System Solver Based on Time-Optimal Adiabatic Quantum Computing and Quantum Approximate Optimization Algorithm*, arXiv:1909.05500, ACM Trans. Quantum Comput. **3**(2), Article 5 (2022)
 > **Links:** [arXiv](https://arxiv.org/abs/1909.05500) · [ACM TQC](https://doi.org/10.1145/3498331)
 > **Tags:** #QLSA #adiabatic #QAOA #linear-systems #scheduling #time-optimal
@@ -65,7 +67,8 @@ Because $H^{(k)}(0) = H^{(k)}(1) = 0$ for all $k \geq 1$, Nenciu-type superadiab
 
 **Theorem 2 (HPD case):**
 
-$$\| |{\psi_T(1)}\rangle\langle{\psi_T(1)}| - |e_x\rangle\langle e_x| \|_2 \leq C \log \kappa \cdot \exp\!\left[-C'\left(\kappa \log^2 \kappa \cdot T\right)^{-1/4}\right].$$
+$$\| |{\psi_T(1)}\rangle\langle{\psi_T(1)}| - |e_x\rangle\langle e_x| \|_2
+\leq C \log \kappa \cdot \exp\!\left[-C'\left(\frac{T}{\kappa \log^2 \kappa}\right)^{1/4}\right].$$
 
 This gives runtime $T = O(\kappa \log^2(\kappa) \cdot \log^4(\log \kappa / \varepsilon))$ — the $1/\varepsilon$ dependence is polylogarithmic. The schedule is **universal**: it doesn't require knowing $\kappa$ in advance.
 
@@ -85,11 +88,11 @@ $$|\psi_\theta\rangle = e^{-i\gamma_P H_1} e^{-i\beta_P H_0} \cdots e^{-i\gamma_
 
 with $P$ layers and angles $\{\beta_j, \gamma_j\}$. The connection to AQC: if you time-slice the AQC evolution into $P$ segments via first-order Trotterisation, the QAOA angles are:
 
-$$\beta_j = \frac{(1 - f(s_j))}{T/P}, \quad \gamma_j = \frac{f(s_j)}{T/P}.$$
+$$\beta_j = (1 - f(s_j))\Delta t, \quad \gamma_j = f(s_j)\Delta t,\qquad \Delta t=T/P.$$
 
-So AQC provides a principled initialisation for QAOA parameters. The paper's numerics suggest QAOA can beat AQC with the same $P$ because the variational optimisation finds better angles than the Trotter-discretised AQC schedule.
+So AQC provides a principled initialisation for QAOA parameters. The rigorous guarantee comes from taking the Trotterised AQC-derived parameters. The paper's numerics suggest variational optimisation can improve the constants, but that improvement is empirical rather than the theorem.
 
-**Theorem 3 (QAOA complexity):** Using AQC(exp) parameters as initial guess, QAOA solves QLSP with the same asymptotic gate complexity as AQC(exp).
+**Theorem 3 (QAOA complexity):** Using the discretised AQC(exp) schedule as QAOA parameters gives the same asymptotic gate complexity as AQC(exp).
 
 ## Key results
 
@@ -107,7 +110,7 @@ AQC(p) with $1 < p < 2$ removes the $\log \kappa$ factor from the randomisation 
 
 The lineage is clear: [[Quantum Search by Local Adiabatic Evolution (Roland-Cerf 2002) — Paper Notes|Roland-Cerf (2002)]] introduced gap-adapted scheduling for search; Subası-Somma-Orsucci (2019) applied adiabatic methods to QLSP with a randomisation trick achieving $O(\kappa \log \kappa / \varepsilon)$; this paper optimises the schedule to shave off the $\log \kappa$ and, with AQC(exp), gets polylogarithmic precision dependence.
 
-The follow-up by Costa, An, Sanders, Su, Babbush, and Berry (2022, arXiv:2111.08152) uses a **discrete** adiabatic theorem to push the complexity to the optimal $O(\kappa \cdot \text{polylog}(\kappa/\varepsilon))$, removing the remaining polylog factors from AQC(exp).
+The follow-up by Costa, An, Sanders, Su, Babbush, and Berry (2022, arXiv:2111.08152) uses a **discrete** adiabatic theorem to push the complexity to the optimal $O(\kappa \log(1/\varepsilon))$ query scaling, removing the remaining $\log\kappa$ overhead from AQC(exp).
 
 The QAOA connection is interesting but somewhat preliminary: the theoretical guarantee just says QAOA is at least as good as time-sliced AQC. The numerics suggest it's better in practice, but there's no proof it achieves a fundamentally different scaling.
 
@@ -123,7 +126,7 @@ The time-dependent Hamiltonian $H(f(s))$ is simulated using the [[Time-Dependent
 - **Still produces a quantum state**, not a classical solution. The usual QLSA caveat applies: the exponential speedup is only meaningful if the downstream computation can use $|x\rangle$ directly.
 - **AQC(exp) has worse $\kappa$-dependence** than AQC(p): the polylog factors in $\kappa$ are the price for polylogarithmic precision. For moderate $\varepsilon$, AQC(p) may win.
 - **The QAOA guarantee is weak**: it only matches AQC, not beats it. The numerical evidence for QAOA outperforming AQC is encouraging but limited to small instances.
-- **Superseded in asymptotics** by Costa et al. (2022), which achieves optimal $O(\kappa \cdot \text{polylog}(\kappa/\varepsilon))$ via a discrete adiabatic theorem. This paper's primary contribution is conceptual: it shows that scheduling optimisation alone gets you most of the way.
+- **Superseded in asymptotics** by Costa et al. (2022), which achieves optimal $O(\kappa \log(1/\varepsilon))$ query scaling via a discrete adiabatic theorem. This paper's primary contribution is conceptual: it shows that scheduling optimisation alone gets you most of the way.
 - **No explicit analysis of the constant factors** in the gate complexity. The Dyson series simulation introduces overhead that may be significant in practice.
 
 ## Reusable ideas

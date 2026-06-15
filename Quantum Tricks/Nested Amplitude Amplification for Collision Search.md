@@ -33,9 +33,11 @@ $O(N^{3/4} \log N)$ comparisons for element distinctness. $O(N^{1/2} M^{1/4} \lo
 
 ## Caveat
 
-Superseded by [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis's $O(N^{2/3})$ walk algorithm]] for element distinctness. The walk avoids the sorting overhead entirely by amortising the cost of moving between adjacent subsets. However, this technique remains useful when space is constrained to $O(\sqrt{N})$, where the walk can't operate at its optimal regime.
+Superseded by [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes|Ambainis's $O(N^{2/3})$ walk algorithm]] for element distinctness. The walk avoids the sorting overhead by amortising the cost of moving between adjacent subsets. However, this technique remains useful when space is constrained to $O(\sqrt{N})$, where the walk can't operate at its optimal regime.
 
-The log factor from sorting is inherent to this approach and can't be removed without changing the algorithmic structure.
+The log factor from sorting/binary search is inherent to this comparison-model implementation, not an absolute lower bound for every model or every later element-distinctness algorithm.
+
+Compare with [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|BHT]]: its $O(N^{1/3})$ query behavior relies on an $r$-to-1 collision promise, whereas this nested-amplification method handles ordinary element distinctness without that promise.
 
 ## Related notes
 

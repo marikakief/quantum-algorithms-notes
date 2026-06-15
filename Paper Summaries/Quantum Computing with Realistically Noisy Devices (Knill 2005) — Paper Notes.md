@@ -172,3 +172,8 @@ The jump from $10^{-4}$ to $10^{-2}$ was the headline result. The key insight en
 - [[Postselected Computation for State Preparation]]
 - [[Error-Correcting Teleportation]]
 - [[Solovay-Kitaev Recursive Gate Compilation]]
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler give a learning-theory reason to care about fault-tolerant interfaces, not just long protected circuits.
+

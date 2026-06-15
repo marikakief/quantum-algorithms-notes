@@ -37,29 +37,32 @@ Because $U$ has constant depth, $O_{i,P}$ is supported only on the lightcone of 
 
 ## 2. Build local sewing unitaries
 
-From the learned local observables, define
+From the learned local observables, use the local-swap identity
 
 $$
-W_i = \sum_{P\in\{I,X,Y,Z\}} O_{i,P}\otimes P_i,
+S_i=\frac12\sum_{P\in\{I,X,Y,Z\}} P_i\otimes P_i .
 $$
 
-acting on the system register together with an ancilla copy. Algebraically, the exact version of this operator equals the conjugated local swap
+The exact local factor is therefore
 
 $$
-U^\dagger S_i U,
+A_i=(U^\dagger\otimes I)S_i(U\otimes I)
+=\frac12\sum_{P\in\{I,X,Y,Z\}} (U^\dagger P_i U)\otimes P_i .
 $$
 
-where $S_i$ swaps system qubit $i$ with ancilla qubit $i$.
+This acts on the system register together with an ancilla copy. The learned operator replaces each exact $U^\dagger P_iU$ by its estimated local Heisenberg observable. The factor $1/2$ is essential: the raw Pauli sum is twice the local swap.
 
 ## 3. Sew the local pieces together
 
 The global identity is
 
 $$
-U\otimes U^\dagger = S\,\prod_i \bigl(U^\dagger S_i U\bigr),
+U\otimes U^\dagger
+=
+S\,\prod_{i=1}^n \bigl((U^\dagger\otimes I)S_i(U\otimes I)\bigr),
 $$
 
-with $S$ the global swap between system and ancilla. Replacing each exact local factor by the learned $W_i$ gives a learned circuit for a dilation of $U$.
+with $S=\prod_i S_i$ the global swap between system and ancilla, and the product ordered consistently over the local swaps. Replacing each exact local factor by its learned approximation gives a learned circuit for a dilation of $U$.
 
 This is the heart of the paper. Instead of trying to directly fit $U$, it reconstructs $U\otimes U^\dagger$ from pieces that are each locally accessible.
 
@@ -96,7 +99,7 @@ $$
 
 with probability at least $1-\delta$.
 
-The learned dilation acts on $2n$ qubits and has constant depth depending only on the original depth and geometry constants.
+This sample-complexity statement is for arbitrary architecture. The learned dilation acts on $2n$ qubits; preserving shallow geometric depth requires the additional fixed-dimensional locality refinements described below.
 
 ### Finite-gate-set exact learning
 
@@ -120,7 +123,7 @@ For $|\psi\rangle = U|0^n\rangle$ with $U$ shallow on a 2D lattice, they prove a
 
 ### Hardness boundary
 
-The paper also proves that the result is essentially tight: for $O(\log n)$-depth circuits, exponentially many queries are required in general. So constant depth is not a sloppy artifact of the proof; it is the actual frontier.
+The paper also proves that the result is essentially tight: for $O(\log n)$-depth circuits, exponentially many queries are required in general. So constant depth is not a sloppy artifact of the proof; it is the frontier for this general learning guarantee.
 
 ## Comparison with prior work
 

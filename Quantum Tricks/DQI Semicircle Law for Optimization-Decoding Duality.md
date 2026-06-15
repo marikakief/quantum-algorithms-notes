@@ -38,6 +38,7 @@ The formula assumes either (a) $2\ell + 1 < d^\perp$ (perfect decoding within ha
 
 ## Related notes
 - [[Optimization by Decoded Quantum Interferometry (Jordan, Shutty, Wootters, Babbush et al 2024) — Paper Notes]]
+- [[Verifiable Quantum Advantage via Optimized DQI Circuits (Khattar, Shutty, Gidney et al 2025) — Paper Notes]]
 - [[QFT-Based Amplitude Shaping via Polynomial Evaluation]]
 - [[Optimization-to-Decoding Reduction via Code Duality]]
 - [[Uncomputation via Syndrome Decoding]]

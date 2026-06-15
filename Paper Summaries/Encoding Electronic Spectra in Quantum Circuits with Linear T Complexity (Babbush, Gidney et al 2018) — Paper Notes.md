@@ -29,7 +29,7 @@ with $\lambda = 2Nt + Nu/2$.
 
 ## What the paper does
 
-Constructs concrete, T-gate-optimized circuits for the PREPARE and SELECT oracles needed by qubitization, achieving T complexity $O(N + \log(1/\varepsilon))$ per oracle call and overall T complexity $O(N^3/\varepsilon + N^2 \log(1/\varepsilon)/\varepsilon)$ for full phase estimation on the electronic structure problem. This is asymptotically better than every prior approach and the paper also compiles to surface-code fault tolerance, showing that chemically interesting problems beyond classical reach require only about one million superconducting qubits and a few hours of runtime.
+Constructs concrete, T-gate-optimized circuits for the PREPARE and SELECT oracles needed by qubitization, achieving T complexity $O(N + \log(1/\varepsilon))$ per oracle call and overall T complexity $O(N^3/\varepsilon + N^2 \log(1/\varepsilon)/\varepsilon)$ for the plane-wave-dual electronic-structure problem under the paper's scaling assumptions. The paper also compiles representative instances to surface-code fault tolerance; under its hardware and distillation assumptions, chemically interesting problems beyond classical reach require roughly one million superconducting qubits and a few hours of runtime.
 
 This is the paper that makes qubitization-based quantum chemistry practical, not just asymptotically optimal. The gap to prior work is not small: the gate count per oracle call goes from $O(N^4)$ in naive second-quantized LCU decompositions to $O(N)$ here, via three key circuit primitives introduced in this paper: [[Unary Iteration]], [[QROM (Quantum Read-Only Memory)]], and [[Coherent Alias Sampling for PREPARE]].
 
@@ -39,7 +39,7 @@ This is the paper that makes qubitization-based quantum chemistry practical, not
 
 ### 1. LCU decomposition
 
-Write $H$ in LCU form (Eq. 5). For the electronic structure Hamiltonian in the dual basis this gives $L = O(N^2)$ terms — not $O(N^4)$ as in a naive second-quantized decomposition — because the basis diagonalizes the Coulomb operator, making the interaction terms diagonal in the computational basis. The 1-norm is $\lambda = O(N^2)$ for typical molecular problems at fixed electron density.
+Write $H$ in LCU form (Eq. 5). For the electronic structure Hamiltonian in the plane-wave-dual basis this gives $L = O(N^2)$ terms — not $O(N^4)$ as in a naive second-quantized decomposition — because the basis diagonalizes the Coulomb operator, making the interaction terms diagonal in the computational basis. The 1-norm is $\lambda = O(N^2)$ for the plane-wave-dual scaling regime considered in the paper, not a generic statement about arbitrary molecular-orbital Hamiltonians.
 
 ### 2. PREPARE oracle via coherent alias sampling
 
@@ -47,7 +47,7 @@ Define
 
 $$\text{PREPARE}|0\rangle = |L\rangle \equiv \sum_\ell \sqrt{w_\ell / \lambda}\, |\ell\rangle \quad \text{(Eq. 6)}$$
 
-(allowing extra ancilla "garbage" registers entangled with $|\ell\rangle$ as long as the required marginals hold).
+(allowing extra ancilla "garbage" registers entangled with $|\ell\rangle$ only when they are part of the coherent PREPARE state and are handled by the corresponding reflection and PREPARE$^\dagger$; they cannot simply be traced out).
 
 **Implementation:** Use [[Coherent Alias Sampling for PREPARE]] — a quantum version of the classical Vose/alias sampling method:
 
@@ -124,7 +124,7 @@ $$T\text{-gates} = 10\sqrt{2}\pi \frac{N\lambda}{\varepsilon} + O\!\left(\frac{\
 
 $$\text{Ancilla qubits} = \log\!\left(\frac{\lambda N^3}{\varepsilon}\right) + O(1)$$
 
-With $\lambda = 2Nt + Nu/2$: T scales as $O(N^2\lambda/\varepsilon)$.
+With $\lambda = 2Nt + Nu/2$: Theorem 2 gives $O(N\lambda/\varepsilon)=O(N^2(t+u)/\varepsilon)$ up to logarithmic terms.
 
 **Per-oracle T-gate counts:**
 
@@ -132,11 +132,11 @@ With $\lambda = 2Nt + Nu/2$: T scales as $O(N^2\lambda/\varepsilon)$.
 |---|---|---|
 | SELECT (electronic structure) | $12N + 8\log N + O(1)$ | $N + 3\log N + O(1)$ |
 | PREPARE / subprepare | $6N + O(\mu + \log N)$ | $2\mu + 3\log N + O(1)$ |
-| Unary iteration (L items) | $4L - 4$ | $O(\log L)$ |
-| QROM (L entries) | $4L - 4$ | $O(\log L)$ |
-| **Combined oracle call** | $O(N + \log(1/\varepsilon))$ | $O(\log(\lambda N/\varepsilon))$ |
+| Unary iteration (L items) | $4L - 4$ T gates under the paper's temporary-AND accounting | $O(\log L)$ |
+| QROM (L entries) | $4L - 4$ T gates under the 2018 unary-iteration accounting | $O(\log L)$ |
+| **Combined oracle call** | $O(N + \log(1/\varepsilon))$ | $N$ system qubits plus $O(\log(\lambda N/\varepsilon))$ ancilla qubits |
 
-**Surface-code estimate:** Compiling to surface-code fault tolerance with per-gate error rate $10^{-3}$, the paper estimates that phase estimation on chemically interesting instances beyond classical tractability (e.g., FeMoco active space) requires ~1 million superconducting qubits and ~a few hours of runtime — a concrete, non-astronomical cost.
+**Surface-code estimate:** Compiling to surface-code fault tolerance with per-gate error rate $10^{-3}$ and the paper's chosen magic-state factory assumptions, phase estimation on chemically interesting instances beyond classical tractability (e.g., FeMoco active space) is estimated at roughly one million superconducting qubits and a few hours of runtime. This is a concrete resource estimate, not a hardware-independent constant.
 
 ---
 
@@ -153,7 +153,7 @@ With $\lambda = 2Nt + Nu/2$: T scales as $O(N^2\lambda/\varepsilon)$.
 
 \*Qubitization's $O(\lambda/\varepsilon)$ query scaling is Heisenberg-limited, not improvable. The comparison with Taylor series is subtle: Taylor achieves $O(\log(1/\varepsilon))$ Hamiltonian-simulation cost per fixed time window, but the phase-estimation wrapper for *spectroscopy* requires $O(1/\varepsilon)$ repetitions in both cases. Qubitization's advantage is that it directly encodes the spectrum without needing to simulate time evolution.
 
-The key improvement over [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|the CI matrix approach]]: the CI approach achieves $\tilde{O}(\eta^2 N^3)$ which beats $O(N^3)$ when $\eta \ll N$, but the CI paper did not include compiled T-gate counts or a surface-code analysis. This paper provides end-to-end resource estimates.
+The key improvement over [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|the CI matrix approach]] is not qubit count but compiled spectral encoding: the CI approach uses fewer logical qubits in dilute regimes, but its $\tilde{O}(\eta^2 N^3)$ gate scaling and Taylor-series oracle model are not competitive with this paper's qubitized plane-wave-dual resource estimates. This paper provides end-to-end T-gate and surface-code estimates.
 
 ---
 
@@ -161,7 +161,7 @@ The key improvement over [[Exponentially More Precise Quantum Simulation of Ferm
 
 - **$O(\lambda/\varepsilon)$ is tight for spectroscopy but not simulation:** The $O(\lambda/\varepsilon)$ cost is Heisenberg-optimal for sampling in the eigenbasis (phase estimation). For simulating time evolution $e^{-iHt}$, qubitization gives $O(\lambda t)$ queries — no improvement over Taylor series in query complexity, but better constant factors in T gates.
 - **$\lambda$ can be large:** For some basis choices, $\lambda = \Theta(N^2)$ which drives the overall $O(N^3/\varepsilon)$ scaling. In the first-quantized picture ([[CI Matrix Simulation (First-Quantized Encoding)|CI matrix]]), $\lambda$ can be smaller for systems with $\eta \ll N$. The dual basis is good for periodic systems but not necessarily optimal for all molecules.
-- **No qubits savings vs. Taylor series:** The qubit count here is $O(\log(\lambda N/\varepsilon))$ — comparable to Taylor series. The CI matrix approach still wins on qubits for $\eta \ll N$.
+- **System, ancilla, and physical qubits are different counts:** The theorem's $O(\log(\lambda N/\varepsilon))$ expression is an ancilla count on top of the $N$ second-quantized system qubits. Surface-code estimates then add a much larger physical-qubit overhead. The CI matrix approach can still win on logical system qubits when $\eta\log N \ll N$.
 - **Surface-code error rates assumed:** The million-qubit estimate assumes $10^{-3}$ per-gate error rate and specific surface-code overheads. Actual hardware thresholds will vary.
 - **Rotation synthesis costs:** The circuits "exactly encode" the spectra *up to rotation synthesis errors*. The $O(\log(1/\varepsilon))$ T-gate cost for each Clifford+T rotation adds logarithmic terms to the total count, already captured in the theorem's second term.
 - **Subsequent improvement:** The QSVT framework (Berry, Babbush et al. 2019) removes most of the $O(1)$ pre-factors and sub-leading terms. This paper is superseded for the electronic structure problem but remains the canonical reference for the circuit primitives (unary iteration, QROM, alias sampling).

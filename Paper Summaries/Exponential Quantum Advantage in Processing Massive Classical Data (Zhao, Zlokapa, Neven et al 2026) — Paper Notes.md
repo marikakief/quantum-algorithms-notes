@@ -4,6 +4,8 @@
 
 ---
 
+> **Status / scope:** 2026 arXiv v1. The headline separation is a streaming-sample / bounded-space machine-size separation: a polylogarithmic-size quantum processor versus polynomial-size classical memory in the paper's data-stream model. It is not a blanket practical QML advantage claim.
+
 ## The computational problem
 
 The paper studies a streaming-style model for **massive classical data**. One does **not** get random access to the whole dataset, and one does **not** assume [[QROM (Quantum Read-Only Memory)|QROM]]/qRAM. Instead, data arrive as classical samples from a hierarchical data-generation process, possibly with temporal correlation measured by a repetition number $R$.
@@ -23,11 +25,11 @@ The three application-level tasks are:
 
 There are also **dynamic** versions where the underlying dataset changes every $\tau$ samples but the target prediction, quadratic form, or low-dimensional representation stays approximately fixed.
 
-The complexity measure is primarily **machine size** (logical qubits vs classical memory words), together with sample complexity from the data stream.
+The complexity measure is primarily **machine size** (logical qubits vs classical memory words), together with sample complexity from the data stream. Raw runtime is not the main advantage metric; in many settings the quantum algorithm still consumes $\widetilde O(N)$ stream samples.
 
 ## What the paper does
 
-The main claim is strong but also quite specific: in this streaming-sample model, a quantum computer using only $\operatorname{poly}(\log N)$ or $\operatorname{poly}(\log D)$ qubits can solve natural large-data tasks from $\widetilde O(N)$ samples, while any classical machine using comparable samples needs polynomially larger memory, and in dynamic settings may need superpolynomially more samples.
+The main claim is strong but also quite specific: in this streaming-sample model, a quantum computer using only $\operatorname{poly}(\log N)$ or $\operatorname{poly}(\log D)$ qubits can solve natural large-data tasks from $\widetilde O(N)$ samples, while any classical machine using comparable samples needs polynomially larger memory. The exponential gap is usually in the machine-size / bounded-memory parameter, not simply in dataset dimension or wall-clock runtime. In dynamic settings, the same framework can also force superpolynomially more samples for bounded-space classical learners.
 
 The mechanism is a new primitive, [[Quantum Oracle Sketching]], which incrementally compiles a usable quantum oracle from classical samples without storing the whole dataset. Combined with block-encoding / state-preparation subroutines and a new readout method, [[Interferometric Classical Shadow]], this yields end-to-end quantum algorithms for linear systems, LS-SVM classification, and PCA-style dimension reduction.
 
@@ -37,17 +39,17 @@ My assessment: this is a real technical paper, not a slogan paper. The central c
 
 ### 1. Quantum oracle sketching
 
-Suppose one wants a phase oracle
+Suppose one wants a phase oracle of the schematic form
 $$
 U_f = \sum_x e^{i p(x) f(x) t} |x\rangle\langle x|
 $$
-from classical samples $(x, f(x))$ with $x \sim p$. The paper's move is to process each sample once, applying a tiny controlled phase update whose product approximates the target oracle in expectation.
+from classical samples $(x, f(x))$ with $x \sim p$. The paper's exact statements are theorem-specific about normalization, target precision, and the sampled oracle family; this displayed phase is a useful mental model, not a reusable black-box formula. The paper's move is to process each sample once, applying a tiny controlled phase update whose product approximates the target oracle in expectation.
 
 If an eventual quantum algorithm would need $Q$ oracle queries, then constructing a good enough oracle from samples costs
 $$
 M = \Theta(N Q^2)
 $$
-in the relevant regimes. The quadratic dependence on $Q$ is not a bug of the proof; it is proved optimal up to logs in [[Quantum Oracle Sketching]] (Theorem D.14). The authors tie this to the Born-rule amplitude/probability mismatch: estimating amplitudes from classical sample frequencies costs a square.
+in the simplest relevant regimes, up to precision, repetition/correlation, distribution, and downstream-query factors. The quadratic dependence on $Q$ is not a bug of the proof; it is proved optimal up to logs in [[Quantum Oracle Sketching]] (Theorem D.14). The authors tie this to the Born-rule amplitude/probability mismatch: estimating amplitudes from classical sample frequencies costs a square.
 
 The framework is extended from IID samples to correlated hierarchical generators with repetition number $R$ (Theorem D.16), giving the same basic scaling with an extra $R$ overhead.
 
@@ -81,7 +83,7 @@ $$
 $$
 then use observables whose expectation values equal $\operatorname{Re}\langle x_i | w \rangle$.
 
-This gives a compact classical shadow from which one can answer many sparse test queries offline. In other words, the quantum machine compresses the useful predictive content into a small classical artifact, without ever classically materialising the full high-dimensional model.
+This gives a compact classical shadow from which one can answer the paper's specified sparse test-query family offline, with sample complexity controlled by the relevant observables / shadow norm. It is not full classical recovery of the model vector. In other words, the quantum machine compresses selected predictive statistics into a small classical artifact, without ever classically materialising the full high-dimensional model.
 
 ## Key results
 
@@ -91,7 +93,7 @@ This gives a compact classical shadow from which one can answer many sparse test
 $$
 M = \Omega\!\left(\frac{p_{\max} t^2 Q^2}{\varepsilon}\right)
 $$
-under their phase-oracle formulation. This is the theorem that makes the later $Q^2$ sample overhead feel structural rather than accidental.
+under their phase-oracle formulation. This lower-bound expression is tied to that formulation and should be checked against the source theorem before being transplanted. Its main reusable message is that the $Q^2$ sample overhead is structural rather than accidental.
 
 **Space lower bound from oracle separation (Theorem 7 / E.2).** For Noisy Oracle Property Estimation (NOPE), if the target property has quantum query complexity $Q$ and classical query complexity $Q_C$, then any classical machine using the same number of samples as the quantum algorithm must have size at least
 $$
@@ -111,9 +113,17 @@ $$
 $$
 So the clean "$\widetilde O(N)$" headline is really a regime statement, not the general bound.
 
+Parameter dependencies hidden by the slogan:
+
+| Task | Parameters that must stay controlled |
+|---|---|
+| Linear systems | sparsity, condition number, observable access, precision, repetition/correlation overhead |
+| Binary classification | sparsity $s$, $\kappa_{\rm reg}$, test margin $\gamma_{\rm test}$, failure probability, test-query family |
+| Dimension reduction | sparsity, spectral gap, guiding-vector quality, precision, repetition/correlation overhead |
+
 **Dimension reduction (Theorems 5, F.21, F.22).** For sparse $X$ with inverse-polylog spectral gap and a guiding vector of quality $\chi$, a quantum machine of size $\operatorname{poly}(\log D)$ uses $\widetilde O(N)$ samples to estimate PCA coordinates of sparse test vectors. Again, the same-sample classical lower bound rules out machines of size $O(D^{0.99})$, and the dynamic variant forces superpolynomially many samples for smaller-space classical learners.
 
-The more detailed complexity bound (Theorem F.23) contains a factor $D^{1-\chi}$ in samples. So the best regime is when the guiding vector already has reasonably good overlap with the top principal component. In the hardness construction they ultimately take $\chi = 1$.
+The more detailed complexity bound (Theorem F.23) contains a factor $D^{1-\chi}$ in samples, where $\chi$ encodes the promised guiding-vector quality in the paper's notation. So the best regime is when the guiding vector already has reasonably good overlap with the top principal component. In the hardness construction they ultimately take $\chi = 1$; check the theorem statement before reusing this factor in another model.
 
 ## Comparison with prior work
 

@@ -4,16 +4,22 @@
 
 ## What it does
 
-Solves problems of the form "find a $k$-element subset of $[N]$ satisfying property $P$" by doing a quantum walk on the Johnson graph $J(N, r)$ — the graph whose vertices are $r$-element subsets of $[N]$, with edges between subsets differing in exactly one element.
+Solves some subset-search problems by doing a quantum walk on the Johnson graph $J(N, r)$ — the graph whose vertices are $r$-element subsets of $[N]$, with edges between subsets differing in exactly one element. The useful cases are those where stored subset data makes checking cheap and adjacent updates much cheaper than rebuilding the subset.
 
 ## The construction
 
 1. Each vertex $S$ of $J(N, r)$ stores the data $\{(i, x_i) : i \in S\}$
 2. A vertex is **marked** if the stored data contains a witness for property $P$ (e.g., a collision $x_i = x_j$ for element distinctness)
 3. One walk step: swap element $i \in S$ for element $j \notin S$
-   - **Cost: 1 query** (look up $x_j$ for the new element; $x_i$ is already known)
+   - **Cost: constant queries** in the reversible query model (load the new value, and often unquery the removed value depending on the implementation)
    - **Checking if marked: 0 queries** (check stored data internally)
-4. Run [[Coined Quantum Walk Search on Graphs|coined walk search]] for $O(\sqrt{\binom{N}{r}/M})$ steps, where $M$ = number of marked vertices
+4. Analyze the marked fraction and the Johnson-graph spectral gap. In MNRS notation, the walk-search cost is governed by
+
+$$
+S + \frac{1}{\sqrt{\epsilon}}\left(\frac{1}{\sqrt{\delta}}U + C\right),
+$$
+
+where $\epsilon$ is the marked stationary probability, $\delta=\Theta(1/r)$ for $J(N,r)$, $S$ is setup, $U$ is update, and $C$ is checking.
 
 ## Element distinctness ($k = 2$)
 
@@ -29,22 +35,22 @@ Find $i \neq j$ with $x_i = x_j$ among $N$ items.
 
 ## General $k$-element search
 
-Find $k$ equal elements: use $r = N^{k/(k+1)}$, giving $O(N^{k/(k+1)})$.
+Find $k$ equal elements in Ambainis's framework: use $r = N^{k/(k+1)}$, giving $O(N^{k/(k+1)})$.
 
 Applications:
 - **Triangle finding** ($n$-vertex graph): $O(n^{1.3})$ queries
-- **$k$-clique finding:** via reduction to $k$-element distinctness
+- **Fixed subgraph/clique finding:** only after specifying the data structure and checking subroutine; update/check costs can dominate
 
 ## When to reach for it
 
-- Any problem where the answer is a small subset and you can check the property from stored data
+- Subset-search problems where a marked subset can be recognized from stored data and one-element updates are cheap
 - Element distinctness, collision problems without $r$-to-1 promise
-- Graph property testing (triangles, cliques, subgraph detection)
+- Graph-property algorithms such as triangle or fixed-subgraph finding, once their checking subroutines are accounted for
 - Problems where [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|BHT's $N^{1/3}$]] doesn't apply (no $r$-to-1 promise)
 
 ## Complexity
 
-$O(N^{k/(k+1)})$ queries for $k$-element problems. Space: $O(N^{k/(k+1)})$ to store the subset data.
+$O(N^{k/(k+1)})$ queries for Ambainis-style $k$-distinctness. This is not a universal bound for every $k$-element certificate problem. Space is $O(N^{k/(k+1)})$ to store the subset data in the basic implementation.
 
 ## Caveat
 

@@ -23,9 +23,9 @@ The insight: set $q = 0$ for the local pseudopotential. Then $k_p = k_{q-\nu} = 
 - The polynomial evaluations $\tilde{F}^j_0(r^\alpha_{\text{loc}} \|k_\nu\|)$ give the correct Gaussian-polynomial products for the local terms
 - The $l = 0$ Legendre polynomial is just 1, so no angular-momentum-dependent correction is needed
 
-In the circuit, a qubit $\varsigma$ selects between local and nonlocal. Controlled on $\varsigma$, either the actual $q$ or zero is copied into the working register. The rest of the arithmetic pipeline is shared.
+In the circuit, a qubit $\varsigma$ selects between local and nonlocal. Controlled on $\varsigma$, a mux/copy step loads either the actual $q$ or a zero value into the working momentum register used by the shared arithmetic pipeline, so the uncompute path knows which value was selected.
 
-The $C^\alpha_1, C^\alpha_2, C^\alpha_3, C^\alpha_4$ polynomial terms of the local pseudopotential map directly to the $l = 0$, $i = 1$, $j = 1, 2, 3, 4$ terms of the nonlocal pseudopotential, because the polynomial coefficients $c_{x,lj}$ are the same.
+For the GTH/HGH-style parameterization considered in the paper, the $C^\alpha_1, C^\alpha_2, C^\alpha_3, C^\alpha_4$ polynomial terms of the local pseudopotential can be embedded into the same indexed arithmetic pipeline as the $l = 0$, $i = 1$, $j = 1, 2, 3, 4$ nonlocal-style terms. This is a parameterization-specific sharing of structure, not a statement about all pseudopotential families.
 
 ## When to reach for it
 
@@ -35,7 +35,9 @@ The $C^\alpha_1, C^\alpha_2, C^\alpha_3, C^\alpha_4$ polynomial terms of the loc
 
 ## Complexity
 
-Saves one full exponential evaluation (~$b^2$ to $(11/4)b^2$ Toffolis depending on interpolation order). For $b = 20$, this is 400–1,100 Toffolis saved. The overhead is one controlled copy of $\sim n$ qubits, costing $O(n)$ Toffolis — negligible.
+Saves one full exponential evaluation (~$b^2$ to $(11/4)b^2$ Toffolis depending on interpolation order and precision). For $b = 20$, this is hundreds to about a thousand Toffolis saved in the relevant subroutine. The overhead is one controlled mux/copy of $\sim n$ qubits, costing $O(n)$ Toffolis.
+
+This reduces block-encoding circuit cost but does not by itself reduce the large $\lambda_{\text{nonloc}}$ normalization caused by splitting the pseudopotential terms and using box-level bounds.
 
 ## Caveat
 

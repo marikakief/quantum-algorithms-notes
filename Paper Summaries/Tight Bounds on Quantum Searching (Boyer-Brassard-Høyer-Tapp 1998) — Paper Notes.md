@@ -47,7 +47,7 @@ The key insight the paper emphasises: success probability is **not monotone** in
 
 ### Optimal restart strategy
 
-If you stop at $j$ iterations and restart on failure, the expected number of iterations before success is $j/(t \cdot k_j^2)$, where $k_j$ is the amplitude on any solution state. Optimising gives $j \approx 0.583\sqrt{N/t}$ with success probability $\approx 0.845$, and expected iterations $\approx 0.690\sqrt{N/t}$ — about 88% of the $\pi\sqrt{N/t}/4$ needed for near-certainty.
+If you stop at $j$ iterations and restart on failure, BBHT also analyze an expected-time optimization rather than only the near-certainty iteration count. The optimized restart point is a specialized constant-factor refinement; the central theorem-level takeaway is still the $\Theta(\sqrt{N/t})$ query scaling and the nonmonotonic overshoot behavior.
 
 ### The special case $t = N/4$
 
@@ -67,6 +67,8 @@ The central algorithmic contribution. When $t$ is unknown, you can't set the opt
 4. If solution found, stop. Otherwise set $m \leftarrow \min(\lambda m, \sqrt{N})$, repeat.
 
 **Theorem 3:** This finds a solution in expected $O(\sqrt{N/t})$ queries for $1 \leq t \leq 3N/4$, with a constant overhead of at most $9/2$ relative to the known-$t$ case. The case $t > 3N/4$ is handled by classical sampling.
+
+The theorem assumes at least one marked item. If $t=0$, no marked item can be found; certifying absence requires a separate stopping/checking convention rather than the same expected-time guarantee.
 
 The analysis works by tracking when $m$ exceeds the critical threshold $m_0 = 1/\sin(2\theta) < \sqrt{N/t}$. Before reaching the critical stage, the total iterations form a geometric series bounded by $3m_0$. After, each round succeeds with probability $\geq 1/4$ by Lemma 2 (below), giving another $\frac{3}{2}m_0$ expected iterations.
 
@@ -92,10 +94,10 @@ The paper sketches an approach to estimate $t$ by combining Grover's operator $G
 
 1. Create a superposition of $P$ iteration counts: $\sum_{j=0}^{P-1} |j\rangle |\Psi_0\rangle / \sqrt{P}$.
 2. Apply controlled-$G^j$: the result is $\sum_j |j\rangle G^j |\Psi_0\rangle / \sqrt{P}$.
-3. Measure the second register — post-selection onto solution or non-solution states collapses the first register into a function of $j$ with period $\pi/\theta$.
-4. Apply QFT to the first register to extract the frequency $f = P\theta/\pi$, and hence $\theta$ and $t = N\sin^2\theta$.
+3. Analyze the Grover iterate through its two eigenphases $\pm 2\theta$; equivalently, the initial state is a superposition of the two Grover eigenvectors.
+4. Apply QFT/phase-estimation ideas to the first register to extract a frequency proportional to $\theta$, and hence $t = N\sin^2\theta$.
 
-This sketch was fleshed out in the companion paper [[Quantum Counting (Brassard-Høyer-Tapp 1998) — Paper Notes|Brassard-Høyer-Tapp (1998)]], and later fully generalised as [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]] in [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard-Høyer-Mosca-Tapp (2002)]].
+This sketch was fleshed out in the companion paper [[Quantum Counting (Brassard-Høyer-Tapp 1998) — Paper Notes|Brassard-Høyer-Tapp (1998)]], and later fully generalised as [[Amplitude Estimation via Phase Estimation on Q|amplitude estimation]] in [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard-Høyer-Mosca-Tapp (2002)]]. These are estimating/counting results, distinct from the lower bound for finding a marked item.
 
 ---
 
@@ -136,7 +138,7 @@ Since $\sin(\pi/8) \approx 0.383$ and the optimal Grover count is $\approx \pi/4
 
 ## Limits / caveats
 
-- The lower bound has a gap of $\sim 2\times$ with the upper bound. The exact tight constant for quantum search was later determined to be $\pi/4$ (matching Grover's iteration count).
+- The lower bound has a gap of $\sim 2\times$ with the upper bound. The exact asymptotic search constant $\pi/4$ is associated with later optimality work, especially Zalka's proof of Grover optimality, matching Grover's iteration count.
 - The unknown-$t$ algorithm's overhead constant of $9/2$ is an upper bound. In practice the overhead is smaller.
 - The quantum counting sketch in §5 was preliminary. The full analysis, including error bounds on the estimate of $t$, came in the companion paper.
 - All results assume exact oracle queries — no noise model.
@@ -156,7 +158,7 @@ Since $\sin(\pi/8) \approx 0.383$ and the optimal Grover count is $\approx \pi/4
 ## References within this paper
 
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the algorithm being analysed
-- [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1996)]] — earlier $\Omega(\sqrt{N})$ lower bound
+- [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — earlier $\Omega(\sqrt{N})$ lower bound
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1994)]] — QFT techniques used for counting
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — phase estimation (implicit in counting sketch)
 

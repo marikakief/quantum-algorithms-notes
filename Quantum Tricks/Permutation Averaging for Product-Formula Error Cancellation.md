@@ -1,17 +1,17 @@
 
-> **Source:** Andrew M. Childs, Yuan Su, Minh C. Tran, Nathan Wiebe, and Shuchen Zhu, *Faster quantum simulation by randomization*, Quantum **3**, 182 (2019)  
-> **Links:** [Quantum](https://quantum-journal.org/papers/q-2019-09-02-182/) · [arXiv](https://arxiv.org/abs/1805.08385)  
+> **Source:** Andrew M. Childs, Yuan Su, Minh C. Tran, Nathan Wiebe, and Shuchen Zhu, *Faster quantum simulation by randomization*, Quantum **3**, 182 (2019)
+> **Links:** [Quantum](https://quantum-journal.org/papers/q-2019-09-02-182/) · [arXiv](https://arxiv.org/abs/1805.08385)
 > **Tags:** #trick #randomization #product-formulas #trotter
 
 ## Idea
 
-Draw a fresh random permutation of the Hamiltonian terms at each segment of a [[Order-Condition Cancellation in Product Formulas|product formula]]. The average channel over permutations has stronger cancellation of leading error terms than any fixed ordering, giving provably better bounds in the averaged sense.
+Draw a fresh random permutation of the Hamiltonian terms at each segment of a [[Order-Condition Cancellation in Product Formulas|product formula]]. The average channel over permutations cancels ordering-dependent error terms in the averaged sense, giving provably better bounds than the corresponding fixed-order worst-case analyses.
 
 ## Why it works
 
-A deterministic ordering commits to a specific sequence-dependent bias: the same ordering-dependent commutator terms contribute the same signed error on every segment. Randomizing the permutation turns those bias terms into a sum over signed contributions from different orderings. Many of these cancel by symmetry — specifically, the nondegenerate Taylor terms (those involving all-distinct summand indices) average to zero over the symmetric group.
+A deterministic ordering commits to a specific sequence-dependent bias: the same ordering-dependent commutator terms contribute the same signed error on every segment. Randomizing the permutation turns those bias terms into a sum over contributions from different orderings. For nondegenerate Taylor terms (those involving all-distinct summand indices), the average over the symmetric group matches the corresponding contribution in the target exponential rather than leaving an ordering-dependent residual.
 
-What survives averaging: "degenerate" terms with repeated summand indices, which are permutation-invariant. These have a smaller combinatorial coefficient than the sum of all terms, giving the improved bound.
+What survives as product-formula error after averaging: "degenerate" terms with repeated summand indices. These have a smaller combinatorial coefficient than the sum of all terms, giving the improved bound.
 
 ## When useful
 

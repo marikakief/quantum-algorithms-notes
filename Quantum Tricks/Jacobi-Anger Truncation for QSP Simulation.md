@@ -7,6 +7,21 @@
 
 Express the simulation target in the encoded angle variable using a Jacobi–Anger expansion, truncate the resulting Bessel/Fourier series, and use the truncation degree as the driver of query complexity.
 
+One representative identity is
+
+$$
+e^{-i\tau x}
+= J_0(\tau)+2\sum_{m\ge1}(-i)^m J_m(\tau)T_m(x),
+$$
+
+where \(T_m\) is the Chebyshev polynomial and \(J_m\) is a Bessel function. The Bessel tail decays super-exponentially once \(m\) is larger than \(\tau\), giving degree
+
+$$
+O\!\left(\tau+\frac{\log(1/\epsilon)}{\log\log(1/\epsilon)}\right)
+$$
+
+for uniform approximation.
+
 ## Why it matters
 
 This is one of the cleanest examples of approximation theory directly dictating quantum query complexity. The simulation algorithm is good because the Bessel tail is well behaved, not because of a mysterious circuit trick.

@@ -5,7 +5,7 @@
 
 ## What it does
 
-Builds an efficiently computable kernel on classical shadows that can learn nonlinear functions of few-body reduced density matrices, which is exactly what linear order parameters miss for topological and SPT phase classification.
+Builds an efficiently computable kernel on classical shadows that can learn nonlinear functions of few-body reduced density matrices, which is exactly what linear order parameters miss for topological and SPT phase classification. Unlike a general projected quantum kernel, this starts from stored classical-shadow data and targets many-body phase classification.
 
 ## The trick
 
@@ -33,10 +33,11 @@ This is expressive enough to represent analytic functions of constant-size margi
 - Linear observables fail to separate the phases you care about.
 - You suspect the classifier lives in local entanglement structure rather than a simple order parameter.
 - You have classical-shadow data from experiment or simulation and want a kernel method with interpretable geometry.
+- The relevant phase can be recognized from bounded-size marginals; if the necessary subsystem size grows with correlation length, this is the wrong tool.
 
 ## Complexity
 
-Kernel evaluation costs $O(nT^2)$ per pair of states, where $n$ is system size and $T$ is the number of shadow shots per state.
+Kernel evaluation costs $O(nT^2)$ per pair of states, where $n$ is system size and $T$ is the number of shadow shots per state. The learning guarantee also depends on having enough shadow shots for the relevant local marginals / polynomial features; $T$ is a statistical resource, not just a runtime knob.
 
 ## Caveat
 

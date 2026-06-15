@@ -4,7 +4,11 @@
 
 ## What it does
 
-Implements a complete first-order Trotter step of the electronic structure Hamiltonian in circuit depth exactly $N$ using $N(N-1)/2$ two-qubit entangling gates, assuming only linear nearest-neighbour qubit connectivity and the Jordan–Wigner encoding.
+Implements a complete first-order Trotter step of the structured electronic-structure Hamiltonian
+$$
+H=\sum_{p,q}T_{pq}a_p^\dagger a_q+\sum_p U_p n_p+\sum_{p\neq q}V_{pq}n_p n_q
+$$
+in circuit depth exactly $N$ using $N(N-1)/2$ logical two-qubit fermionic simulation gates, assuming only linear nearest-neighbour qubit connectivity and the Jordan-Wigner encoding. This is the one-body plus density-density two-body form, not a generic four-index Gaussian-basis chemistry Hamiltonian.
 
 ## The trick
 
@@ -12,7 +16,7 @@ The electronic structure Hamiltonian in second quantization is:
 
 $$H = \sum_{p,q} T_{pq} a^\dagger_p a_q + \sum_p U_p n_p + \sum_{p \neq q} V_{pq} n_p n_q$$
 
-A Trotter step requires simulating every pair interaction $(p,q)$. The challenge: under Jordan–Wigner, only adjacent orbitals give 2-local qubit operators. Non-adjacent orbital interactions require long Pauli strings.
+A Trotter step requires simulating every pair interaction $(p,q)$ in this dense pairwise Hamiltonian. The challenge: under Jordan-Wigner, only adjacent orbitals give 2-local qubit operators. Non-adjacent orbital interactions require long Pauli strings if implemented directly.
 
 **The fix:** change the canonical ordering dynamically using fermionic swaps. The fermionic swap between orbitals $p$ and $q$ is:
 
@@ -30,27 +34,27 @@ In the $\{|00\rangle, |01\rangle, |10\rangle, |11\rangle\}$ basis (for adjacent 
 
 $$F_t = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & -i\sin(T_{pq}t) & \cos(T_{pq}t) & 0 \\ 0 & \cos(T_{pq}t) & -i\sin(T_{pq}t) & 0 \\ 0 & 0 & 0 & -e^{-iV_{pq}t} \end{pmatrix}$$
 
-Each $F_t$ compiles to at most 3 entangling gates (CNOT/CZ) plus single-qubit rotations. After $N$ layers of these gates (alternating odd-even patterns), all $N(N-1)/2$ interaction pairs have been simulated, completing the first-order Trotter step. One additional layer of single-qubit $Z$-rotations handles the diagonal $U_p n_p$ terms.
+Each $F_t$ is one logical two-qubit fermionic simulation gate and compiles to at most 3 primitive entangling gates (CNOT/CZ) plus single-qubit rotations in the paper's decomposition. After $N$ layers of these gates (alternating odd-even patterns), all $N(N-1)/2$ interaction pairs have been simulated, completing the first-order Trotter step. One additional layer of single-qubit $Z$-rotations handles the diagonal $U_p n_p$ terms.
 
-**Symmetric (second-order) Trotter:** Double the final interaction strength to $2t$ and omit its fermionic swap, then mirror the remaining gates in reverse. Achieves symmetric Trotter with no additional gates.
+**Symmetric (second-order) Trotter:** Double the final interaction strength to $2t$ and omit its fermionic swap, then mirror the remaining gates in reverse. This avoids the naive extra swap-network overhead in the mirrored construction; it does not remove Trotter error.
 
 ## When to reach for it
 
 - Compiling Trotterized time evolution for electronic structure on any linearly-connected quantum hardware (superconducting qubits, trapped ions in a chain).
 - As the state-evolution subroutine in [[Iterative Phase Estimation (Kitaev)]] for quantum chemistry.
 - As the [[Hamiltonian simulation]] layer in VQE circuits when the ansatz includes Trotterized evolution.
-- Whenever you want to minimise two-qubit gate count for a Trotter step of a dense (all-to-all) quadratic+quartic fermionic Hamiltonian.
+- Whenever you want to minimize two-qubit gate count for a Trotter step of a dense pairwise one-body plus density-density fermionic Hamiltonian.
 - The Hubbard model variant gives $O(\sqrt{N})$ depth on a linear chain — use it for 2D lattice simulation.
 
 ## Complexity
 
 - **Depth:** exactly $N$ layers
-- **Two-qubit entangling gates:** exactly $N(N-1)/2$ (one per orbital pair)
+- **Logical fermionic simulation gates:** exactly $N(N-1)/2$ (one per orbital pair)
 - **Primitive CNOT/CZ per Trotter step:** $\leq 3 \cdot N(N-1)/2$
 - **Single-qubit rotations:** $O(N^2)$ (one per orbital pair, plus $N$ diagonal terms)
 - **Hubbard-2D variant:** $O(\sqrt{N})$ depth on a linear chain
 
-For comparison: naive JW decomposition takes $O(N^4)$ Pauli terms × $O(N)$ gates each = $O(N^5)$ gates, $O(N^5)$ depth.
+For comparison on this $T+U+V$ Hamiltonian, direct JW string implementation has $O(N^2)$ pair terms with strings of length up to $O(N)$, giving roughly $O(N^3)$ gate work if done naively. The often-quoted fifth-power estimate belongs to generic $O(N^4)$ four-index chemistry Pauli decompositions, which are outside the direct scope of this swap-network theorem.
 
 ## Caveat
 

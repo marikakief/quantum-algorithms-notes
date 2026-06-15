@@ -8,6 +8,8 @@
 
 Add two $n$-bit integers $a$ and $b$ on a quantum computer, storing the result in place: $|a\rangle|b\rangle \to |a\rangle|a+b\rangle$, with one additional output qubit for the carry bit $s_n$. The cost measures are qubit count (especially ancillae), gate count (Toffoli and CNOT), and circuit depth.
 
+Qubit convention: the main adder has two $n$-bit input registers, a separate output carry wire, and one initialized clean ancilla. The output carry is not scratch space, so "one ancilla" means one extra initialized workspace qubit beyond the result wire.
+
 The prior state of the art was the Vedral-Barenco-Ekert (VBE) adder, which uses $n - O(1)$ ancilla qubits, $4n + O(1)$ Toffoli gates, $4n + O(1)$ CNOTs, and has depth $6n - 2$.
 
 ## What the paper does
@@ -73,7 +75,7 @@ Five optimisations reduce depth from $\sim 4n$ to $2n + 4$:
 | Ancilla qubits | 1 |
 | Circuit depth | $2n + 4$ |
 
-The depth breaks down as $2n - 1$ Toffoli time-slices and 5 CNOT time-slices.
+The depth breaks down as $2n - 1$ Toffoli time-slices and 5 CNOT time-slices. The paper's Table 1 usually excludes NOT gates from the headline size/depth comparison; they are listed separately here so row-by-row comparisons are not mistaken for identical counting conventions.
 
 ## Key results
 
@@ -111,7 +113,7 @@ $$\text{Toffoli: } 2n - 1, \quad \text{CNOT: } 4n - 3, \quad \text{depth: } 2n +
 
 1. **Linear depth is inherent to ripple-carry.** The $\Omega(n)$ depth cannot be improved without switching to a different adder topology (e.g., carry-lookahead). For applications where depth is the bottleneck, the Draper-Kutin-Rains-Svore $O(\log n)$-depth adder is preferable — at the cost of $O(n)$ ancillae.
 
-2. **T-count is $8n + O(1)$ under standard Toffoli decomposition.** Each of the $2n - 1$ Toffolis costs 4 T gates when using the matched-phase-error trick (Barenco et al. 1995), since the Toffolis come in compute/uncompute pairs. [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney (2018)]] later cut this to $4n + O(1)$ by replacing paired Toffolis with [[Temporary Logical-AND]] operations.
+2. **Later Clifford+T accounting gives $8n + O(1)$ T gates.** Cuccaro et al. do not present a fault-tolerant Clifford+T resource estimate. Under later standard accounting, each paired Toffoli can be treated as 4 T gates using matched phase errors, giving about $8n$ T gates before [[Halving the Cost of Quantum Addition (Gidney 2018) — Paper Notes|Gidney (2018)]] cuts the paired structure to $4n + O(1)$ with [[Temporary Logical-AND]] operations.
 
 3. **CNOT count is higher than VBE.** The $5n - 3$ CNOTs exceed VBE's $4n - 2$. For architectures where CNOTs are not free (e.g., trapped ions with limited connectivity), this tradeoff may not be favourable.
 

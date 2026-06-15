@@ -16,7 +16,7 @@ $$|x\rangle = |x_{1,1}\rangle \cdots |x_{1,D}\rangle \, |x_{2,1}\rangle \cdots |
 
 with $\eta D \lceil \log b \rceil$ total qubits. The wavefunction $\psi(y(x))$ is stored as amplitudes over computational basis states, where $y(x)$ maps each point to the centroid of its bin.
 
-**Relation to Hilbert space dimension:** the full Hilbert space has dimension $b^{\eta D}$. For $\eta = 2$ electrons, $D = 3$, $b = 2^{32}$ (32 bits per coordinate): $192$ qubits — already large. The CI approach of [[Exponentially More Precise Quantum Simulation of Fermions in the CI Representation (Babbush et al 2018) — Paper Notes|Babbush et al. (2018)]] needs only $\eta \log N$ qubits using $N$ orbital basis functions, making orbital methods more qubit-efficient for chemistry.
+**Relation to Hilbert space dimension:** the full Hilbert space has dimension $b^{\eta D}$. For $\eta = 2$ electrons, $D = 3$, $b = 2^{32}$ (32 bits per coordinate): $192$ qubits — already large. Orbital/CI methods can be more qubit-efficient for chemistry in many regimes, but the comparison depends on the orbital basis, target accuracy, first- versus second-quantized encoding, and how much spatial resolution the grid needs.
 
 **Operators in this basis:**
 - The potential $V(x)$ is diagonal — matrix elements computable by a potential oracle query
@@ -25,7 +25,7 @@ with $\eta D \lceil \log b \rceil$ total qubits. The wavefunction $\psi(y(x))$ i
 
 ## When to reach for it
 
-- When you want to simulate interacting particles without choosing a basis set; the grid is a natural choice for systems without clear orbital structure (ultracold gases, nuclear physics, condensed matter in a box)
+- When you want to simulate interacting particles in a chosen simulation box without an orbital basis; the grid is a natural choice for systems without clear orbital structure (ultracold gases, nuclear physics, condensed matter in a box)
 - When the number of particles $\eta$ is small but they interact via a complex potential
 - For systems where position-space locality matters (e.g., contact interactions, lattice models, simple models in computational physics)
 - As a starting point for real-space LCU simulation; combine with [[High-Order Finite Difference Kinetic Energy]] and [[Regularized Coulomb Potential (Delta Cutoff)]]
@@ -40,6 +40,7 @@ with $\eta D \lceil \log b \rceil$ total qubits. The wavefunction $\psi(y(x))$ i
 ## Caveat
 
 - The discretization error analysis of [[Bounding the Costs of Quantum Simulation of Many-Body Physics in Real Space (Kivlichan, Wiebe, Babbush, Aspuru-Guzik 2017) — Paper Notes|Kivlichan et al. (2017)]] shows that, in the worst case, the grid resolution must be exponentially fine in $\eta D$. This can negate the computational advantage over second-quantized methods.
+- Boundary conditions and box size are part of the model and error budget.
 - Does not naturally accommodate systems with cusps or singularities in the wave function (e.g., electrons near nuclei). The [[Regularized Coulomb Potential (Delta Cutoff)]] provides a partial fix but introduces an additional approximation.
 - Not a fermion-aware encoding: the antisymmetry of the wavefunction must be imposed separately (e.g., via initial-state preparation or by restricting to antisymmetric subspace). Compare with the CI representation, which handles antisymmetry through the Slater determinant basis.
 

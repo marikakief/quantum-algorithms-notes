@@ -11,7 +11,7 @@ Decomposes a reversible ripple-carry adder into matched pairs of MAJ (majority) 
 
 A ripple-carry adder has two phases: an upward sweep computing carries $c_1, \ldots, c_n$, and a downward sweep erasing carries while writing sum bits. In VBE's design, each carry gets its own ancilla qubit. The MAJ-UMA decomposition avoids this by storing each carry in the input register $A_i$ (overwriting $a_i$), then restoring $a_i$ during the downward sweep.
 
-**MAJ** (2 CNOTs + 1 Toffoli): takes $(c_i, b_i, a_i)$ to $(c_i \oplus a_i, \; b_i \oplus a_i, \; c_{i+1})$. Stores the new carry in $A_i$.
+**MAJ** (2 CNOTs + 1 Toffoli): in the Cuccaro wire order $(c_i,b_i,a_i)$, takes $(c_i, b_i, a_i)$ to $(c_i \oplus a_i, \; b_i \oplus a_i, \; c_{i+1})$. Stores the new carry in $A_i$; see the source paper's MAJ gate diagram before copying this tuple transform into another wire convention.
 
 **UMA** (1 Toffoli + 2 or 3 CNOTs): takes $(c_i \oplus a_i, \; b_i \oplus a_i, \; c_{i+1})$ back to $(c_i, \; s_i, \; a_i)$. Restores $a_i$, erases the carry, and writes $s_i = a_i \oplus b_i \oplus c_i$ into $B_i$.
 
@@ -27,11 +27,13 @@ The paired structure — each Toffoli in MAJ has a matching Toffoli in UMA — i
 
 ## Complexity
 
-$2n - 1$ Toffoli gates + $5n - 3$ CNOTs + $2n - 4$ NOTs for the optimised $n$-bit adder. Depth $2n + 4$. One ancilla qubit.
+$2n - 1$ Toffoli gates + $5n - 3$ CNOTs + $2n - 4$ NOTs for the optimized Cuccaro adder with final carry output, using the paper's optimized UMA variant. Depth $2n + 4$. One clean ancilla qubit, distinct from the output carry wire.
 
 ## Caveat
 
 The decomposition is specific to ripple-carry (linear-depth) adders. It does not help with carry-lookahead or other logarithmic-depth topologies, which use different carry computation structures. For circuits where depth matters more than ancilla count, carry-lookahead (Draper-Kutin-Rains-Svore) is better despite needing $O(n)$ ancillae.
+
+Boundary variants differ: an in-place adder with final carry output, addition modulo $2^n$ with no carry output, and an incoming-carry adder have slightly different first/last MAJ/UMA blocks and counts.
 
 ## Related notes
 - [[A New Quantum Ripple-Carry Addition Circuit (Cuccaro-Draper-Kutin-Moulton 2004) — Paper Notes]] — source paper

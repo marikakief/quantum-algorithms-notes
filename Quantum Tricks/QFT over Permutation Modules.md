@@ -27,6 +27,7 @@ $O(\mathrm{poly}(n, \log(1/\varepsilon)))$ elementary gates. Independent of the 
 Works specifically for induced representations from the trivial rep of Young subgroups. More general induced representations would need adapted GPE steps. The polynomial in $n$ is not tightly optimised.
 
 ## Related notes
+- [[The Quantum Schur Transform I Efficient Qudit Circuits (Bacon-Chuang-Harrow 2006) — Paper Notes]] — original Schur-transform route that Krovi replaces with permutation modules
 - [[An Efficient High Dimensional Quantum Schur Transform (Krovi 2019) — Paper Notes]]
 - [[Alphabet Reduction to n for Schur Transform]]
 - [[GPE for Multiplicity Space Decomposition]]

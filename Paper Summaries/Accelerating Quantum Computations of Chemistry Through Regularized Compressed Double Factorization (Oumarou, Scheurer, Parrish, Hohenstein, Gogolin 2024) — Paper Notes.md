@@ -20,10 +20,10 @@ RC-DF introduces regularization into the compressed double factorization (CDF) o
 
 Key claims:
 - For NISQ: RC-DF reduces measurement bases by $\sim 3\times$ and shot count to chemical accuracy by $3$–$6\times$ compared to truncated DF, outperforming Pauli grouping by an order of magnitude on 12–20 qubit systems
-- For fault-tolerant: RC-DF cuts QPE runtime almost in half compared to truncated DF and outperforms THC on $\lambda$ for cytochrome P450 CpdI (58 orbitals)
+- For fault-tolerant: RC-DF cuts QPE runtime almost in half compared to truncated DF and outperforms THC on $\lambda$ for cytochrome P450 CpdI (58 orbitals), under the paper's compressed-DF qubitization comparison
 - The approach bridges NISQ and fault-tolerant regimes with a single classical preprocessing step
 
-The 2.6×10⁹ Toffoli figure for FeMoCo arises from applying RC-DF to the Reiher active space model and computing the resulting 1-norm $\lambda$ combined with standard qubitization resource estimates.
+Important attribution caveat: do not attribute the later $2.6 \times 10^9$ FeMoCo-style headline to this RC-DF paper. That number is associated with later symmetry-compressed double factorization (SCDF) / symmetry-shift resource-estimation work, not the regularized CDF method summarized here.
 
 ---
 
@@ -41,7 +41,7 @@ Standard CDF minimizes the 1-norm $\lambda = \sum_\ell \|\lambda^{(\ell)}\|_1^2 
 
 $$\mathcal{L}(U^{(\ell)}, \lambda^{(\ell)}) = \lambda + \mu \cdot \delta E_{\rm CCSD(T)}$$
 
-where $\delta E_{\rm CCSD(T)}$ measures how much the factorized Hamiltonian shifts CCSD(T) energies relative to the exact integrals, and $\mu$ is a regularization parameter. This prevents the optimizer from collapsing $\lambda$ at the cost of large energy errors.
+where $\delta E_{\rm CCSD(T)}$ measures how much the factorized Hamiltonian shifts CCSD(T) energies relative to the exact integrals, and $\mu$ is a regularization parameter. This is a chemically motivated heuristic penalty that preserves correlated-energy quality in the benchmarks while reducing quantum cost; it is not a theorem that the regularizer globally optimizes QPE resources.
 
 The optimization is classical and uses a variant of alternating minimization over $U^{(\ell)}$ (Riemannian gradient descent on the Stiefel manifold) and $\lambda^{(\ell)}$ (unconstrained quadratic).
 
@@ -55,21 +55,20 @@ RC-DF's regularization term correlates with low variance, so minimizing the join
 
 ### 1-norm and Toffoli counts
 
-For qubitization, the total Toffoli count scales as:
+For qubitization, the total Toffoli count scales schematically as:
 
 $$T_{\rm total} \approx \frac{\pi \lambda}{2 \varepsilon} \cdot T_{\rm oracle}$$
 
-where $\lambda$ is the 1-norm of the factorized Hamiltonian and $T_{\rm oracle}$ is the per-step Toffoli cost. RC-DF achieves lower $\lambda$ than both truncated DF and THC for the P450 benchmark, and competitive with THC for FeMoCo.
+where $\lambda$ is the 1-norm of the factorized Hamiltonian and $T_{\rm oracle}$ is the per-step Toffoli cost. RC-DF achieves lower $\lambda$ than truncated DF and THC for the P450 benchmark in this paper's comparison, with FeMoCo-like systems requiring separate attribution from later SCDF/BLISS-style results.
 
 ---
 
 ## Key results
 
-**FeMoCo (Reiher active space, 54e/54o):**
-- RC-DF 1-norm: $\lambda_{\rm RC-DF} \approx 700$ Ha (competitive with THC)
-- Estimated Toffoli count: $\sim 2.6 \times 10^9$ (at target precision 1 mHa)
-- Logical qubits: ~1,994
-- Roughly $2\times$ improvement over THC baseline from [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee et al. 2021]]
+**FeMoCo attribution note:**
+- This vault note should not present $\lambda \sim 700$, $\sim 2.6 \times 10^9$ Toffolis, or ~1,994 logical qubits as Oumarou et al. 2024 RC-DF results unless a specific table in that paper is cited.
+- Those low FeMoCo resource numbers are better associated with later symmetry-compressed DF / symmetry-shift work, which is a distinct method from RC-DF.
+- RC-DF should be summarized here as regularized compressed DF: a classical preprocessing method that trades a CCSD(T)-motivated accuracy penalty against the qubitization 1-norm.
 
 **Cytochrome P450 CpdI (58 orbitals):**
 - RC-DF achieves $\lambda < \lambda_{\rm THC}$ — first to beat THC on $\lambda$ for P450
@@ -82,21 +81,22 @@ where $\lambda$ is the 1-norm of the factorized Hamiltonian and $T_{\rm oracle}$
 
 ## Comparison with prior work
 
-| Method | FeMoCo Toffolis | P450 $\lambda$ advantage |
+| Method | FeMoCo / resource context | P450 $\lambda$ advantage |
 |---|---|---|
 | [[Quantum Computing Enhanced Computational Catalysis (von Burg, Low, Häner, Steiger, Reiher, Roetteler, Troyer 2020) — Paper Notes|von Burg et al. 2020]] (DF) | $1.0 \times 10^{10}$ | Baseline |
 | [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes|Lee et al. 2021]] (THC) | $5.3 \times 10^9$ | Beats DF by $\sim 1.5\times$ |
-| **Oumarou et al. 2024 (RC-DF)** | $\mathbf{2.6 \times 10^9}$ | **Beats THC for P450** |
-| [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low et al. 2025]] (DFTHC+BLISS+SA) | $3.4 \times 10^8$ | $\sim 16\times$ vs RC-DF |
+| **Oumarou et al. 2024 (RC-DF)** | no standalone $2.6 \times 10^9$ FeMoCo attribution in this note | **Beats THC for P450 in $\lambda$** |
+| SCDF / symmetry-shifted DF (Rocca et al. 2024) | source of the later $\sim 2.6 \times 10^9$-scale FeMoCo line | distinct from RC-DF |
+| [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes|Low et al. 2025]] (DFTHC+BLISS+SA) | $3.4 \times 10^8$ | spectrum-amplified DFTHC/BLISS, not RC-DF |
 
-RC-DF establishes that combining regularization with compression can beat pure 1-norm minimization (THC) by introducing chemical structure as an inductive bias.
+RC-DF establishes that combining regularization with compression can improve over truncated DF and can beat THC on the P450 $\lambda$ benchmark by introducing chemical structure as an inductive bias. It should be kept separate from SCDF, BLISS-THC, DFTHC, and SOS spectrum-amplified methods.
 
 ---
 
 ## Limits / caveats
 
 - **Classical cost:** The alternating minimization over rotation matrices is expensive. For large active spaces (100+ orbitals), the classical preprocessing can become a bottleneck.
-- **P450 advantage doesn't always generalize:** RC-DF beats THC on P450 but the advantage depends on system structure. For FeMoCo, the improvement over THC is modest.
+- **P450 advantage doesn't always generalize:** RC-DF beats THC on P450 but the advantage depends on system structure. FeMoCo resource-number comparisons should be made only after separating RC-DF from later SCDF/BLISS-style symmetry-shift methods.
 - **Regularization parameter tuning:** The $\mu$ parameter requires tuning per system; no universal recipe is provided.
 - **Active-space limitation:** Like all qubitization approaches in this era, the estimates target a fixed active space. Dynamical correlation remains unaddressed.
 - **NISQ relevance:** The NISQ measurement reduction is impressive for small systems, but the molecule sizes at which NISQ is relevant (12–20 qubits) are already classically tractable.
@@ -118,8 +118,8 @@ RC-DF establishes that combining regularization with compression can beat pure 1
 ## Cross-links
 
 ### Paper notes
-- [[Quantum Computing Enhanced Computational Catalysis (von Burg, Low, Häner, Steiger, Reiher, Roetteler, Troyer 2020) — Paper Notes]] — DF baseline; RC-DF improves on this by roughly $4\times$ for FeMoCo.
-- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC baseline; RC-DF beats THC on P450 $\lambda$ and approaches it for FeMoCo.
+- [[Quantum Computing Enhanced Computational Catalysis (von Burg, Low, Häner, Steiger, Reiher, Roetteler, Troyer 2020) — Paper Notes]] — DF baseline for qubitized chemistry resource estimates.
+- [[Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction (Lee, Berry, Babbush et al 2021) — Paper Notes]] — THC baseline; RC-DF beats THC on the P450 $\lambda$ benchmark in this paper's comparison.
 - [[Low Rank Representations for Quantum Simulation of Electronic Structure (Motta, Babbush, Chan et al 2018) — Paper Notes]] — Original double factorization as a classical scheme.
 - [[FeMoCo Resource Estimation Timeline]] — This paper is the 2024 entry in the FeMoCo resource estimate progression.
 - [[Fast Quantum Simulation of Electronic Structure by Spectrum Amplification (Low, King, Berry, Babbush, Somma, Rubin 2025) — Paper Notes]] — Subsequent work that combines DFTHC + BLISS + spectrum amplification to achieve $3.4 \times 10^8$ Toffolis.

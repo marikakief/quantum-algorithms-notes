@@ -8,7 +8,7 @@ Simulates a Hamiltonian $H = T + V$ (kinetic + potential) by switching between m
 
 ## The trick
 
-For a first-quantized system on a grid of $2^l$ points per particle:
+For a first-quantized system on a grid of $2^l$ points per particle, using the convention that the computational basis initially stores position:
 
 1. Start in position space
 2. Apply $e^{-iV\delta t}$ — diagonal, just phase gates on position register
@@ -27,11 +27,11 @@ For $n$ particles with pairwise interactions $V_{ij}$: do the QFT per-particle (
 
 ## Complexity
 
-Each Trotter step: $n$ QFTs ($O(nl^2)$ gates) + $O(n^2)$ potential phases + $O(n)$ kinetic phases. The QFT cost is logarithmic in grid size — much cheaper than matrix exponentiation.
+Each Trotter step: $n$ QFTs and inverse QFTs (textbook exact cost $O(nl^2)$ gates, with approximate-QFT variants depending on precision) + $O(n^2)$ pair potential phases + $O(n)$ kinetic phases. The $O(n^2)$ count is the number of particle pairs, not the arithmetic gate cost of evaluating each pair potential; Coulomb phases can be dominated by reversible arithmetic.
 
 ## Caveat
 
-Only works when $T$ and $V$ are diagonal in dual (Fourier-related) bases. For non-local potentials or non-standard kinetic terms, you need a different decomposition. Also, the Trotter error from $[T, V] \neq 0$ must be controlled.
+Only works when $T$ and $V$ are diagonal in dual (Fourier-related) bases. Depending on sign conventions, QFT and inverse-QFT may be swapped relative to the displayed order. For non-local potentials or non-standard kinetic terms, you need a different decomposition. Also, the product-formula error from $[T,V]\neq0$ and higher nested commutators must be controlled.
 
 ## Related notes
 

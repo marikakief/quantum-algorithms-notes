@@ -16,7 +16,7 @@ This is the classical-quantum (CQ) variant of addition. The quantum-quantum (QQ)
 
 ## What the paper does
 
-Closes a 21-year-old open problem by constructing a CQ adder with $4n \pm O(1)$ Toffolis and only 3 clean ancillae — matching the asymptotic gate count of the QQ adder while using constant workspace. Also presents a variant with $3n \pm O(1)$ Toffolis when $n - 2$ dirty ancillae are available. Both variants can be controlled by an additional qubit at zero extra Toffoli cost.
+Closes a 21-year-old open problem by constructing a CQ adder with $4n \pm O(1)$ Toffolis and only 3 clean ancillae — matching the asymptotic gate count of the QQ adder while using constant workspace. Also presents a variant with $3n \pm O(1)$ Toffolis when $n - 2$ dirty ancillae are available. Because the offset is classical, the controlled variants can be controlled by an additional qubit at zero extra Toffoli cost; this should not be generalized to arbitrary controlled adders.
 
 The construction rests on three ideas: (1) "venting" carry qubits via X-basis measurement to convert garbage into phasing tasks, (2) resolving those phasing tasks using a carry-xor circuit from [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes|Häner, Roetteler, Svore (2017)]], and (3) splitting the addition into two halves that borrow each other as dirty workspace.
 
@@ -30,7 +30,7 @@ A key observation: the carries of $x + d + c_0$ are exactly reproduced by adding
 
 $$\text{carry}(\sim x', d, c_0) = \text{carry}(x, d, c_0)$$
 
-This means each carry qubit is a Z-basis function of values available *after* the addition completes — Gidney calls this "Z-redundant." A Z-redundant qubit can be erased by measuring it in the X basis ([[Measurement-Asymmetric Uncomputation|measurement-based uncomputation]]). The $|+\rangle$ outcome means clean erasure; the $|-\rangle$ outcome means an unwanted phase flip $Z_{c_k}$ occurred just before deletion.
+This means each carry qubit is a computational-basis function of values available *after* the addition completes — Gidney calls this "Z-redundant." A Z-redundant qubit can be erased by measuring it in the X basis ([[Measurement-Asymmetric Uncomputation|measurement-based uncomputation]]). The $|+\rangle$ outcome means clean erasure; the $|-\rangle$ outcome means an unwanted phase flip $Z_{c_k}$ occurred just before deletion.
 
 The process of converting carry garbage into phasing tasks via X-basis measurement is called **venting**. A vented adder uses just 2 clean ancillae (recycled for each carry) and $n \pm O(1)$ Toffolis, but leaves behind $n - 2$ unresolved phasing tasks.
 
@@ -38,7 +38,7 @@ The process of converting carry garbage into phasing tasks via X-basis measureme
 
 [[Factoring using 2n+2 qubits with Toffoli based modular multiplication (Häner-Roetteler-Svore 2017) — Paper Notes|Häner et al.]] described a carry-xor circuit that XORs the carries of a planned addition into a secondary register: $g \to g \oplus \text{carry}(x, d, c_0)$. This costs $n \pm O(1)$ Toffolis and requires $n - 2$ dirty target qubits.
 
-The connection to venting: interleaving phase flips with controlled bit flips transfers the phase onto the control. So interleaving classically conditioned $Z$ gates (from the venting measurement outcomes) with carry-xor operations resolves the phasing tasks. Two carry-xor passes are needed (to return the dirty register to its original state), but the first can be merged into the streaming adder cheaply.
+The connection to venting: interleaving phase flips with controlled bit flips transfers the phase onto the control. So interleaving classically conditioned $Z$ gates (from the venting measurement outcomes) with carry-xor operations resolves the phasing tasks. Two carry-xor passes are needed because the dirty target register must be restored, not merely consumed, but the first can be merged into the streaming adder cheaply.
 
 This gives a CQ adder using $3n \pm O(1)$ Toffolis, 2 clean ancillae, and $n - 2$ dirty ancillae.
 
@@ -56,7 +56,7 @@ Total: $4n \pm O(1)$ Toffolis ($n \pm O(1)$ for streaming additions, $3n \pm O(1
 
 ### Free control
 
-All the adders in this paper can be controlled at zero additional Toffoli cost. Since each classical bit $d_k$ only appears as a control inversion or a classical bit-flip control, substituting $d_k = 1 \to \text{control qubit}$ and $d_k = 0 \to 0$ introduces no new Toffoli gates.
+All the CQ adders in this paper can be controlled at zero additional Toffoli cost because the offset is classical. Since each classical bit $d_k$ only appears as a control inversion or a classical bit-flip control, substituting $d_k = 1 \to \text{control qubit}$ and $d_k = 0 \to 0$ introduces no new Toffoli gates in this structure.
 
 ## Key results
 
@@ -83,7 +83,7 @@ This paper closes the asymptotic gap between CQ and QQ adders. The $O(\log n)$ f
 
 ## Limits / caveats
 
-1. **Linear depth.** Both variants have $O(n)$ depth. Constant workspace rules out parallelism — parallel operations require workspace proportional to the parallelism for routing and magic state production. Low-depth tradeoffs remain open.
+1. **Linear depth.** Both variants have $O(n)$ depth. This construction optimizes Toffoli count and workspace, not depth. Known low-depth arithmetic approaches spend extra workspace or use different primitives; this is a design tradeoff, not a general lower bound saying constant workspace rules out all parallelism.
 
 2. **No quantum carry-save adder.** The paper's conclusion notes that a "true" quantum carry-save adder (accumulating offsets with $O(1)$ marginal depth and $O(n)$ storage) does not yet exist. All known attempts have $\Omega(\log n)$ or $\Omega(\log \log 1/\varepsilon)$ multiplicative overhead.
 
@@ -96,6 +96,8 @@ This paper closes the asymptotic gap between CQ and QQ adders. The $O(\log n)$ f
 1. [[Carry Venting via X-Basis Measurement]] — Convert carry garbage into phasing tasks by measuring carry qubits in the X basis, exploiting the Z-redundancy of carries (the complement-addition identity). Eliminates the need to store or uncompute carry qubits.
 
 2. [[Half-Register Dirty Workspace Borrowing]] — Split a register into two halves and use each half as dirty workspace for the other. Eliminates external ancilla requirements at the cost of sequential processing.
+
+This paper and [[A Log-Depth In-Place Quantum Fourier Transform (Kahanamoku-Meyer-Blue-Bergamaschi-Gidney-Chuang 2025) — Paper Notes]] are complementary modern responses to arithmetic depth/workspace tradeoffs: this one optimizes constant workspace and linear Toffoli count for CQ addition, while the optimistic-QFT work optimizes depth under an average/Frobenius error model and logarithmic-range locality.
 
 ## References within this paper
 

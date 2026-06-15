@@ -51,11 +51,11 @@ The other half of the trick is to compile the needed subspace unitaries with alt
 
 ## Complexity
 
-The source paper reports about a $7\times$ Toffoli reduction over the Low-Kliuchnikov-Schaeffer synthesis route in the parameter regime relevant to chemistry MPS preparation. For physical dimension $d=4$, the improvement is still around $3.5\times$.
+The source paper reports about a $7\times$ Toffoli reduction over the Low-Kliuchnikov-Schaeffer synthesis route for the relevant unitary-synthesis/MPS-preparation subroutine. For physical dimension $d=4$, the subroutine improvement is still around $3.5\times$.
 
 ## Caveat
 
-This is a constant-factor win, not a new asymptotic class. It helps because the MPS circuit has a lot of repeated structured synthesis. If the target unitary has no subspace restriction, or if the dimension is small enough that generic synthesis is already cheap, the gain shrinks.
+This is a constant-factor win, not a new asymptotic class or an end-to-end QPE speedup. It helps because the MPS circuit has a lot of repeated structured synthesis. The total resource impact still depends on bond dimension, physical dimension, orbital ordering, target squared overlap, and the QPE filtering/search routine. If the target unitary has no subspace restriction, or if the dimension is small enough that generic synthesis is already cheap, the gain shrinks.
 
 ## Related notes
 - [[Rapid Initial State Preparation for the Quantum Simulation of Strongly Correlated Molecules (Berry, Tong, Babbush, Rubin et al 2024) — Paper Notes]]

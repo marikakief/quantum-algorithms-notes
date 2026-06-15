@@ -5,13 +5,21 @@
 
 ## Idea
 
-A $p$-th order [[Product Formulas]] is constructed so that all Taylor/commutator terms up to order $p$ match the true evolution exactly. These terms are not just small — they are zero by construction (the order conditions). Only $(p+1)$-fold and higher nested commutators survive.
+A $p$-th order [[Product Formulas]] is constructed so that the aggregate Taylor/commutator expansion through order $p$ matches the true evolution exactly. The cancelled contribution is the whole homogeneous error at each order, not necessarily every individual word or monomial before terms are collected. Only $(p+1)$-fold and higher nested-commutator contributions survive in the error.
 
 ## Why it matters
 
 When bounding [[Order-Condition Cancellation in Product Formulas|product-formula error]], don't carry low-order terms as independent errors. A formula satisfying order conditions to depth $p$ has those terms exactly cancelled by the coefficient design of the formula ([[Suzuki Order as a Tunable Knob for Time Scaling|Suzuki recursion]], for example). Treating cancelled terms as separate contributions gives ugly and misleading bounds.
 
 This is also why the [[Trotter Commutator-Scaling Bound|commutator-scaling bound]] from 1912.08854 looks like $O(\tilde{\alpha}_{\mathrm{comm}} \cdot t^{p+1})$: all lower-order terms are killed by the order conditions. See [[Trotter Commutator-Scaling Bound]].
+
+Concrete example: the symmetric Strang formula
+
+$$
+e^{A t/2}e^{B t}e^{A t/2}
+$$
+
+is second order because the order-$t^2$ commutator error cancels by symmetry; the leading local error is order $t^3$ and is built from nested commutators such as $[A,[A,B]]$ and $[B,[A,B]]$.
 
 ## When to use it
 

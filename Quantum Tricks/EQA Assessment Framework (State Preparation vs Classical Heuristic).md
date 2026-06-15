@@ -15,7 +15,7 @@ EQA for ground-state energy estimation requires **two independent conditions**:
 
 The non-obvious insight: **these two conditions tend to be in tension.** If a classical heuristic can efficiently find a state with good overlap (needed for Condition 1), that same heuristic likely gives a good energy estimate (undermining Condition 2). Conversely, if classical heuristics truly fail (Condition 2), there's no obvious way to efficiently prepare a good initial state quantumly either (undermining Condition 1).
 
-More precisely, for ansatz state preparation: improving the local overlap from $s$ to $s + \delta$ for a fragment costs $\mathrm{poly}(1/\delta)$ classically and yields energy error $\mathrm{poly}(\delta)$. So a classical method that achieves $1/\mathrm{poly}(L)$ global overlap also achieves $\mathrm{poly}(L)$ energy accuracy.
+More cautiously, for ansatz state preparation the paper argues that improving local overlap is often tied to improving the classical energy estimate, because the same structure that gives a good overlap witness can also improve the variational or tensor-network approximation. This is a diagnostic tension rather than a representation-independent theorem: making it rigorous requires specifying the ansatz class, normalization, spectral gaps, and how local errors propagate to global energy.
 
 For adiabatic state preparation: [[ASP Time–Overlap Correlation|the ASP time correlates with the initial overlap]], so finding a good starting point for ASP is as hard as finding a good classical approximation.
 
@@ -25,6 +25,13 @@ For adiabatic state preparation: [[ASP Time–Overlap Correlation|the ASP time c
 - Writing a quantum resource estimation paper that assumes "efficient state preparation" — this framework forces you to justify that assumption relative to classical alternatives
 - Designing quantum algorithms for chemistry: the framework suggests that polynomial (not exponential) advantage is the realistic target
 - Comparing quantum and classical approaches to a specific chemical system: check whether classical heuristics have the same structure (locality, area laws) that makes quantum state preparation efficient
+
+## Checklist
+
+- Classical benchmark: what is the best known classical heuristic on the same Hamiltonian family and precision target?
+- Overlap witness: is the reported overlap determinant, CSF, selected-CI, MPS amplitude, or squared overlap?
+- State-preparation cost: is the cost of preparing that witness state included?
+- QPE/filtering cost: does the resource estimate use standard repetition, amplitude amplification, or another filter/search routine?
 
 ## Complexity
 

@@ -1,0 +1,1500 @@
+
+
+--- PAGE 1 ---
+Lattice sieving via quantum random walks
+André Chailloux and Johanna Loyer
+Inria de Paris, EPI COSMIQ,
+andre.chailloux@inria.fr ∥johanna.loyer@inria.fr
+Abstract. Lattice-based cryptography is one of the leading proposals
+for post-quantum cryptography. The Shortest Vector Problem (SVP) is
+arguably the most important problem for the cryptanalysis of lattice-
+based cryptography, and many lattice-based schemes have security claims
+based on its hardness. The best quantum algorithm for the SVP is due
+to Laarhoven [Laa16] and runs in (heuristic) time 20.2653d+o(d). In this
+article, we present an improvement over Laarhoven’s result and present
+an algorithm that has a (heuristic) running time of 20.2570d+o(d) where d
+is the lattice dimension. We also present time-memory trade-oﬀs where
+we quantify the amount of quantum memory and quantum random access
+memory of our algorithm. The core idea is to replace Grover’s algorithm
+used in [Laa16] in a key part of the sieving algorithm by a quantum
+random walk in which we add a layer of local sensitive ﬁltering.
+1
+Introduction
+Lattice-based cryptography is one of the most appealing modern public-key cryp-
+tography. It has worst case to average case reductions [Ajt96], eﬃcient schemes
+and allows more advanced primitives such as fully homomorphic encryption
+[Gen09]. Another important aspect is that lattice based problems are believed to
+be hard even for quantum computers. Lattice-based cryptography is therefore
+at the forefront of post-quantum cryptography, especially in the NIST post-
+quantum standardization process. It is therefore very important to put a large
+eﬀort on quantum cryptanalysis and to understand the quantum hardness of
+lattice problems in order to increase our trust in these post-quantum solutions.
+For a given lattice L, the Shortest Vector Problem (SVP) asks to ﬁnd a
+short vector of this lattice. Solving the SVP is arguably the most important
+problem for the cryptanalysis of lattice-based cryptography. Additionally to
+its own importance, it is used as a subroutine in the BKZ algorithm, which is
+often the best attack on lattice-based schemes. There are two main families of
+algorithms for SVP: enumeration algorithms which are asymptotically slow but
+have small memory requirements, and sieving algorithm which have the best
+asymptotic complexities but have large memory requirements. For ﬁnding very
+small vectors, which is required by the BKZ algorithm, sieving algorithms are
+currently the most eﬃcient algorithms despite their large memory requirements.
+arXiv:2105.05608v1  [quant-ph]  12 May 2021
+
+
+--- PAGE 2 ---
+Indeed, in the SVP challenge, the 10 top performances are done by sieving
+algorithms and the current record solves SVP for d = 1801.
+For a lattice L of dimension d, sieving algorithms solve SVP classically in
+time 20.292d+o(d) (with a heuristic analysis) using the local ﬁltering technique
+introduced in [BDGL16]. Laarhoven presented a quantum equivalent of this
+algorithm that runs in time 20.265d+o(d) while using as much space as in the
+classical setting, namely 20.208d+o(d). The BKZ algorithm is the most eﬃcient
+known attack against all lattice-based schemes which were chosen at the third
+round of NIST standardization process2. These two exponents are used for
+determining the number of bits of security in all these schemes hence improving
+the time exponent for SVP has direct implications on the security claims of these
+schemes.
+Related work. Heuristic sieving algorithms were ﬁrst introduced by Nguyen
+and Vidick [NV08] that presented an algorithm running in time 20.415d+o(d)
+and using 20.2075d memory. A more eﬃcient sieve in practice but with the
+same asymptotic running time was presented in [MV10]. Then, there has been
+improvements by considering k-sieve algorithms [WLTB11, ZPH14, Laa16]. Also,
+several works showed how to use nearest neighbor search to improve sieving
+algorithms [LdW15, Laa15, BL16]. The best algorithm [BDGL16] runs in time
+20.292d+o(d) and uses locality-sensitive ﬁltering.
+In the quantum setting, quantum analogues of the main algorithms for sieving
+were studied [LMvdP15, Laa16]. The best algorithm runs in time 20.265d+o(d)
+and is the quantum analogue of [BDGL16]. There has been two more recent
+works on quantum sieving algorithms. First, quantum variants of the k-sieve
+were studied in [KMPM19], giving interesting time-space trade-oﬀand a recent
+article [AGPS20] studied more practical speedups of these quantum algorithms,
+i.e. when do these gains in the exponent actually translate to quantum speedups.
+Contributions. In this article, we study and improve the asymptotic complexity of
+quantum sieving algorithm for SVP. This is the ﬁrst improvement on the asymp-
+totic running time of quantum sieving algorithms since the work of Laarhoven
+[Laa16]3.
+It is not a priori clear how to use quantum random walks to adapt the
+algorithm from [BDGL16]. This algorithm is divided into a pre-processing phase
+and a query phase. In this query phase, we have several points that are in a ﬁlter
+F, which means here that there are close to a speciﬁc point. We are then given
+a new point ⃗v and we want to know whether there exists a point ⃗w ∈F such
+1 The SVP challenge can be accessed here https://www.latticechallenge.org/svp-
+challenge.
+2 At this stage, there are 3 encryption schemes / key encapsulation mechanisms:
+KYBER, NTRU and SABER as well as two signature schemes: DILITHIUM and
+FALCON.
+3 We are talking here only about the asymptotic running time, there are other metrics
+of interest that have been covered in [KMPM19, AGPS20] where there were some
+improvements.
+
+
+--- PAGE 3 ---
+that ∥⃗v ± ⃗w∥is smaller than min{∥⃗v∥, ∥⃗w∥}4. Then we do not know how to do
+better here than Grover’s algorithm, which takes time
+p
+|F|. On the other hand,
+if instead of this query framework, we start from a ﬁlter F and we want to ﬁnd
+all the pairs ⃗v, ⃗w, then we can apply a quantum random walk.
+Even within this framework, there are many ways of constructing quantum
+random walks and most of them do not give speedups over [Laa16]. What we
+show is that by adding proper additional information in the vertices of the
+random walk, in particular by adding another layer of ﬁlters within the vertices
+of the graph on which we perform the quantum walk, we can actually get some
+improvement over Grover’s algorithm and achieve our speedups.
+We now state our results. We present here not only the running time but also
+the amount of classical memory, quantum memory and quantum RAM (QRAM)
+operations required.
+Our main theorem is an improvement of the best asymptotic quantum heuristic
+running time for the SVP bringing down the asymptotic running time from
+20.2653d+o(d) to 20.2570d+o(d). Our results are in the QRAM model where QRAM
+operations can be done eﬃciently. Notice that Laarhoven’s result is in this model
+so our result are directly comparable to his.
+Theorem 1. There exists a quantum algorithm using quantum random walks
+that solves the SVP on dimension d which heuristically solves SVP on dimension
+d in time 20.2570d+o(d), uses QRAM of maximum size 20.0767d, a quantum memory
+of size 20.0495d and a classical memory of size poly(d) · 20.2075d.
+We can see that additionally to improving the best asymptotic running time,
+this algorithm uses much less quantum resources (both quantum memory and
+quantum RAM) than its running time which makes it fairly practical. We also
+present two trade-oﬀs: a quantum memory-time trade-oﬀand a QRAM-time
+trade-oﬀ. For a ﬁxed amount of quantum memory, our algorithm performs as
+follows.
+Theorem 2 (Trade-oﬀfor ﬁxed quantum memory). There exists a quan-
+tum algorithm using quantum random walks that solves the SVP on dimension
+d which, for a parameter M ∈[0, 0.0495], heuristically runs in time 2τMd+o(d),
+uses QRAM of maximum size 2γMd and quantum memory of size 2µMd and a
+classical memory of size poly(d)20.2075d where
+τM ∈0.2653 −0.1670M + [−2·10−5; 4·10−5]
+γM ∈0.0578 + 0.3829M −[0; 2·10−4]
+;
+µM = M.
+With this theorem, we obtain for M = 0 the quantum running time of
+Laarhoven’s quantum algorithm and, for M = 0.0495, the result of Theorem 1.
+We now present our second trade-oﬀtheorem where we ﬁx the amount of
+QRAM.
+4 We remain a bit imprecise and informal here as we haven’t properly described sieving
+algorithms yet.
+
+
+--- PAGE 4 ---
+Theorem 3 (Trade-oﬀfor ﬁxed QRAM). There exists a quantum algorithm
+using quantum random walks that solves SVP on dimension d which for a pa-
+rameter M ′ ∈[0, 0.0767] heuristically runs in time 2τM′d+o(d), uses QRAM of
+maximum size 2γM′d, a quantum memory of size 2µM′d and uses a classical
+memory of size poly(d) · 20.2075d where
+τM ′ ∈0.2925 −0.4647M ′ −[0; 6·10−4]
+;
+γM ′ = M ′
+µM ′ ∈max{2.6356(M ′ −0.0579), 0} + [0; 9·10−4].
+With this theorem, we obtain for M ′ = 0, the best classical exponent of
+[BDGL16] (we can actually show the algorithm uses no quantum resources in
+this case). For M ′ = 0.0577, we retrieve Laarhoven’s quantum exponent and for
+M ′ = 0.0767, we get Theorem 1.
+This theorem can also be helpful if we want to optimize other performance
+measures. For example, it has been argued that having eﬃcient QRAM operations
+is too strong and that performing a QRAM operation should require time at
+least r1/3 where r is the number of QRAM registers. This means we want to
+minimize the quantity λ = τM ′ + 1
+3 max{γM ′, µM ′}5. We also show some mild
+improvements in this metric: the previous best known bound was λ = 0.2849
+[Laa16, AGPS20] while using our theorem, we can retrieve the previous results
+by taking M ′ = 0.0577 and slightly improve it by taking M ′ = 0.0767 to obtain
+λ = 0.2824.
+Organisation of the paper. In section 2, we present preliminaries on Quantum
+computing. In Section 3, we then present sieving algorithm, as well as useful
+statements on lattices. In Section 4, we present the framework we use for sieving
+algorithm that we use and perform a ﬁrst study of its time complexity. Next, we
+present in Section 5 the quantum walk that will allow our time improvements
+and in Section 5.4 the numerical values we achieve and the space-time trade-oﬀs.
+We perform a ﬁnal discussion in Section 8 and talk about parallelization of our
+algorithm as well as possible improvements.
+2
+Quantum computing preliminaries
+2.1
+Quantum circuits.
+We consider here quantum circuits consisting of 1 and 2 qubit gate, without any
+locality constraint, meaning that we can apply a 2 qubit gate from a universal set
+of gates to any pair of qubits in time 16. We use the textbook gate model where
+the running time of a quantum circuit is just the number of gates used. The
+5 We want to minimize 2τM′ d ·  2γM′ d + 2µM′ d1/3 which asymptotically is equivalent
+to minimizing τM′ + 1
+3 max{γM′, µM′}.
+6 We are only interested in asymptotic running time here so we are not interested in
+the choice of this universal gate set, as they are all essentially equivalent from the
+Solovay-Kitaev theorem (see [NC00], Appendix 3).
+
+
+--- PAGE 5 ---
+width of a circuit is the number of qubits it operates on, including the ancilla
+qubits. This quantity is important as it represents the number of qubits that
+have to be manipulated simultaneously and coherently. We will also call this
+quantity quantum memory.
+When we will know much more precisely how quantum architectures look like,
+it will be possible to make these models more precise and replace the gate model
+with something more adequate. The gate model is still the most widely used in
+the scientiﬁc community and is very practical to compare diﬀerent algorithms.
+We will use the gate model as our main model for computing quantum times but
+we will also include other interesting quantum ﬁgures of merit, such as quantum
+memory or Quantum Random Access Memory usage.
+2.2
+Quantum Random Access Memory.
+Quantum Random Access Memory (denoted hereafter QRAM) is a type of
+quantum operation which is not captured by the circuit model. Consider N
+registers x1, . . . , xN ∈{0, 1}d stored in memory. A QRAM operation consists of
+applying the following unitary
+UQRAM : |i⟩|y⟩→|i⟩|xi ⊕y⟩.
+We say that we are in the QRAM model if the above unitary can be constructed
+eﬃciently, typically in time O(d + log(N)). We can distinguish two diﬀerent
+types of QRAM: QRACM, where the registers x1, . . . , xN are stored in some
+classical memory and QRAQM where the unitary UQRAM can be applied on fully
+quantum registers. The former being of course easier to achieve than the latter.
+QRAM operations are theoretically allowed by the laws of quantum mechanics
+and there are some proposals for building eﬃciently QRAM operations, such as
+[GLM08], even though its robustness has been challenged in [AGJO+15]. The
+truth is that it very premature to know whether QRAM operations will be
+eﬃciently available in quantum computers. This would deﬁnitely require a major
+hardware breakthrough but as does quantum computing in general.
+While our results are mainly in the QRAM model, we will also discuss other
+metrics where the cost of a QRAM operation is not logarithmic in N but has a
+cost of N x for a constant x.
+2.3
+Grover algorithm.
+One formulation of Grover’s search problem [Gro96] is the following. We are
+given a list of data x1, ..., xr, with xi ∈E. Given a function f : E →{0, 1}, the
+goal is to ﬁnd an i such that f(xi) = 1, and to output "no solution" if there are
+no such i. Let Sol = {i ∈[r] : f(xi) = 1}.
+Classically, we cannot solve this problem with a better average complexity
+than Θ( r
+Sol) queries, which is done by examining random xi one by one until
+we ﬁnd one whose image is 1 through f. Quantum computing allows a better
+complexity. Grover’s algorithm solves this search problem in O
+ p r
+Sol
+
+queries
+to f. Applying Grover’s algorithm this way requires eﬃcient QRAM access to
+the data x1, . . . , xr.
+
+
+--- PAGE 6 ---
+2.4
+Quantum random walks.
+We present here brieﬂy quantum random walks (QRW). There are several variants
+of QRW and we will use the MNRS framework, ﬁrst presented in [MNRS11].
+We start from a graph G = (V, E) where V is the set of vertices and E ⊆V ×V
+is the set of edges. We do not allow self loops which means that ∀x ∈V, (x, x) /∈E
+and the graph will be undirected so (x, y) ∈E ⇒(y, x) ∈E. Let also N(x) =
+{y : (x, y) ∈E} be the set of neighbors of x. We have a set M ⊆V of marked
+elements and the goal of a QRW is to ﬁnd v ∈M.
+Let ε = |M|
+|V | be the fraction of marked vertices and let δ be the spectral gap
+of G7. For any vertex x, we deﬁne |px⟩= P
+y∈N(x)
+1
+√
+|N(x)||y⟩. We also deﬁne
+|U⟩=
+1
+√
+|V |
+P
+x∈V |x⟩|px⟩. We now deﬁne the following quantities:
+– SETUP cost S: the SETUP cost S is the cost of constructing |U⟩.
+– UPDATE cost U: here, it is the cost of constructing the unitary
+UUPDATE : |x⟩|0⟩→|x⟩|px⟩.
+– CHECK cost C: it is the cost of computing the function fCHECK : V →{0, 1}
+where fCHECK(v) = 1 ⇔v ∈M.
+Proposition 1. [MNRS11] There exists a quantum random walk algorithm that
+ﬁnds a marked element v ∈M in time
+S + 1
+√ε
+ 1
+√
+δ
+U + C
+
+.
+In order to compute the update cost, we can actually compute the classical
+running time of going from one vertex to another i.e. starting from a vertex x
+and constructing a vertex y for a random neighbor y ∈N(x). Then, we can use
+this procedure in quantum superposition to construct the unitary UUPDATE. We
+refer to [Amb07, MNRS11, dW19] for more details on these QRW.
+Quantum random walks on the Johnson graph. A very standard graph on
+which we can perform QRW is the Johnson graph J(n, r). Each vertex v consists
+of r diﬀerent (unordered) points x1, . . . , xr ∈[n] as well as some additional data
+D(v) that depends on the QRW we want to perform.
+v = (x1, . . . , xr, D(v)) and v′ = (x′
+1, . . . , x′
+r, D(v′)) form an edge in J(n, r) iﬀ.
+we can go from (x1, . . . , xr) to (x′
+1, . . . , x′
+r) by removing exactly one value and then
+adding one value. The Johnson graph J(n, r) has spectral gap δ =
+n
+r(n−r) ≈1
+r
+when r ≪n [dW19].
+The additional data D(v) here is used to reduce the checking time C with the
+drawback that it will increase the update time U. Johnson graphs were often used,
+for example when trying to solve the element distinctness problem [Amb07], but
+also for the subset-sum problem [BJLM13, HM18, BBSS20] or for code-based
+problems [KT17].
+7 For a regular graph, if λ1 > · · · > λ|V | are the eigenvalues of the normalized adjacency
+matrix of G, then δ = λ1 −maxi=2...n |λi|.
+
+
+--- PAGE 7 ---
+Quantum data structures. A time analysis of quantum random walks on the
+Johnson graph was done in [Amb07] when studying the element distinctness
+problem. There, Ambainis presented a quantum data structure that uses eﬃcient
+QRAQM that allows in particular insertion and deletion in O(log(n)) time where
+n is the database size while maintaining this database in quantum superposition.
+Another paper on quantum algorithm for the subset problem using quantum
+random walks [BJLM13] also presents a detailed analysis of a quantum data
+structure based on radix trees to perform eﬃcient insertion and deletion in
+quantum superposition. All of these data structures require as much QRAQM
+registers as the number of registers to store the whole database and this running
+time holds only in the QRAM model. In our work, we will use such a quantum
+data structure and refer to the above two papers for explicit details on how to
+construct such quantum data structures.
+3
+Lattice preliminaries
+Notations. The norm ∥·∥we use throughout this paper is the Euclidian norm,
+so for a vector ⃗v = (v1, . . . , vd) ∈Rd, ∥⃗v∥=
+qPd
+i=1 v2
+i . The inner product
+of ⃗v = (v1, . . . , vd) and ⃗w = (w1, . . . , wd) is ⟨⃗v, ⃗w⟩:= Pd
+i=1 viwi. The non-
+oriented angle between ⃗v and ⃗w is denoted θ(⃗v, ⃗w) := arccos
+
+⟨⃗v,⃗w⟩
+∥⃗v∥∥⃗w∥
+
+. We
+denote the d-dimensional sphere of radius R by Sd−1
+R
+:= {⃗v ∈Rd : ∥⃗v∥= R},
+and Sd−1 := Sd−1
+1
+. Throughout the paper, for a known integer d, we will write
+N := (
+p
+4/3)d.
+Lattices. The d-dimensional lattice L ⊂Rm generated by the basis B = (b1, ..., bn)
+with ∀i, bi ∈Rm is the set of all integer linear combinations of its basis vectors:
+L(B) =
+n Pd
+i=1 λi bi, λi ∈Z
+o
+.
+Shortest Vector Problem. Given a basis of a lattice L, the Shortest Vector Problem
+(SVP) asks to ﬁnd a non-zero vector in L of minimal norm. SVP is known to
+be NP-hard [Ajt98]. This problem and its derivatives (SIS, LWE) have been
+used in several public-key cryptosystems, speciﬁcally as candidate for quantum-
+resistant cryptography [DKL+19, FHK+19, CDH+19]. Thereby, one of the most
+important ways to know their security and choose parameters is to estimate the
+computational hardness of the best SVP-solving algorithms.
+Sieving algorithms.
+SVP solving methods. The algorithm LLL [LLL82] returns a reduced basis of a
+lattice in a polynomial time. However it is not suﬃcient to solve SVP. All the
+fastest known algorithms to solve SVP run in exponential time. A ﬁrst method
+is enumeration [Kan83], that solves deterministically SVP using low space but in
+super-exponential time in the lattice dimension d.
+
+
+--- PAGE 8 ---
+Another method, which will interest us in this article, is lattice sieving
+[NV08, MV10]. They are heuristic algorithms that probably solve SVP in time
+and space 2Ω(d). To this day, the best complexity for sieving in the QRAM
+model is obtained by quantum hypercone LSF [Laa16] in 20.2653d+o(d) time and
+20.2075d+o(d) space. Another algorithm [KMPM19] uses k-lists to solve SVP in
+20.2989d+o(d) time and 20.1395d+o(d) space.
+The NV-sieve. The NV-sieve [NV08] is a heuristic algorithm. It starts with a
+list of lattice vectors, that we can consider of norm at most 1 by normalization.
+Given this list and a constant γ < 1, the NV-sieve returns a list of lattice vectors
+of norm at most γ. It iteratively builds lists of shorter lattice vectors by applying
+a sieve. This sieve step consists in computing all the sums (plus and minus) of
+two list vectors, and ﬁlls the output list with those which have norm at most
+γ. For γ tending to 1, two vectors form a reducing pair - i.e. their sum is of
+norm at most γ - iﬀ. they are of angle at most π/3. The ﬁrst list of lattice
+vectors can be sampled with Klein’s algorithm [Kle00] for example. A list size
+of N 1+o(1) = (
+p
+4/3)d+o(d) suﬃces to have about one reducing vector in the list
+for each list vector, as stated in [NV08]. Because of the norms of the list vectors
+reduces with a factor by γ < 1 at each application of the algorithm, the output
+list will hopefully contain a non-zero shortest lattice vector after a polynomial
+number of application of the NV-sieve.
+NNS and application to lattice sieving. A logic improvement of this algorithm is
+to use Neighbor Nearest Search (NNS) [IM98] techniques. The NNS problem is:
+given a list L of vectors, preprocess L such that one can eﬃciently ﬁnd the nearest
+vector in L to a target vector given later. Used in the NV-sieve, the preprocessing
+partitions the input list in several buckets of lattice points, each bucket being
+associated with a hash function. The algorithm will only sum vectors from a
+same bucket, which are near to each other, instead of trying all pairs of vectors.
+Locality-sensitive hashing (LSH). A method to solve NNS is locality-sensitive
+hashing (LSH) [IM98]. An LSH function is a hash-function that have high
+probability to collide for two elements if they are close, and a low one if they
+are far. Several categories of LSH functions exists: hyperplane LSH [Cha02],
+hypercone or spherical LSH [AINR14, AR15] and cross-polytope LSH [TT07].
+Locality-sensitive ﬁltering (LSF).
+Locality-sensitive ﬁltering (LSF). More recently, [BDGL16] improved NNS solving
+by introducing locality-sensitive ﬁltering (LSF). LSF functions, called ﬁlters, map
+a vector ⃗v to a boolean value: 1 if ⃗v survives the ﬁlter, and 0 otherwise. They act
+similarly to LSH but only few vectors survive the ﬁlter.
+These ﬁlters are instantiated by hypercone ﬁlters, characterized by a vector
+⃗s and an angle α ∈[0, π/2]. For a ﬁlter f of center ⃗s and angle α, the vector
+⃗v survives f iﬀθ(⃗v,⃗s) ⩽α. In this case, the ﬁlter f is said relevant for ⃗v. The
+
+
+--- PAGE 9 ---
+set of the vectors from a list that survives a ﬁlter f is called its bucket, and is
+denoted fα(⃗s). More formally, we deﬁne the spherical cap of center ⃗v and angle
+α as follows:
+H⃗v,α := {⃗x ∈Sd−1 | θ(⃗x,⃗v) ⩽α}
+and ⃗v survives the ﬁlter fα(⃗s) iﬀ. ⃗v ∈H⃗s,α.
+Proposition 2. [MV10] For an angle α ∈[0, π/2] and ⃗v ∈Sd−1, the ratio of
+the volume of a spherical cap H⃗v,α to the volume of the sphere Sd−1 is
+Vd(α) := poly(d) · sind(α).
+Proposition 3. [BDGL16] For an angle α ∈[0, π/2] and two vectors ⃗v, ⃗w ∈
+Sd−1 such that θ(⃗v, ⃗w) = θ, the ratio of the volume of a wedge H⃗v,α ∩H⃗w,α to
+the volume of the sphere Sd−1 is
+Wd(α, θ) := poly(d) ·
+ 
+1 −2 cos2(α)
+1 + cos(θ)
+!d/2
+.
+Random product codes (RPC). LSF method from [BDGL16] uses a decoding
+oracle that returns relevant ﬁlters for a given vector. A random-product code
+(RPC) that admits a fast list-decoding algorithm is sampled over the sphere
+Sd−1. The ﬁlters are determined by its code words, and the oracle is its decoding
+algorithm.
+We assume d = m · b, for m = O(polylog(d)) and a block size b. The vectors
+in Rd will be identiﬁed with tuples of m vectors in Rb. A random product code
+C of parameters [d, m, B] on subsets of Rd and of size Bm is deﬁned as a code of
+the form C = Q · (C1 × C2 × · · · Cm), where Q is a uniformly random rotation
+over Rd and the subcodes C1, ..., Cm are sets of B vectors, sampled uniformly
+and independently random over the sphere
+p
+1/m · Sb−1, so that codewords are
+points of the sphere Sd−1. We can have a full description of C by storing mB
+points corresponding to the codewords of C1, . . . , Cm and by storing the rotation
+Q. When the context is clear, C will correspond to the description of the code or
+to the set of codewords. Random product codes can be easily decoded in some
+parameter range:
+Proposition 4 ([BDGL16]). Let C be a random product code of parameters
+[d, m, B] with m = log(d) and Bm = N O(1). For any ⃗v ∈Sd−1 and α ∈[0, π/2],
+one can compute H⃗v,α ∩C in time N o(1)·|H⃗v,α ∩C|.
+We can now present the NV-sieve with LSF.
+The NV-sieve with LSF. Let α ∈[π/3, π/2] be an angle. The NV-sieve with LSF
+[BDGL16] takes as input a list of lattice vectors lying on Sd−1 and a constant
+γ < 1. This algorithm runs in two phases. First, during the processing, it samples
+a random-product code C on the sphere, whose words give the α-ﬁlters. The
+
+
+--- PAGE 10 ---
+algorithm decodes half of the vectors of the list to get their nearest α-ﬁlters, and
+then add the vectors to the buckets associated to their α-ﬁlters.
+Secondly, there is the queries phase. For each vector ⃗v from the other half
+of the list, the algorithm computes the α-ﬁlters of ⃗v, and for each vector ⃗w
+having a common α-ﬁlter with ⃗v, the algorithm checks whereas ∥⃗v −⃗w∥⩽γ.
+If it is the case, ⃗v −⃗w is added to the output list. This algorithm solves SVP
+time8 20.292d+o(d), and in space 20.208d+o(d) with its space-eﬃcient version [Laa16].
+Applying a Grover search instead of testing each candidate in the ﬁlter gives
+the quantum NV-sieve with LSF [Laa16], which run in same space and in time
+20.265d+o(d).
+Probabilistic argument. If we consider any vector ⃗w ∈Sd−1 and N ρ0 random
+points ⃗s1, . . . ,⃗sNρ0 in H⃗v,α for ρ0 :=
+Vd(α)
+Wd(α,θ) ; then this proposition implies that
+there exists, with constant probability, an i ∈[N ρ0] such that ⃗si ∈H⃗w,α.
+Consider a set S = ⃗s1, . . . ,⃗sM points taken from the uniform distribution on
+the sphere Sd−1 and ⃗v another point randomly chosen on the sphere. Fix also an
+angle α ∈(0, π/2). We have the following statements:
+Proposition 5. ∀i ∈[M], Pr[⃗v ∈H⃗si,α] = Pr[⃗si ∈H⃗v,α] = Vd(α).
+Proof. Immediate by deﬁnition of Vd(α) considering that both ⃗v and ⃗si are
+uniform random points on the sphere.
+From the above proposition, we immediately have that E[|S∩H⃗v,α|] = MVd(α).
+We now present a standard concentration bound for this quantity.
+Proposition 6. Assume we have MVd(α) = N x with x > 0 an absolute constant.
+Then
+Pr[|S ∩H⃗v,α| ≥2N x] ≤e−Nx
+3 .
+Proof. As before, let Xi be the random variable which is equal to 1 if ⃗si ∈H⃗v,α
+and is equal to 0 otherwise. Let Y = PM
+i=1 Xi so E[Y ] = N x. Y is equal to the
+quantity |S ∩H⃗v,α|. A direct application of the multiplicative Chernoﬀbound
+gives
+Pr[Y ≥2N x] ≤e−Nx
+3
+which is the desired result.
+4
+General framework for sieving algorithms using LSF
+We present here a general framework for sieving algorithms using LSF. We
+present here one sieving step where we start from a list L of N ′ = N 1+o(1)
+lattice vectors of norm 1 and output N ′ lattice vectors of norm γ < 1. Sieving
+algorithms for SVP then consists of applying this subroutine poly(d) times (where
+8 We consider here the values of the NV-sieve, which have asymptotically better space
+requirements even though this sieve is less eﬃcient in practice.
+
+
+--- PAGE 11 ---
+we renormalize the vectors at each step) to ﬁnd at the end a small vector. We
+can actually take γ very close to 1 at each iteration, and we refer for example to
+[NV08] for more details. This framework will encompass the best classical and
+quantum sieving algorithms.
+Algorithm 1 Sieving algorithms using LSF with parameter c
+Input: a list L of N ′ = N 1+o(1) lattice vectors of norm 1, a constant γ < 1 and
+parameter c ∈(0, 1).
+Output: a list L′ of N ′ lattice vectors of norm at most γ.
+Algorithm:
+L′ := {} (empty list)
+while |L′| ≤N ′ do
+Sample a random product code C of parameter [d, log(d), N
+1−c
+log(d) ]. Let
+⃗s1, . . . ,⃗sN 1−c be the code points of C and let α ∈[π/3, π/2] st. Vd(α) =
+1
+N1−c .
+for ⃗v in L do
+Add ⃗v to its α-ﬁlter’s buckets fα(⃗si)
+for each i ∈[N 1−c] do
+S ←FindAllSolutions(fα(⃗si), γ)
+L′ := L′ ∪S
+return L′
+The FindAllSolutions(fα(⃗si), γ) subroutine starts from a list of vectors
+⃗x1, . . . , ⃗xNc ∈fα(⃗si) and outputs all vectors of the form ⃗xi ± ⃗xj (with i ̸= j)
+of norm less than γ. We want to ﬁnd asymptotically all the solutions and not
+strictly all of them. Let’s say here we want to output half of them. Sometimes,
+there are no solutions so the algorithm outputs an empty list.
+4.1
+Analysis of the above algorithm
+Heuristics and simplifying assumptions. We ﬁrst present the heuristic
+arguments and simplifying assumptions we use for our analysis.
+1. The input lattice points behave like random points on the sphere Sd−1. The
+relevance of this heuristic has been studied and conﬁrmed in a few papers
+starting from the initial NV-sieve [NV08].
+2. The code points of C behave like random points of the sphere Sd−1. This was
+argued in [BDGL16], see for instance Lemma 5.1 and Appendix C therein.
+3. We assume that a random point in fα(⃗si) is on the border of the ﬁlter, i.e.
+that it can be written ⃗x = cos(α)⃗si + sin(α)⃗y with ⃗y⊥⃗si and of norm 1. As
+we argue below, this will be approximately true with very high probability.
+In order to argue point 3, notice that for any angle α ∈(π/4, π/2) and ε > 0,
+we have Vd(α) ≫Vd(α −ϵ). Indeed, for an angle ϵ > 0, Vd(α −ϵ) = sind(α −ϵ) =
+
+
+--- PAGE 12 ---
+Vd(α) · (ϵ′)d with ϵ′ = cos ϵ −sin ϵ cos α
+sin α
+< 1 for α > ϵ. So the probability for a
+point to be at angle α with the center of the cap is exponentially higher than to
+be at angle α −ϵ. That justiﬁes that with very high probability, points in fα(⃗si)
+lie at the border of the cap and hence justiﬁes point 3.
+Completion. We start from a list L of N ′ points. The heuristic states that
+each point in L is modeled as a random point on the sphere Sd−1 so each pair of
+points ⃗x, ⃗x′ ∈L reduces with probability Vd(π/3) = 1
+N . Since there are N ′(N′−1)
+2
+pairs of points in L, we have on average N ′(N′−1)
+2N
+pairs in L that are reducible.
+We can take for example N ′ = 6N to ensure that there are on average ≈3N ′
+pairs. Therefore, each time we ﬁnd a random reducible pair, with probability at
+least 3N′−|L′|
+3N′
+≥2/3, it wasn’t already in the list L′.
+Throughout the rest of the paper
+Time analysis.
+Condition of reduction of vectors. Consider two random vectors ⃗x0 and ⃗x1 that
+are in the same α-ﬁlter’s bucket of center ⃗s. We write
+⃗x0 = cos(α)⃗s + sin(α)⃗y0
+(1)
+⃗x1 = cos(α)⃗s + sin(α)⃗y1
+(2)
+with ⃗y0, ⃗y1 of norm 1 both orthogonal to ⃗s. The vectors ⃗y0 and ⃗y1 are called
+residual vectors and if ⃗x0 and ⃗x1 are random vectors of fα(⃗s) then ⃗y0, ⃗y1 are
+random vectors in the sphere of dimension d −2 of vectors of norm 1 orthogonal
+to ⃗s.
+Proposition 7. Using the notations just above, we have
+θ(⃗y0, ⃗y1) ⩽2 arcsin
+ 1
+2 sin(α)
+
+⇐⇒θ(⃗x0, ⃗x1) ⩽π
+3 .
+Proof. We denote for simplicity θy := θ(⃗y0, ⃗y1). By subtracting Equation 2 from
+Equation 1 and then by squaring, we have
+∥⃗x0 −⃗x1∥2 ⩽1 ⇔sin2(α)∥⃗y0 −⃗y1∥2 ⩽1
+⇔sin2(α)(2 −2 cos(θy)) ⩽1
+⇔cos(θy) ⩾1 −
+1
+2 sin2(α)
+⇔θy ⩽arccos
+ 1 −
+1
+2 sin2(α)
+
+= 2 arcsin
+ 1
+2 sin(α)
+
+, true for α ⩽π/2.
+
+
+--- PAGE 13 ---
+Corollary 1. Let α ∈[π/3, π/2] and a random pair of vectors in a same α-
+ﬁlter’s bucket. The probability that the pair is reducing is equal to Vd−1(θ∗
+α),
+with
+θ∗
+α := 2 arcsin
+
+1
+2 sin(α)
+
+.
+Notice that we have Vd−1 because we work with residual vectors (orthogonal
+to ⃗s) but since Vd and Vd−1 are asymptotically equivalent, we will keep writing
+Vd(θ∗
+α) everywhere for simplicity. From the above corollary, we have that for
+an α-ﬁlter that has N c points randomly distributed in this ﬁlter, the expected
+number of reducing pairs is N 2c · Vd−1(θ∗
+α).
+Proposition 8. Consider Algorithm 1 with parameter c ∈[0, 1] and associ-
+ated angle α ∈[π/3, π/2] satisfying Vd(α) = N −(1−c). Let ζ such that N ζ =
+N 2c·Vd−1(θ∗
+α). The above algorithm runs in time T = NBREP·(INIT + FAS)
+where
+NBREP = max{1, N c−ζ+o(1)}
+;
+INIT = N 1+o(1)
+;
+FAS = N 1−cFAS1
+where FAS1 the running time of a single call to the FindAllSolutions subroutine.
+Proof. We ﬁrst analyze the two for loops. INIT is the running time of the ﬁrst
+loop. For each point ⃗v ∈L, we need to compute H⃗v,α ∩C and update the
+corresponding buckets fα(⃗si). We have |C| = N 1−c and we chose α such that
+Vd(α) = N −(1−c), so the expected value of |H⃗v,α ∩C| is 1. For each point ⃗v, we
+can compute H⃗v,α ∩C in time N o(1)|H⃗v,α| using Proposition 4. From there, we
+can conclude that we compute the ﬁlter for the N ′ points in time INIT = N 1+o(1).
+The second loop runs in time FAS = N 1−cFAS1 by deﬁnition. After this loop,
+the average number of solutions found is N ζ for each call to FindAllSolutions
+so N 1−c+ζ in total (notice that we can have ζ < 0, which means that we can
+ﬁnd on average much less that one solution for each call of FindAllSolutions).
+We run the while loop until we ﬁnd N ′ solutions so we must repeat this process
+NBREP = max{1, N 1−(1−c+ζ)+o(1)} = max{1, N c−ζ+o(1)} times.
+This formulation of sieving algorithms is easy to analyze. Notice that the
+above running time depends only on c (since α can be derived from c and ζ
+can be derived from c, α) and on the FindAllSolutions subroutine. We now
+retrieve the best known classical and quantum sieving algorithm in this framework.
+Best classical algorithm. In order to retrieve the time exponent of [BDGL16], we
+take c →0, which implies α →π/3. We can compute θ∗
+π/3 ≈1.23rad ≈70.53◦
+and ζ = −0.4094. In this case, we have FAS1 = O(1). From the above proposition,
+we get a total running time of T = N 1.4094+o(1) = 20.2925d+o(d).
+Best quantum algorithm. In order to retrieve the time exponent of [Laa16],
+we take c = 0.2782. This value actually corresponds to the case where ζ = 0, so
+we have on average one solution per α-ﬁlter. For the FindAllSolutions subrou-
+tine, we can apply Grover’s algorithm on pairs of vectors in the ﬁlter to ﬁnd this
+
+
+--- PAGE 14 ---
+solution in time
+√
+N 2c = N c (there are N 2c pairs) so FAS1 = N c. Putting this
+together, we obtain T = N 1+c+o(1) = N 1.2782+o(1) = 20.2653d+o(d).
+In the next section, we show how to improve the above quantum algorithm.
+Our main idea is to replace Grover’s algorithm used in the FindAllSolutions
+subroutine with a quantum random walk. In the next section, we present the
+most natural quantum walk which is done over a Johnson graph and where a
+vertex is marked if the points of a vertex contain a reducible pair, in a similar way
+than for element distinctness. We then show in a later section how this random
+walk can be improved by relaxing the condition on marked vertices.
+5
+Quantum random walk for the FindAllSolutions
+subroutine: a ﬁrst attempt
+5.1
+Constructing the graph
+We start from an unordered list ⃗x1, . . . , ⃗xNc of distinct points in a ﬁlter fα(⃗s) with
+α satisfying Vd(α) =
+1
+N1−c . Let Lx be this list of ⃗xi. For each i ∈[N c], we write
+⃗xi = cos(α)⃗s+sin(α)⃗yi where each ⃗yi is of norm 1 and orthogonal to ⃗s. Recall from
+Proposition 7 that a pair (⃗xi, ⃗xj) is reducible iﬀ. θ(⃗yi, ⃗yj) = θ∗
+α = 2 arcsin(
+1
+2 sin(α)).
+We will work only on the residual vectors ⃗yi and present the quantum random
+walk that ﬁnds pairs ⃗yi, ⃗yj such that θ(⃗yi, ⃗yj) = θ∗
+α more eﬃciently than with
+Grover’s algorithm. Let Ly = ⃗y1, . . . , ⃗yNc be the list of all residual vectors.
+The quantum walk has two extra parameters c1 ∈[0, c] and c2 ∈[0, c1].
+From these two parameters, let β ∈[π/3, π/2] st. Vd(β) = N c2−c1 and ρ0 st.
+N ρ0 =
+Vd(β)
+Wd(β,θ∗α). We start by sampling a random product code C2 with parameters
+[(d −1), log(d −1), N
+ρ0+c1−c2
+log(d−1) ] which has therefore N ρ0+c1−c2 =
+1
+Wd(β,θ∗α) points
+denoted ⃗t1, . . . ,⃗tNρ0+c1−c2. We perform our quantum random walk on a graph
+G = (V, E) where each vertex v ∈V contains:
+– An unordered list Lv
+y = ⃗y1, . . . , ⃗yN c1 of distinct points taken from Ly.
+– For each ⃗ti ∈C2, we store the list of elements of Jv(⃗ti) := fβ(⃗ti) ∩Lv
+y. For
+each ⃗ti, we do this using a quantum data structure that stores Jv(⃗ti) where
+we can add and delete eﬃciently in quantum superposition. This can be done
+with QRAM. Notice that we have on average
+|Jv(⃗ti)| = N c1 ·Vd(β) = N c2,
+and we need to store in total |C2|·N c2 = N c1+ρ0 such elements in total for
+each vertex.
+– A bit that says whether the vertex is marked (we detail the marked condition
+below).
+The vertices of G consists of the above vertices for all possible lists Lv
+y. We
+have (v, w) ∈E if we can go from Lv
+y to Lw
+y by changing exactly one value. In
+
+
+--- PAGE 15 ---
+order words
+(v, w) ∈E ⇔∃⃗yold ∈Lv
+y and ⃗ynew ∈Ly\Lv
+y st. Lw
+y =
+ Lv
+y\{⃗yold}
+
+∪{⃗ynew}.
+This means the graph G is exactly a Johnson graph J(N c, N c1) where each
+vertex also has some additional information as we described above. Once we ﬁnd
+a marked vertex, it contains a pair (⃗yi, ⃗yj) such that θ(⃗yi, ⃗yj) ≤θ∗
+α from which
+we directly get a reducible pair (⃗xi, ⃗xj).
+Condition for a vertex to be marked. We deﬁne the following subsets of vertices .
+We ﬁrst deﬁne the set M0 vertices for which there exists a pair of points which is
+reducible.
+M0 := {v ∈V : ∃⃗yi, ⃗yj ̸= ⃗yi ∈Lv
+y, θ(⃗yi, ⃗yj) ≤θ∗
+α}.
+Ideally, we would want to mark each vertex in M0, however this would induce a
+too large update cost when updating the bit that speciﬁes whether the vertex is
+marked or not. Instead, we will consider as marked vertices subsets of M0 but for
+which the update can be done more eﬃciently, but losing only a small fraction of
+the marked vertices. For each Jv(⃗ti), we deﬁne eJv(⃗ti) which consists of the ﬁrst
+2N c2 elements of Jv(⃗ti)9 and if |Jv(⃗ti)| ≤2N c2, we have eJv(⃗ti) = Jv(⃗ti) . We
+deﬁne the set of marked elements M as follows:
+M := {v ∈V : ∃⃗t ∈C2, ∃⃗yi, ⃗yj ̸= ⃗yi ∈eJv(⃗t), st. θ(⃗yi, ⃗yj) ≤θ∗
+α}.
+The reason for using such a condition for marked vertices is that when we
+will perform an update, hence removing a point ⃗yold from a vertex and adding a
+point ⃗ynew, we will just need to look at the points in eJv(⃗t) for ⃗t ∈fβ(⃗ynew) ∩C2
+which can be done faster than by looking at all the points of the vertex. If we
+used Jv(⃗t) instead of eJv(⃗t) then the argument would be simpler but we would
+only be able to argue about the average running time of the update but the
+quantum walk framework require to bound the update for any pair of adjacent
+vertices10. Also notice that each vertex still contain the sets Jv(⃗ti) (from which
+one can easily compute eJv(⃗ti)).
+5.2
+Time analysis of the quantum random walk on this graph
+We are now ready to analyze our quantum random walk, and compute its diﬀerent
+parameters. Throughout our analysis, we deﬁne K(⃗yi) := fβ(⃗yi)∩C2 and we have
+on average
+|K(⃗yi)| = N ρ0+c1−c2 · Vd(β) = N ρ0.
+9 We consider an global ordering of elements of Ly, for example with respect to their
+index, and Jv(⃗ti) consists of the 2N c2 elements of Jv(⃗ti) which are the smallest with
+respect to this ordering.
+10 This problem arises in several quantum random walk algorithms, for example for
+quantum subset-sum algorithms. One solution is to use a heuristic that essentially
+claims that we can use the average running time of the update cost instead of the
+worst case. In our case, we don’t need this heuristic as we manage to bound the
+update cost in the worst case. We refer to [BBSS20] for an interesting discussion on
+the topic.
+
+
+--- PAGE 16 ---
+Using Proposition 6, we have for each i,
+Pr[|K(⃗yi)|] > 2N ρ] ≤e−Nρ0
+3
+(3)
+and using a union bound, we have for any absolute constant ρ0 > 0:
+Pr[∀i ∈[N c], |K(⃗yi)| ≤2N ρ] ≥1 −N ce−Nρ0
+3
+= 1 −o(1).
+(4)
+So for a ﬁxed α-ﬁlter, we have with high probability that each |K(⃗yi)| is bounded
+by 2N ρ0 and we assume we are in this case. The sets K(⃗yi) can hence be
+constructed in time N ρ0+o(1) using the decoding procedure (Proposition 4) for
+C2.
+Setup cost. In order to construct a full vertex v from a list Lv
+y = ⃗y1, . . . , ⃗yNc1 , the
+main cost is to construct the lists Jv(⃗ti) = fβ(⃗ti) ∩Lv
+y. To do this, we start from
+empty lists Jv(⃗ti). For each ⃗yi ∈Lv
+y, we construct the list K(⃗yi) = fβ(⃗yi) ∩C2
+and for each codeword ⃗tj ∈K(⃗yi), we add ⃗yi in Jv(⃗ti).
+This takes time N c1 ·N ρ0+o(1). We can perform a uniform superposition of
+the vertices by performing the above procedure in quantum superposition. This
+can also be done in N c1 ·N ρ0+o(1) since we use a quantum data structure that
+performs these insertions in Jv(⃗ti) eﬃciently. So in conclusion,
+S = N c1+ρ0+o(1).
+Update cost. We show here how to go from a vertex v with associated list Lv
+y to
+a vertex w with Lw
+y =
+ Lv
+y\{⃗yold}
+
+∪{⃗ynew}. We start from a vertex v so we also
+have the lists Jv(⃗ti) = fβ(⃗ti) ∩Lv
+y.
+In order to construct the lists Jw(⃗ti), we ﬁrst construct K(⃗yold) = fβ(⃗yold)∩C2
+and for each ⃗ti in this set, we remove ⃗yold from Jv(⃗ti). Then, we construct K(⃗ynew)
+and for each ⃗ti in this set, we add ⃗ynew to Jv(⃗ti), thus obtaining all the Jw(⃗ti).
+Constructing the two lists takes time on average N ρ0+o(1) and we then perform
+at most 2N ρ0 deletion and insertion operations which are done eﬃciently. These
+operations take N ρ0+o(1) deletions and insertions, which can be done eﬃciently.
+If v was marked and ⃗yold is not part of the reducible pair then we do not
+change the last registers for Lw
+y . If v was not marked, then we have to ensure
+that adding ⃗ynew doesn’t make it marked. So we need to check whether there
+exists ⃗y′ ̸= ⃗ynew such that
+∃⃗t ∈C2, ⃗ynew, ⃗y0 ∈eJw(⃗t) and (⃗ynew, ⃗y0) are reducible .
+If such a point ⃗y0 exists, it necessarily lies in the set ∪⃗t∈K(⃗ynew) eJv(⃗t) which is of
+size at most 2N ρ·2N c2 = 4N ρ0+c2. We perform a Grover search on this set to
+determine whether there exists a ⃗y0 ∈∪⃗t∈C2 eJv(⃗t) that reduces with ⃗ynew, and
+this takes time N
+ρ0+c1+o(1)
+2
+. In conclusion, we have that the average update time
+is
+U = N ρ0+o(1) + N
+ρ0+c2+o(1)
+2
+≤N max{ρ0, ρ0+c2
+2
+}+o(1).
+
+
+--- PAGE 17 ---
+Checking cost. Each vertex has a bit that says whether it is marked or not so we
+have
+C = 1.
+Computing the fraction of marked vertices Epsilon. We prove here the following
+proposition
+Proposition 9. ε ≥Θ
+ min
+
+N 2c1Vd(β), 1
+	
+.
+Proof. We consider a random vertex in the graph and lower bound the probability
+that it is marked. A suﬃcient condition for a vertex v to be marked is if it satisﬁes
+the following 2 events :
+– E1 : ∃⃗t ∈C2, ∃⃗yi, ⃗yj ̸= ⃗yi ∈Jv(⃗t), st. θ(⃗yi, ⃗yj) ≤θ∗
+α.
+– E2 : ∀⃗t ∈C2, |Jv(⃗t)| ≤2N c2.
+The second property implies that ∀⃗t ∈C2, Jv(⃗t) = eJv(⃗t) and in that case, the
+ﬁrst property implies that v is marked. We now bound the probability of each
+event
+Lemma 1. Pr[E1] ≥Θ
+ min
+
+N 2c1Vd(β), 1
+	
+.
+Proof. For a ﬁxed pair ⃗yi, ⃗yj ̸= ⃗yi ∈Lv
+y, we have Pr[θ(⃗yi, ⃗yj) ≤θ∗
+α] = Vd(θ∗
+α).
+Since there are Θ(N 2c1) such pairs, if we deﬁne the event E0 as: ∃⃗yi, ⃗yj ̸= ⃗yi ∈
+Lv
+y, st. θ(⃗yi, ⃗yj) ≤θ∗
+α, we have
+Pr[E0] ≥Θ
+ min
+
+N 2c1Vd(β), 1
+	
+.
+Now we assume E0 holds and we try to compute the probability that E1 is true
+conditioned on E0. So we assume E0 and let ⃗yi, ⃗yj ̸= ⃗yi ∈Lv
+y, st. θ(⃗yi, ⃗yj) ≤θ∗
+α.
+For each code point ⃗t ∈C2, we have
+Pr[⃗yi, ⃗yj ∈Jv(⃗t)] = Pr[⃗t ∈H⃗yi,β ∩H⃗yj,β] = Wd(β, θ∗
+α).
+Therefore, we have
+Pr[∃⃗t ∈C2, ⃗yi, ⃗yj ∈Jv(⃗t)] = 1 −(1 −Wd(β, θ∗
+α))|C2|.
+(5)
+Since |C2| =
+1
+Wd(β,θ∗α), we can conclude
+Pr[E1|E0] ≥Pr[∃⃗t ∈C2, ⃗yi, ⃗yj ∈Jv(⃗t)] = 1 −(1 −Wd(β, θ∗
+α))|C2| ≥Θ(1),
+which implies Pr[E1] ≥Pr[E1|E0]· Pr[E0] ≥Θ
+ max
+
+N 2c1Vd(β), 1
+	
+.
+Lemma 2. Pr[E2] ≥1 −|C2|e−Nc2
+3 .
+Proof. For each ⃗t ∈C2, we have using Proposition 6 that Pr[|Jv(⃗t)| ≤2N c2] ≥
+1 −e−Nc2
+3 . Using a union bound, we have
+Pr[∀⃗t ∈C2, |Jv(⃗t)| ≤2N c2] ≥1 −|C2|e−Nc2
+3 .
+
+
+--- PAGE 18 ---
+We can now ﬁnish the proof of our Proposition. We have
+ε ≥Pr[E1 ∧E2] ≥Pr[E1] + Pr[E2] −1
+≥Θ
+ max
+
+N 2c1Vd(β), 1
+	
+−|C2|e−Nc2
+3
+≥Θ
+ max
+
+N 2c1Vd(β), 1
+	
+The last inequality comes from the fact that |C2|e−Nc2
+3
+is vanishing doubly
+exponentially in d (N is exponential in d) so it is negligible compared to the ﬁrst
+term and is absorbed by the Θ(·).
+Computing the spectral gap Delta. We are in a J(N c, N c1) Johnson graph so we
+have
+δ ≈N −c1.
+Running time of the quantum walk. The running time T1 of the quantum walk is
+(omitting the o(1) terms and the O(·) notations)
+T1 = S + 1
+√ε
+ 1
+√
+δ
+U + C
+
+= N c1+ρ0 +
+1
+max{1, N c1p
+Vd(θ∗α)}
+
+N max{ρ0, ρ0+c2
+2
+}+ c1
+2
+
+In this running time, we can ﬁnd one marked vertex with high probability if
+it exists. We repeat this quantum random walk until we ﬁnd max{ Nζ
+2 , 1} solutions.
+Algorithm for the FindAllSolutions procedure
+Pick a random product code C2.
+while the number of solutions found is < Nζ
+2 :
+Run our QRW to ﬁnd a solution and add it to the list of solutions
+if it hasn’t been found.
+For ζ > 0, there are N ζ diﬀerent solutions that can be found in each α-ﬁlter.
+Each time we ﬁnd a solution, since the list of solutions found is < N ζ
+2 . Therefore,
+the probability that each solutions found by the QRW is new is at least 1
+2. We
+have therefore
+FAS1 = max{N ζ, 1} · T1.
+If ζ > 0, our algorithm ﬁnds Θ(N ζ) solutions in time N ζT1 and if ζ ≤0, our
+algorithm ﬁnds 1 solution in time T1 with probability Θ(N −ζ).
+5.3
+Memory analysis
+Classical space. We have to store at the same time in classic memory the N list
+vectors of size d, and the buckets of the α-ﬁlters. Each vector is in N o(1) α-ﬁlter,
+so our algorithm takes classical space N 1+o(1).
+
+
+--- PAGE 19 ---
+Memory requirements of the quantum random walk. Each vertex v of the graph
+stores all the Jv(⃗ti) which together take space N c1+ρ0. We need to store a
+superposition of vertices so we need N c1+ρ0 quantum registers and we need
+that same amount of QRAM because we perform insertions and deletions in the
+database in quantum superposition. All the operations require QRAM access to
+the whole list Ly which is classically stored and is of size N c. Therefore, we also
+require N c QRAM.
+5.4
+Optimal parameters for this quantum random walk
+Our algorithm takes in argument three parameters: c ∈[0, 1], c1 ≤c and c2 ≤c1
+from which we can express all the other variables we use: α, θ∗
+α, β, ρ0 and ζ. We
+recall these expressions as they are scattered throughout the previous sections:
+– α: angle in [π/3, π/2] that satisﬁes Vd(α) =
+1
+N1−c .
+– θ∗
+α = 2 arcsin(
+1
+2 sin(α)).
+– β: angle in [π/3, π/2] that satisﬁes Vd(β) =
+1
+N c1−c2 .
+– ρ0: non-negative real number such that N ρ0 =
+Vd(β)
+Wd(β,θ∗α).
+– ζ: real number such that N ζ = N 2cVd(θ∗
+α).
+Plugging the value of FAS1 from the end of Section 5.2 in Proposition 8,
+we ﬁnd that the total running time of our quantum sieving algorithm with
+parameters c, c1, c2 is
+T = N c−ζ
+ 
+N + N 1−c max{N ζ, 1}
+ 
+N c1+ρ0 +
+1
+max{1, N c1p
+Vd(θ∗α)}
+
+N max{ρ0, ρ0+c2
+2
+}+ c1
+2
+!!
+.
+We ran a numerical optimization over c, c1, c2 to get our optimal running
+time, summed up in the following theorem.
+Proposition 10. Our algorithm with parameters
+c ≈0.3300
+;
+c1 ≈0.1952
+;
+c2 ≈0.0603
+heuristically solves SVP on dimension d in time T = N 1.2555+o(1) = 20.2605d+o(d),
+uses QRAMM of maximum size N 0.3300+o(1) = 20.0685d+o(d), a quantum memory
+of size N 0.2555+o(1) = 20.0530d+o(d) and uses a classical memory of size N 1+o(1) =
+20.2075d+o(d).
+With these parameters, we obtain the values of the other parameters:
+α ≈1.1388rad ≈65.25◦;
+θ∗
+α ≈1.1661rad ≈66.46◦;
+β ≈1.3745rad ≈78.75◦
+ρ0 ≈0.0603;
+ζ ≈0.0745.
+As well as the quantum walk parameters:
+S = N c1+ρ0 = N 0.2555;
+U = N ρ0 = N 0.0603;
+C = 0;
+ε = δ = N −c1 = N −0.1952.
+
+
+--- PAGE 20 ---
+The equality ρ0 = c2 allows to balance the time of the two operations during
+the update step. With these parameters we also obtain S = U/
+√
+ϵ δ = N c1+ρ0 =
+N 0.2555d, which balances the overall time complexity.
+Notice that with these parameters, we can rewrite T as
+T = N c−ζ  N + N 1−c+ζ+c1+ρ0
+= N 1+c−ζ + N 1+c1+ρ0.
+Also, we have c1 + ρ0 = c −ζ, which equalizes the random walk step with the
+initialization step. From our previous analysis, the amount of required QRAM is
+N c and the amount of quantum memory needed is N c1+ρ0.
+6
+Quantum random walk for the FindAllSolutions
+subroutine: an improved quantum random walk
+We now add a variable ρ ∈(0, ρ0] that will replace the choice of ρ0 above. ρ0
+was chosen in order to make sure that if a pair ⃗yi, ⃗yj exists in a vertex v, then it
+will appear on one of the Jv(⃗t) for ⃗t ∈C2. However, we can relax this and only
+mark a small fraction of these vertices. This will reduce the fraction of marked
+vertices, which makes it harder to ﬁnd a solution, but having a smaller ρ will
+reduce the running time of our quantum random walk.
+The construction is exactly the same as in the previous section just that we
+replace ρ0 with ρ. This implies that |C2| = N ρ+c1−c2. We can perform the same
+analysis as above
+Time analysis of this QRW in the regime ζ + ρ −ρ0 > 0. We consider the regime
+where ζ + ρ −ρ0 > 0 and ρ ∈(0, ρ0] (in particular ζ > 0, since ρ0 > 0). This
+regime ensures that even when if we have less marked vertices, then there on
+average more than one marked vertex, so our algorithm at least ﬁnds one solution
+with a constant probability.
+The analysis walk is exactly the same than in Section 5.2, each repetition of
+the quantum random walk takes time T1 with
+T1 = S + 1
+√ε
+ 1
+√
+δ
+U + C
+
+with
+S = N c1+ρ,
+U = N max{ρ, ρ+c2
+2
+}+o(1),
+C = 1,
+ε = N 2c1N ρ−ρ0Vd(θ∗
+α),
+δ = N −c1.
+The only thing maybe to develop is the computation of ε. We perform the
+same analysis as above but with |C2| = N ρ+c1−c2. This means that Equation 5
+of Lemma 1 becomes
+Pr[∃⃗t ∈C2, ⃗yi, ⃗yj ∈Jv(⃗t)] = 1 −(1 −Wd(β, θ∗
+α))|C2|
+≥|C2|Wd(β, θ∗
+α) = N ρ−ρ0.
+
+
+--- PAGE 21 ---
+which gives the extra term N ρ−ρ0 in ε. Another issue is that now, we can only
+extract N ζ+ρ−ρ0 solutions each time we construct the graph, we have therefore to
+repeat this procedure to ﬁnd Nζ+ρ−ρ0
+2
+solutions with this graph and then repeat
+the procedure with a new code C2. The algorithm becomes
+Algorithm from Section 6 with parameter ρ
+while the total number of solutions found is < N ζ
+2 :
+Pick a random product code C2.
+while the number of solutions found is < Nζ+ρ−ρ0
+2
+with this C2:
+Run our QRW with ρ to ﬁnd a new solution.
+With this procedure, we also ﬁnd Θ(N ζ) solutions in time N ζT1 and FAS1 =
+N ζT1 (Recall that we are in the case ζ ≥ζ + ρ −ρ0 > 0). Actually, Optimal
+parameters will be when c2 = 0 and ρ →0.
+6.1
+Analysis of the above algorithm
+This change implies that some reducing pairs are missed. For the quantum random
+walk complexity, this only change the probability, denoted ϵ, so that a vertex is
+marked. Indeed, it is equal to the one so that there happens a collision between
+two vectors through a ﬁlter, which is no longer equal to the existence of a reducing
+pair within the vertex. Indeed, to have a collision, there is the supplementary
+condition of both vectors of a reducing pair are inserted in the same ﬁlter, which
+is of probability N ρ0−ρ. So we get a higher value of ϵ = N 2c1Vd(θ∗
+α) · N ρ0−ρ.
+However, this increasing is compensated by the reducing of the costs of the
+setup (N c1+ρ+o(1)) and the update (2N max{ρ, ρ+c2
+2
+}+o(1)).
+A numerical optimisation over ρ, c, c1 and c2 leads to the following theorem.
+Theorem 4 (Theorem 1 restated). Our algorithm with a free ρ with param-
+eters
+ρ →0
+;
+c ≈0.3696
+;
+c1 ≈0.2384
+;
+c2 = 0
+heuristically solves SVP on dimension d in time T = N 1.2384+o(1) = 20.2570d+o(d),
+uses QRAM of maximum size N 0.3696 = 20.0767d, a quantum memory of size
+N 0.2384 = 20.0495d and uses a classical memory of size N 1+o(1) = 20.2075d+o(d).
+With these parameters, we obtain the values of the other parameters:
+α ≈1.1514 rad;
+θ∗
+α ≈1.1586 rad;
+β ≈1.1112 rad;
+ζ ≈0.1313.
+As well as the quantum walk parameters:
+S = N c1+ρ = N 0.2384;
+U = N ρ = N o(1);
+C = 0;
+ε = δ = N −c1 = N −0.2384.
+With these parameters, we also have ρ0 = 0.107 so we are in the regime where
+ζ + ρ −ρ0 > 0. As in the previous time complexity stated in Theorem 10, we
+
+
+--- PAGE 22 ---
+reach the equality S = U/
+√
+ϵδ, which allows to balance the time of the two steps
+of the quantum random walk: the setup and the search itself.
+Notice that with these parameters, we can rewrite T as
+T = N c−ζ  N + N 1−c+ζ+c1+ρ
+= N 1+c−ζ + N 1+c1+ρ.
+With our optimal parameters, we have ρ = 0 and c −ζ = c1, which equalizes the
+random walk step with the initialization step. From our previous analysis, the
+amount of required QRAM is N c and the amount of quantum memory needed is
+N c1.
+7
+Space-time trade-oﬀs
+By varying the values c, c1, c2 and ρ, we can obtain trade-oﬀs between QRAM
+and time, and between quantum memory and time. All the following results come
+from numerical observations.
+7.1
+Trade-oﬀfor ﬁxed quantum memory.
+We computed the minimized time if we add the constraint that the quantum
+memory must not exceed 2Md. For a chosen ﬁxed M, the quantum memory
+is denoted is 2µMd = 2Md and the corresponding minimal time by 2τMd. The
+variation of M also impacts the required QRAM to run the algorithm, that we
+denote by 2γMd.
+So we get a trade-oﬀbetween time and quantum memory in Figure 1, and
+the evolution of QRAM in function of M for a minimal time is in Figure 2.
+Fig. 1: Quantum memory-time trade-oﬀ.
+
+
+--- PAGE 23 ---
+Fig. 2: QRAM in function of available quantum memory for minimized time.
+For more than 20.0495d quantum memory, increasing it does not improve
+the time complexity anymore. An important fact is that for a ﬁxed M the
+corresponding value τM from ﬁgure 1 and γM from Figure 2 can be achieved
+simultaneously with the same algorithm.
+We observe that from M = 0 to 0.0495 these curves are very close to aﬃne.
+Indeed, the function that passes through the two extremities points is of expression
+0.2653 −0.1670M. The diﬀerence between τM and its aﬃne approximation does
+not exceed 4·10−5. By the same way, the diﬀerence between γM and its aﬃne
+average function of expression 0.0578 + 0.3829M is inferior to 2·10−4. All this is
+summarized in the following theorem.
+Theorem 5 (Trade-oﬀfor ﬁxed quantum memory). There exists a quan-
+tum algorithm using quantum random walks that solves SVP on dimension d
+which for a parameter M ∈[0, 0.0495] heuristically runs in time 2τMd+o(d), uses
+QRAM of maximum size 2γMd, a quantum memory of size 2µMd and a classical
+memory of size 20.2075d where
+τM ∈0.2653 −0.1670M + [−2·10−5; 4·10−5]
+γM ∈0.0578 + 0.3829M −[0; 2·10−4]
+;
+µM = M.
+In the informal formulation of this theorem, we used the symbols ⪅and ⪆
+that refers to these hidden small values.
+7.2
+Trade-oﬀfor ﬁxed QRAM.
+We also get a trade-oﬀbetween QRAM and time. For a chosen ﬁxed M ′, the
+QRAM is denoted by 2γM′d = 2M ′d, and the corresponding minimal time by
+
+
+--- PAGE 24 ---
+2τM′d. The required quantum memory is denoted 2µM′d. Note that 2µM′d is the
+also the amount of the required quantum QRAM called "QRAQM".
+This gives a trade-oﬀbetween time and QRAM in the ﬁgure 3, and the
+evolution of quantum memory in function of M ′ is in the ﬁgure 4.
+Fig. 3: QRAM-time trade-oﬀ.
+Fig. 4: Quantum memory in function of available QRAM for minimized time.
+For more than 20.0767d QRAM, increasing it does not improve the time
+complexity.
+
+
+--- PAGE 25 ---
+The diﬀerence between the function τM ′ and its average aﬃne function of
+expression 0.2926 −0.4647·M ′ does not exceed 6·10−4. This aﬃne function is a
+upper bound of τM ′.
+From M ′ = 0 to 0.0579 the function γM ′ is at 0. Then, it is close to the
+aﬃne function of expression 2.6356(M ′ −0.0579). So γM ′ can be approximated
+by max{2.6356(M ′ −0.0579), 0}, and the diﬀerence between γM ′ and this ap-
+proximation does not exceed 9·10−4. All this is summarized in the following
+theorem.
+Theorem 6 (Trade-oﬀfor ﬁxed QRAM). There exists a quantum algorithm
+using quantum random walks that solves SVP on dimension d which for a pa-
+rameter M ′ ∈[0, 0.0767] heuristically runs in time 2τM′d+o(d), uses QRAM of
+maximum size poly(d) · 2γM′d, a quantum memory of size poly(d) · 2µM′d and uses
+a classical memory of size poly(d) · 20.2075d where
+τM ′ ∈0.2927 −0.4647M ′ −[0; 6·10−4]
+;
+γM ′ = M ′
+µM ′ ∈max{2.6356(M ′ −0.0579), 0} + [0; 9·10−4].
+Finally, we present a table with a few values that presents some of the above
+trade-oﬀs.
+Time τM ′
+0.2925
+0.2827 0.2733
+0.2653
+0.2621 0.2598 0.2570
+QRAM γM ′
+0
+0.02
+0.04
+0.0578
+0.065 0.070 0.0767
+Q. memory µM ′
+0
+0
+0
+0
+0.0190 0.0324 0.0495
+Comment
+[BDGL16] alg.
+[Laa16] alg.
+Thm 1.
+Fig. 5: Time, QRAM and quantum memory values for our algorithm.
+8
+Discussion
+Impact on lattice-based cryptography. Going from a running time of 20.2653d+o(d)
+to 20.2570d+o(d) slightly reduces the security claims based on the analysis of the
+SVP (usually via the BKZ algorithm). For example, if one claims 128 bits of
+security using the above exponent then one must reduce this claim to 124 bits
+of quantum security. This of course can usually be ﬁxed with a slight increase
+of the parameters but cannot be ignored if one wants to have the same security
+claims as before.
+Parallelization. On thing we haven’t talked about in this article is whether our
+algorithm paralellizes well. Algorithm 1 seems to parallelize very well, and we
+argue that it is indeed the case.
+For this algorithm, the best classical algorithm takes c →0. In this case,
+placing each ⃗v ∈L in its corresponding α-ﬁlters can be done in parallel and with
+N processors (or N width) it can be done in time poly(d). Then, there are N
+
+
+--- PAGE 26 ---
+separate instances of FindAllSolutions which can be also perfectly parallelized
+and each one also takes time poly(d) when c →0. The while loop is repeated
+N −ζ = N 0.409d times so the total running time (here depth) is N 0.409d+o(d) with
+a classical circuit of width N. Such a result already surpasses the result from
+[BDGL16] that achieves depth N 1/2 with a quantum circuit of width N using
+parallel Grover search.
+In the quantum setting, our algorithm parallelizes also quite well. If we consider
+our optimal parameters (c = 0.3696) with a similar reasoning, our algorithm will
+parallelize perfectly with N 1−c processors (so that there is exactly one for each
+call to FindAllSolutions i.e. for the quantum random walk). Unfortunately,
+after that, we do not know how to parallelize well within the quantum walk.
+When we consider circuits of width N, our optimizations didn’t achieve better
+than a depth of N 0.409+o(d) which is the classical parallelization. This is also
+the case if we use Grover’s algorithm as in [Laa16] for the FindAllSolutions
+and we use parallel Grover search as in [BDGL16] so best known (classical or
+quantum) algorithm with lowest depth that uses a circuit of width N is the
+classical parallel algorithm described above.
+Acknowledgments and paths for improvements
+The authors want to thank Simon Apers for helpful discussions about quantum
+random walks, in particular about the fact that there are no better generic
+algorithms for ﬁnding k diﬀerent marked than to run the whole random walk
+(including the setup) O(k) times. There could however be a smarter way to do
+this in our setting which would improve the overall complexity of our algorithm.
+Another possible improvement would be to embed the local sensitivity property
+in the graph on which we perform the random walk instead of working on the
+Johnson graph.
+
+
+--- PAGE 27 ---
+References
+[AGJO+15]
+Srinivasan Arunachalam, Vlad Gheorghiu, Tomas Jochym-O’Connor,
+Michele Mosca, and Priyaa Varshinee Srinivasan. On the robustness
+of bucket brigade quantum ram. New Journal of Physics, 17(12):123010,
+Dec 2015.
+[AGPS20]
+Martin R. Albrecht, Vlad Gheorghiu, Eamonn W. Postlethwaite, and
+John M. Schanck. Estimating quantum speedups for lattice sieves. In
+Shiho Moriai and Huaxiong Wang, editors, Advances in Cryptology –
+ASIACRYPT 2020, pages 583–613, Cham, 2020. Springer International
+Publishing.
+[AINR14]
+Alexandr Andoni, Piotr Indyk, Huy Lê Nguyên, and Ilya Razenshteyn.
+Beyond locality-sensitive hashing. SODA, page 1018–1028, 2014.
+[Ajt96]
+M. Ajtai. Generating hard instances of lattice problems (extended ab-
+stract). In Proceedings of the Twenty-Eighth Annual ACM Symposium
+on Theory of Computing, STOC ’96, page 99–108, New York, NY, USA,
+1996. Association for Computing Machinery.
+[Ajt98]
+Miklos Ajtai. The shortest vector problem in l2 is np-hard for randomized
+reductions (extended abstract). 30th Annual ACM Symposium on Theory
+of Computing Proceedings, pages 10 – 19, 1998.
+[Amb07]
+Andris Ambainis.
+Quantum walk algorithm for element distinctness.
+SIAM J. Comput., 37(1):210–239, 2007.
+[AR15]
+Alexandr Andoni and Ilya Razenshteyn. Optimal data-dependent hashing
+for approximate near neighbors. STOC, page 793–801, 2015.
+[BBSS20]
+Xavier Bonnetain, Rémi Bricout, André Schrottenloher, and Yixin Shen.
+Improved classical and quantum algorithms for subset-sum. In Shiho Mo-
+riai and Huaxiong Wang, editors, Advances in Cryptology - ASIACRYPT
+2020 - 26th International Conference on the Theory and Application of
+Cryptology and Information Security, Daejeon, South Korea, December 7-
+11, 2020, Proceedings, Part II, volume 12492 of Lecture Notes in Computer
+Science, pages 633–666. Springer, 2020.
+[BDGL16]
+Anja Becker, Léo Ducas, Nicolas Gama, and Thijs Laarhoven.
+New
+directions in nearest neighbor searching with applications to lattice sieving.
+Proc. of the 2016 Annual ACM-SIAM Symposium on Discrete Algorithms,
+2016.
+[BJLM13]
+Daniel J. Bernstein, Stacey Jeﬀery, Tanja Lange, and Alexander Meurer.
+Quantum algorithms for the subset-sum problem. In Philippe Gaborit, edi-
+tor, Post-Quantum Cryptography - 5th International Workshop, PQCrypto
+2013, Limoges, France, June 4-7, 2013. Proceedings, volume 7932 of Lec-
+ture Notes in Computer Science, pages 16–33. Springer, 2013.
+[BL16]
+Anja Becker and Thijs Laarhoven. Eﬃcient (ideal) lattice sieving using
+cross-polytope lsh.
+In David Pointcheval, Abderrahmane Nitaj, and
+Tajjeeddine Rachidi, editors, Progress in Cryptology – AFRICACRYPT
+2016, pages 3–23, Cham, 2016. Springer International Publishing.
+[CDH+19]
+C. Chen, O. Danba, J. Hoﬀstein, A. Hülsing, J. Rijneveld, J.M. Schanck,
+P. Schwabe, W. Whyte, and Z. Zhang. Ntru. Round-3 submission to the
+NIST pqc project, 2019.
+[Cha02]
+Moses S. Charikar. Similarity estimation techniques from rounding algo-
+rithms. STOC, page 380–388, 2002.
+
+
+--- PAGE 28 ---
+[DKL+19]
+L. Ducas, E. Kiltz, T. Lepoint, V. Lyubashevsky, P. Schwabe, G. Seiler,
+and D. Stehlé. Crystals-dilithium, algorithm speciﬁcations and supporting
+documentation. Round-3 submission to the NIST pqc project, 2019.
+[dW19]
+Ronald de Wolf. Quantum computing: Lecture notes, 2019.
+[FHK+19]
+P-A. Fouque, J. Hoﬀstein, P. Kirchner, V. Lyubashevsky, T. Pornin,
+T. Prest, T. Ricosset, G. Seiler, W. Whyte, and Z. Zhang. Falcon: Fast-
+fourier lattice-based compact signatures over ntru. Round-3 submission
+to the NIST pqc project, 2019.
+[Gen09]
+Craig Gentry. Fully homomorphic encryption using ideal lattices. In
+Proceedings of the Forty-First Annual ACM Symposium on Theory of
+Computing, STOC ’09, page 169?178, New York, NY, USA, 2009. Associ-
+ation for Computing Machinery.
+[GLM08]
+Vittorio Giovannetti, Seth Lloyd, and Lorenzo Maccone. Quantum random
+access memory. Phys. Rev. Lett., 100:160501, Apr 2008.
+[Gro96]
+Lov Grover. A fast quantum mechanical algorithm for database search.
+Proc.28th Annual ACM Symposium on the Theory of Computing STOC,
+pages 212 – 219, 1996.
+[HM18]
+Alexander Helm and Alexander May. Subset sum quantumly in 1.17n.
+In Stacey Jeﬀery, editor, 13th Conference on the Theory of Quantum
+Computation, Communication and Cryptography, TQC 2018, July 16-18,
+2018, Sydney, Australia, volume 111 of LIPIcs, pages 5:1–5:15. Schloss
+Dagstuhl - Leibniz-Zentrum für Informatik, 2018.
+[IM98]
+Piotr Indyk and Rajeev Motwani. Approximate nearest neighbors: To-
+wards removing the curse of dimensionality. STOC, pages 604 – 613, 1998.
+[Kan83]
+R. Kannan. Improved algorithms for integer programmingand related
+lattice problems. Proceedings of the 15thSymposium on the Theory of
+Computing (STOC), ACM Press, pages 99 – 108, 1983.
+[Kle00]
+Philip Klein. Finding the closest lattice vector when it’s unusually close.
+SODA, page 937–941, 2000.
+[KMPM19]
+Elena Kirshanova, Erik Martensson, Eamonn W. Postlethwaite, and
+Subhayan Roy Moulik. Quantum algorithms for the approximate k-list
+problem and their application to lattice sieving. ASIACRYPT, 2019.
+[KT17]
+Ghazal Kachigar and Jean-Pierre Tillich.
+Quantum information set
+decoding algorithms. In Tanja Lange and Tsuyoshi Takagi, editors, Post-
+Quantum Cryptography - 8th International Workshop, PQCrypto 2017,
+Utrecht, The Netherlands, June 26-28, 2017, Proceedings, volume 10346
+of Lecture Notes in Computer Science, pages 69–89. Springer, 2017.
+[Laa15]
+Thijs Laarhoven. Sieving for shortest vectors in lattices using angular
+locality-sensitive hashing. In Rosario Gennaro and Matthew Robshaw,
+editors, Advances in Cryptology – CRYPTO 2015, pages 3–22, Berlin,
+Heidelberg, 2015. Springer Berlin Heidelberg.
+[Laa16]
+Thijs Laarhoven. Search problems in cryptography, From ﬁngerprinting
+to lattice sieving. PhD thesis, Eindhoven University of Technology, 2016.
+[LdW15]
+Thijs Laarhoven and Benne de Weger. Faster sieving for shortest lat-
+tice vectors using spherical locality-sensitive hashing. In Kristin Lauter
+and Francisco Rodríguez-Henríquez, editors, Progress in Cryptology –
+LATINCRYPT 2015, pages 101–118, Cham, 2015. Springer International
+Publishing.
+[LLL82]
+A.K. Lenstra, H.W. Lenstra, and L. Lovasz. Factoring polynomials with
+rational coeﬃcients. Mathematische Annalen, pages 513–534, 1982.
+
+
+--- PAGE 29 ---
+[LMvdP15]
+Thijs Laarhoven, Michele Mosca, and Joop van de Pol. Finding shortest
+lattice vectors faster using quantum search. Des. Codes Cryptogr., 77(2-
+3):375–400, 2015.
+[MNRS11]
+Frédéric Magniez, Ashwin Nayak, Jérémie Roland, and Miklos Santha.
+Search via quantum walk. SIAM J. Comput., 40(1):142–164, 2011.
+[MV10]
+Daniele Micciancio and Panagiotis Voulgaris. Faster exponential time
+algorithms for the shortest vector problem. SODA, page 1468 – 1480,
+2010.
+[NC00]
+Michael A. Nielsen and Isaac L. Chuang. Quantum computation and
+quantum information. Cambridge University Press, New York, NY, USA,
+2000.
+[NV08]
+P.Q. Nguyen and T. Vidick. Sieve algorithms for the shortest vector
+problem are practical. J. Math. Crypt. 2, pages 181 – 207, 2008.
+[TT07]
+Kengo Terasawa and Yuzuru Tanaka.
+Spherical lsh for approximate
+nearest neighbor search on unit hypersphere. WADS, page 27–38, 2007.
+[WLTB11]
+Xiaoyun Wang, Mingjie Liu, Chengliang Tian, and Jingguo Bi. Improved
+nguyen-vidick heuristic sieve algorithm for shortest vector problem. In
+Proceedings of the 6th ACM Symposium on Information, Computer and
+Communications Security, ASIACCS ’11, page 1–9, New York, NY, USA,
+2011. Association for Computing Machinery.
+[ZPH14]
+Feng Zhang, Yanbin Pan, and Gengran Hu. A three-level sieve algorithm
+for the shortest vector problem. In Tanja Lange, Kristin Lauter, and Petr
+Lisoněk, editors, Selected Areas in Cryptography – SAC 2013, pages 29–47,
+Berlin, Heidelberg, 2014. Springer Berlin Heidelberg.

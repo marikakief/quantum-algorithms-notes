@@ -1,3 +1,5 @@
+# A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes
+
 > **Source:** Oded Regev, *A subexponential time algorithm for the dihedral hidden subgroup problem with polynomial space*, arXiv:quant-ph/0406151, 2004
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0406151)
 > **Tags:** #hidden-subgroup-problem #dihedral-group #quantum-sieve #subexponential #space-efficient
@@ -14,7 +16,7 @@ Equivalently: given labelled qubits $|\psi_y\rangle = |0\rangle + e^{2\pi i dy/N
 
 Regev modifies [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg's algorithm]] to achieve **polynomial space** at the cost of a slightly larger (but still subexponential) running time: $2^{O(\sqrt{\log N \cdot \log \log N})}$ vs Kuperberg's $2^{O(\sqrt{\log N})}$.
 
-The key difference: Kuperberg's sieve stores $2^{O(\sqrt{n})}$ qubits simultaneously to wait for label collisions. Regev replaces this with a **multi-qubit combination** that processes $l + 4$ qubits at once and zeros out $l$ bits of the label in one shot, using only $O(l)$ qubits at a time.
+The key difference, with $n=\log N$, is that Kuperberg's sieve stores $2^{O(\sqrt{n})}$ qubits simultaneously to wait for label collisions. Regev replaces this with a **multi-qubit combination** that processes $l + 4$ qubits at once and zeros out $l$ bits of the label in one shot, using only $O(l)$ qubits at a time.
 
 ## The algorithm
 
@@ -51,7 +53,7 @@ The pipeline has $k = O(\sqrt{n/\log n})$ routines, each using the batch combina
 
 Total input to the pipeline: $l^{O(k)} = 2^{O(\sqrt{n \log n})}$ oracle calls.
 
-Each batch combination step takes $2^{O(l)} = 2^{O(\sqrt{n \log n})}$ classical time (brute-force enumeration of $\vec{b}$).
+Each batch combination step takes $2^{O(l)} = 2^{O(\sqrt{n \log n})}$ classical time for brute-force enumeration of $\vec{b}$. This is classical work inside each batch attempt; it is not stored quantum memory, but it is the source of the extra $\sqrt{\log n}$ factor in the time exponent.
 
 ## Key results
 
@@ -68,11 +70,11 @@ Each batch combination step takes $2^{O(l)} = 2^{O(\sqrt{n \log n})}$ classical 
 | Space | $2^{O(\sqrt{n})}$ | $\text{poly}(n)$ |
 | Queries | $2^{O(\sqrt{n})}$ | $2^{O(\sqrt{n \log n})}$ |
 | Combination | Pairwise ($k + \ell \to k \pm \ell$) | Batch ($l + 4$ qubits $\to$ 1 qubit, clearing $l$ bits) |
-| Pile needed? | Yes ($2^{O(\sqrt{n})}$ qubits) | No (constant qubits per attempt) |
+| Pile needed? | Yes ($2^{O(\sqrt{n})}$ qubits) | No stored exponential list of quantum states; failed batches are regenerated |
 
 Where $n = \log N$.
 
-The space reduction is significant for near-term considerations: polynomial-space algorithms are much more realistic than superpolynomial-space ones, even if both are subexponential in time.
+The space reduction is significant for cryptographic resource estimates when long-lived quantum memory is treated as more expensive than additional classical time. It does not make DHSP easy; it changes which resource is expensive.
 
 ## Limits / caveats
 
@@ -98,6 +100,7 @@ The space reduction is significant for near-term considerations: polynomial-spac
 ### Paper notes
 - [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes]] — proves poly queries suffice for all groups; the computational complexity that Regev addresses is the hard part
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes]] — the original algorithm that Regev modifies; same problem, same overall approach, different space/time tradeoff
+- [[Another Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2013) — Paper Notes]] — later collimation-sieve framework that includes Regev's polynomial-space behaviour as one endpoint of a broader tradeoff family
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]] — complementary approach to nonabelian HSP via PGM
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — the abelian HSP foundation
 - [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes]] — another extension of period finding; different group-theoretic setting but similar "beyond standard abelian HSP" flavour

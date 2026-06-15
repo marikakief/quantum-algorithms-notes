@@ -1,0 +1,813 @@
+
+
+--- PAGE 1 ---
+arXiv:1410.1434v2  [quant-ph]  26 Apr 2015
+Quantum attacks against iterated block ciphers
+M. Kaplan∗
+Abstract
+We study the ampliﬁcation of security against quantum attacks provided by iteration of block ciphers.
+In the classical case, the Meet-in-the-middle attack is a generic attack against those constructions. This
+attack reduces the time required to break double iterations to only twice the time it takes to attack a
+single block cipher, given that the attacker has access to a large amount of memory. More abstractly, it
+shows that security by composition does not achieve exact multiplicative ampliﬁcation.
+We prove here that for quantum adversaries, two iterated ideal block cipher are more diﬃcult to
+attack than a single one. We give a quantized version of the Meet-in-the-middle attack and then use the
+generalized adversary method to prove that it is optimal. An interesting corollary is that the time-space
+product for quantum attacks is very diﬀerent from what classical attacks allow. This ﬁrst result seems
+to indicate that composition resists better to quantum attacks than to classical ones.
+We investigate security ampliﬁcation by composition further by examining the case of four iterations.
+We quantize a recent technique called the dissection attack using the framework of quantum walks.
+Surprisingly, this leads to better gains over classical attacks than for double iterations, which seems to
+indicate that when the number of iterations grows, the resistance against quantum attacks decreases.
+1
+Introduction
+Quantum information processing has deeply changed the landscape of classical cryptography. In particu-
+lar, cryptosystems based on integer factoring and discrete logarithm are known to be completely insecure
+against quantum computers. This opened the ﬁeld of post-quantum (PQ) cryptography, which tries to restore
+the security of classical cryptosystems against quantum attacks. Regarding public key cryptography, PQ
+cryptography is investigating (or reinvestigating) a number of diﬀerent approaches such as lattice-based cryp-
+tography, code-based cryptography or elliptic curve cryptography. The goal of these diﬀerent approaches
+is to base public key encryption mechanisms on problems that are believed to be hard to solve even for
+quantum computers.
+The situation in symmetric cryptography is more complicated. It is well known quantum computers can
+speed-up certain information processing tasks that are useful for the cryptanalysis of symmetric cryptosys-
+tems. This includes exhaustive search [Gro96] or collision ﬁnding [Amb07]. In fact, quantum cryptanalysis
+is often cited as a motivation to study quantum algorithms [BHT98, AS04, Zha13]. Since these quantum
+algorithms usually allow only polynomial speedups, this tends to spread the belief that the security against
+quantum adversaries can be restored by increasing the size of private keys.
+This short answer to the question of security against quantum attacks leaves aside a number of issues. For
+example, it applies to generic attacks and not to cryptographic attacks. Roughly speaking, generic attacks
+work against constructions based on ideal functionalities, whereas cryptographic attacks try to attack their
+implementations. Attacking realistic, complex cryptosystems may require more eﬀort than just applying
+basic quantum algorithms. This situation is well described by Daniel Bernstein [Ber10]:
+“Grovers algorithm takes only square-root time compared to a brute-force key search, but this
+does not mean that it takes less time than the more sophisticated algorithms used to ﬁnd hash
+∗LTCI, T´el´ecom ParisTech, 23 avenue dItalie, 75214 Paris CEDEX 13, France
+1
+
+
+--- PAGE 2 ---
+collisions, McEliece error vectors, etc. Sometimes Grover’s idea can be used to speed up the more
+sophisticated algorithms, but understanding the extent of the speedup requires careful analysis.”
+In this work, we argue that the tools developed to study quantum speedups in complexity theory can be
+applied to get new insights in cryptographic settings. In particular, the ﬁeld of quantum walk algorithms is
+a ﬂexible framework to develop search algorithms on complex structures [San08]. Even more interestingly,
+the generalized adversary method [HLˇS07] can be used to prove lower bounds, and thus resistance against
+quantum attacks, at least in a black box setting.
+Applying these tools to study the resistance against
+quantum attacks is an extension of the current horizon of PQ cryptography that can be though as quantum
+post-quantum cryptography.
+We focus here on one of the most fundamental situations in symmetric cryptography: block cipher
+encryption. In this setting, a message m is cut into blocks of ﬁxed size, and each block is encrypted using a
+permutation speciﬁed by a secret key. The original message can then be recovered by applying the inverse
+permutation on each block. The speciﬁcation of the encryption and decryption algorithms are public, only
+the key remains secret through the process. Block cipher encryption is widely used in practice. It is also
+an important building block in the design of other cryptographic primitives such as message authentication
+codes, hash functions, or digital signature.
+A block cipher is designed such that applying a permutation speciﬁed by an randomly sampled key “looks
+like” sampling a random permutation. In this paper, we work at a more abstract level and consider that a
+block cipher is a collection of random permutations Fi : [M] →[M] where i = 1, . . . , N are the potential
+secret keys.
+The set of permutations is public, and anyone can eﬃciently compute Fi(X) and F −1
+i
+(X)
+for any X, i. We consider an attacker that knows a few pairs of plaintext with corresponding ciphertexts,
+all encrypted with the same key. The goal for the attacker is to extract the secret key that was used for
+encryption from the datas.
+If the permutations are random, the only attack is to search exhaustively among the keys, which requires
+O(N) classical queries to the functions Fi or the inverse functions F −1
+i
+. Of course, a quantum attacker can
+use Grover search algorithm to achieve a quadratic speedup, and ﬁnd the key with O(
+√
+N) quantum queries.
+In order to restore the same security parameter against a quantum cryptanalyst, it suﬃces to double the
+length of the key. Of course, it is unreasonable to assume that a time bound N is considered secure against
+quantum attacks because it is secure against classical attacks. However, the broader question we investigate
+here is to amplify the security against quantum attacks. We believe this question remains legitimate.
+Although increasing the key length is a neat theoretical answer, it is not always clear how to implement
+it in practice. Block ciphers are deterministic algorithms, designed to work with speciﬁed parameters N
+and M. Assuming that one can double the key size is a strong structural assumption on the design of the
+cipher. For example, AES can be used to work with diﬀerent key sizes, but it was not the case for its ancestor
+DES. This block cipher was designed to work with 56 bits keys, and although this was considered suﬃcient
+by the time is was standardized, the question of how to increase this size became central when brute-force
+attacks started looking realistic.
+The simplest attempt to increase the key size is to compose permutations with independent keys. The
+composition of r independent permutations of a block cipher is called an r-encryption. For r = 2, the size
+is doubled, but there is a clever attack against this construction [DH77, MH81]. Suppose that an attacker
+knows a pair of plaintext-ciphertext (P, C). These satisfy C = Fk2(Fk1(P)), where (k1, k2) are the keys
+used for encryption. Since inverse permutations can be computed, an attacker can construct tables Fk(P)
+and F −1
+k′ (C) for every possible keys k, k′. Finding a collision Fk1(P) = F −1
+k2 (C) reveals the keys used for
+encryption.
+This attack, known as the Meet-in-the-middle attack, shows that it only takes twice more time to attack
+double iterations than it takes to attack a single one, where a naive cryptographer would expect a quadratic
+increase. Equivalently, the key expansion obtained by double-iteration is only 1 bit, although the size of the
+key space has doubled. Of course, this attack is optimal up to a factor two. The Meet-in-the-middle attack
+shows that even a simple idea such as security ampliﬁcation by composition should be carefully studied.
+It also has practical consequences, and led to the standardization of triple-DES rather than the insecure
+double-DES.
+2
+
+
+--- PAGE 3 ---
+We address the question of how resistant composition is against quantum adversaries. An obvious quan-
+tum attack against the 2-encryption is to use a collision ﬁnding algorithm.
+Finding collisions has been
+studied extensively in classical and quantum settings. The series of quantum algorithms for this problem
+culminated with Ambainis’ celebrated algorithm [Amb07] for the Element Distinctness problem, which is
+optimal with respect to the number of queries to the input [AS04]. In our case, it extracts the keys with
+N 2/3 quantum queries to the permutations. However, the key extraction problem for double encryption has
+more structure than element distinctness and there is no clear indication that this approach is optimal. The
+problem has a lot more possible inputs and more queries are allowed. Starting from an instance of element
+distinctness and embedding it to an input that is consistant with the structure of key extraction may not
+always be possible without a large number of queries to the input. For this reason, there is no obvious way
+of proving the optimality of Ambainis’ algorithm for key extraction by reduction from Element Distinctness.
+In Section 2, we prove using the generalized adversary method that N 2/3 queries are also required
+to extract the keys in the case of 2-encryption (Theorem 3).
+Starting from an adversary matrix for
+Element Distinctness, we build an adversary matrix for the new problem (Lemma 1). The underlying idea
+is that even if there is no obvious reduction, the two problems are equivalent because they have the same
+symmetries. We prove that the attack against 2-encryption that consists in searching for collision is the most
+time-eﬃcient, leading to a generic attack deserving to be called the quantum Meet-in-the-middle attack. The
+immediate consequence is that for quantum computers, contrary to the classical ones, 2-encryption is harder
+to break than a single ideal cipher.
+A surprising corollary is that classical and quantum time-space products are very diﬀerent (Corollary 1).
+In the classical case, the Meet-in-the-middle attack is time-eﬃcient for an attacker that is willing to pay with
+more space, but the global time-space product is similar to the one achieved by an exhaustive search.
+Using quantum algorithms, the time-space product of the optimal algorithm of Ambainis is worse than an
+exhaustive search. While this may not be a surprise from the point of view of quantum complexity theory (see
+e.g. the conclusion of [BDH+05]), this suggests that the time-space product, a common way of evaluating
+classical attacks [DDKS12], may not be the correct ﬁgure of merit to evaluate quantum attacks.
+The results obtained for two iterations suggest that composition could be a good tool to amplify the
+resistance against quantum attacks because it prevents the quadratic speedups allowed by the quantization
+of an exhaustive search. We investigate this question further in Section 3, by looking at the case of 4-
+encryption. Once again, the tools from quantum complexity theory appear to be very helpful to tackle
+this question. We give a quantization of the dissection attack for four encryption recently introduced by
+Dinur, Dunkelman, Keller and Shamir [DDKS12]. This attack is essentially a composition of an exhaustive
+search with the basic Meet-in-the-middle algorithm. Surprisingly, it is better than previously known classical
+attacks solely based on the Meet-in-the-middle technique. Quantum query complexity theory developed good
+tools to quantize such compositions, but in order to quantify also time and space complexity, we use the
+framework of quantum walks. Our main ﬁnding in this case is that the resistance against quantum attacks
+decreases when the number of iterations goes from two to four (Theorem 4).
+While these tools appear to be very helpful to study two encryptions and four encryptions, we are not in
+position to make a statement for general multiple encryptions. Using the generalized adversary method and
+quantum walks has been very fruitful for studying Merkle puzzles in a quantum world [BHK+11], in which
+these techniques were used to devise attacks and prove their optimality. We present here another important
+cryptographic scenario in which these tools can be applied to derive new results. A similarity between the
+two scenarios is that polynomial speedups are very insightful. Many speciﬁcally quantum techniques are
+available to study such speedups and their optimality in black-box settings.
+Even if the main question
+about successive encryption remains open, we hope that our work demonstrates that quantum techniques
+can be very interesting for PQ cryptography, and that it will motivate further interactions between quantum
+computer scientists and classical cryptographers.
+3
+
+
+--- PAGE 4 ---
+2
+Optimality of the quantum Meet-in-the-middle
+In what follows, M and N are two integers of comparable size and [N] is the set of integers from 1 to N.
+We denote S[N] the set of permutations of [N]. The space of keys is [N] and the space of blocks [M].
+We consider problems with inputs given as oracles (or black-boxes). Usually, we consider these inputs as
+functions f, and a classical query to the input returns f(x) for some x in the domain of f. In some cases,
+we may also consider an input f as a string where fi denotes the result of the classical query i to f. This
+notation is convenient in particular when considering adversary matrices whose entries are indexed by inputs
+to the problem. In the quantum setting, the only diﬀerence is that attacker can make quantum queries to
+the input. A brief exposition of the underlying model with the main theorems that we use to derive our
+results can be found in Appendix.
+The Element Distinctness problem has been extensively studied in quantum query complexity. In par-
+ticular, Ambainis’ quantum walk based algorithm [Amb07] is known to be optimal for this problem [AS04].
+The recent result of Rosmanis gives the best possible bound with respect to the range of the input func-
+tion [Ros14].
+Deﬁnition 1. The Element Distinctness (ED) problem takes input O : [N] →[M] with the promise that
+there exists a pair i, j ∈[N] such that O(i) = O(j). The problem is to output the pair (i, j).
+In this paper, we use the slightly more structured problem known as Claw ﬁnding [BHT98].
+Deﬁnition 2. Given two one-to-one functions F : [N/2] →[M] and G : [N/2] →[M], a claw is a pair
+x, y ∈[N] such that F(x) = G(y). The Claw ﬁnding (CF) problem is, on input F, G to return the pair x, y
+given that there is exactly one.
+It is easy to prove that CF and ED are equivalent up to constant factors. Given an input O for ED,
+an input for CF can be obtained by randomly cutting O into two functions. The probability that the two
+colliding elements are splited is 1/2 and running the algorithm for CF a few times on diﬀerent random cuts
+is suﬃcient to ﬁnd the collision with high probability. Therefore, upper and lower bounds for ED apply
+similarly to CF, up to constant factors.
+Theorem 1. For M ≥N, the quantum query complexity and time complexity of ED and CF are Θ(N 2/3).
+The most time-eﬃcient algorithm for these problems uses memory O(N 2/3).
+The goal of this section is to study the problem of extracting keys from the double iteration of a block
+cipher. In this context, we assume that the quantum cryptanalyst has implemented the publicly known block
+cipher on a quantum computer. He then receives the classical data consisting in couples of plaintext (P) and
+ciphertext (C), all encrypted with the same key. Finally, he uses this datas to extract the secret key with
+the help of the quantum computer. We assume that there is only one key that maps P to C. Equivalently,
+we can assume that the attacker knows a few pairs (Pi, Ci), all encrypted with the same keys. This ensures
+that the key mapping Pi to Ci for all i is unique with very high probability. This can always be simulated by
+giving only one pair to the attacker and increasing the size of the blocks. This introduces constant factors in
+the complexity analysis, and enforces the permutations to have a product structure, but do not induce any
+fundamental change to the security proof given here. Notice that applying this trick implies that M and N
+are then not comparable anymore, which is an important fact in Section 3.
+Deﬁnition 3. The 2-Key Extraction (KEP,C
+2
+) problem with P, C ∈[M] takes input F where F = {F1, . . . , FN}
+is a collection of permutations Fi ∈S[M] with the promise that there exists a unique couple (k1, k2) such that
+Fk2(Fk1(P)) = C. The goal of the problem is to output the pair (k1, k2).
+It is easy to prove that the complexity of the problem is independent of the pair (P, C). An algorithm
+for a given pair (P, C) can be easily adapted to solve the problem for another pair (P ′, C′). Let σ be the
+permutation that transposes P ′ and P and C′ and C. It suﬃces to conjugate every permutation of an input
+F = {F1, . . . , FN} with σ before running the algorithm for KEP,C
+2
+. When it is clear from the context and
+unnecessary for proofs, we drop the exponent and write only KE2.
+4
+
+
+--- PAGE 5 ---
+P
+C
+k1
+k2
+Fk1
+Fk2
+Figure 1: The 2-encryption problem consists in recovering the keys k1 and k2, given a plaintext P and a
+corresponding ciphertext C
+The next theorem shows an upper bound on the complexity of KE2. The idea is simply to reduce KE2
+to CF.
+Theorem 2. There exists a quantum algorithm that solves KE2 in time O(N 2/3) using memory O(N 2/3).
+Proof. Assume that F = {F1, . . . , FN} is an input of KEP,C
+2
+. We construct the following input to CF: a
+pair of functions G1, G2 : [N] →[M], deﬁned by G1(x) = Fx(P) and G2(y) = F −1
+y
+(C). Suppose that the
+algorithm for CF returns a pair (x∗, y∗). This implies that it is the unique pair such that Fx∗(P) = F −1
+y∗(C),
+leading to Fy∗(Fx∗(P)) = C. It is therefore the pair of keys used to encrypt P.
+We also prove the following lower bound on the problem.
+Theorem 3. A quantum algorithm that solves KE2 needs Ω(N 2/3) quantum queries to the input F =
+{F1, . . . , FN}, including queries to inverse permutations, except with vanishing probabilities.
+A lower bound on query complexity translates into a lower bound on time complexity. Therefore, com-
+bining the upper and lower bounds on time complexity with the upper bound on memory gives the following
+corollary.
+Corollary 1. The most time-eﬃcient attack on KE2 has time-space product O(N 4/3).
+Notice that a simple Grover search leads to time O(N) with logarithmic space, thus having a time-space
+product of N, better than the best known algorithm for CF.
+The rest of the section is now devoted to proving the lower bound on the attack. There are two important
+diﬀerences between CF and KE2:
+• It is possible to query a permutation Fi on any input X ∈[M].
+• It is possible to query inverse permutations F −1
+i
+.
+These diﬀerences imply that there is no obvious query-preserving reduction from CF to KE2.
+One
+important issue is that, since Fi is a permutation, querying Fi(X) with X ̸= P gives information on Fi(P).
+Intuitively, we believe this information is so small that it may not be useful to solve the problem. This is
+even more problematic in the quantum setting, where a single query can be made in superposition of all the
+inputs, preventing the strategy that consists in building the reduction on the ﬂy, when the queries to the
+input are done. To overcome this issue, we use a speciﬁc tool from quantum query complexity known as the
+generalized adversary method.
+We prove a slightly stronger lower bound result by considering the decision version of KE2. In this case,
+the problem is to determine if there exists keys k1, k2 such that C = Fk2(Fk1(P)). We denote this version
+d−KE2. Of course, an algorithm for the search version can easily be transformed into an algorithm for the
+5
+
+
+--- PAGE 6 ---
+decision version. Consequentely, a lower bound for the decision version is also a lower bound on the search
+problem. We compare this algorithm with the decision version of claw ﬁnding, denoted d−CF. The bounds
+given in Theorem 1 apply equivalently to the decision version of these problems.
+The proof of Theorem 3 is in two steps. In Lemma 1, we prove a lower bound in the worst-case quantum
+query complexity using the generalized adversary method. In the second step, which is the proof of Theorem 3,
+we use a self-reducibility argument to prove that the probability of solving the problem on a random input
+with less queries than in the worst case is vanishing.
+Lemma 1. A quantum algorithm that solves d−KE2 needs Ω(N 2/3) quantum queries to the input F =
+{F1, . . . , FN}, including queries to inverse permutations.
+Proof. We consider an optimal adversary matrix for d−CF and use it to build an explicit adversary matrix
+for d−KE2. Details on the adversary method can be found in the Appendix. In this proof, we need the fact
+that the generalized adversary method gives optimal lower bounds on quantum query complexity. Therefore,
+we can choose an adversary matrix for CF such that the adversary value given by this matrix is exactly
+the quantum query complexity of the function. Let ΓCF be this adversary matrix for d−CF. The rows and
+columns of ΓCF are indexed by inputs to the problem, that is, pairs of function G1, G2.
+We now construct an adversary matrix ΓKE2 for the problem d−KEP,C
+2
+. The rows and columns of ΓKE2
+are indexed by collections of permutations F = {F1, . . . FN}. Given a row u, (resp. a column v), denote
+u(P,C) the row (resp. v(P,C) the column) of ΓCF corresponding to functions G1, G2 deﬁned by G1(k) = Fk(P)
+and G2(k) = F −1
+k (C). The input u(P,C) for the problem d−CF is called the projection of the input u for
+the problem d−KE2. This operation is represented on ﬁgure 2. We simply deﬁne the entries of ΓKE2 by
+ΓKE2[u, v] = ΓCF [u(P,C), v(P,C)]. Our goal is now to apply Theorem 6. In order to apply it, we need to
+compute the values of ∥ΓKE2 ∥and maxq ∥ΓKE2 • ∆q ∥, where “•” denotes the entry-wise product of
+matrices1.
+This deﬁnition implies that ΓKE2 has a simple tensor product structure. Notice that for two pairs (u, v)
+and (u′, v′) of inputs of d−KE2 projecting onto the same pair of inputs (˜u, ˜v) of CF, we get by deﬁnition
+ΓKE2[u, v] = ΓKE2[u′, v′] = ΓCF[˜u, ˜v]. Moreover, the number of inputs to d−KE2 projecting onto the same
+of d−CF is a constant. Denoting this constant D and JD×D the all-one matrix of dimension D, we get
+ΓKE2 = ΓCF ⊗JD×D. This immediately gives the relation
+∥ΓKE2 ∥= D ∥ΓCF ∥.
+The next step is to bound maxi ∥ΓKE2 • ∆i ∥where ∆i[u, v] = 0 if ui = vi, and 1 otherwise. A query to
+an input to d−KE2 is a triplet (x, k, b) where x ∈[M], k ∈[N] and b ∈{−1, 1} indicates if the query is to a
+permutation or to its inverse. The query thus returns F b
+k(x).
+We show that it is suﬃcient to consider a special set of queries. The set of queries I consists of queries
+q = (x, k, b) where x = P if b = 1 and x = C if b = −1. We prove that if the value ∥ΓKE2 • ∆q ∥is not
+maximized by a query from I, it is possible to ﬁnd another matrix with both the same norm and the same
+tensor product structure such that ∥Γ′ • ∆q ∥is maximized by a query from I. Formally, we prove the
+following claim.
+Claim: There exists a permutation of rows and columns of ΓKE2 leading to a matrix Γ′ such that Γ′ =
+Γ′
+CF ⊗JD×D, where Γ′
+CF is obtained by permuting the rows and columns of ΓCF and maxq ∥ΓKE2 • ∆q ∥=
+maxq∈I ∥Γ′ • ∆q ∥.
+We ﬁrst explain how to ﬁnish the proof assuming this claim. A query q ∈I projects onto a query ˜q
+to inputs of d−CF. Formally, for a query q ∈I, there exists a query ˜q to inputs of d−CF such that for
+any input u of d−KE2, uq = u(P,C)
+˜q
+. If q = (x, k, b) ∈I, the query ˜q = (k, b) on u(P,C) returns G1(k) if
+b = 1 and G2(k) if b = −1. By deﬁnition of u(P,C), we have G1(k) = Fk(P) and G2(k) = F −1
+k (C) and thus,
+uq = u(P,C)
+˜q
+. This implies that for q ∈I, (Γ′ • ∆q)[u, v] = (Γ′
+CF • ∆˜q)[u(P,C), v(P,C)]. The tensor product
+structure ensures that Γ′ • ∆q = (Γ′
+CF ⊗JD×D) • ∆q = (Γ′
+CF • ∆˜q) ⊗JD×D, and thus
+1This product is usually denoted ◦, we use here a diﬀerent notation to avoid confusion with the composition of permutations
+that is also used in this proof
+6
+
+
+--- PAGE 7 ---
+max
+q
+∥ΓKE2 • ∆i ∥= max
+q∈I ∥Γ′ • ∆q ∥= D max
+˜q
+∥Γ′
+CF • ∆˜q ∥.
+The last equality is true because since I and queries to inputs of d−CF have the same cardinality, they
+are in one-to-one correspondance. Maximizing over queries to I is therefore equivalent to maximizing over
+queries to inputs to d−CF. Finally, this shows that the quantum query complexity of KE2 is at least
+min
+q
+∥ΓKE2 ∥
+∥ΓKE2 • ∆q ∥
+=
+min
+q
+∥Γ′ ∥
+∥Γ′ • ∆q ∥= min
+˜q
+D ∥Γ′
+CF ∥
+D ∥Γ′
+CF • ∆˜q ∥
+=
+min
+˜q
+∥ΓCF ∥
+∥ΓCF • ∆˜q ∥= Ω(N 2/3).
+X
+k
+Fk
+FN
+FN
+P
+Fk(X)
+F1(X)
+FN(X)
+G1(k)
+G1(1)
+G1(N)
+Figure 2: An input to KE2 can be represented as a table whose rows and columns are indexed by k and X,
+respectively. Each line of the table is a permutation Fi. The projecting onto an input to CF is a restriction
+to one column. To build a complete input to CF, one also has to restrict the table of permutations F −1
+k .
+It only remains to prove the above claim. Suppose that ∥ΓKE2 • ∆q ∥is maximized by a query q∗=
+(x∗, k∗, b∗). The intuition of the claim is that if q∗/∈I, it can still be projected onto a query to inputs of
+d−CF. By mapping these to inputs of the original problems, we get the new matrix Γ′.
+Assume that b∗= 1 and x∗̸= P (the proof is similar with b∗= −1). Let σ denote the transposition
+(x∗P). For an input u = {Fi}i∈[N], denote uσ = {Fi ◦σ}i∈[N] and deﬁne Γ′ as Γ′[u, v] = ΓKE2[uσ, vσ]. The
+operation u 7→uσ corresponds to a permutations of rows and columns of ΓKE2. Denote Πσ this permutation,
+so that Γ′ = Π†
+σΓKE2Πσ. Similarly, we have Π†
+σ∆q∗Πσ = ∆q∗∗, where q∗∗= (P, k∗, b∗).
+Finally, we show that Γ′ = Γ′
+CF ⊗JD×D for some matrix Γ′
+CF . The sets {u(P,C)}u and {u(x∗,C)}u are equal
+and therefore, there exists a bijection τ sending u(P,C) to u(x,C). This bijection satisﬁes (uσ)(P,C) = τ(u(P,C)).
+The matrix Γ′
+CF is simply deﬁned as Γ′
+CF [˜u, ˜v] = ΓCF [τ(˜u), τ(˜v)]. This gives
+Γ′[u, v]
+=
+ΓKE2[uσ, vσ] = ΓCF [(uσ)(P,C), (vσ)(P,C)],
+=
+ΓCF [τ(u(P,C)), τ(u(P,C))] = Γ′
+CF [u(P,C), v(P,C)].
+This immediately leads to Γ′ = Γ′
+CF ⊗JD×D, and ﬁnishes the proof of the claim.
+Proof of Theorem 3. We now show that the lower bound proved in Lemma 1 holds on random inputs, except
+with vanishing probability. The proof is in three steps. In the ﬁrst step, we prove that the lower bound holds
+for the average number of queries made by the attack. In the second step, we show that the lower bound also
+holds when considering the average error. Finally, we show that the lower bound hold for random inputs,
+except with vanishing probability.
+7
+
+
+--- PAGE 8 ---
+Step 1: Let A be an attack such that, given an input F = {F1, . . . , FN} to KEP,C
+2
+, returns (k1, k2) such
+that Fk2(Fk1(P)) = C after q queries on average over the inputs and is successful with probability at least
+1 −ε for any input. Consider then the following attack: run A for q/ε queries. If A stopped, then output
+the same value. Otherwise output a random value. By Markov’s inequality, this new attach is successful
+with probability at least 1 −2ε and therefore, by Lemma 1, q/ε ≥Ω(N 2/3).
+Step 2: Let A′ be an attack such that, given an input F = {F1, . . . , Ft} to KEP,C
+2
+, returns (k1, k2) such
+that Fk2(Fk1(P)) = C after q queries on average and is successful with average probability 1 −ε, both over
+the inputs. Consider now the following attack: Choose N random permutations {σ1, . . . σN}, and run the
+A′ on the input F′ = {σ1 ◦F1, . . . , σN ◦FN}. This is equivalent to running A′ on a random input, so that
+the error made by the attack is now 1 −ε for any input. From Step 1, we get again q = Ω(N 2/3).
+Step 3: Let A′′ be an attack that solves KEP,C
+2
+with error ε on average. Denote Q the random variable
+indicating the number of queries made by A′′ and ﬁx q = o(N 2/3). Denote δ = Pr[Q ≤q]. We want to
+prove that δ is vanishing. Fix two constants k and k′ and consider the following attack. Repeat k/δ times
+the following steps:
+1. Choose N random permutation σ1, . . . , σN. Run A′′ on a random input as explained in Step 2, and
+stop it after k′q queries.
+2. If A′′ stopped, then output the same value and stop.
+If after repeating these two steps k/δ times, no output was produced, output random values.
+The number of queries of this attack is at most kk′q/δ. Choosing k and k′ large enough, the probability
+that at least one iteration of the loop is successful can be made arbitrarily close to one, so that the error
+probability of this attack is arbitrarily close to ε. We have constructed an attack that makes O(q/δ) queries
+on average and is successful with average probability 1 −ε. From Step 2, we get that q/δ = Ω(N 2/3), which
+implies δ = o(1).
+In order to measure the gains obtained by quantum algorithms, we use a quantity similar to the one
+used by Dinur, Dunkelman, Keller and Shamir [DDKS12]. We consider log C/ log Q, where C is a classical
+complexity measure and Q is its quantum counterpart. Intuitively, this corresponds to the factor by which
+the key size is decreased when the attack is quantized. For example the gain in time for Grover search over
+classical exhaustive search is 2. The gain for the time-space product is similar because both Grover and
+exhaustive search require only constant space.
+The gain for the Meet-in-the-middle attack is very diﬀerent. The gain in time is 3/2, using the algorithm
+presented above. Since this algorithm is optimal, it is the largest possible gain. The gain for the time-space
+product of this algorithm is also 3/2. Interestingly, there exists other algorithms for ED leading to diﬀerent
+gains. For example, the algorithm based on amplitude ampliﬁcation of [BDH+05] leads to a gain in time of
+4/3 (over the classical Meet-in-the-middle attack), and a gain in time-space product of 8/5, better than the
+most time-eﬃcient attack. The most time-eﬃcient algorithm is not the one leading to the most important
+gain in time-space, and an attacker that is willing to pay with more time can save on the time-space product.
+Time
+Time-space
+Exhaustive search
+2
+2
+MITM
+3/2 = 1.5
+3/2 = 1.5
+Amplitude ampliﬁcation [BDH+05]
+4/3 ≃1.3
+8/5 = 1.6
+Table 1: Gains of attacks against 4-encryption
+8
+
+
+--- PAGE 9 ---
+3
+Quantum attack against 4-encryption
+We now apply tools from quantum complexity theory to study the case of four iterated encryptions. We
+assume again that the attacker knows suﬃciently many pairs (Pi, Ci) of plaintextcipher-text in order to
+ensure that, with very high probability, there is only one quadruple of keys (k1, k2, k3, k4) that satisﬁes the
+relations Ci = Ek4(Ek3(Ek2(Ek1(Pi)))) for all i.
+The classical Meet-in-the-middle attack can be applied in this situation by considering the pairs (k1, k2)
+and (k2, k3) as single keys. This requires time and memory O(N 2), and thus time-space product O(N 4).
+This was the best known algorithm the recent dissection attack [DDKS12], which still requires time O(N 2)
+but memory only O(N). This signiﬁcantly improves the time-space product to O(N 3).
+The basic idea of the dissection attack is to make an exhaustive search of the intermediate value after
+two encryptions. The candidate values are then checked using a Meet-in-the-middle procedure. A notable
+diﬀerence with the previous case is that the complexity of the problem is now a function of both M and N.
+We assumed in the beginning that M and N were of comparable sizes. In order to keep this assumption, we
+cannot assume anymore that the attacker has a single pair of datas. Instead, we assume that it has enough
+pairs, all encrypted with the same datas, to be sure that, with large probability, there is only one quadruple of
+keys consistant with all the datas. It can be shown that four pairs of plaintext with corresponding ciphertext.
+Deﬁnition 4. The 4-Key Extraction (KEP,C
+4
+) problem with P = (P1, P2, P3, P4), C = (C1, C2, C3, C4) ∈
+[M]4 takes input F where F = {F1, . . . , FN} is a collection of permutations of [M]. The goal of the problem
+is to output (k1, k2, k3, k4) such that Fk4(Fk3(Fk2(Fk1(Pi)))) = Ci for all i.
+The attack uses the quantum Meet-in-the-middle algorithm presented in the previous section as a subrou-
+tine. The basic idea is to compose this algorithm with a Grover search of the value in the middle. Quantum
+query complexity has the remarkable property, derived from the generalized adversary method, that for
+compatible functions f and g, Q(f(g(x1), . . . , g(xn))) = O(Q(f)Q(g)) [HLˇS07].
+For simplicity, consider ﬁrst the decision version of the problem. Given permutations F = {F1, . . . , FN}
+and a pair (P, C), the problem d−KE4 is to decide if there exists a 4-tuple of keys (k1, k2, k3, k4) such that
+C = Fk4(Fk3(Fk2(Fk1(P)))).
+Consider the following functions:
+fX : (S[M])N
+→
+{0, 1}
+{F1, . . . , FN}
+7→
+(
+1
+if there exists k1 and k2 such that Fk2(Fk1(P)) = X,
+0
+otherwise;
+and
+gX : (S[M])N
+→
+{0, 1}
+{F1, . . . , FN}
+7→
+(
+1
+if there exists k1 and k2 such that Fk2(Fk1(X)) = C,
+0
+otherwise.
+The function fX returns the boolean answer of the problem d−KE(P,X)
+2
+and gX the answer of d−KE(X,C)
+2
+.
+Finally, denote SEARCH the function that, on input u ∈{0, 1}M, returns 1 if there exists i such that ui = 1
+and 0 otherwise.
+The problem d−KE4 : (S[M])N →{0, 1} can be expressed as the following composition:
+d−KE4 = SEARCH ◦(f0 ∧g0, f1 ∧g1, . . . , fN ∧gN).
+(1)
+It is well known that a quantum query complexity is multiplicative under function composition [HLˇS07],
+which leads to a O(M 1/2N 2/3) upper bound on the number of queries needed to solve the problem. However,
+the composition theorem that proves this upper bound holds for quantum query complexity, whereas we are
+interested here in bounding the time and space used by a quantum algorithm. For this purpose, we give an
+9
+
+
+--- PAGE 10 ---
+explicit composed algorithm. This algorithm is a quantized version of the Dissect2(4, 1) algorithm of Dinur,
+Dunkleman, Keller and Shamir [DDKS12]. In the classical setting, this algorithm achieves the best known
+time-space product for 4-encryption. We now remove the assumption that the key is unique, and suppose
+that the attacker has four pairs (Pi, Ci). We also assume that M and N are of comparable sizes and state
+our result as a function of N.
+Theorem 4. There exists a quantum algorithm that solves KE4 in time O(N 7/6) and using memory
+O(N 2/3). The time-space product for this attack is O(N 11/6).
+Proof. Assume that the attacker knows the pairs (Pi, Ci)i=1..4. This is suﬃcient to ensure that only a single
+quadruple of keys is consistent with the datas. We devise a search algorithm that consists in a composition
+of a Grover search with a quantum Meet-in-the-middle attack presented in Section 2. We use the framework
+of quantum walks in order to compose these two procedures. The details of the theorems that we use are
+given in the Appendix.
+The walk is designed on the complete graph, whose vertices are indexed by elements from [M] who are
+candidates for the value X after two encryptions. Once the correct value for X is found, it suﬃces to make
+O(N 2/3) queries to the input in order to ﬁnd the keys, using some of the datas (Pi, Ci). This correct value
+is unique, and the goal of the quantum walk is to ﬁnd it.
+Theorem 5 given in the Appendix states that the cost to ﬁnd the correct value X is upper bounded by
+S +
+1
+√ε( 1
+√
+δU + C), where
+• S is the cost for setting up a quantum register in a state that corresponds to the stationary of the
+classical random walk on the graph distribution
+• U is the cost of moving from one node to an adjacent one,
+• C is the cost of checking if the value X is the correct one,
+• ε is the probability of ﬁnding the correct value X, and
+• δ is the eigenvalue gap for the complete graph.
+In our case, the setup is to build a uniform superposition of all states |X⟩, which can be made with
+no query to the input, and constant time. The update is the same procedure. The checking consists in
+running a quantum Meet-in-the-middle attack several times in order to check that the value X satisﬁes
+Ek2(Ek1(Pi)) = X and Ek4(Ek3(X)) = Ci for all i for some value k1, k2, k3, k4. The probability of ﬁnding
+the correct value is ε = 1/M. Finally, the eigenvalue gap for the complete graph is δ = 1 −
+1
+M−1. Overall,
+this leads to an attack that makes O(M 1/2N 2/3) queries, and takes the same amount of time. Moreover,
+the checking procedure is the only procedure using non-constant memory. The attack uses in total O(N 2/3)
+memory, leading to a time-space product bounded by O(M 1/2N 4/3).
+P
+C
+k1
+k2
+k3
+k4
+Fk1
+Fk2
+Fk3
+Fk4
+X
+Figure 3: The attack on 4-encryption is an exhaustive search over the central value X combined with a
+MIT M algorithm to check the consistency with the datas P, C
+10
+
+
+--- PAGE 11 ---
+Our approach does not give any lower bound on the number of queries to the input. Since our attack is a
+composition of Grover’s algorithm with a quantum Meet-in-the-middle attack, expressing the problem as a
+composition could allow to apply product theorems on the adversary method [HLˇS07, LMR+11, BHK+11],
+leading to a lower bound. Unfortunately, known theorems do not apply to the composition given in Equa-
+tion 1. For example, the composition theorem proven by Høyer, Lee and ˇSpalek requires the inner function
+to be boolean and to act on independent inputs. In our case, all the inner functions act on the same input.
+Equivalently, the expression given in Equation 1 could be completed with a non-boolean function that maps
+the input to N copies of it. The hypothesis of the composition theorem used to prove security of Merkle
+puzzles in a quantum world are very contrived an do not apply here [BHK+11].
+We compare three diﬀerent attacks against 4-encryption:
+• exhaustive search over the whole key-space,
+• classical and quantum Meet-in-the-middle attack where both the ﬁrst and the second pair of keys are
+treated as single keys,
+• the dissection attack and its quantized version.
+The quantization of exhaustive search gives a very good gain, but its time-performance is poor. Applying
+the Meet-in-the-middle attack from the previous section gives both poor gains and poor performances. The
+quantization of the dissection attack gives better gains than what we observed for 2-encryption, but we have
+no indications that this algorithm is optimal.
+Time
+Time-space
+Exhaustive search
+2
+2
+MITM
+3/2 = 1.5
+3/2 = 1.5
+Dissection
+12/7 ≃1.7
+18/11 ≃1.63
+Table 2: Gains of attacks against 4-encryption
+4
+Conclusion
+Iterative encryption is a natural way to amplify the security of block ciphers. It is well known that this
+procedure do not lead to the expected results, even for classical attacks in the case of 2-encryption. The
+Meet-in-the-middle attack allows an attacker to save a lot of time, if he is willing to pay with more space.
+Equipped with a quantum computer, an attacker can run a quantum algorithm for collision ﬁnding. We
+have proven that this approach leads to optimal time complexity for extracting keys, making crucial use of
+the generalized adversary method, a tool from quantum complexity theory. Extracting a pair of keys (k1, k2)
+takes time N 2/3, where N is the size of the key space of a single encryption. An interesting corollary is that
+the most time-eﬃcient attack is not known to give the best gain for time-space product. An attacker can
+pay with more time and save on space, but with a ratio that diﬀers fundamentally from the classical case.
+We have then studied the case of 4-encryption, for which we have given a quantized version of the
+dissection attack of Dinur, Dunkleman, Keller and Shamir. This quantization uses the framework of quantum
+walks, another important concept of quantum algorithms and complexity theory. We do not not know if
+this quantum attack is optimal with respect to the number of queries or time, and we have only compared
+it with the best currently know classical attack. But we can already conclude that this quantization gives
+better gains in time and time-space product than the optimal algorithm for 2-encryption.
+This seems to indicate that successive encryptions is less resistant against quantum attacks than it is
+against classical ones.
+This intuition could be conﬁrmed by proving lower bounds on quantum attacks,
+eventually allowing to consider the most time-eﬃcient attacks in both cases. We have not been able to
+answer this question for 4-encryption as we did for 2-encryption.
+Of course, one possibility is that the
+11
+
+
+--- PAGE 12 ---
+dissection algorithm is not optimal, but improving it is a challenging question in classical cryptography.
+Proving a quantum lower bound or improving the classical upper bounds would both give more insight on
+security ampliﬁcation.
+Another crucial element that misses in our analysis is a study of the r-encryption case. Classically, the
+dissection algorithm that we have discussed can be generalized iteratively applied, leading to attacks on
+r-encryption for arbitrary values of r. In our case, there is a barrier that prevents the scaling of our results.
+The composition theorem derived from the generalized adversary method, or the quantum-walk framework
+both introduce multiplicative factors, and it seems harder to understand how the complexity grows as a
+function of r.
+Our work can be understood as a proof of principle that quantum complexity and algorithms theory has
+developed powerful tools to tackle important questions in cryptography and post-quantum cryptography.
+Maybe a better use of these tools can lead to improving and extending the results presented here. Or maybe
+these tools need to be sharpened in order to apply to speciﬁc cryptographic situations. In both cases, we hope
+that our work will motivate further interactions between classical cryptographers and quantum computer
+scientists. Such interactions seem crucial to establish a serious approach to post-quantum cryptography. In
+particular, iterating block ciphers is not a very good procedure to amplify security against classical adversary.
+We hope that the techniques presented here will be applied to more eﬃcient cryptographic procedures in
+the future.
+Aknowledgements
+The author is grateful to Anne Canteaut, Maria Naya-Plasencia, Fr´ed´eric Magniez, Robin Kothari, Andris
+Ambainis and Gilles Brassard for stimulating discussions and pointers to references. M.K. acknowledges
+ﬁnancial support from acknowledge ﬁnancial support from ANR retour des post-doctorants NLQCC (ANR-
+12-PDOC-0022- 01).
+References
+[Amb07]
+A. Ambainis. Quantum walk algorithm for element distinctness. SIAM Journal on Computing,
+37:210–239, 2007.
+[AS04]
+S. Aaronson and Y. Shi. Quantum lower bounds for the collision and the element distinctness
+problems. Journal of the ACM, 51(4):595 – 605, 2004.
+[BDH+05] H. Buhrman, C. D¨urr, M. Heiligman, P. Høyer, F. Magniez, M. Santha, and R. de Wolf. Quantum
+algorithms for element distinctness. SIAM Journal on Computing, 34, 2005.
+[Ber10]
+D. Bernstein.
+Grover vs. McEliece.
+In Proc. of the Third international conference on Post-
+Quantum Cryptography (PQCrypto’10), pages 73–80, 2010.
+[BHK+11] G. Brassard, P. Høyer, K. Kallach, M. Kaplan, S. Laplante, and L. Salvail. Merkle puzzles in a
+quantum world. In Advances in Cryptology - CRYPTO ’11, pages 391–410, 2011.
+[BHT98]
+G. Brassard, P. Høyer, and A. Tapp. Quantum cryptanalysis of hash and claw-free functions. In
+3rd Latin American Theoretical Informatics Symposium (LATIN’98), volume 1380, pages 163–
+169, 1998.
+[DDKS12] I. Dinur, O. Dunkelman, N. Keller, and A. Shamir. Eﬃcient dissection of composite problems,
+with applications to cryptanalysis, knapsacks, and combinatorial search problems. In Advances
+in Cryptology – CRYPTO, 2012.
+[DH77]
+W. Diﬃe and M.E. Hellman. Exhaustive cryptanalysis of the NBS data encryption standard.
+Computer, 10(6):74–84, 1977.
+12
+
+
+--- PAGE 13 ---
+[Gro96]
+L.K. Grover. A fast quatum mechanical algorithm for database search. In Proc. of the 28th
+Annual ACM Symposium on Theory of Computing (STOC), pages 212–219, 1996.
+[HLˇS07]
+P. Høyer, T. Lee, and R. ˇSpalek. Negative weights make adversaries stronger. In Proc. of 39th
+Annual ACM Symposium on Theory of Computing (STOC), pages 526–535, 2007.
+[LMR+11] T. Lee, R. Mittal, B. Reichardt, R. ˇSpalek, and M. Szegedy. Quantum query complexity of state
+conversion. In Proc. 52nd IEEE Symp. on Foundations of Computer Science (FOCS), pages
+344–353, 2011.
+[MH81]
+R. Merkle and M. Hellman. On the security of multiple encryption. Communication of the ACM,
+1981.
+[MNRS11] F. Magniez, A. Nayak, J. Roland, and M. Santha. Search via quantum walk. In SIAM Journal
+on Computing, volume 40(1), pages 142–164, 2011.
+[Ros14]
+A. Rosmanis. Adversary lower bound for element distinctness with small range. Technical Report
+1401.3826, arXiv e-Print archive, 2014.
+[San08]
+M. Santha. Quantum walk based search algorithms. In LNCS, editor, Proceedings of 5th Theory
+and Applications of Models of Computation (TAMC08), volume 4978, pages 31–46, 2008.
+[Zha13]
+M. Zhandry.
+A note on the quantum collision and set equality problems.
+Technical Report
+1312.1027, arXiv e-Print archive, 2013.
+A
+Quantum query complexity
+The model
+In the quantum query complexity model, the goal is to compute some function F : S →T on input x. For
+simplicity, we assume in this short presentation that S ⊆{0, 1}n. The input is given as a black-box and
+accessed through queries. A classical query ℓto the input x returns xℓ.
+In the quantum setting, the algorithm is executed on an architecture with three quantum registers: an
+input register I, a query register Q and a working register W. The state of the quantum computer when
+the algorithm starts is |x⟩I|0, 0⟩Q|0⟩W . There are several equivalent formalism to model quantum queries.
+Without loss of generality, we consider a quantum query as an operator
+O : |x⟩I|i, y⟩Q 7−→|x⟩I|i, y + xi
+mod 2⟩Q.
+Considering non-boolean inputs is equivalent, up to logarithmic factors.
+The quantum algorithm supposed to compute f alternates between quantum query operations Oi and
+work operations that are unitaries Ui acting on the query register and the working register. After t queries
+to the input, the state of the quantum computer is UtOtUt−1 . . . O2U1O1|x⟩I|0, 0⟩Q|0⟩W .
+We assume that the working register contains log |T | qubits to encode the value f(x). The last step of
+the algorithm is then to measure these qubits and output the value that is obtained. Finally, an immediate
+corollary of the model is that the time complexity of f is at least equal to the query complexity of the
+algorithm. The generalized adversary method can be used to prove a lower bound on query complexity,
+which in turn bounds the time complexity.
+Quantum walks
+We ﬁrst review the paradigm of quantum walks. We use this tool to design an attack against 4-encryption.
+More precisely, we use it to combine an exhaustive search with a collision ﬁnding algorithm. The framework
+of quantum walks allows to easily analyze the ressources used by the algorithm.
+13
+
+
+--- PAGE 14 ---
+A search algorithm aims to ﬁnd a marked element in a ﬁnite set U. Classically, it can be seen as a walk
+on a graph whose nodes are indexed by subsets of elements of U. Each step of the algorithm consists in
+walking from one node to another. The algorithm can also maintain a data structure that is updated at
+each step. After each move, the algorithm checks if the node contains a marked element. The algorithm
+terminates when a marked element is found.
+Magniez, Nayak, Roland and Santha have designed a generic theorem in order to quantize search al-
+gorithms expressed as random walks. The cost of the resulting quantum algorithm can be written as a
+function of S, U and C. These are the cost of setting up the quantum register in a state that corresponds to
+the stationary distribution, moving unitarily from one node to an adjacent node, and checking if a node is
+marked, respectively.
+Theorem 5.
+[MNRS11] Let P be an ergodic and reversible Markov chain with eignvalue gap δ, and let
+ε > 0 be a lower bound on the probability that an element chosen from the stationary distribution of P is
+marked, whenever the set of marked element is non-empty. Then, there exists a quantum algorithm which
+ﬁnds, with high probability, a marked element if there is any at cost of order S +
+1
+√ε( 1
+√
+δU + C).
+Grover’s algorithm can be seen as a trivial application of Theorem 5 (see also [San08]). The underlying
+graph is the complete graph whose nodes are indexed by elements of U, with no data structure. In our case
+however, the checking procedure is very diﬀerent because it implies multiple queries to the input, and we
+use Theorem 5 to design our attack.
+The generalized adversary method
+We use the generalized adversary method to prove a lower bound on the problem KE2. The intuition of the
+method is to consider pairs of inputs leading to diﬀerent outputs. Each pair is given a weight2 quantifying
+how diﬃcult it is to distinguish them. The key point of the method is then to measure the progress made by
+a single quantum query to distinguish paris of inputs. This intuition can be formalized in several diﬀerent
+ways. We use the spectral version, an elegant algebraic formalization of the previous intuition [HLˇS07].
+Deﬁnition 5. Fix a function F : S →T , with S ⊆{0, 1}n. A symmetric matrix Γ : S × S →R is an
+adversary matrix for F provided Γ[x, y] = 0 whenever F(x) = F(y). Let ∆ℓ[x, y] = 1 if xℓ̸= yℓand 0
+otherwise. The adversary bound of F using Γ is
+ADV±(F; Γ) = min
+ℓ
+∥Γ∥
+∥Γ • ∆ℓ∥,
+where • denotes entrywise (or Hadamard) product, and ∥A∥denotes the spectral norm of A. The adversary
+bound ADV±(F) is the maximum, over all adversary matrices Γ for F, of ADV±(F; Γ).
+Høyer, Lee and ˇSpalek introduced the generalized adversary method and proved that the adversary value
+is a lower bound on quantum query complexity [HLˇS07]. In our proof, we need the fact that the adversary
+bound characterizes quantum query complexity, up to a constant factor. Our proof starts by considering
+an adversary matrix for the problem CF such that the adversary bound is equal to the quantum query
+complexity. The fact that the generalized adversary method is tight was proven by Lee, Mittal, Reichardt,
+ˇSpalek and Szegedy.
+Theorem 6.
+[LMR+11] Fix a function F : S →T . The bounded-error quantum query complexity of F is
+characterized by the general adversary bound:
+Q(f) = Θ(ADV±(F)).
+2The original method uses probability distribution, the generalized method allows for negative weights as well.
+14

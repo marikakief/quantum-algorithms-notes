@@ -9,7 +9,7 @@ Decomposes a $d$-sparse Hamiltonian into a sum of [[1-Sparse Hamiltonian Simulat
 ## The trick
 
 1. View $H$ as a bipartite graph: rows on one side, columns on the other, edge for each nonzero off-diagonal entry.
-2. A bipartite graph with max degree $d$ has a proper edge coloring with $d$ colors (König's theorem). Each color class is a matching → a [[1-Sparse Hamiltonian Simulation via 2×2 Blocks|1-sparse matrix]].
+2. A bipartite graph with max degree $d$ has a proper edge coloring with $d$ colors (König's theorem). Each color class is a matching, hence a [[1-Sparse Hamiltonian Simulation via 2×2 Blocks|1-sparse matrix]]. The matching need not be perfect.
 3. Computing the optimal $d$-coloring requires global graph knowledge. Instead, use a deterministic local coloring rule that assigns colors using only the neighbor function $f(x, i)$.
 4. The local rule produces $6d^2$ colors (quadratic blowup over optimal) and costs $O(\log^* n)$ queries per color lookup.
 
@@ -30,7 +30,7 @@ Result: $H = \sum_{j=1}^{6d^2} H_j$, each $H_j$ one-sparse, each simulable with 
 
 ## Why $6d^2$ and not $d$
 
-The optimal $d$-coloring from König's theorem requires solving a global matching problem. With only oracle access, the best known local procedure squares the color count. The $6$ is from the specific deterministic scheme used (related to iterated hash-based label disambiguation).
+The optimal $d$-coloring from König's theorem requires solving a global matching problem. In the Berry-Ahokas-Cleve-Sanders black-box construction, the local coloring rule squares the color count. The $6$ is from the specific deterministic scheme used (related to iterated hash-based label disambiguation).
 
 ## When to reach for it
 
@@ -46,7 +46,7 @@ The optimal $d$-coloring from König's theorem requires solving a global matchin
 
 ## Caveat
 
-The quadratic blowup in $d$ feeds directly into the total simulation cost. For Hamiltonians where sparsity is moderate but not tiny, this overhead is significant. Later approaches ([[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians|quantum walks]], [[Linear Combination of Unitaries (LCU)|LCU]]) avoid this decomposition entirely.
+The quadratic blowup in $d$ feeds directly into the total simulation cost. For Hamiltonians where sparsity is moderate but not tiny, this overhead is significant. Later sparse-oracle quantum-walk and qubitization approaches can avoid explicit 1-sparse edge-coloring decomposition; generic [[Linear Combination of Unitaries (LCU)|LCU]] methods may still need some access-model conversion or decomposition unless the PREPARE/SELECT encoding is already supplied.
 
 ## Related notes
 

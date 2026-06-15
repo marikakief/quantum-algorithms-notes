@@ -1,3 +1,5 @@
+# Quantum Algorithm for Nonhomogeneous Linear PDEs (Arrazola-Kalajdzievski-Weedbrook-Lloyd 2019) — Paper Notes
+
 > **Source:** Juan Miguel Arrazola, Timjan Kalajdzievski, Christian Weedbrook, Seth Lloyd, *Quantum algorithm for nonhomogeneous linear partial differential equations*, Physical Review A **100**:032306, 2019; arXiv:1809.02622
 > **Links:** [arXiv](https://arxiv.org/abs/1809.02622) · [PRA](https://doi.org/10.1103/PhysRevA.100.032306)
 > **Tags:** #PDE #linear-systems #continuous-variable #quantum-algorithm #differential-equations #matrix-inversion #Poisson-equation
@@ -6,7 +8,7 @@
 
 ## The computational problem
 
-**Input:** A linear differential operator $A = A(x_1, \ldots, x_N, \partial_{x_1}, \ldots, \partial_{x_N})$ that is a polynomial in the position variables and their partial derivatives, plus a quantum state $|f\rangle$ with wavefunction $\langle x | f \rangle = f(x)$ encoding the inhomogeneous source term.
+**Input:** A linear differential operator $A = A(x_1, \ldots, x_N, \partial_{x_1}, \ldots, \partial_{x_N})$ that is a polynomial in the position variables and their partial derivatives, plus a quantum state $|f\rangle$ with wavefunction $\langle x | f \rangle = f(x)$ encoding the inhomogeneous source term. The Fourier-inversion construction applies cleanly to Hermitian/self-adjoint operators or to an appropriate Hermitian embedding; boundary conditions and domains are part of the operator specification, not an implementation detail.
 
 **Output:** A quantum state $|\psi\rangle$ whose wavefunction is proportional to $\psi(x) = A^{-1}f(x)$, the solution to $A\psi(x) = f(x)$.
 
@@ -14,7 +16,7 @@ This is the continuous-variable (CV) analogue of [[Quantum Algorithm for Linear 
 
 ## What the paper does
 
-Presents a quantum algorithm for inhomogeneous linear PDEs that works natively in the continuous-variable model of quantum computing. The algorithm inverts polynomial differential operators using a [[Fourier Decomposition Technique for Operator Inversion|Fourier decomposition of $A^{-1}$]] (following Childs-Kothari-Somma 2017), implemented via Hamiltonian simulation on continuous-variable modes. For fixed-degree differential operators, the runtime is polynomial in the spatial dimension $N$ — exponential improvement over classical methods that compute the full solution.
+Presents a quantum algorithm for inhomogeneous linear PDEs that works natively in the continuous-variable model of quantum computing. The algorithm inverts polynomial differential operators using a [[Fourier Decomposition Technique for Operator Inversion|Fourier decomposition of $A^{-1}$]] (following Childs-Kothari-Somma 2017), implemented via Hamiltonian simulation on continuous-variable modes. For fixed-degree differential operators, the formal runtime is polynomial in the spatial dimension $N$ for producing a quantum state, but finite-precision CV resources are part of the cost: cutoff dimension, squeezing/energy, homodyne precision, postselection window, and resource-state preparation all matter.
 
 The paper also introduces exact gate decompositions for CV Hamiltonian simulation of three-mode polynomial interactions, which avoid Trotter-Suzuki commutator approximations entirely. These reduce gate counts by orders of magnitude for this class of Hamiltonians.
 
@@ -40,7 +42,7 @@ The algorithm requires two ancillary CV modes prepared in specific states:
 - A **step function state** $|s_L\rangle = \frac{1}{\sqrt{L}} \int_0^L dx\,|x\rangle$ (a finite-width approximation to $\Theta(x)$)
 - A **single photon state** $|1\rangle$, whose wavefunction $ye^{-y^2/2}$ provides the Fourier kernel
 
-The authors use quantum neural networks (parameterised CV circuits optimised via TensorFlow/Strawberry Fields) to prepare these states. A 30-layer network achieves 99.36% fidelity for the step function state with width $L=7$ and Fock-space cutoff $d=41$.
+The authors use quantum neural networks (parameterised CV circuits optimised via TensorFlow/Strawberry Fields) to prepare these states. A 30-layer network achieves 99.36% fidelity for the step function state with width $L=7$ and Fock-space cutoff $d=41$. This is a heuristic preparation demonstration, not a proof that the required resource states have efficient guaranteed preparation in the full finite-precision model.
 
 ### Step 3: Hamiltonian simulation
 
@@ -62,7 +64,7 @@ The success probability scales as $O(\Delta^2)$, creating a tradeoff between app
 
 ## Key results
 
-**Complexity:** For a differential operator $\hat{A}$ that is a polynomial of constant degree in $N$ position/momentum operators, the Hamiltonian simulation and hence the full algorithm runs in $\text{poly}(N)$ time. This is exponential improvement over classical PDE solvers whose cost scales exponentially with dimension.
+**Complexity:** For a differential operator $\hat{A}$ that is a polynomial of constant degree in $N$ position/momentum operators, the Hamiltonian simulation layer runs in $\text{poly}(N)$ time in the CV model. The exponential-improvement comparison is for producing a quantum state under the paper's access and finite-precision assumptions, not for printing a full classical PDE solution.
 
 **Exact decomposition gate counts:**
 | Gate | Exact decomposition | Commutator approx. ($\epsilon = 10^{-3}$) |
@@ -79,12 +81,12 @@ The success probability scales as $O(\Delta^2)$, creating a tradeoff between app
 | Aspect | HHL / CKS (discrete) | This paper (CV) |
 |---|---|---|
 | Domain | Finite-dimensional $A\mathbf{x} = \mathbf{b}$ | Continuous $A\psi(x) = f(x)$ |
-| Input | Quantum state $\|b\rangle$ | CV state with wavefunction $f(x)$ |
+| Input | Quantum state $|b\rangle$ | CV state with wavefunction $f(x)$ |
 | Matrix inversion | Fourier decomposition of $A^{-1}$ | Same technique on differential operator |
 | Hamiltonian simulation | Standard qubit methods | CV gate set + exact decompositions |
 | Postselection | On ancilla register | On homodyne $p=0$ |
 
-The discrete approach (e.g., [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang 2017]]) discretises the PDE first, then applies standard QLSA methods. This paper operates directly in the continuous domain but still requires finite approximations (step function width, measurement precision).
+Discrete ODE/linear-system history-state approaches (e.g., [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry-Childs-Ostrander-Wang 2017]]) discretise time and then apply standard QLSA methods. This paper operates directly in the continuous domain but still requires finite approximations (step function width, measurement precision).
 
 ---
 
@@ -120,7 +122,7 @@ The discrete approach (e.g., [[Quantum Algorithm for Linear Differential Equatio
 - Lloyd-Braunstein (1999) — universality of CV quantum computation
 - Sefi-van Loock (2011) — commutator approximations for CV gates that this paper's exact decompositions replace
 - [[A Quantum Algorithm to Solve Nonlinear Differential Equations (Leyton-Osborne 2008) — Paper Notes|Leyton-Osborne (2008)]] — cited for nonlinear ODE quantum algorithms
-- [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes|Bagherimehrab et al. (2023)]] — later PDE solver that removes the finite-difference condition-number bottleneck for elliptic problems using wavelet preconditioning
+- Later cross-link: [[Fast Quantum Algorithm for Differential Equations (Bagherimehrab-Nakaji-Wiebe-Brennen-Sanders-Aspuru-Guzik 2023) — Paper Notes|Bagherimehrab et al. (2023)]] — later PDE solver that removes the finite-difference condition-number bottleneck for elliptic problems using wavelet preconditioning
 
 ---
 

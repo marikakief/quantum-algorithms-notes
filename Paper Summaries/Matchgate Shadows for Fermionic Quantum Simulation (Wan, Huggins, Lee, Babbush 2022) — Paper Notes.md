@@ -6,7 +6,7 @@
 
 ## The computational problem
 
-Given copies of an unknown $n$-qubit state $\rho$, estimate expectation values $\operatorname{tr}(O_i \rho)$ for a collection of observables $\{O_i\}$ that are natural to fermionic quantum simulation: products of Majorana operators, fermionic Gaussian density matrices, and overlaps with Slater determinants.
+Given copies of an unknown $n$-qubit state $\rho$, estimate quantities natural to fermionic quantum simulation: expectation values of Majorana products, fidelities with fermionic Gaussian density matrices, squared overlaps / fidelities, and transition amplitudes involving Slater determinants when the relevant real and imaginary parts are estimated separately.
 
 The classical shadows framework of Huang, Kueng, and Preskill (2020) solves this generically by randomizing over unitaries, measuring in the computational basis, and classically post-processing the results. But the efficiency — both in sample complexity and classical post-processing cost — depends on the choice of unitary ensemble. The question: is there an ensemble tailored to fermionic problems that is efficient for both local fermionic observables *and* global properties like Gaussian-state fidelities and Slater determinant overlaps?
 
@@ -20,7 +20,7 @@ The main payoff: efficient classical post-processing ($O(n^3)$ to $O(n^4)$ per s
 
 1. **Expectation values of local fermionic operators** — $\operatorname{tr}(\tilde{\gamma}_S \rho)$ for any product of $|S|$ Majorana operators, with variance $O(n^{|S|/2})$.
 2. **Fidelities with Gaussian states** — $\operatorname{tr}(\varrho \rho)$ for any fermionic Gaussian density matrix $\varrho$, with variance $O(\sqrt{n} \log n)$.
-3. **Overlaps with Slater determinants** — $\langle \psi | \phi \rangle$ for any pure state $|\psi\rangle$ and Slater determinant $|\phi\rangle$, with an explicitly computable variance bound that grows sublinearly in $n$ (numerically confirmed up to $n = 1000$).
+3. **Overlaps with Slater determinants** — transition amplitudes against Slater determinants, with an explicitly computable variance bound that grows sublinearly in $n$ in the analyzed setting (numerically confirmed up to $n = 1000$).
 
 This is a qualitative advantage over standard Clifford shadows, which force a choice: single-qubit Cliffords handle local observables efficiently but not global ones, while $n$-qubit Cliffords handle global properties but lose locality. Matchgate shadows do both simultaneously.
 
@@ -96,6 +96,8 @@ where $\tilde{Q}$ encodes the orbital rotation, $W$ is a basis change matrix, an
 
 The proof works by interpreting Majorana operators as Clifford algebra generators, using graded structure and the wedge product to isolate grade-$2\ell$ components, then applying Pfaffian identities (Fact 3) to evaluate the resulting exterior algebra expression.
 
+The operator $|\phi\rangle\langle 0|$ is not Hermitian in general. Operationally, the desired complex transition amplitude is accessed by estimating Hermitian real and imaginary parts, or by embedding it in the overlap-estimation routine used by the application.
+
 ### General framework via Grassmann integrals (Section V C)
 
 For arbitrary products $A^{(1)} \cdots A^{(m)}$ where each factor is a linear combination of Majorana operators, a Gaussian unitary, or a Gaussian density matrix:
@@ -113,8 +115,8 @@ This handles overlaps with arbitrary pure Gaussian states (not just Slater deter
 |---|---|---|---|
 | $\operatorname{tr}(\tilde{\gamma}_S \rho)$, $\|S\| = O(1)$ | $O(\|S\|^3)$ per sample | $O(n^{\|S\|/2})$ | $O(n^{\|S\|/2} / \varepsilon^2)$ |
 | $\operatorname{tr}(\varrho \, \rho)$, $\varrho$ Gaussian | $O(n^3)$ per sample | $O(\sqrt{n} \log n)$ | $O(\sqrt{n} \log n / \varepsilon^2)$ |
-| $\langle \psi | \phi \rangle$, $\|\phi\rangle$ Slater det. | $O(n^4)$ per sample | $\leq b(n, \zeta)$, sublinear in $n$ | Sublinear in $n$ |
-| $\langle \psi | \varphi \rangle$, $\|\varphi\rangle$ pure Gaussian | $O(n^4)$ per sample | Not bounded (open) | — |
+| $\langle \psi | \phi \rangle$, $|\phi\rangle$ Slater det. | $O(n^4)$ per sample | $\leq b(n, \zeta)$, sublinear in $n$ in numerics | Depends on $b(n,\zeta)/\varepsilon^2$ |
+| $\langle \psi | \varphi \rangle$, $|\varphi\rangle$ pure Gaussian | $O(n^4)$ per sample | Not bounded (open) | — |
 
 The variance bound $b(n, \zeta)$ is given explicitly by a triple sum involving multinomial coefficients (Eqs. 43–44). It's computable in $\operatorname{poly}(n)$ time and plotted up to $n = 1000$ in the paper, showing growth consistent with $O(\sqrt{n} \log n)$ or better across all tested $\zeta$ values.
 
@@ -183,7 +185,7 @@ Key citations and their role:
 
 ### Paper notes in the vault
 
-- [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]] — Proves the $\Omega(n^k/\epsilon^2)$ single-copy lower bound that matchgate shadows saturate, then shows two-copy measurements beat it exponentially: $O((\log n) \cdot \mathrm{poly}_k(1/\epsilon))$ samples. The two-copy protocol supersedes matchgate shadows in sample complexity (as a function of $n$) for all $k$-body fermionic operators.
+- [[Triply Efficient Shadow Tomography (King, Gosset, Kothari, Babbush 2024) — Paper Notes]] — Proves the $\Omega(n^k/\epsilon^2)$ single-copy lower bound that matchgate shadows saturate for $k$-body fermionic operators, then shows two-copy measurements can beat it exponentially for those families: $O((\log n) \cdot \mathrm{poly}_k(1/\epsilon))$ samples. This improves sample complexity in that setting, but matchgate shadows remain relevant for Gaussian fidelities, Slater-overlap post-processing, and hardware regimes where matchgate measurements are the natural primitive.
 - [[Unbiasing Fermionic Quantum Monte Carlo with a Quantum Computer (Huggins, Babbush et al 2021) — Paper Notes]] — The direct motivation. Matchgate shadows replace the exponentially costly Clifford shadow post-processing step in QC-AFQMC.
 - [[Nearly Optimal Quantum Algorithm for Estimating Multiple Expectation Values (Huggins, Wan, McClean, Babbush et al 2022) — Paper Notes]] — Shares lead authors (Huggins, Wan). The gradient encoding approach achieves $\tilde{O}(\sqrt{M}/\varepsilon)$ queries for $M$ observables in the fault-tolerant regime; matchgate shadows operate in the NISQ regime with $O(\log M / \varepsilon^2)$ samples.
 - [[Power of Data in Quantum Machine Learning (Huang, Babbush, McClean et al 2021) — Paper Notes]] — Uses the same classical shadow formalism (Huang, Kueng, Preskill 2020) for [[Projected Quantum Kernel via Local Observables|projected quantum kernels]].

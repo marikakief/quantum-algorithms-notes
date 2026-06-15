@@ -4,7 +4,7 @@
 
 ## What it does
 
-Implements an indexed controlled operation $\sum_{\ell=0}^{L-1} |\ell\rangle\langle\ell| \otimes U_\ell$ over $L$ possible unitaries $U_\ell$, given an index register $|\ell\rangle$ stored in $\lceil\log L\rceil$ binary bits, using T-gate count $4L - 4$ and $O(\log L)$ ancilla qubits.
+Implements the unary-control sweep for an indexed controlled operation $\sum_{\ell=0}^{L-1} |\ell\rangle\langle\ell| \otimes U_\ell$ over $L$ possible branches, given an index register $|\ell\rangle$ stored in $\lceil\log L\rceil$ binary bits. The 2018 temporary-AND accounting gives T-gate count $4L - 4$ for the control logic, excluding the cost of the controlled operations $U_\ell$ themselves.
 
 ## The trick
 
@@ -18,8 +18,8 @@ Implements an indexed controlled operation $\sum_{\ell=0}^{L-1} |\ell\rangle\lan
 2. Build a binary tree of AND gates that compute, for each $i \in \{0, \ldots, L-1\}$, the conjunction of bits asserting $|\ell\rangle = i$. Each AND (Toffoli) costs 4 T gates (using the phase-kickback AND construction with ancilla).
 3. The sweep passes through the $L$ targets in order, maintaining a *unary flag* register: bit $i$ is $1$ if the sweep has reached (or passed) position $i$.
 4. At each position $i$, apply $U_i$ controlled on the single unary flag bit.
-5. **Optimization (Fig. 6):** adjacent AND computations share sub-expressions; after unary bit $i$ is no longer needed (all controlled $U_j$ for $j \leq i$ have been applied), uncompute the AND gate for free by re-running the computation backward. This eliminates many T gates.
-6. Final count: each AND gate costs 4 T gates at compute time; uncomputing requires 0 additional T gates (measure and classically correct). Total: $4(L-1) = 4L - 4$ T gates for $L$ branches.
+5. **Optimization (Fig. 6):** adjacent AND computations share sub-expressions; after unary bit $i$ is no longer needed (all controlled $U_j$ for $j \leq i$ have been applied), uncompute the AND ancilla using the measurement-based temporary-AND cleanup without additional T gates. This eliminates many T gates.
+6. Final count: each temporary logical-AND costs 4 T gates at compute time; the measurement-based uncomputation of those AND ancillae costs no additional T gates in the measurement/feedforward model. Total control-sweep cost: $4(L-1) = 4L - 4$ T gates for $L$ branches.
 
 **Space:** Only $O(\log L)$ ancilla qubits are needed at any time — the unary expansion is not materialized all at once; bits are computed and immediately consumed.
 
@@ -34,13 +34,13 @@ Implements an indexed controlled operation $\sum_{\ell=0}^{L-1} |\ell\rangle\lan
 
 ## Complexity
 
-- T gates: $4L - 4$
+- T gates: $4L - 4$ for the unary-control sweep, excluding the controlled $U_\ell$ gates
 - Ancilla qubits: $O(\log L)$
 - Circuit depth: $O(L)$ in general; can be reduced with parallelism at cost of more ancilla
 
 ## Caveat
 
-- Linear in $L$ — fine when $L = O(N)$ (this paper's setting), but if $L = O(N^4)$ (naive second-quantized LCU) this becomes expensive. The whole point of the plane-wave dual basis is to keep $L = O(N^2)$.
+- Linear in the number of branches $L$ — fine when the branch count and controlled operations are structured, but expensive for naive $O(N^4)$ second-quantized LCU decompositions. The plane-wave-dual chemistry construction keeps the relevant SELECT/PREPARE controls structured enough to achieve the theorem's linear-in-$N$ oracle cost.
 - Sequential structure makes it depth-inefficient. When circuit depth (not T count) is the bottleneck, different approaches may be better.
 - The AND gate uncomputation trick (Fig. 4 of the paper) relies on measuring the ancilla and classically conditioning future gates — not standard in all fault-tolerance frameworks.
 
@@ -52,3 +52,4 @@ Implements an indexed controlled operation $\sum_{\ell=0}^{L-1} |\ell\rangle\lan
 - [[Coherent Alias Sampling for PREPARE]] — uses QROM which uses unary iteration
 - [[Qubitization (Quantum Walk for Spectral Encoding)]] — the SELECT oracle in qubitization uses unary iteration
 - [[Controlled Swap Network for Select Oracle]] — alternative approach used in real-space simulation
+- [[Verifiable Quantum Advantage via Optimized DQI Circuits (Khattar, Shutty, Gidney et al 2025) — Paper Notes]] — uses unary-iteration-style comparison sharing while scanning sparse DQI error locators

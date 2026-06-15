@@ -10,11 +10,11 @@ Provides an explicit, near-optimal kernel function $f(k)$ for the [[LCHS Kernel 
 
 Choose the kernel:
 
-$$f(k) = \frac{1}{2\pi}\, e^{-2\beta}\, e^{(1+ik)^\beta}, \quad \beta \in (0,1).$$
+$$f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}, \quad C_\beta = 2\pi e^{-2^\beta}, \quad \beta \in (0,1).$$
 
-This $f$ lives in the Hardy space $H^1(\mathbb{C}^-)$ and satisfies the LCHS normalisation $\int_\mathbb{R} f(k)/(1-ik)\, dk = 1$.
+This $f_\beta$ lives in the Hardy space $H^1(\mathbb{C}^-)$, with $\mathbb{C}^-$ the lower half-plane in the kernel variable, and satisfies the LCHS normalisation $\int_\mathbb{R} f_\beta(k)/(1-ik)\, dk = 1$.
 
-The decay is $|f(k)| \sim e^{-c|k|^\beta}$ — sub-exponential but faster than any polynomial. Truncating to $|k| \leq K$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ gives error $\leq \varepsilon$.
+The decay is $|f_\beta(k)| \sim e^{-c|k|^\beta}$ — sub-exponential but faster than any polynomial. Truncating to $|k| \leq K$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ gives error $\leq \varepsilon$.
 
 Taking $\beta$ close to 1 makes the decay nearly exponential (but never truly exponential — there's a fundamental barrier from the Hardy-space constraint). In practice, $\beta = 0.9$ or similar gives good constants.
 

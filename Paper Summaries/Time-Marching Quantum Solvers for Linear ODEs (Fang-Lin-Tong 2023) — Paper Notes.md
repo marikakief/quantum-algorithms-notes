@@ -1,3 +1,5 @@
+# Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes
+
 > **Source:** Di Fang, Lin Lin, and Yu Tong, *Time-marching based quantum solvers for time-dependent linear differential equations*, arXiv:2208.06941, Quantum **7**, 955 (2023)
 > **Links:** [arXiv](https://arxiv.org/abs/2208.06941) · [Quantum](https://quantum-journal.org/papers/q-2023-03-20-955/)
 > **Tags:** #quantum-algorithm #differential-equations #time-marching #QSVT #block-encoding #singular-value-amplification #compression-gadget
@@ -29,7 +31,7 @@ Rehabilitates the **time-marching strategy** for quantum ODE solvers. The naive 
 
 The result: the success probability drops to $\Omega(Q^{-2})$ rather than $\Omega(\prod_l \|\Xi_l\|^{-2})$, and a single round of [[Standard Amplitude Amplification|amplitude amplification]] with $O(Q)$ repetitions brings it to $2/3$.
 
-**My assessment:** This is a genuinely useful alternative to [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|QLSA-based]] ODE solvers. The three claimed advantages are real: it handles non-diagonalisable $A(t)$, needs only bounded variation (not smoothness), and uses fewer initial-state queries. The amplification ratio $Q$ replaces the condition number $\kappa$ as the hardness parameter, and Theorem 10 proves this dependence is tight (via reduction to unstructured search). The main open question — whether $O(T^2)$ matrix-query scaling can match QLSA's $O(T)$ — remains unresolved and interesting. The paper also connects nicely to the Fang-Lin group's earlier [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes|qHOP]] work, since the first-order Magnus integrator they analyse is essentially qHOP for general (non-Hamiltonian) dynamics.
+**My assessment:** This is a genuinely useful alternative to [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|QLSA-based]] ODE solvers. The three claimed advantages are real in the paper's model: it handles non-diagonalisable $A(t)$, needs only bounded variation for the Dyson-series construction, and separates matrix-query cost from the number of initial-state-preparation queries. The amplification ratio $Q$ replaces the condition number $\kappa$ as the hardness parameter, and Theorem 10 proves this dependence is tight in the paper's oracle lower-bound model. The main open question — whether $O(T^2)$ matrix-query scaling can match the $O(T)$ scaling of the best QLSA/history-state approaches — remains unresolved and interesting. The paper also connects nicely to the Fang-Lin group's earlier [[qHOP — Time-Dependent Simulation of Highly Oscillatory Dynamics (An-Fang-Lin 2022) — Paper Notes|qHOP]] work, since the first-order Magnus integrator they analyse is essentially qHOP for general (non-Hamiltonian) dynamics.
 
 ---
 
@@ -47,7 +49,7 @@ Given $U_l$ as an $(\alpha_l, m_l, 0)$-block encoding of $\bar{\Xi}_l$, construc
 
 $$O\!\left(\frac{\alpha_l}{\delta\|\bar{\Xi}_l\|} \cdot \log\frac{\alpha_l\|\bar{\Xi}_l\|}{\epsilon'}\right)$$
 
-applications of controlled-$U_l$ and its inverse. The construction uses [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] with an odd polynomial that approximates $x/\|x\|$ on the relevant singular value interval.
+applications of controlled-$U_l$ and its inverse. The construction uses [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] with an odd polynomial that rescales singular values on a promised interval. It changes the block-encoding normalization of the operator; it is not a map that normalizes an input vector.
 
 The effect: each amplified block-encoding $\tilde{U}_l$ has normalisation $\alpha_l' \approx \|\bar{\Xi}_l\|$ instead of $\alpha_l \gg \|\bar{\Xi}_l\|$. This is the step that prevents the exponential success-probability decay.
 
@@ -80,7 +82,7 @@ For the **sparse matrix** input model ($d$-sparse, $\|A(t)\| \leq 1$, Corollary 
 
 ### Theorem 10 (Lower bound)
 
-For any $\theta > 0$, there exists an instance where no quantum algorithm can solve the ODE using $O(Q^{1-\theta}\operatorname{poly}(T))$ queries. The proof reduces to unstructured search: set $A = -U_{\text{targ}}$ (the Grover oracle), then the ODE amplifies the marked element exponentially, and $Q = \Theta(\sqrt{N})$. Sub-linear-in-$Q$ query complexity would violate the $\Omega(\sqrt{N})$ search lower bound.
+For any $\theta > 0$, there exists an oracle-defined ODE family where no quantum algorithm can solve the problem using $O(Q^{1-\theta}\operatorname{poly}(T))$ queries. The proof embeds unstructured search into a promised linear-ODE instance so that solving the ODE would reveal the marked item and $Q = \Theta(\sqrt{N})$. Sublinear-in-$Q$ query complexity would violate the $\Omega(\sqrt{N})$ search lower bound.
 
 This shows the **linear dependence on $Q$** in Theorem 8 is optimal.
 
@@ -102,17 +104,17 @@ where $\alpha_{\text{comm}} = \frac{1}{T}\sum_l \frac{1}{2}\int_{t_{l-1}}^{t_l}\
 |---|---|---|
 | Hardness parameter | Amplification ratio $Q$ | Condition number $\kappa$ of discretised system |
 | Matrix query scaling | $O(\alpha^2 T^2 Q)$ | $O(\alpha T \kappa)$ (better in $T$) |
-| Diagonalisability | Handles non-diagonalisable $A(t)$ | Requires $A(t)$ diagonalisable or special structure |
-| Smoothness requirement | Bounded variation only | Higher smoothness for high-order accuracy |
+| Diagonalisability | Handles non-diagonalisable $A(t)$ | Older diagonalisation-based analyses require diagonalisability; later log-norm/history-state methods use different stability promises |
+| Smoothness requirement | Bounded variation for the Dyson-series construction | Spectral/high-order methods need quantitative derivative bounds, not just qualitative smoothness |
 | Initial state queries | $O(Q)$ (independent of $T$, $\alpha$, $\epsilon$) | $O(\kappa \operatorname{polylog}(1/\epsilon))$ (depends on $T$ through $\kappa$) |
 | Precision scaling | $\operatorname{polylog}(1/\epsilon)$ | $\operatorname{polylog}(1/\epsilon)$ |
 | Optimality | Linear in $Q$ is tight (Thm 10) | Linear in $\kappa$ is tight |
 
 ### The three advantages over QLSA
 
-1. **Non-diagonalisable $A(t)$:** QLSA-based methods typically convert the ODE to a linear system via discretisation, then invert. The resulting system's condition number $\kappa_V$ can involve the eigenvector condition number of $A$, which is infinite for non-diagonalisable matrices. Time-marching sidesteps this because $Q$ is defined through propagator norms, not spectral decompositions.
+1. **Non-diagonalisable $A(t)$:** Some earlier QLSA-based ODE analyses convert the ODE to a linear system whose condition bound involves an eigenvector condition number $\kappa_V$, which is not meaningful for defective matrices. Later history-state/log-norm methods use different assumptions. Time-marching sidesteps spectral decompositions because $Q$ is defined through propagator norms.
 
-2. **Non-smooth $A(t)$:** The truncated Dyson series achieves $\operatorname{polylog}(1/\epsilon)$ precision scaling requiring only bounded variation of $A(t)$. QLSA-based methods using spectral discretisation (e.g., Childs & Liu, Commun. Math. Phys. 2020) need $r$ derivatives for $r$th-order accuracy.
+2. **Non-smooth $A(t)$:** The truncated Dyson series achieves $\operatorname{polylog}(1/\epsilon)$ precision scaling requiring only bounded variation of $A(t)$. QLSA-based methods using spectral discretisation (e.g., Childs & Liu, Commun. Math. Phys. 2020) need quantitative derivative bounds for their high-order convergence claims.
 
 3. **Fewer initial-state queries:** Time-marching uses $O(Q)$ applications of $U_{\text{init}}$, independent of $T$, $\alpha$, or $\epsilon$. QLSA-based methods use the initial state inside the linear system solve, where the number of applications depends on $\kappa$ (and thus on $T$ and $\alpha$).
 
@@ -123,7 +125,7 @@ where $\alpha_{\text{comm}} = \frac{1}{T}\sum_l \frac{1}{2}\int_{t_{l-1}}^{t_l}\
 - The $O(\alpha^2 T^2)$ matrix-query scaling is **quadratically worse** in $T$ compared to QLSA-based methods, which achieve $O(\alpha T)$. This is the main quantitative drawback. The paper explicitly asks whether this gap can be closed.
 - $Q$ can be exponential in $T$ for general dissipative dynamics, just as $\kappa$ can be. The lower bound (Theorem 10) shows you can't do better than linear in $Q$, but for specific problem classes (e.g., normal matrices), $Q$ is well-behaved.
 - For non-normal $A$, the amplification ratio $Q$ (defined via the worst-case partition) can vastly overestimate the actual difficulty. The paper gives an explicit $2 \times 2$ example where $Q$ grows exponentially while the solution grows only polynomially. A weaker notion $\bar{Q} = \|\mathcal{T}e^{\int_0^T A(s)\,ds}\| / \||\psi(T)\rangle\|$ would be tighter, but the time-marching algorithm can't achieve $\bar{Q}$-scaling.
-- The first-order Magnus integrator's complexity scales as $O(\alpha_{\text{comm}}^2 T^4 Q^3 / \epsilon^2)$ in the high-precision limit — much worse than the Dyson solver when $\alpha_{\text{comm}}$ is large. Useful primarily when commutators are small.
+- The first-order Magnus integrator is worse than the Dyson solver when commutators are large. From the displayed Theorem 14 bound, if the commutator term dominates the maximum, the leading scaling is roughly $O(\alpha\,\alpha_{\text{comm}} T^3 Q/\epsilon)$ up to logarithmic factors; if the $\alpha T$ term dominates, it is roughly $O(\alpha^2T^2)$ up to logs. Useful primarily when commutators are small.
 - The compression gadget requires coherent composition of all $L$ block-encodings, meaning the full circuit depth is $\sum_l (\text{depth of } \tilde{U}_l)$ — no parallelism across time steps.
 
 ---

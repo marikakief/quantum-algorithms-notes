@@ -1,0 +1,1648 @@
+--- PAGE 1 ---
+arXiv:2302.11454v3  [quant-ph]  7 May 2024
+Quantum complexity of the Kronecker coeﬃcients
+Sergey Bravyi1, Anirban Chowdhury2,3, David Gosset2,3,4, Vojtˇech Havl´ıˇcek1, and Guanyu Zhu1
+1 IBM Quantum, IBM T.J. Watson Research Center
+2 Department of Combinatorics and Optimization, University of Waterloo
+3 Institute for Quantum Computing, University of Waterloo and
+4 Perimeter Institute for Theoretical Physics, Waterloo
+Whether or not the Kronecker coeﬃcients of the symmetric group count some set of combinatorial
+objects is a longstanding open question. In this work we show that a given Kronecker coeﬃcient is
+proportional to the rank of a projector that can be measured eﬃciently using a quantum computer.
+In other words a Kronecker coeﬃcient counts the dimension of the vector space spanned by the
+accepting witnesses of a QMA veriﬁer, where QMA is the quantum analogue of NP. This implies
+that approximating the Kronecker coeﬃcients to within a given relative error is not harder than
+a certain natural class of quantum approximate counting problems that captures the complexity of
+estimating thermal properties of quantum many-body systems. A second consequence is that decid-
+ing positivity of Kronecker coeﬃcients is contained in QMA, complementing a recent NP-hardness
+result of Ikenmeyer, Mulmuley and Walter. We obtain similar results for the related problem of
+approximating row sums of the character table of the symmetric group. Finally, we discuss an eﬃ-
+cient quantum algorithm that approximates normalized Kronecker coeﬃcients to inverse-polynomial
+additive error.
+In this work we revisit a well-known mystery in
+combinatorics— what do the Kronecker coeﬃcients
+count?—from the perspective of quantum complex-
+ity theory.
+The Kronecker coeﬃcients are the analogues of
+the Clebsch-Gordan coeﬃcients for the symmetric
+group. In particular, let n ≥2 and let ρµ and ρν be
+irreducible representations of the symmetric group
+labelled by partitions µ, ν ⊢n respectively [26]. The
+Kronecker coeﬃcient gµνλ is the multiplicity of the
+irreducible representation ρλ in the tensor product
+representation ρµ ⊗ρν:
+ρµ ⊗ρν ≃
+M
+λ
+gµνλρλ.
+(1)
+where the ≃stands for isomorphism. Although we
+will not need it here, we note that a related notion
+of stretched Kronecker coeﬃcients [27] plays an im-
+portant role in the study of the quantum marginal
+problem [9, 10, 22].
+The deﬁnition Eq. (1) of the Kronecker coeﬃcients
+as multiplicities ensures that they are nonnegative
+integers. But it is a longstanding open problem in al-
+gebraic combinatorics—Problem 10 on Stanley’s list
+[40]—to ﬁnd a combinatorial formula for them. That
+is, do the Kronecker coeﬃcients count some natural
+set of combinatorial objects? Let us interpret “natu-
+ral” as any set of objects where the description size is
+polynomial in n and such that membership in the set
+can be veriﬁed eﬃciently using a classical computer.
+In this way we are led to the complexity-theoretic
+question [7, 15, 16, 35–37]: does gµνλ admit a #P
+formula, i.e., does it count the number of accepting
+witnesses of an NP veriﬁer?
+It will be convenient to deﬁne the problem of com-
+puting the Kronecker coeﬃcients as follows. Here,
+and in other computational problems deﬁned below,
+the input partitions µ, ν, λ ∈Sn are given in unary
+so that the input size is O(n) [28].
+Problem 1 (ExactKron). Given µ, ν, λ ⊢n, com-
+pute gµνλ.
+There is little doubt that ExactKron is an ex-
+tremely hard computational problem. It is known
+that any problem in #P can be reduced in poly-
+nomial time to ExactKron [15][29], and that Exac-
+tKron is contained in the class GapP [7] of functions
+that can be expressed as the diﬀerence f −g of two
+functions f and g in #P [11].
+In this sense, the
+Kronecker coeﬃcients are as hard as #P, but also
+not much harder. Pinning down their complexity is
+therefore entirely concerned with the sliver of day-
+light between #P and GapP. Why should we care?
+Firstly, as discussed above, if ExactKron is con-
+tained in #P then this would resolve a signiﬁcant
+open problem in combinatorics by showing that Kro-
+necker coeﬃcients count the elements of an eﬃ-
+ciently veriﬁable set. A second important (though
+less direct) consequence has to do with the complex-
+ity of approximating Kronecker coeﬃcients to within
+a given relative error.
+Problem 2 (ApproxKron). Given µ, ν, λ ⊢n and
+ǫ = Ω(1/poly(n)), compute an estimate ˜g, such that:
+(1 −ǫ)gµνλ ≤˜g ≤(1 + ǫ)gµνλ.
+This problem is at least as hard as deciding if
+gµνλ > 0, which has been recently shown to be
+
+
+--- PAGE 2 ---
+2
+NP-hard [15]. It is also no harder than ExactKron.
+In order to discuss its complexity in more detail,
+we now review some facts about the relationship
+between exact and approximate counting problems
+more generally.
+Some problems in GapP are just as hard to ap-
+proximate as they are to compute exactly (with re-
+spect to polynomial-time reductions).
+This is the
+case, for example, for the problems of computing
+output probabilities of polynomial-size quantum cir-
+cuits [13], or computing the squared permanent of a
+real matrix [1], or computing the square of a given
+irreducible character of the symmetric group [17].
+Approximating these quantities to within a given
+relative error is #P-hard. On the other hand, Stock-
+meyer has shown that the hardest functions in #P
+are vastly easier to approximate assuming a standard
+conjecture in complexity theory [41]. In particular, if
+a function is contained in #P, then it can be approx-
+imated to a given relative error using a polynomial-
+time randomized algorithm that has access to an NP
+oracle, i.e., in the class FBPPNP. Problems in this
+class cannot be #P-hard unless the polynomial hier-
+archy collapses, which is believed to be very unlikely.
+So far we have considered two classes of count-
+ing problems—GapP and #P (which are polynomial-
+time reducible to one another) as well as the approx-
+imation tasks associated with them (which are un-
+likely to be polynomial-time equivalent). A central
+message of this work and Ref. [5] is that in between
+these two extremes there is a rich class of approxima-
+tion tasks associated with a third type of quantum
+counting problem.
+By analogy with the deﬁnition of #P, Refs. [6, 39]
+deﬁned the class #BQP of functions that can be
+thought of informally as counting the number of ac-
+cepting witnesses of a QMA veriﬁer. Here QMA is a
+quantum analogue of NP— a class of problems for
+which yes instances can be veriﬁed with high prob-
+ability using a polynomial-sized quantum computa-
+tion. A quantum veriﬁcation circuit C takes as in-
+put a quantum state |ψ⟩as well as some number
+a of ancilla qubits in the |0⟩state. At the end of
+the circuit the ﬁrst qubit is measured and the cir-
+cuit accepts the input state |ψ⟩if and only if the
+outcome 1 is observed. This occurs with probability
+p(ψ) = ∥|(|1⟩⟨1| ⊗I)C|ψ⟩|0a⟩∥2.
+For any quantum veriﬁcation circuit we deﬁne the
+POVM element corresponding to the accept out-
+come
+A ≡(I ⊗⟨0a|)C†(|1⟩⟨1| ⊗I)C(I ⊗|0a⟩),
+(2)
+and for q ∈[0, 1] we deﬁne Nq to be the number
+of eigenvalues of A that are at least q (informally,
+the number of witnesses accepted with probability
+at least q). #BQP is the class of problems that can
+be expressed as: given a quantum veriﬁcation circuit
+with an n-qubit input register and total size poly(n),
+along with two thresholds 0 < b < a ≤1 satisfying
+a −b = Ω(1/poly(n)), compute an estimate N such
+that Na ≤N ≤Nb. If we are assured that there
+are no “mediocre witnesses” [6], i.e., eigenvalues of
+A in the interval [b, a), then N = Na is the number
+of witnesses accepted with probability at least the
+given threshold acceptance probability a. We note
+that this deﬁnition of #BQP, allowing for a “grace
+interval” of miscounted witnesses [6], was suggested
+in Ref. [6] but passed over in favor of a slightly diﬀer-
+ent deﬁnition. Though our results do not rest on this
+technical choice, we ﬁnd the above to be the most
+natural deﬁnition for our purposes (see the Supple-
+mentary Material for more details).
+The corresponding class QXC of quantum approx-
+imate counting problems [5] is then the approxi-
+mation version of #BQP. Here the goal is to ap-
+proximate the number of accepting witnesses of a
+QMA veriﬁer within a small relative error. That is,
+given an n-qubit quantum veriﬁcation circuit of size
+poly(n), an error parameter δ = poly(1/n) and two
+thresholds 0 < b < a ≤1 and a −b = Ω(1/poly(n)),
+compute an estimate N such that (1 −δ)Na ≤N ≤
+Nb(1 + δ).
+Quantum approximate counting was studied in
+Ref. [5] where it was shown that a wide class of prob-
+lems that arise naturally in quantum many-body
+physics are equivalent to QXC under polynomial-
+time reductions [30].
+These include the problem
+of approximating the partition function of a quan-
+tum many-body system described by a local Hamil-
+tonian (to within a given relative error), as well as
+the problem of computing expected values of local
+observables in the thermal (Gibbs) state at a given
+temperature (to within a prescribed additive error).
+Despite the centrality of these problems in physics,
+the complexity of quantum approximate counting
+is largely an open question. The main challenge is
+that there does not appear to be a natural quantum
+generalization of Stockmeyer’s approximate count-
+ing method (a similar obstacle was encountered in
+attempting to generalize the Valiant-Vazirani the-
+orem [2, 18]). All we can say is that quantum ap-
+proximate counting is at least QMA-hard [31] and at
+most #P-hard (because quantum exact counting is
+as hard as classical exact counting [6]). Nevertheless
+we conjecture that quantum approximate counting
+is not #P-hard—i.e., that it deﬁnes an intermedi-
+ate class that lies somewhere between classical ap-
+proximate counting and #P. Tab. I summarizes the
+
+
+--- PAGE 3 ---
+3
+Problem in... Approximation problem upper bound...
+Classical counting
+#P
+FBPPNP
+Quantum counting
+#BQP
+QXC
+Gap counting
+GapP
+#P
+TABLE I: Three classes of counting problems that are polynomial-time reducible to one another. The
+associated approximation problems are very unlikely to be polynomial-time equivalent. Classical counting
+problems in #P can be approximated within the third level of the polynomial hierarchy via Stockmeyer’s
+approximate counting algorithm. In contrast, some problems in GapP can be #P-hard to approximate.
+Quantum approximate counting problems lie somewhere between these two extremes.
+three types of counting problems discussed above,
+and their approximation versions.
+In this work we describe an eﬃcient quan-
+tum circuit that measures a projector with rank
+dµdνdλgµνλ.
+Since the dimension dω of any irre-
+ducible representation ω of Sn can be computed eﬃ-
+ciently via the hook-length formula, this shows that
+gµνλ is equal to an eﬃciently computable dimen-
+sional factor (dµdνdλ)−1 times a #BQP function.
+Therefore the problem of approximating Kronecker
+coeﬃcients to within a given relative error (Approx-
+Kron) is not harder than QXC. This furnishes one
+of the ﬁrst natural computational problems that is
+polynomial-time reducible to quantum approximate
+counting (and not known to be easier) but whose
+deﬁnition does not involve quantum many-body sys-
+tems. The only other problem of this kind that we
+are aware of involves approximating Betti numbers
+of a cochain complex [8][32]. Our results make use of
+Beals’ eﬃcient quantum Fourier transform over the
+symmetric group [4] and, in particular, its use in the
+generalized phase estimation algorithm [14] which we
+now review.
+Let ρ be a representation of the symmetric group
+Sn such that for every permutation σ ∈Sn, ρ(σ)
+is a unitary operator acting on a Hilbert space H.
+For any irreducible representation of the symmetric
+group labeled by a partition λ ⊢n, we deﬁne an
+operator acting on H as
+Πλ = dλ
+n!
+X
+α∈Sn
+χλ(α)ρ(α).
+(3)
+Here χλ : Sn →C is the character of Sn correspond-
+ing to the irreducible representation labeled by λ (it
+is a nontrivial fact that χλ is in fact integer-valued
+[19]), and dλ is its dimension. Also note that the
+operator Eq. (3) depends on the representation ρ,
+although this is suppressed in our notation.
+The operators Mρ ≡{Πλ : λ ⊢n} deﬁne a projec-
+tive measurement. That is, as shown in the Supple-
+mentary Material, the Πλ are mutually orthogonal
+Hermitian projectors that sum to the identity.
+In fact, this measurement can almost always (i.e.,
+for most representations ρ) be implemented eﬃ-
+ciently on a quantum computer. First consider the
+simple case when H = CSn and ρ is the left-regular
+representation acting as ρ(α)|π⟩= |απ⟩for any per-
+mutations α, π ∈Sn. Let us denote the correspond-
+ing projectors Eq. (3) as ΠL
+λ and the measurement
+as ML = {ΠL
+λ}. This measurement—also known as
+weak Fourier sampling over the symmetric group—
+can be implemented using a simple circuit depicted
+in Fig. 1. Here QFTn is the unitary corresponding
+to Beals’ quantum Fourier transform over the sym-
+metric group [4]. It is deﬁned in terms of Young’s
+orthogonal representation of Sn which describes an
+irreducible matrix representation of Sn, denoted ρω,
+for each ω ⊢n, with certain desirable properties.
+For any function f : Sn →C we have
+QFTn
+X
+σ∈Sn
+f(σ)|σ⟩=
+X
+ω⊢n
+r
+dω
+n!
+dω
+X
+i,j=1
+( ˆf(ω))ij|ω, i, j⟩,
+(4)
+where
+ˆf(ω) =
+X
+α∈Sn
+f(α)ρω(α).
+(5)
+(Note that basis vectors of H can be labeled by
+triples from the set T = {(ω, i, j) : ω ⊢n, 1 ≤i, j ≤
+dω}, since |T | = P
+ω⊢n d2
+ω = |Sn|).
+For other unitary representations ρ of Sn, it is
+possible to implement the measurement Mρ using
+the generalized phase estimation [14] circuit shown
+in Fig. 1, which uses weak Fourier sampling as a
+subroutine. It further requires that we can perform
+the C−ρ gate and its inverse, where (C−ρ)|α⟩|ψ⟩=
+|α⟩ρ(α)|ψ⟩for any permutation α ∈Sn and ψ ∈H.
+We are now ready to describe our main results.
+Again let us consider the left-regular representation
+of Sn. For any three partitions µ, ν, λ of n, we may
+deﬁne the projectors ΠL
+µ, ΠL
+ν , ΠL
+λ using Eq. (3) where
+ρ is the left regular representation of Sn.These op-
+erators act on the Hilbert space H = CSn.
+
+
+--- PAGE 4 ---
+4
+QFTn
+ω
+i
+j
+QFT†
+n
+|0⟩
+|ψ⟩
+ω
+ΠL
+ω|ψ⟩
+ML
+ρ†
+ρ
+|φ⟩
+Πω|φ⟩
+ω
+QFT†
+n
+|τ⟩
+|1⟩
+|1⟩
+FIG. 1: (a) Weak Fourier sampling circuit that performs the projective measurement ML = {ΠL
+ω : ω ⊢n}.
+(b) Generalized phase estimation algorithm. Here τ is the trivial representation of Sn, such that
+QFT†
+n|τ, 1, 1⟩=
+1
+√
+n!
+P
+α∈Sn |α⟩.
+Next consider H⊗3 and let
+Q ≡1
+n!
+X
+σ∈Sn
+σ ⊗σ ⊗σ.
+(6)
+Then it is easy to verify that Q is a hermitian projec-
+tor, i.e., Q2 = Q = Q†. Moreover, Q is a projector
+of the form Eq. (3) where ρ(σ) = σ ⊗σ ⊗σ is the
+threefold tensor product representation and λ is the
+trivial (one-dimensional) irreducible representation
+τ such that ρτ(σ) = χτ(σ) = 1 for all σ ∈Sn.
+Using the fact that [σ, ΠL
+α] = 0 for any σ ∈Sn and
+α ⊢n, we get [Q, ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ] = 0. Let us then
+deﬁne
+Pµνλ ≡Q
+ ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ
+
+=
+ ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ
+
+Q
+as
+the
+projector
+onto
+the
+simultaneous
++1
+eigenspace of Q and ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ. Then
+Lemma 1. gµνλ =
+1
+dµdνdλ Tr(Pµνλ).
+Proof. Taking the trace in Eq. (1) we see that
+χµ(σ)χν(σ) = P
+λ gµνλχλ(σ) for all σ ∈Sn.
+Us-
+ing orthogonality of the irreducible characters, we
+then obtain the well-known formula
+gµνλ = 1
+n!
+X
+σ∈Sn
+χµ(σ)χν(σ)χλ(σ).
+(7)
+We can evaluate Tr(Pµνλ) using Eqs. (3,6) and the
+fact that in the left-regular representation Tr(π) is
+zero unless π is the identity permutation:
+1
+dµdνdλ
+Tr(Pµνλ) =
+1
+dµdνdλ
+Tr
+ Q
+ ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ
+
+= 1
+n!
+X
+σ,α
+β,γ
+δσ,α−1δσ,β−1δσ,γ−1χµ(α)χν(β)χλ(γ),
+which coincides with Eq. (7).
+Theorem 1. For any partitions µ, ν, λ ⊢n there
+exists a quantum circuit of size poly(n) that imple-
+ments a projective measurement {Pµνλ, I −Pµνλ}.
+Proof. The circuit will have an input register CSn ⊗
+CSn ⊗CSn. First we use weak Fourier sampling to
+perform the measurement ML on each of the three
+registers and reject unless the outcomes are µ, ν, λ
+respectively. Then we use generalized phase estima-
+tion with the threefold tensor product representation
+ρ(σ) = σ ⊗σ ⊗σ and reject unless the outcome is
+the trivial representation τ. If the circuit does not
+reject in either step, then it accepts. The corresond-
+ing POVM element is the product of the POVM ele-
+ments for acceptance in each step individually, that
+is Q
+ ΠL
+µ ⊗ΠL
+ν ⊗ΠL
+λ) = Pµνλ.
+Corollary 1. The function (µ, ν, λ) 7→dµdνdλgµνλ
+is in #BQP, and ApproxKron is polynomial-time re-
+ducible to QXC.
+Proof. From Theorem 1 there is a polynomial size
+veriﬁcation circuit that measures the projector Pµνλ.
+Since it is a projector, its eigenvalues are either zero
+or 1. By Lemma 1 the number of +1 eigenvalues
+is equal to dµdνdλgµνλ. By deﬁnition it is a #BQP
+problem to exactly count the number of +1 eigenval-
+ues, and a QXC problem to approximate the number
+of +1 eigenvalues to within a given relative error δ
+(for example, we can set a = 1 and b = 1/2 in the
+deﬁnitions of #BQP and QXC). Since the dimen-
+sional factor dµdνdλ is eﬃciently computable this
+shows that ApproxKron is polynomial time reducible
+to QXC.
+The eﬃcient quantum circuit that measures the
+projector Pµνλ (Theorem 1) directly gives a QMA
+protocol for the problem of deciding positivity of
+Kronecker coeﬃcients. Indeed, the projector Pµνλ
+
+
+--- PAGE 5 ---
+5
+has nonzero rank if and only if gµνλ > 0. If gµνλ > 0
+there exists a quantum state that results in the mea-
+surement outcome +1 while if gµνλ = 0 then all
+states give measurement outcome 0. Note that this
+QMA protocol is deterministic in the sense that it
+has perfect completeness and soundness .
+Corollary 2. The problem of deciding positivity of
+Kronecker coeﬃcients—given µ, ν, λ ⊢n, decide if
+gµνλ > 0— is contained in QMA.
+This upper bound complements the recent result
+of Ikenmeyer, Mulmuley and Walter who established
+that deciding positivity of Kronecker coeﬃcients is
+NP-hard [15].
+Corollaries 1, 2 describe complexity-theoretic con-
+sequences of the fact that a Kronecker coeﬃcient
+is proportional to the dimension of a subspace for
+which membership can be eﬃciently veriﬁed on a
+quantum computer.
+Similar arguments shed light
+on another positivity problem on Stanley’s list [40],
+which concerns the row sums of the character table
+of the symmetric group:
+Rλ ≡
+X
+µ⊢n
+χλ(µ).
+(8)
+Here χλ(µ) is the value of the irreducible character
+χλ evaluated at any permutation with cycle struc-
+ture described by µ.
+Just like the Kronecker coeﬃcients, the row sums
+Rλ are nonnegative integers. This follows from the
+fact that Rλ is equal to the multiplicity of an ir-
+reducible representation ρλ in the decomposition of
+the so-called
+conjugation representation ρc which
+acts on the Hilbert space H = CSn as ρc(π)|σ⟩=
+|πσπ−1⟩. In particular, we have the decomposition
+ρc ≃L
+λ Rλρλ, see the Supplementary Material for
+details.
+The generalized phase estimation circuit
+Fig. 1(b) can be used to eﬃciently measure the pro-
+jector Πc
+λ given by Eq. (3) with ρ →ρc. In this way
+we obtain:
+Theorem 2. For any λ ⊢n there exists a quantum
+circuit of size poly(n) that implements a projective
+measurement {Πc
+λ, I −Πc
+λ}, where dλRλ = Tr(Πc
+λ).
+As a consequence, the problem of computing dλRλ
+is in #BQP, the problem of approximating Rλ to
+within a given relative error is eﬃciently reducible
+to QXC, and the problem of deciding positivity of
+Rλ is contained in QMA.
+Our discussion thus far has centred around prob-
+lems that are thought to be intractable for quantum
+or classical computers. It is natural to ask whether
+there are easier versions of these problems that may
+admit eﬃcient quantum or classical algorithms. For
+example— although it is very unlikely that there
+exists an eﬃcient algorithm to approximate the ir-
+reducible characters of the symmetric group to with
+a given relative error [17]— Jordan has shown that
+the normalized irreducible characters χλ(π)/dλ can
+be eﬃciently approximated to within a given ad-
+ditive error using a classical randomized algorithm
+[20].
+Similarly, a quantum algorithm for approxi-
+mating normalized Kronecker coeﬃcients can be in-
+ferred from Ref. [25].
+Lemma 2. [25] There is a quantum circuit of size
+poly(n) that samples from the probability distribution
+p(λ) = dλgµνλ
+dµdν .
+We describe the algorithm in the Supplementary
+Material. (To see that p(λ) is a normalized prob-
+ability distribution, apply Eq. (1) to the identity
+permutation and take the trace.)
+Given a parti-
+tion λ, one can approximate the probability p(λ)
+with an additive error ǫ by generating O(1/ǫ2) sam-
+ples from p and computing the fraction of samples
+equal to λ.
+This gives an approximation of gµνλ
+with an additive error δ = ǫdµdν/dλ. This approx-
+imation can be eﬃciently obtained on a quantum
+computer, as long as ǫ ≥poly(1/n). Note that this
+approximation is good enough to solve ExactKron if
+min (dµ, dν, dλ) ≤poly(n). Indeed, assuming wlog
+that dµ ≤dν ≤dλ, one gets δ ≤ǫdµ ≤ǫ · poly(n) <
+1/2 for ǫ = poly(1/n). We do not know if such an
+approximation can be eﬃciently obtained classically.
+Polynomial-time classical algorithms for ExactKron
+are only known in the special case when all partitions
+µ, ν, λ have constant (or nearly constant) number of
+parts [36].
+In summary, we have upper bounded the compu-
+tational hardness of counting problems related to the
+representation theory of the symmetric group. We
+have shown that two mysterious quantities in this
+arena—the Kronecker coeﬃcients and the row sums
+of the symmetric group— are proportional to #BQP
+functions and can be approximated via quantum ap-
+proximate counting. We have also described an eﬃ-
+cient quantum algorithm for estimating the normal-
+ized Kronecker coeﬃcient gµνλdλ/(dµdν) to within a
+given additive error. We note that Kronecker coeﬃ-
+cient squared g2
+µνλ can be expressed as an eigenvalue
+degeneracy for a certain Hamiltonian describing dy-
+namics of bipartite ribbon graphs [12]. This provides
+an alternative quantum mechanical interpretation of
+the Kronecker coeﬃcients.
+It remains a challeng-
+ing open question to understand the computational
+hardness of quantum approximate counting relative
+to other known complexity classes.
+
+
+--- PAGE 6 ---
+6
+Acknowledgments
+We
+thank
+Matthias
+Chris-
+tandl, Robin Kothari, Hari Krovi, Greg Kuperberg,
+Igor Pak, and Michael Walter for helpful discus-
+sions. SB, AC, DG, and VH are supported in part
+by the Army Research Oﬃce under Grant Num-
+ber W911NF-20-1-0014. DG is a CIFAR fellow in
+the quantum information science program, and is
+also supported in part by IBM Research.
+GZ is
+supported by the U.S. Department of Energy, Of-
+ﬁce of Science, National Quantum Information Sci-
+ence Research Centers, Co-design Center for Quan-
+tum Advantage (C2QA) under contract number DE-
+SC0012704.
+This research was supported in part
+by Perimeter Institute for Theoretical Physics. Re-
+search at Perimeter Institute is supported by the
+Government of Canada through the Department of
+Innovation, Science and Economic Development and
+by the Province of Ontario through Ministry of Col-
+leges and Universities.
+Note added:
+At the ﬁnal stages of completing
+this work we became aware that other groups have
+independently obtained similar results [33][34].
+[1] Scott Aaronson and Alex Arkhipov. The computa-
+tional complexity of linear optics. In Proceedings of
+the forty-third annual ACM symposium on Theory
+of computing, pages 333–342, 2011.
+[2] Dorit Aharonov, Michael Ben-Or, Fernando GSL
+Brandao, and Or Sattath. The pursuit of unique-
+ness: Extending Valiant-Vazirani theorem to the
+probabilistic and quantum settings.
+Quantum,
+6:668, 2022.
+[3] J.L. Alperin and R.B. Bell. Groups and Represen-
+tations. Graduate Texts in Mathematics. Springer
+New York, 2012.
+[4] Robert Beals.
+Quantum computation of Fourier
+transforms over symmetric groups. In Proceedings of
+the twenty-ninth annual ACM symposium on The-
+ory of computing, pages 48–53, 1997.
+[5] Sergey Bravyi, Anirban Chowdhury, David Gosset,
+and Pawel Wocjan.
+Quantum Hamiltonian com-
+plexity in thermal equilibrium.
+Nature Physics,
+18(11):1367–1370, 2022.
+[6] Brielin Brown, Steven T Flammia, and Norbert
+Schuch.
+Computational diﬃculty of computing
+the density of states.
+Physical review letters,
+107(4):040501, 2011.
+[7] Peter B¨urgisser and Christian Ikenmeyer. The com-
+plexity of computing Kronecker coeﬃcients. In Dis-
+crete Mathematics and Theoretical Computer Sci-
+ence, pages 357–368. Discrete Mathematics and
+Theoretical Computer Science, 2008.
+[8] Chris Cade and P Marcos Crichigno. Complexity of
+supersymmetric systems and the cohomology prob-
+lem. arXiv preprint arXiv:2107.00011, 2021.
+[9] Matthias Christandl, Aram W Harrow, and Graeme
+Mitchison. Nonzero Kronecker coeﬃcients and what
+they tell us about spectra.
+Communications in
+mathematical physics, 270(3):575–585, 2007.
+[10] Matthias Christandl and Graeme Mitchison.
+The
+spectra of quantum states and the Kronecker coeﬃ-
+cients of the symmetric group. Communications in
+Mathematical Physics, 261(3):789–797, oct 2005.
+[11] Stephen A. Fenner, Lance J. Fortnow, and Stuart A.
+Kurtz.
+Gap-deﬁnable counting classes.
+Journal
+of Computer and System Sciences, 48(1):116–148,
+1994.
+[12] Joseph Ben Geloun and Sanjaye Ramgoolam. Quan-
+tum mechanics of bipartite ribbon graphs:
+Inte-
+grality, lattices and Kronecker coeﬃcients.
+arXiv
+preprint arXiv:2010.04054, 2020.
+[13] Leslie Ann Goldberg and Heng Guo.
+The com-
+plexity of approximating complex-valued Ising and
+Tutte partition functions. computational complex-
+ity, 26(4):765–833, 2017.
+[14] Aram W. Harrow.
+Applications of coherent clas-
+sical communication and the Schur transform to
+quantum information theory. arXiv e-prints, pages
+quant–ph/0512255, December 2005.
+[15] Christian
+Ikenmeyer,
+Ketan D Mulmuley,
+and
+Michael Walter.
+On vanishing of Kronecker coef-
+ﬁcients.
+computational complexity, 26(4):949–992,
+2017.
+[16] Christian Ikenmeyer and Igor Pak. What is in# P
+and what is not? In 2022 IEEE 63rd Annual Sympo-
+sium on Foundations of Computer Science (FOCS),
+pages 860–871. IEEE, 2022.
+[17] Christian Ikenmeyer, Igor Pak, and Greta Panova.
+Positivity of the symmetric group characters is as
+hard as the polynomial time hierarchy. In Proceed-
+ings of the 2023 Annual ACM-SIAM Symposium
+on Discrete Algorithms (SODA), pages 3573–3586.
+SIAM, 2023.
+[18] Rahul Jain, Iordanis Kerenidis, Greg Kuperberg,
+Miklos Santha, Or Sattath, and Shengyu Zhang. On
+the power of a unique quantum witness. Theory OF
+Computing, 8:375–400, 2012.
+[19] James. The Representation Theory of the Symmet-
+ric Group.
+Encyclopedia of Mathematics and its
+Applications. Cambridge University Press, 1984.
+[20] Stephen P. Jordan.
+Fast quantum algorithms for
+approximating some irreducible representations of
+groups, 2008.
+[21] Alexei Yu Kitaev, Alexander Shen, Mikhail N Vya-
+lyi, and Mikhail N Vyalyi. Classical and quantum
+computation. Number 47. American Mathematical
+Soc., 2002.
+[22] Alexander Klyachko. Quantum marginal problem
+and representations of the symmetric group, 2004.
+[23] Chris Marriott and John Watrous.
+Quantum
+Arthur–Merlin games.
+computational complexity,
+2(14):122–152, 2005.
+[24] Cristopher Moore, Daniel Rockmore, and Alexander
+Russell. Generic quantum Fourier transforms, 2003.
+[25] Cristopher Moore, Alexander Russell, and Piotr
+Sniady.
+On the impossibility of a quantum sieve
+
+
+--- PAGE 7 ---
+7
+algorithm for graph isomorphism. In Proceedings of
+the thirty-ninth annual ACM symposium on Theory
+of computing, pages 536–545, 2007.
+[26] We shall assume the reader is familiar with basic
+deﬁnitions concerning the representation theory of
+the symmetric group.
+[27] A stretched Kronecker coeﬃcient is a family of Kro-
+necker coeﬃcients, where the number of boxes in
+every partition on every input can be multiplied by
+an arbitrary positive integer.
+[28] Some works in this area consider problems where
+the parts of each partition are speciﬁed in binary
+(i.e., Ref. [7]).
+[29] See Remark 14 in Ref. [37].
+[30] In this paper we have changed the name to QXC
+from QAC as in Ref. [5] to avoid confusion with
+other quantum complexity classes.
+[31] Note that approximating the number of accepting
+witnesses of a QMA veriﬁer with a small relative
+error allows one to check whether the veriﬁer accepts
+at least one witness.
+[32] In particular, the approximation version of the prob-
+lem described in Theorem 5 of Reference [8].
+[33] Greg Kuperberg, Igor Pak, and Greta Panova, per-
+sonal communication.
+[34] Matthias Christandl, Aram Harrow, and Michael
+Walter. Presented by M. Walter at the Algorithms
+and Complexity in Algebraic Geometry Reunion-
+Workshop, Simons Institute, Berkeley, December
+2015.
+[35] Igor Pak. What is a combinatorial interpretation?
+arXiv preprint arXiv:2209.06142, 2022.
+[36] Igor Pak and Greta Panova.
+On the complexity
+of computing Kronecker coeﬃcients. computational
+complexity, 26:1–36, 2017.
+[37] Igor Pak and Greta Panova.
+Breaking down the
+reduced Kronecker coeﬃcients.
+Comptes Rendus.
+Math´ematique, 358(4):463–468, 2020.
+[38] J.P. Serre. Linear Representations of Finite Groups.
+Collection
+M´ethodes.
+Math´ematiques.
+Springer-
+Verlag, 1977.
+[39] Yaoyun Shi and Shengyu Zhang.
+Note on quan-
+tum counting classes.
+Available from Shengyu
+Zhang’s homepage:
+http://www. cse. cuhk. edu.
+hk/syzhang/papers/SharpBQP. pdf, 2009.
+[40] Richard P. Stanley.
+Positivity problems and con-
+jectures in algebraic combinatorics.
+In in Mathe-
+matics: Frontiers and Perspectives, pages 295–319.
+American Mathematical Society, 1999.
+[41] Larry Stockmeyer. The complexity of approximate
+counting.
+In Proceedings of the ﬁfteenth annual
+ACM symposium on Theory of computing, pages
+118–126, 1983.
+Properties of the operators {Πµ}
+Here we show that the operators in Eq. (3) are mutually orthogonal projectors that add up to identity. To
+this end we use the grand orthogonality theorem (a consequence of Schur’s lemma) of representation theory.
+Theorem 3 (Grand orthogonality theorem). (See [38, Sec. 2.2.]) Given irreducible representations ρµ and
+ρν, we have that:
+X
+g∈Sn
+ρµ(g)†
+ijρν(g)kℓ= n!
+dµ
+δikδjℓδµν.
+(9)
+Using Theorem 3 we obtain the following identity for any ﬁxed h ∈Sn.
+X
+g∈Sn
+χν(g)χµ(g−1h) =
+X
+g∈Sn
+X
+i,j
+ρν(g)iiρµ(g−1h)jj
+=
+X
+g∈Sn
+X
+ijk
+ρν(g)iiρµ(g−1)jkρµ(h)kj
+=
+X
+ijk
+
+X
+g∈Sn
+ρν(g)iiρµ(g)†
+jk
+
+ρµ(h)kj
+= δµν
+X
+ijk
+δijδik
+n!
+dν
+ρµ(h)kj = δµν
+X
+i
+n!
+dν
+ρµ(h)ii = δµν
+n!
+dν
+χµ(h).
+It follows that {Πµ} are mutually orthogonal projectors.
+ΠνΠµ = dµdν
+(n!)2
+X
+gh
+χν(g)χµ(h)ρ(gh) = dµdν
+(n!)2
+X
+gℓ
+χν(g)χµ(g−1ℓ)ρ(ℓ) = δµν
+dµ
+n!
+X
+ℓ
+χµ(ℓ)ρ(ℓ) = δµνΠµ.
+(10)
+
+
+--- PAGE 8 ---
+8
+Using the fact that dµ = χµ(e), where e ∈Sn is the identity, we obtain
+X
+µ⊢n
+Πµ =
+X
+g∈Sn
+1
+n!ρ(g)
+X
+µ⊢n
+dµχµ(g) =
+X
+g∈Sn
+1
+n!ρ(g)
+X
+µ⊢n
+χµ(e)χµ(g).
+(11)
+The column-orthogonality of characters (stated below) implies that
+X
+µ
+χµ(e)χµ(g) = n!δeg,
+(12)
+and substituting this into Eq. (11) gives P
+µ Πµ = I.
+Lemma 3 (Column-orthogonality of characters). (See [3, Thm 16.4]) For any h, g ∈Sn we have
+X
+µ⊢n
+χµ(h)χµ(g) =
+(
+|Z(g)|
+if h and g are conjugate.
+0
+otherwise.
+(13)
+where Z(g) is the centralizer of g in Sn (the set of all group elements that commute with g).
+Beals’ quantum Fourier transform over the symmetric group
+For completeness, here we review Beals’ eﬃcient algorithm for the quantum Fourier transform over the
+symmetric group [4] (see also [24] for generalizations to other nonabelian groups).
+Let n ≥2 be an integer and consider the symmetric group Sn of permutations on n objects.
+Also
+let T = {τ1, τ2, . . . , τn} be a transversal of the left cosets of Sn−1 in Sn. Here Sn−1 is regarded as the
+subgroup of Sn that does not permute the n-th object and transversality means that Sn is a union of cosets
+τ1Sn−1, . . . , τnSn−1.
+It will be convenient to ﬁx some notation and conventions concerning the function whose Fourier transform
+we are interested in. We shall ﬁx a unitary matrix representation of each irreducible representation of Sn. In
+particular, we choose the so-called Young Orthogonal representation (more on this below) and write ρλ(π)
+for the matrix corresponding to the irreducible representation labeled by λ ⊢n evaluated at π ∈Sn, and dλ
+for its dimension.
+For a function f : Sn →C we have
+QFTn
+X
+σ∈Sn
+f(σ)|σ⟩=
+X
+ω⊢n
+X
+i,j∈dω
+( ˆf(ω))ij|ω, i, j⟩,
+(14)
+where
+ˆf(ω) =
+r
+dω
+n!
+X
+σ∈Sn
+f(σ)ρω(σ).
+(15)
+For ease of notation in this section we include the normalization factor
+q
+dω
+n! in Eq. (15) rather than in
+Eq. (14) which diﬀers from our convention in the main text (Cf. Eqs. (4,5)). However the quantum fourier
+transform QFTn is deﬁned in exactly the same way.
+Note that the basis vectors in the Fourier basis can be labeled by triples from the set Ω= {(ω, i, j) : ω ⊢
+n, 1 ≤i, j ≤dω}, since |Ω| = P
+ω⊢n d2
+ω = |Sn|. Since the left cosets of Sn−1 partition Sn, we may write
+f(g) =
+n
+X
+j=1
+F j(g)
+F j(g) ≡
+(
+f(g)
+, if g ∈τjSn−1
+0
+, otherwise
+.
+(16)
+Also deﬁne fj : Sn−1 →C for 1 ≤j ≤n by
+fj(h) ≡f(τjh)
+h ∈Sn−1.
+(17)
+
+
+--- PAGE 9 ---
+9
+Young’s orthogonal representation has a certain adapted property that allows us to express Eq. (15) in
+terms of Fourier transforms of the functions fj for 1 ≤j ≤n in a simple way. In particular,
+ˆf(λ) =
+n
+X
+k=1
+ρλ(τk)
+M
+λ−∈Φ(λ)
+s
+dλ
+n · dλ−· ˆfk(λ−),
+(18)
+where
+Φ(λ) = {λ−⊢(n −1) : λ−≤λ}
+is the set of partitions of n −1 whose diagram diﬀers from λ in exactly one box. Note that the Fourier
+transforms ˆfk appearing on the right hand side of Eq. (18) are over the group Sn−1.
+To describe Beals’ QFT algorithm it will be convenient to ﬁrst deﬁne some unitary transformations that
+are used in the construction. In the following we shall assume that we have enough qubits to encode certain
+classical strings as computational basis states.
+Let W denote the unitary which implements a classical reversible circuit that, given a permutation π ∈Sn,
+computes its factorization:
+W|π⟩= |τj⟩|h⟩,
+where j ∈[n] and h ∈Sn−1 satisfy π = τjh. Note that this factorization is unique.
+For π ∈Sn let M(π) be a unitary such that
+M(π)
+X
+λ⊢n
+dλ
+X
+p,q=1
+(Aλ)p,q|λ, p, q⟩=
+X
+λ⊢n
+dλ
+X
+p,q=1
+(ρλ(π)Aλ)p,q|λ, p, q⟩
+Here (Aλ)p,q are complex coeﬃcients. Note that this can be implemented via a controlled-ρλ(π) operation
+on the p register (where the control is λ). The unitary M(π) acts trivially outside the subspace spanned by
+basis vectors {|λ, p, q⟩: λ ⊢n, p, q ∈[dλ]}
+For each irreducible representation σ of Sn−1 there is a set of irreps λ of Sn such that the restriction of ρλ
+to Sn−1 contains σ. These correspond to the partitions λ that diﬀer from σ by adding one box. Moreover,
+each matrix element p, q of ρσ (where p, q ≤dσ) is identiﬁed with a unique matrix element p′, q′ of ρλ (Here
+p′, q′ depend on p, q as well as λ, though our notation suppresses these dependencies).
+Let U be a unitary such that for any σ ⊢(n −1) and p, q ≤dσ we have
+U|0⟩|σ, p, q⟩= |0⟩
+X
+λ⊢n:σ≤λ
+r
+dλ
+n · dσ
+|λ, p′, q′⟩
+(19)
+and such that
+U|τi⟩|σ, p, q⟩= |τi⟩|σ, p, q⟩
+i ∈[n].
+(20)
+It is possible to construct such a unitary because the states appearing on the RHS of Eq. (19) for diﬀerent
+values of σ, p, q are orthonormal. However the action of U in the rest of the Hilbert space is constrained by
+unitarity. The following lemma describes a property of U that follows from this constraint.
+Lemma 4. Let P project onto the subspace spanned by basis states than encode partitions of n −1, that is,
+span{|w⟩|σ, p, q⟩: w ∈{0, τ1, . . . , τn}, σ ⊢(n −1), 1 ≤p, q ≤dσ}.
+Suppose g : Sn →C is any function such that g(π) = 0 for all π ∈Sn−1 (regarded as the subgroup of Sn that
+ﬁxes n). Then PU †|0⟩|ˆg⟩= 0.
+Proof. Below we write P = Pn
+k=0 Pk where P0 = span{|0⟩|σ, p, q⟩: σ ⊢(n −1), 1 ≤p, q ≤dσ} and
+Pk = span{|τk⟩|σ, p, q⟩: σ ⊢(n −1), 1 ≤p, q ≤dσ} for k ∈[n].
+
+
+--- PAGE 10 ---
+10
+First suppose that ˆr is the Fourier transform of some (arbitrary) function r : Sn−1 →C. Deﬁne R : Sn →C
+such that R(π) = r(π) for all π ∈Sn−1, and R(π) = 0 otherwise. Then from Eq. (19) we have
+|0⟩
+X
+σ⊢n−1,p,q
+(ˆr(σ))pq|σ, p, q⟩= U †|0⟩
+X
+λ⊢n,p′,q′
+( ˆR(λ))p′,q′|λ, p′, q′⟩.
+(21)
+Now consider a function g : Sn →C as in the statement of the Lemma. Since g(π) = 0 for all π ∈Sn−1 we
+have ⟨g|R⟩= 0 and therefore ⟨ˆg| ˆR⟩= 0 and therefore U †|0⟩|ˆg⟩is orthogonal to any state of the form on the
+LHS of Eq. (21). Noting that the LHS of Eq. (21) is an arbitrary state in the image of P0, we see that
+P0U †|0⟩|ˆg⟩= 0.
+(22)
+Then
+PU †|0⟩|ˆg⟩= (
+n
+X
+k=1
+Pk)U †|0⟩|ˆg⟩+ P0U †|0⟩|ˆg⟩
+= (
+n
+X
+k=1
+Pk)U †|0⟩|ˆg⟩
+= (
+n
+X
+k=1
+Pk)|0⟩|ˆg⟩
+= 0
+where in the ﬁrst step we used Eq. (22) and in the following step we used Eq. (20).
+Our deﬁnitions of U, fk, F k and M(τk) are chosen so that the following holds.
+Claim 1. For 1 ≤k ≤n we have M(τk)U|0⟩| ˆfk⟩= |0⟩| ˆ
+F k⟩.
+Proof. Follows by combining Eqs. (18, 19, 16, 17).
+Finally, for k ∈[n] let Vk be the unitary that acts as
+Vk|0⟩|σ, p, q⟩= |τk⟩|σ, p, q⟩
+(23)
+Vk|τk⟩|σ, p, q⟩= |0⟩|σ, p, q⟩,
+(24)
+for all σ ⊢n −1 and 1 ≤p, q ≤dσ, and which acts as the identity on all other computational basis states.
+The quantum Fourier transform over the symmetric group is described in Algorithm 1.
+Algorithm 1 Implements a unitary QFTn
+Input: A state |f⟩= P
+g∈Sn f(g)|g⟩.
+Output: The state | ˆf⟩= QFTn|f⟩corresponding to the Fourier transform of f over Sn.
+1: |φ⟩←W |φ⟩
+⊲|φ⟩= Pn
+j=1 |τj⟩P
+h∈Sn−1 fj(h)|h⟩.
+2: |φ⟩←(I ⊗QFTn−1)|φ⟩
+⊲|φ⟩= Pn
+j=1 |τj⟩P
+σ⊢n−1( ˆfj(σ))pq|σ, p, q⟩
+3: for k = 1 to n do
+4:
+|φ⟩←M(τk)−1|φ⟩
+5:
+|φ⟩←UVkU †|φ⟩
+6:
+|φ⟩←M(τk)|φ⟩
+7: end for
+⊲|φ⟩= |0⟩| ˆf⟩(see Lemma 5)
+8: return the second register | ˆf⟩.
+The following lemma shows that the algorithm performs the quantum Fourier transform, as claimed.
+
+
+--- PAGE 11 ---
+11
+Lemma 5. For 0 ≤k ≤n, the state after the kth iteration of the for loop in Algorithm 1 is
+|φk⟩= |0⟩
+k
+X
+j=1
+| ˆ
+F j⟩+
+n
+X
+j=k+1
+|τj⟩| ˆfj⟩.
+(25)
+When k = 0 this describes the state before the ﬁrst iteration (in this case the ﬁrst term is not present). For
+k = n we have |φn⟩= |0⟩Pn
+j=1 | ˆ
+F j⟩= |0⟩| ˆf⟩.
+Proof. By induction on k. The base case k = 0 corresponds to the initial state Pn
+j=1 |τj⟩| ˆfj⟩.
+Now suppose the state after the (k −1)-th iteration is given by |φk−1⟩as described by Eq. (25). Then
+after line 4 of Algorithm 1 the state is
+M(τ −1
+k )|φk−1⟩= |0⟩
+k−1
+X
+j=1
+M(τ −1
+k )| ˆ
+F j⟩+
+n
+X
+j=k
+|τj⟩| ˆfj⟩.
+(26)
+For each j ≤k −1, the state M(τ −1
+k )| ˆ
+F j⟩is the Fourier transform of a function g(π) = F j(τkπ) which is
+zero on Sn−1. So for j ≤k −1, by Lemma 4 we have PU †|0⟩M(τ −1
+k )| ˆ
+F j⟩= 0 where P projects onto basis
+states that encode partitions of n −1. Therefore Vk acts trivially on U †|0⟩M(τ −1
+k )| ˆ
+F j⟩for all j ≤k −1, i.e.,
+VkU †M(τ −1
+k )|φk−1⟩= U †|0⟩
+k−1
+X
+j=1
+M(τ −1
+k )| ˆ
+F j⟩+
+n
+X
+j=k
+Vk|τj⟩| ˆfj⟩
+(27)
+= U †|0⟩
+k−1
+X
+j=1
+M(τ −1
+k )| ˆ
+F j⟩+ |0⟩| ˆfk⟩+
+n
+X
+j=k+1
+|τj⟩| ˆfj⟩.
+(28)
+and, applying M(τk)U to the above gives
+|φk⟩= |0⟩
+k−1
+X
+j=1
+| ˆ
+F j⟩+ M(τk)U|0⟩| ˆfk⟩+
+n
+X
+j=k+1
+|τj⟩| ˆfj⟩
+(29)
+= |0⟩
+k
+X
+j=1
+| ˆ
+F j⟩+
+n
+X
+j=k+1
+|τj⟩| ˆfj⟩
+(30)
+where we used Claim 1. This completes the induction, and the proof.
+Generalized phase estimation
+In this section we will show that the circuits from Figure 1 implement weak Fourier sampling and gener-
+alized phase estimation respectively. The following Lemma shows that the circuit in Figure 1(a) implements
+weak Fourier sampling. We will make use of the inverse Fourier transform QFT†
+n which acts as:
+QFT†
+n
+X
+ω⊢n
+X
+1≤i,j≤dω
+(c(ω))ij|ω, i, j⟩=
+X
+σ∈Sn
+X
+λ⊢n
+r
+dλ
+n! Tr
+ c(λ)ρλ(σ)†
+|σ⟩.
+(31)
+Lemma 6. The POVM ML can be implemented by applying QFTn, then performing a projective measure-
+ment of the representation label ω, then appplying QFT†
+n.
+Proof. Let a partition λ ⊢n be given. Let Pλ denote the projector such that Pλ|ω, i, j⟩= δω,λ|ω, i, j⟩. It
+suﬃces to show that for any state |ψ⟩∈H we have ΠL
+λ|ψ⟩= QFT†
+nPλQFTn|ψ⟩. To this end let |ψ⟩=
+P
+σ∈Sn f(σ)|σ⟩. Using Eq. (3) we get
+Πλ|ψ⟩= dλ
+n!
+X
+σ∈Sn
+X
+α∈Sn
+χλ(α)f(σ)|ασ⟩
+(32)
+= dλ
+n!
+X
+σ,β∈Sn
+χλ(βσ−1)f(σ)|β⟩= dλ
+n!
+X
+σ,β∈Sn
+χλ(σβ−1)f(σ)|β⟩,
+(33)
+
+
+--- PAGE 12 ---
+12
+where in the last line we used the fact that χλ(g) = χλ(g−1) for all g ∈Sn (this can be seen for example
+using the fact that group characters are class functions and g and g−1 are always in the same conjugacy
+class since their cycle structure coincides). Now using Eq. (33) and the fact that
+χλ(σβ−1) = Tr
+ ρλ(σβ−1)
+
+= Tr
+ ρλ(σ)ρλ(β)†
+gives
+ΠL
+λ|ψ⟩=
+r
+dλ
+n!
+X
+β∈Sn
+Tr
+
+ˆf(λ)ρλ(β)†
+|β⟩.
+(34)
+Below we show this is equal to QFT†
+nPλQFTn|ψ⟩. We have:
+QFT†
+nPλQFTn|ψ⟩= QFT†
+nPλ
+X
+ω⊢n
+dω
+X
+i,j=1
+( ˆf(ω))ij|ω, i, j⟩
+(35)
+= QFT†
+n
+dλ
+X
+i,j=1
+( ˆf(λ))ij|λ, i, j⟩=
+r
+dλ
+n!
+X
+β∈Sn
+Tr
+
+ˆf(λ)ρλ(β)†
+|β⟩,
+(36)
+where we used Eq. (31) in the last line. This coincides with Eq. (34) and completes the proof.
+Next we show that the circuit in Fig. 1 (b) implements the generalized phase estimation measurement Mρ:
+|τ, 1, 1⟩⊗|ψ⟩
+QFT†
+n⊗I
+−−−−−−→
+1
+√
+n!
+X
+α∈Sn
+|α⟩⊗|ψ⟩
+(37)
+C−ρ†
+−−−−→1
+√
+n!
+X
+α∈Sn
+|α⟩⊗ρ†(α)|ψ⟩
+(38)
+Measure ML
+−−−−−−−−→1
+√
+n!
+X
+α∈Sn
+ΠL
+ω|α⟩⊗ρ†(α)|ψ⟩
+(conditioned on meas. outcome ω)
+(39)
+=
+dω
+(n!)3/2
+X
+α,σ∈Sn
+χω(σ)|σα⟩⊗ρ†(α)|ψ⟩
+(40)
+C−ρ
+−−−→
+dω
+(n!)3/2
+X
+α,σ∈Sn
+χω(σ)|σα⟩⊗ρ(σα)ρ†(α)|ψ⟩.
+(41)
+Using the fact that ρ(σα) = ρ(σ)ρ(α) and that ρ†(α) = ρ(α)−1 we see that the output state Eq. (41) is equal
+to
+dω
+(n!)3/2
+X
+α,σ∈Sn
+χω(σ)|σα⟩⊗ρ(σ)|ψ⟩=
+1
+√
+n!
+X
+β∈Sn
+|β⟩⊗dω
+n!
+X
+σ∈Sn
+χω(σ)ρ(σ)|ψ⟩.
+(42)
+On the right hand side the state of the second register is Πω|ψ⟩, as desired.
+QMA, #BQP, and QXC
+Recall the deﬁnition of a veriﬁcation circuit from the main text. In the following we write p(ψ) for the
+acceptance probability of a veriﬁcation circuit with input state ψ.
+A (promise) problem is in QMA with completeness c and soundness s, also denoted QMA(c, s), if there
+exists a uniform polynomial-sized family of veriﬁcation circuits Cx labeled by instances x of the problem,
+such that (A) If x is a yes instance then there exists a witness ψ such that p(ψ) ≥c, and (B) If x is a no
+instance then p(ψ) ≤s for all ψ.
+A standard convention is to deﬁne QMA ≡QMA(2/3, 1/3). The deﬁnition is not very sensitive to the choice
+of completeness c and soundness s: it is known that QMA(c, s) = QMA(2/3, 1/3) whenever 0 < s < c ≤1
+
+
+--- PAGE 13 ---
+13
+and c −s = Ω(1/poly(n)). In fact, one can reduce the error of any QMA veriﬁer exponentially in the input
+size n, so that, e.g., QMA(2/3, 1/3) = QMA(4−n, 1 −4−n) as well [21, 23].
+We choose to deﬁne #BQP as a class of relation problems rather than a class of functions, languages
+(decision problems), or promise problems. Recall from the main text that Eq. (2) describes the POVM
+element corresponding to the accept outcome of a quantum veriﬁcation circuit and Nq denotes the number
+of eigenvalues of A that are at least q. We deﬁne #BQP as the class of problems that can be expressed as:
+given a quantum veriﬁcation circuit with an n-qubit input register, total size poly(n), and two thresholds
+0 < b < a ≤1 and a −b = Ω(1/poly(n)), compute an estimate N such that Na ≤N ≤Nb. This deﬁnes a
+relation problem because there may be more than one solution for a given instance (this happens whenever
+Na ̸= Nb).
+Ref. [6] puts forward a slightly diﬀerent deﬁnition of #BQP, as the class of promise problems obtained
+by augmenting and specializing the above deﬁnition with the promise that Na = Nb. This has the pleasing
+feature that it results in a class of functions rather than relations, though at the expense of adding a promise.
+One of the main results established in Ref. [6] is that any problem in #BQP (as they deﬁne it) can be
+eﬃciently reduced to computing a #P function. We now describe how their proof can be straightforwardly
+adapted to our setting, establishing the same result for the deﬁnition of #BQP that we use in this paper.
+Using the in-place error reduction for QMA [23] we may assume without loss of generality that a = 1−2−n−2
+and b = 2−n−2 (see, e.g. the proof of Lemma 8 in the supplementary material of Ref. [5]). Then
+Tr(A) ≤Nb + 2−n−2 · (2n −Nb) ≤Nb + 1/4,
+(43)
+and
+Tr(A) ≥Na(1 −2−n−2) ≥Na −1/4.
+(44)
+Eqs. (43,44) show that the nearest integer N to Tr(A) solves the given #BQP problem as it satisﬁes Na ≤
+N ≤Nb. It then suﬃces to show that we can compute Tr(A) to within an additive error of 1/4 using eﬃcient
+classical computation along with a single call to a #P oracle. This is established in Theorem 14 of Ref. [6]
+via a proof that is based on expressing Tr(A) as a sum over paths, see Ref. [6] for details.
+Eﬃcient sampling algorithm
+Now let us describe the algorithm stated in Lemma 2, which appears implicitly in Ref. [25].
+The completely mixed state over the image of the projector ΠL
+µ can be prepared as follows.
+ΠL
+µ
+d2µ
+= QFT†
+n (|µ⟩⟨µ| ⊗I/dµ ⊗I/dµ) QFTn.
+(45)
+From Eq. 31:
+QFT†
+n |µ, i, j⟩= QFT†
+n
+X
+λ⊢n
+X
+1≤k,l≤dλ
+(δλµδkiδkj)
+|
+{z
+}
+c(λ)
+|λ, k, l⟩=
+X
+σ
+r
+dµ
+n! ρ†
+µ(σ)ji |σ⟩.
+(46)
+There is a basis in which ρλ are orthogonal matrices (Young’s orthogonal form). It follows in this basis that
+ρ†
+µ(σ)ji = ρµ(σ)ij, so that we can write:
+QFT†
+n |µ, i, j⟩=
+X
+σ
+r
+dµ
+n! ρµ(σ)ij |σ⟩,
+(47)
+and
+ΠL
+µ
+d2µ
+= 1
+d2µ
+X
+1≤i,j≤dµ
+QFT†
+n |µ, i, j⟩⟨µ, i, j| QFTn =
+X
+α,β∈Sn
+1
+n!dµ
+χµ(αβ−1) |α⟩⟨β| ,
+(48)
+
+
+--- PAGE 14 ---
+14
+We will need the projector formula: Πλ = dλ
+n!
+P
+g χλ(g)R(g) ⊗R(g), where R is the regular representation.
+We already proved above how to implement this measurement using Generalized Phase Estimation. For
+completeness, we can verify the projection property of this operator as follows:
+Π2
+λ =
+dλ
+n!
+2 X
+h∈Sn
+χλ(h)R(h) ⊗R(h)
+X
+g∈Sn
+χλ(g)R(g) ⊗R(g)
+(49)
+=
+dλ
+n!
+2 X
+g∈Sn
+X
+g∈Sn
+χλ(h)χλ(h−1g)R(g) ⊗R(g)
+(50)
+= dλ
+n!
+X
+g∈Sn
+χλ(g)R(g) ⊗R(g),
+(51)
+where the last line follows from the convolution formula χλ ∗χλ(s) = P
+h χλ(h)χλ(h−1s) =
+n!
+dλ χλ(s). We
+now use that ⟨a|R(g)|b⟩= ⟨a|gb⟩= δa,gb to show:
+1
+d2µd2ν
+Tr
+ (ΠL
+µ ⊗ΠL
+ν )Πλ
+
+=
+X
+a,b∈Sn
+X
+c,d∈Sn
+X
+g∈Sn
+dλ
+n!3dµdν
+χµ(ab−1)χν(cd−1)χλ(g)Tr (|ac⟩⟨bd| R(g) ⊗R(g)) (52)
+=
+X
+a,d,g∈Sn
+dλ
+n!3dµdν
+χµ(g−1)χν(g)χλ(g) =
+X
+g∈Sn
+dλ
+dµdν
+χµ(g−1)χν(g)χλ(g)
+n!
+.
+(53)
+Since Sn has orthogonal representation for its matrices, we have that:
+χµ(g−1) = Tr(ρλ(g)T ) = Tr(ρλ(g)) = χµ(g),
+(54)
+from which:
+p(λ) = Tr
+ 
+ΠL
+µ ⊗ΠL
+ν
+d2µd2ν
+ΠL
+λ
+!
+=
+X
+g∈Sn
+dλ
+dµdν
+χµ(g)χν(g)χλ(g)
+n!
+=
+dλ
+dµdν
+gµνλ.
+(55)
+Row sums
+Lemma 7. The multiplicity of an irreducible representation ρλ in the conjugation representation ρc is given
+by the row sum Rλ deﬁned in Eq. (8).
+Proof. Recall that the centralizer Z(π) of an element π ∈Sn is deﬁned as the set of elements g ∈Sn that
+commute with π. The conjugation representation acts on CSn as
+ρc(π)|σ⟩= |πσπ−1⟩
+and therefore
+χc(π) ≡Tr(ρc(π)) = |Z(π)|,
+where Z(π) is the centralizer of π ∈Sn. Note that all elements π ∈Sn in the same conjugacy class C have
+the same centralizer which we denote Z(C).
+We can decompose the conjugation representation into irreducibles as ρc ≃L
+λ⊢n mλρλ for some multi-
+plicities mλ. Taking the trace gives
+χc(π) =
+X
+λ⊢n
+mλχλ(π)
+for all π ∈Sn. Using orthogonality of the irreducible characters we arrive at
+mλ = 1
+n!
+X
+g∈G
+χλ(g)χc(g) = 1
+n!
+X
+C⊢n
+χλ(C)|C||Z(C)|,
+(56)
+
+
+--- PAGE 15 ---
+15
+where |C| is the order of the conjugacy class C. By Lagrange’s theorem, n!/|C| = |Z(C)|, and substituting
+this into Eq. (56) shows that mλ = Rλ and completes the proof.
+Lemma 8. Rλ = d−1
+λ Tr(Πc
+λ)
+Proof. By deﬁnition,
+Πc
+λ = dλ
+n!
+X
+g∈Sn
+χλ(g)ρc(g),
+and therefore
+Tr(Πc
+λ) = dλ
+n!
+X
+g∈Sn
+χλ(g)χc(g) = dλRλ,
+by Eq. (56)

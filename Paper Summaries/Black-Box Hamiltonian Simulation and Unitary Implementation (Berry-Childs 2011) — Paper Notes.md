@@ -15,14 +15,14 @@ The prior state of the art (Berry–Ahokas–Cleve–Sanders 2006) had $D^4$ dep
 Given black-box access $O_H$ to matrix elements $H_{jk}$, construct an isometry $T: |j\rangle \mapsto |\eta_j\rangle$ where
 
 $$
-|\eta_j\rangle = |j\rangle\left(\sqrt{\frac{\varepsilon}{|H|_1}}\sum_k \sqrt{H^*_{jk}}|k\rangle + \sqrt{1 - \frac{\varepsilon\sigma_j}{|H|_1}}|M+1\rangle\right),
+|\eta_j\rangle = |j\rangle\left(\sqrt{\frac{\eta}{|H|_1}}\sum_k \sqrt{H^*_{jk}}|k\rangle + \sqrt{1 - \frac{\eta\sigma_j}{|H|_1}}|M+1\rangle\right),
 $$
 
-with $\sigma_j = \sum_k |H_{jk}|$ and $\|H\|_1 = \max_j \sigma_j$ (the max column-sum norm). The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
+with $\sigma_j = \sum_k |H_{jk}|$ in the paper's row/column convention and $|H|_1$ an upper bound on the corresponding maximum absolute row/column sum. The square root of a complex entry includes a phase choice; it is not a positive real square root. The walk step is $V = iS(2TT^\dagger - \mathbf{1})$ where $S$ swaps the two registers.
 
-The key relation is $\langle\eta_j|S|\eta_k\rangle = \varepsilon H_{jk}/|H|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/\|H\|_1$ scaled by $\varepsilon$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
+The key relation is $\langle\eta_j|S|\eta_k\rangle = \eta H_{jk}/|H|_1$, so the walk operator's eigenphases encode the eigenvalues of $H/|H|_1$ scaled by $\eta$. Phase estimation on $V$ recovers these phases, and thus the Hamiltonian spectrum.
 
-The parameter $\varepsilon \in (0,1]$ controls **laziness**: small $\varepsilon$ makes the walk slow, which reduces the arcsin nonlinearity error in the phase-eigenvalue relation. The paper uses phase estimation to correct residual errors from this nonlinearity.
+The parameter $\eta \in (0,1]$ controls **laziness**: small $\eta$ makes the walk slow, which reduces the arcsin nonlinearity error in the phase-eigenvalue relation. I use $\eta$ here to avoid confusing this walk parameter with the final simulation error $\delta$. The paper uses phase estimation to correct residual errors from this nonlinearity.
 
 ## Main complexity results
 
@@ -48,11 +48,11 @@ $$
 O\!\left(N^{2/3}(\log\log N)^{4/3}\,\delta^{-1/3}\right) \text{ queries to } O_U.
 $$
 
-Much better than the $\Omega(N^2)$ elementary gates needed for an explicitly specified unitary. Matches the search lower bound $\Omega(\sqrt{N})$ only for "typical" unitaries (numerically observed to require $\tilde O(\sqrt{N})$).
+This is much better than the $\Omega(N^2)$ elementary gates needed to synthesize a completely arbitrary explicitly specified unitary. The proved worst-case query upper bound should be kept separate from empirical or heuristic comments about typical unitaries.
 
 ## State preparation via amplitude amplification
 
-In the non-sparse case, preparing $|\varphi_j\rangle$ exactly is expensive (the amplitudes are proportional to $\sqrt{H^*_{jk}}$, which can be arbitrary). The paper uses Grover-style [[Standard Amplitude Amplification|amplitude amplification]] to prepare these states with fewer queries, following Ref. [12] (Grover 2000) with a modification for the ancilla orthogonality condition. This reduces state-preparation cost from $O(N)$ to $O(N^{2/3})$ per walk step.
+In the non-sparse case, preparing $|\varphi_j\rangle$ exactly is expensive (the amplitudes are proportional to phase-sensitive square roots of matrix entries, which can be arbitrary). The paper uses Grover-style [[Standard Amplitude Amplification|amplitude amplification]] to prepare these states with fewer queries, following Ref. [12] (Grover 2000) with a modification for the ancilla orthogonality condition. The $N^{2/3}$ scaling is part of the balanced non-sparse simulation/unitary-implementation query complexity, not a universal per-walk-step cost independent of the rest of the algorithm.
 
 ## Black-box unitary via Hamiltonian embedding
 
@@ -78,7 +78,8 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 
 ## Limits
 
-- Uses the max column-sum norm $\|H\|_1$, not the spectral norm $\|H\|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
+- Uses a maximum absolute row/column-sum norm promise, not just the spectral norm $\|H\|$. For non-sparse Hamiltonians these can differ by $\sqrt{N}$, which causes exactly the problems studied in Childs–Kothari (0908.4398).
+- The parameters $\Lambda$ and $\Lambda_{\max}$ in the theorem are supplied upper bounds/promises, not quantities the algorithm automatically learns.
 - Not optimal: later qubitization/QSP/QSVT frameworks achieve better parameters and cleaner structure for oracles that provide block-encodings.
 - Worst-case constant prefactors are not particularly tight.
 
@@ -86,7 +87,7 @@ The reduction from $D^4$ to $D$ for sparse Hamiltonians is the headline improvem
 
 1. **[[Quantum-Walk Isometry Encoding for Black-Box Hamiltonians]]** — encode Hamiltonian matrix elements into walk eigenphases via the $T: |j\rangle \mapsto |\eta_j\rangle$ isometry construction. Applies whenever you have query access to matrix elements and want a walk operator whose spectrum encodes the Hamiltonian.
 
-2. **[[Lazy-Walk Phase-Correction for Simulation Accuracy]]** — use the laziness parameter $\varepsilon$ to suppress the arcsin nonlinearity in the walk eigenphases, trading walk speed for simulation accuracy. A precursor to the Bessel linearisation of BCK 2015.
+2. **[[Lazy-Walk Phase-Correction for Simulation Accuracy]]** — use the laziness parameter $\eta$ to suppress the arcsin nonlinearity in the walk eigenphases, trading walk speed for simulation accuracy. A precursor to the Bessel linearisation of BCK 2015.
 
 3. **[[Magnitude-Banded Hamiltonian Decomposition]]** — decompose a non-sparse Hamiltonian into magnitude bands to control the column-sum norm. Used here for the non-sparse simulation result.
 

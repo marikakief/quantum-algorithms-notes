@@ -4,7 +4,7 @@
 
 ## What it does
 
-An architectural principle for block encoding operators with known analytical structure: compute the operator's functional form via coherent arithmetic ($O(\text{polylog}\, N)$ cost) rather than tabulating it via [[QROM (Quantum Read-Only Memory)|QROM]] ($O(N)$ or $O(\text{poly}(N))$ cost). Applied to the GTH pseudopotential, this gives a roughly 100× improvement in block encoding cost over the QROM-heavy approach.
+An architectural principle for block encoding operators with known analytical structure: compute the operator's functional form via coherent arithmetic ($O(\text{polylog}\, N)$ cost) rather than tabulating it via [[QROM (Quantum Read-Only Memory)|QROM]] ($O(N)$ or $O(\text{poly}(N))$ cost). Applied to the GTH pseudopotential, this gives a roughly 100× improvement in the paper's block-encoding comparisons over the QROM-heavy approach. The tradeoff is that breaking the analytic expression into cheaper pieces can inflate the LCU normalization $\lambda$, increasing the number of phase-estimation steps.
 
 ## The trick
 
@@ -14,7 +14,7 @@ The GTH pseudopotential has a complicated but *analytically known* form: exponen
 
 **Arithmetic approach (this paper):** Use the analytical form. The expensive part — the Gaussian exponential — is computed once via [[QROM Interpolation for Negative Exponential|QROM interpolation]] (cost ~256 entries, independent of $N$). The polynomials $c_{0,lj} + c_{1,lj}(r^\alpha_l \|k\|)^2 + c_{2,lj}(r^\alpha_l \|k\|)^4$ are computed via a handful of multiplications (each $O(b^2)$). The angular-momentum-dependent Legendre polynomials $P_l(\hat{k}_p \cdot \hat{k}_q)$ are computed by combining dot products and norms that are already available.
 
-The total arithmetic cost scales as $O(b^2)$ per evaluation, where $b \sim 20$ is the number of precision bits. Since $b = O(\log N)$, this is $O(\log^2 N)$ — an exponential improvement over $O(N)$.
+The total arithmetic cost scales as $O(b^2)$ per evaluation, where $b \sim 20$ is the number of precision bits. Since $b = O(\log N)$ in the address-register model, this replaces an $O(N)$ table with an $O(\log^2 N)$ arithmetic calculation as a function of the table address size. It is not a complexity-theoretic exponential speedup in the physical problem size.
 
 What makes this work:
 1. The GTH pseudopotential has a **separable** structure: the exponential depends on $\|k\|^2$ only, not on the direction; the angular dependence is through low-degree Legendre polynomials; the species-dependent parameters are discrete (loaded via small QROM).
@@ -35,13 +35,15 @@ What makes this work:
 | QROM (Shokrian Zini et al.) | $O(N)$ Toffolis | Linear |
 | Arithmetic (this paper) | $O(b^2) \sim O(\log^2 N)$ Toffolis | Polylogarithmic |
 
-For realistic systems: the arithmetic approach costs ~5,000–10,000 Toffolis for the pseudopotential evaluation, compared to the controlled swaps ($12\eta n \sim 15,000$–$40,000$) that dominate the full block encoding. The QROM approach would cost $O(N)$, which for $N \sim 10^5$ plane waves would be dominant.
+For realistic systems: the arithmetic approach costs ~5,000–10,000 Toffolis for the pseudopotential evaluation, compared to the controlled swaps ($12\eta n \sim 15,000$–$40,000$) that dominate the full block encoding in the paper's examples. QROM/QROAM costs can be space-time traded, and arithmetic costs include precision and finite-interval constants; the table captures the main scaling contrast, not every constant.
 
 ## Caveat
 
 The arithmetic approach trades Toffoli cost for $\lambda$ inflation. To keep the arithmetic tractable, the sum over angular momentum indices $l, i, j$ is broken up in PREPARE (each term prepared separately), which means $\lambda$ accumulates the *sum of absolute values* of individual terms rather than the *absolute value of the sum*. For transition metals (Ni, Mn) with $l_{\max} = 2$ and three projectors per $l$, this can inflate $\lambda_{\text{nonloc}}$ by a significant factor.
 
 This is the classic block-encoding tradeoff: simpler circuits at the cost of larger $\lambda$, meaning more QPE steps. Whether the tradeoff is worthwhile depends on the relative costs.
+
+Rule of thumb: arithmetic wins when analytic structure and moderate precision make $\operatorname{poly}(b)$ arithmetic cheaper than QROM/QROAM table lookup, and when the induced $\lambda$ increase is tolerable in the total phase-estimation cost.
 
 ## Related notes
 - [[Quantum Simulation of Realistic Materials in First Quantization Using Non-Local Pseudopotentials (Berry, Rubin, Babbush et al 2024) — Paper Notes]] — The paper articulating this principle

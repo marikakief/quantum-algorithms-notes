@@ -1,3 +1,5 @@
+# Quantum Algorithm for Linear Non-Unitary Dynamics with Near-Optimal Dependence on All Parameters (An-Childs-Lin 2023) — Paper Notes
+
 > **Source:** Dong An, Andrew M. Childs, and Lin Lin, *Quantum algorithm for linear non-unitary dynamics with near-optimal dependence on all parameters*, arXiv:2312.03916, Commun. Math. Phys. **407**(1), 19 (2026)
 > **Links:** [arXiv](https://arxiv.org/abs/2312.03916) · [CMP](https://doi.org/10.1007/s00220-025-05509-w)
 > **Tags:** #quantum-algorithm #non-unitary #LCHS #differential-equations #hamiltonian-simulation #kernel #Hardy-space #LCU #quadrature
@@ -45,13 +47,13 @@ $$\mathcal{T} e^{-\int_0^t A(s)\, ds} = \int_{\mathbb{R}} \frac{f(k)}{1 - ik}\, 
 
 The original LCHS (arXiv:2303.01029) is the special case $f(k) = 1/(\pi(1 + ik))$, which gives the Cauchy kernel $1/(\pi(1+k^2))$ — only polynomial decay.
 
-**Proof idea:** Lemma 7 shows the Cauchy principal value integral of $f(k) \cdot \mathcal{T} e^{-i\int(kL+H)}$ vanishes (by contour integration in the lower half-plane, using analyticity of $f$ and the exponential decay $e^{-k \int L}$ for $k < 0$ when $L \succ 0$). Dividing by $(1-ik)$ and using the normalisation condition recovers the propagator via residue at $k = -i$.
+**Proof idea:** Lemma 7 shows the relevant principal-value integral vanishes by a contour argument in the lower half-plane of the complex $k$ variable, using the Hardy-space analyticity/decay assumptions on $f$ together with $L\succeq0$. Dividing by $(1-ik)$ and using the normalisation condition recovers the propagator through the pole at $k=-i$.
 
 ### Step 3: Near-optimal kernel choice
 
 Choose the kernel family:
 
-$$f_\beta(k) = \frac{1}{C_\beta}\, e^{(1 + ik)^\beta}, \quad C_\beta = 2\pi\, e^{-2^\beta}, \quad \beta \in (0,1).$$
+$$f_\beta(k) = C_\beta^{-1} e^{-(1 + ik)^\beta}, \quad C_\beta = 2\pi\, e^{-2^\beta}, \quad \beta \in (0,1).$$
 
 On the real axis, $|f_\beta(k)| \sim e^{-c|k|^\beta}$ — sub-exponential decay, faster than any polynomial. This is the [[Near-Optimal Hardy-Space Kernel for LCHS|near-optimal Hardy-space kernel]].
 
@@ -61,7 +63,7 @@ A kernel satisfying the analyticity requirements of Theorem 6 **cannot** have tr
 
 ### Step 5: Discretisation via composite Gaussian quadrature
 
-Truncate the $k$-integral to $[-K, K]$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ (Lemma 10). Partition $[-K, K]$ into intervals of width $h_1 \sim 1/(e\, T \max_t \|L(t)\|)$ and apply $Q$-point Gaussian quadrature on each interval, with $Q = O(\log(1/\varepsilon))$ (Lemma 11). This gives:
+Truncate the $k$-integral to $[-K, K]$ with $K = O((\log 1/\varepsilon)^{1/\beta})$ (Lemma 10). Partition $[-K, K]$ into intervals of width $h_1 \sim 1/(e\, T \max_t \|L(t)\|)$ and apply $Q$-point Gaussian quadrature on each interval, with $Q = O(\log(1/\varepsilon))$ (Lemma 11). These quadrature nodes are not themselves the whole cost: each selected node calls a Hamiltonian-simulation subroutine for $k_jL+H$. This gives:
 
 $$\mathcal{T} e^{-\int A} \approx \sum_{j=0}^{M-1} c_j\, U(T, k_j), \quad M = O\!\left(T \max_t \|L(t)\| \cdot (\log 1/\varepsilon)^{1+1/\beta}\right),$$
 
@@ -101,7 +103,7 @@ $$\tilde{O}\!\left(\frac{\|u_0\|}{\|u(T)\|} \cdot \alpha_A T \cdot (\log 1/\vare
 
 ### Corollary 18 (Gibbs state preparation)
 
-For $L \succeq 0$, prepare the purified Gibbs state $e^{-\gamma L}/Z_\gamma$ using:
+For $L \succeq 0$, prepare a purification of the Gibbs density operator proportional to $e^{-\gamma L}$ (equivalently, amplitudes involve the corresponding square-root purification) using:
 
 $$\tilde{O}\!\left(q_N\, Z_\gamma^{-1}\, \gamma\, \alpha_L \cdot (\log 1/\varepsilon)^{1/\beta}\right) \text{ queries to a block-encoding of } L.$$
 
@@ -132,21 +134,21 @@ The truncated Dyson method achieves $(\log 1/\varepsilon)^2$ matrix-query scalin
 
 ## Limits / caveats
 
-1. **Dissipative assumption:** Requires $L(t) \succeq 0$ (the Hermitian part of $A(t)$ is positive semidefinite). Without this, the LCHS identity fails — the contour integral doesn't converge.
+1. **Dissipative assumption:** Requires $L(t) \succeq 0$ (the Hermitian part of $A(t)$ is positive semidefinite). A scalar shift can enforce a nonnegative Hermitian part in some cases, but the shift changes normalization and amplification factors, so it is not free.
 
-2. **$T^2$ for time-dependent case:** The time-dependent version has $\alpha_A T$ in the matrix-query cost, but the time-marching approach replaces $\alpha_A T$ with $\alpha_A^2 T^2$ while getting $\log(1/\varepsilon)$ precision. The improved LCHS trades better precision scaling for potentially better $T$-scaling, but neither achieves the conjectured optimal $O(\alpha_A T \cdot \mathrm{polylog}(1/\varepsilon))$ for time-dependent problems. The paper notes this remains open (see Section 4.4.4).
+2. **Time-dependent extra logarithm:** The time-dependent version still has linear $\alpha_A T$ dependence in the displayed matrix-query cost, but it pays an extra logarithmic precision factor compared with the time-independent Hamiltonian-simulation implementation. The paper asks whether this time-dependent precision overhead can be tightened (see Section 4.4.4).
 
 3. **Kernel choice:** The $\beta$-family is near-optimal but not unique. Other Hardy-space kernels satisfying Theorem 6 could work. The $\beta \to 1$ limit gives increasingly good decay but worsening constants ($\|f_\beta\|_{L^1}$ grows).
 
 4. **Composite Gaussian quadrature constants:** While asymptotically near-optimal, the constants in the quadrature error bounds involve terms like $T \max_t \|L(t)\|$, which matter in practice.
 
-5. **Section 4.4.4 (newly added):** Discusses open questions around whether the $(\log 1/\varepsilon)^{1+1/\beta}$ factor for time-dependent problems can be tightened to $(\log 1/\varepsilon)^{1/\beta}$ matching the time-independent case. The extra $\log$ comes from having to use time-dependent [[Hamiltonian simulation]] (truncated Dyson series) rather than QSP.
+5. **Lower-bound scope:** "Near-optimal" combines the $\Omega((\|u_0\|+\|b\|_{L^1})/\|u(T)\|)$ state-preparation lower bound with the analytic-kernel decay barrier; it is not a claim that every constant factor or every implementation model is optimal.
 
 ---
 
 ## Reusable ideas
 
-1. **[[Near-Optimal Hardy-Space Kernel for LCHS]]** — the kernel family $f_\beta(k) = (1/C_\beta) e^{(1+ik)^\beta}$ with sub-exponential decay. This is the engine of the exponential precision improvement. Applicable whenever LCHS or [[Laplace-Transform LCU Lifting for Eigenvalue Transforms|Lap-LCHS]] is used.
+1. **[[Near-Optimal Hardy-Space Kernel for LCHS]]** — the kernel family $f_\beta(k) = C_\beta^{-1} e^{-(1+ik)^\beta}$ with sub-exponential decay. This is the engine of the exponential precision improvement. Applicable whenever LCHS or [[Laplace-Transform LCU Lifting for Eigenvalue Transforms|Lap-LCHS]] is used.
 
 2. **[[Phragmén–Lindelöf Decay Barrier for Analytic Kernels]]** — the impossibility result (Proposition 8): an analytic kernel on the lower half-plane with normalisation cannot have true exponential decay. Sets a fundamental limit for any LCHS-type approach.
 
@@ -161,8 +163,8 @@ The truncated Dyson method achieves $(\log 1/\varepsilon)^2$ matrix-query scalin
 - [[Linear Combination of Hamiltonian Simulation for Non-Unitary Dynamics (An-Liu-Lin 2023) — Paper Notes|An-Liu-Lin (PRL 2023)]] — the original LCHS method this paper improves. arXiv:2303.01029.
 - [[Time-Marching Quantum Solvers for Linear ODEs (Fang-Lin-Tong 2023) — Paper Notes|Fang-Lin-Tong (2023)]] — time-marching approach. The main competitor for quantum ODE solving.
 - [[Time-Dependent Hamiltonian Simulation via Dyson Series (Kieferová-Scherer-Berry 2018) — Paper Notes|Kieferová-Scherer-Berry (2018)]] — truncated Dyson series, used as the [[Hamiltonian simulation]] subroutine for the time-dependent case.
-- Berry, Childs, Ostrander, and Wang (2017) — QLSA-based ODE solver. arXiv:1701.05552. Not in vault.
-- Childs, Kothari, and Somma (2017) — quantum spectral method. Not in vault.
+- [[Quantum Algorithm for Linear Differential Equations (Berry-Childs-Ostrander-Wang 2017) — Paper Notes|Berry, Childs, Ostrander, and Wang (2017)]] — QLSA-based ODE solver.
+- [[Improved Quantum Linear Systems via Fourier and Chebyshev LCUs (Childs-Kothari-Somma 2015) — Paper Notes|Childs, Kothari, and Somma (2017)]] — Fourier/Chebyshev LCU quantum linear-system method.
 - [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|Gilyén et al. (2019)]] — QSVT, used for time-independent [[Hamiltonian simulation]] subroutine.
 - [[Quantum Algorithm for General Eigenvalue Transforms via the Laplace Transform (An-Childs-Lin 2024) — Paper Notes|An-Childs-Lin (2024)]] — Lap-LCHS, the follow-up that extends this paper's kernel to general eigenvalue transforms.
 

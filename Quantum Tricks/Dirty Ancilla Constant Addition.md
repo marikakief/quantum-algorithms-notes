@@ -5,7 +5,7 @@
 
 ## What it does
 
-Adds a classically known $n$-bit constant $c$ to an $n$-qubit register $|a\rangle$ in place, using only dirty ancilla qubits (qubits in unknown states borrowed from other parts of the computation).
+Adds a classically known $n$-bit constant $c$ to an $n$-qubit register $|a\rangle$ in place, using only dirty ancilla qubits. A clean ancilla starts in a known state such as $|0\rangle$; a dirty ancilla may be in an unknown or entangled state, but the circuit must return it exactly to that original state.
 
 ## The trick
 
@@ -13,7 +13,7 @@ The construction uses divide-and-conquer on the bit-register, with a [[Carry Com
 
 **Step 1 — Split.** Divide $a$ into high bits $x_H$ and low bits $x_L$ of roughly $n/2$ bits each.
 
-**Step 2 — Carry.** Compute the carry from $x_L + c_L$ into a single qubit, borrowing $x_H$ as dirty ancillae. This carry gate uses $4(n/2 - 2) + 2$ Toffoli gates and returns all borrowed qubits to their original state.
+**Step 2 — Carry.** Compute the carry from $x_L + c_L$ into a single qubit, borrowing $x_H$ as dirty ancillae. This carry gate uses $4(n/2 - 2) + 2$ Toffoli gates in the even-size source convention and returns all borrowed qubits to their original state.
 
 **Step 3 — Increment.** Conditionally increment $x_H$ based on the carry. The incrementer uses $n/2$ borrowed dirty qubits and the identity $|x\rangle|g\rangle \to |x - g\rangle|g\rangle \to |x - g\rangle|\bar{g}\rangle \to |x - g - \bar{g}\rangle|\bar{g}\rangle = |x + 1\rangle|g\rangle$, where $\bar{g}$ is the bitwise complement (so $g + \bar{g} + 1 = 2^n$, giving $-g - \bar{g} = +1 \bmod 2^n$). This uses the ancilla-free adder of Takahashi (2009) and its reverse.
 
@@ -26,6 +26,8 @@ At the lowest recursion level, 1-bit additions are just conditional NOT gates.
 **Toffoli count:**
 
 $$T_{\text{add}}(n) = 8n(\log_2 n - 2) + O(1)$$
+
+This displayed closed form suppresses boundary effects and is cleanest for power-of-two-style recurrences; the source's asymptotic statement is $O(n\log n)$ size and $O(n)$ depth.
 
 **Depth:** $O(n)$ (serial version; the parallel version computes low-half and high-half carries simultaneously using $n/2$ additional dirty qubits).
 
@@ -40,7 +42,7 @@ $$T_{\text{add}}(n) = 8n(\log_2 n - 2) + O(1)$$
 - **Size:** $O(n \log n)$ Toffoli gates
 - **Depth:** $O(n)$
 - **Ancillae:** 1 dirty qubit minimum (serial), up to $n$ dirty qubits for full parallelism
-- **Controlled version:** only the two final CNOT gates of the CARRY circuit need to be made controlled
+- **Controlled version:** in the controlled modular-multiplier context, only certain final CNOTs in the CARRY circuit become multi-controlled; a full controlled adder or modular addition still includes comparator/control overhead.
 
 ## Caveat
 

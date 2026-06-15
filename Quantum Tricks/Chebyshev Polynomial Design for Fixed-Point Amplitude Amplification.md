@@ -19,19 +19,20 @@ Choose the phases as:
 
 $$\alpha_j = -\beta_{l-j+1} = 2\cot^{-1}\!\left(\tan\!\left(\frac{2\pi j}{L}\right)\sqrt{1-\gamma^2}\right)$$
 
-where $L = 2l+1$ and $\gamma^{-1} = T_{1/L}(1/\delta)$. The resulting success probability is a **Dolph-Chebyshev** function:
+where $L = 2l+1$ and $\gamma^{-1} = T_{1/L}(1/\delta)$. The resulting success probability is the **Dolph-Chebyshev** response from Yoder-Low-Chuang Eq. (1):
 
-$$P_L(\lambda) = 1 - \delta^2 \left[T_L\!\left(\frac{\sqrt{1-\lambda}}{T_{1/L}(1/\delta)^{-1}}\right)\right]^2$$
+$$P_L(\lambda) = 1 - \delta^2 \left[T_L\!\left(T_{1/L}(1/\delta)\sqrt{1-\lambda}\right)\right]^2
+= 1 - \delta^2 \left[T_L\!\left(\frac{\sqrt{1-\lambda}}{\gamma}\right)\right]^2.$$
 
 This is the polynomial of degree $L$ that guarantees $P_L \geq 1-\delta^2$ over the widest possible range of $\lambda$ — an optimal design from antenna array theory.
 
-**Key property:** $P_L \geq 1-\delta^2$ for all $\lambda \geq w \approx (\log(2/\delta)/L)^2$. As $L$ increases, $w$ shrinks, and the algorithm can never "overcook."
+**Key property:** $P_L \geq 1-\delta^2$ for all $\lambda \geq w = 1 - T_{1/L}(1/\delta)^{-2} \approx (\log(2/\delta)/L)^2$. As $L$ increases, $w$ shrinks. Thus a sequence that has entered the guaranteed range remains bounded-error as the length grows; below that range the polynomial can still oscillate.
 
 ## When to reach for it
 
 - Any time [[Standard Amplitude Amplification|amplitude amplification]] is used but the overlap $\lambda$ is unknown or varies across a superposition of instances.
 - As a subroutine inside [[Near-Optimal Ground State Preparation (Lin-Tong 2020) — Paper Notes|eigenvalue filtering]] or [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]] where the initial overlap with the target subspace isn't precisely known.
-- Quantum rejection sampling, minimum finding, collision problems — anywhere Grover's algorithm is used as a black box.
+- Quantum rejection sampling, minimum finding, and collision-problem subroutines when the algorithm supplies a lower bound on the relevant success probability or a coherent adaptive/nesting scheme.
 - When the algorithm must be fully coherent (no intermediate measurements) and cannot restart from scratch.
 
 ## Complexity

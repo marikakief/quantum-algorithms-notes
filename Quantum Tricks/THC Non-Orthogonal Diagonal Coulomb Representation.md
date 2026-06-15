@@ -4,7 +4,7 @@
 
 ## What it does
 
-Transforms the four-index Coulomb operator $V_{pqrs}$ in an arbitrary molecular orbital basis into a diagonal two-body operator ($n_\mu n_\nu$ terms only) by projecting into a larger, non-orthogonal basis defined by the THC leaf tensors. This gives the same diagonal structure as the [[Plane-Wave Dual Basis]] without requiring plane waves.
+Represents the four-index Coulomb operator $V_{pqrs}$ in an arbitrary molecular orbital basis through diagonal two-body terms ($n_\mu n_\nu$-type factors) in a larger, non-orthogonal THC orbital representation. In the block encoding, each term is implemented by term-dependent rotations into and out of the needed basis, giving plane-wave-dual-like diagonal structure without requiring plane waves.
 
 ## The trick
 
@@ -16,13 +16,13 @@ Define $M$ non-orthogonal "THC orbitals" as linear combinations of the original 
 
 $$\tilde{\phi}_\mu(\mathbf{r}) = \sum_p \chi_p^{(\mu)} \phi_p(\mathbf{r})$$
 
-In this basis, the Coulomb operator becomes diagonal:
+Formally, the THC factorization has diagonal density-density structure in this non-orthogonal representation:
 
 $$V \approx \frac{1}{2} \sum_{\alpha,\beta} \sum_{\mu \neq \nu} \zeta_{\mu\nu}\, \tilde{n}_{\mu,\alpha}\, \tilde{n}_{\nu,\beta}$$
 
-The non-orthogonality is handled by writing the block encoding as an LCU where each term independently rotates the system register into the THC basis (via a [[Givens Rotation Slater Determinant Preparation|Givens rotation]] network with angles loaded from [[QROM (Quantum Read-Only Memory)|QROM]]), applies the diagonal operator, and rotates back. The overlap matrix of the non-orthogonal orbitals never appears explicitly.
+The non-orthogonality is handled by writing the block encoding as an LCU where each term independently rotates the system register into the required term basis (via a [[Givens Rotation Slater Determinant Preparation|Givens rotation]] network with angles loaded from [[QROM (Quantum Read-Only Memory)|QROM]]), applies the diagonal operator, and rotates back. The overlap matrix of the non-orthogonal orbitals never appears explicitly, and the SELECT operation remains unitary.
 
-The $\lambda$-norm of this representation ($\lambda_\zeta$) satisfies $\lambda_\zeta \leq \lambda_{\rm DF}$ in general, and sometimes beats $\lambda_{\rm DF}$ significantly. The information content is $\Gamma = O(N^2)$ regardless of how $N$ grows, giving $\widetilde{O}(N)$ Toffoli cost per [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] step.
+The $\lambda$-norm of this representation ($\lambda_\zeta$) is reported as comparable to or smaller than double-factorized norms in the benchmarked instances, but there is no universal ordering theorem for every Hamiltonian and THC fit. When the THC rank satisfies the empirical $M=O(N)$ scaling, the information content is $\Gamma = O(MN+M^2)=O(N^2)$, giving $\widetilde{O}(N)$ Toffoli cost per [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] step under the paper's precision assumptions.
 
 **Why not directly qubitize THC?** Naively applying [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] to the standard THC form (without the non-orthogonal projection) gives a much larger $\lambda$ — sometimes worse than single factorization. The non-orthogonal diagonal form is what makes THC competitive.
 
@@ -34,7 +34,7 @@ The $\lambda$-norm of this representation ($\lambda_\zeta$) satisfies $\lambda_\
 
 ## Complexity
 
-- $\widetilde{O}(N)$ Toffolis per walk step (matching plane-wave dual basis scaling)
+- $\widetilde{O}(N)$ Toffolis per walk step under the empirical THC-rank and precision assumptions (matching plane-wave dual basis scaling)
 - $\widetilde{O}(N)$ logical qubits
 - Total: $\widetilde{O}(N\lambda_\zeta/\varepsilon)$ Toffolis for phase estimation
 - Classical preprocessing: $O(N^4)$ or worse for the THC fit

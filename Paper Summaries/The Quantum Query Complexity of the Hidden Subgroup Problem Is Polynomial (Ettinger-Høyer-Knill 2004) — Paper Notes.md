@@ -1,3 +1,5 @@
+# The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes
+
 > **Source:** Mark Ettinger, Peter Høyer, Emanuel Knill, *The quantum query complexity of the hidden subgroup problem is polynomial*, Information Processing Letters **91**(1):43–48, 2004; arXiv:quant-ph/0401083
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0401083) · [Journal](https://doi.org/10.1016/j.ipl.2004.01.024)
 > **Tags:** #hidden-subgroup-problem #query-complexity #nonabelian #information-theoretic #foundational
@@ -58,6 +60,8 @@ The bounded-error algorithm produces a conditional probability matrix $M$, where
 
 Define $\text{ExactTest}$: run Test, then conditionally rotate an ancilla qubit by an angle determined by $x = M^{-1}y$, where $y$ encodes a binary partition of the subgroups into sets $Y_{3/4}$ and $Y_{1/4}$. This produces measurement probabilities of exactly $3/4$ or $1/4$ depending on which set $H$ belongs to.
 
+This exactification is a query-complexity construction. Computing the probability matrix, inverting it, and implementing the resulting controlled rotations are exponentially expensive in general.
+
 Apply [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|amplitude amplification]] to convert $3/4$ vs $1/4$ to $1$ vs $0$ (exact discrimination). Binary search over subgroup partitions identifies $H$ in $\lceil \log_2 r \rceil = O(n^2)$ rounds.
 
 Total queries for exact version: $O(n^2) \times O(n^2) = O(n^4) = O(\log^4 |G|)$.
@@ -85,10 +89,12 @@ This is the paper's real contribution — not the algorithm itself (which is exp
 | **Computational complexity** (general $G$) | Unknown — likely exponential for some groups |
 | **Computational complexity** (dihedral $G$) | $2^{O(\sqrt{\log N})}$ — subexponential |
 
-The query complexity is never the bottleneck. For abelian groups, the QFT provides an efficient measurement. For non-abelian groups, the states carry enough information, but:
+The query complexity is not the asymptotic bottleneck in the query model. Concrete oracle-evaluation costs are separate, and the EHK construction does not make the measurement efficient. For abelian groups, the QFT provides an efficient measurement. For non-abelian groups, the states carry enough information, but:
 - The coset states have exponentially many components in the representation basis
 - Distinguishing between exponentially many candidate subgroups requires processing these components
 - The pretty good measurement is optimal ([[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes|Bacon-Childs-van Dam 2005]]) but implementing it efficiently is the open problem
+
+Equivalently: having polynomially many hidden-subgroup states is different from having an efficiently implementable PGM or post-processing circuit for those states.
 
 ---
 
@@ -127,7 +133,7 @@ The query complexity is never the bottleneck. For abelian groups, the QFT provid
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes]] — addresses the computational complexity that this paper shows is the real barrier
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes]] — polynomial-space variant for dihedral groups
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]] — optimal measurements for semidirect product HSP
-- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — efficient HSP for solvable groups
+- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — quantum algorithms for solvable black-box group structural tasks, not arbitrary HSP over every solvable group
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] — abelian HSP as a special case
 - [[Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes]] — dihedral HSP ↔ lattice problems connection
 

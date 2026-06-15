@@ -10,7 +10,7 @@
 
 **Claw-finding:** Given $f: [N] \to \mathbb{Z}$ and $g: [M] \to \mathbb{Z}$, find $(x, y)$ with $f(x) = g(y)$.
 
-The complexity measure throughout is the number of **comparisons** — queries of the form "is $f(x) \leq f(y)$?" — not function evaluations. The results hold (up to log factors) in the function-evaluation model too.
+The complexity measure throughout is the number of **comparisons** — queries of the form "is $f(x) \leq f(y)$?" — not function evaluations. With a value oracle one can simulate the comparisons used here after loading values, but sorting and table lookup have a different accounting; do not read the comparison bound as a literal value-query bound without specifying the data-access model.
 
 ---
 
@@ -48,7 +48,7 @@ $$Q_2(\text{ED}) = O(N^{3/4} \log N)$$
 
 ### Recovering BHT for structured functions
 
-If $f$ is 2-to-1 (the [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|BHT]] setting), set $\ell = N^{1/3}$. Then the success probability of steps 1–4 is $\Theta(1)$, and no outer amplification is needed: total $O(N^{1/3} \log N)$.
+If $f$ is 2-to-1 (the [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|BHT]] setting), set $\ell = N^{1/3}$. Then the success probability of steps 1–4 is $\Theta(1)$, and no outer amplification is needed: total $O(N^{1/3} \log N)$. This is a structured collision promise, not an ordinary element-distinctness algorithm.
 
 ---
 
@@ -75,11 +75,11 @@ where $n = |V|$, $m = |E|$. For sparse graphs ($m = O(n)$), this gives $O(n)$, a
 | Algorithm | ED bound | Technique | Space |
 |---|---|---|---|
 | Classical (sorting) | $\Theta(N \log N)$ | Sort + scan | $O(N)$ |
-| [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes\|BHT (1997)]] | $O(N^{1/3})$ | [[Birthday-Grover Space-Time Tradeoff\|Birthday + Grover]] | $O(N^{1/3})$ |
-| ↳ requires 2-to-1 promise | — | — | — |
+| [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes\|BHT (1997)]] | $O(N^{1/3})$ for promised collision finding | [[Birthday-Grover Space-Time Tradeoff\|Birthday + Grover]] | $O(N^{1/3})$ |
+| ↳ not ordinary ED | requires an $r$-to-1-style promise | — | — |
 | **This paper (2001)** | $O(N^{3/4} \log N)$ | Sort + Grover + amp. amplification | $O(\sqrt{N})$ |
 | [[Quantum Walk Algorithm for Element Distinctness (Ambainis 2007) — Paper Notes\|Ambainis (2007)]] | $O(N^{2/3})$ | [[Walk on the Johnson Graph for Subset Search\|Johnson graph walk]] | $O(N^{2/3})$ |
-| Aaronson-Shi lower bound | $\Omega(N^{2/3})$ | Polynomial method | — |
+| Shi lower bound | $\Omega(N^{2/3})$ | Polynomial method | — |
 
 The gap between $N^{3/4}$ (this paper) and $N^{2/3}$ (Ambainis) is exactly the difference between classical random sampling and quantum walking on the search space. Ambainis's walk amortises the cost of moving between adjacent subsets to 1 query, while this paper pays $O(\ell \log \ell)$ to set up each subset from scratch.
 
@@ -89,7 +89,7 @@ Interestingly, Ambainis's paper recovers the $N^{3/4}$ bound of Buhrman et al. a
 
 ## Lower bounds and hardness
 
-The paper proves $\Omega(\sqrt{N})$ for bounded-error ED and $\Omega(N)$ for exact ED, both via reduction from OR. These are weaker than the $\Omega(N^{2/3})$ bound proved later by Aaronson and Shi (2004) using the polynomial method.
+The paper proves $\Omega(\sqrt{N})$ for bounded-error ED and $\Omega(N)$ for exact ED, both via reduction from OR. These are weaker than the $\Omega(N^{2/3})$ bound proved later by Shi using the polynomial method.
 
 The paper also shows three related problems have $\Omega(N)$ quantum evaluation complexity (no speedup possible), proved via [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes|Ambainis's adversary method]]:
 - **Parity-collision:** counting the parity of the number of collisions
@@ -115,7 +115,7 @@ With $r = \log^2 N$, the recursion depth is $O(\log^* N)$, yielding $T(N) = O(\s
 ## Limits / caveats
 
 - The $N^{3/4}$ bound was superseded by Ambainis's $N^{2/3}$ within a few years. The paper is historically important but algorithmically no longer the best approach.
-- The log factors are real and somewhat annoying — they come from classical sorting and binary search. Ambainis's walk avoids them entirely.
+- The log factors are real in this comparison-model implementation: they come from sorting and binary search inside the nested-amplification routine. Ambainis's walk avoids repeated sorting by moving between adjacent subsets instead of rebuilding them from scratch.
 - The lower bounds ($\Omega(\sqrt{N})$) are weak. The polynomial method hadn't yet been applied to element distinctness when this paper appeared.
 - The triangle-finding algorithm ($O(n + \sqrt{nm})$) was later improved by [[Quantum Algorithms for the Triangle Problem (Magniez-Santha-Szegedy 2007) — Paper Notes|Magniez-Santha-Szegedy (2007)]] to $\tilde{O}(n^{13/10})$ and eventually $\tilde{O}(n^{5/4})$ by Le Gall.
 
@@ -132,12 +132,12 @@ With $r = \log^2 N$, the recursion depth is $O(\log^* N)$, yielding $T(N) = O(\s
 ## References within this paper
 
 - [[Quantum Algorithm for the Collision Problem (Brassard-Høyer-Tapp 1997) — Paper Notes|Brassard, Høyer & Tapp (1997)]] — $O(N^{1/3})$ collision finding for 2-to-1 functions
-- [[Quantum Amplitude Amplification and Estimation (Brassard-Høyer-Mosca-Tapp 2002) — Paper Notes|Brassard, Høyer, Mosca & Tapp (2000)]] — amplitude amplification framework (the key tool)
+- [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes|Boyer, Brassard, Høyer & Tapp (1998)]] — search with unknown number of marked items, used as the amplification primitive
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard & Vazirani (1997)]] — $\Omega(\sqrt{N})$ lower bound for search
 - [[A Fast Quantum Mechanical Algorithm for Database Search (Grover 1996) — Paper Notes|Grover (1996)]] — the underlying search primitive
 - [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes|Ambainis (2000)]] — adversary method used for the hardness results
 - [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes|Shor (1997)]] — context: the other main quantum algorithm family
-- Aaronson & Shi (2004) — later proved the tight $\Omega(N^{2/3})$ lower bound
+- Shi (2002) — later proved the tight $\Omega(N^{2/3})$ lower bound via the polynomial method
 
 ---
 

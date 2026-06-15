@@ -1,3 +1,5 @@
+# Quantum Algorithms for Algebraic Problems (Childs-van Dam 2010) — Paper Notes
+
 > **Source:** Andrew M. Childs and Wim van Dam, "Quantum algorithms for algebraic problems," *Reviews of Modern Physics* **82**, 1–52 (2010); arXiv:0812.0380
 > **Links:** [arXiv](https://arxiv.org/abs/0812.0380) · [journal](https://doi.org/10.1103/RevModPhys.82.1)
 > **Tags:** #review #hidden-subgroup-problem #algebraic-algorithms #order-finding #abelian-HSP #nonabelian-HSP #query-complexity #number-theory #graph-isomorphism
@@ -22,7 +24,7 @@ The survey is not just a list of results — it provides a unified framework and
 
 Childs and van Dam wrote this as an invited review for *Reviews of Modern Physics*, targeting an audience familiar with quantum computing but not necessarily experts in algebra. It organises the state of the field as of 2008–2009 around the HSP framework and identifies the key open problems.
 
-The paper's structural contribution is showing that most known exponential quantum speedups over classical algorithms — factoring, discrete logarithm, Simon's problem, Pell's equation, class groups, unit groups — all fit inside the abelian HSP template, while the non-abelian case (graph isomorphism being the flagship example) resists this approach for representable structural reasons.
+The paper's structural contribution is showing that many algebraic exponential speedups covered by the survey — factoring, discrete logarithm, Simon's problem, Pell's equation, and later class-group/unit-group algorithms — fit an abelian-HSP or closely related period-finding template, while the non-abelian case (graph isomorphism being the flagship example) resists this approach for representation-theoretic and measurement-implementation reasons.
 
 ---
 
@@ -46,18 +48,18 @@ For abelian $G$ of the form $\mathbb{Z}_{N_1} \times \cdots \times \mathbb{Z}_{N
 
 | Problem | Group $G$ | Hidden subgroup $H$ |
 |---|---|---|
-| [[On the Power of Quantum Computation (Simon 1994) — Paper Notes\|Simon's problem]] | $\mathbb{Z}_2^n$ | Order-2 subgroup $\{0, s\}$ |
-| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor: factoring]] | $\mathbb{Z}^*_N$ (via period finding in $\mathbb{Z}$) | $\langle r \rangle$ where $r$ is the order of $x \bmod N$ |
-| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor: discrete log]] | $\mathbb{Z}_q \times \mathbb{Z}_q$ | Cyclic subgroup encoding the discrete log |
-| [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes\|Kitaev: abelian stabiliser]] | Any finite abelian group | Arbitrary $H \leq G$ |
-| [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes\|Bernstein-Vazirani]] | $\mathbb{Z}_2^n$ | Hyperplane $\{x : s \cdot x = 0\}$ |
-| [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes\|Hallgren: Pell's equation]] | $\mathbb{R}$ (continuous) | Discrete subgroup $r\mathbb{Z}$ |
+| [[On the Power of Quantum Computation (Simon 1994) — Paper Notes]] / Simon's problem | $\mathbb{Z}_2^n$ | Order-2 subgroup $\{0, s\}$ |
+| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] / factoring | $\mathbb{Z}^*_N$ (via period finding in $\mathbb{Z}$) | $\langle r \rangle$ where $r$ is the order of $x \bmod N$ |
+| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes]] / discrete log | $\mathbb{Z}_q \times \mathbb{Z}_q$ | Cyclic subgroup encoding the discrete log |
+| [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes]] / abelian stabiliser | Any finite abelian group | Arbitrary $H \leq G$ |
+| [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes]] | $\mathbb{Z}_2^n$ | Hyperplane $\{x : s \cdot x = 0\}$ |
+| [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes]] / Pell's equation | discretized real-period function over $\mathbb{R}$ | regulator period $R\mathbb{Z}$, sampled approximately |
 
-The Hallgren case is notable: the group is infinite and the period is an irrational algebraic number. The QFT is replaced by sampling from a continuous approximation, and the result is still polynomial-time.
+The Hallgren case is notable: the period is an irrational real number and the algorithm uses a discretized approximation to a weakly periodic real-domain function, not a literal finite abelian HSP over a listed group. The QFT is replaced by sampling from a continuous approximation, and the result is still polynomial-time.
 
 ### 3. Class group and unit group computations
 
-Hallgren (2005) and Schmidt-Vollmer (2005) extend the approach to compute the **class group** and **unit group** of number fields — problems that are foundational in computational algebraic number theory and for which no efficient classical algorithm is known.
+Hallgren's 2002/2007 paper solves the regulator/Pell and PIP problems for real quadratic fields. Broader **class group** and **unit group** algorithms belong to later work such as Hallgren (2005) and Schmidt--Vollmer (2005), with additional assumptions and number-field machinery.
 
 For class groups of imaginary quadratic fields, the hidden period lives in the group law of ideals. The QFT over $\mathbb{R}^k$ (for rank-$k$ unit groups) requires careful discretization and error analysis.
 
@@ -69,7 +71,7 @@ The structural obstacle: applying the QFT over a non-abelian group yields matrix
 
 **Key non-abelian results covered:**
 
-- **Solvable groups** ([[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous 2001]]): polynomial time via series of normal subgroups. Uses the fact that solvable groups have a subnormal chain with abelian quotients; each level of the chain is an abelian HSP.
+- **Solvable black-box group structural tasks** ([[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous 2001]]): polynomial-time quantum algorithms for order, membership, subgroup equality, normality testing, and related factor-group computations. This is not a general algorithm for arbitrary HSP over every solvable group.
 - **Dihedral group** $D_N$: subexponential time $2^{O(\sqrt{\log N})}$ via a sieving algorithm ([[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg 2005]]), improved to polynomial space by [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes|Regev (2004)]]. The dihedral HSP is related to worst-case lattice problems, suggesting hardness.
 - **Symmetric group** $S_n$ (graph isomorphism): the standard approach fails — single-copy measurements on coset states are provably insufficient (Moore-Russell-Schulman 2005). Entangled multi-copy measurements ([[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes|Bacon-Childs-van Dam 2005]]) yield the [[Entangled Multi-Copy Measurements for Nonabelian HSP|pretty good measurement]] approach, efficient for some semidirect product groups but reducing to average-case subset sum for dihedral groups.
 - **Semidirect products** $\mathbb{Z}_p^r \rtimes \mathbb{Z}_p$: polynomial time when $r$ is constant, via the PGM on multiple coset state copies.
@@ -102,13 +104,20 @@ No polynomial-time quantum algorithm for GI is known, and this remains one of th
 
 2. **Polynomial query complexity for all finite groups** (Ettinger-Høyer-Knill): $O(\log^4 |G|)$ queries suffice for any finite group, but the algorithm requires exponential classical post-processing.
 
-3. **Solvable groups in polynomial time** (Watrous): The HSP over any solvable group can be solved in $\text{poly}(\log |G|)$ time.
+3. **Solvable black-box group tasks** (Watrous): order, membership, subgroup equality, normality testing, and abelian factor-group computations are quantum polynomial-time for solvable black-box groups.
 
 4. **Dihedral HSP in subexponential time** (Kuperberg): $2^{O(\sqrt{\log N})}$ time for $D_N$.
 
-5. **Dihedral hardness via lattice connections** (Regev): An efficient quantum algorithm for the dihedral HSP would imply efficient quantum algorithms for worst-case lattice problems (SVP, CVP), suggesting the problem is hard.
+5. **Dihedral hardness via lattice connections** (Regev): an efficient quantum algorithm for the relevant dihedral coset problem would imply efficient quantum algorithms for certain promised unique-SVP lattice problems, suggesting the problem is hard.
 
-6. **Continuous group HSP** (Hallgren, Schmidt-Vollmer): Pell's equation, the principal ideal problem, class groups, and unit groups of number fields are all solvable in polynomial time.
+6. **Continuous-period and infrastructure algorithms** (Hallgren, Schmidt--Vollmer): Pell/regulator and PIP for real quadratic fields, and later class-group/unit-group algorithms for number fields, are solvable in quantum polynomial time in their stated models.
+
+| Category | What is solved efficiently | What is not implied |
+|---|---|---|
+| Abelian HSP | finite abelian HSP and standard period-finding applications | nonabelian HSP by representation labels alone |
+| Normal-HSP / special nonabelian cases | normal subgroups and selected group families with extra structure | arbitrary hidden subgroups in arbitrary nonabelian groups |
+| Solvable black-box group algorithms | order, membership, equality, normality, and abelian factor-group computations | a blanket HSP solver for arbitrary solvable-group instances |
+| General finite-group HSP query complexity | polynomially many queries/coset states | efficient measurement or post-processing |
 
 7. **Graph isomorphism barrier**: No polynomial-time quantum algorithm for the HSP over $S_n$ is known, and structural results suggest the standard approach cannot work.
 
@@ -134,6 +143,7 @@ The paper appeared contemporaneously with major advances in the polynomial hiera
 - **Continuous groups require more machinery**: the Pell's equation and class group algorithms involve technical analysis of continuous QFTs over $\mathbb{R}^k$ that the review summarises but does not fully treat.
 - **Post-2009 developments not covered**: the framework has been extended by QSVT (2018–2019), which subsumes some of these speedups in a unified framework. The non-abelian HSP status is essentially unchanged as of 2024.
 - **Quantum walk-based search** is only lightly touched: the survey mostly stays on the algebraic side and doesn't develop the Szegedy / Ambainis frameworks.
+- **Survey compression can overstate boundaries**: when using this note, keep separate abelian HSP, normal-HSP special cases, solvable black-box structural algorithms, and arbitrary nonabelian HSP.
 
 ---
 
@@ -160,11 +170,12 @@ Key papers cited in the review (those with notes in this vault):
 - [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|Kitaev (1995)]] — general abelian HSP via phase estimation
 - [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes|Bernstein-Vazirani (1993)]] — hidden linear function, abelian HSP precursor
 - [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes|Hallgren (2002)]] — continuous group HSP, Pell's equation
-- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — non-abelian HSP for solvable groups
+- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes|Watrous (2001)]] — solvable black-box group structural algorithms
 - [[The Quantum Query Complexity of the Hidden Subgroup Problem Is Polynomial (Ettinger-Høyer-Knill 2004) — Paper Notes|Ettinger-Høyer-Knill (2004)]] — polynomial query complexity for all finite groups
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes|Kuperberg (2005)]] — dihedral HSP in subexponential time
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes|Regev (2004)]] — dihedral HSP with polynomial space
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes|Bacon-Childs-van Dam (2005)]] — PGM for semidirect products (van Dam is a coauthor of this review)
+- [[Classical and Quantum Algorithms for Exponential Congruences (van Dam-Shparlinski 2008) — Paper Notes|van Dam-Shparlinski (2008)]] — adjacent semidirect-product HSP motivation: solving $a f^x+b f^y=c$ efficiently would help the $\mathbb Z/q\rtimes\mathbb Z/p$ case, but their algorithm remains superpolynomial in $\log q$
 - [[Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes|Regev (2002)]] — dihedral HSP ↔ lattice problem hardness
 - [[Succinct Quantum Proofs for Properties of Finite Groups (Watrous 2000) — Paper Notes|Watrous (2000)]] — group membership in QMA
 
@@ -191,7 +202,8 @@ Key papers cited in the review (those with notes in this vault):
 - [[A Subexponential-Time Quantum Algorithm for the Dihedral Hidden Subgroup Problem (Kuperberg 2005) — Paper Notes]] — dihedral case
 - [[A Subexponential Time Algorithm for the Dihedral Hidden Subgroup Problem with Polynomial Space (Regev 2004) — Paper Notes]] — dihedral case, space-efficient
 - [[From Optimal Measurement to Efficient Quantum Algorithms for the HSP over Semidirect Product Groups (Bacon-Childs-van Dam 2005) — Paper Notes]] — optimal measurements for structured non-abelian groups
-- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — polynomial time for solvable groups
+- [[Classical and Quantum Algorithms for Exponential Congruences (van Dam-Shparlinski 2008) — Paper Notes]] — finite-field exponential congruence algorithm motivated by semidirect-product HSP
+- [[Quantum Algorithms for Solvable Groups (Watrous 2001) — Paper Notes]] — polynomial-time order, membership, equality, normality, and factor-group tools for solvable black-box groups
 - [[Polynomial-Time Quantum Algorithms for Pell's Equation and the Principal Ideal Problem (Hallgren 2002) — Paper Notes]] — continuous group HSP
 - [[Quantum Computation and Lattice Problems (Regev 2002) — Paper Notes]] — lattice hardness connection
 - [[Exponential Algorithmic Speedup by Quantum Walk (Childs-Cleve-Deotto-Farhi-Gutmann-Spielman 2003) — Paper Notes]] — Childs' glued-trees construction (same first author; walk-based exponential speedup)

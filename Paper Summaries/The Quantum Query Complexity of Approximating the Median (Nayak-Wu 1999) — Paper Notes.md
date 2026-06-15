@@ -1,3 +1,5 @@
+# The Quantum Query Complexity of Approximating the Median (Nayak-Wu 1999) — Paper Notes
+
 > **Source:** Ashwin Nayak and Felix Wu, "The quantum query complexity of approximating the median and related statistics", *STOC 1999*
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/9804066) · [ACM DL](https://dl.acm.org/doi/10.1145/301250.301349)
 > **Tags:** #query-complexity #lower-bounds #polynomial-method #statistics #median #quantum-algorithms
@@ -20,9 +22,11 @@ Classical complexity for finding the median is $\Theta(n)$ comparisons (Blum-Flo
 
 ## What the paper does
 
-Proves $\Omega(1/\varepsilon)$ quantum query complexity for the $\varepsilon$-approximate median, matching Grover's $\tilde{O}(1/\varepsilon)$ upper bound up to polylogarithmic factors. This gives one of the rare **cubic** quantum-classical separations: quantum $\Theta(1/\varepsilon)$ vs classical $\Theta(n)$, and since $\varepsilon$ can be as small as $1/n$, the separation is $\Theta(n)$ vs $\Theta(n)$ at the exact end but $\Theta(n^{1/3})$ vs $\Theta(n)$ when $\varepsilon = n^{-2/3}$.
-
-Actually, the most interesting case for the cubic separation is finding the exact median ($\Delta = 1$ in the $k$th-smallest formulation): the quantum comparison complexity is $\tilde{\Theta}(\sqrt{k(n-k)})$ while classical is $\Theta(n)$. For $k = n/2$, this gives $\tilde{\Theta}(n)$ quantum vs $\Theta(n)$ classical — no separation. The cubic separation appears for approximate statistics at intermediate precision.
+Proves $\Omega(\min\{1/\varepsilon,n\})$ quantum query complexity for the $\varepsilon$-approximate median, matching the paper's
+$$
+O\!\left(\frac{1}{\varepsilon}\log\frac{1}{\varepsilon}\log\log\frac{1}{\varepsilon}\right)
+$$
+upper bound up to polylogarithmic factors when $1/\varepsilon\le n$. This is a query-complexity result in the paper's oracle/comparison setting; classical comparisons depend strongly on the access model, so any quantum-classical separation claim has to state whether the benchmark is deterministic comparison, randomized comparison, value-oracle sampling, or another model.
 
 The paper also provides a new algorithm eliminating the domain-size dependence in Grover's earlier algorithm.
 
@@ -68,17 +72,16 @@ $$\text{Queries} = \Omega\left(\sqrt{n/\Delta} + \sqrt{k(n-k)/\Delta}\right)$$
 
 **For the median** ($k = n/2$, $\Delta = \varepsilon n/2$): $\Omega(1/\varepsilon)$ queries.
 
-## The quantum-classical separation
+## Query-complexity consequences
 
-| Problem | Classical | Quantum | Separation |
-|---|---|---|---|
-| Exact median ($k = n/2$, $\Delta = 1$) | $\Theta(n)$ | $\tilde{\Theta}(n)$ | None |
-| Exact $k$th-smallest ($\Delta = 1$) | $\Theta(n)$ | $\tilde{\Theta}(\sqrt{k(n-k)})$ | Up to $\sqrt{n}$ |
-| Exact minimum ($k = 1$, $\Delta = 1$) | $\Theta(n)$ | $O(\sqrt{n})$ | Quadratic |
-| $\varepsilon$-approximate median | $\Theta(n)$ | $\tilde{\Theta}(1/\varepsilon)$ | Up to $n$ (when $\varepsilon$ constant) |
-| $\Delta$-approximate count | $\Theta(n)$ | $\Theta(\sqrt{n/\Delta} + \sqrt{t(n-t)/\Delta})$ | Depends on $t, \Delta$ |
+| Problem / parameter regime | Quantum query bound | Classical comparison caveat |
+|---|---|---|
+| Exact median ($k = n/2$, $\Delta = 1$) | $\tilde{\Theta}(n)$ | Same order as deterministic linear-time selection |
+| Exact $k$th-smallest ($\Delta = 1$) | $\tilde{\Theta}(\sqrt{k(n-k)})$ | Small $k$ includes minimum finding and gives the usual quadratic search-type gap |
+| $\varepsilon$-approximate median, $1/\varepsilon\le n$ | $\Omega(1/\varepsilon)$ and $\tilde O(1/\varepsilon)$ | Randomized classical sampling can be sublinear for some natural approximation models; state the oracle and success criterion before claiming a separation |
+| $\Delta$-approximate count | $\Theta(\sqrt{n/\Delta} + \sqrt{t(n-t)/\Delta})$ on inputs with $t$ ones | This is an instance-sensitive quantum counting/statistics statement |
 
-The cubic separation arises in the comparison model when $\varepsilon = \Theta(1)$: quantum needs $O(1)$ queries while classical needs $\Theta(n)$. More precisely, setting $\varepsilon = n^{-2/3}$ gives quantum $\tilde{O}(n^{2/3})$ vs classical $\Theta(n)$ — a cube-root separation.
+Broad quantum-classical separation framings for approximate statistics require care. The paper proves polynomial-method quantum lower bounds and near-matching quantum algorithms; the classical side is model-dependent.
 
 ## The algorithm
 
@@ -114,7 +117,7 @@ The algorithm performs quantum binary search using:
 - The polylogarithmic gap between upper and lower bounds ($\log(1/\varepsilon) \cdot \log\log(1/\varepsilon)$) remains open. The authors conjecture the lower bound is tight and the algorithm can be improved.
 - The polynomial method used here cannot yield better bounds for these problems (proven by the matching polynomial upper bound in Corollary 1.4).
 - All bounds hold in the comparison tree model as well (4 oracle queries simulate one comparison).
-- The "cubic separation" framing requires care: it's cubic in the comparison model at specific parameter settings, not a blanket statement.
+- Broad "cubic separation" framings require care. The paper proves polynomial-method quantum lower bounds and near-matching quantum algorithms; the classical side is model-dependent for approximate statistics.
 
 ## Reusable ideas
 
@@ -140,7 +143,7 @@ The algorithm performs quantum binary search using:
 - [[Tight Bounds on Quantum Searching (Boyer-Brassard-Høyer-Tapp 1998) — Paper Notes]] — the search framework used here
 - [[Quantum Counting (Brassard-Høyer-Tapp 1998) — Paper Notes]] — approximate counting subroutine
 - [[Quantum Algorithms for Testing Properties of Distributions (Bravyi-Harrow-Hassidim 2011) — Paper Notes]] — related $O(N^{1/3})$ bounds for distribution testing
-- [[All Quantum Adversary Methods Are Equivalent (Špalek-Szegedy 2006) — Paper Notes]] — the adversary method cannot prove $\Omega(1/\varepsilon)$ for approximate median (certificate barrier applies)
+- [[All Quantum Adversary Methods Are Equivalent (Špalek-Szegedy 2006) — Paper Notes]] — positive adversary limitations are related background, but the Nayak-Wu lower bound itself is a polynomial-method result
 - [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes]] — another polynomial method application
 
 ### Trick cards

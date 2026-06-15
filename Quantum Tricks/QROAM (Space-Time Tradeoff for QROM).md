@@ -19,11 +19,11 @@ The system register and other unused qubits serve as "dirty" ancillae (not initi
 
 Cost: $2\lceil d/k \rceil + 4M(k-1)$, using $(k-1)M$ dirty ancillae.
 
-This is improved over [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low, Kliuchnikov, Schaeffer (2024)]] by:
+This is improved over the Low-Kliuchnikov-Schaeffer arXiv:1812.00954 construction by:
 - Using a linear-depth swapping network instead of log-depth (saves factor of 2 in $Mk$ term, since dirty CSWAP must be toggled twice in the log-depth version)
 - Using $|+\rangle$ states instead of spare registers (saves from $Mk$ to $M(k-1)$ ancillae)
 
-**Uncomputation:** See [[Measurement-Based QROM Uncomputation]] for the $M$-independent uncomputation that complements QROAM.
+**Uncomputation:** Reversing QROAM coherently costs another lookup. See [[Measurement-Based QROM Uncomputation]] for the $M$-independent measurement-based cleanup that complements QROAM when the output data can be consumed and erased by X-basis measurement plus phase fixup.
 
 ## When to reach for it
 - Any fault-tolerant algorithm bottlenecked by [[QROM (Quantum Read-Only Memory)|QROM]] lookups with large tables ($d \gg 1$)
@@ -32,15 +32,15 @@ This is improved over [[Trading T Gates for Dirty Qubits in State Preparation an
 - Any [[Coherent Alias Sampling for PREPARE|coherent alias sampling]] PREPARE oracle
 
 ## Complexity
-| Setting | Compute cost | Uncompute cost | Ancilla |
+| Setting | Compute cost | Measurement-cleanup cost | Ancilla |
 |---|---|---|---|
 | Clean, optimal $k$ | $\sim 2\sqrt{dM}$ | $\sim 2\sqrt{d}$ (with [[Measurement-Based QROM Uncomputation\|measurement uncompute]]) | $\sqrt{dM}$ clean |
-| Dirty, $k$ bounded by $N$ | $2dM/N + O(N)$ | $\sim dN/4$ | $N$ dirty |
+| Dirty, bounded $k$ | use $2\lceil d/k\rceil + 4M(k-1)$ and optimize subject to available dirty qubits | use the corresponding measurement-fixup formula, e.g. $2\lceil d/k\rceil + 4k$ in the simple dirty cleanup model | $(k-1)M$ dirty |
 
 ## Caveat
-The space cost can be significant: optimal $k$ with clean ancillae requires $O(\sqrt{dM})$ extra qubits. For very large tables (e.g., $d = 10^6$), this can exceed the system register size. The dirty-ancilla variant is less costly in space but $\sim 4\times$ more expensive in Toffolis.
+The space cost can be significant: optimal $k$ with clean ancillae requires $O(\sqrt{dM})$ extra qubits. For very large tables (e.g., $d = 10^6$), this can exceed the system register size. The dirty-ancilla variant is less costly in clean space but its Toffoli overhead depends on available dirty qubits, output width, and the chosen $k$; it is not a universal fixed factor.
 
-A lower bound proven in [[Trading T Gates for Dirty Qubits in State Preparation and Unitary Synthesis (Low-Kliuchnikov-Schaeffer 2024) — Paper Notes|Low, Kliuchnikov, Schaeffer (2024)]] shows that no further space-time tradeoffs can asymptotically beat the $\sqrt{dM}$ scaling for general QROM.
+The Low-Kliuchnikov-Schaeffer lower bound applies within their SelectSwap/QROM access model for general table lookup; it should not be read as a lower bound on every possible structured oracle or arithmetic evaluation.
 
 ## Related notes
 - [[Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Factorization (Berry, Gidney, Motta, McClean, Babbush 2019) — Paper Notes]]

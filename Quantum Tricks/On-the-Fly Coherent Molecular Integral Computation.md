@@ -4,22 +4,22 @@
 
 ## What it does
 
-Computes molecular two-electron integrals coherently on the quantum computer during the PREPARE step of an [[Linear Combination of Unitaries (LCU)|LCU]] simulation, instead of loading them from a classically precomputed database. Reduces the per-call PREPARE cost from $O(N^4)$ to $O(N)$ for $N$ spin-orbitals.
+Computes molecular two-electron integrals coherently on the quantum computer during the PREPARE step of an [[Linear Combination of Unitaries (LCU)|LCU]] simulation, instead of loading them from a classically precomputed database. In the asymptotic model of Babbush et al. 2015, this reduces the per-call PREPARE index-preparation cost from $O(N^4)$ to $O(N)$ for $N$ spin-orbitals, while hiding precision-dependent arithmetic and normalization factors.
 
 ## The trick
 
-The two-electron integrals $h_{pqrs}$ can be written as integrals over an auxiliary continuous variable $z$ (related to the Boys function and Gaussian decomposition of the Coulomb interaction):
+Schematically, the two-electron integrals $h_{pqrs}$ can be written as integrals over an auxiliary continuous variable $z$ (related to the Boys function and Gaussian decomposition of the Coulomb interaction):
 
 $$h_{pqrs} = \int f_p(z) f_q(z) f_r(z) f_s(z)\, W(z)\, dz,$$
 
-where $f_p(z)$ are one-electron functions evaluated at the auxiliary point $z$.
+where $f_p(z)$ are one-electron functions evaluated at the auxiliary point $z$. The actual construction involves Gaussian-integral/Boys-function arithmetic and quadrature details; the displayed product is a useful cartoon, not the full molecular-integral circuit.
 
 Discretise on $M$ quadrature points $\{z_m\}$. Now the integral factorises: instead of preparing a superposition over all $O(N^4)$ index tuples $(p,q,r,s)$ with amplitudes proportional to $h_{pqrs}$, prepare:
 
 1. A superposition over quadrature points $m$ with amplitudes $\propto \sqrt{|W(z_m)|}$.
 2. Conditioned on $m$, prepare orbital-index registers with amplitudes $\propto \sqrt{|f_p(z_m)|}$ — each register costs $O(N)$.
 
-The factorisation means the four orbital indices are prepared independently (each $O(N)$) rather than jointly ($O(N^4)$). The Gaussian basis function evaluations use quantum arithmetic (additions, multiplications, exponentials to polylogarithmic precision).
+The factorisation means the four orbital indices are prepared independently (each $O(N)$) rather than jointly ($O(N^4)$). The Gaussian basis function evaluations use quantum arithmetic (additions, multiplications, exponentials to polylogarithmic precision). Signs/phases and the LCU coefficient normalization must still be handled coherently.
 
 ## When to reach for it
 
@@ -29,13 +29,13 @@ The factorisation means the four orbital indices are prepared independently (eac
 
 ## Complexity
 
-$O(N)$ gates per PREPARE call (down from $O(N^4)$ for the database variant), plus $O(\text{polylog}(N, 1/\varepsilon))$ overhead for quantum arithmetic. Requires $O(\log M)$ ancilla qubits for the quadrature register.
+$O(N)$ index-preparation gates per PREPARE call in the asymptotic model (down from $O(N^4)$ for the database variant), plus $O(\text{polylog}(N, 1/\varepsilon))$ overhead for quantum arithmetic and quadrature precision. Requires $O(\log M)$ ancilla qubits for the quadrature register. The LCU coefficient sum still controls the segment count, so PREPARE cost alone is not the full simulation cost.
 
 ## Caveat
 
 The quantum arithmetic for evaluating Gaussian basis functions to exponential precision is non-trivial — the paper doesn't give explicit circuit constructions, just asymptotic costs. The constant factors and ancilla overhead for the arithmetic could be substantial. Also, the quadrature discretisation introduces an additional approximation error that must be budgeted within the total $\varepsilon$.
 
-Modern approaches (double factorisation, tensor hypercontraction) achieve similar or better factorisations with more explicit and practical circuits.
+Modern approaches (QROM-loaded coefficients, low-rank/double factorisation, tensor hypercontraction) achieve similar or better factorisations with more explicit and practical circuits, so this card is mainly of historical/asymptotic interest.
 
 ## Related notes
 

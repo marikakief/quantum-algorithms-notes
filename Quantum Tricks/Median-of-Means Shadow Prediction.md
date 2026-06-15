@@ -56,3 +56,4 @@ Median-of-means improves concentration, not variance. If the chosen measurement 
 - [[Predicting Many Properties from Very Few Measurements (Huang-Kueng-Preskill 2020) — Paper Notes]]
 - [[Classical Shadow Channel Inversion]]
 - [[Shadow Norm as Measurement-Observable Match]]
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — keeps the usual shadow concentration layer, but moves the randomizing circuit behind fault-tolerant uploading.

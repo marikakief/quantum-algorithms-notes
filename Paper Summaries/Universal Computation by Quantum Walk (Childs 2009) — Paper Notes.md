@@ -16,7 +16,7 @@ The construction encodes $n$-qubit computational basis states as $2^n$ parallel 
 
 **Input:** An $m$-gate quantum circuit $U$ on $n$ qubits.
 
-**Output:** A graph $G$ (with $\text{poly}(m, 2^n)$ vertices, maximum degree 3) such that a continuous-time quantum walk on $G$ — starting at a designated input vertex and evolving under the adjacency matrix Hamiltonian — produces the output of $U$ on measurement.
+**Output:** A graph $G$ (with $\text{poly}(m, 2^n)$ vertices, maximum degree 3) such that a continuous-time quantum walk on $G$, evolving under the adjacency matrix Hamiltonian, produces the output of $U$ on measurement. For a general input state, the initial wave packet is a superposition over the input wires corresponding to the computational-basis amplitudes, not a single designated input vertex.
 
 ---
 
@@ -24,7 +24,7 @@ The construction encodes $n$-qubit computational basis states as $2^n$ parallel 
 
 ### Representation
 
-Each of the $2^n$ computational basis states corresponds to a separate wire (a long line of vertices). Gates are implemented by inserting **widgets** — small subgraphs connecting the wires — in sequence.
+Each of the $2^n$ computational basis states corresponds to a separate wire (a long line of vertices). Gates are implemented by inserting **widgets** — small subgraphs connecting the wires — in sequence. Thus logical qubits are encoded globally in wire labels; the construction is exponentially large in $n$ but succinctly describable from the circuit.
 
 ### Scattering theory on graphs
 
@@ -44,7 +44,7 @@ Three widgets suffice for universality, all operating at momentum $k = -\pi/4$:
 
 | Widget | Function | Transmission at $k = -\pi/4$ |
 |---|---|---|
-| Wire crossing (Fig. 1a) | CNOT — swaps the $\|10\rangle$ and $\|11\rangle$ wires | Perfect, phase $e^{ik}$ |
+| Wire crossing (Fig. 1a) | CNOT on the encoded basis labels -- a permutation that swaps the $\|10\rangle$ and $\|11\rangle$ wires | Perfect, phase $e^{ik}$ |
 | Phase gadget (Fig. 1b) | Phase gate $U_b = \text{diag}(1, e^{i\pi/4})$ on $\|1\rangle$ wire | Perfect, extra phase $e^{i\pi/4}$ |
 | Basis-change gadget (Fig. 1c) | $U_c = -\frac{1}{\sqrt{2}}\begin{pmatrix} i & 1 \\ 1 & i \end{pmatrix}$ coupling two wires | Perfect, $\ell = 2$ |
 
@@ -56,7 +56,7 @@ Away from $k = -\pi/4$, the gate widgets have imperfect transmission — they pa
 - $\ell^{(e)}(-\pi/4) \approx 0.686$
 - $\ell^{(e)}(-3\pi/4) \approx 23.3$
 
-This temporal separation, combined with $m_d = \log\Theta(m^2)$ filter stages, ensures only the desired momentum component reaches the gate widgets.
+This temporal separation, combined with $m_d = \Theta(\log m)$ filter stages, ensures only the desired momentum component reaches the gate widgets.
 
 ### Composition
 
@@ -82,7 +82,7 @@ Bound states of the graph (decaying as $e^{-\kappa x}$) are handled by:
 | Graph properties | Sparse (degree ≤ 3), unweighted (all edges have weight 0 or 1) |
 | Evolution time | $O(m^4)$ |
 | Success probability | $\Omega(1/m^4)$ per run (boost by repetition) |
-| Total cost | $\text{poly}(m)$ repetitions × $O(m^4)$ time per run |
+| Total cost | $O(m^4)$ repetitions or amplification on top of $O(m^4)$ time per run, hence polynomial overhead |
 
 ---
 
@@ -94,13 +94,13 @@ Bound states of the graph (decaying as $e^{-\kappa x}$) are handled by:
 | [[Adiabatic Quantum Computation is Equivalent to Standard Quantum Computation (Aharonov-van Dam-Kempe-Landau-Lloyd-Regev 2004) — Paper Notes\|Aharonov et al. (2004)]] | — | — | Adiabatic, not walk-based |
 | **This paper** | **3 (optimal)** | **No** | Success probability $\Omega(1/m^4)$ |
 
-Degree 3 is optimal: degree-2 graphs are lines/cycles, which can't be universal.
+Degree 3 is optimal for this unweighted-graph universality statement: degree-2 graphs are disjoint unions of paths and cycles, which cannot implement universal scattering.
 
 ---
 
 ## Limits / caveats
 
-- **Exponential graph size.** The graph has $\Theta(2^n)$ wires, so it's exponentially large in $n$. This is necessary (the graph encodes the full Hilbert space), and the graph has a succinct description in terms of the circuit. But you can't literally build the graph — you simulate the walk on a standard quantum computer.
+- **Exponential graph size.** The graph has $\Theta(2^n)$ wires, so it is exponentially large in $n$. This is necessary for this direct wire-label encoding, and the graph has a succinct description in terms of the circuit. It is not a polynomial-size physical graph construction for arbitrary $n$-qubit circuits.
 - **Low success probability.** The $\Omega(1/m^4)$ probability per run means you need $O(m^4)$ repetitions. The total time is $\text{poly}(m)$ but with a large polynomial.
 - **Fixed momentum required.** The entire construction works at $k = -\pi/4$. Extending to other momenta or momentum distributions would require redesigned widgets.
 - **Not immediately algorithmic.** This is a universality result, not an algorithm. It shows quantum walks *can* do anything, but doesn't give a new way to solve specific problems faster. The value is foundational and complexity-theoretic.

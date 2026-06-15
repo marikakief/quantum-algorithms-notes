@@ -22,13 +22,13 @@ The paper compares:
 
 ## What the paper does
 
-It draws a sharp line between average-case and worst-case prediction.
+It draws a sharp line between average-case and worst-case prediction, in query/sample complexity rather than implementation runtime.
 
 For **average-case error over an input distribution**, any query advantage of quantum ML over even restricted classical ML is at most polynomial. So if someone claims an exponential QML advantage for typical prediction error, this paper says: check the model very carefully.
 
 For **worst-case prediction over many incompatible observables**, exponential query advantage is possible. A quantum learner with quantum memory can predict all $4^n$ Pauli expectations of an unknown $n$-qubit state using $O(n)$ copies for constant error, while any classical learner needs exponentially many copies.
 
-My assessment: this is one of Robert's clean foundational papers because it separates two stories that QML often muddles. Average-case learning from data is much less friendly to exponential quantum advantage; worst-case property prediction can still have genuine quantum-memory separations.
+My assessment: this is a clean foundational paper because it separates two stories that QML often muddles. Average-case learning from data is much less friendly to exponential query advantage; worst-case property prediction can still have genuine quantum-memory separations.
 
 ## The algorithm / construction
 
@@ -38,7 +38,7 @@ Suppose a quantum learner uses $N_Q$ queries to $\mathcal E$ and, with high prob
 
 $$\sum_x D(x)|h_Q(x)-f_{\mathcal E}(x)|^2\le \varepsilon.$$
 
-The proof constructs a restricted classical learner by covering the function class induced by CPTP maps with a maximal packing net. If too many well-separated functions were learnable by the quantum learner from too few queries, the learner would transmit too much information about the hidden process. Holevo information bounds prevent that.
+The proof constructs a restricted classical learner by covering the function class induced by CPTP maps with a maximal packing net. If too many well-separated functions were learnable by the quantum learner from too few queries, the learner would transmit too much information about the hidden process. Holevo information bounds prevent that. This construction is information-theoretic; it does not automatically give a computationally efficient ERM procedure in every representation.
 
 The classical learner only samples inputs from $D$, queries $\mathcal E$, measures $O$, and uses empirical risk minimisation over the packing/net class.
 
@@ -64,7 +64,7 @@ This is where the exponential separation lives: coherent access/quantum memory l
 
 ### Theorem 1: average-case prediction has no exponential query advantage
 
-Fix an input distribution $D$, an observable $O$ on $m$ qubits with $\|O\|\le 1$, and a family $F$ of CPTP maps from $n$ input qubits to $m$ output qubits. If a quantum ML model accesses $\mathcal E\in F$ $N_Q$ times and outputs $h_Q$ with high probability such that
+Fix an input distribution $D$, an observable $O$ on an $m$-qubit output system with $\|O\|\le 1$, and a family $F$ of CPTP maps from $n$ input qubits to $m$ output qubits. If a quantum ML model accesses $\mathcal E\in F$ $N_Q$ times and outputs $h_Q$ with high probability such that
 
 $$\sum_{x\in\{0,1\}^n}D(x)|h_Q(x)-\operatorname{tr}(O\mathcal E(|x\rangle\langle x|))|^2\le \varepsilon,$$
 
@@ -90,7 +90,7 @@ $$N_Q=O\!\left(\frac{\log(M/\delta)}{\varepsilon^4}\right)$$
 
 copies of $\rho$.
 
-Taking $M=4^n$ and constant $\varepsilon,\delta$ gives $N_Q=O(n)$ copies for all Pauli observables.
+Taking $M=4^n$ and constant $\varepsilon,\delta$ gives $N_Q=O(n)$ copies for all Pauli observables at constant precision and constant failure probability.
 
 ### Theorem 3: classical lower bound
 
@@ -99,6 +99,8 @@ Any classical ML model must use
 $$N_C\ge 2^{\Omega(n)}$$
 
 copies of $\rho$ to predict expectation values of all Pauli observables up to small error with constant success probability. The lower bound still allows adaptive POVM choices depending on previous measurement outcomes.
+
+This lower bound is a worst-case property-prediction separation for incompatible observables. It does not contradict classical shadows for restricted observable families such as local Paulis with bounded shadow norm.
 
 ## Comparison with prior work
 

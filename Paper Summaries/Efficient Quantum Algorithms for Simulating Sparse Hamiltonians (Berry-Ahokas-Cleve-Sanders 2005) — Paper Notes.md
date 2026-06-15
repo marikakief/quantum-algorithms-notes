@@ -27,7 +27,7 @@ $$
 O\!\left((\log^* n)\, d^2 \cdot 5^{2k} \cdot (d^2 \|H\| t)^{1+1/2k} / \epsilon^{1/2k}\right).
 $$
 
-By choosing $k$ appropriately, this becomes nearly linear in $t$ (up to subexponential corrections in $\log(d^2 \|H\| t / \epsilon)$).
+Here $\|H\|$ is the norm parameter used in the product-formula bound after decomposition; later sparse-oracle papers often rewrite comparisons using $\|H\|_{\max}$ instead. By choosing $k$ appropriately, this becomes nearly linear in $t$ (up to subexponential corrections in $\log(d^2 \|H\| t / \epsilon)$).
 
 This was the first result to break away from the polynomial-in-$t$ scaling of [[Adiabatic Quantum State Generation and Statistical Zero Knowledge (Aharonov-Ta-Shma 2003) — Paper Notes|Aharonov and Ta-Shma's]] earlier approach and achieve near-optimal time dependence for sparse Hamiltonians.
 
@@ -41,7 +41,7 @@ The problem: a $d$-sparse Hamiltonian isn't 1-sparse. The paper decomposes it in
 
 **Step 1 — Build the graph.** Treat $H$ as a bipartite graph: rows on one side, columns on the other, with an edge for each nonzero off-diagonal entry. Each vertex has degree $\leq d$.
 
-**Step 2 — Color the edges.** A bipartite graph with max degree $d$ has a proper edge coloring with $d$ colors (König's theorem). Each color class is a perfect matching — a 1-sparse matrix. But computing an optimal coloring requires global knowledge of the graph.
+**Step 2 — Color the edges.** A bipartite graph with max degree $d$ has a proper edge coloring with $d$ colors (König's theorem). Each color class is a matching -- not necessarily a perfect matching -- and hence a 1-sparse matrix. But computing an optimal coloring requires global knowledge of the graph.
 
 **Step 3 — Do it with local access only.** The paper uses an explicit local coloring scheme that doesn't need the full graph. It assigns colors based on a deterministic rule using only the black-box neighbor function $f$. The cost: the coloring uses $6d^2$ colors instead of the optimal $d$, and each color query costs $O(\log^* n)$ calls to $f$ (from iterated applications of the local rule).
 
@@ -118,7 +118,7 @@ The construction: a 1D nearest-neighbor chain (a path graph) where evolving for 
     Wavepacket moves ~t sites → need ~t queries to detect
 ```
 
-**Corollary:** No [[Product Formulas]]-based scheme (or any black-box scheme) can simulate sparse Hamiltonians in sublinear time. The near-linear scaling achieved above is the best possible up to subexponential factors.
+**Corollary:** No [[Product Formulas]]-based scheme, or any black-box scheme in the same sparse-oracle access model, can simulate sparse Hamiltonians in sublinear time. The near-linear scaling achieved above is the best possible in its time dependence up to subexponential factors.
 
 ---
 
@@ -130,9 +130,9 @@ The construction: a 1D nearest-neighbor chain (a path graph) where evolving for 
 | **2005** | **This paper** | $d^4$ | **Near-linear in $t$** |
 | 2007 | Childs (quantum walk) | $d$ | Linear in $t$ |
 | 2011 | [[Black-Box Hamiltonian Simulation and Unitary Implementation (Berry-Childs 2011) — Paper Notes\|Berry–Childs]] | $d$ | Linear in $t$, improved $\delta$-dependence |
-| 2012 | [[LCU Origins (Childs-Wiebe 2012) — Paper Notes\|Childs–Wiebe (LCU)]] | $d^2$ | Near-optimal via Taylor series |
-| 2015 | Berry–Childs–Cleve–Kothari–Somma (Taylor LCU) | $d^2$ | $O(d^2 \|H\|_{\max} t / \log(1/\epsilon))$ |
-| 2016–19 | [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|Low–Chuang (QSP/qubitization)]] | Through [[Standard-Form Encoding (Prepare + Signal Oracle)\|block-encoding]] | Optimal: $O(\tau + \log(1/\epsilon))$ |
+| 2012 | [[LCU Origins (Childs-Wiebe 2012) — Paper Notes\|Childs–Wiebe (LCU)]] | decomposition-dependent | Multi-product/LCU origin, not direct Taylor-series LCU |
+| 2015 | Berry–Childs–Cleve–Kothari–Somma (Taylor LCU) | $d^2$ in the sparse reduction | $O(\tau \log(\tau/\epsilon)/\log\log(\tau/\epsilon))$, $\tau=d^2\|H\|_{\max}t$ |
+| 2016–19 | [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|Low–Chuang (QSP/qubitization)]] | Through [[Standard-Form Encoding (Prepare + Signal Oracle)\|block-encoding]] | Additive precision term: $O(\tau + \log(1/\epsilon)/\log\log(1/\epsilon))$ |
 
 The sparsity dependence here ($d^4$ from $m = 6d^2$ with $m^2$ in the exponential count) was later improved by Childs's quantum-walk approach (2007) to linear in $d$. But the near-linear time scaling introduced here was the lasting contribution — the idea that you can [[Suzuki Order as a Tunable Knob for Time Scaling|trade integrator order for time exponent]].
 

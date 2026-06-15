@@ -7,7 +7,13 @@
 Proves DQC1-hardness of spectral density estimation problems by reducing normalised sub-trace estimation to histogram construction using binned eigenvalue counts.
 
 ## The trick
-Given oracle access to an LLSD (low-lying spectral density) estimator:
+Normalised sub-trace estimation asks for a normalized average such as
+
+$$
+\frac{1}{2^n}\sum_{\lambda_j\le b}\lambda_j
+$$
+
+for the low-lying part of a sparse PSD matrix spectrum; this problem is DQC1-hard in the source reduction. Given oracle access to an LLSD (low-lying spectral density) estimator:
 
 1. Partition the interval $[0, b]$ into bins of width $w$
 2. For each bin $[jw, (j+1)w]$, estimate the eigenvalue count by taking the difference $N_H(0, (j+1)w) - N_H(0, jw)$
@@ -26,7 +32,7 @@ The one-bin misplacement doesn't affect the mean calculation enough to break the
 The reduction uses $O(\text{poly}(n))$ non-adaptive queries to the LLSD oracle (polynomial-time truth-table reduction).
 
 ## Caveat
-The reduction is to DQC1 hardness for *general* sparse PSD matrices, not specifically for combinatorial Laplacians. Whether combinatorial Laplacians of clique complexes are rich enough to encode DQC1-hard instances remains open.
+The reduction is to DQC1 hardness for *general* sparse PSD matrices / log-local Hamiltonians, not specifically for combinatorial Laplacians. Whether combinatorial Laplacians of clique complexes are rich enough to encode DQC1-hard instances remains open.
 
 ## Related notes
 - [[Towards Quantum Advantage via Topological Data Analysis (Gyurik-Cade-Dunjko 2022) — Paper Notes]]

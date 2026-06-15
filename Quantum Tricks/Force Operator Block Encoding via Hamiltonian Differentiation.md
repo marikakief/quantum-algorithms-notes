@@ -12,15 +12,15 @@ Given a factorised Hamiltonian $V = \sum_l W^{(l)} W^{(l)\dagger}$ (e.g., [[Doub
 
 $$\frac{dV}{dR_i} = \sum_l \frac{dW^{(l)}}{dR_i} W^{(l)\dagger} + W^{(l)} \frac{dW^{(l)\dagger}}{dR_i}$$
 
-Rewrite as a difference of squares:
+When the factors are Hermitian one-body operators (or after replacing non-Hermitian factors by a Hermitian embedding with daggers treated explicitly), rewrite as a difference of squares:
 
-$$\frac{dV}{dR_i} = \frac{1}{2}\sum_l \left[\left(W^{(l)} + \frac{dW^{(l)}}{dR_i}\right)^2 - \left(W^{(l)} - \frac{dW^{(l)}}{dR_i}\right)^2\right]$$
+$$\frac{dV}{dR_i} = \frac{1}{2}\sum_l \left[\left(W^{(l)} + \frac{dW^{(l)}}{dR_i}\right)^2 - \left(W^{(l)} - \frac{dW^{(l)}}{dR_i}\right)^2\right].$$
 
 Each squared term has the same structure as the original Hamiltonian factors — a one-body operator squared, diagonalisable by a Givens rotation. This means the same [[Qubitization (Quantum Walk for Spectral Encoding)|qubitization]] circuit applies with:
 - One extra ancilla qubit to flag between the $+$ and $-$ terms
 - Modified eigenvalues $f_p^{(l\pm)}$ from diagonalising $W^{(l)} \pm dW^{(l)}/dR_i$
 
-For **THC**: differentiate the THC tensors $\chi, \zeta$ directly. The result has five terms (vs. one for the Hamiltonian) with tensors $\chi, \chi^{(+)}, \chi^{(-)}, \zeta, d\zeta/dR_i$. The critical diagonal structure is preserved because creation and annihilation operators always transform with the *same* tensor within each term. Circuit cost: $T_F \sim \sqrt{2}\, T_H$ (from the $\sqrt{2}\times$ larger QROM). Rescaling factor: $\lambda_{F_i} = \sum_{\mu\nu}(|\zeta_{\mu\nu}| + \frac{1}{2}|d\zeta_{\mu\nu}/dR_i|)$.
+For **THC**: differentiate the THC tensors $\chi, \zeta$ directly, including differentiated leaf factors and any Pulay/orbital-response data required by the chosen basis convention. The result has multiple derivative terms (five in the paper's construction) but the critical diagonal structure is preserved because creation and annihilation operators transform with matched tensors within each term. Circuit cost in that construction: $T_F \sim \sqrt{2}\, T_H$ (from the larger QROM/PREPARE data). Rescaling formulas should be read as absorbing all derivative tensors into the force data; differentiating only a central coefficient tensor is not the general case.
 
 For **low-rank factorisation**: $T_F \sim O(\sqrt{NL})$ (same as Hamiltonian). Rescaling: $\lambda_{F_i} = \frac{1}{2}\sum_l [(\sum_p |f_p^{(l+)}|)^2 + (\sum_p |f_p^{(l-)}|)^2]$, worst-case $\sim 4\lambda_H$.
 
@@ -32,14 +32,14 @@ For **low-rank factorisation**: $T_F \sim O(\sqrt{NL})$ (same as Hamiltonian). R
 
 ## Complexity
 
-- **Circuit overhead:** At most constant factor ($\sqrt{2}\times$ for THC, $1\times$ for DF) over the Hamiltonian block encoding
+- **Circuit overhead:** Constant factor in the paper's THC/DF constructions ($\sqrt{2}\times$ for the analysed THC construction, same asymptotic order for DF), after the derivative data are organized into compatible PREPARE/SELECT oracles
 - **Rescaling factor:** $\lambda_F \leq 4\lambda_H$ worst-case for DF; empirically much smaller ($\lambda_F^{(\text{DF})} \sim O(N_H^{0.06})$ vs. $\lambda_H^{(\text{DF})} \sim O(N_H^{1.94})$ on H-chains)
 
 ## Caveat
 
 Differentiating the factorised Hamiltonian (rather than directly factorising $dH/dR_i$) guarantees consistency — the estimated force matches the energy manifold of the factorised Hamiltonian exactly. Direct factorisation of $dH/dR_i$ would likely give smaller $\lambda_F$ but introduces a systematic bias from the mismatch between truncation errors. The practical significance of this bias depends on the THC/DF truncation threshold and needs separate analysis.
 
-Also, in second-quantised atomic-centred bases, the force operator includes **Pulay force** terms $\propto dS/dR_A$ that arise from the nuclear-position-dependent overlap matrix. These add a non-trivial one-body correction that has no analogue in the Hamiltonian block encoding.
+Also, in second-quantised atomic-centred bases, the force operator includes **Pulay force** terms $\propto dS/dR_A$ that arise from the nuclear-position-dependent overlap matrix. These add non-trivial one-body corrections and can require new PREPARE data, SELECT branches, or response terms that have no direct analogue in the Hamiltonian block encoding.
 
 ## Related notes
 - [[Efficient Quantum Computation of Molecular Forces and Other Energy Gradients (O'Brien, Babbush et al 2022) — Paper Notes]]

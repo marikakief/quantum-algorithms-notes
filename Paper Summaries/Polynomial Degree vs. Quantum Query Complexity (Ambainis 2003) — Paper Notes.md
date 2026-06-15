@@ -1,3 +1,5 @@
+# Polynomial Degree vs. Quantum Query Complexity (Ambainis 2003) — Paper Notes
+
 > **Source:** Andris Ambainis, *Polynomial degree vs. quantum query complexity*, Journal of Computer and System Sciences **72**(2):220–238, 2006 (originally FOCS 2003); arXiv:quant-ph/0305028
 > **Links:** [arXiv](https://arxiv.org/abs/quant-ph/0305028) · [JCSS](https://doi.org/10.1016/j.jcss.2005.06.003)
 > **Tags:** #query-complexity #lower-bound #adversary-method #polynomial-method #composition-theorem #Boolean-functions
@@ -6,7 +8,7 @@
 
 ## The computational problem
 
-**Central question:** Is the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]] tight? That is, does $Q_2(f) = \Theta(\widetilde{\deg}(f))$ or $Q_E(f) = \Theta(\deg(f))$ for Boolean functions $f$?
+**Central question:** Is the [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|polynomial method]] tight? That is, does bounded-error quantum query complexity satisfy $Q_2(f) = \Theta(\widetilde{\deg}(f))$, or does exact quantum query complexity satisfy $Q_E(f) = \Theta(\deg(f))$, for Boolean functions $f$?
 
 [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|Beals et al. (1998)]] showed $Q_2(f) = O(\deg(f)^6)$ and $Q_E(f) = O(\deg(f)^4)$, so polynomial degree and quantum query complexity are polynomially related. But could they be *linearly* related? This was an explicit open problem.
 
@@ -18,7 +20,7 @@ Answers the open question negatively: polynomial degree does **not** characteris
 
 The proof introduces a **weighted adversary method** — a strict generalisation of the [[Quantum Lower Bounds by Quantum Arguments (Ambainis 2000) — Paper Notes|adversary method from Ambainis (2000)]] — and a **composition theorem** showing that the weighted adversary lower bound multiplies under function iteration.
 
-My take: the weighted adversary method is more significant than the specific separation result. It became the standard adversary technique, and Špalek & Szegedy (2004) showed it's equivalent to the spectral adversary method of Barnum-Saks-Szegedy and the Kolmogorov complexity method of Laplante-Magniez. The composition theorem is clean and reusable. The separation itself ($M$ vs $M^{1.321}$) is modest, but it definitively answered a structural question about the relationship between polynomial degree and quantum complexity.
+My take: the weighted adversary method is more significant than the specific separation result. It became the standard positive adversary technique, and Špalek & Szegedy (2006) showed it is equivalent to the spectral adversary method of Barnum-Saks-Szegedy and the Kolmogorov complexity method of Laplante-Magniez. The composition theorem is clean and reusable. The separation itself ($M$ vs $M^{1.321}$) is modest, but it definitively answered a structural question about the relationship between polynomial degree and quantum complexity.
 
 ---
 
@@ -30,7 +32,7 @@ Define $f : \{0,1\}^4 \to \{0,1\}$ where $f(x) = 1$ iff $x \in \{0011, 0100, 010
 
 Properties:
 - $\deg(f) = 2$, via $f(x_1, x_2, x_3, x_4) = x_1 + x_2 + x_3 x_4 - x_1 x_4 - x_2 x_3 - x_1 x_2$
-- $D(f) = 3$ (query $x_1$ and $x_3$; then only one of $x_2, x_4$ is needed)
+- $D(f) = 3$ (there is a depth-3 deterministic decision tree: query $x_1$ and $x_3$, then only one of $x_2, x_4$ is needed)
 - Sensitivity $s_x(f) = 2$ on every input
 - Block sensitivity $\text{bs}_x(f) = 3$ on every input
 
@@ -112,13 +114,13 @@ The basic adversary can't do better than $\Omega(2.121^d)$ because it can't expl
 
 ## Limits / caveats
 
-1. **Certificate complexity barrier still applies.** The weighted adversary method (and all its equivalents) is bounded by $O(\sqrt{C_0(f) \cdot C_1(f)})$ for total functions. This is proven in Zhang (2004).
+1. **Certificate complexity barrier still applies to positive weights.** The weighted positive adversary method (and its equivalent positive formulations) is bounded by $O(\sqrt{C_0(f) \cdot C_1(f)})$ for total functions. This is proven in Zhang (2004).
 
 2. **Separation is polynomial, not exponential.** The gap is $M^{1.321}$ — interesting structurally but not a dramatic separation.
 
 3. **No matching upper bound.** The paper proves $Q_2(f^d) = \Omega(2.5^d)$ but doesn't show this is tight. The true quantum query complexity of these iterated functions could be higher (closer to $D(f^d) = 3^d$).
 
-4. **Later developments.** The negative-weight adversary (Høyer-Lee-Špalek 2007) removes the certificate complexity barrier. Ben-David (2015) showed a quartic separation between $\widetilde{\deg}(f)$ and $Q_2(f)$. The Huang (2019) sensitivity theorem connects sensitivity, block sensitivity, and polynomial degree polynomially. The exact exponent in $D(f) = O(Q_2(f)^c)$ remains open.
+4. **Later developments.** The negative-weight/general adversary (Høyer-Lee-Špalek 2007; Reichardt 2009/2011) removes the certificate complexity barrier and characterizes bounded-error quantum query complexity. Approximate-degree separations, including Ben-David's quartic separation, are a different line from adversary tightness. Huang's sensitivity theorem connects sensitivity, block sensitivity, and polynomial degree polynomially. The exact exponent in $D(f) = O(Q_2(f)^c)$ remains open.
 
 ---
 
@@ -135,7 +137,7 @@ The basic adversary can't do better than $\Omega(2.121^d)$ because it can't expl
 - [[Quantum Lower Bounds by Polynomials (Beals-Buhrman-Cleve-Mosca-de Wolf 1998) — Paper Notes|Beals, Buhrman, Cleve, Mosca, de Wolf (1998)]] — polynomial method; the $D(f) = O(Q_2(f)^6)$ bound being refined here
 - [[Strengths and Weaknesses of Quantum Computing (Bennett-Bernstein-Brassard-Vazirani 1997) — Paper Notes|Bennett, Bernstein, Brassard, Vazirani (1997)]] — hybrid argument
 - Barnum & Saks (2002) — adversary generalisation for read-once functions; special case of weight schemes
-- Barnum, Saks & Szegedy (2003) — spectral adversary / SDP approach; equivalent to weight schemes (Špalek-Szegedy 2004)
+- Barnum, Saks & Szegedy (2003) — spectral adversary / SDP approach; equivalent to weight schemes (Špalek-Szegedy 2006)
 - Laplante & Magniez (2004) — Kolmogorov complexity method; also equivalent
 - Nisan & Szegedy (1992/1994) — degree of Boolean functions
 - Nisan & Wigderson (1995) — iterated functions for rank vs communication complexity gaps

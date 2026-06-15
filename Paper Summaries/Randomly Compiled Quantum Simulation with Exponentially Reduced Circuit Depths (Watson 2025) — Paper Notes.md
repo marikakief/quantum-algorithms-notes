@@ -56,7 +56,7 @@ This is a Vandermonde system. The weights $b_k$ exist and are unique. The Richar
 $$\mathbb{E}[\hat{A}_m] - \langle O \rangle_T = O\!\left(\left(\max_k s_k\right)^m\right)$$
 i.e., all error terms up to order $m-1$ in $s$ cancel, leaving only a remainder of order $m$.
 
-**Key issue:** the Vandermonde system is notoriously ill-conditioned for large $m$, which would blow up the variance (you'd be summing estimates with coefficients that are exponentially large, amplifying noise). This is addressed by **Lemma 4** (building on LKW19): choosing the $s_k$ geometrically according to the LKW19 construction gives $\|b\|_1 = O(\log m)$. This keeps the noise amplification under control.
+**Key issue:** the Vandermonde system is notoriously ill-conditioned for large $m$, which would blow up the variance (you'd be summing estimates with coefficients that are exponentially large, amplifying noise). This is addressed by **Lemma 4** (building on Low-Kliuchnikov-Wiebe 2019): choosing the $s_k$ geometrically according to the well-conditioned multiproduct construction gives $\|b\|_1 = O(\log m)$. This keeps the noise amplification under control.
 
 The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ points and step sizes up to $N_{\max} = O((\lambda T)^2 \log(1/\varepsilon) \cdot (\log\log(1/\varepsilon))^2)$, the systematic error drops below $\varepsilon/2$ and the statistical error (from $O(1/\varepsilon^2)$ shots per point) drops below $\varepsilon/2$.
 
@@ -72,7 +72,7 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 
 **Lemma 3:** The qDRIFT channel $\mathcal{E}^N$ with step size $1/N$ admits a power series in $s = 1/N$ with bounded remainder at each order. Proved via iterated variation-of-parameters on the channel generator.
 
-**Lemma 4 (from LKW19):** There exists a choice of $m$ step sizes such that the Vandermonde weights satisfy $\|b\|_1 = O(\log m)$, giving good conditioning. This bounds the variance inflation from Richardson combination.
+**Lemma 4 (from [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low-Kliuchnikov-Wiebe 2019]]):** There exists a choice of $m$ step sizes such that the Vandermonde weights satisfy $\|b\|_1 = O(\log m)$, giving good conditioning. This bounds the variance inflation from Richardson combination.
 
 **Lemma 7:** Explicit parameter choices: $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$, $N_{\max} = O((\lambda T)^2 \log(1/\varepsilon) \cdot (\log\log(1/\varepsilon))^2)$.
 
@@ -80,18 +80,18 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 
 ## Comparison with prior work
 
-| Method | Circuit depth | Shot cost | Ancilla qubits | Notes |
-|---|---|---|---|---|
-| [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes\|qDRIFT (Campbell 2019)]] | $O((\lambda T)^2/\varepsilon)$ | $O(1)$ per estimate | 0 | Baseline; depth linear in $1/\varepsilon$ |
-| **qFLO (Watson 2025)** | $O((\lambda T)^2 \log(1/\varepsilon))$ | $O(1/\varepsilon^2)$ total | 0 | This paper; exponential depth improvement |
-| [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes\|Randomized multiproduct (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022)]] | Order-dependent | $O(1)$ | 0 | Different approach: linear combinations of randomized circuits coherently |
-| Deterministic multi[[Product Formulas]]s | Order-dependent; can be deep | $O(1)$ | Ancillas needed for coherent combination | Full state output; harder to implement |
-| [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes\|Taylor series / LCU (Berry et al. 2015)]] | $O(\lambda T \log(1/\varepsilon)/\log\log(1/\varepsilon))$ | $O(1)$ | Yes | Near-optimal depth; substantial overhead |
-| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP (Low-Chuang 2017)]] | $O(\lambda T + \log(1/\varepsilon))$ | $O(1)$ | Yes | Optimal; requires block-encoding machinery |
+| Method | Max depth | Distinct step sizes | Shot/statistical cost | Output type |
+|---|---:|---:|---:|---|
+| [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes\|qDRIFT (Campbell 2019)]] | $O((\lambda T)^2/\varepsilon)$ | 1 | estimator-dependent | randomized channel / observable estimate |
+| **qFLO (Watson 2025)** | $O((\lambda T)^2 \log(1/\varepsilon))$ up to logs | $\tilde O(\log(1/\varepsilon))$ | $O(1/\varepsilon^2)$ total shots up to conditioning/log factors | expectation value only |
+| [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes\|Randomized multiproduct (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022)]] | order-dependent | multiple product-formula branches | resolution-factor-dependent observable-estimation overhead | expectation value only |
+| Deterministic multi[[Product Formulas|product formulas]] | order-dependent; can be deep | multiple branches | coherent LCU/OAA overhead rather than classical shots | state/unitary output possible if implemented coherently |
+| [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes\|Taylor series / LCU (Berry et al. 2015)]] | $O(\lambda T \log(\lambda T/\varepsilon)/\log\log(\lambda T/\varepsilon))$ | N/A | coherent algorithm, not a shot-saving estimator | state/unitary output |
+| [[Optimal Hamiltonian Simulation by QSP (Low-Chuang 2016-2017) — Paper Notes\|QSP (Low-Chuang 2017)]] | $O(\lambda T + \log(1/\varepsilon)/\log\log(1/\varepsilon))$ | N/A | coherent algorithm, not a shot-saving estimator | state/unitary output |
 
 **The key comparison:** qFLO converts qDRIFT's $1/\varepsilon$ depth to $\log(1/\varepsilon)$ depth at the cost of $1/\varepsilon^2$ shots. The total query complexity is worse than QSP (which is near-optimal), but the implementation is far simpler: no ancilla registers, no coherent linear combinations, no block-encoding oracles.
 
-**Relationship to Kieferová et al. 2022:** This is the most direct ancestor. The randomised multiproduct paper uses linear combinations of [[Product Formulas]] circuits to cancel error terms — the same mathematical idea as Richardson extrapolation, but done coherently. Watson's contribution is showing it works just as well classically (for observables, not states), using the simpler incoherent Richardson combination.
+**Relationship to Kieferová et al. 2022:** This is the most direct ancestor. The randomised multiproduct paper uses sampled/interference estimators built from [[Product Formulas|product-formula]] circuits to cancel error terms for observables. The same mathematical idea as Richardson extrapolation appears here, but Watson keeps the combination entirely classical and incoherent, so the result is for observables rather than state output.
 
 ---
 
@@ -111,7 +111,7 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 - **$O(1/\varepsilon^2)$ shot cost.** The statistical noise from measuring at multiple step sizes requires quadratically more total shots than vanilla qDRIFT. If shots are the bottleneck (e.g., on real hardware with limited wall time), this is a significant overhead.
 - **Observables only, not states.** Richardson extrapolation works on expectation values; you can't reconstruct the full quantum state this way. Fine for most near-term applications, but a fundamental limitation.
 - **Multiple separate circuit families.** You need to run $m = O(\log(1/\varepsilon))$ different circuit families, each with a different step count. More classical orchestration overhead than a single-shot protocol.
-- **Conditioning analysis.** The Lemma 4 conditioning bound uses LKW19, which requires specific geometric choices for the step sizes. Ad-hoc choices will likely fail.
+- **Conditioning analysis.** The Lemma 4 conditioning bound uses Low-Kliuchnikov-Wiebe 2019, which requires specific geometric choices for the step sizes. Ad-hoc choices will likely fail.
 
 ---
 
@@ -126,7 +126,7 @@ The upshot: with $m = O(\log(1/\varepsilon) \cdot \log\log(1/\varepsilon))$ poin
 
 - [[qDRIFT Randomized Hamiltonian Simulation (Campbell 2018) — Paper Notes|Campbell (2019)]] — qDRIFT; the base protocol that qFLO extends
 - [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes|Faehrmann-Steudtner-Kueng-Kieferová-Eisert (2022)]] — randomised multi[[Product Formulas]]s; closest prior work
-- LKW19 (Lin-Tong-Wu 2019 or similar) — multiproduct weights; Vandermonde conditioning result used in Lemma 4
+- [[Well-Conditioned Multiproduct Hamiltonian Simulation (Low-Kliuchnikov-Wiebe 2019) — Paper Notes|Low-Kliuchnikov-Wiebe (2019)]] — multiproduct weights; Vandermonde conditioning result used in Lemma 4
 - AAT24 — series expansion technique for qDRIFT channels; cited for Lemma 3 setup
 - [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs-Su-Tran-Wiebe-Zhu (2021)]] — Trotter error theory; comparison context
 - [[Simulating Hamiltonian Dynamics with a Truncated Taylor Series (Berry-Childs-Cleve-Kothari-Somma 2015) — Paper Notes|Berry-Childs-Cleve-Kothari-Somma (2015)]] — Taylor series / LCU; comparison context

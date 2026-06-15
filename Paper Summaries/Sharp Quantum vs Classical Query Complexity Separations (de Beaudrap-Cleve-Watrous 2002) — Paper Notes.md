@@ -1,3 +1,5 @@
+# Sharp Quantum vs Classical Query Complexity Separations (de Beaudrap-Cleve-Watrous 2002) — Paper Notes
+
 > **Source:** J. Niel de Beaudrap, Richard Cleve, John Watrous, *Sharp quantum versus classical query complexity separations*, Algorithmica 34(4):449–461, 2002
 > **Links:** [arXiv:quant-ph/0011065](https://arxiv.org/abs/quant-ph/0011065) · [Algorithmica](https://doi.org/10.1007/s00453-002-0978-1)
 > **Tags:** #query-complexity #quantum-classical-separation #QFT #finite-fields #hidden-subgroup
@@ -6,7 +8,11 @@
 
 ## The computational problem
 
-**Hidden linear structure problem over $\mathrm{GF}(2^n)$:** Given a black-box computing $(x, y) \mapsto (x, \pi(y + sx))$ where $\pi$ is an arbitrary permutation on $\mathrm{GF}(2^n)$ and $s \in \mathrm{GF}(2^n)$ is unknown, determine $s$.
+**Hidden linear structure problem over $\mathrm{GF}(2^n)$:** Given a black-box computing
+$$
+A_{\pi,s}(x,y)=(x,\pi(y+sx)),
+$$
+where $\pi$ is an arbitrary permutation on $\mathrm{GF}(2^n)$ and $s \in \mathrm{GF}(2^n)$ is unknown, determine $s$.
 
 The permutation $\pi$ is adversarial — it hides the linear structure. The goal is to extract the multiplicative coefficient $s$ from the field's linear structure despite the scrambling by $\pi$.
 
@@ -88,7 +94,7 @@ where $C(p,\varepsilon)$ is the cost of the QFT modulo $p$. For $p = 2$: exactly
 | [[Rapid Solution of Problems by Quantum Computation (Deutsch-Jozsa 1992) — Paper Notes\|Deutsch-Jozsa (1992)]] | 1 query (exact) | $O(1)$ | Partial function, exact-vs-bounded gap only |
 | [[Quantum Complexity Theory (Bernstein-Vazirani 1993) — Paper Notes\|Bernstein-Vazirani (1993)]] | 1 query (exact) | $n$ | Total function |
 | [[On the Power of Quantum Computation (Simon 1994) — Paper Notes\|Simon (1994)]] | $O(n)$ | $\Omega(2^{n/2})$ | Promise problem |
-| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor (1994)]] | $O(1)$ | $\Omega(2^{n/3}/\sqrt{n})$ | Bounded-error quantum |
+| [[Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer (Shor 1994) — Paper Notes\|Shor (1994)]] | polynomial in the input length | exponential classical lower bounds only in black-box period/order-finding abstractions | Bounded-error quantum |
 | **de Beaudrap-Cleve-Watrous (2002)** | **1 query (exact)** | **$\Omega(2^{n/2})$** | **Promise problem** |
 | [[Forrelation — A Problem That Optimally Separates Quantum from Classical Computing (Aaronson-Ambainis 2015) — Paper Notes\|Aaronson-Ambainis (2015)]] | 1 query (bounded-error) | $\tilde{\Omega}(\sqrt{N})$ | Partial function, optimal |
 

@@ -20,7 +20,7 @@ Prior work bounded the error using the operator norm $\|V^{(1)}\|$ of the leadin
 
 Three things:
 
-1. **Numerically demolishes** the assumption that Trotter error scales primarily with the number of spin orbitals $N$. Instead, the dominant factor is the maximum nuclear charge $Z_{\max}$ in the molecule, with error scaling as $O(Z_{\max}^6)$ in an atomic orbital basis. For molecules like O, F, Ne the actual ground-state Trotter error is negligible despite error *bounds* predicting large errors.
+1. **Numerically demolishes** the assumption that second-order Trotter error is captured well by naive orbital-count norm bounds. In the studied local atomic-orbital regime, the maximum nuclear charge $Z_{\max}$ is a dominant empirical predictor, with error scaling as $O(Z_{\max}^6)$ in an atomic orbital basis. For atoms like O, F, Ne the actual ground-state Trotter error is negligible despite error *bounds* predicting large errors.
 
 2. **Explains why** through analysis of the leading-order error operator (Eq. 13 from BCH expansion): the inner-shell orbitals dominate the error because $|h_{pq}| = \Theta(Z^2)$ for atomic orbitals. The ground state has limited overlap with the high-error eigenstates of $V^{(1)}$, and atoms with filled or nearly-filled shells have extra error cancellation.
 
@@ -36,7 +36,7 @@ The second-order Trotter error operator (leading BCH term) is:
 
 $$V^{(1)} = -\frac{\Delta t^2}{12}\sum_{\alpha \leq \beta}\sum_\gamma^{\gamma < \beta}\left[H_\alpha\left(1 - \frac{\delta_{\alpha,\beta}}{2}\right),\, [H_\beta, H_\gamma]\right]$$
 
-The ground-state energy error is $\Delta E_i = \langle\psi_i|V^{(1)}|\psi_i\rangle + O(\Delta t^4)$. The paper computes this exactly (not bounded) for small molecules by constructing all $O(N^{10})$ nonzero terms and normal-ordering.
+The ground-state energy error is $\Delta E_i = \langle\psi_i|V^{(1)}|\psi_i\rangle + O(\Delta t^4)$ for the second-order formula and timestep convention used in the paper. This is a state-dependent phase-estimation energy bias, distinct from the operator-norm simulation error. The paper computes this leading correction exactly (not bounded) for small molecules by constructing all $O(N^{10})$ nonzero terms and normal-ordering.
 
 | Molecule | $\|V^{(1)}\|$ (norm) | $|\Delta E_0|$ (ground state) | Ratio |
 |---|---|---|---|
@@ -61,7 +61,7 @@ Three bases compared: local (atomic), canonical (HF molecular), natural (diagona
 
 ### Inner-shell orbitals dominate
 
-Normal-ordering the error operator and binning by orbital index shows that inner-shell orbitals (closest to nuclei) produce the largest error coefficients. Valence electrons — the ones that matter for chemistry — contribute relatively little to the Trotter error. This suggests that pseudopotentials (freezing core electrons) could substantially reduce Trotter cost.
+Normal-ordering the error operator and binning by orbital index shows that inner-shell orbitals (closest to nuclei) produce the largest error coefficients. Valence electrons — the ones that matter for chemistry — contribute relatively little to the Trotter error. This suggests that pseudopotentials or frozen-core approximations could substantially reduce Trotter cost, but those choices introduce their own approximation and transferability questions.
 
 ### Haar-random states see much less error
 
@@ -77,16 +77,16 @@ which vanishes with system size. Real eigenstates of chemical Hamiltonians are f
 
 ### The idea
 
-Compute $\langle\psi_{\text{CI}}|V^{(1)}|\psi_{\text{CI}}\rangle$ using a classical CI ansatz (Hartree-Fock, CISD, CISDT, CISDTQ) and subtract it from the quantum result. This:
+Compute $\langle\psi_{\text{CI}}|V^{(1)}|\psi_{\text{CI}}\rangle$ using a classical CI ansatz (Hartree-Fock, CISD, CISDT, CISDTQ) and subtract it from the quantum result for the chosen target state. This:
 
 1. Gives an a priori estimate of how many Trotter steps are needed (avoiding the massive overestimate from $\|V^{(1)}\|$)
 2. Reduces the effective error in the quantum simulation — often by an order of magnitude or more (Fig. 10)
 
-The CISD ansatz is already good enough for most molecules tested. The approach doesn't require additional quantum resources — it's purely classical post-processing.
+The CISD ansatz is already good enough for most molecules tested. The approach doesn't require additional quantum resources — it's purely classical post-processing — but it is not a black-box rigorous error bound for strongly correlated systems where the ansatz may be qualitatively wrong.
 
 ### State preparation circuit
 
-The paper also gives an improved circuit for preparing a CISD initial state $|\psi_{\text{CISD}}\rangle$ using number-theoretic gate synthesis (à la [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes|Kliuchnikov-Maslov-Mosca]]). The state is a superposition over $D = O(N^4)$ Slater determinants (for CISD). The preparation proceeds by:
+The paper also gives an improved circuit for preparing a CISD initial state $|\psi_{\text{CISD}}\rangle$ using number-theoretic Clifford+T synthesis in the Kliuchnikov-Maslov-Mosca lineage, rather than generic Solovay-Kitaev synthesis. The state is a superposition over $D = O(N^4)$ Slater determinants (for CISD). The preparation proceeds by:
 
 1. Iteratively rotating each amplitude into the $|0\rangle$ component of a 2D subspace
 2. Using multiply-controlled H and T gates, synthesized via least-denominator-exponent reduction
@@ -107,16 +107,16 @@ This is asymptotically better than the Ortiz et al. method ($\tilde{O}(D^2 N^2 \
 | **This paper** | Shows norm bounds are loose by up to 10¹⁶; identifies $Z_{\max}^6$ scaling; proposes classical error subtraction |
 | [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes\|Childs-Su-Tran-Wiebe-Zhu 2019]] | Tightens norm bounds using nested commutators; partially closes the gap this paper identified |
 
-This paper was one of the first to seriously question whether worst-case Trotter bounds are meaningful for quantum chemistry. The answer — they're not, at least for the second-order formula — reshaped how people think about resource estimation. The [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs et al. 2019]] commutator bounds later closed some of the gap by exploiting the same cancellation structure (nested commutators instead of raw norms), but the fundamental insight that chemical structure determines Trotter cost came from here.
+This paper was one of the first to seriously question whether worst-case Trotter bounds are meaningful for quantum chemistry. The answer — they can be wildly pessimistic for the second-order formula and the studied states — reshaped how people think about resource estimation. The [[A Theory of Trotter Error (Childs-Su-Tran-Wiebe-Zhu 2019) — Paper Notes|Childs et al. 2019]] commutator bounds later improved worst-case product-formula analysis generally by exploiting nested-commutator structure, but they do not replace the state-dependent chemical-error analysis of this paper.
 
 ---
 
 ## Limits / caveats
 
-- All numerics are on small molecules ($\leq 20$ spin orbitals, STO-6G minimal basis). The $Z_{\max}^6$ scaling is an empirical fit, not a rigorous bound — though the analytical argument for $O(Z^6)$ from one-body integral scaling is clean.
+- All numerics are on small molecules ($\leq 20$ spin orbitals, STO-6G minimal basis) and second-order formulas. The $Z_{\max}^6$ scaling is an empirical local-basis fit supported by an analytical one-body integral scaling argument, not a universal basis-independent bound.
 - The error subtraction trick requires a good classical ansatz. For strongly correlated systems where CISD is poor, the subtraction may not help much.
-- Only the second-order Trotter formula is studied. Higher-order Suzuki formulas have different error structures — the dominance of $Z_{\max}$ may or may not persist.
-- The state preparation cost $O(N^5)$ can be comparable to or exceed the simulation cost for large $N$ at half-filling. This limits the advantage when the Hartree-Fock state has poor overlap with the ground state.
+- Only the second-order Trotter formula is studied. Higher-order Suzuki formulas and randomized/product-formula variants have different error structures — the dominance of $Z_{\max}$ may or may not persist.
+- The state preparation cost has fifth-power scaling in the discussed construction and can be comparable to or exceed the simulation cost for large $N$ at half-filling. This limits the advantage when the Hartree-Fock state has poor overlap with the ground state.
 - The paper predates [[Hamiltonian Simulation by Qubitization (Low-Chuang 2019) — Paper Notes|qubitization]] and [[QSVT and Beyond (Gilyén et al. 2018-2019) — Paper Notes|QSVT]], which avoid Trotter entirely. The Trotter error question is less urgent for fault-tolerant algorithms using these methods, but remains relevant for near-term and product-formula approaches.
 
 ---
@@ -148,7 +148,7 @@ This paper was one of the first to seriously question whether worst-case Trotter
 - [[Simulation of Many-Body Fermi Systems on a Universal Quantum Computer (Abrams-Lloyd 1997) — Paper Notes]]
 - [[Higher Order Decompositions of Ordered Operator Exponentials (Wiebe-Berry-Høyer-Sanders 2010) — Paper Notes]]
 - [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes]]
-- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — randomized multi-[[Product Formulas]]s as a follow-on strategy to close the gap between norm bounds and actual Trotter cost that this paper identified
+- [[Randomizing Multi-Product Formulas for Hamiltonian Simulation (Faehrmann-Steudtner-Kueng-Kieferová-Eisert 2022) — Paper Notes]] — randomized multi-product formulas as a follow-on strategy to close the gap between norm bounds and actual Trotter cost that this paper identified
 - [[Faster Digital Quantum Simulation by Symmetry Protection (Tran-Su-Childs-Wiebe 2021) — Paper Notes]] — symmetry kicks as another route to achieve the practical Trotter error reduction this paper documented empirically
 - [[Doubling the Order of Approximation via the Randomized Product Formula (Cho-Berry-Hsieh 2022) — Paper Notes]] — randomized corrections that double effective product-formula order; addresses the overestimation problem this paper raised
 - [[Faster Algorithmic Quantum and Classical Simulations by Corrected Product Formulas (Bagherimehrab-Berry-Schleich-Aldossary-Angulo-Aspuru-Guzik 2024) — Paper Notes]] — deterministic corrected [[Product Formulas]]s; achieves provable factor-$\alpha$ improvement for perturbed systems, vindicating the practical-error framing of this paper

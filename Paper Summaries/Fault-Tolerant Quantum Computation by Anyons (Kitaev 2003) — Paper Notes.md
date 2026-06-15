@@ -174,3 +174,8 @@ Particle pairs are created by **ribbon operators** $F^{(h,g)}(t)$, associated wi
 - [[Ribbon Operators for Particle Creation]]
 - [[Pants Decomposition Embedding for TQFT Simulation]] — related technique from Freedman-Kitaev-Wang
 - [[Algebraic Gate Design via Temperley-Lieb Representations]] — connection to Jones polynomial papers
+
+## Later connections
+
+- [[Exponential Speedups in Fault-Tolerant Processing of Quantum Experiments (Kannan-Putterman-Cotler 2026) — Paper Notes]] — Later connection: Kannan--Putterman--Cotler use surface-code growth as a state-uploading primitive for quantum learning from experiments.
+

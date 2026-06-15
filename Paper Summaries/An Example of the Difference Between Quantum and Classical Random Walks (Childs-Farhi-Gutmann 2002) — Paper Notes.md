@@ -6,9 +6,9 @@
 
 ## The computational problem
 
-**Graph traversal:** Given a specific family of graphs $G_n$ (two balanced binary trees of depth $n$ with leaves pairwise identified), start at the root of the left tree and reach the root of the right tree. The complexity measure is time: how long does it take for the walk to propagate from left root to right root?
+**Random-walk propagation:** Given a specific family of graphs $G_n$ (two balanced binary trees of depth $n$ with leaves pairwise identified), start at the root of the left tree and reach the root of the right tree. The complexity measure is time: how long does the walk dynamics take to put appreciable probability at the right root?
 
-This is not framed as a decision problem with an oracle — it's a direct comparison of propagation dynamics. The quantum advantage is in the *speed* of transport, not in query complexity per se.
+This is not framed as a decision problem with an oracle -- it is a direct comparison of propagation dynamics. The quantum advantage is in the *speed* of transport, not in query complexity per se.
 
 ---
 
@@ -43,7 +43,7 @@ On the right tree ($n < j < 2n$), this reverses: probability $1/3$ to move towar
 
 ### Symmetry reduction
 
-With the initial state $|\text{col } 0\rangle$ (left root), the symmetry of $H$ (the adjacency matrix as Hamiltonian, per equation (7)) confines evolution to the $(2n+1)$-dimensional subspace spanned by the column states:
+With the initial state $|\text{col } 0\rangle$ (left root), the symmetry of $H$ (the graph-generator Hamiltonian of the paper, with off-diagonal hopping and degree-dependent diagonal terms) confines evolution to the $(2n+1)$-dimensional subspace spanned by the column states:
 
 $$
 |\text{col } j\rangle = \frac{1}{\sqrt{N_j}} \sum_{a \in \text{column } j} |a\rangle
@@ -61,7 +61,7 @@ $$
 \langle \text{col } j | H | \text{col } j\rangle = \begin{cases} 2\gamma & j = 0, n, 2n \\ 3\gamma & \text{otherwise} \end{cases}
 $$
 
-The quantum walk on $G_n$ reduces to a quantum walk on a line of $2n+1$ vertices with uniform hopping $\sqrt{2}\gamma$ — the branching structure that creates the classical drift is completely invisible to the quantum dynamics.
+The quantum walk on $G_n$ reduces to a quantum walk on a line of $2n+1$ vertices with uniform hopping $\sqrt{2}\gamma$ -- for this column-symmetric initial state, the branching structure that creates the classical drift is invisible to the reduced quantum dynamics.
 
 ### Ballistic propagation
 
@@ -71,7 +71,7 @@ $$
 \langle m | e^{-iHt} | l \rangle = e^{-i3\gamma t} \, i^{m-l} \, J_{m-l}(2\sqrt{2}\gamma t)
 $$
 
-where $J_{m-l}$ is a [[Bessel Linearisation of Quantum Walk Phases|Bessel function]] of order $m-l$. This gives propagation at speed $v = 2\sqrt{2}\gamma$: the wavepacket is exponentially small ahead of the wavefront $|m-l| > vt$, and has amplitude $O(|m-l|^{-1/2})$ near the front.
+where $J_{m-l}$ is a [[Bessel Linearisation of Quantum Walk Phases|Bessel function]] of order $m-l$. This gives propagation at speed $v = 2\sqrt{2}\gamma$: the wavepacket is exponentially small ahead of the wavefront $|m-l| > vt$. Away from the leading caustic, stationary-phase amplitudes scale like $t^{-1/2}$; at the leading front there is an Airy-type transition.
 
 Since $G_n$ (reduced) is nearly identical to this infinite line for large $n$ (with a small "defect" at column $n$ from the different diagonal element), propagation from column 0 to column $2n$ occurs in time $T \approx 2n / (2\sqrt{2}\gamma) = O(n)$.
 
@@ -103,7 +103,7 @@ So the time-averaged probability at the right root is $\Omega(1/n)$ — polynomi
 
 | Property | Classical | Quantum |
 |---|---|---|
-| Transport time (left root → right root) | $2^{\Omega(n)}$ | $O(n)$ |
+| Random-walk transport time (left root → right root) | $2^{\Omega(n)}$ | $O(n)$ |
 | Limiting probability at right root | $(2^{n+1} + 2^n - 2)^{-1}$ | $\ge (2n+1)^{-1}$ |
 | Propagation mode | Diffusive (biased against right) | Ballistic (speed $2\sqrt{2}\gamma$) |
 
@@ -123,9 +123,9 @@ This paper came first (2001 preprint, 2002 publication) and demonstrated the phe
 ## Limits / caveats
 
 - The simple graph $G_n$ has a structural weakness: a classical algorithm can detect column $n$ by vertex degree (valence pattern changes there) and use this to traverse in $O(n^2)$ time via backtracking from the identified centre. This is why the 2003 paper needed to randomise the connections.
-- The Hamiltonian uses the adjacency matrix directly, requiring knowledge of the hopping rate $\gamma$, but $\gamma$ is a free parameter that doesn't depend on global graph properties.
+- The Hamiltonian convention is the continuous-time graph generator used in the paper, not the pure adjacency Hamiltonian convention used in some later quantum-walk papers. The hopping rate $\gamma$ is a free parameter that does not depend on global graph properties.
 - The analysis is specific to this graph family. Extending quantum walk speedups to broader graph classes required the machinery of [[Spatial Search by Quantum Walk (Childs-Goldstone 2004) — Paper Notes|Childs-Goldstone (2004)]], [[Search via Quantum Walk (Magniez-Nayak-Roland-Santha 2007) — Paper Notes|Magniez-Nayak-Roland-Santha (2007)]], and [[Quantum Walks Can Find a Marked Element on Any Graph (Krovi-Magniez-Ozols-Roland 2016) — Paper Notes|Krovi-Magniez-Ozols-Roland (2016)]].
-- The continuous-time framework avoids the "coin" issue of discrete-time walks, but [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] later showed the two formulations are equivalent via Szegedy quantization.
+- The continuous-time framework avoids the "coin" issue of discrete-time walks, but [[On the Relationship Between Continuous- and Discrete-Time Quantum Walk (Childs 2010) — Paper Notes|Childs (2010)]] later gave precise simulations between continuous- and discrete-time walk models. This is a correspondence under explicit access assumptions, not a blanket equivalence of all walk algorithms.
 
 ---
 
@@ -133,7 +133,7 @@ This paper came first (2001 preprint, 2002 publication) and demonstrated the phe
 
 1. **[[Symmetry Reduction to Column Subspace in Quantum Walks]]** — The branching structure of the tree becomes invisible after projecting onto the column subspace. What looks like an asymmetric graph with exponential classical drift becomes a uniform line. This reduction is the key reason the quantum walk doesn't "feel" the classical drift.
 
-2. **[[Ballistic Quantum Transport via Bessel Functions]]** — On a uniform line, quantum propagation is ballistic (linear in $t$) with amplitude $J_{m-l}(vt)$, versus classical diffusive $O(\sqrt{t})$. The Bessel function structure gives both the wavefront speed and the $O(t^{-1/2})$ amplitude scaling at the front.
+2. **[[Ballistic Quantum Transport via Bessel Functions]]** — On a uniform line, quantum propagation is ballistic (linear in $t$) with amplitude $J_{m-l}(vt)$, versus classical diffusive $O(\sqrt{t})$. The Bessel function structure gives the wavefront speed, ordinary $O(t^{-1/2})$ stationary-phase scaling away from the front, and Airy-type behaviour at the leading front.
 
 ---
 

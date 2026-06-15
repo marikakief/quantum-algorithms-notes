@@ -42,7 +42,11 @@ The key win over [[Solovay-Kitaev Recursive Gate Compilation|Solovay-Kitaev]] is
 
 **Success probability:** $P = \cos^4\theta + \sin^4\theta$
 
-For $\theta \ll 1$, $P \approx 1 - 2\theta^2\sin^2(2\theta)/2 \approx 1 - O(\theta^4)$, so the circuit nearly always succeeds for small rotations.
+Since
+
+$$P=\cos^4\theta+\sin^4\theta=1-\tfrac12\sin^2(2\theta),$$
+
+for $\theta \ll 1$ this is $P = 1 - 2\theta^2 + O(\theta^4)$. The circuit still succeeds with high probability for small rotations, but the leading failure probability is quadratic in $\theta$, not quartic.
 
 ### Composed gearbox $C^{\circ d}(U)$
 
@@ -72,7 +76,7 @@ Combine using a further gearbox application: the circuit for $\phi_{\text{exp}} 
 $$P_{\text{success}} = \cos^4\theta + \sin^4\theta$$
 On failure, the result is a Clifford.
 
-**T-count for composed gearbox (Theorem / empirical).** Let $n_d$ be the total number of $U$ applications in $C^{\circ d}(U)$. The authors derive recursive formulas for $\mathbb{E}[n_d]$ and $\text{Var}[n_d]$:
+**T-count for composed gearbox (qualitative summary).** Let $n_d$ be the total number of $U$ applications in $C^{\circ d}(U)$. The paper gives exact recurrences for $\mathbb{E}[n_d]$ and $\text{Var}[n_d]$; the expression below is only a schematic guide to the dependence:
 
 $$\mathbb{E}[n_d] = \frac{2}{\Pi_d}\prod_{q=1}^d \frac{1}{P_q} \cdot \mathbb{E}[n_1] \quad \text{(schematic)}$$
 
@@ -84,7 +88,7 @@ where $d = O(\log\log(1/\phi))$ for the exponent part. This is qualitatively bet
 
 **Lower bounds (empirical, ancilla-free).** For ancilla-free Clifford + T synthesis, the paper empirically determines (Fig. 9, Table II) that the optimal T-count scales as $\approx 3\log_2(1/|u|)$ where $|u|$ is the off-diagonal magnitude. The fit gives slope $a \approx 2.98$ with 95% confidence interval $[2.95, 3.03]$. This is the tightest empirically observed scaling for the ancilla-free case with this gate library.
 
-**Ancilla-assisted circuits beat this bound.** The gearbox (with ancillas) achieves scaling $\approx 2\log_2(1/\theta)$ (empirical, Fig. 4), roughly $2.6\times$ more efficient than the ancilla-free optimum — the first demonstrated case where ancillas and measurement provably help for single-qubit gate synthesis.
+**Ancilla-assisted circuits beat this empirical ancilla-free baseline.** The gearbox (with ancillas) achieves scaling $\approx 2\log_2(1/\theta)$ in the paper's simulations (Fig. 4), roughly $2.6\times$ more efficient than the observed ancilla-free optimum in that model. This is strong evidence for the practical value of ancillas and measurement here, but it should not be quoted as a formal lower-bound separation unless one also cites such a lower bound.
 
 **T-depth.** Most of the T gates in the composed gearbox can be parallelised. The online T-depth (the T-depth on the critical path after offline ancilla preparation) is $O(d)$ per successful attempt, not $O(\mathbb{E}[T])$.
 
@@ -94,10 +98,10 @@ where $d = O(\log\log(1/\phi))$ for the exponent part. This is qualitatively bet
 
 | Method | T-count scaling | Ancilla-free? | Notes |
 |---|---|---|---|
-| [[Solovay-Kitaev Recursive Gate Compilation\|Solovay-Kitaev]] | $O(\log^{3.97}(1/\epsilon))$ | Yes | Gate universal but poor constants; no improvement for small $\phi$ |
+| [[Solovay-Kitaev Recursive Gate Compilation|Solovay-Kitaev]] | $O(\log^{3.97}(1/\epsilon))$ | Yes | Gate universal but poor constants; no improvement for small $\phi$ |
 | Fowler (2011) | $O(\log(1/\epsilon))$ | Yes | Near-optimal for ancilla-free; T-count ≈ $3.5 \log_2(1/\epsilon)$ empirically |
 | Selinger (2013) / Ross-Selinger | $O(\log(1/\epsilon))$ with better constants | Yes | Provably optimal ancilla-free; Clifford + T only |
-| **This paper (gearbox / FP)** | $O(\log(1/\phi) + \log(1/\epsilon))$ expected | **No** | Beats ancilla-free lower bound; advantage when $\phi \ll \epsilon$ |
+| **This paper (gearbox / FP)** | $O(\log(1/\phi) + \log(1/\epsilon))$ expected | **No** | Beats the observed ancilla-free baseline in the paper's model; advantage for very small $\phi$ |
 
 For the example $e^{-i\pi Z / 2^{16}}$ to $10^{-5}$ precision: the floating-point method requires far fewer T gates than Fowler/Selinger, because the dominant cost is the $\log(1/\phi)$ exponent part.
 
@@ -105,7 +109,7 @@ For the example $e^{-i\pi Z / 2^{16}}$ to $10^{-5}$ precision: the floating-poin
 
 ## Limits / caveats
 
-- **Non-deterministic:** the protocol is repeat-until-success. Expected T-count is good, but there's nonzero variance — in the worst case you may need many retries. The variance formulas in the paper let you bound tail probabilities, but fault-tolerant resource estimation must account for this.
+- **Non-deterministic:** the protocol is repeat-until-success. Expected T-count is good, but there's nonzero variance — in the worst case you may need many retries. The variance formulas in the paper let you bound tail probabilities, but fault-tolerant resource estimation must account for this with a retry budget, timeout/fallback policy, or explicit tail bound.
 - **Ancillas required:** the advantage over ancilla-free methods comes entirely from using ancilla qubits plus mid-circuit measurement. If you can't afford ancillas (e.g., limited connectivity), this reduces to the Clifford/T mantissa synthesis cost.
 - **Base rotation synthesis:** the method still requires synthesizing the base rotation $U$ with $\theta_0$ using standard (ancilla-free) methods. The total T-count is dominated by the mantissa synthesis if $\phi$ is only mildly small.
 - **Angle squaring, not arbitrary:** the gearbox maps $\phi \to \phi^2$ (angle squaring), not general arithmetic. The floating-point analogy is loose — it's specifically designed for small-angle synthesis, not general gate compilation.
@@ -126,7 +130,7 @@ For the example $e^{-i\pi Z / 2^{16}}$ to $10^{-5}$ precision: the floating-poin
 
 - **Fowler (2011)** — "Surface code quantum computing by lattice surgery", arXiv:1111.4022. Used for the baseline ancilla-free T-count of $\approx 3.5\log_2(1/\epsilon)$ for small rotations.
 - **Selinger (2013)** — "Efficient Clifford + T approximation of single-qubit operators", arXiv:1212.6253. The optimal ancilla-free method; lower bound competitor.
-- **Ross and Selinger (2014)** — optimal Clifford+T approximation of Z-rotations; further tightens the ancilla-free picture.
+- [[Optimal Ancilla-Free Clifford+T Approximation of Z-Rotations (Ross-Selinger 2014) — Paper Notes|Ross and Selinger (2014)]] — optimal Clifford+T approximation of Z-rotations; further tightens the ancilla-free picture.
 - **Kitaev, Shen, Vyalyi** — "Classical and Quantum Computation". Standard reference for Clifford+T universality.
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes|Dawson-Nielsen (2005)]] — Solovay-Kitaev theorem and algorithm; the baseline they are improving on.
 - **Amy, Maslov, Mosca, Roetteler (2013)** — T-count optimisation for specific circuits; complementary direction.
@@ -138,8 +142,9 @@ For the example $e^{-i\pi Z / 2^{16}}$ to $10^{-5}$ precision: the floating-poin
 
 ### Paper notes
 - [[The Solovay-Kitaev Algorithm (Dawson-Nielsen 2005) — Paper Notes]] — the gate compilation method they supersede for small-angle synthesis
+- [[Optimal Ancilla-Free Clifford+T Approximation of Z-Rotations (Ross-Selinger 2014) — Paper Notes]] — optimal ancilla-free Clifford+T baseline for $R_z$ rotations
 - [[Resonant Equiangular Composite Gates (Low-Yoder-Chuang 2016) — Paper Notes]] — composite gate sequences; related non-deterministic / iterative gate synthesis ideas
-- [[Raeisi-Wiebe-Sanders 2012]] — gate-level [[Hamiltonian simulation]] circuit construction, context for where small rotations arise
+- [[Quantum-Circuit Design for Efficient Simulations of Many-Body Quantum Dynamics (Raeisi-Wiebe-Sanders 2012) — Paper Notes]] — gate-level [[Hamiltonian simulation]] circuit construction, context for where small rotations arise
 
 ### Trick cards
 - [[Gearbox Circuit for Angle Squaring]]

@@ -20,9 +20,9 @@ The state family is MPS-like in the sense used in DMRG, with physical dimension 
 
 ## What the paper does
 
-This paper closes a gap that has bothered the chemistry resource-estimation literature for years. Earlier FeMoco numbers often assumed near-perfect initial overlap. Here they actually cost how to get it.
+This paper closes a gap that has bothered the chemistry resource-estimation literature for years. Earlier FeMoco numbers often assumed near-perfect initial overlap. Here they actually cost how to get it. The arXiv preprint appeared in 2024 and the published version is PRX Quantum **6**, 020327 (2025).
 
-There are two real contributions. First, they give a much cheaper way to compile the unitaries needed for MPS preparation, cutting Toffoli count by about $7\times$ relative to the Low-Kliuchnikov-Schaeffer route used in earlier analyses. Second, they treat ground-state identification as a confidence-interval problem, not a toy phase-estimation problem, and use window functions plus either repeated sampling or binary search with amplitude estimation to get realistic resource estimates.
+There are two real contributions. First, they give a much cheaper way to compile the unitaries needed for MPS preparation, cutting the Toffoli count of that unitary-synthesis/MPS-preparation subroutine by about $7\times$ relative to the Low-Kliuchnikov-Schaeffer route used in earlier analyses. This is not a $7\times$ reduction of the full QPE workflow. Second, they treat ground-state identification as a confidence-interval problem, not a toy phase-estimation problem, and use window functions plus either repeated sampling or binary search with amplitude estimation to get realistic resource estimates.
 
 My assessment: the MPS-preparation side matters more than the asymptotics of the filtering step. The $1/\sqrt{p}$ binary-search method is nice, but for the chemistry instances they study the main story is that the overlap can be made so high that plain sampling wins anyway. The paper is strongest where it is most concrete: FeMoco with modest bond-dimension MPS already looks good enough that the old “perfect overlap” assumption was not fantasy, just under-argued.
 
@@ -126,7 +126,7 @@ They then sharpen the analysis by accounting for the location of excited states.
 
 ### 6. Binary search with amplitude estimation
 
-To improve the scaling in $p$, they adapt the Lin-Tong style fuzzy-bisection approach. At each search step one distinguishes whether the ground energy lies in the lower or upper part of a shrinking interval. The decision problem is converted into amplitude estimation on the event that a windowed QPE outcome lands beyond a threshold $\bar\phi$.
+To improve the scaling in $p$, they adapt the Lin-Tong style fuzzy-bisection approach. Here $p$ is the squared overlap; the corresponding amplitude overlap is $\sqrt{p}$. At each search step one distinguishes whether the ground energy lies in the lower or upper part of a shrinking interval. The decision problem is converted into amplitude estimation on the event that a windowed QPE outcome lands beyond a threshold $\bar\phi$.
 
 With a shrinking factor optimized to $\omega = 1/\sqrt{2}$, the asymptotic walk-operator query complexity is
 
@@ -136,7 +136,7 @@ $$
 \ln\!\left(\frac{\log_{\sqrt{2}}(\lambda/\epsilon)}{q}\right),
 $$
 
-which is Eq. (127). This is the advertised $1/\sqrt{p}$ improvement, but the constant factor is large enough that it only beats sampling for about $p \lesssim 0.003$.
+which is Eq. (127). This is the advertised $1/\sqrt{p}$ improvement in squared-overlap notation, but the constant factor is large enough that it only beats sampling for about $p \lesssim 0.003$ in the paper's parameter choices.
 
 ### 7. Fe-S resource estimates and overlap extrapolation
 
@@ -162,7 +162,7 @@ This is empirical, not rigorous. But for the smaller Fe-S systems they validate 
 
 ### MPS preparation
 
-- New unitary synthesis method: about **$7\times$ lower Toffoli cost** than prior LKS-based costing over the relevant regime.
+- New unitary synthesis method: about **$7\times$ lower Toffoli cost** than prior LKS-based costing for the relevant synthesis subroutine and parameter regime.
 - MPS preparation becomes a smaller part of the total cost than it was in previous estimates.
 - For physical dimension $d=4$ the improvement over LKS is still around $3.5\times$.
 
@@ -195,11 +195,11 @@ The binary-search method wins only for roughly
 
 $$p \lesssim 0.003.$$
 
-That crossover is one of the more practically useful outputs of the paper.
+That crossover is one of the more practically useful outputs of the paper, but it is a model- and parameter-dependent numerical threshold rather than a universal constant.
 
 ### Extrapolated overlaps and MPS preparation costs
 
-| System | Estimated overlap | Bond dimension | Spatial orbitals | MPS Toffolis | Logical qubits |
+| System | Estimated squared overlap $p$ | Bond dimension | Spatial orbitals | MPS Toffolis | Logical qubits |
 |---|---|---:|---:|---:|---:|
 | Fe$_2^{\mathrm{III}}$Fe$_2^{\mathrm{II}}$ | 0.88 | 1000 | 36 | $4.22 \times 10^7$ | 359 |
 | Fe$_4^{\mathrm{III}}$ | 0.92 | 1000 | 36 | $4.22 \times 10^7$ | 359 |
@@ -259,7 +259,7 @@ Toffolis at 95% confidence.
 | Reference | Why it matters here |
 |---|---|
 | [[Postponing the Orthogonality Catastrophe (Tubman, Mejuto-Zaera, Babbush et al 2018) — Paper Notes]] | Earlier serious treatment of imperfect initial overlap for chemistry QPE |
-| Low, Kliuchnikov, Schaeffer (2024) | Prior unitary-synthesis method that this paper improves on by about $7\times$ in Toffoli count |
+| Low, Kliuchnikov, Schaeffer (arXiv 2018; later publication date sometimes cited) | Prior unitary-synthesis method that this paper improves on by about $7\times$ in Toffoli count for the MPS-preparation subroutine |
 | Schön, Solano, Verstraete, Cirac, Wolf (2005) | Standard ancilla-assisted MPS preparation framework being re-costed here |
 | [[Kaiser Window Amplitude Estimation]] / Berry et al. (2024) | Source of the Kaiser-window perspective used for confidence-interval phase estimation |
 | Lin and Tong (2020, 2022) | Binary-search / fuzzy-bisection perspective and related phase-estimation search methods |

@@ -14,6 +14,8 @@
 
 **Classical algorithm:** A generic backtracking algorithm (Algorithm 1 in the paper) explores a tree whose vertices are partial solutions. Internal vertices are "indeterminate" assignments; leaves are either solutions ($P = \text{true}$) or dead ends ($P = \text{false}$). Let $T$ be the number of vertices in this tree. Each vertex costs one evaluation of $P$ and $h$, so the classical runtime is $O(T \cdot \text{poly}(n))$.
 
+The headline bounds treat the domain size/branching factor as constant. If the domain size $d$ is not constant, the cost of implementing local reflections and checking child subtrees must include the corresponding degree dependence.
+
 This framework covers DPLL (the backbone of modern SAT solvers), DSATUR for graph colouring, and essentially any CSP algorithm that proceeds by branching-and-pruning.
 
 ---
@@ -35,7 +37,7 @@ The quantum walk operates on the Hilbert space $\mathcal{H}$ spanned by $\{|r\ra
 Partition the vertices into sets $A$ (even distance from root) and $B$ (odd distance). Define local diffusion operators $D_x$ on the subspace of $x$ and its children:
 
 - **Marked vertex:** $D_x = I$ (identity — do nothing)
-- **Unmarked, $x \neq r$:** $D_x = I - 2|\psi_x\rangle\langle\psi_x|$, where $|\psi_x\rangle = \frac{1}{\sqrt{d_x}}\left(|x\rangle + \sum_{y: x \to y} |y\rangle\right)$
+- **Unmarked, $x \neq r$:** $D_x = I - 2|\psi_x\rangle\langle\psi_x|$, where $d_x$ is the number of children and $|\psi_x\rangle = \frac{1}{\sqrt{d_x+1}}\left(|x\rangle + \sum_{y: x \to y} |y\rangle\right)$
 - **Root:** $D_r = I - 2|\psi_r\rangle\langle\psi_r|$, where $|\psi_r\rangle = \frac{1}{\sqrt{1 + d_r n}}\left(|r\rangle + \sqrt{n}\sum_{y: r \to y} |y\rangle\right)$
 
 The root diffusion has an extra $\sqrt{n}$ weighting on its children. This is needed so the eigenvector with eigenvalue 1 (when a marked vertex exists) has large overlap with $|r\rangle$.
@@ -44,7 +46,7 @@ One step of the walk is $R_B R_A$, where $R_A = \bigoplus_{x \in A} D_x$ and $R_
 
 ### Detection algorithm
 
-Apply [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]] to the walk operator $R_B R_A$ with precision $\beta / \sqrt{Tn}$:
+Given an upper bound $T$ on the tree size, apply [[Quantum Measurements and the Abelian Stabilizer Problem (Kitaev 1995) — Paper Notes|phase estimation]] to the walk operator $R_B R_A$ with precision $\beta / \sqrt{Tn}$:
 
 1. Repeat $K = O(\log(1/\delta))$ times:
    - Run phase estimation on $R_B R_A$ starting from $|r\rangle$
@@ -70,7 +72,7 @@ Use the detection algorithm as a subroutine in a binary search down the tree:
 3. Recurse into that subtree
 4. Repeat until a marked leaf is reached
 
-Since depth is $\leq n$ and degree is $O(1)$, this costs an extra factor of $O(n)$, giving total $O(\sqrt{T} n^{3/2} \log n)$.
+Since depth is $\leq n$ and degree is assumed $O(1)$, this costs an extra factor of $O(n)$, giving total $O(\sqrt{T} n^{3/2} \log n)$. For nonconstant branching degree, checking child subtrees adds the appropriate degree factor.
 
 ### Unique solution variant
 
@@ -84,7 +86,7 @@ When promised a unique marked vertex $x_0$, a cleverer approach avoids binary se
 
 **Theorem 2 (Search):** Without any promise on the number of solutions, there is a quantum algorithm finding a solution (or certifying none exists) using $O(\sqrt{T} n^{3/2} \log n \log(1/\delta))$ evaluations of $P$ and $h$. For a unique solution, this improves to $O(\sqrt{Tn} \log^3 n \log(1/\delta))$.
 
-Both use $\text{poly}(n)$ space and $O(1)$ auxiliary operations per evaluation.
+Both use $\text{poly}(n)$ space. The query counts hide the reversible work needed to compute children, evaluate $P$, and implement the heuristic $h$; this is treated as polynomial-time auxiliary computation in the paper.
 
 ---
 
@@ -111,7 +113,7 @@ An interesting secondary result: for the right distribution over CSP instances, 
 
 $$\mathbb{E}[T_Q] = \text{poly}(n), \qquad \mathbb{E}[T_C] = 2^{\Omega(n)}.$$
 
-The paper demonstrates this concretely for random 3-SAT with a distribution over clause densities, achieving $\mathbb{E}[T_C] = \Omega(2^{0.094n})$ while $\mathbb{E}[T_Q] = \text{poly}(n)$.
+The paper demonstrates this concretely for a carefully chosen distribution over random 3-SAT clause densities, achieving $\mathbb{E}[T_C] = \Omega(2^{0.094n})$ while $\mathbb{E}[T_Q] = \text{poly}(n)$.
 
 This uses heavy-tailed distributions on backtracking tree sizes, which have some empirical support (Hogg-Williams, Jia-Moore) but remain debated. The paper is careful to note several caveats — the separation doesn't hold for randomised backtracking where the randomness is internal to the algorithm (rather than over instances).
 
@@ -123,9 +125,9 @@ This uses heavy-tailed distributions on backtracking tree sizes, which have some
 
 2. **Multiple marked vertices.** Finding one of $k > 1$ marked vertices doesn't give a $1/\sqrt{k}$ speedup, unlike Grover. Belov's argument: attach $k$ marked leaves below the unique target, find one in $o(\sqrt{Tn})$ to recover the target, contradicting the lower bound.
 
-3. **Classical "lucky" search.** If the classical algorithm finds a solution early without exploring the whole tree, the quantum algorithm — which must explore the entire tree to detect the marked vertex — may not outperform it. The paper notes this as an open problem.
+3. **Classical "lucky" search.** The quantum detection analysis is against an upper bound on the whole backtracking tree. If the classical algorithm finds a solution early without exploring the whole tree, the quantum algorithm may not outperform it. The paper notes this as an open problem.
 
-4. **Upper bound on $T$ needed for detection.** Without it, use exponential doubling (guessing $T = 1, 2, 4, \ldots$), which adds a factor of $O(n)$ to search.
+4. **Upper bound on $T$ needed for detection.** Without a known upper bound on the tree size, use exponential doubling (guessing $T = 1, 2, 4, \ldots$), which adds a factor of $O(n)$ to search.
 
 5. **The speedup is "only" quadratic.** For CSPs on $n$ variables with classical runtime $2^{cn}$, the quantum algorithm runs in $2^{cn/2} \cdot \text{poly}(n)$. This is a constant-factor improvement in the exponent, not a change in scaling class.
 

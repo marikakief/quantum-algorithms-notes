@@ -13,7 +13,7 @@ On a line graph, a quantum walk has momentum eigenstates $|\tilde{k}\rangle$ wit
 
 **Filter widget:** A specific small graph (Fig. 1d in the paper) has a transmission coefficient where $|T(k)|^2$ is sharply peaked around $k = -\pi/4$ and $k = -3\pi/4$, with exponential suppression elsewhere. Each filter stage is degree 3 and adds effective length 2 at $k = -\pi/4$.
 
-**Cascading:** $m_d = \log\Theta(m^2)$ filter widgets in series suppress unwanted momenta to exponentially small amplitude. The transmission of the cascade at $k = -\pi/4$ remains perfect (since each individual filter has $|T(-\pi/4)| = 1$).
+**Cascading:** $m_d = \Theta(\log m)$ filter widgets in series suppress unwanted momenta to exponentially small amplitude. The transmission of the cascade at $k = -\pi/4$ remains perfect (since each individual filter has $|T(-\pi/4)| = 1$).
 
 **Momentum separator:** A second widget type (Fig. 1e) has perfect transmission at both $k = -\pi/4$ and $k = -3\pi/4$ but with very different effective lengths ($\ell \approx 0.686$ vs $\ell \approx 23.3$). This temporally separates the two momentum components even though they propagate at the same group velocity $|v| = \sqrt{2}$.
 
@@ -31,7 +31,7 @@ $O(\log m)$ filter widgets for an $m$-gate computation. Each widget adds $O(1)$ 
 
 ## Caveat
 
-The filter transmits both $k = -\pi/4$ and $k = -3\pi/4$, requiring the additional momentum separator. The separator has different effective lengths at the two momenta but same group velocity — the temporal separation requires wires long enough to resolve the arrival time difference.
+The filter transmits both $k = -\pi/4$ and $k = -3\pi/4$, requiring the additional momentum separator. The separator has different effective lengths at the two momenta but same group velocity — the temporal separation requires wires long enough to resolve the arrival time difference. Filtering narrows the momentum distribution of a wave packet; it does not prepare a localized computational-basis state.
 
 ## Related notes
 - [[Universal Computation by Quantum Walk (Childs 2009) — Paper Notes]]

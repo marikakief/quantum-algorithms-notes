@@ -7,6 +7,20 @@
 
 Given a [[Standard-Form Encoding (Prepare + Signal Oracle)|block-encoded / standard-form encoded]] operator, construct a unitary iterate whose action on each eigenvalue is confined to a two-dimensional invariant subspace. In that subspace, the iterate acts as an \(SU(2)\) rotation.
 
+For a standard-form encoding
+
+$$
+\frac{H}{\alpha}=(\langle G|\otimes I)U(|G\rangle\otimes I),
+$$
+
+one common convention is
+
+$$
+W=\left(2|G\rangle\langle G|\otimes I-I\right)U.
+$$
+
+Equivalent conventions differ by adjoints, signs, or a swap/reflection, but preserve the same two-dimensional invariant-subspace structure.
+
 ## Why it matters
 
 This is the geometric core of [[Qubitization Iterate|qubitization]]. Once the problem has been reduced to controlled rotations inside invariant two-dimensional sectors, phase-modulated iterate sequences (see [[Phased Qubitization Sequence]]) can implement polynomial spectral transforms efficiently.
@@ -17,7 +31,9 @@ Use this whenever you want to implement a function \(f(H)\) and you already have
 
 ## What to remember
 
-The iterate reduces a hard many-qubit spectral transformation to programmable SU(2) rotation geometry — one 2D invariant subspace per eigenvalue, with the [[Qubitization Iterate|qubitization]] iterate acting as a rotation by $\arccos(\lambda)$ in each.
+The iterate reduces a hard many-qubit spectral transformation to programmable SU(2) rotation geometry — one 2D invariant subspace per eigenvalue. If \(H|\psi_\lambda\rangle=\lambda|\psi_\lambda\rangle\), the relevant angle is \(\arccos(\lambda/\alpha)\), and QSP/QSVT applies functions to the normalized variable \(\lambda/\alpha\).
+
+A useful basis for the sector is the prepared state \(|G\rangle|\psi_\lambda\rangle\) together with the component of \(U|G\rangle|\psi_\lambda\rangle\) orthogonal to \(|G\rangle|\psi_\lambda\rangle\). In that basis \(W\) is a \(2\times2\) rotation/reflection block whose eigenphases encode \(\lambda/\alpha\).
 
 ## Related notes
 

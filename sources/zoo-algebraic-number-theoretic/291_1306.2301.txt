@@ -1,0 +1,281 @@
+
+
+--- PAGE 1 ---
+A note on quantum related-key attacks
+Martin R¨otteler∗
+Microsoft Research
+One Microsoft Way
+Redmond, WA 98052, U.S.A.
+martinro@microsoft.com
+Rainer Steinwandt
+Florida Atlantic University
+Department of Mathematical Sciences
+Boca Raton, FL 33431
+rsteinwa@fau.edu
+November 11, 2018
+Abstract
+In a basic related-key attack against a block cipher, the adversary has access to encryptions under keys
+that differ from the target key by bit-ﬂips. In this short note we show that for a quantum adversary such
+attacks are quite powerful: if the secret key is (i) uniquely determined by a small number of plaintext-
+ciphertext pairs, (ii) the block cipher can be evaluated efﬁciently, and (iii) a superposition of related keys
+can be queried, then the key can be extracted efﬁciently.
+1
+INTRODUCTION
+The availability of scalable quantum computers would jeopardize the security of many currently deployed
+asymmetric cryptographic schemes [1]. For symmetric cryptography the expectations for a post-quantum
+setting tend to be more optimistic, see e.g. [2], from which we quote “quantum computers seem to have very
+little effect on secret-key cryptography, hash functions, etc. Grover’s algorithm forces somewhat larger key
+sizes for secret-key ciphers, but this effect is essentially uniform across ciphers; today’s fastest pre-quantum
+256-bit ciphers are also the fastest candidates for post-quantum ciphers at a reasonable security level.”
+Related-key attacks are a powerful cryptanalytic tool when exploring block ciphers. In such attacks,
+the adversary is granted access to encryptions and/or decryptions of messages under secret keys which are
+related to the target key in a known or chosen way. As argued in [3], this type of attack is of practical
+interest, despite the assumptions made. When Winternitz and Hellman described this attack model more
+than 25 years ago, they focused on key relations given by bit-ﬂips [4]. An illustrative example for an
+application of this attack model is an attack against 9 rounds of Rijndael with a 256-bit key, invoking 256
+related keys with a particular choice of the bit-ﬂips [5].
+Current approaches to formalize related-key attacks allow more general key relations [6, 7], and restrict-
+ing to bit-ﬂips can be considered to be a rather conservative choice. Below we show that for a quantum
+adversary such a basic form of related-key attack is quite powerful. We show that the possibility to query
+a superposition of related keys to a block cipher enables the efﬁcient extraction of the secret key, if some
+rather mild conditions are met:
+1. the block cipher can be implemented efﬁciently as a quantum circuit, and
+∗This work was carried out while MR was with NEC Laboratories America, Inc., Princeton, NJ 08540, USA.
+1
+arXiv:1306.2301v2  [quant-ph]  14 Nov 2013
+
+
+--- PAGE 2 ---
+2. the secret key is uniquely determined by a small number of available plaintext-ciphertext pairs.
+The attack we describe is unlikely to pose a practical threat as querying a superposition of secret keys may
+not be feasible for a typical implementation. Notwithstanding this, from the structural point of view our
+observation indicates an interesting limitation for the security guarantees of a block cipher that one can hope
+to prove in a post-quantum scenario.
+2
+PRELIMINARIES
+A block cipher with key length k and block length n is a family of 2k permutations {EK : {0,1}n −→
+{0,1}n}K∈{0,1}k on bitstrings of length n. Popular block ciphers limit the possible choices of the key length
+k—e. g., for the Advanced Encryption Standard [8] we have n = 128 and k ∈{128,192,256}. To character-
+ize the efﬁciency of certain types of attacks, it can nonetheless be convenient to consider families of block
+ciphers, interpreting the key length k as a scalable security parameter. Measuring the running time of an
+adversary as a function of k, it is meaningful to speak of an expected polynomial time attack.
+2.1
+Related-key attacks
+The attack model we consider goes back to [4]. After a key K ∈{0,1}k has been chosen uniformly at
+random, the adversary has access to two oracles:
+E: On input a bitmask L ∈{0,1}k and a bitstring m ∈{0,1}n, this oracle returns the encryption EK⊕L(m)
+of m under the key K ⊕L.
+E−1: On input a bitmask L ∈{0,1}k and a bitstring c ∈{0,1}n, this oracle returns the decryption E−1
+K⊕L(c)
+of c under the key K ⊕L.
+After interacting with these oracles, the adversary has to output a guess K′ for K, and it is considered
+successful if and only if K = K′. For our attack we will also assume that the block cipher at hand can be
+evaluated efﬁciently, i. e., with a polynomial-size quantum circuit that has the secret key and a plaintext as
+input. For block ciphers that are actually used this condition is of no concern.
+The quantum attack below will not involve E−1, but we will allow the adversary to query the block
+cipher and also the oracle E with a superposition of keys. Finally, we require that the adversary has access
+to a polynomial number of plaintext-ciphertext pairs (m1,c1),...,(mr,cr) such that there exists exactly one
+secret key K ∈{0,1}k satisfying
+(c1,...,cr) = (EK(m1),...,EK(mr)).
+It is easy to come up with a pathological block cipher where the secret key cannot be uniquely determined
+by any number of plaintext-ciphertext pairs1, but for typical block ciphers we do not think this to be a
+concern. In [9, Deﬁnition 7.34] the known plaintext unicity distance is deﬁned as a measure for the number
+of (known) plaintext-ciphertext pairs that are needed to determine the secret key of a block cipher uniquely,
+and with [9, Fact 7.35] it seems plausible to estimate that for an n-bit block cipher with key length k having
+r > ⌈k/n⌉
+(1)
+1Encryption and decryption can simply ignore parts of the secret key.
+2
+
+
+--- PAGE 3 ---
+plaintext-ciphertext pairs sufﬁces. So for the 128-bit version of AES, where n = k = 128, one can think
+of an r-value as small as 2. Throughout we will assume that r satisﬁes Inequality (1). Then the main idea
+to mount a quantum related-key attack is a reduction to a quantum algorithm described in [10] which we
+describe next.
+2.2
+Simon’s problem
+Let f : {0,1}k −→{0,1}k′ with k ≤k′ be a function such that one of the following two conditions holds:
+(a) f is injective;
+(b) there exists a bitstring s ∈{0,1}k \{0k} such that for every two distinct x,x′ ∈{0,1}k we have
+f(x) = f(x′) ⇐⇒x = x′ ⊕s.
+Simon’s problem asks to decide for such a function f which of the two conditions holds, and in the case (b)
+to ﬁnd s. Allowing the function f to be evaluated at a superposition of inputs, [10] establishes the following
+result:
+Theorem 1 Let g(k) be an upper bound for the time needed to solve a k × k linear system of equations
+over the binary ﬁeld F2, and let tf (k) be an upper bound for the time needed to evaluate the function
+f on (a superposition of) inputs from {0,1}k. Then the above problem can be solved in expected time
+O(k · tf (k) + g(k)). In particular, for t f = t f (k) being polynomial, the above problem can be solved in
+expected polynomial time.
+3
+Description of the attack
+Alluding to the Electronic Code Book mode of operation [9, Section 7.2.2], subsequently we will simply
+write EK(⃗m) for the tuple of ciphertext blocks (EK(m1),...,EK(mr)) ∈{0,1}rn. For a ﬁxed, unknown secret
+key s ∈{0,1}k \{0k} and messages ⃗m ∈{0,1}rn that characterize the s uniquely as described in Section 2,
+we deﬁne the function
+fs :
+{0,1}k
+−→
+2{0,1}rn
+x
+7−→
+{Ex(⃗m),Es⊕x(⃗m)} .
+We remark that for each x in the domain of fs, the image is comprised of two different ciphertexts, i. e.,
+it does not collapse to a singleton set. Indeed, this is the case due to the choice of the plaintexts m1,...,mr
+as the condition s ̸= 0k implies that Ex(⃗m) ̸= Es⊕x(⃗m). We next describe our core result, namely a reduction
+from the problem of ﬁnding the secret key s to an instance of Simon’s problem which can then be solved
+efﬁciently on a quantum computer.
+Meeting the conditions of Simon’s problem
+To argue that fs meets the conditions of Theorem 1, let us
+ﬁrst clarify how to encode the images as elements of {0,1}k′ for some k′ ≥k. As we impose condition (1),
+with k′=(rn+rn)=2rn we clearly have k′ ≥k as desired. By interpreting elements in {0,1}rn as (unsigned)
+integers, we can impose a linear order on {0,1}rn. Then, to store an element {c,c′} in the image of fs, we
+simply store the ordered pair (min(c,c′),max(c,c′)) as its unique k′-bit representation.
+Next, consider two different k-bit strings x ̸= x′ that satisfy fs(x) = fs(x′):
+3
+
+
+--- PAGE 4 ---
+Figure 1: Quantum circuit to implement a quantum related-key attack on a block cipher via a reduction to an
+instance of Simon’s problem. The basic building blocks of this circuit are described in more detail in the text.
+The circuit makes use of calls to the block cipher for keys x to obtain encryptions Ex(⃗m) and of calls to the
+related-key oracle to obtain the corresponding encryptions Ex⊕s(⃗m) with respect to the related keys x⊕s that
+are obtained from the secret key s via exclusive-OR (XOR) masks. Further detail on the comparison circuits
+is given in Figure 3. In the center of the circuit is a sequence of four copy operations via CNOTs to pick
+out the desired register and copy it into the target registers holding min(c,c′) and max(c,c′), respectively.
+We make use of a graphical notation that employs control knobs of different sizes which is described further
+in Figure 4. Together, the comparison and copy operations realize the data structure of an unordered set
+which we use in our reduction to Simon’s problem. Upon measurement of the ﬁrst register, a k-bit vector
+y ∈{0,1}k is obtained which due to our construction is perpendicular to the secret key s ∈{0,1}k. After
+O(k) iterations, with constant probability the secret key can be reconstructed from the measurement data.
+• If Ex(⃗m) = Ex′(⃗m) then the choice of the plaintexts m1,...,mr implies x = x′, so this cannot happen.
+• If Ex(⃗m) ̸= Ex′(⃗m), then Ex(⃗m) = Es⊕x′(⃗m), which by the choice of the plaintexts m1,...,mr means
+that x = s⊕x′.
+So we have the implication fs(x) = fs(x′) =⇒x = x′⊕s. The converse follows trivially from s⊕(x′⊕s) = x′.
+Next, let us check that the function fs(·) can be evaluated efﬁciently.
+Evaluating fs(·) in polynomial time
+By assumption the underlying block cipher can be evaluated with a
+polynomial-size quantum circuit, so computing the two values Ex(⃗m) and Es⊕x(⃗m) for a given x can certainly
+be done in polynomial time. In the actual attack, the value Es⊕x(⃗m) is obtained by invoking the encryption
+oracle E for each of the plaintexts m1,...,mr, i. e., with a polynomial number of queries to E. This means
+we can obtain the pair (Ex(⃗m),Es⊕x(⃗m)) in polynomial time, and we are left to distill our unique k′-bit
+representation of the set comprised by these two elements.
+As indicated in the previous paragraph, such a representation can be implemented by interpreting the two
+ciphertexts as integers and by then sorting them. A quantum circuit to determine this unique representation
+of a pair of bitvectors consists of swapping Ex(⃗m) and Es⊕x(⃗m) conditioned on the the latter value being
+smaller than the former. For instance with a reversible circuit to perform addition [13, 14, 15] one can
+4
+
+
+--- PAGE 5 ---
+compute the difference of the binary numbers represented by Ex(⃗m) and Es⊕x(⃗m) in polynomial time. The
+most signiﬁcant bit of the result then reveals the result of the comparison. The swap operation can be
+conditioned on this bit, followed by an uncomputation of the garbage introduced by the adder [16].
+Figure 2: Quantum oracle to implement the encryption of a tuple ⃗m of messages under an encryption key
+x ⊕s that is related to the secret key s via addition of an XOR mask x. Note that the circuit for s = 0 is
+needed in Figure 1 also and this circuit can—by assumption on the cipher—be efﬁciently implemented. The
+shifted version of the cipher has to be given as a block-box circuit which we can evaluate in superposition.
+Figure 3: Quantum circuit for the comparison of two n bit integers. An efﬁcient implementation can, e. g.,
+be obtained by computing the difference i−j in one’s complement form and then keeping only the highest
+order bit (see [13, 14]).
+In Figure 1 we display the resulting quantum circuit. Note that each computation of an intermediate
+result has to be uncomputed or else interference between the various computational paths could not take
+place. The overall structure of the circuit is that of a Fourier sampling circuit, i.e., a circuit type that arises
+in the solution of abelian hidden subgroup problems [11, 12].
+The implementation of the hiding function fs is decomposed into several subroutines to make the circuit
+more readable: in a ﬁrst stage, the classical k-bit vector x is fanned out into two copies using a CNOT
+gate (note that a line with a tick denotes a quantum register holding two or more qubits). The value x is
+then passed to a subroutine computing Ex(⃗m), respectively Ex⊕s(⃗m) in superposition. These subroutines
+are carried out by circuits as in Figure 2. An efﬁcient cirucit for Ex(⃗m) can be synthesized by making the
+efﬁcient circuit (which by assumption exists) reversible. For the implementation of Ex⊕s(⃗m) we make use
+of the related-key oracle E. Throughout, it should be noted that ⃗m is a vector that uniquely characterizes s
+as in Section 2.1.
+The “COMP” operation is shown in Figure 3 and can be realized similarly to addition of integers. See
+also [13, 14] for implementations of comparison circuits that optimize circuit width, respectively circuit
+depth. The result of the comparison is then used to copy the smaller of the two registers (when interpreted
+5
+
+
+--- PAGE 6 ---
+Figure 4: Quantum circuit to implement a controlled copy operation from one quantum register to another
+quantum register. In the ﬁgure, the source register consists of the upper n qubits, the target register of the
+lower n qubits, and the control qubit sits in the middle.
+as integers) into the uppermost of the last two registers and the larger one into the lower one. Finally, in
+Figure 4 one of the operations is shown that allow to select one of the two registers holding an rn-bit integer,
+depending on the value of the comparison operation. The other type which picks a register controlled by the
+negated value of the comparison bit is implemented analogously. Overall we have established the following
+result.
+Theorem 2 For every s ∈{0,1}k \ {0k} the function fs deﬁned above satisﬁes the conditions needed to
+apply Theorem 1, and the bound tfs can be chosen to be polynomial.
+By combining Theorems 1 and 2 we now obtain the following quantum related-key attack which runs in
+expected polynomial time:
+1. Check if the secret target key s is the all-zero key s = 0k by computing E0k(⃗m) and comparing these
+ciphertexts with the given ciphertexts Es(⃗m).
+2. If s ̸= 0k then apply Simon’s algorithm—which constitutes the proof of Theorem 1—to recover s.
+4
+Conclusion
+This note shows that in a quantum setting even a basic related-key attack is very powerful: under rather mild
+assumptions on the attacked block cipher the secret key can be extracted efﬁciently.
+6
+
+
+--- PAGE 7 ---
+ACKNOWLEDGMENTS
+RS was supported by the Spanish Ministerio de Econom´ıa y Competitividad through the project grant MTM-
+2012-15167 and by NATO’s Public Diplomacy Division in the framework of “Science for Peace”, Project
+MD.SFPP 984520. This work was carried out while MR was with NEC Laboratories America, Princeton,
+NJ 08540, U.S.A. We thank Schloss Dagstuhl, Germany, for providing an excellent research environment in
+which part of this research was carried out during a Quantum Cryptanalysis seminar.
+References
+[1]
+P. W. Shor, Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quan-
+tum Computer, SIAM Journal on Computing 26 (1997) 1484–1509.
+[2]
+D. J. Bernstein, Introduction to post-quantum cryptography, in:
+Post-Quantum Cryptography,
+D. J. Bernstein, J. Buchmann, E. Dahmen (eds.), Springer, 2009, pp. 1–14.
+[3]
+J. Kelsey, B. Schneier, D. Wagner, Key-Schedule Cryptoanalysis of IDEA, G-DES, GOST, SAFER,
+and Triple-DES, in: N. Koblitz (Ed.), Advances in Cryptology – CRYPTO 1996, volume 1109 of
+Lecture Notes in Computer Science, Springer, 1996, pp. 237–251.
+[4]
+R. Winternitz, M. Hellman, Chosen-key attacks on a block cipher, Cryptologia XI (1987) 16–20.
+[5]
+N. Ferguson, J. Kelsey, S. Lucks, B. Schneier, M. Stay, D. Wagner, D. Whiting, Improved Cryptanal-
+ysis of Rijndael, in: B. Schneier (Ed.), Fast Software Encryption – FSE 2000, volume 1978 of Lecture
+Notes in Computer Science, Springer, 2001, pp. 213–230.
+[6]
+M. Bellare, T. Kohno, A Theoretical Treatment of Related-Key Attacks: RKA-PRPs, RKA-PRFs,
+and Applications, in: E. Biham (Ed.), Advances in Cryptology – EUROCRYPT 2003, volume 2656
+of Lecture Notes in Computer Science, International Association for Cryptologic Research, Springer,
+2003, pp. 491–506.
+[7]
+M. R. Albrecht, P. Farshim, K. G. Paterson, G. J. Watson, On Cipher-Dependent Related-Key Attacks
+in the Ideal-Cipher Model, in: Fast Software Encryption – FSE 2011, volume 6733 of Lecture Notes in
+Computer Science, International Association for Cryptologic Research, Springer, 2011, pp. 128–145.
+[8]
+NIST, Speciﬁcation for the ADVANCED ENCRYPTION STANDARD (AES), Federal Information
+Processing Standards Publication 197, 2001.
+[9]
+A. J. Menezes, P. C. van Oorschot, S. A. Vanstone, Handbook of Applied Cryptography, CRC Press,
+2001. Sample chapters available at http://cacr.uwaterloo.ca/hac/.
+[10] D. R. Simon, On the Power of Quantum Computation, in: 35th Annual Symposium on Foundations
+of Computer Science – FOCS 1994, IEEE Computer Society, 1994, pp. 116–123.
+[11] G. Brassard, P. Høyer. An exact polynomial–time algorithm for Simon’s problem, in: Proceedings
+of Fifth Israeli Symposium on Theory of Computing and Systems – ISTCS 1997, IEEE Computer
+Society, 1997, pp. 12–23.
+7
+
+
+--- PAGE 8 ---
+[12] M. Mosca, A. Ekert. The hidden subgroup problem and eigenvalue estimation on a quantum computer,
+in: Quantum Computing and Quantum Communications – QCQC 1998, volume 1509 of Lecture Notes
+in Computer Science, Springer, 1998, pp. 174–188.
+[13] S. A. Cuccaro, T. G. Draper, S. A. Kutin, D. P. Moulton, A new quantum ripple-carry addition circuit,
+2004. ArXiv:quant-ph/0410184.
+[14] T. G. Draper, S. A. Kutin, E. M. Rains, K. M. Svore, A logarithmic-depth quantum carry-lookahead
+adder, Quantum Information and Computation 6 (2006) 351–369.
+[15] Y. Takahashi, S. Tani, N. Kunihiro, Quantum addition circuits and unbounded fan-out, Quantum
+Information and Computation 10 (2010) 872–890.
+[16] C. H. Bennett, Logical reversibility of computation, IBM J. Res. Develop. 17 (1973) 525–532.
+8

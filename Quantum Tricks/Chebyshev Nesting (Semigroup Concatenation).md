@@ -27,14 +27,14 @@ with phase matching $\beta_j = -\alpha_{l-j+1}$.
 
 ## When to reach for it
 
-- **Adaptive search:** run $S_{L_1}$, check if the result is good enough, extend to $S_{L_1 L_2}$ if not — no restart needed, because $S_{L_1}$ is a prefix of the nested sequence.
+- **Coherent adaptive extension:** design the circuit so $S_{L_1}$ is a prefix of the nested sequence and can be extended to $S_{L_1L_2}$ without re-preparing the initial state. A literal measurement-based "check if good enough" is a restart/adaptive protocol, not the same coherent prefix extension.
 - **Multiplicative query complexity composition:** combine a cheap coarse search with a finer refinement.
 - **Composite pulse design:** the same concatenation structure appears in NMR composite pulse sequences (Jones 2013).
 - **Anywhere Grover is used iteratively** — nesting avoids the bookkeeping of "how many iterations should I run."
 
 ## Complexity
 
-A nested sequence of complexities $L_1, L_2$ uses $l_1 + 2l_1 l_2 + l_2$ Grover iterates (where $L_i = 2l_i + 1$). For $k$-level nesting: $L_1 L_2 \cdots L_k$ total complexity, but the number of physical iterates grows multiplicatively.
+A nested sequence of complexities $L_1, L_2$ has combined complexity $L_1L_2$. In the paper's convention $L_i=2l_i+1$, this corresponds to $l = l_1 + 2l_1l_2 + l_2$ generalized Grover iterates, since $L_1L_2 = 2l+1$. For $k$-level nesting the effective $L$ values multiply, so physical depth grows multiplicatively.
 
 ## Caveat
 
